@@ -73,11 +73,12 @@ const currentPath = Astro.url.pathname;
                     <!-- Link with submenu -->
                     <a
                         href={`/${lang}/${section.slug}`}
-                        class={`flex items-center gap-1 py-1 px-1 transition-colors border-b-2 ${
-                        isActive
-                            ? "text-blue-800 border-blue-800"
-                            : "text-gray-900 border-transparent hover:border-blue-800 hover:text-blue-800"
-                        }`}
+                        class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                            before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
+                            before:w-0 before:bg-blue-800 before:transition-all before:duration-500 before:ease-in-out
+                            hover:before:w-full hover:text-blue-800
+                            ${isActive ? "text-blue-800 before:w-full" : ""}`
+                        }
                     >
                         <span>{section.name}</span>
                         <svg
@@ -124,11 +125,12 @@ const currentPath = Astro.url.pathname;
                     <!-- Simple link -->
                     <a
                     href={`/${lang}/${section.slug}`}
-                    class={`flex items-center py-1 px-1 transition-colors border-b-2 lg:text-base ${
-                        isActive
-                        ? "text-blue-800 border-blue-800"
-                        : "text-gray-900 border-transparent hover:border-blue-800 hover:text-blue-800"
-                    }`}
+                    class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                        before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
+                        before:w-0 before:bg-blue-800 before:transition-all before:duration-500 before:ease-in-out
+                        hover:before:w-full hover:text-blue-800
+                        ${isActive ? "text-blue-800 before:w-full" : ""}`
+                        }
                     >
                     <span>{section.name}</span>
                     </a>

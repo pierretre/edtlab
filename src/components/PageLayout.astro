@@ -1,0 +1,359 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getEntry } from "astro:content";
+
+export interface Props {
+    title?: string;
+    description?: string;
+    image?: string;
+    canonical?: string;
+    noindex?: boolean;
+    lang?: "en" | "fr";
+    showBreadcrumb?: boolean;
+    showToc?: boolean;
+    breadcrumbItems?: Array<{ name: string; href?: string }>;
+}
+
+const {
+    title,
+    description,
+    image,
+    canonical,
+    noindex = false,
+    lang: propLang,
+    showBreadcrumb = true,
+    showToc = false,
+    breadcrumbItems = [],
+} = Astro.props;
+
+// Get language from URL or use prop
+const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
+const t = useTranslations(lang);
+
+// Build breadcrumb items if not provided
+let finalBreadcrumbItems = breadcrumbItems;
+if (breadcrumbItems.length === 0 && showBreadcrumb) {
+    const currentPath = Astro.url.pathname;
+    const pathSegments = currentPath.split('/').filter(segment => segment && segment !== lang);
+    
+    finalBreadcrumbItems = [
+        { name: t('nav.home'), href: `/${lang}/` }
+    ];
+    
+    // Build breadcrumb from path segments
+    let currentHref = `/${lang}`;
+    for (let i = 0; i < pathSegments.length; i++) {
+        const segment = pathSegments[i];
+        currentHref += `/${segment}`;
+        
+        // Get translated name for common segments
+        const segmentKey = `nav.${segment}` as keyof typeof t;
+        const segmentName = t(segmentKey) || segment.charAt(0).toUpperCase() + segment.slice(1).replace('-', ' ');
+        
+        // Don't add href for the last item (current page)
+        const isLastItem = i === pathSegments.length - 1;
+        finalBreadcrumbItems.push({
+            name: segmentName,
+            href: isLastItem ? undefined : currentHref
+        });
+    }
+}
+
+// Extract headings for TOC if enabled
+let tocItems: Array<{ id: string; text: string; level: number }> = [];
+if (showToc) {
+    // This will be populated by the TOC component after content is rendered
+    // For now, we'll pass the showToc flag to enable TOC generation
+}
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    image={image}
+    canonical={canonical}
+    noindex={noindex}
+    lang={lang}
+>
+    <div class="container mx-auto px-4 py-6 max-w-6xl">
+        <!-- Breadcrumb Navigation -->
+        {showBreadcrumb && finalBreadcrumbItems.length > 1 && (
+            <nav class="flex mb-6" aria-label={lang === 'en' ? 'Breadcrumb' : 'Fil d\'Ariane'}>
+                <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    {finalBreadcrumbItems.map((item, index) => (
+                        <li class="inline-flex items-center">
+                            {index > 0 && (
+                                <svg 
+                                    class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" 
+                                    aria-hidden="true" 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    fill="none" 
+                                    viewBox="0 0 6 10"
+                                >
+                                    <path 
+                                        stroke="currentColor" 
+                                        stroke-linecap="round" 
+                                        stroke-linejoin="round" 
+                                        stroke-width="2" 
+                                        d="m1 9 4-4-4-4"
+                                    />
+                                </svg>
+                            )}
+                            {item.href ? (
+                                <a 
+                                    href={item.href} 
+                                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                                >
+                                    {index === 0 && (
+                                        <svg 
+                                            class="w-3 h-3 me-2.5" 
+                                            aria-hidden="true" 
+                                            xmlns="http://www.w3.org/2000/svg" 
+                                            fill="currentColor" 
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                                        </svg>
+                                    )}
+                                    {item.name}
+                                </a>
+                            ) : (
+                                <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2">
+                                    {item.name}
+                                </span>
+                            )}
+                        </li>
+                    ))}
+                </ol>
+            </nav>
+        )}
+
+        <!-- Main Content Area -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Main Content -->
+            <main class="flex-1 min-w-0">
+                <article class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+                    <slot />
+                </article>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            {showToc && (
+                <aside class="lg:w-64 flex-shrink-0">
+                    <div class="sticky top-24 bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            {t('toc.title')}
+                        </h3>
+                        <nav id="table-of-contents" aria-label={t('toc.title')}>
+                            <!-- TOC will be populated by JavaScript -->
+                            <ul id="toc-list" class="space-y-2 text-sm">
+                                <!-- Dynamically populated -->
+                            </ul>
+                        </nav>
+                    </div>
+                </aside>
+            )}
+        </div>
+    </div>
+
+    <!-- Table of Contents JavaScript -->
+    {showToc && (
+        <script is:inline>
+            document.addEventListener('DOMContentLoaded', function() {
+                const tocList = document.getElementById('toc-list');
+                const article = document.querySelector('article');
+                
+                if (!tocList || !article) return;
+                
+                // Find all headings in the article
+                const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                
+                if (headings.length === 0) {
+                    // Hide TOC if no headings found
+                    const tocContainer = document.querySelector('#table-of-contents').closest('aside');
+                    if (tocContainer) {
+                        tocContainer.style.display = 'none';
+                    }
+                    return;
+                }
+                
+                // Generate TOC items
+                const tocItems = [];
+                headings.forEach((heading, index) => {
+                    // Create ID if it doesn't exist
+                    if (!heading.id) {
+                        const text = heading.textContent || '';
+                        heading.id = 'heading-' + text.toLowerCase()
+                            .replace(/[^\w\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-')
+                            .trim();
+                    }
+                    
+                    const level = parseInt(heading.tagName.charAt(1));
+                    const text = heading.textContent || '';
+                    
+                    tocItems.push({
+                        id: heading.id,
+                        text: text,
+                        level: level
+                    });
+                });
+                
+                // Build TOC HTML
+                let tocHTML = '';
+                tocItems.forEach((item, index) => {
+                    const indent = Math.max(0, item.level - 2) * 16; // 16px per level, starting from h2
+                    const isActive = index === 0 ? 'toc-active' : '';
+                    
+                    tocHTML += `
+                        <li style="margin-left: ${indent}px;">
+                            <a href="#${item.id}" 
+                               class="toc-link block py-1 px-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors ${isActive}"
+                               data-target="${item.id}">
+                                ${item.text}
+                            </a>
+                        </li>
+                    `;
+                });
+                
+                tocList.innerHTML = tocHTML;
+                
+                // Add click handlers for smooth scrolling
+                const tocLinks = tocList.querySelectorAll('.toc-link');
+                tocLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('data-target');
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            // Remove active class from all links
+                            tocLinks.forEach(l => l.classList.remove('toc-active', 'text-blue-600', 'bg-blue-50'));
+                            
+                            // Add active class to clicked link
+                            this.classList.add('toc-active', 'text-blue-600', 'bg-blue-50');
+                            
+                            // Smooth scroll to target
+                            targetElement.scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            
+                            // Focus the target for accessibility
+                            targetElement.focus();
+                        }
+                    });
+                });
+                
+                // Highlight current section on scroll
+                let ticking = false;
+                function updateActiveSection() {
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            const scrollPosition = window.scrollY + 100; // Offset for fixed header
+                            let activeHeading = null;
+                            
+                            headings.forEach(heading => {
+                                if (heading.offsetTop <= scrollPosition) {
+                                    activeHeading = heading;
+                                }
+                            });
+                            
+                            if (activeHeading) {
+                                // Remove active class from all links
+                                tocLinks.forEach(link => {
+                                    link.classList.remove('toc-active', 'text-blue-600', 'bg-blue-50');
+                                    link.classList.add('text-gray-600');
+                                });
+                                
+                                // Add active class to current section
+                                const activeLink = tocList.querySelector(`[data-target="${activeHeading.id}"]`);
+                                if (activeLink) {
+                                    activeLink.classList.remove('text-gray-600');
+                                    activeLink.classList.add('toc-active', 'text-blue-600', 'bg-blue-50');
+                                }
+                            }
+                            
+                            ticking = false;
+                        });
+                    }
+                    ticking = true;
+                }
+                
+                // Listen for scroll events
+                window.addEventListener('scroll', updateActiveSection);
+                
+                // Initial call to set active section
+                updateActiveSection();
+            });
+        </script>
+    )}
+
+    <!-- Additional styles for TOC -->
+    <style>
+        .toc-active {
+            @apply text-blue-600 bg-blue-50 font-medium;
+        }
+        
+        /* Ensure headings have proper spacing when linked to */
+        article h1:target,
+        article h2:target,
+        article h3:target,
+        article h4:target,
+        article h5:target,
+        article h6:target {
+            scroll-margin-top: 6rem; /* Account for fixed header */
+        }
+        
+        /* Prose styling adjustments */
+        .prose {
+            @apply text-gray-700;
+        }
+        
+        .prose h1 {
+            @apply text-3xl font-bold text-gray-900 mb-6 mt-8;
+        }
+        
+        .prose h2 {
+            @apply text-2xl font-semibold text-gray-900 mb-4 mt-8 border-b border-gray-200 pb-2;
+        }
+        
+        .prose h3 {
+            @apply text-xl font-semibold text-gray-900 mb-3 mt-6;
+        }
+        
+        .prose h4 {
+            @apply text-lg font-medium text-gray-900 mb-2 mt-4;
+        }
+        
+        .prose p {
+            @apply mb-4 leading-relaxed;
+        }
+        
+        .prose ul, .prose ol {
+            @apply mb-4;
+        }
+        
+        .prose li {
+            @apply mb-1;
+        }
+        
+        .prose blockquote {
+            @apply border-l-4 border-blue-200 pl-4 italic text-gray-600 my-4;
+        }
+        
+        .prose code {
+            @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+        }
+        
+        .prose pre {
+            @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+        }
+        
+        .prose pre code {
+            @apply bg-transparent p-0;
+        }
+    </style>
+</BaseLayout>

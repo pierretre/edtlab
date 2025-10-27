@@ -1,9 +1,10 @@
 ---
 import { defaultLang } from "../i18n/ui";
 import { getEntry } from "astro:content";
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
 const menu = await getEntry("menu", lang);
 ---
 
@@ -19,15 +20,16 @@ const menu = await getEntry("menu", lang);
                 class="w-72 h-auto mb-4"
             />
             <p class="text-sm text-gray-600">
-                Des projets de recherche fondamentale au service de la stratégie
-                nationale
+                {t("footer.tagline")}
             </p>
         </div>
 
         <!-- Middle column -->
         <div class="flex-1 min-w-[250px]">
-            <!-- Piloté par -->
-            <h6 class="border-l-2 border-blue-800 pl-3 mb-3">Piloté par</h6>
+            <!-- Piloted by -->
+            <h6 class="border-l-2 border-blue-800 pl-3 mb-3">
+                {t("footer.piloted-by")}
+            </h6>
             <div class="flex items-center space-x-4 mb-4 flex-wrap">
                 <img
                     src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-pilote-cea.png"
@@ -46,8 +48,10 @@ const menu = await getEntry("menu", lang);
                 />
             </div>
 
-            <!-- Financé par -->
-            <h6 class="border-l-2 border-blue-800 pl-3 mb-3">Financé par</h6>
+            <!-- Funded by -->
+            <h6 class="border-l-2 border-blue-800 pl-3 mb-3">
+                {t("footer.funded-by")}
+            </h6>
             <div class="flex items-center mb-4">
                 <img
                     src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-finance-france-2030.png"
@@ -56,8 +60,10 @@ const menu = await getEntry("menu", lang);
                 />
             </div>
 
-            <!-- Opéré par -->
-            <h6 class="border-l-2 border-blue-800 pl-3 mb-3">Opéré par</h6>
+            <!-- Operated by -->
+            <h6 class="border-l-2 border-blue-800 pl-3 mb-3">
+                {t("footer.operated-by")}
+            </h6>
             <div class="flex items-center">
                 <img
                     src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-finance-anr.png"

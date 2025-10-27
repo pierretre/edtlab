@@ -1,53 +1,102 @@
 ---
+import { getCollection, getEntry } from "astro:content";
 import { useTranslations } from "../../i18n/utils";
-import BaseLayout from "../../components/BaseLayout.astro";
+import PageLayout from "../../components/PageLayout.astro";
 
-export function getStaticPaths() {
-    // This will be populated when content collections are set up
-    // For now, return basic paths for testing
-    const paths = [];
-    const langs = ["en", "fr"];
-    const pages = [
-        "about",
-        "contact",
-        "program",
-        "projects",
-        "production",
-        "demo-center",
-        "resources",
-        "news",
-        "join-us",
-    ];
+export async function getStaticPaths() {
+    // Get all pages from content collections
+    const allPages = await getCollection("pages");
 
-    for (const lang of langs) {
-        for (const page of pages) {
-            paths.push({
-                params: { lang, slug: page },
-            });
-        }
-    }
+    // Generate paths from content collection
+    const paths = allPages.map((page) => {
+        const slugParts = page.slug.split("/");
+        return {
+            params: {
+                lang: page.data.lang,
+                slug: slugParts.join("/"),
+            },
+            props: { page },
+        };
+    });
 
     return paths;
 }
 
+const { page } = Astro.props;
 const { lang, slug } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
 
-// Create a more descriptive title
-const pageTitle = `${slug?.charAt(0).toUpperCase()}${slug?.slice(1).replace("-", " ")}`;
+// Get the rendered content
+const { Content } = await page.render();
+
+// Build breadcrumb items based on slug structure
+const slugParts = slug?.split("/") || [];
+const breadcrumbItems = [{ name: t("nav.home"), href: `/${lang}/` }];
+
+// Build breadcrumb from slug parts
+let currentHref = `/${lang}`;
+for (let i = 0; i < slugParts.length; i++) {
+    const part = slugParts[i];
+    currentHref += `/${part}`;
+
+    // Get translated name for common segments
+    const segmentKey = `nav.${part}` as keyof typeof t;
+    const segmentName =
+        t(segmentKey) ||
+        part.charAt(0).toUpperCase() + part.slice(1).replace("-", " ");
+
+    // Don't add href for the last item (current page)
+    const isLastItem = i === slugParts.length - 1;
+    breadcrumbItems.push({
+        name: segmentName,
+        href: isLastItem ? undefined : currentHref,
+    });
+}
 ---
 
-<BaseLayout
-    title={pageTitle}
-    description={t("site.description")}
+<PageLayout
+    title={page.data.title}
+    description={page.data.description || t("site.description")}
     lang={lang as "en" | "fr"}
+    showBreadcrumb={true}
+    showToc={page.data.toc}
+    breadcrumbItems={breadcrumbItems}
 >
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-6">
-            {slug} ({lang?.toUpperCase()})
+    <!-- Page Title -->
+    <header class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            {page.data.title}
         </h1>
-        <p class="text-gray-600">
-            This is the {slug} page in {lang === "en" ? "English" : "French"}.
-        </p>
-    </div>
-</BaseLayout>
+        {
+            page.data.description && (
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    {page.data.description}
+                </p>
+            )
+        }
+    </header>
+
+    <!-- Page Content -->
+    <Content />
+
+    <!-- Last Modified Date -->
+    {
+        page.data.lastModified && (
+            <footer class="mt-12 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500">
+                    {lang === "en" ? "Last updated:" : "Dernière mise à jour :"}
+                    <time datetime={page.data.lastModified.toISOString()}>
+                        {page.data.lastModified.toLocaleDateString(
+                            lang === "en" ? "en-US" : "fr-FR",
+                            {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            },
+                        )}
+                    </time>
+                </p>
+            </footer>
+        )
+    }
+</PageLayout>

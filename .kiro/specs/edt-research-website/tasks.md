@@ -63,7 +63,7 @@
   - Add skip links and focus management for accessibility
   - _Requirements: 28.1, 28.4, 29.1, 29.2, 31.4_
 
-- [ ] 9. Build content-specific layout components
+- [x] 9. Build content-specific layout components
   - Create PageLayout component extending BaseLayout with Breadcrumb and TOC
   - Build HomeLayout component for front page with TileGrid using Flowbite Cards
   - Update existing page files to use appropriate layout components

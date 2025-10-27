@@ -1,0 +1,349 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getEntry } from "astro:content";
+
+export interface Props {
+    title?: string;
+    description?: string;
+    image?: string;
+    canonical?: string;
+    noindex?: boolean;
+    lang?: "en" | "fr";
+}
+
+const {
+    title,
+    description,
+    image,
+    canonical,
+    noindex = false,
+    lang: propLang,
+} = Astro.props;
+
+// Get language from URL or use prop
+const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
+const t = useTranslations(lang);
+
+// Get menu data for tile generation
+const currentMenu = await getEntry("menu", lang);
+const menuSections = currentMenu?.data.sections || [];
+
+// Define tile data with icons and descriptions
+const tileData = [
+    {
+        slug: "program",
+        icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+        description: lang === 'en' 
+            ? "Discover our research goals, structure, and partnerships"
+            : "Découvrez nos objectifs de recherche, structure et partenariats"
+    },
+    {
+        slug: "focused-projects",
+        icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+        description: lang === 'en'
+            ? "Explore our five focused research projects (PC1-PC5)"
+            : "Explorez nos cinq projets de recherche ciblés (PC1-PC5)"
+    },
+    {
+        slug: "production",
+        icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+        description: lang === 'en'
+            ? "Access our publications, research outputs, and platform"
+            : "Accédez à nos publications, résultats de recherche et plateforme"
+    },
+    {
+        slug: "demo-center",
+        icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+        description: lang === 'en'
+            ? "Explore our use cases and interactive demonstrators"
+            : "Explorez nos cas d'usage et démonstrateurs interactifs"
+    },
+    {
+        slug: "resources",
+        icon: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
+        description: lang === 'en'
+            ? "Find external software, tools, and research resources"
+            : "Trouvez des logiciels externes, outils et ressources de recherche"
+    },
+    {
+        slug: "news",
+        icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z",
+        description: lang === 'en'
+            ? "Stay updated with our latest events and press releases"
+            : "Restez informé de nos derniers événements et communiqués"
+    },
+    {
+        slug: "join-us",
+        icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
+        description: lang === 'en'
+            ? "Discover career opportunities and open positions"
+            : "Découvrez les opportunités de carrière et postes ouverts"
+    },
+    {
+        slug: "contact",
+        icon: "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+        description: lang === 'en'
+            ? "Get in touch with our research team"
+            : "Contactez notre équipe de recherche"
+    }
+];
+
+// Match tiles with menu sections to get proper names
+const tiles = tileData.map(tile => {
+    const menuSection = menuSections.find(section => section.slug === tile.slug);
+    return {
+        ...tile,
+        name: menuSection?.name || tile.slug.charAt(0).toUpperCase() + tile.slug.slice(1).replace('-', ' ')
+    };
+});
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    image={image}
+    canonical={canonical}
+    noindex={noindex}
+    lang={lang}
+>
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-16 lg:py-24">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center">
+                <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+                    {t('site.title')}
+                </h1>
+                <p class="text-xl lg:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    {t('site.description')}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a 
+                        href={`/${lang}/program`}
+                        class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                    >
+                        {lang === 'en' ? 'Learn More' : 'En Savoir Plus'}
+                        <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a 
+                        href={`/${lang}/contact`}
+                        class="inline-flex items-center px-6 py-3 text-base font-medium text-blue-600 bg-white border border-blue-600 rounded-lg shadow-sm hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                    >
+                        {lang === 'en' ? 'Contact Us' : 'Nous Contacter'}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Tiles Section -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                    {lang === 'en' ? 'Explore Our Research' : 'Explorez Notre Recherche'}
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    {lang === 'en' 
+                        ? 'Navigate through our comprehensive research program and discover our contributions to engineering digital twins.'
+                        : 'Naviguez dans notre programme de recherche complet et découvrez nos contributions aux jumeaux numériques d\'ingénierie.'
+                    }
+                </p>
+            </div>
+
+            <!-- Tile Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {tiles.map((tile) => (
+                    <div class="group">
+                        <a 
+                            href={`/${lang}/${tile.slug}`}
+                            class="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                            <div class="flex flex-col items-center text-center h-full">
+                                <!-- Icon -->
+                                <div class="flex items-center justify-center w-16 h-16 mb-4 bg-blue-100 rounded-full group-hover:bg-blue-200 transition-colors">
+                                    <svg 
+                                        class="w-8 h-8 text-blue-600" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        viewBox="0 0 24 24" 
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path 
+                                            stroke-linecap="round" 
+                                            stroke-linejoin="round" 
+                                            stroke-width="2" 
+                                            d={tile.icon}
+                                        />
+                                    </svg>
+                                </div>
+                                
+                                <!-- Title -->
+                                <h3 class="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                                    {tile.name}
+                                </h3>
+                                
+                                <!-- Description -->
+                                <p class="text-sm text-gray-600 leading-relaxed flex-grow">
+                                    {tile.description}
+                                </p>
+                                
+                                <!-- Arrow indicator -->
+                                <div class="mt-4 flex items-center text-blue-600 group-hover:text-blue-700 transition-colors">
+                                    <span class="text-sm font-medium mr-2">
+                                        {lang === 'en' ? 'Explore' : 'Explorer'}
+                                    </span>
+                                    <svg 
+                                        class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" 
+                                        fill="currentColor" 
+                                        viewBox="0 0 20 20" 
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path 
+                                            fill-rule="evenodd" 
+                                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" 
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Content Slot -->
+    <div class="bg-gray-50">
+        <slot />
+    </div>
+
+    <!-- Enhanced interaction styles -->
+    <style>
+        /* Smooth animations for reduced motion users */
+        @media (prefers-reduced-motion: reduce) {
+            .group a {
+                transform: none !important;
+                transition: none !important;
+            }
+            
+            .group svg {
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+        
+        /* Focus styles for better accessibility */
+        .group a:focus {
+            outline: 2px solid #3B82F6;
+            outline-offset: 2px;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .group a {
+                border-width: 2px;
+            }
+            
+            .group a:hover {
+                border-color: #1D4ED8;
+                background-color: #F3F4F6;
+            }
+        }
+        
+        /* Ensure tiles have equal height */
+        .grid > div {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid > div > a {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+
+    <!-- Enhanced JavaScript for interactions -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add keyboard navigation enhancements
+            const tileLinks = document.querySelectorAll('.group a');
+            
+            tileLinks.forEach(link => {
+                // Add keyboard interaction feedback
+                link.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        // Add visual feedback
+                        this.style.transform = 'translateY(-2px)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                            // Navigate to the link
+                            window.location.href = this.href;
+                        }, 150);
+                    }
+                });
+                
+                // Add focus/blur handlers for enhanced accessibility
+                link.addEventListener('focus', function() {
+                    this.setAttribute('aria-describedby', 'tile-description-' + this.href.split('/').pop());
+                });
+                
+                link.addEventListener('blur', function() {
+                    this.removeAttribute('aria-describedby');
+                });
+            });
+            
+            // Add intersection observer for animation on scroll
+            if ('IntersectionObserver' in window) {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, observerOptions);
+                
+                // Initially hide tiles for animation
+                tileLinks.forEach((link, index) => {
+                    link.parentElement.style.opacity = '0';
+                    link.parentElement.style.transform = 'translateY(20px)';
+                    link.parentElement.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                    observer.observe(link.parentElement);
+                });
+            }
+            
+            // Add analytics tracking for tile clicks (placeholder for future implementation)
+            tileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Analytics tracking will be implemented in task 21
+                    console.log('Tile clicked:', this.href.split('/').pop());
+                });
+            });
+        });
+    </script>
+</BaseLayout>
