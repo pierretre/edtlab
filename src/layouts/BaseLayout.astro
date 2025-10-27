@@ -1,7 +1,7 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import Header from "./Header.astro";
-import Footer from "./Footer.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
 export interface Props {
@@ -160,9 +160,14 @@ const alternateUrl =
         <!-- Site wrapper for sticky footer -->
         <div class="site-wrapper">
             <!-- Header with navigation -->
-            <div id="navigation">
-                <Header />
-            </div>
+            <header
+                id="navigation"
+                class="bg-white shadow-sm border-b border-gray-200"
+                role="banner"
+            >
+                <!-- Main navigation -->
+                <Navigation />
+            </header>
 
             <!-- Main content area -->
             <main

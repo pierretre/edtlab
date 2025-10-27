@@ -24,7 +24,6 @@ const publicationsCollection = defineCollection({
         venue: z.string().optional(),
         doi: z.string().optional(),
         url: z.string().url().optional(),
-        lang: z.enum(['en', 'fr'])
     })
 });
 
@@ -38,7 +37,6 @@ const eventsCollection = defineCollection({
         location: z.string().optional(),
         description: z.string(),
         url: z.string().url().optional(),
-        lang: z.enum(['en', 'fr'])
     })
 });
 
@@ -53,7 +51,6 @@ const jobOffersCollection = defineCollection({
         deadline: z.date(),
         description: z.string(),
         requirements: z.array(z.string()),
-        lang: z.enum(['en', 'fr'])
     })
 });
 

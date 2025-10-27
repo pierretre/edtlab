@@ -1,0 +1,175 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+---
+
+<aside class="lg:w-64 flex-shrink-0">
+    <div class="sticky top-24 bg-gray-50 rounded-lg p-4 border border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+            {t("toc.title")}
+        </h3>
+        <nav id="table-of-contents" aria-label={t("toc.title")}>
+            <!-- TOC will be populated by JavaScript -->
+            <ul id="toc-list" class="space-y-2 text-sm">
+                <!-- Dynamically populated -->
+            </ul>
+        </nav>
+    </div>
+</aside>
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tocList = document.getElementById("toc-list");
+        const article = document.querySelector("article");
+
+        if (!tocList || !article) return;
+
+        // Find all headings in the article
+        const headings = article.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        if (headings.length === 0) {
+            // Hide TOC if no headings found
+            const tocContainer = document
+                .querySelector("#table-of-contents")
+                .closest("aside");
+            if (tocContainer) {
+                tocContainer.style.display = "none";
+            }
+            return;
+        }
+
+        // Generate TOC items
+        const tocItems = [];
+        headings.forEach((heading, index) => {
+            // Create ID if it doesn't exist
+            if (!heading.id) {
+                const text = heading.textContent || "";
+                heading.id =
+                    "heading-" +
+                    text
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, "")
+                        .replace(/\s+/g, "-")
+                        .replace(/-+/g, "-")
+                        .trim();
+            }
+
+            const level = parseInt(heading.tagName.charAt(1));
+            const text = heading.textContent || "";
+
+            tocItems.push({
+                id: heading.id,
+                text: text,
+                level: level,
+            });
+        });
+
+        // Build TOC HTML
+        let tocHTML = "";
+        tocItems.forEach((item, index) => {
+            const indent = Math.max(0, item.level - 2) * 16; // 16px per level, starting from h2
+            const isActive = index === 0 ? "toc-active" : "";
+
+            tocHTML += `
+                        <li style="margin-left: ${indent}px;">
+                            <a href="#${item.id}" 
+                               class="toc-link block py-1 px-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors ${isActive}"
+                               data-target="${item.id}">
+                                ${item.text}
+                            </a>
+                        </li>
+                    `;
+        });
+
+        tocList.innerHTML = tocHTML;
+
+        // Add click handlers for smooth scrolling
+        const tocLinks = tocList.querySelectorAll(".toc-link");
+        tocLinks.forEach((link) => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute("data-target");
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    // Remove active class from all links
+                    tocLinks.forEach((l) =>
+                        l.classList.remove(
+                            "toc-active",
+                            "text-blue-600",
+                            "bg-blue-50",
+                        ),
+                    );
+
+                    // Add active class to clicked link
+                    this.classList.add(
+                        "toc-active",
+                        "text-blue-600",
+                        "bg-blue-50",
+                    );
+
+                    // Smooth scroll to target
+                    targetElement.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+
+                    // Focus the target for accessibility
+                    targetElement.focus();
+                }
+            });
+        });
+
+        // Highlight current section on scroll
+        let ticking = false;
+        function updateActiveSection() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollPosition = window.scrollY + 100; // Offset for fixed header
+                    let activeHeading = null;
+
+                    headings.forEach((heading) => {
+                        if (heading.offsetTop <= scrollPosition) {
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading) {
+                        // Remove active class from all links
+                        tocLinks.forEach((link) => {
+                            link.classList.remove(
+                                "toc-active",
+                                "text-blue-600",
+                                "bg-blue-50",
+                            );
+                            link.classList.add("text-gray-600");
+                        });
+
+                        // Add active class to current section
+                        const activeLink = tocList.querySelector(
+                            `[data-target="${activeHeading.id}"]`,
+                        );
+                        if (activeLink) {
+                            activeLink.classList.remove("text-gray-600");
+                            activeLink.classList.add(
+                                "toc-active",
+                                "text-blue-600",
+                                "bg-blue-50",
+                            );
+                        }
+                    }
+
+                    ticking = false;
+                });
+            }
+            ticking = true;
+        }
+
+        // Listen for scroll events
+        window.addEventListener("scroll", updateActiveSection);
+
+        // Initial call to set active section
+        updateActiveSection();
+    });
+</script>

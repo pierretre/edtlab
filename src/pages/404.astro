@@ -1,6 +1,6 @@
 ---
 import { useTranslations } from "../i18n/utils";
-import PageLayout from "../components/PageLayout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 
 export async function getStaticPaths() {
     return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];

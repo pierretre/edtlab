@@ -80,7 +80,7 @@
   - Ensure bilingual content is properly rendered with correct metadata
   - _Requirements: 22.1, 22.4, 23.3, 23.4_
 
-- [ ] 11. Build publications system with filtering and integrate with content pages
+- [x] 11. Build publications system with filtering and integrate with content pages
   - Create PublicationList component with Flowbite Table and filters
   - Implement filtering by type and year using existing schema
   - Update production/publications content pages to display PublicationList
