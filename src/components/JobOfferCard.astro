@@ -1,0 +1,243 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { useTranslations } from "../i18n/utils";
+
+interface Props {
+    jobOffer: CollectionEntry<"job-offers">;
+    lang: "en" | "fr";
+}
+
+const { jobOffer, lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Helper function to get project color
+const getProjectColor = (project: string) => {
+    switch (project) {
+        case "PC1":
+            return "bg-blue-100 text-blue-800";
+        case "PC2":
+            return "bg-green-100 text-green-800";
+        case "PC3":
+            return "bg-yellow-100 text-yellow-800";
+        case "PC4":
+            return "bg-purple-100 text-purple-800";
+        case "PC5":
+            return "bg-red-100 text-red-800";
+        case "General":
+            return "bg-gray-100 text-gray-800";
+        default:
+            return "bg-gray-100 text-gray-800";
+    }
+};
+
+// Helper function to get type color
+const getTypeColor = (type: string) => {
+    switch (type) {
+        case "postdoc":
+            return "bg-indigo-100 text-indigo-800";
+        case "phd":
+            return "bg-emerald-100 text-emerald-800";
+        case "engineer":
+            return "bg-orange-100 text-orange-800";
+        case "intern":
+            return "bg-pink-100 text-pink-800";
+        default:
+            return "bg-gray-100 text-gray-800";
+    }
+};
+
+// Format deadline date
+const formatDate = (date: Date) => {
+    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+};
+
+// Check if deadline is approaching (within 30 days)
+const isDeadlineApproaching = (deadline: Date) => {
+    const now = new Date();
+    const timeDiff = deadline.getTime() - now.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return daysDiff <= 30 && daysDiff > 0;
+};
+
+// Check if deadline has passed
+const isDeadlinePassed = (deadline: Date) => {
+    const now = new Date();
+    return deadline < now;
+};
+---
+
+<div
+    class="job-offer-card max-w-sm bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
+>
+    <div class="p-5">
+        <!-- Header with badges -->
+        <div class="flex flex-wrap gap-2 mb-3">
+            <span
+                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getProjectColor(jobOffer.data.project)}`}
+            >
+                {jobOffer.data.project}
+            </span>
+            <span
+                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(jobOffer.data.type)}`}
+            >
+                {t(`job-offers.type.${jobOffer.data.type}`)}
+            </span>
+            {
+                isDeadlineApproaching(jobOffer.data.deadline) && (
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        {t("job-offers.deadline-approaching")}
+                    </span>
+                )
+            }
+            {
+                isDeadlinePassed(jobOffer.data.deadline) && (
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        {t("job-offers.deadline-passed")}
+                    </span>
+                )
+            }
+        </div>
+
+        <!-- Title -->
+        <h5
+            class="mb-2 text-xl font-bold tracking-tight text-gray-900 line-clamp-2"
+        >
+            {jobOffer.data.title}
+        </h5>
+
+        <!-- Description -->
+        <p class="mb-3 text-gray-700 text-sm line-clamp-3">
+            {jobOffer.data.description}
+        </p>
+
+        <!-- Location and Deadline -->
+        <div class="mb-4 space-y-2">
+            <div class="flex items-center text-sm text-gray-600">
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    ></path>
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                {jobOffer.data.location}
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    ></path>
+                </svg>
+                <span
+                    class={isDeadlinePassed(jobOffer.data.deadline)
+                        ? "text-red-600"
+                        : ""}
+                >
+                    {t("job-offers.deadline")}: {
+                        formatDate(jobOffer.data.deadline)
+                    }
+                </span>
+            </div>
+        </div>
+
+        <!-- Requirements preview -->
+        {
+            jobOffer.data.requirements.length > 0 && (
+                <div class="mb-4">
+                    <h6 class="text-sm font-semibold text-gray-900 mb-2">
+                        {t("job-offers.key-requirements")}:
+                    </h6>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        {jobOffer.data.requirements.slice(0, 2).map((req) => (
+                            <li class="flex items-start">
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 mr-2 flex-shrink-0" />
+                                <span class="line-clamp-1">{req}</span>
+                            </li>
+                        ))}
+                        {jobOffer.data.requirements.length > 2 && (
+                            <li class="text-gray-500 text-xs">
+                                {t("job-offers.more-requirements").replace(
+                                    "{count}",
+                                    (
+                                        jobOffer.data.requirements.length - 2
+                                    ).toString(),
+                                )}
+                            </li>
+                        )}
+                    </ul>
+                </div>
+            )
+        }
+
+        <!-- Action button -->
+        <a
+            href={`/${lang}/job-offers/${jobOffer.slug}`}
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-colors duration-200"
+            aria-label={t("job-offers.view-details-aria").replace(
+                "{title}",
+                jobOffer.data.title,
+            )}
+        >
+            {t("job-offers.view-details")}
+            <svg
+                class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                aria-hidden="true"
+                fill="none"
+                viewBox="0 0 14 10"
+            >
+                <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"></path>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<style>
+    .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

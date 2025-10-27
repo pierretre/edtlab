@@ -51,6 +51,7 @@ const jobOffersCollection = defineCollection({
         deadline: z.date(),
         description: z.string(),
         requirements: z.array(z.string()),
+        lang: z.enum(['en', 'fr']),
     })
 });
 
