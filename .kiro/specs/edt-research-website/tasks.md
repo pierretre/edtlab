@@ -25,7 +25,7 @@
 
 ## Content Architecture and Collections
 
-- [ ] 4. Create Astro Content Collections with Zod schemas
+- [x] 4. Create Astro Content Collections with Zod schemas
   - Define content collections for pages, publications, events, and job offers
   - Create Zod validation schemas for each content type
   - Set up bilingual content structure with language field validation

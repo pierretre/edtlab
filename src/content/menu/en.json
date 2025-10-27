@@ -1,0 +1,76 @@
+{
+    "sections": [
+        {
+            "name": "Program",
+            "slug": "program"
+        },
+        {
+            "name": "Projects",
+            "slug": "focused-projects",
+            "items": [
+                {
+                    "name": "Overview",
+                    "slug": "focused-projects"
+                },
+                {
+                    "name": "Project 1 (PC1)",
+                    "slug": "focused-projects/fp1"
+                },
+                {
+                    "name": "Project 2 (PC2)",
+                    "slug": "focused-projects/fp2"
+                },
+                {
+                    "name": "Project 3 (PC3)",
+                    "slug": "focused-projects/fp3"
+                },
+                {
+                    "name": "Project 4 (PC4)",
+                    "slug": "focused-projects/fp4"
+                },
+                {
+                    "name": "Project 5 (PC5)",
+                    "slug": "focused-projects/fp5"
+                }
+            ]
+        },
+        {
+            "name": "Production",
+            "slug": "production",
+            "items": [
+                {
+                    "name": "Overview",
+                    "slug": "production"
+                },
+                {
+                    "name": "Publications",
+                    "slug": "production/publications"
+                },
+                {
+                    "name": "Platform",
+                    "slug": "production/platform"
+                }
+            ]
+        },
+        {
+            "name": "Demo Center",
+            "slug": "demo-center"
+        },
+        {
+            "name": "Resources",
+            "slug": "resources"
+        },
+        {
+            "name": "News",
+            "slug": "news"
+        },
+        {
+            "name": "Join Us",
+            "slug": "join-us"
+        },
+        {
+            "name": "Contact",
+            "slug": "contact"
+        }
+    ]
+}

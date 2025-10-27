@@ -1,0 +1,76 @@
+{
+    "sections": [
+        {
+            "name": "Programme",
+            "slug": "program"
+        },
+        {
+            "name": "Projets",
+            "slug": "focused-projects",
+            "items": [
+                {
+                    "name": "Aperçu",
+                    "slug": "focused-projects"
+                },
+                {
+                    "name": "Projet 1 (PC1)",
+                    "slug": "focused-projects/fp1"
+                },
+                {
+                    "name": "Projet 2 (PC2)",
+                    "slug": "focused-projects/fp2"
+                },
+                {
+                    "name": "Projet 3 (PC3)",
+                    "slug": "focused-projects/fp3"
+                },
+                {
+                    "name": "Projet 4 (PC4)",
+                    "slug": "focused-projects/fp4"
+                },
+                {
+                    "name": "Projet 5 (PC5)",
+                    "slug": "focused-projects/fp5"
+                }
+            ]
+        },
+        {
+            "name": "Production",
+            "slug": "production",
+            "items": [
+                {
+                    "name": "Aperçu",
+                    "slug": "production"
+                },
+                {
+                    "name": "Publications",
+                    "slug": "production/publications"
+                },
+                {
+                    "name": "Plateforme",
+                    "slug": "production/platform"
+                }
+            ]
+        },
+        {
+            "name": "Centre de Démonstration",
+            "slug": "demo-center"
+        },
+        {
+            "name": "Ressources",
+            "slug": "resources"
+        },
+        {
+            "name": "Actualités",
+            "slug": "news"
+        },
+        {
+            "name": "Nous Rejoindre",
+            "slug": "join-us"
+        },
+        {
+            "name": "Contact",
+            "slug": "contact"
+        }
+    ]
+}
