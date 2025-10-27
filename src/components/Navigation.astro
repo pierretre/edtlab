@@ -1,0 +1,66 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import LanguageToggle from "./LanguageToggle.astro";
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+
+const navItems = [
+    { key: "nav.program", href: `/${lang}/program` },
+    { key: "nav.projects", href: `/${lang}/projects` },
+    { key: "nav.production", href: `/${lang}/production` },
+    { key: "nav.demo-center", href: `/${lang}/demo-center` },
+    { key: "nav.resources", href: `/${lang}/resources` },
+    { key: "nav.news", href: `/${lang}/news` },
+    { key: "nav.join-us", href: `/${lang}/join-us` },
+    { key: "nav.contact", href: `/${lang}/contact` },
+] as const;
+---
+
+<nav class="bg-white shadow-sm border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <a
+                    href={`/${lang}/`}
+                    class="text-xl font-bold text-gray-900 hover:text-blue-600"
+                >
+                    {t("site.title")}
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-8">
+                {
+                    navItems.map((item) => (
+                        <a
+                            href={item.href}
+                            class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+                        >
+                            {t(item.key)}
+                        </a>
+                    ))
+                }
+            </div>
+
+            <div class="flex items-center">
+                <LanguageToggle />
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="md:hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50">
+            {
+                navItems.map((item) => (
+                    <a
+                        href={item.href}
+                        class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium"
+                    >
+                        {t(item.key)}
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</nav>

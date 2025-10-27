@@ -1,0 +1,61 @@
+---
+import { useTranslations } from "../../i18n/utils";
+import Navigation from "../../components/Navigation.astro";
+import "../../styles/global.css";
+
+export function getStaticPaths() {
+    // This will be populated when content collections are set up
+    // For now, return basic paths for testing
+    const paths = [];
+    const langs = ["en", "fr"];
+    const pages = [
+        "about",
+        "contact",
+        "program",
+        "projects",
+        "production",
+        "demo-center",
+        "resources",
+        "news",
+        "join-us",
+    ];
+
+    for (const lang of langs) {
+        for (const page of pages) {
+            paths.push({
+                params: { lang, slug: page },
+            });
+        }
+    }
+
+    return paths;
+}
+
+const { lang, slug } = Astro.params;
+const t = useTranslations(lang as "en" | "fr");
+---
+
+<html lang={lang}>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{t("site.title")} - {slug}</title>
+        <meta name="description" content={t("site.description")} />
+    </head>
+    <body>
+        <Navigation />
+
+        <main class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold mb-6">
+                {slug} ({lang.toUpperCase()})
+            </h1>
+            <p class="text-gray-600">
+                This is the {slug} page in {
+                    lang === "en" ? "English" : "French"
+                }.
+            </p>
+        </main>
+    </body>
+</html>

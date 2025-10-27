@@ -1,0 +1,31 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import "../styles/global.css";
+
+// Try to detect language from URL, fallback to English
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+---
+
+<html lang={lang}>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>404 - {t("site.title")}</title>
+        <meta name="description" content={t("page.not-found")} />
+    </head>
+    <body>
+        <main class="container mx-auto px-4 py-8 text-center">
+            <h1 class="text-4xl font-bold mb-4">404</h1>
+            <p class="text-xl text-gray-600 mb-8">{t("page.not-found")}</p>
+            <a
+                href={`/${lang}/`}
+                class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
+            >
+                {t("page.back-home")}
+            </a>
+        </main>
+    </body>
+</html>
