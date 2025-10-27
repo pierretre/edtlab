@@ -62,15 +62,45 @@ body {
     left: 6px;
     background: var(--color-text-primary);
     color: white;
-    padding: 8px;
+    padding: 8px 12px;
     text-decoration: none;
     border-radius: 4px;
     z-index: 1000;
     font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    transition: all 0.2s ease;
 }
 
 .skip-link:focus {
     top: 6px;
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+/* Enhanced focus styles for better visibility */
+.focus\:not-sr-only:focus {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0.5rem 1rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+}
+
+/* Screen reader only content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* Accessible link styles */
@@ -243,6 +273,72 @@ th {
     }
 }
 
+/* Accessibility: Focus within for better keyboard navigation */
+.focus-within\:ring-2:focus-within {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* Accessibility: Better button and interactive element styles */
+[role="button"],
+[role="menuitem"],
+[role="tab"],
+[role="option"] {
+    cursor: pointer;
+}
+
+[role="button"]:focus,
+[role="menuitem"]:focus,
+[role="tab"]:focus,
+[role="option"]:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+/* Accessibility: Better form validation styles */
+[aria-invalid="true"] {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 1px var(--color-error);
+}
+
+[aria-describedby] {
+    position: relative;
+}
+
+/* Accessibility: Better table styles */
+table[role="table"] {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th[role="columnheader"],
+th[role="rowheader"] {
+    position: relative;
+}
+
+th[role="columnheader"]:focus,
+th[role="rowheader"]:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+}
+
+/* Accessibility: Live region styles */
+[aria-live] {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+[aria-live="polite"][aria-atomic="true"] {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
 /* Print styles */
 @media print {
     * {
@@ -265,5 +361,11 @@ th {
     h2,
     h3 {
         page-break-after: avoid;
+    }
+
+    /* Hide skip links and other screen-reader content in print */
+    .sr-only,
+    .skip-link {
+        display: none !important;
     }
 }

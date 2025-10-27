@@ -1,0 +1,273 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getCollection } from "astro:content";
+import LanguageToggle from "./LanguageToggle.astro";
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+
+// Get menu data from content collection
+const menuData = await getCollection("menu");
+const currentMenu = menuData.find((menu) => menu.id === lang);
+const menuSections = currentMenu?.data.sections || [];
+---
+
+<header role="banner" class="bg-white shadow-sm border-b border-gray-200">
+    <nav id="main-navigation" role="navigation" aria-label={lang === "en" ? "Main navigation" : "Navigation principale"} class="bg-white border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between py-4">
+                <!-- Logo/Brand -->
+                <a 
+                    href={`/${lang}/`} 
+                    class="flex items-center space-x-3 rtl:space-x-reverse focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md"
+                    aria-label={lang === "en" ? "Go to homepage" : "Aller à la page d'accueil"}
+                >
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-gray-900 hover:text-blue-600 transition-colors">
+                        {t("site.title")}
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex md:items-center md:space-x-8">
+                    {menuSections.map((section) => (
+                        section.items && section.items.length > 0 ? (
+                            <!-- Dropdown menu for sections with items -->
+                            <div class="relative">
+                                <button
+                                    id={`dropdown-button-${section.slug}`}
+                                    data-dropdown-toggle={`dropdown-${section.slug}`}
+                                    class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    type="button"
+                                    aria-expanded="false"
+                                    aria-haspopup="true"
+                                    aria-controls={`dropdown-${section.slug}`}
+                                >
+                                    {section.name}
+                                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div 
+                                    id={`dropdown-${section.slug}`} 
+                                    class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 border border-gray-200"
+                                    role="menu"
+                                    aria-labelledby={`dropdown-button-${section.slug}`}
+                                >
+                                    <ul class="py-2 text-sm text-gray-700" role="none">
+                                        {section.items.map((item) => (
+                                            <li role="none">
+                                                <a 
+                                                    href={`/${lang}/${item.slug}`} 
+                                                    class="block px-4 py-2 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                                                    role="menuitem"
+                                                    tabindex="-1"
+                                                >
+                                                    {item.name}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        ) : (
+                            <!-- Simple link for sections without items -->
+                            <a
+                                href={`/${lang}/${section.slug}`}
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            >
+                                {section.name}
+                            </a>
+                        )
+                    ))}
+                </div>
+
+                <!-- Right side: Language toggle and mobile menu button -->
+                <div class="flex items-center space-x-3">
+                    <!-- Language Toggle -->
+                    <LanguageToggle />
+                    
+                    <!-- Mobile menu button -->
+                    <button 
+                        data-collapse-toggle="navbar-dropdown" 
+                        type="button" 
+                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" 
+                        aria-controls="navbar-dropdown" 
+                        aria-expanded="false"
+                        aria-label={lang === "en" ? "Open main menu" : "Ouvrir le menu principal"}
+                    >
+                        <span class="sr-only">{lang === "en" ? "Open main menu" : "Ouvrir le menu principal"}</span>
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="hidden w-full md:hidden" id="navbar-dropdown">
+            <div class="px-4 py-3 bg-gray-50 border-t border-gray-200">
+                <ul class="flex flex-col font-medium space-y-1" role="menu">
+                    {menuSections.map((section) => (
+                        section.items && section.items.length > 0 ? (
+                            <!-- Mobile dropdown section -->
+                            <li role="none">
+                                <button
+                                    id={`mobile-dropdown-button-${section.slug}`}
+                                    data-collapse-toggle={`mobile-dropdown-${section.slug}`}
+                                    class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    type="button"
+                                    aria-expanded="false"
+                                    aria-controls={`mobile-dropdown-${section.slug}`}
+                                    role="menuitem"
+                                >
+                                    {section.name}
+                                    <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </button>
+                                <div id={`mobile-dropdown-${section.slug}`} class="hidden py-2 space-y-1">
+                                    {section.items.map((item) => (
+                                        <a
+                                            href={`/${lang}/${item.slug}`}
+                                            class="block py-2 ps-6 pe-3 text-gray-600 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                            role="menuitem"
+                                        >
+                                            {item.name}
+                                        </a>
+                                    ))}
+                                </div>
+                            </li>
+                        ) : (
+                            <!-- Simple mobile link -->
+                            <li role="none">
+                                <a
+                                    href={`/${lang}/${section.slug}`}
+                                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    role="menuitem"
+                                >
+                                    {section.name}
+                                </a>
+                            </li>
+                        )
+                    ))}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Enhanced Flowbite JavaScript for accessibility -->
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Import Flowbite dynamically
+        import('flowbite').then(({ Dropdown, Collapse }) => {
+            // Initialize desktop dropdowns with accessibility enhancements
+            const dropdownButtons = document.querySelectorAll('[data-dropdown-toggle]');
+            dropdownButtons.forEach(button => {
+                const targetId = button.getAttribute('data-dropdown-toggle');
+                if (!targetId) return;
+                
+                const targetElement = document.getElementById(targetId);
+                if (targetElement && !targetId.includes('mobile-dropdown')) {
+                    new Dropdown(targetElement, button, {
+                        placement: 'bottom-start',
+                        triggerType: 'click',
+                        offsetSkidding: 0,
+                        offsetDistance: 10,
+                        delay: 300
+                    });
+
+                    // Enhanced keyboard navigation for dropdowns
+                    button.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            button.click();
+                        } else if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            button.click();
+                            setTimeout(() => {
+                                const firstMenuItem = targetElement.querySelector('a');
+                                if (firstMenuItem) firstMenuItem.focus();
+                            }, 100);
+                        }
+                    });
+
+                    // Arrow key navigation within dropdown
+                    targetElement.addEventListener('keydown', function(e) {
+                        const menuItems = Array.from(targetElement.querySelectorAll('a'));
+                        const activeElement = document.activeElement;
+                        const currentIndex = menuItems.indexOf(activeElement);
+
+                        if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            const nextIndex = (currentIndex + 1) % menuItems.length;
+                            menuItems[nextIndex].focus();
+                        } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            const prevIndex = currentIndex > 0 ? currentIndex - 1 : menuItems.length - 1;
+                            menuItems[prevIndex].focus();
+                        } else if (e.key === 'Escape') {
+                            e.preventDefault();
+                            button.click();
+                            button.focus();
+                        }
+                    });
+                }
+            });
+
+            // Initialize mobile menu collapse
+            const mobileMenuButton = document.querySelector('[data-collapse-toggle="navbar-dropdown"]');
+            const mobileMenu = document.getElementById('navbar-dropdown');
+            if (mobileMenuButton && mobileMenu) {
+                new Collapse(mobileMenu, mobileMenuButton);
+                
+                // Update aria-expanded when mobile menu toggles
+                mobileMenuButton.addEventListener('click', function() {
+                    setTimeout(() => {
+                        const isExpanded = !mobileMenu.classList.contains('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', isExpanded.toString());
+                    }, 100);
+                });
+            }
+
+            // Initialize mobile dropdown collapses
+            const mobileDropdownButtons = document.querySelectorAll('[data-collapse-toggle^="mobile-dropdown-"]');
+            mobileDropdownButtons.forEach(button => {
+                const targetId = button.getAttribute('data-collapse-toggle');
+                if (!targetId) return;
+                
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    new Collapse(targetElement, button);
+                    
+                    // Update aria-expanded for mobile dropdowns
+                    button.addEventListener('click', function() {
+                        setTimeout(() => {
+                            const isExpanded = !targetElement.classList.contains('hidden');
+                            button.setAttribute('aria-expanded', isExpanded.toString());
+                        }, 100);
+                    });
+                }
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                const target = e.target;
+                if (target && !target.closest('[data-dropdown-toggle]') && !target.closest('[id^="dropdown-"]')) {
+                    const openDropdowns = document.querySelectorAll('[data-dropdown-toggle][aria-expanded="true"]');
+                    openDropdowns.forEach(button => {
+                        const targetId = button.getAttribute('data-dropdown-toggle');
+                        if (!targetId) return;
+                        
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement && !targetElement.classList.contains('hidden')) {
+                            button.click();
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>

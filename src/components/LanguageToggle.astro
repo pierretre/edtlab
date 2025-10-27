@@ -13,15 +13,30 @@ const currentPath = Astro.url.pathname
     .replace(/^\/[a-z]{2}\//, "/")
     .replace(/^\//, "");
 const alternateUrl = getLocalizedUrl(alternateLang, currentPath);
+
+// Language names for better accessibility
+const langNames = {
+    en: "English",
+    fr: "Français",
+};
 ---
 
 <a
     href={alternateUrl}
-    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
     aria-label={t("lang.switch")}
+    hreflang={alternateLang}
+    title={`${t("lang.switch")} (${langNames[alternateLang]})`}
 >
-    <span class="mr-2">{alternateLang.toUpperCase()}</span>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <span class="mr-2" aria-hidden="true">{alternateLang.toUpperCase()}</span>
+    <span class="sr-only">{langNames[alternateLang]}</span>
+    <svg
+        class="w-4 h-4"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
         <path
             stroke-linecap="round"
             stroke-linejoin="round"

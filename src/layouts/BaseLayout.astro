@@ -1,0 +1,247 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+export interface Props {
+    title?: string;
+    description?: string;
+    image?: string;
+    noindex?: boolean;
+    lang?: "en" | "fr";
+}
+
+const {
+    title,
+    description,
+    image,
+    noindex = false,
+    lang: propLang,
+} = Astro.props;
+
+const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
+const t = useTranslations(lang);
+
+const siteTitle = t("site.title");
+const siteDescription = t("site.description");
+const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+const pageDescription = description || siteDescription;
+
+// Canonical URL handling
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Alternate language URL
+const alternateLang = lang === "en" ? "fr" : "en";
+const alternateUrl = new URL(
+    Astro.url.pathname.replace(`/${lang}/`, `/${alternateLang}/`),
+    Astro.site,
+);
+
+// Open Graph image
+const ogImage = image ? new URL(image, Astro.site) : undefined;
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr">
+    <head>
+        <!-- Essential meta tags -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content={Astro.generator} />
+
+        <!-- Title and description -->
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+
+        <!-- Canonical and alternate language links -->
+        <link rel="canonical" href={canonicalURL} />
+        <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+        <link rel="alternate" hreflang="x-default" href={canonicalURL} />
+
+        <!-- Robots meta -->
+        {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta
+            property="og:locale"
+            content={lang === "en" ? "en_US" : "fr_FR"}
+        />
+        <meta
+            property="og:locale:alternate"
+            content={lang === "en" ? "fr_FR" : "en_US"}
+        />
+        {ogImage && <meta property="og:image" content={ogImage} />}
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={canonicalURL} />
+        <meta property="twitter:title" content={pageTitle} />
+        <meta property="twitter:description" content={pageDescription} />
+        {ogImage && <meta property="twitter:image" content={ogImage} />}
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <!-- Preload critical fonts -->
+        <link
+            rel="preload"
+            href="/src/assets/fonts/Marianne-Regular.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="/src/assets/fonts/Marianne-Bold.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+
+        <!-- DNS prefetch for external resources -->
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+
+        <!-- Theme color for mobile browsers -->
+        <meta name="theme-color" content="#ffffff" />
+
+        <!-- RGAA compliance: Ensure proper document structure -->
+        <meta name="format-detection" content="telephone=no" />
+
+        <!-- Security headers -->
+        <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+        <meta http-equiv="X-Frame-Options" content="DENY" />
+        <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+
+        <!-- Content Security Policy -->
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://www.google-analytics.com; frame-ancestors 'none';"
+        />
+    </head>
+    <body>
+        <!-- Skip links for accessibility -->
+        <div class="sr-only">
+            <a
+                href="#main-content"
+                class="skip-link focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded focus:shadow-lg"
+            >
+                {
+                    lang === "en"
+                        ? "Skip to main content"
+                        : "Aller au contenu principal"
+                }
+            </a>
+            <a
+                href="#main-navigation"
+                class="skip-link focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded focus:shadow-lg"
+            >
+                {lang === "en" ? "Skip to navigation" : "Aller à la navigation"}
+            </a>
+        </div>
+
+        <!-- Page content -->
+        <div class="min-h-screen flex flex-col">
+            <slot />
+        </div>
+
+        <!-- Flowbite JavaScript -->
+        <script>
+            import "flowbite";
+        </script>
+
+        <!-- Google Analytics (GDPR compliant) -->
+        <script
+            is:inline
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+        ></script>
+        <script is:inline>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            // GDPR compliant analytics
+            gtag("consent", "default", {
+                analytics_storage: "denied",
+                ad_storage: "denied",
+            });
+
+            gtag("config", "GA_MEASUREMENT_ID", {
+                anonymize_ip: true,
+                cookie_flags: "SameSite=Strict;Secure",
+            });
+        </script>
+
+        <!-- Accessibility: Announce page changes to screen readers -->
+        <div
+            id="page-announcement"
+            class="sr-only"
+            aria-live="polite"
+            aria-atomic="true"
+        >
+        </div>
+
+        <!-- Focus management script -->
+        <script is:inline>
+            // Announce page changes to screen readers
+            document.addEventListener("DOMContentLoaded", function () {
+                const announcement =
+                    document.getElementById("page-announcement");
+                if (announcement) {
+                    const pageTitle = document.title;
+                    announcement.textContent = "Page loaded: " + pageTitle;
+                }
+            });
+
+            // Enhanced focus management
+            document.addEventListener("keydown", function (e) {
+                // Escape key to close modals/dropdowns
+                if (e.key === "Escape") {
+                    const openDropdowns = document.querySelectorAll(
+                        '[data-dropdown-toggle][aria-expanded="true"]',
+                    );
+                    openDropdowns.forEach(function (dropdown) {
+                        dropdown.click();
+                    });
+                }
+            });
+
+            // Focus trap for modals (if needed)
+            function trapFocus(element) {
+                const focusableElements = element.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+                );
+                const firstFocusableElement = focusableElements[0];
+                const lastFocusableElement =
+                    focusableElements[focusableElements.length - 1];
+
+                element.addEventListener("keydown", function (e) {
+                    if (e.key === "Tab") {
+                        if (e.shiftKey) {
+                            if (
+                                document.activeElement === firstFocusableElement
+                            ) {
+                                lastFocusableElement.focus();
+                                e.preventDefault();
+                            }
+                        } else {
+                            if (
+                                document.activeElement === lastFocusableElement
+                            ) {
+                                firstFocusableElement.focus();
+                                e.preventDefault();
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Make trapFocus available globally if needed
+            window.trapFocus = trapFocus;
+        </script>
+    </body>
+</html>
