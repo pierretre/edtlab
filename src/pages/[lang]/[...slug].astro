@@ -1,7 +1,6 @@
 ---
 import { useTranslations } from "../../i18n/utils";
-import Navigation from "../../components/Navigation.astro";
-import "../../styles/global.css";
+import BaseLayout from "../../components/BaseLayout.astro";
 
 export function getStaticPaths() {
     // This will be populated when content collections are set up
@@ -33,29 +32,22 @@ export function getStaticPaths() {
 
 const { lang, slug } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
+
+// Create a more descriptive title
+const pageTitle = `${slug?.charAt(0).toUpperCase()}${slug?.slice(1).replace("-", " ")}`;
 ---
 
-<html lang={lang}>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{t("site.title")} - {slug}</title>
-        <meta name="description" content={t("site.description")} />
-    </head>
-    <body>
-        <Navigation />
-
-        <main class="container mx-auto px-4 py-8">
-            <h1 class="text-3xl font-bold mb-6">
-                {slug} ({lang.toUpperCase()})
-            </h1>
-            <p class="text-gray-600">
-                This is the {slug} page in {
-                    lang === "en" ? "English" : "French"
-                }.
-            </p>
-        </main>
-    </body>
-</html>
+<BaseLayout
+    title={pageTitle}
+    description={t("site.description")}
+    lang={lang as "en" | "fr"}
+>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">
+            {slug} ({lang?.toUpperCase()})
+        </h1>
+        <p class="text-gray-600">
+            This is the {slug} page in {lang === "en" ? "English" : "French"}.
+        </p>
+    </div>
+</BaseLayout>
