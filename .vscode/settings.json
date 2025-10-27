@@ -1,5 +1,6 @@
 {
     "kiroAgent.trustedCommands": [
-        "npm run *"
+        "npm run *",
+        "npm test"
     ]
 }

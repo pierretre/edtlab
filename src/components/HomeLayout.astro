@@ -68,8 +68,8 @@ const tileDescriptionMap = {
 const tiles = menuSections.map(section => ({
     slug: section.href,
     name: section.name,
-    icon: tileIconMap[section.href] || "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-    description: tileDescriptionMap[section.href] || section.name
+    icon: (tileIconMap as Record<string, string>)[section.href] || "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    description: (tileDescriptionMap as Record<string, string>)[section.href] || section.name
 }));
 ---
 

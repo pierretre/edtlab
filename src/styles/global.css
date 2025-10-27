@@ -66,11 +66,6 @@ body {
     flex: 1;
 }
 
-/* Accessibility: Focus management */
-*:focus {
-    outline: 2px solid var(--color-focus);
-    outline-offset: 2px;
-}
 
 /* Skip links for keyboard navigation */
 .skip-link {
@@ -121,12 +116,6 @@ body {
 
 a:hover {
     color: var(--color-link-hover);
-}
-
-a:focus {
-    outline: 2px solid var(--color-focus);
-    outline-offset: 2px;
-    border-radius: 2px;
 }
 
 /* Accessible button styles */

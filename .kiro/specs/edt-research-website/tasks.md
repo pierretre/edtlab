@@ -72,7 +72,7 @@
 
 ## Dynamic Content Integration
 
-- [ ] 10. Implement content-driven page routing in existing slug handler
+- [x] 10. Implement content-driven page routing in existing slug handler
   - Update `src/pages/[lang]/[...slug].astro` to use content collections for page rendering
   - Replace static page list with dynamic content collection queries
   - Integrate PageLayout component for proper content display

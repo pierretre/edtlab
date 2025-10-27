@@ -5,7 +5,6 @@ lang: "en"
 description: "Detailed information about Focused Project 4 (PC4)"
 toc: true
 ---
-
 # Focused Project 4 (PC4)
 
 ## Project Overview
