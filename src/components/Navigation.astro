@@ -1,20 +1,15 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getCollection } from "astro:content";
 import LanguageToggle from "./LanguageToggle.astro";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
 
-const navItems = [
-    { key: "nav.program", href: `/${lang}/program` },
-    { key: "nav.projects", href: `/${lang}/projects` },
-    { key: "nav.production", href: `/${lang}/production` },
-    { key: "nav.demo-center", href: `/${lang}/demo-center` },
-    { key: "nav.resources", href: `/${lang}/resources` },
-    { key: "nav.news", href: `/${lang}/news` },
-    { key: "nav.join-us", href: `/${lang}/join-us` },
-    { key: "nav.contact", href: `/${lang}/contact` },
-] as const;
+// Get menu data from content collection
+const menuData = await getCollection("menu");
+const currentMenu = menuData.find((menu) => menu.id === lang);
+const menuSections = currentMenu?.data.sections || [];
 ---
 
 <nav class="bg-white shadow-sm border-b">
@@ -29,38 +24,144 @@ const navItems = [
                 </a>
             </div>
 
-            <div class="hidden md:flex items-center space-x-8">
+            <div class="hidden md:flex items-center space-x-4">
                 {
-                    navItems.map((item) => (
-                        <a
-                            href={item.href}
-                            class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-                        >
-                            {t(item.key)}
-                        </a>
+                    menuSections.map((section) => (
+                        section.items && section.items.length > 0 ? (
+                            <!-- Dropdown menu for sections with items -->
+                            <div class="relative">
+                                <button
+                                    type="button"
+                                    class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors inline-flex items-center"
+                                    data-dropdown-toggle={`dropdown-${section.slug}`}
+                                    aria-expanded="false"
+                                >
+                                    {section.name}
+                                    <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div id={`dropdown-${section.slug}`} class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby={`dropdown-${section.slug}`}>
+                                        {section.items.map((item) => (
+                                            <li>
+                                                <a href={`/${lang}/${item.slug}`} class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                    {item.name}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        ) : (
+                            <!-- Simple link for sections without items -->
+                            <a
+                                href={`/${lang}/${section.slug}`}
+                                class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+                            >
+                                {section.name}
+                            </a>
+                        )
                     ))
                 }
             </div>
 
             <div class="flex items-center">
                 <LanguageToggle />
+                <!-- Mobile menu button -->
+                <button
+                    type="button"
+                    class="md:hidden ml-3 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                    data-collapse-toggle="mobile-menu"
+                    aria-controls="mobile-menu"
+                    aria-expanded="false"
+                >
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Mobile menu -->
-    <div class="md:hidden">
+    <div class="md:hidden hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50">
             {
-                navItems.map((item) => (
-                    <a
-                        href={item.href}
-                        class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium"
-                    >
-                        {t(item.key)}
-                    </a>
+                menuSections.map((section) => (
+                    section.items && section.items.length > 0 ? (
+                        <!-- Mobile dropdown section -->
+                        <div>
+                            <button
+                                type="button"
+                                class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium w-full text-left"
+                                data-collapse-toggle={`mobile-dropdown-${section.slug}`}
+                                aria-expanded="false"
+                            >
+                                {section.name}
+                                <svg class="w-2.5 h-2.5 ml-2.5 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <div id={`mobile-dropdown-${section.slug}`} class="hidden pl-4">
+                                {section.items.map((item) => (
+                                    <a
+                                        href={`/${lang}/${item.slug}`}
+                                        class="text-gray-600 hover:text-blue-600 block px-3 py-2 text-sm"
+                                    >
+                                        {item.name}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <!-- Simple mobile link -->
+                        <a
+                            href={`/${lang}/${section.slug}`}
+                            class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium"
+                        >
+                            {section.name}
+                        </a>
+                    )
                 ))
             }
         </div>
     </div>
 </nav>
+
+<!-- Flowbite JavaScript for dropdown functionality -->
+<script>
+    import { Dropdown, Collapse } from 'flowbite';
+    
+    // Initialize dropdowns for desktop navigation
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize desktop dropdowns
+        const dropdownButtons = document.querySelectorAll('[data-dropdown-toggle]');
+        dropdownButtons.forEach(button => {
+            const targetId = button.getAttribute('data-dropdown-toggle');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                new Dropdown(targetElement, button);
+            }
+        });
+
+        // Initialize mobile menu collapse
+        const mobileMenuButton = document.querySelector('[data-collapse-toggle="mobile-menu"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            new Collapse(mobileMenu, mobileMenuButton);
+        }
+
+        // Initialize mobile dropdown collapses
+        const mobileDropdownButtons = document.querySelectorAll('[data-collapse-toggle^="mobile-dropdown-"]');
+        mobileDropdownButtons.forEach(button => {
+            const targetId = button.getAttribute('data-collapse-toggle');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                new Collapse(targetElement, button);
+            }
+        });
+    });
+</script>

@@ -15,23 +15,21 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^6.0.2",
-    "@tailwindcss/vite": "^4.1.16",
-    "astro": "^5.15.1",
+    "@astrojs/check": "^0.9.5",
+    "@astrojs/mdx": "^4.3.7",
+    "@astrojs/tailwind": "^5.1.1",
+    "@tailwindcss/typography": "^0.5.19",
+    "astro": "^5.14.3",
     "flowbite": "^3.1.2",
-    "sass": "^1.93.2",
-    "tailwindcss": "^4.1.16"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.5",
+    "sass-embedded": "^1.93.2",
     "@vitest/coverage-v8": "^2.1.8",
     "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.49.1",
-    "axe-core": "^4.10.2",
     "jsdom": "^25.0.1",
     "playwright": "^1.49.1",
-    "typescript": "^5.9.3",
-    "vitest": "^2.1.8",
-    "zod": "^3.24.1"
+    "vitest": "^2.1.8"
   }
 }

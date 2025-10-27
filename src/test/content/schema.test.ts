@@ -42,6 +42,17 @@ describe('Content Schema Validation', () => {
         lang: z.enum(['en', 'fr'])
     });
 
+    const menuSchema = z.object({
+        sections: z.array(z.object({
+            name: z.string(),
+            slug: z.string(),
+            items: z.array(z.object({
+                name: z.string(),
+                slug: z.string()
+            })).optional()
+        }))
+    });
+
     it('should validate page schema', () => {
         const validPage = {
             title: 'Test Page',
@@ -96,6 +107,34 @@ describe('Content Schema Validation', () => {
         };
 
         const result = eventSchema.safeParse(validEvent);
+        expect(result.success).toBe(true);
+    });
+
+    it('should validate menu schema', () => {
+        const validMenu = {
+            sections: [
+                {
+                    name: 'Program',
+                    slug: 'program'
+                },
+                {
+                    name: 'Projects',
+                    slug: 'focused-projects',
+                    items: [
+                        {
+                            name: 'Overview',
+                            slug: 'focused-projects'
+                        },
+                        {
+                            name: 'Project 1 (PC1)',
+                            slug: 'focused-projects/fp1'
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const result = menuSchema.safeParse(validMenu);
         expect(result.success).toBe(true);
     });
 
