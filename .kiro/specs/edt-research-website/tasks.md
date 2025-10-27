@@ -203,7 +203,15 @@
   - Set up content validation and schema testing
   - _Requirements: 26.1, 26.2, 26.3, 33.2_
 
-- [ ] 27. Add manual testing procedures
+- [x] 27. Set up CI/CD pipeline with automated testing
+  - Create GitHub Actions workflow for automated testing
+  - Configure unit test execution on pull requests and pushes
+  - Add route testing to verify all content pages are accessible
+  - Implement build validation and deployment checks
+  - Set up test coverage reporting and quality gates
+  - _Requirements: 26.1, 26.2, 26.3, 20.2_
+
+- [ ] 28. Add manual testing procedures
   - Create accessibility testing procedures with assistive technology
   - Document keyboard navigation testing protocols
   - Set up content review and translation validation processes
@@ -212,14 +220,14 @@
 
 ## Deployment and Infrastructure
 
-- [ ] 28. Set up build and deployment pipeline
+- [ ] 29. Set up build and deployment pipeline
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
   - Set up Docker containerization with Nginx
   - Configure deployment to VPS with SSL/TLS certificates
   - _Requirements: 20.1, 20.2, 20.3, 20.4, 20.5, 17.1, 17.2_
 
-- [ ] 29. Configure production monitoring and maintenance
+- [ ] 30. Configure production monitoring and maintenance
   - Set up uptime monitoring and performance alerts
   - Implement error tracking and log management
   - Configure automated security updates and backups
@@ -228,7 +236,7 @@
 
 ## Final Integration and Launch
 
-- [ ] 30. Populate initial content and perform final testing
+- [ ] 31. Populate initial content and perform final testing
   - Migrate existing program content and documentation
   - Populate all content sections with initial bilingual content
   - Perform comprehensive accessibility and performance testing

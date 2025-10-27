@@ -1,0 +1,113 @@
+import { describe, it, expect } from 'vitest';
+import { z } from 'zod';
+
+describe('Content Schema Validation', () => {
+    const pageSchema = z.object({
+        title: z.string(),
+        slug: z.string(),
+        lang: z.enum(['en', 'fr']),
+        description: z.string().optional(),
+        toc: z.boolean().default(false)
+    });
+
+    const publicationSchema = z.object({
+        title: z.string(),
+        authors: z.array(z.string()),
+        type: z.enum(['journal', 'conference', 'book', 'report']),
+        year: z.number(),
+        venue: z.string().optional(),
+        doi: z.string().optional(),
+        url: z.string().url().optional(),
+        lang: z.enum(['en', 'fr'])
+    });
+
+    const jobOfferSchema = z.object({
+        title: z.string(),
+        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General']),
+        type: z.enum(['postdoc', 'phd', 'engineer', 'intern']),
+        location: z.string(),
+        deadline: z.date(),
+        description: z.string(),
+        requirements: z.array(z.string()),
+        lang: z.enum(['en', 'fr'])
+    });
+
+    const eventSchema = z.object({
+        title: z.string(),
+        date: z.date(),
+        type: z.enum(['conference', 'workshop', 'seminar', 'press']),
+        location: z.string().optional(),
+        description: z.string(),
+        url: z.string().url().optional(),
+        lang: z.enum(['en', 'fr'])
+    });
+
+    it('should validate page schema', () => {
+        const validPage = {
+            title: 'Test Page',
+            slug: 'test-page',
+            lang: 'en' as const,
+            description: 'Test description',
+            toc: true
+        };
+
+        const result = pageSchema.safeParse(validPage);
+        expect(result.success).toBe(true);
+    });
+
+    it('should validate publication schema', () => {
+        const validPublication = {
+            title: 'Test Publication',
+            authors: ['Author One', 'Author Two'],
+            type: 'journal' as const,
+            year: 2024,
+            venue: 'Test Journal',
+            lang: 'en' as const
+        };
+
+        const result = publicationSchema.safeParse(validPublication);
+        expect(result.success).toBe(true);
+    });
+
+    it('should validate job offer schema', () => {
+        const validJobOffer = {
+            title: 'Test Position',
+            project: 'PC1' as const,
+            type: 'postdoc' as const,
+            location: 'Paris, France',
+            deadline: new Date('2024-12-31'),
+            description: 'Test job description',
+            requirements: ['PhD in relevant field'],
+            lang: 'en' as const
+        };
+
+        const result = jobOfferSchema.safeParse(validJobOffer);
+        expect(result.success).toBe(true);
+    });
+
+    it('should validate event schema', () => {
+        const validEvent = {
+            title: 'Test Event',
+            date: new Date('2024-06-15'),
+            type: 'conference' as const,
+            location: 'Paris, France',
+            description: 'Test event description',
+            lang: 'en' as const
+        };
+
+        const result = eventSchema.safeParse(validEvent);
+        expect(result.success).toBe(true);
+    });
+
+    it('should reject invalid language codes', () => {
+        const invalidPage = {
+            title: 'Test Page',
+            slug: 'test-page',
+            lang: 'es', // Invalid language
+            toc: false
+        };
+
+        const result = pageSchema.safeParse(invalidPage);
+        expect(result.success).toBe(false);
+    });
+});
