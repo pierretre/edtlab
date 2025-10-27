@@ -1,6 +1,6 @@
 ---
 title: "Nous Rejoindre"
-slug: "join-us"
+href: "nous-rejoindre"
 lang: "fr"
 description: "Opportunités de carrière et postes ouverts dans le programme de recherche EDT"
 toc: true

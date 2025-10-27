@@ -29,74 +29,48 @@ const t = useTranslations(lang);
 const currentMenu = await getEntry("menu", lang);
 const menuSections = currentMenu?.data.sections || [];
 
-// Define tile data with icons and descriptions
-const tileData = [
-    {
-        slug: "program",
-        icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-        description: lang === 'en' 
-            ? "Discover our research goals, structure, and partnerships"
-            : "Découvrez nos objectifs de recherche, structure et partenariats"
-    },
-    {
-        slug: "focused-projects",
-        icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
-        description: lang === 'en'
-            ? "Explore our five focused research projects (PC1-PC5)"
-            : "Explorez nos cinq projets de recherche ciblés (PC1-PC5)"
-    },
-    {
-        slug: "production",
-        icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
-        description: lang === 'en'
-            ? "Access our publications, research outputs, and platform"
-            : "Accédez à nos publications, résultats de recherche et plateforme"
-    },
-    {
-        slug: "demo-center",
-        icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
-        description: lang === 'en'
-            ? "Explore our use cases and interactive demonstrators"
-            : "Explorez nos cas d'usage et démonstrateurs interactifs"
-    },
-    {
-        slug: "resources",
-        icon: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
-        description: lang === 'en'
-            ? "Find external software, tools, and research resources"
-            : "Trouvez des logiciels externes, outils et ressources de recherche"
-    },
-    {
-        slug: "news",
-        icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z",
-        description: lang === 'en'
-            ? "Stay updated with our latest events and press releases"
-            : "Restez informé de nos derniers événements et communiqués"
-    },
-    {
-        slug: "join-us",
-        icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
-        description: lang === 'en'
-            ? "Discover career opportunities and open positions"
-            : "Découvrez les opportunités de carrière et postes ouverts"
-    },
-    {
-        slug: "contact",
-        icon: "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
-        description: lang === 'en'
-            ? "Get in touch with our research team"
-            : "Contactez notre équipe de recherche"
-    }
-];
+// Define tile data with icons and descriptions - use menu sections for proper slugs
+const tileIconMap = {
+    "program": "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    "programme": "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    "focused-projects": "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+    "projets-cibles": "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+    "production": "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+    "demo-center": "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+    "centre-demo": "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+    "resources": "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
+    "ressources": "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
+    "news": "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z",
+    "actualites": "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z",
+    "join-us": "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
+    "nous-rejoindre": "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
+    "contact": "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+};
 
-// Match tiles with menu sections to get proper names
-const tiles = tileData.map(tile => {
-    const menuSection = menuSections.find(section => section.slug === tile.slug);
-    return {
-        ...tile,
-        name: menuSection?.name || tile.slug.charAt(0).toUpperCase() + tile.slug.slice(1).replace('-', ' ')
-    };
-});
+const tileDescriptionMap = {
+    "program": "Discover our research goals, structure, and partnerships",
+    "programme": "Découvrez nos objectifs de recherche, structure et partenariats",
+    "focused-projects": "Explore our five focused research projects (PC1-PC5)",
+    "projets-cibles": "Explorez nos cinq projets de recherche ciblés (PC1-PC5)",
+    "production": "Access our publications, research outputs, and platform",
+    "demo-center": "Explore our use cases and interactive demonstrators",
+    "centre-demo": "Explorez nos cas d'usage et démonstrateurs interactifs",
+    "resources": "Find external software, tools, and research resources",
+    "ressources": "Trouvez des logiciels externes, outils et ressources de recherche",
+    "news": "Stay updated with our latest events and press releases",
+    "actualites": "Restez informé de nos derniers événements et communiqués",
+    "join-us": "Discover career opportunities and open positions",
+    "nous-rejoindre": "Découvrez les opportunités de carrière et postes ouverts",
+    "contact": "Get in touch with our research team"
+};
+
+// Create tiles from menu sections
+const tiles = menuSections.map(section => ({
+    slug: section.href,
+    name: section.name,
+    icon: tileIconMap[section.href] || "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    description: tileDescriptionMap[section.href] || section.name
+}));
 ---
 
 <BaseLayout

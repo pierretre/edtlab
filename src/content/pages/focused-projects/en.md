@@ -1,6 +1,6 @@
 ---
 title: "Focused Projects"
-slug: "focused-projects"
+href: "focused-projects"
 lang: "en"
 description: "Overview of the five focused projects (PC1-PC5) in the EDT research program"
 toc: true

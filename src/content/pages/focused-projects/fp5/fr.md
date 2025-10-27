@@ -1,6 +1,6 @@
 ---
 title: "Projet Ciblé 5"
-slug: "focused-projects/fp5"
+href: "projets-cibles/pc5"
 lang: "fr"
 description: "Informations détaillées sur le Projet Ciblé 5 (PC5)"
 toc: true

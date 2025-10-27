@@ -5,7 +5,7 @@ const pagesCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
-        slug: z.string().optional(),
+        href: z.string(),
         lang: z.enum(['en', 'fr']),
         description: z.string().optional(),
         toc: z.boolean().default(false),
@@ -63,10 +63,10 @@ const menuCollection = defineCollection({
     schema: z.object({
         sections: z.array(z.object({
             name: z.string(),
-            slug: z.string(),
+            href: z.string(),
             items: z.array(z.object({
                 name: z.string(),
-                slug: z.string()
+                href: z.string()
             })).optional()
         }))
     })

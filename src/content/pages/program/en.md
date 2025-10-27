@@ -1,6 +1,6 @@
 ---
 title: "Program"
-slug: "program"
+href: "program"
 lang: "en"
 description: "EDT Research Program overview, goals, structure, and partners"
 toc: true

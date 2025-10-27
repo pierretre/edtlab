@@ -1,5 +1,4 @@
 ---
-import { defaultLang } from "../i18n/ui";
 import { getEntry } from "astro:content";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
@@ -82,7 +81,7 @@ const menu = await getEntry("menu", lang);
                         menu.data.sections.map((section) => (
                             <li>
                                 <a
-                                    href={`/${lang}/${section.slug}`}
+                                    href={`/${lang}/${section.href}`}
                                     class="hover:underline"
                                 >
                                     {section.name}

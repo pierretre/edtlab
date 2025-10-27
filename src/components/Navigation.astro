@@ -62,9 +62,9 @@ const currentPath = Astro.url.pathname;
         {
             menuSections.map((section) => {
             const isActive =
-                currentPath === `/${lang}/${section.slug}` ||
+                currentPath === `/${lang}/${section.href}` ||
                 (section.items &&
-                section.items.some((sub) => currentPath === `/${lang}/${sub.slug}`));
+                section.items.some((sub) => currentPath === `/${lang}/${sub.href}`));
 
             return (
                 <li class="relative group flex items-center">
@@ -72,7 +72,7 @@ const currentPath = Astro.url.pathname;
                     <>
                     <!-- Link with submenu -->
                     <a
-                        href={`/${lang}/${section.slug}`}
+                        href={`/${lang}/${section.href}`}
                         class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
                             before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
                             before:w-0 before:bg-blue-800 before:transition-all before:duration-500 before:ease-in-out
@@ -107,9 +107,9 @@ const currentPath = Astro.url.pathname;
                         {section.items.map((sub) => (
                             <li>
                             <a
-                                href={`/${lang}/${sub.slug}`}
+                                href={`/${lang}/${sub.href}`}
                                 class={`block px-4 py-2 hover:bg-gray-100 ${
-                                currentPath === `/${lang}/${sub.slug}`
+                                currentPath === `/${lang}/${sub.href}`
                                     ? "text-blue-800 font-medium"
                                     : ""
                                 }`}
@@ -124,7 +124,7 @@ const currentPath = Astro.url.pathname;
                 ) : (
                     <!-- Simple link -->
                     <a
-                    href={`/${lang}/${section.slug}`}
+                    href={`/${lang}/${section.href}`}
                     class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
                         before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
                         before:w-0 before:bg-blue-800 before:transition-all before:duration-500 before:ease-in-out
@@ -155,7 +155,7 @@ const currentPath = Astro.url.pathname;
                             <button
                                 type="button"
                                 class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium w-full text-left"
-                                data-collapse-toggle={`mobile-dropdown-${section.slug}`}
+                                data-collapse-toggle={`mobile-dropdown-${section.href}`}
                                 aria-expanded="false"
                             >
                                 {section.name}
@@ -163,10 +163,10 @@ const currentPath = Astro.url.pathname;
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
-                            <div id={`mobile-dropdown-${section.slug}`} class="hidden pl-4">
+                            <div id={`mobile-dropdown-${section.href}`} class="hidden pl-4">
                                 {section.items.map((item) => (
                                     <a
-                                        href={`/${lang}/${item.slug}`}
+                                        href={`/${lang}/${item.href}`}
                                         class="text-gray-600 hover:text-blue-600 block px-3 py-2 text-sm no-underline"
                                     >
                                         {item.name}
@@ -177,7 +177,7 @@ const currentPath = Astro.url.pathname;
                     ) : (
                         <!-- Simple mobile link -->
                         <a
-                            href={`/${lang}/${section.slug}`}
+                            href={`/${lang}/${section.href}`}
                             class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium no-underline"
                         >
                             {section.name}

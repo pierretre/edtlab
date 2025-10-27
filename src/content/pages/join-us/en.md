@@ -1,6 +1,6 @@
 ---
 title: "Join Us"
-slug: "join-us"
+href: "join-us"
 lang: "en"
 description: "Career opportunities and open positions in the EDT research program"
 toc: true

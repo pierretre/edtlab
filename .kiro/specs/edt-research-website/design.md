@@ -162,7 +162,7 @@ This structure separates static page content from dynamic collections, enabling:
 ```typescript
 const pagesSchema = z.object({
   title: z.string(),
-  slug: z.string(),
+  href: z.string(),
   lang: z.enum(['en', 'fr']),
   description: z.string().optional(),
   toc: z.boolean().default(false),

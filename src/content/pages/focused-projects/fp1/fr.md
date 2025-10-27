@@ -1,6 +1,6 @@
 ---
 title: "Projet Ciblé 1"
-slug: "focused-projects/fp1"
+href: "projets-cibles/pc1"
 lang: "fr"
 description: "Informations détaillées sur le Projet Ciblé 1 (PC1)"
 toc: true

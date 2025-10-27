@@ -1,6 +1,6 @@
 ---
 title: "Plateforme"
-slug: "production/platform"
+href: "production/plateforme"
 lang: "fr"
 description: "Documentation et ressources de la plateforme de recherche EDT"
 toc: true

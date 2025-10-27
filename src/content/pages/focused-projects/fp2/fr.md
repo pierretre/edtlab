@@ -1,6 +1,6 @@
 ---
 title: "Projet Ciblé 2"
-slug: "focused-projects/fp2"
+href: "projets-cibles/pc2"
 lang: "fr"
 description: "Informations détaillées sur le Projet Ciblé 2 (PC2)"
 toc: true

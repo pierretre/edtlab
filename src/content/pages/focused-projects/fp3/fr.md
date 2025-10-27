@@ -1,6 +1,6 @@
 ---
 title: "Projet Ciblé 3"
-slug: "focused-projects/fp3"
+href: "projets-cibles/pc3"
 lang: "fr"
 description: "Informations détaillées sur le Projet Ciblé 3 (PC3)"
 toc: true

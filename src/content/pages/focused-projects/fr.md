@@ -1,6 +1,6 @@
 ---
 title: "Projets Ciblés"
-slug: "focused-projects"
+href: "projets-cibles"
 lang: "fr"
 description: "Aperçu des cinq projets ciblés (PC1-PC5) du programme de recherche EDT"
 toc: true

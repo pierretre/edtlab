@@ -1,6 +1,6 @@
 ---
 title: "Focused Project 5"
-slug: "focused-projects/fp5"
+href: "focused-projects/fp5"
 lang: "en"
 description: "Detailed information about Focused Project 5 (PC5)"
 toc: true

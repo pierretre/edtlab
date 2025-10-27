@@ -1,6 +1,6 @@
 ---
 title: "Publications"
-slug: "production/publications"
+href: "production/publications"
 lang: "fr"
 description: "Liste complète des publications du programme de recherche EDT"
 toc: true

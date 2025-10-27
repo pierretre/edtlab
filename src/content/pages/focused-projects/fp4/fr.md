@@ -1,6 +1,6 @@
 ---
 title: "Projet Ciblé 4"
-slug: "focused-projects/fp4"
+href: "projets-cibles/pc4"
 lang: "fr"
 description: "Informations détaillées sur le Projet Ciblé 4 (PC4)"
 toc: true

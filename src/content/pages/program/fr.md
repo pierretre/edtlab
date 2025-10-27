@@ -1,6 +1,6 @@
 ---
 title: "Programme"
-slug: "program"
+href: "programme"
 lang: "fr"
 description: "Aperçu du programme de recherche EDT, objectifs, structure et partenaires"
 toc: true

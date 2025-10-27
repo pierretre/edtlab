@@ -1,6 +1,6 @@
 ---
 title: "À Propos"
-slug: "about"
+href: "about"
 lang: "fr"
 description: "À propos du programme de recherche EDT et du site web"
 toc: true

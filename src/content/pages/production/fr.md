@@ -1,6 +1,6 @@
 ---
 title: "Production"
-slug: "production"
+href: "production"
 lang: "fr"
 description: "Résultats de recherche, publications et documentation de la plateforme"
 toc: true

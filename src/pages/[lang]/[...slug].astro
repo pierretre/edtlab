@@ -1,37 +1,45 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../i18n/utils";
 import PageLayout from "../../components/PageLayout.astro";
 
 export async function getStaticPaths() {
-    // Get all pages from content collections
     const allPages = await getCollection("pages");
 
-    // Generate paths from content collection
-    const paths = allPages.map((page) => {
-        const slugParts = page.slug.split("/");
+    return allPages.map((page: CollectionEntry<"pages">) => {
+        const { lang, href } = page.data;
+
         return {
             params: {
-                lang: page.data.lang,
-                slug: slugParts.join("/"),
+                lang: lang,
+                slug: href,
             },
             props: { page },
         };
     });
-
-    return paths;
 }
 
-const { page } = Astro.props;
+const { page } = Astro.props as { page: CollectionEntry<"pages"> };
 const { lang, slug } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
+
+// Handle 404 for missing pages - this should not happen in getStaticPaths
+// but we include it for safety
+if (!page) {
+    return new Response(null, {
+        status: 404,
+        statusText: "Not found",
+    });
+}
 
 // Get the rendered content
 const { Content } = await page.render();
 
 // Build breadcrumb items based on slug structure
-const slugParts = slug?.split("/") || [];
-const breadcrumbItems = [{ name: t("nav.home"), href: `/${lang}/` }];
+const slugParts = slug?.split("/").filter((part) => part.length > 0) || [];
+const breadcrumbItems: Array<{ name: string; href?: string }> = [
+    { name: t("nav.home"), href: `/${lang}/` },
+];
 
 // Build breadcrumb from slug parts
 let currentHref = `/${lang}`;
@@ -47,10 +55,16 @@ for (let i = 0; i < slugParts.length; i++) {
 
     // Don't add href for the last item (current page)
     const isLastItem = i === slugParts.length - 1;
-    breadcrumbItems.push({
-        name: segmentName,
-        href: isLastItem ? undefined : currentHref,
-    });
+    if (isLastItem) {
+        breadcrumbItems.push({
+            name: segmentName,
+        });
+    } else {
+        breadcrumbItems.push({
+            name: segmentName,
+            href: currentHref,
+        });
+    }
 }
 ---
 

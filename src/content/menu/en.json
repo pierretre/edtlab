@@ -2,75 +2,75 @@
     "sections": [
         {
             "name": "Program",
-            "slug": "program"
+            "href": "program"
         },
         {
             "name": "Projects",
-            "slug": "focused-projects",
+            "href": "focused-projects",
             "items": [
                 {
                     "name": "Overview",
-                    "slug": "focused-projects"
+                    "href": "focused-projects"
                 },
                 {
                     "name": "Project 1 (PC1)",
-                    "slug": "focused-projects/fp1"
+                    "href": "focused-projects/fp1"
                 },
                 {
                     "name": "Project 2 (PC2)",
-                    "slug": "focused-projects/fp2"
+                    "href": "focused-projects/fp2"
                 },
                 {
                     "name": "Project 3 (PC3)",
-                    "slug": "focused-projects/fp3"
+                    "href": "focused-projects/fp3"
                 },
                 {
                     "name": "Project 4 (PC4)",
-                    "slug": "focused-projects/fp4"
+                    "href": "focused-projects/fp4"
                 },
                 {
                     "name": "Project 5 (PC5)",
-                    "slug": "focused-projects/fp5"
+                    "href": "focused-projects/fp5"
                 }
             ]
         },
         {
             "name": "Production",
-            "slug": "production",
+            "href": "production",
             "items": [
                 {
                     "name": "Overview",
-                    "slug": "production"
+                    "href": "production"
                 },
                 {
                     "name": "Publications",
-                    "slug": "production/publications"
+                    "href": "production/publications"
                 },
                 {
                     "name": "Platform",
-                    "slug": "production/platform"
+                    "href": "production/platform"
                 }
             ]
         },
         {
             "name": "Demo Center",
-            "slug": "demo-center"
+            "href": "demo-center"
         },
         {
             "name": "Resources",
-            "slug": "resources"
+            "href": "resources"
         },
         {
             "name": "News",
-            "slug": "news"
+            "href": "news"
         },
         {
             "name": "Join Us",
-            "slug": "join-us"
+            "href": "join-us"
         },
         {
             "name": "Contact",
-            "slug": "contact"
+            "href": "contact"
         }
     ]
 }
