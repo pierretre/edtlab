@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import FilterBar from "./FilterBar.astro";
 
 interface Props {
     lang: "en" | "fr";
@@ -41,87 +42,50 @@ const getTypeTranslation = (type: string) => {
             return type;
     }
 };
+
+// Prepare filter configuration
+const filterConfig = [
+    {
+        id: "type-filter",
+        label: t("publications.filter.type"),
+        type: "select" as const,
+        options: [
+            { value: "", label: t("publications.filter.all-types") },
+            ...types.map((type) => ({
+                value: type,
+                label: getTypeTranslation(type),
+            })),
+        ],
+    },
+    {
+        id: "year-filter",
+        label: t("publications.filter.year"),
+        type: "select" as const,
+        options: [
+            { value: "", label: t("publications.filter.all-years") },
+            ...years.map((year) => ({
+                value: year.toString(),
+                label: year.toString(),
+            })),
+        ],
+    },
+    {
+        id: "search-filter",
+        label: t("publications.filter.search"),
+        type: "search" as const,
+        placeholder: t("publications.filter.search-placeholder"),
+    },
+];
 ---
 
 <div class="publications-container">
     <!-- Filters Section -->
-    <div class="mb-6 p-4 bg-gray-50 rounded-lg border">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <!-- Type Filter -->
-            <div>
-                <label
-                    for="type-filter"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                >
-                    {t("publications.filter.type")}
-                </label>
-                <select
-                    id="type-filter"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                >
-                    <option value=""
-                        >{t("publications.filter.all-types")}</option
-                    >
-                    {
-                        types.map((type) => (
-                            <option value={type}>
-                                {getTypeTranslation(type)}
-                            </option>
-                        ))
-                    }
-                </select>
-            </div>
-
-            <!-- Year Filter -->
-            <div>
-                <label
-                    for="year-filter"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                >
-                    {t("publications.filter.year")}
-                </label>
-                <select
-                    id="year-filter"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                >
-                    <option value=""
-                        >{t("publications.filter.all-years")}</option
-                    >
-                    {
-                        years.map((year) => (
-                            <option value={year.toString()}>{year}</option>
-                        ))
-                    }
-                </select>
-            </div>
-
-            <!-- Search Filter -->
-            <div>
-                <label
-                    for="search-filter"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                >
-                    {t("publications.filter.search")}
-                </label>
-                <input
-                    type="text"
-                    id="search-filter"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder={t("publications.filter.search-placeholder")}
-                />
-            </div>
-        </div>
-
-        <!-- Clear Filters Button -->
-        <div class="mt-4">
-            <button
-                id="clear-filters"
-                class="text-blue-600 hover:text-blue-800 text-sm font-medium"
-            >
-                {t("publications.filter.clear")}
-            </button>
-        </div>
-    </div>
+    <FilterBar
+        lang={lang}
+        filters={filterConfig}
+        clearButtonId="clear-filters"
+        compact={false}
+    />
 
     <!-- Publications Table -->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -220,7 +184,10 @@ const getTypeTranslation = (type: string) => {
 
     <!-- Results Count -->
     <div class="mt-4 text-sm text-gray-600">
-        <span id="results-count">
+        <span
+            id="results-count"
+            data-template={t("publications.results-count")}
+        >
             {
                 t("publications.results-count").replace(
                     "{count}",
@@ -287,13 +254,12 @@ const getTypeTranslation = (type: string) => {
             });
 
             // Update results count and show/hide no results message
-            const lang = document.documentElement.lang || "en";
-            const countText =
-                lang === "fr"
-                    ? `Affichage de ${visibleCount} publications`
-                    : `Showing ${visibleCount} publications`;
-
-            resultsCount.textContent = countText;
+            const template =
+                resultsCount.dataset.template || "Showing {count} publications";
+            resultsCount.textContent = template.replace(
+                "{count}",
+                visibleCount.toString(),
+            );
 
             if (visibleCount === 0) {
                 tbody.style.display = "none";

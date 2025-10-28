@@ -40,7 +40,7 @@ const types = ["postdoc", "phd", "engineer", "intern"] as const;
 
 // Helper function to get type translation
 const getTypeTranslation = (type: string) => {
-    return t(`job-offers.type.${type}`);
+    return t(`job-offers.type.${type}` as any);
 };
 
 // Helper function to get project translation
@@ -257,7 +257,7 @@ const expiredJobOffers = sortedJobOffers.filter(
 
     <!-- Results Count -->
     <div class="mt-6 text-sm text-gray-600 text-center">
-        <span id="results-count">
+        <span id="results-count" data-template={t("job-offers.results-count")}>
             {
                 t("job-offers.results-count").replace(
                     "{count}",
@@ -332,13 +332,12 @@ const expiredJobOffers = sortedJobOffers.filter(
             });
 
             // Update results count and show/hide no results message
-            const lang = document.documentElement.lang || "en";
-            const countText =
-                lang === "fr"
-                    ? `Affichage de ${visibleCount} offres d'emploi`
-                    : `Showing ${visibleCount} job offers`;
-
-            resultsCount.textContent = countText;
+            const template =
+                resultsCount.dataset.template || "Showing {count} job offers";
+            resultsCount.textContent = template.replace(
+                "{count}",
+                visibleCount.toString(),
+            );
 
             if (visibleCount === 0) {
                 grid.style.display = "none";

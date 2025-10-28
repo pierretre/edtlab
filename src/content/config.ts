@@ -37,6 +37,7 @@ const eventsCollection = defineCollection({
         location: z.string().optional(),
         description: z.string(),
         url: z.string().url().optional(),
+        lang: z.enum(['en', 'fr']),
     })
 });
 

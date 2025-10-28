@@ -1,0 +1,191 @@
+---
+import { getCollection } from "astro:content";
+import { useTranslations } from "../i18n/utils";
+
+interface Props {
+    lang: "en" | "fr";
+    maxItems?: number;
+}
+
+const { lang, maxItems } = Astro.props;
+const t = useTranslations(lang);
+
+// Get all press release events for the current language
+const allPressReleases = await getCollection("events", (event) => {
+    return event.data.lang === lang && event.data.type === "press";
+});
+
+// Sort press releases by date (newest first)
+const sortedPressReleases = allPressReleases.sort((a, b) => {
+    return b.data.date.getTime() - a.data.date.getTime();
+});
+
+// Limit press releases if maxItems is specified
+const displayPressReleases = maxItems
+    ? sortedPressReleases.slice(0, maxItems)
+    : sortedPressReleases;
+
+// Format press release date
+const formatDate = (date: Date) => {
+    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+};
+---
+
+<div class="py-4 mb-8">
+    {
+        displayPressReleases.length > 0 ? (
+            <div class="space-y-4">
+                {displayPressReleases.map((pressRelease) => (
+                    <article class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                                    <a
+                                        href={`/${lang}/events/${pressRelease.slug}`}
+                                        class="hover:text-blue-600 transition-colors duration-200"
+                                    >
+                                        {pressRelease.data.title}
+                                    </a>
+                                </h4>
+                                <div class="flex items-center text-sm text-gray-500 mb-3">
+                                    <svg
+                                        class="w-4 h-4 mr-2"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                        />
+                                    </svg>
+                                    {formatDate(pressRelease.data.date)}
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-4">
+                                {t("events.type.press")}
+                            </span>
+                        </div>
+
+                        <p class="text-gray-700 text-sm mb-4 line-clamp-3">
+                            {pressRelease.data.description}
+                        </p>
+
+                        <div class="flex items-center justify-between">
+                            <a
+                                href={`/${lang}/events/${pressRelease.slug}`}
+                                class="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                            >
+                                {t("news.read-full-release")}
+                                <svg
+                                    class="w-4 h-4 ml-1"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </a>
+
+                            {pressRelease.data.url && (
+                                <a
+                                    href={pressRelease.data.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors duration-200"
+                                >
+                                    {t("news.external-link")}
+                                    <svg
+                                        class="w-4 h-4 ml-1"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                        />
+                                    </svg>
+                                </a>
+                            )}
+                        </div>
+                    </article>
+                ))}
+            </div>
+        ) : (
+            <div class="text-center py-8 text-gray-500">
+                <svg
+                    class="w-12 h-12 mx-auto mb-4 text-gray-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                    />
+                </svg>
+                <p class="text-lg">{t("news.no-press-releases")}</p>
+            </div>
+        )
+    }
+
+    {
+        maxItems &&
+            displayPressReleases.length >= maxItems &&
+            sortedPressReleases.length > maxItems && (
+                <div class="mt-6 text-center">
+                    <a
+                        href={`/${lang}/news`}
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-colors duration-200"
+                    >
+                        {t("news.view-all-press-releases")}
+                        <svg
+                            class="w-4 h-4 ml-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
+                    </a>
+                </div>
+            )
+    }
+</div>
+
+<style>
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

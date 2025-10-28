@@ -88,7 +88,7 @@
   - Create publication templates for editors to use
   - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5, 3.3_
 
-- [ ] 12. Create job offers system and integrate with join-us pages
+- [x] 12. Create job offers system and integrate with join-us pages
   - Build JobOfferCard components with Flowbite Cards and Badges
   - Update join-us content pages to display job offers
   - Add filtering by project (PC1-PC5) using existing schema
@@ -96,7 +96,7 @@
   - Ensure job offers work with the PageLayout component
   - _Requirements: 12.1, 12.2, 12.3, 12.4, 12.5, 3.7_
 
-- [ ] 13. Build events system and integrate with news pages
+- [x] 13. Build events system and integrate with news pages
   - Create EventCard components using Flowbite Timeline or Cards
   - Update news content pages to display events with chronological organization
   - Add event filtering by type using existing schema

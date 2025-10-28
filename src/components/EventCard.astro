@@ -1,0 +1,225 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { useTranslations } from "../i18n/utils";
+
+interface Props {
+    event: CollectionEntry<"events">;
+    lang: "en" | "fr";
+}
+
+const { event, lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Helper function to get event type color
+const getTypeColor = (type: string) => {
+    switch (type) {
+        case "conference":
+            return "bg-blue-100 text-blue-800";
+        case "workshop":
+            return "bg-green-100 text-green-800";
+        case "seminar":
+            return "bg-purple-100 text-purple-800";
+        case "press":
+            return "bg-red-100 text-red-800";
+        default:
+            return "bg-gray-100 text-gray-800";
+    }
+};
+
+// Format event date
+const formatDate = (date: Date) => {
+    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+};
+
+// Check if event is upcoming
+const isUpcoming = (date: Date) => {
+    const now = new Date();
+    return date > now;
+};
+
+// Check if event is today
+const isToday = (date: Date) => {
+    const now = new Date();
+    return (
+        date.getDate() === now.getDate() &&
+        date.getMonth() === now.getMonth() &&
+        date.getFullYear() === now.getFullYear()
+    );
+};
+
+// Check if event is soon (within 7 days)
+const isSoon = (date: Date) => {
+    const now = new Date();
+    const timeDiff = date.getTime() - now.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return daysDiff <= 7 && daysDiff > 0;
+};
+---
+
+<div
+    class="event-card max-w-sm bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
+>
+    <div class="p-5">
+        <!-- Header with badges -->
+        <div class="flex flex-wrap gap-2 mb-3">
+            <span
+                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(event.data.type)}`}
+            >
+                {t(`events.type.${event.data.type}`)}
+            </span>
+            {
+                isToday(event.data.date) && (
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        {t("events.today")}
+                    </span>
+                )
+            }
+            {
+                isSoon(event.data.date) && !isToday(event.data.date) && (
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                        {t("events.soon")}
+                    </span>
+                )
+            }
+            {
+                !isUpcoming(event.data.date) && (
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        {t("events.past")}
+                    </span>
+                )
+            }
+        </div>
+
+        <!-- Title -->
+        <h5
+            class="mb-2 text-xl font-bold tracking-tight text-gray-900 line-clamp-2"
+        >
+            {event.data.title}
+        </h5>
+
+        <!-- Description -->
+        <p class="mb-3 text-gray-700 text-sm line-clamp-3">
+            {event.data.description}
+        </p>
+
+        <!-- Date and Location -->
+        <div class="mb-4 space-y-2">
+            <div class="flex items-center text-sm text-gray-600">
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    ></path>
+                </svg>
+                <span
+                    class={isUpcoming(event.data.date)
+                        ? "text-blue-600 font-medium"
+                        : ""}
+                >
+                    {formatDate(event.data.date)}
+                </span>
+            </div>
+            {
+                event.data.location && (
+                    <div class="flex items-center text-sm text-gray-600">
+                        <svg
+                            class="w-4 h-4 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+                        {event.data.location}
+                    </div>
+                )
+            }
+        </div>
+
+        <!-- Action buttons -->
+        <div class="flex gap-2">
+            {
+                event.data.url && (
+                    <a
+                        href={event.data.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-colors duration-200"
+                        aria-label={`${t("events.learn-more")} - ${event.data.title}`}
+                    >
+                        {isUpcoming(event.data.date) &&
+                        event.data.type !== "press"
+                            ? t("events.register")
+                            : t("events.learn-more")}
+                        <svg
+                            class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                            aria-hidden="true"
+                            fill="none"
+                            viewBox="0 0 14 10"
+                        >
+                            <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9"
+                            />
+                        </svg>
+                    </a>
+                )
+            }
+            <a
+                href={`/${lang}/events/${event.slug}`}
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-blue-700 bg-white border border-blue-700 rounded-lg hover:bg-blue-50 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-colors duration-200"
+                aria-label={`${t("events.view-details")} - ${event.data.title}`}
+            >
+                {t("events.view-details")}
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

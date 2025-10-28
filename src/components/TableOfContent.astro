@@ -41,7 +41,7 @@ const t = useTranslations(lang);
 
         // Generate TOC items
         const tocItems = [];
-        headings.forEach((heading, index) => {
+        headings.forEach((heading) => {
             // Create ID if it doesn't exist
             if (!heading.id) {
                 const text = heading.textContent || "";
@@ -84,7 +84,7 @@ const t = useTranslations(lang);
 
         tocList.innerHTML = tocHTML;
 
-        // Add click handlers for smooth scrolling
+        // Add click handlers for smooth scrolling with header offset
         const tocLinks = tocList.querySelectorAll(".toc-link");
         tocLinks.forEach((link) => {
             link.addEventListener("click", function (e) {
@@ -109,14 +109,31 @@ const t = useTranslations(lang);
                         "bg-blue-50",
                     );
 
-                    // Smooth scroll to target
-                    targetElement.scrollIntoView({
+                    // Calculate header height and add extra offset
+                    const header = document.getElementById("site-header");
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const extraOffset = 20; // Additional spacing for better UX
+                    const totalOffset = headerHeight + extraOffset;
+
+                    // Calculate target position
+                    const targetPosition =
+                        targetElement.offsetTop - totalOffset;
+
+                    // Smooth scroll to target with proper offset
+                    window.scrollTo({
+                        top: Math.max(0, targetPosition),
                         behavior: "smooth",
-                        block: "start",
                     });
 
-                    // Focus the target for accessibility
-                    targetElement.focus();
+                    // Update URL hash without triggering scroll
+                    if (history.pushState) {
+                        history.pushState(null, null, `#${targetId}`);
+                    }
+
+                    // Focus the target for accessibility (after a short delay)
+                    setTimeout(() => {
+                        targetElement.focus();
+                    }, 100);
                 }
             });
         });
@@ -126,7 +143,13 @@ const t = useTranslations(lang);
         function updateActiveSection() {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    const scrollPosition = window.scrollY + 100; // Offset for fixed header
+                    // Calculate header height and offset for scroll position detection
+                    const header = document.getElementById("site-header");
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const extraOffset = 20;
+                    const totalOffset = headerHeight + extraOffset;
+                    const scrollPosition = window.scrollY + totalOffset;
+
                     let activeHeading = null;
 
                     headings.forEach((heading) => {
@@ -166,10 +189,90 @@ const t = useTranslations(lang);
             ticking = true;
         }
 
+        // Handle direct hash navigation (e.g., when page loads with #hash or hash changes)
+        function handleHashNavigation() {
+            const hash = window.location.hash;
+            if (hash) {
+                const targetElement = document.querySelector(hash);
+                if (targetElement) {
+                    // Calculate header height and offset
+                    const header = document.getElementById("site-header");
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const extraOffset = 20;
+                    const totalOffset = headerHeight + extraOffset;
+
+                    // Calculate target position
+                    const targetPosition =
+                        targetElement.offsetTop - totalOffset;
+
+                    // Scroll to target with proper offset
+                    window.scrollTo({
+                        top: Math.max(0, targetPosition),
+                        behavior: "smooth",
+                    });
+
+                    // Update active TOC link
+                    const targetId = hash.substring(1);
+                    tocLinks.forEach((link) => {
+                        link.classList.remove(
+                            "toc-active",
+                            "text-blue-600",
+                            "bg-blue-50",
+                        );
+                        link.classList.add("text-gray-600");
+                    });
+
+                    const activeLink = tocList.querySelector(
+                        `[data-target="${targetId}"]`,
+                    );
+                    if (activeLink) {
+                        activeLink.classList.remove("text-gray-600");
+                        activeLink.classList.add(
+                            "toc-active",
+                            "text-blue-600",
+                            "bg-blue-50",
+                        );
+                    }
+                }
+            }
+        }
+
         // Listen for scroll events
         window.addEventListener("scroll", updateActiveSection);
 
+        // Listen for hash changes
+        window.addEventListener("hashchange", handleHashNavigation);
+
         // Initial call to set active section
         updateActiveSection();
+
+        // Handle initial hash if present
+        if (window.location.hash) {
+            // Delay to ensure page is fully loaded
+            setTimeout(handleHashNavigation, 100);
+        }
     });
 </script>
+
+<style>
+    /* Ensure smooth scrolling behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Add scroll padding to account for fixed header */
+    html {
+        scroll-padding-top: 100px;
+    }
+
+    /* TOC active state styling */
+    .toc-active {
+        font-weight: 500;
+    }
+
+    /* Improve focus visibility for accessibility */
+    .toc-link:focus {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+    }
+</style>
