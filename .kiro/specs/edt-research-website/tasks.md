@@ -106,7 +106,7 @@
 
 ## Front Page and User Experience
 
-- [ ] 14. Enhance front page with interactive content using HomeLayout
+- [x] 14. Enhance front page with interactive content using HomeLayout
   - Update `src/pages/[lang]/index.astro` to use HomeLayout component
   - Build Hero section using Flowbite Hero component
   - Implement 8 interactive navigation tiles using Flowbite Cards
