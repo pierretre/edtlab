@@ -114,7 +114,15 @@
   - Replace placeholder content with dynamic content from collections
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 1.1_
 
-- [ ] 15. Implement search functionality across content
+- [x] 15. Update color scheme to Scampi and Woodsmoke palette
+  - Replace existing EDT color scheme with Scampi primary colors
+  - Update secondary colors to Woodsmoke palette
+  - Ensure RGAA 4.1 AA compliance with new color contrast ratios
+  - Update CSS custom properties and Tailwind configuration
+  - Verify accessibility across all components and pages
+  - _Requirements: 30.1, 30.2, 30.3_
+
+- [-] 16. Implement search functionality across content
   - Build site-wide search using Flowbite Search component
   - Index all content collections for search capability
   - Implement search results display with relevance ranking

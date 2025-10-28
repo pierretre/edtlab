@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 const getProjectColor = (project: string) => {
     switch (project) {
         case "PC1":
-            return "bg-blue-100 text-blue-800";
+            return "bg-blue-100 text-primary-600";
         case "PC2":
             return "bg-green-100 text-green-800";
         case "PC3":
@@ -195,7 +195,7 @@ const isDeadlinePassed = (deadline: Date) => {
         <!-- Action button -->
         <a
             href={`/${lang}/job-offers/${jobOffer.slug}`}
-            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-colors duration-200"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
             aria-label={t("job-offers.view-details-aria").replace(
                 "{title}",
                 jobOffer.data.title,

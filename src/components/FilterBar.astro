@@ -41,7 +41,7 @@ const t = useTranslations(lang);
                     {filter.type === "select" ? (
                         <select
                             id={filter.id}
-                            class={`bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ${compact ? "p-2" : "p-2.5"}`}
+                            class={`bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full ${compact ? "p-2" : "p-2.5"}`}
                         >
                             {filter.options?.map((option) => (
                                 <option value={option.value}>
@@ -53,7 +53,7 @@ const t = useTranslations(lang);
                         <input
                             type="text"
                             id={filter.id}
-                            class={`bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ${compact ? "p-2" : "p-2.5"}`}
+                            class={`bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full ${compact ? "p-2" : "p-2.5"}`}
                             placeholder={filter.placeholder}
                         />
                     )}
@@ -65,7 +65,7 @@ const t = useTranslations(lang);
         <div class="filter-item flex items-end">
             <button
                 id={clearButtonId}
-                class={`text-blue-600 hover:text-blue-800 text-xs font-medium whitespace-nowrap ${compact ? "py-2" : "py-2.5"}`}
+                class={`text-primary-600 hover:text-primary-600 text-xs font-medium whitespace-nowrap ${compact ? "py-2" : "py-2.5"}`}
             >
                 {t("filter.clear")}
             </button>

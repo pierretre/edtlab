@@ -75,9 +75,9 @@ const currentPath = Astro.url.pathname;
                         href={`/${lang}/${section.href}`}
                         class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
                             before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                            before:w-0 before:bg-blue-800 before:transition-all before:duration-500 before:ease-in-out
-                            hover:before:w-full hover:text-blue-800
-                            ${isActive ? "text-blue-800 before:w-full" : ""}`
+                            before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                            hover:before:w-full hover:text-primary-600
+                            ${isActive ? "text-primary-600 before:w-full" : ""}`
                         }
                     >
                         <span>{section.name}</span>
@@ -110,7 +110,7 @@ const currentPath = Astro.url.pathname;
                                 href={`/${lang}/${sub.href}`}
                                 class={`block px-4 py-2 hover:bg-gray-100 ${
                                 currentPath === `/${lang}/${sub.href}`
-                                    ? "text-blue-800 font-medium"
+                                    ? "text-primary-600 font-medium"
                                     : ""
                                 }`}
                             >
@@ -127,9 +127,9 @@ const currentPath = Astro.url.pathname;
                     href={`/${lang}/${section.href}`}
                     class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
                         before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                        before:w-0 before:bg-blue-800 before:transition-all before:duration-500 before:ease-in-out
-                        hover:before:w-full hover:text-blue-800
-                        ${isActive ? "text-blue-800 before:w-full" : ""}`
+                        before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                        hover:before:w-full hover:text-primary-600
+                        ${isActive ? "text-primary-600 before:w-full" : ""}`
                         }
                     >
                     <span>{section.name}</span>
@@ -154,7 +154,7 @@ const currentPath = Astro.url.pathname;
                         <div>
                             <button
                                 type="button"
-                                class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium w-full text-left"
+                                class="text-gray-700 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left"
                                 data-collapse-toggle={`mobile-dropdown-${section.href}`}
                                 aria-expanded="false"
                             >
@@ -167,7 +167,7 @@ const currentPath = Astro.url.pathname;
                                 {section.items.map((item) => (
                                     <a
                                         href={`/${lang}/${item.href}`}
-                                        class="text-gray-600 hover:text-blue-600 block px-3 py-2 text-sm no-underline"
+                                        class="text-gray-600 hover:text-primary-600 block px-3 py-2 text-sm no-underline"
                                     >
                                         {item.name}
                                     </a>
@@ -178,7 +178,7 @@ const currentPath = Astro.url.pathname;
                         <!-- Simple mobile link -->
                         <a
                             href={`/${lang}/${section.href}`}
-                            class="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium no-underline"
+                            class="text-gray-700 hover:text-primary-600 block px-3 py-2 text-base font-medium no-underline"
                         >
                             {section.name}
                         </a>

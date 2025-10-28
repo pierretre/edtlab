@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 const getTypeColor = (type: string) => {
     switch (type) {
         case "conference":
-            return "bg-blue-100 text-blue-800";
+            return "bg-blue-100 text-primary-600";
         case "workshop":
             return "bg-green-100 text-green-800";
         case "seminar":
@@ -124,7 +124,7 @@ const isSoon = (date: Date) => {
                 </svg>
                 <span
                     class={isUpcoming(event.data.date)
-                        ? "text-blue-600 font-medium"
+                        ? "text-primary-600 font-medium"
                         : ""}
                 >
                     {formatDate(event.data.date)}
@@ -166,7 +166,7 @@ const isSoon = (date: Date) => {
                         href={event.data.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-colors duration-200"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
                         aria-label={`${t("events.learn-more")} - ${event.data.title}`}
                     >
                         {isUpcoming(event.data.date) &&
@@ -192,7 +192,7 @@ const isSoon = (date: Date) => {
             }
             <a
                 href={`/${lang}/events/${event.slug}`}
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-blue-700 bg-white border border-blue-700 rounded-lg hover:bg-blue-50 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-colors duration-200"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-primary-700 bg-white border border-primary-700 rounded-lg hover:bg-primary-50 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
                 aria-label={`${t("events.view-details")} - ${event.data.title}`}
             >
                 {t("events.view-details")}

@@ -74,7 +74,7 @@ const t = useTranslations(lang);
             tocHTML += `
                         <li style="margin-left: ${indent}px;">
                             <a href="#${item.id}" 
-                               class="toc-link block py-1 px-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors ${isActive}"
+                               class="toc-link block py-1 px-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors ${isActive}"
                                data-target="${item.id}">
                                 ${item.text}
                             </a>
@@ -97,16 +97,16 @@ const t = useTranslations(lang);
                     tocLinks.forEach((l) =>
                         l.classList.remove(
                             "toc-active",
-                            "text-blue-600",
-                            "bg-blue-50",
+                            "text-primary-600",
+                            "bg-primary-50",
                         ),
                     );
 
                     // Add active class to clicked link
                     this.classList.add(
                         "toc-active",
-                        "text-blue-600",
-                        "bg-blue-50",
+                        "text-primary-600",
+                        "bg-primary-50",
                     );
 
                     // Calculate header height and add extra offset
@@ -163,8 +163,8 @@ const t = useTranslations(lang);
                         tocLinks.forEach((link) => {
                             link.classList.remove(
                                 "toc-active",
-                                "text-blue-600",
-                                "bg-blue-50",
+                                "text-primary-600",
+                                "bg-primary-50",
                             );
                             link.classList.add("text-gray-600");
                         });
@@ -177,8 +177,8 @@ const t = useTranslations(lang);
                             activeLink.classList.remove("text-gray-600");
                             activeLink.classList.add(
                                 "toc-active",
-                                "text-blue-600",
-                                "bg-blue-50",
+                                "text-primary-600",
+                                "bg-primary-50",
                             );
                         }
                     }
@@ -216,8 +216,8 @@ const t = useTranslations(lang);
                     tocLinks.forEach((link) => {
                         link.classList.remove(
                             "toc-active",
-                            "text-blue-600",
-                            "bg-blue-50",
+                            "text-primary-600",
+                            "bg-primary-50",
                         );
                         link.classList.add("text-gray-600");
                     });
@@ -229,8 +229,8 @@ const t = useTranslations(lang);
                         activeLink.classList.remove("text-gray-600");
                         activeLink.classList.add(
                             "toc-active",
-                            "text-blue-600",
-                            "bg-blue-50",
+                            "text-primary-600",
+                            "bg-primary-50",
                         );
                     }
                 }
