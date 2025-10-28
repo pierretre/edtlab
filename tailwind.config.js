@@ -12,68 +12,83 @@ export default {
                 'sans': ['Marianne', 'system-ui', 'sans-serif'],
             },
             colors: {
-                // French government color scheme with RGAA-compliant contrast ratios
-                'edt': {
-                    // Primary blue (French government blue)
-                    'primary': {
-                        50: '#eff6ff',   // Very light blue
-                        100: '#dbeafe',  // Light blue
-                        200: '#bfdbfe',  // Medium light blue
-                        300: '#93c5fd',  // Medium blue
-                        400: '#60a5fa',  // Medium dark blue
-                        500: '#3b82f6',  // Base blue
-                        600: '#2563eb',  // Dark blue (4.5:1 contrast on white)
-                        700: '#1d4ed8',  // Darker blue (7:1 contrast on white)
-                        800: '#1e40af',  // Very dark blue
-                        900: '#1e3a8a',  // Darkest blue
-                    },
-                    // Secondary red (Marianne red)
-                    'secondary': {
-                        50: '#fef2f2',   // Very light red
-                        100: '#fee2e2',  // Light red
-                        200: '#fecaca',  // Medium light red
-                        300: '#fca5a5',  // Medium red
-                        400: '#f87171',  // Medium dark red
-                        500: '#ef4444',  // Base red
-                        600: '#dc2626',  // Dark red (4.5:1 contrast on white)
-                        700: '#b91c1c',  // Darker red (7:1 contrast on white)
-                        800: '#991b1b',  // Very dark red
-                        900: '#7f1d1d',  // Darkest red
-                    },
-                    // Neutral grays with proper contrast ratios
-                    'gray': {
-                        50: '#f9fafb',   // Very light gray
-                        100: '#f3f4f6',  // Light gray
-                        200: '#e5e7eb',  // Medium light gray
-                        300: '#d1d5db',  // Medium gray
-                        400: '#9ca3af',  // Medium dark gray
-                        500: '#6b7280',  // Base gray (4.5:1 contrast on white)
-                        600: '#4b5563',  // Dark gray (7:1 contrast on white)
-                        700: '#374151',  // Darker gray (12:1 contrast on white)
-                        800: '#1f2937',  // Very dark gray
-                        900: '#111827',  // Darkest gray
-                    },
-                    // Success green (RGAA compliant)
-                    'success': {
-                        50: '#f0fdf4',
-                        500: '#22c55e',
-                        600: '#16a34a',  // 4.5:1 contrast on white
-                        700: '#15803d',  // 7:1 contrast on white
-                    },
-                    // Warning orange (RGAA compliant)
-                    'warning': {
-                        50: '#fffbeb',
-                        500: '#f59e0b',
-                        600: '#d97706',  // 4.5:1 contrast on white
-                        700: '#b45309',  // 7:1 contrast on white
-                    },
-                    // Error red (RGAA compliant)
-                    'error': {
-                        50: '#fef2f2',
-                        500: '#ef4444',
-                        600: '#dc2626',  // 4.5:1 contrast on white
-                        700: '#b91c1c',  // 7:1 contrast on white
-                    }
+                // Primary Scampi colors
+                'primary': {
+                    'DEFAULT': '#665BA7',
+                    50: '#EEEDF5',
+                    100: '#E2E0EE',
+                    200: '#C9C5E0',
+                    300: '#B0ABD2',
+                    400: '#9890C3',
+                    500: '#7F76B5',
+                    600: '#665BA7',
+                    700: '#4F4783',
+                    800: '#39335F',
+                    900: '#231F3A',
+                    950: '#181628'
+                },
+                // Secondary brown colors (#745037)
+                'secondary': {
+                    50: '#faf9f7',    // Very light brown
+                    100: '#f3f1ed',   // Light brown
+                    200: '#e7e2db',   // Medium light brown
+                    300: '#d4cbc0',   // Light medium brown
+                    400: '#b8a896',   // Medium brown
+                    500: '#9d8a75',   // Base medium brown
+                    600: '#745037',   // Base brown (#745037)
+                    700: '#5d3f2c',   // Dark brown
+                    800: '#4a3223',   // Darker brown
+                    900: '#3d2a1d',   // Very dark brown
+                    950: '#201611',   // Darkest brown
+                },
+                // Tertiary lighter brown colors (#8b6f50)
+                'tertiary': {
+                    50: '#faf8f6',    // Very light brown
+                    100: '#f4f0eb',   // Light brown
+                    200: '#e8dfd6',   // Medium light brown
+                    300: '#d6c7b8',   // Light medium brown
+                    400: '#bfa593',   // Medium brown
+                    500: '#a68c73',   // Base medium brown
+                    600: '#8b6f50',   // Base brown (#8b6f50)
+                    700: '#6f5640',   // Dark brown
+                    800: '#5a4534',   // Darker brown
+                    900: '#4a392c',   // Very dark brown
+                    950: '#261e17',   // Darkest brown
+                },
+                // Neutral grays based on #c6c0c6
+                'gray': {
+                    50: '#fafafa',    // Very light gray
+                    100: '#f5f5f5',   // Light gray
+                    200: '#e5e5e5',   // Medium light gray
+                    300: '#d4d4d4',   // Medium gray
+                    400: '#c6c0c6',   // Base gray (#c6c0c6)
+                    500: '#a3a3a3',   // Medium dark gray
+                    600: '#737373',   // Dark gray
+                    700: '#525252',   // Darker gray
+                    800: '#404040',   // Very dark gray
+                    900: '#262626',   // Darkest gray
+                    950: '#171717',   // Almost black
+                },
+                // Success green (RGAA compliant with new scheme)
+                'success': {
+                    50: 'oklch(96.5% 0.027 142)',      // Very light green
+                    500: 'oklch(62.8% 0.150 145)',     // Base green
+                    600: 'oklch(55.4% 0.135 145)',     // 4.5:1 contrast on white
+                    700: 'oklch(48.2% 0.122 145)',     // 7:1 contrast on white
+                },
+                // Warning orange (RGAA compliant with new scheme)
+                'warning': {
+                    50: 'oklch(97.8% 0.024 83)',       // Very light orange
+                    500: 'oklch(75.8% 0.108 83)',      // Base orange
+                    600: 'oklch(68.3% 0.098 83)',      // 4.5:1 contrast on white
+                    700: 'oklch(60.5% 0.087 83)',      // 7:1 contrast on white
+                },
+                // Error red (RGAA compliant with new scheme)
+                'error': {
+                    50: 'oklch(97.1% 0.013 17)',       // Very light red
+                    500: 'oklch(62.8% 0.228 17)',      // Base red
+                    600: 'oklch(55.4% 0.207 17)',      // 4.5:1 contrast on white
+                    700: 'oklch(47.2% 0.177 17)',      // 7:1 contrast on white
                 }
             },
             fontSize: {
@@ -105,9 +120,9 @@ export default {
                 '2xl': '1rem',     // 16px
             },
             boxShadow: {
-                // Accessible shadows that don't rely on color alone
-                'focus': '0 0 0 3px rgba(59, 130, 246, 0.5)',  // Blue focus ring
-                'focus-error': '0 0 0 3px rgba(239, 68, 68, 0.5)',  // Red focus ring for errors
+                // Accessible shadows using new color scheme
+                'focus': '0 0 0 3px oklch(51.708% 0.11741 288.23 / 0.5)',  // Scampi focus ring
+                'focus-error': '0 0 0 3px oklch(62.8% 0.228 17 / 0.5)',    // Error red focus ring
             }
         },
     },

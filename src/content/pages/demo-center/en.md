@@ -1,6 +1,6 @@
 ---
 title: "Demo Center"
-slug: "demo-center"
+href: "demo-center"
 lang: "en"
 description: "Use cases and demonstrators from the EDT research program"
 toc: true

@@ -22,7 +22,7 @@ export const mockContentCollections = {
 // Helper functions for testing
 export const createMockPage = (overrides = {}) => ({
     title: 'Test Page',
-    slug: 'test-page',
+    href: 'test-page',
     lang: 'en',
     description: 'Test description',
     toc: false,

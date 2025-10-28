@@ -1,6 +1,6 @@
 ---
 title: "Resources"
-slug: "resources"
+href: "resources"
 lang: "en"
 description: "External software, tools, and publication links organized by type"
 toc: true

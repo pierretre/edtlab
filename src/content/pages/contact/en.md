@@ -1,6 +1,6 @@
 ---
 title: "Contact"
-slug: "contact"
+href: "contact"
 lang: "en"
 description: "Contact information for the EDT research program"
 toc: false

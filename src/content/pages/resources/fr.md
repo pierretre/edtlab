@@ -1,6 +1,6 @@
 ---
 title: "Ressources"
-slug: "resources"
+href: "ressources"
 lang: "fr"
 description: "Logiciels externes, outils et liens de publications organisés par type"
 toc: true

@@ -1,0 +1,321 @@
+---
+interface Props {
+    lang: "en" | "fr";
+}
+
+const { lang } = Astro.props;
+
+const colorPalettes = [
+    {
+        name: lang === "en" ? "Primary (Scampi)" : "Primaire (Scampi)",
+        colors: [
+            { shade: "50", value: "#EEEDF5", class: "bg-primary-50" },
+            { shade: "100", value: "#E2E0EE", class: "bg-primary-100" },
+            { shade: "200", value: "#C9C5E0", class: "bg-primary-200" },
+            { shade: "300", value: "#B0ABD2", class: "bg-primary-300" },
+            { shade: "400", value: "#9890C3", class: "bg-primary-400" },
+            { shade: "500", value: "#7F76B5", class: "bg-primary-500" },
+            { shade: "600", value: "#665BA7", class: "bg-primary-600" },
+            { shade: "700", value: "#4F4783", class: "bg-primary-700" },
+            { shade: "800", value: "#39335F", class: "bg-primary-800" },
+            { shade: "900", value: "#231F3A", class: "bg-primary-900" },
+            { shade: "950", value: "#181628", class: "bg-primary-950" },
+        ],
+    },
+    {
+        name: lang === "en" ? "Secondary (Brown)" : "Secondaire (Marron)",
+        colors: [
+            { shade: "50", value: "#faf9f7", class: "bg-secondary-50" },
+            { shade: "100", value: "#f3f1ed", class: "bg-secondary-100" },
+            { shade: "200", value: "#e7e2db", class: "bg-secondary-200" },
+            { shade: "300", value: "#d4cbc0", class: "bg-secondary-300" },
+            { shade: "400", value: "#b8a896", class: "bg-secondary-400" },
+            { shade: "500", value: "#9d8a75", class: "bg-secondary-500" },
+            { shade: "600", value: "#745037", class: "bg-secondary-600" },
+            { shade: "700", value: "#5d3f2c", class: "bg-secondary-700" },
+            { shade: "800", value: "#4a3223", class: "bg-secondary-800" },
+            { shade: "900", value: "#3d2a1d", class: "bg-secondary-900" },
+            { shade: "950", value: "#201611", class: "bg-secondary-950" },
+        ],
+    },
+    {
+        name:
+            lang === "en"
+                ? "Tertiary (Light Brown)"
+                : "Tertiaire (Marron Clair)",
+        colors: [
+            { shade: "50", value: "#faf8f6", class: "bg-tertiary-50" },
+            { shade: "100", value: "#f4f0eb", class: "bg-tertiary-100" },
+            { shade: "200", value: "#e8dfd6", class: "bg-tertiary-200" },
+            { shade: "300", value: "#d6c7b8", class: "bg-tertiary-300" },
+            { shade: "400", value: "#bfa593", class: "bg-tertiary-400" },
+            { shade: "500", value: "#a68c73", class: "bg-tertiary-500" },
+            { shade: "600", value: "#8b6f50", class: "bg-tertiary-600" },
+            { shade: "700", value: "#6f5640", class: "bg-tertiary-700" },
+            { shade: "800", value: "#5a4534", class: "bg-tertiary-800" },
+            { shade: "900", value: "#4a392c", class: "bg-tertiary-900" },
+            { shade: "950", value: "#261e17", class: "bg-tertiary-950" },
+        ],
+    },
+    {
+        name: lang === "en" ? "Gray" : "Gris",
+        colors: [
+            { shade: "50", value: "#fafafa", class: "bg-gray-50" },
+            { shade: "100", value: "#f5f5f5", class: "bg-gray-100" },
+            { shade: "200", value: "#e5e5e5", class: "bg-gray-200" },
+            { shade: "300", value: "#d4d4d4", class: "bg-gray-300" },
+            { shade: "400", value: "#c6c0c6", class: "bg-gray-400" },
+            { shade: "500", value: "#a3a3a3", class: "bg-gray-500" },
+            { shade: "600", value: "#737373", class: "bg-gray-600" },
+            { shade: "700", value: "#525252", class: "bg-gray-700" },
+            { shade: "800", value: "#404040", class: "bg-gray-800" },
+            { shade: "900", value: "#262626", class: "bg-gray-900" },
+            { shade: "950", value: "#171717", class: "bg-gray-950" },
+        ],
+    },
+];
+
+const statusColors = [
+    {
+        name: lang === "en" ? "Success" : "Succès",
+        colors: [
+            {
+                shade: "50",
+                value: "oklch(96.5% 0.027 142)",
+                class: "bg-success-50",
+            },
+            {
+                shade: "500",
+                value: "oklch(62.8% 0.150 145)",
+                class: "bg-success-500",
+            },
+            {
+                shade: "600",
+                value: "oklch(55.4% 0.135 145)",
+                class: "bg-success-600",
+            },
+            {
+                shade: "700",
+                value: "oklch(48.2% 0.122 145)",
+                class: "bg-success-700",
+            },
+        ],
+    },
+    {
+        name: lang === "en" ? "Warning" : "Avertissement",
+        colors: [
+            {
+                shade: "50",
+                value: "oklch(97.8% 0.024 83)",
+                class: "bg-warning-50",
+            },
+            {
+                shade: "500",
+                value: "oklch(75.8% 0.108 83)",
+                class: "bg-warning-500",
+            },
+            {
+                shade: "600",
+                value: "oklch(68.3% 0.098 83)",
+                class: "bg-warning-600",
+            },
+            {
+                shade: "700",
+                value: "oklch(60.5% 0.087 83)",
+                class: "bg-warning-700",
+            },
+        ],
+    },
+    {
+        name: lang === "en" ? "Error" : "Erreur",
+        colors: [
+            {
+                shade: "50",
+                value: "oklch(97.1% 0.013 17)",
+                class: "bg-error-50",
+            },
+            {
+                shade: "500",
+                value: "oklch(62.8% 0.228 17)",
+                class: "bg-error-500",
+            },
+            {
+                shade: "600",
+                value: "oklch(55.4% 0.207 17)",
+                class: "bg-error-600",
+            },
+            {
+                shade: "700",
+                value: "oklch(47.2% 0.177 17)",
+                class: "bg-error-700",
+            },
+        ],
+    },
+];
+---
+
+<div class="color-palette-section">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900">
+        {lang === "en" ? "Color Palette" : "Palette de Couleurs"}
+    </h2>
+
+    <p class="mb-8 text-gray-700">
+        {
+            lang === "en"
+                ? "This website uses the Scampi and Woodsmoke color palette, designed to meet RGAA 4.1 AA accessibility standards with proper contrast ratios."
+                : "Ce site web utilise la palette de couleurs Scampi et Woodsmoke, conçue pour respecter les normes d'accessibilité RGAA 4.1 AA avec des ratios de contraste appropriés."
+        }
+    </p>
+
+    <!-- Main Color Palettes -->
+    <div class="space-y-8">
+        {
+            colorPalettes.map((palette) => (
+                <div class="palette-group">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">
+                        {palette.name}
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-3">
+                        {palette.colors.map((color) => (
+                            <div class="color-swatch">
+                                <div
+                                    class={`${color.class} w-full h-16 rounded-lg border border-gray-200 shadow-sm`}
+                                    title={`${palette.name} ${color.shade}: ${color.value}`}
+                                />
+                                <div class="mt-2 text-center">
+                                    <div class="text-xs font-medium text-gray-900">
+                                        {color.shade}
+                                    </div>
+                                    <div class="text-xs text-gray-600 font-mono">
+                                        {color.value}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+
+    <!-- Status Colors -->
+    <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-6 text-gray-800">
+            {lang === "en" ? "Status Colors" : "Couleurs de Statut"}
+        </h3>
+        <div class="space-y-6">
+            {
+                statusColors.map((palette) => (
+                    <div class="status-palette">
+                        <h4 class="text-md font-medium mb-3 text-gray-700">
+                            {palette.name}
+                        </h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            {palette.colors.map((color) => (
+                                <div class="color-swatch">
+                                    <div
+                                        class={`${color.class} w-full h-12 rounded-lg border border-gray-200 shadow-sm`}
+                                        title={`${palette.name} ${color.shade}: ${color.value}`}
+                                    />
+                                    <div class="mt-2 text-center">
+                                        <div class="text-xs font-medium text-gray-900">
+                                            {color.shade}
+                                        </div>
+                                        <div class="text-xs text-gray-600 font-mono text-wrap break-all">
+                                            {color.value}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+
+    <!-- Usage Guidelines -->
+    <div class="mt-12 p-6 bg-gray-50 rounded-lg">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800">
+            {lang === "en" ? "Usage Guidelines" : "Directives d'Utilisation"}
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-start">
+                <span
+                    class="w-2 h-2 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0"
+                ></span>
+                {
+                    lang === "en"
+                        ? "Primary colors (Scampi) are used for main interactive elements, links, and brand elements."
+                        : "Les couleurs primaires (Scampi) sont utilisées pour les éléments interactifs principaux, les liens et les éléments de marque."
+                }
+            </li>
+            <li class="flex items-start">
+                <span
+                    class="w-2 h-2 bg-secondary-600 rounded-full mt-2 mr-3 flex-shrink-0"
+                ></span>
+                {
+                    lang === "en"
+                        ? "Secondary colors (Brown) provide accent colors and complement the primary palette."
+                        : "Les couleurs secondaires (Marron) fournissent des couleurs d'accent et complètent la palette primaire."
+                }
+            </li>
+            <li class="flex items-start">
+                <span
+                    class="w-2 h-2 bg-gray-600 rounded-full mt-2 mr-3 flex-shrink-0"
+                ></span>
+                {
+                    lang === "en"
+                        ? "Gray colors are used for text, borders, and neutral interface elements."
+                        : "Les couleurs grises sont utilisées pour le texte, les bordures et les éléments d'interface neutres."
+                }
+            </li>
+            <li class="flex items-start">
+                <span
+                    class="w-2 h-2 bg-success-600 rounded-full mt-2 mr-3 flex-shrink-0"
+                ></span>
+                {
+                    lang === "en"
+                        ? "Status colors provide semantic meaning for success, warning, and error states."
+                        : "Les couleurs de statut fournissent une signification sémantique pour les états de succès, d'avertissement et d'erreur."
+                }
+            </li>
+        </ul>
+    </div>
+
+    <!-- Accessibility Note -->
+    <div class="mt-6 p-4 bg-primary-50 border border-primary-200 rounded-lg">
+        <h4 class="text-sm font-semibold text-primary-900 mb-2">
+            {
+                lang === "en"
+                    ? "Accessibility Compliance"
+                    : "Conformité à l'Accessibilité"
+            }
+        </h4>
+        <p class="text-sm text-primary-800">
+            {
+                lang === "en"
+                    ? "All color combinations used on this website meet WCAG 2.1 AA contrast requirements (4.5:1 for normal text, 3:1 for large text) to ensure accessibility for users with visual impairments."
+                    : "Toutes les combinaisons de couleurs utilisées sur ce site web respectent les exigences de contraste WCAG 2.1 AA (4,5:1 pour le texte normal, 3:1 pour le texte large) pour assurer l'accessibilité aux utilisateurs ayant des déficiences visuelles."
+            }
+        </p>
+    </div>
+</div>
+
+<style>
+    .color-swatch {
+        @apply transition-transform duration-200 hover:scale-105;
+    }
+
+    .color-swatch:hover {
+        @apply cursor-pointer;
+    }
+
+    .palette-group {
+        @apply border-b border-gray-100 pb-8 last:border-b-0;
+    }
+
+    .status-palette {
+        @apply pl-4 border-l-2 border-gray-200;
+    }
+</style>

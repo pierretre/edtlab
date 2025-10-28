@@ -2,75 +2,75 @@
     "sections": [
         {
             "name": "Programme",
-            "slug": "program"
+            "href": "programme"
         },
         {
             "name": "Projets",
-            "slug": "focused-projects",
+            "href": "projets-cibles",
             "items": [
                 {
                     "name": "Aperçu",
-                    "slug": "focused-projects"
+                    "href": "projets-cibles"
                 },
                 {
                     "name": "Projet 1 (PC1)",
-                    "slug": "focused-projects/fp1"
+                    "href": "projets-cibles/pc1"
                 },
                 {
                     "name": "Projet 2 (PC2)",
-                    "slug": "focused-projects/fp2"
+                    "href": "projets-cibles/pc2"
                 },
                 {
                     "name": "Projet 3 (PC3)",
-                    "slug": "focused-projects/fp3"
+                    "href": "projets-cibles/pc3"
                 },
                 {
                     "name": "Projet 4 (PC4)",
-                    "slug": "focused-projects/fp4"
+                    "href": "projets-cibles/pc4"
                 },
                 {
                     "name": "Projet 5 (PC5)",
-                    "slug": "focused-projects/fp5"
+                    "href": "projets-cibles/pc5"
                 }
             ]
         },
         {
             "name": "Production",
-            "slug": "production",
+            "href": "production",
             "items": [
                 {
                     "name": "Aperçu",
-                    "slug": "production"
+                    "href": "production"
                 },
                 {
                     "name": "Publications",
-                    "slug": "production/publications"
+                    "href": "production/publications"
                 },
                 {
                     "name": "Plateforme",
-                    "slug": "production/platform"
+                    "href": "production/plateforme"
                 }
             ]
         },
         {
             "name": "Centre de Démonstration",
-            "slug": "demo-center"
+            "href": "centre-demo"
         },
         {
             "name": "Ressources",
-            "slug": "resources"
+            "href": "ressources"
         },
         {
             "name": "Actualités",
-            "slug": "news"
+            "href": "actualites"
         },
         {
             "name": "Nous Rejoindre",
-            "slug": "join-us"
+            "href": "nous-rejoindre"
         },
         {
             "name": "Contact",
-            "slug": "contact"
+            "href": "contact"
         }
     ]
 }

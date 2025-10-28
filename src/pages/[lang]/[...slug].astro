@@ -1,61 +1,81 @@
 ---
+import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../i18n/utils";
-import Navigation from "../../components/Navigation.astro";
-import "../../styles/global.css";
+import PageLayout from "../../layouts/PageLayout.astro";
 
-export function getStaticPaths() {
-    // This will be populated when content collections are set up
-    // For now, return basic paths for testing
-    const paths = [];
-    const langs = ["en", "fr"];
-    const pages = [
-        "about",
-        "contact",
-        "program",
-        "projects",
-        "production",
-        "demo-center",
-        "resources",
-        "news",
-        "join-us",
-    ];
+export async function getStaticPaths() {
+    const allPages = await getCollection("pages");
 
-    for (const lang of langs) {
-        for (const page of pages) {
-            paths.push({
-                params: { lang, slug: page },
-            });
-        }
-    }
+    return allPages.map((page: CollectionEntry<"pages">) => {
+        const { lang, href } = page.data;
 
-    return paths;
+        return {
+            params: {
+                lang: lang,
+                slug: href,
+            },
+            props: { page },
+        };
+    });
 }
 
+const { page } = Astro.props as { page: CollectionEntry<"pages"> };
 const { lang, slug } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
+
+if (!page) {
+    return new Response(null, {
+        status: 404,
+        statusText: "Not found",
+    });
+}
+
+// Get the rendered content
+const { Content } = await page.render();
 ---
 
-<html lang={lang}>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{t("site.title")} - {slug}</title>
-        <meta name="description" content={t("site.description")} />
-    </head>
-    <body>
-        <Navigation />
+<PageLayout
+    title={page.data.title}
+    description={page.data.description || t("site.description")}
+    lang={lang as "en" | "fr"}
+    showBreadcrumb={true}
+    showToc={page.data.toc}
+>
+    <!-- Page Title -->
+    <!-- <header class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            {page.data.title}
+        </h1>
+        {
+            page.data.description && (
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    {page.data.description}
+                </p>
+            )
+        }
+    </header> -->
 
-        <main class="container mx-auto px-4 py-8">
-            <h1 class="text-3xl font-bold mb-6">
-                {slug} ({lang.toUpperCase()})
-            </h1>
-            <p class="text-gray-600">
-                This is the {slug} page in {
-                    lang === "en" ? "English" : "French"
-                }.
-            </p>
-        </main>
-    </body>
-</html>
+    <!-- Page Content -->
+    <Content />
+
+    <!-- Last Modified Date -->
+    <!-- {
+        page.data.lastModified && (
+            <footer class="mt-12 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500">
+                    {lang === "en" ? "Last updated:" : "Dernière mise à jour :"}
+                    <time datetime={page.data.lastModified.toISOString()}>
+                        {page.data.lastModified.toLocaleDateString(
+                            lang === "en" ? "en-US" : "fr-FR",
+                            {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            },
+                        )}
+                    </time>
+                </p>
+            </footer>
+        )
+    } -->
+</PageLayout>
