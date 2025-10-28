@@ -159,44 +159,56 @@ const isSoon = (date: Date) => {
         </div>
 
         <!-- Action buttons -->
-        <div class="flex gap-2">
+        <div class="flex flex-col gap-2">
+            <a
+                href={`/${lang}/events/${event.slug}`}
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
+                aria-label={`${t("events.view-details")} - ${event.data.title}`}
+            >
+                {t("events.view-details")}
+                <svg
+                    class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                    aria-hidden="true"
+                    fill="none"
+                    viewBox="0 0 14 10"
+                >
+                    <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9"></path>
+                </svg>
+            </a>
             {
                 event.data.url && (
                     <a
                         href={event.data.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
-                        aria-label={`${t("events.learn-more")} - ${event.data.title}`}
+                        class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors duration-200"
+                        aria-label={`${t("news.external-link")} - ${event.data.title}`}
                     >
                         {isUpcoming(event.data.date) &&
                         event.data.type !== "press"
                             ? t("events.register")
-                            : t("events.learn-more")}
+                            : t("news.external-link")}
                         <svg
-                            class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                            aria-hidden="true"
+                            class="w-4 h-4 ml-1"
                             fill="none"
-                            viewBox="0 0 14 10"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                         >
                             <path
-                                stroke="currentColor"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M1 5h12m0 0L9 1m4 4L9 9"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                             />
                         </svg>
                     </a>
                 )
             }
-            <a
-                href={`/${lang}/events/${event.slug}`}
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-primary-700 bg-white border border-primary-700 rounded-lg hover:bg-primary-50 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
-                aria-label={`${t("events.view-details")} - ${event.data.title}`}
-            >
-                {t("events.view-details")}
-            </a>
         </div>
     </div>
 </div>

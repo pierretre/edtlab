@@ -55,7 +55,7 @@ All the PCs will be based on the collection of Use cases (UC) provided by the co
 
 #### 2.1.3
  Cross-Cutting Actions
-To ensure a smooth collaboration, the building of a vibrant community and a strong consistency in the R&D, Program governance and animation is structured via a set of 7 Cross-cutting actions (AT): 1) AT1: Animation, 2) AT2: Use cases and demonstrators, 3) AT3: Platform integration, 4) AT4: Standardization; 5) AT5: Education; 6) AT6: Ethics and Sustainability; 7) AT7: Dissemination and Exploitation . Section 5 gives the detail of each cross-cutting actions of EDT .
+To ensure a smooth collaboration, the building of a vibrant community and a strong consistency in the R&D, Program governance and animation is structured via a set of 5 Cross-cutting actions (AT): 1) AT1: Animation, 2) AT2: Use cases and demonstrators, 3) AT3: Platform integration, 4) AT6: Ethics and Sustainability; 5) AT7: Dissemination and Exploitation . Section 5 gives the detail of each cross-cutting actions of EDT .
 
 #### 2.3.1
  Principal Investigators
@@ -83,7 +83,7 @@ EDT is deeply rooted in use cases provided by the user community composed of pub
 
 At the beginning of the first year of EDT , a UCs-PCs matching workshop will be organized to enable the PCs members and UCs providers to meet and detail the respective goals and needs of their use cases. The outcome of the workshop will be to finely link the UCs with the workpackages, with the goal of associating two UCs to each research topic and PhD subject.
 
-Open software components and building blocks provided by these use cases would be considered for their integration in the Digital Toolbox of Artemis in AT3 as well as Educational Tools in AT5.
+Open software components and building blocks provided by these use cases would be considered for their integration in the Digital Toolbox of Artemis in AT3.
 
 A second workshop will be organized to analyze in depth the most cross-cutting use cases, such as UC3, UC6, UC8, UC10, UC22 or UC26 or UC36. Five of them will be selected to serve as the basis for end-to-end demonstrators (see Appendix C). We will do our best to ensure that the five classes of Physical Twins identified in Appendix C.1 will be represented: 1) Natural systems; 2) Anthropized systems, and Engineered systems, incl. 3) Cyber-physical systems, 4) Infrastructures, and 5) Processes.
 
@@ -386,7 +386,7 @@ The outcome of the workshop will be to link the UCs with the relevant PC’s wor
 
 This will enable them to gather a solid set of realistic requirements to initiate their research and development work. The selected UCs, potentially shared between several PCs, and the Use Cases catalog will the be exploited and enriched all along the Program.
 
-From the selected UCs, a set of five end-to-end demonstrators will be developed to validate the integrated EDT platform. These end-to-end demonstrators will serve as an educational support for AT5, a starting point for studying the ethical and sustainable aspects of DT in AT6 and a basis for presenting the results of Artemis and EDT in AT7. The development of the end-to-end demonstrators will also start during the first year following an agile methodology and leveraging the most representative and cross-projects use cases (see Section 3). These end-to-end Demonstrators will be built upon existing data, models and software components provided by the UC provider, bringing a very useful basis for new scientific work in the field of EDT, and leveraging and validating the scientific and technological advances obtained in EDT Projects (with strong links with PC1-core foundations, PC2-core tools, and also with PC3-core methods & PC4-coupling, reliability & PC5-interactivity, immersive interface).
+From the selected UCs, a set of five end-to-end demonstrators will be developed to validate the integrated EDT platform. These end-to-end demonstrators will serve as a starting point for studying the ethical and sustainable aspects of DT in AT6 and a basis for presenting the results of Artemis and EDT in AT7. The development of the end-to-end demonstrators will also start during the first year following an agile methodology and leveraging the most representative and cross-projects use cases (see Section 3). These end-to-end Demonstrators will be built upon existing data, models and software components provided by the UC provider, bringing a very useful basis for new scientific work in the field of EDT, and leveraging and validating the scientific and technological advances obtained in EDT Projects (with strong links with PC1-core foundations, PC2-core tools, and also with PC3-core methods & PC4-coupling, reliability & PC5-interactivity, immersive interface).
 
 The Program Directors will initiate the AT2 activity. Then, an AT2 leader, who will be in charge of coordinating the AT activities, will be identified by EDT Operating Committee in consultation with the Usage Committee during the first year of the Program.
 
