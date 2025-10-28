@@ -132,40 +132,36 @@ const menuSections = currentMenu?.data.sections || [];
 </nav>
 
 <!-- Flowbite JavaScript for dropdown functionality -->
-<script is:inline>
+<script>
+    import { Dropdown, Collapse } from 'flowbite';
+    
+    // Initialize dropdowns for desktop navigation
     document.addEventListener('DOMContentLoaded', function() {
-        // Import Flowbite dynamically to avoid conflicts
-        import('flowbite').then(({ Dropdown, Collapse }) => {
-            // Initialize desktop dropdowns
-            const dropdownButtons = document.querySelectorAll('[data-dropdown-toggle]');
-            dropdownButtons.forEach(button => {
-                const targetId = button.getAttribute('data-dropdown-toggle');
-                if (!targetId) return;
-                
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    new Dropdown(targetElement, button);
-                }
-            });
-
-            // Initialize mobile menu collapse
-            const mobileMenuButton = document.querySelector('[data-collapse-toggle="mobile-menu"]');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenuButton && mobileMenu) {
-                new Collapse(mobileMenu, mobileMenuButton);
+        // Initialize desktop dropdowns
+        const dropdownButtons = document.querySelectorAll('[data-dropdown-toggle]');
+        dropdownButtons.forEach(button => {
+            const targetId = button.getAttribute('data-dropdown-toggle');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                new Dropdown(targetElement, button);
             }
+        });
 
-            // Initialize mobile dropdown collapses
-            const mobileDropdownButtons = document.querySelectorAll('[data-collapse-toggle^="mobile-dropdown-"]');
-            mobileDropdownButtons.forEach(button => {
-                const targetId = button.getAttribute('data-collapse-toggle');
-                if (!targetId) return;
-                
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    new Collapse(targetElement, button);
-                }
-            });
+        // Initialize mobile menu collapse
+        const mobileMenuButton = document.querySelector('[data-collapse-toggle="mobile-menu"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            new Collapse(mobileMenu, mobileMenuButton);
+        }
+
+        // Initialize mobile dropdown collapses
+        const mobileDropdownButtons = document.querySelectorAll('[data-collapse-toggle^="mobile-dropdown-"]');
+        mobileDropdownButtons.forEach(button => {
+            const targetId = button.getAttribute('data-collapse-toggle');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                new Collapse(targetElement, button);
+            }
         });
     });
 </script>

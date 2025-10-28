@@ -41,7 +41,7 @@
 
 ## Core Layout and Components
 
-- [x] 6. Build base layout components with accessibility features
+- [ ] 6. Build base layout components with accessibility features
   - Create BaseLayout component with meta tags, analytics, and RGAA compliance
   - Implement Header component with Flowbite Navbar and responsive navigation
   - Build Footer component with contact information and legal notices
