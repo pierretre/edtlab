@@ -89,7 +89,7 @@ All main pages have been created with bilingual support:
 All pages content files must include:
 ```yaml
 title: "Page Title"
-slug: "url-slug"
+href: "url-slug"
 lang: "en" | "fr"
 description: "Optional description"
 toc: true/false          # Enable table of contents

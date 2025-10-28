@@ -1,32 +1,71 @@
 ---
-import {
-    getLangFromUrl,
-    useTranslations,
-    getAlternateLanguage,
-    getLocalizedUrl,
-} from "../i18n/utils";
+/**
+ * Smart Language Toggle Component
+ *
+ * Features:
+ * - Smart redirecting to corresponding translated pages
+ * - Fallback to home page if no translation exists
+ * - Accessible with proper ARIA labels and keyboard navigation
+ * - Light mode optimized design
+ * - Smooth transitions and hover effects
+ */
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { languages } from "../i18n/ui";
+import { getCorrespondingPage } from "../i18n/page-mapping";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
-const alternateLang = getAlternateLanguage(lang);
-const currentPath = Astro.url.pathname
-    .replace(/^\/[a-z]{2}\//, "/")
-    .replace(/^\//, "");
-const alternateUrl = getLocalizedUrl(alternateLang, currentPath);
+
+// Extract current href from URL (without language prefix)
+const currentHref = Astro.url.pathname
+    .split("/")
+    .filter((part) => part.length > 0)
+    .slice(1) // Remove language prefix
+    .join("/");
 ---
 
-<a
-    href={alternateUrl}
-    class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-    aria-label={t("lang.switch")}
->
-    <span class="mr-2">{alternateLang.toUpperCase()}</span>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
-        ></path>
-    </svg>
-</a>
+<div class="flex items-center space-x-2 text-sm font-medium text-gray-900">
+    {
+        Object.keys(languages).map((locale, index) => {
+            const isActive = locale === lang;
+
+            // Get the corresponding page in the target language
+            const targetLang = locale as "en" | "fr";
+            const correspondingHref = getCorrespondingPage(
+                currentHref,
+                lang,
+                targetLang,
+            );
+            const targetUrl = correspondingHref
+                ? `/${targetLang}/${correspondingHref}`
+                : `/${targetLang}/`;
+
+            return (
+                <>
+                    <a
+                        href={targetUrl}
+                        class={`px-2 transition-colors duration-150 ${
+                            isActive
+                                ? "text-primary-600 font-semibold underline underline-offset-4"
+                                : "text-gray-700 hover:text-primary-500"
+                        }`}
+                        title={
+                            isActive
+                                ? t("language.current")
+                                : t("language.switch-to").replace(
+                                      "{lang}",
+                                      locale.toUpperCase(),
+                                  )
+                        }
+                    >
+                        {locale.toUpperCase()}
+                    </a>
+
+                    {index < Object.keys(languages).length - 1 && (
+                        <span class="text-gray-400 select-none">|</span>
+                    )}
+                </>
+            );
+        })
+    }
+</div>

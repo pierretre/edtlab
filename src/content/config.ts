@@ -5,7 +5,7 @@ const pagesCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
-        slug: z.string().optional(),
+        href: z.string(),
         lang: z.enum(['en', 'fr']),
         description: z.string().optional(),
         toc: z.boolean().default(false),
@@ -24,7 +24,6 @@ const publicationsCollection = defineCollection({
         venue: z.string().optional(),
         doi: z.string().optional(),
         url: z.string().url().optional(),
-        lang: z.enum(['en', 'fr'])
     })
 });
 
@@ -38,7 +37,7 @@ const eventsCollection = defineCollection({
         location: z.string().optional(),
         description: z.string(),
         url: z.string().url().optional(),
-        lang: z.enum(['en', 'fr'])
+        lang: z.enum(['en', 'fr']),
     })
 });
 
@@ -53,7 +52,7 @@ const jobOffersCollection = defineCollection({
         deadline: z.date(),
         description: z.string(),
         requirements: z.array(z.string()),
-        lang: z.enum(['en', 'fr'])
+        lang: z.enum(['en', 'fr']),
     })
 });
 
@@ -63,10 +62,10 @@ const menuCollection = defineCollection({
     schema: z.object({
         sections: z.array(z.object({
             name: z.string(),
-            slug: z.string(),
+            href: z.string(),
             items: z.array(z.object({
                 name: z.string(),
-                slug: z.string()
+                href: z.string()
             })).optional()
         }))
     })

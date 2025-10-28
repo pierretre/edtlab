@@ -1,6 +1,6 @@
 ---
 title: "Platform"
-slug: "production/platform"
+href: "production/platform"
 lang: "en"
 description: "EDT research platform documentation and resources"
 toc: true

@@ -1,7 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import Navigation from "../../components/Navigation.astro";
-import "../../styles/global.css";
+import HomeLayout from "../../layouts/HomeLayout.astro";
 
 export function getStaticPaths() {
     return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];
@@ -11,30 +10,11 @@ const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
 ---
 
-<html lang={lang}>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{t("site.title")}</title>
-        <meta name="description" content={t("site.description")} />
-    </head>
-    <body>
-        <Navigation />
-        <main class="container mx-auto px-4 py-8">
-            <h1 class="text-3xl font-bold text-center mb-8">
-                {t("site.title")}
-            </h1>
-            <p class="text-center text-lg text-gray-600 mb-8">
-                {t("site.description")}
-            </p>
-            <div class="text-center">
-                <p class="text-gray-500">
-                    Welcome to the {lang === "en" ? "English" : "French"} version
-                    of the site.
-                </p>
-            </div>
-        </main>
-    </body>
-</html>
+<HomeLayout
+    title={t("site.title")}
+    description={t("site.description")}
+    lang={lang}
+>
+    <!-- Additional content can be added here if needed -->
+    <!-- The HomeLayout component handles the hero section and navigation tiles -->
+</HomeLayout>

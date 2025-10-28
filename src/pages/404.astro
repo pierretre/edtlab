@@ -1,31 +1,119 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import "../styles/global.css";
+import { useTranslations } from "../i18n/utils";
+import PageLayout from "../layouts/PageLayout.astro";
 
-// Try to detect language from URL, fallback to English
-const lang = getLangFromUrl(Astro.url) as "en" | "fr";
-const t = useTranslations(lang);
+export async function getStaticPaths() {
+    return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];
+}
+
+// Get language from params
+const { lang } = Astro.params;
+
+// Validate language parameter
+const validLang = lang === "en" || lang === "fr" ? lang : "en";
+const t = useTranslations(validLang);
 ---
 
-<html lang={lang}>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>404 - {t("site.title")}</title>
-        <meta name="description" content={t("page.not-found")} />
-    </head>
-    <body>
-        <main class="container mx-auto px-4 py-8 text-center">
-            <h1 class="text-4xl font-bold mb-4">404</h1>
-            <p class="text-xl text-gray-600 mb-8">{t("page.not-found")}</p>
-            <a
-                href={`/${lang}/`}
-                class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
+<PageLayout
+    title={`404 - ${t("404.title")}`}
+    description={t("404.description")}
+    lang={validLang}
+    showBreadcrumb={true}
+    showToc={false}
+    noindex={true}
+>
+    <!-- 404 Error Content -->
+    <div class="text-center py-16">
+        <div class="max-w-md mx-auto">
+            <!-- Error Icon -->
+            <div class="mb-8">
+                <svg
+                    class="mx-auto h-24 w-24 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1"
+                        d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-3-8a9 9 0 110 18 9 9 0 010-18z"
+                    ></path>
+                </svg>
+            </div>
+
+            <!-- Error Message -->
+            <h1 class="text-6xl font-bold text-gray-900 mb-4">404</h1>
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">
+                {t("404.title")}
+            </h2>
+            <p class="text-lg text-gray-600 mb-8">
+                {t("404.description")}
+            </p>
+
+            <!-- Action Buttons -->
+            <div
+                class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center"
             >
-                {t("page.back-home")}
-            </a>
-        </main>
-    </body>
-</html>
+                <a
+                    href={`/${validLang}/`}
+                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-300 transition-colors"
+                >
+                    <svg
+                        class="mr-2 -ml-1 w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    {t("page.back-home")}
+                </a>
+
+                <a
+                    href={`/${validLang}/contact`}
+                    class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-300 transition-colors"
+                >
+                    {t("404.contact-us")}
+                </a>
+            </div>
+
+            <!-- Helpful Links -->
+            <div class="mt-12">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">
+                    {t("404.helpful-links")}
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <a
+                        href={`/${validLang}/program`}
+                        class="text-primary-600 hover:text-primary-600 hover:underline"
+                    >
+                        {t("nav.program")}
+                    </a>
+                    <a
+                        href={`/${validLang}/focused-projects`}
+                        class="text-primary-600 hover:text-primary-600 hover:underline"
+                    >
+                        {t("nav.focused-projects")}
+                    </a>
+                    <a
+                        href={`/${validLang}/production`}
+                        class="text-primary-600 hover:text-primary-600 hover:underline"
+                    >
+                        {t("nav.production")}
+                    </a>
+                    <a
+                        href={`/${validLang}/news`}
+                        class="text-primary-600 hover:text-primary-600 hover:underline"
+                    >
+                        {t("nav.news")}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</PageLayout>

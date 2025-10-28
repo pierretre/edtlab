@@ -1,6 +1,6 @@
 ---
 title: "Centre de Démonstration"
-slug: "demo-center"
+href: "centre-demo"
 lang: "fr"
 description: "Cas d'usage et démonstrateurs du programme de recherche EDT"
 toc: true

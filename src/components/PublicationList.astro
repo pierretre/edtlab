@@ -1,0 +1,300 @@
+---
+import { getCollection } from "astro:content";
+import { useTranslations } from "../i18n/utils";
+import FilterBar from "./FilterBar.astro";
+
+interface Props {
+    lang: "en" | "fr";
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Get all publications for the current language
+const allPublications = await getCollection("publications");
+
+// Sort publications by year (newest first) and then by title
+const sortedPublications = allPublications.sort((a, b) => {
+    if (b.data.year !== a.data.year) {
+        return b.data.year - a.data.year;
+    }
+    return a.data.title.localeCompare(b.data.title);
+});
+
+// Get unique years and types for filters
+const years = [...new Set(allPublications.map((pub) => pub.data.year))].sort(
+    (a, b) => b - a,
+);
+const types = ["journal", "conference", "book", "report"] as const;
+
+// Helper function to get type translation
+const getTypeTranslation = (type: string) => {
+    switch (type) {
+        case "journal":
+            return t("publications.type.journal");
+        case "conference":
+            return t("publications.type.conference");
+        case "book":
+            return t("publications.type.book");
+        case "report":
+            return t("publications.type.report");
+        default:
+            return type;
+    }
+};
+
+// Prepare filter configuration
+const filterConfig = [
+    {
+        id: "type-filter",
+        label: t("publications.filter.type"),
+        type: "select" as const,
+        options: [
+            { value: "", label: t("publications.filter.all-types") },
+            ...types.map((type) => ({
+                value: type,
+                label: getTypeTranslation(type),
+            })),
+        ],
+    },
+    {
+        id: "year-filter",
+        label: t("publications.filter.year"),
+        type: "select" as const,
+        options: [
+            { value: "", label: t("publications.filter.all-years") },
+            ...years.map((year) => ({
+                value: year.toString(),
+                label: year.toString(),
+            })),
+        ],
+    },
+    {
+        id: "search-filter",
+        label: t("publications.filter.search"),
+        type: "search" as const,
+        placeholder: t("publications.filter.search-placeholder"),
+    },
+];
+---
+
+<div class="publications-container">
+    <!-- Filters Section -->
+    <FilterBar
+        lang={lang}
+        filters={filterConfig}
+        clearButtonId="clear-filters"
+        compact={false}
+    />
+
+    <!-- Publications Table -->
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        {t("publications.table.title")}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {t("publications.table.authors")}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {t("publications.table.type")}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {t("publications.table.year")}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {t("publications.table.venue")}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {t("publications.table.links")}
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="publications-tbody">
+                {
+                    sortedPublications.map((publication) => (
+                        <tr
+                            class="publication-row bg-white border-b hover:bg-gray-50"
+                            data-type={publication.data.type}
+                            data-year={publication.data.year.toString()}
+                            data-search-text={`${publication.data.title} ${publication.data.authors.join(" ")} ${publication.data.venue || ""}`.toLowerCase()}
+                        >
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                <div class="max-w-xs">
+                                    <div class="font-semibold">
+                                        {publication.data.title}
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="max-w-xs">
+                                    {publication.data.authors.join(", ")}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-blue-100 text-primary-600 text-xs font-medium px-2.5 py-0.5 rounded">
+                                    {getTypeTranslation(publication.data.type)}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">{publication.data.year}</td>
+                            <td class="px-6 py-4">
+                                <div class="max-w-xs">
+                                    {publication.data.venue || "-"}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex space-x-2">
+                                    {publication.data.url && (
+                                        <a
+                                            href={publication.data.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                                        >
+                                            {t("publications.link.view")}
+                                        </a>
+                                    )}
+                                    {publication.data.doi && (
+                                        <a
+                                            href={`https://doi.org/${publication.data.doi}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="text-green-600 hover:text-green-800 text-sm font-medium"
+                                        >
+                                            DOI
+                                        </a>
+                                    )}
+                                </div>
+                            </td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- No Results Message -->
+    <div id="no-results" class="hidden text-center py-8 text-gray-500">
+        <p class="text-lg">
+            {t("publications.no-results")}
+        </p>
+    </div>
+
+    <!-- Results Count -->
+    <div class="mt-4 text-sm text-gray-600">
+        <span
+            id="results-count"
+            data-template={t("publications.results-count")}
+        >
+            {
+                t("publications.results-count").replace(
+                    "{count}",
+                    sortedPublications.length.toString(),
+                )
+            }
+        </span>
+    </div>
+</div>
+
+<script>
+    // Client-side filtering functionality
+    document.addEventListener("DOMContentLoaded", function () {
+        const typeFilter = document.getElementById(
+            "type-filter",
+        ) as HTMLSelectElement;
+        const yearFilter = document.getElementById(
+            "year-filter",
+        ) as HTMLSelectElement;
+        const searchFilter = document.getElementById(
+            "search-filter",
+        ) as HTMLInputElement;
+        const clearFilters = document.getElementById(
+            "clear-filters",
+        ) as HTMLButtonElement;
+        const tbody = document.getElementById(
+            "publications-tbody",
+        ) as HTMLTableSectionElement;
+        const noResults = document.getElementById(
+            "no-results",
+        ) as HTMLDivElement;
+        const resultsCount = document.getElementById(
+            "results-count",
+        ) as HTMLSpanElement;
+        const rows = Array.from(
+            document.querySelectorAll(".publication-row"),
+        ) as HTMLTableRowElement[];
+
+        function filterPublications() {
+            const typeValue = typeFilter.value;
+            const yearValue = yearFilter.value;
+            const searchValue = searchFilter.value.toLowerCase().trim();
+
+            let visibleCount = 0;
+
+            rows.forEach((row) => {
+                const rowType = row.dataset.type;
+                const rowYear = row.dataset.year;
+                const rowSearchText = row.dataset.searchText || "";
+
+                const typeMatch = !typeValue || rowType === typeValue;
+                const yearMatch = !yearValue || rowYear === yearValue;
+                const searchMatch =
+                    !searchValue || rowSearchText.includes(searchValue);
+
+                const shouldShow = typeMatch && yearMatch && searchMatch;
+
+                if (shouldShow) {
+                    row.style.display = "";
+                    visibleCount++;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            // Update results count and show/hide no results message
+            const template =
+                resultsCount.dataset.template || "Showing {count} publications";
+            resultsCount.textContent = template.replace(
+                "{count}",
+                visibleCount.toString(),
+            );
+
+            if (visibleCount === 0) {
+                tbody.style.display = "none";
+                noResults.style.display = "block";
+            } else {
+                tbody.style.display = "";
+                noResults.style.display = "none";
+            }
+        }
+
+        function clearAllFilters() {
+            typeFilter.value = "";
+            yearFilter.value = "";
+            searchFilter.value = "";
+            filterPublications();
+        }
+
+        // Add event listeners
+        typeFilter.addEventListener("change", filterPublications);
+        yearFilter.addEventListener("change", filterPublications);
+        searchFilter.addEventListener("input", filterPublications);
+        clearFilters.addEventListener("click", clearAllFilters);
+    });
+</script>
+
+<style>
+    .publications-container {
+        @apply w-full;
+    }
+
+    .publication-row {
+        transition: background-color 0.2s ease;
+    }
+
+    .publication-row:hover {
+        @apply bg-gray-50;
+    }
+</style>

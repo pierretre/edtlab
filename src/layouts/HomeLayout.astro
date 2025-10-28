@@ -1,0 +1,725 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getEntry, getCollection } from "astro:content";
+
+export interface Props {
+    title?: string;
+    description?: string;
+    image?: string;
+    canonical?: string;
+    noindex?: boolean;
+    lang?: "en" | "fr";
+}
+
+const {
+    title,
+    description,
+    image,
+    canonical,
+    noindex = false,
+    lang: propLang,
+} = Astro.props;
+
+// Get language from URL or use prop
+const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
+const t = useTranslations(lang);
+
+// Get menu data for tile generation
+const currentMenu = await getEntry("menu", lang);
+const menuSections = currentMenu?.data.sections || [];
+
+// Get dynamic content from collections for enhanced front page
+const allEvents = await getCollection("events", ({ data }) => data.lang === lang);
+const recentEvents = allEvents
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+    .slice(0, 3);
+
+const allPublications = await getCollection("publications");
+const recentPublications = allPublications
+    .sort((a, b) => b.data.year - a.data.year)
+    .slice(0, 3);
+
+const allJobOffers = await getCollection("job-offers", ({ data }) => {
+    return data.lang === lang && new Date(data.deadline) > new Date();
+});
+const activeJobOffers = allJobOffers.slice(0, 3);
+
+// Define tile data with icons and descriptions - use menu sections for proper slugs
+const tileIconMap = {
+    "program": "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    "programme": "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    "focused-projects": "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+    "projets-cibles": "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+    "production": "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+    "demo-center": "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+    "centre-demo": "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+    "resources": "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
+    "ressources": "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
+    "news": "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z",
+    "actualites": "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z",
+    "join-us": "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
+    "nous-rejoindre": "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
+    "contact": "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+};
+
+const tileDescriptionMap = {
+    "program": "Discover our research goals, structure, and partnerships",
+    "programme": "Découvrez nos objectifs de recherche, structure et partenariats",
+    "focused-projects": "Explore our five focused research projects (PC1-PC5)",
+    "projets-cibles": "Explorez nos cinq projets de recherche ciblés (PC1-PC5)",
+    "production": "Access our publications, research outputs, and platform",
+    "demo-center": "Explore our use cases and interactive demonstrators",
+    "centre-demo": "Explorez nos cas d'usage et démonstrateurs interactifs",
+    "resources": "Find external software, tools, and research resources",
+    "ressources": "Trouvez des logiciels externes, outils et ressources de recherche",
+    "news": "Stay updated with our latest events and press releases",
+    "actualites": "Restez informé de nos derniers événements et communiqués",
+    "join-us": "Discover career opportunities and open positions",
+    "nous-rejoindre": "Découvrez les opportunités de carrière et postes ouverts",
+    "contact": "Get in touch with our research team"
+};
+
+// Create tiles from menu sections
+const tiles = menuSections.map(section => ({
+    slug: section.href,
+    name: section.name,
+    icon: (tileIconMap as Record<string, string>)[section.href] || "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    description: (tileDescriptionMap as Record<string, string>)[section.href] || section.name
+}));
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    image={image}
+    canonical={canonical}
+    noindex={noindex}
+    lang={lang}
+>
+    <!-- Enhanced Hero Section with Flowbite Hero styling -->
+    <section class="bg-white">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+            <!-- Hero Badge -->
+            <a href={`/${lang}/news`} class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors" role="alert">
+                <span class="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">
+                    {lang === 'en' ? 'New' : 'Nouveau'}
+                </span> 
+                <span class="text-sm font-medium">
+                    {lang === 'en' ? 'Latest research updates and announcements' : 'Dernières mises à jour et annonces de recherche'}
+                </span> 
+                <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+            </a>
+            
+            <!-- Main Hero Content -->
+            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">
+                {t('site.title')}
+            </h1>
+            <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48">
+                {lang === 'en' 
+                    ? 'Advancing the science and engineering of digital twins through multidisciplinary research, innovative methodologies, and collaborative platforms.'
+                    : 'Faire progresser la science et l\'ingénierie des jumeaux numériques grâce à la recherche multidisciplinaire, des méthodologies innovantes et des plateformes collaboratives.'
+                }
+            </p>
+            
+            <!-- Hero Action Buttons -->
+            <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                <a href={`/${lang}/program`} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 transition-colors">
+                    {t('home.hero.learn-more')}
+                    <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <a href={`/${lang}/contact`} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors">
+                    <svg class="mr-2 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                    </svg>
+                    {t('home.hero.contact-us')}
+                </a>
+            </div>
+            
+            <!-- Hero Statistics -->
+            <div class="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36">
+                <span class="font-semibold text-gray-400 uppercase">
+                    {lang === 'en' ? 'Trusted by leading research institutions' : 'Approuvé par les principales institutions de recherche'}
+                </span>
+                <div class="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between">
+                    <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
+                        <span class="text-2xl font-bold text-primary-600">5</span>
+                        <p class="text-sm">{lang === 'en' ? 'Focused Projects' : 'Projets Ciblés'}</p>
+                    </div>
+                    <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
+                        <span class="text-2xl font-bold text-primary-600">40+</span>
+                        <p class="text-sm">{lang === 'en' ? 'Use Cases' : 'Cas d\'Usage'}</p>
+                    </div>
+                    <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
+                        <span class="text-2xl font-bold text-primary-600">{activeJobOffers.length}</span>
+                        <p class="text-sm">{lang === 'en' ? 'Open Positions' : 'Postes Ouverts'}</p>
+                    </div>
+                    <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
+                        <span class="text-2xl font-bold text-primary-600">{recentPublications.length}+</span>
+                        <p class="text-sm">{lang === 'en' ? 'Publications' : 'Publications'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Navigation Tiles Section with Flowbite Cards -->
+    <section class="bg-gray-50 py-16 lg:py-24">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
+                    {t('home.tiles.title')}
+                </h2>
+                <p class="font-light text-gray-500 lg:mb-16 sm:text-xl">
+                    {t('home.tiles.subtitle')}
+                </p>
+            </div>
+
+            <!-- Enhanced Tile Grid with Flowbite Card styling -->
+            <div class="grid gap-6 mb-6 lg:mb-16 md:grid-cols-2 lg:grid-cols-4">
+                {tiles.map((tile, index) => (
+                    <div class="group tile-card" data-index={index}>
+                        <a 
+                            href={`/${lang}/${tile.slug}`}
+                            class="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg hover:border-primary-300 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary-300"
+                            role="button"
+                            tabindex="0"
+                            aria-label={`${lang === 'en' ? 'Navigate to' : 'Naviguer vers'} ${tile.name}`}
+                        >
+                            <div class="flex flex-col items-center text-center h-full">
+                                <!-- Enhanced Icon with gradient background -->
+                                <div class="flex items-center justify-center w-20 h-20 mb-4 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full group-hover:from-primary-200 group-hover:to-primary-300 transition-all duration-300 group-hover:scale-110">
+                                    <svg 
+                                        class="w-10 h-10 text-primary-600 group-hover:text-primary-700 transition-colors duration-300" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        viewBox="0 0 24 24" 
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path 
+                                            stroke-linecap="round" 
+                                            stroke-linejoin="round" 
+                                            stroke-width="2" 
+                                            d={tile.icon}
+                                        />
+                                    </svg>
+                                </div>
+                                
+                                <!-- Enhanced Title -->
+                                <h3 class="mb-3 text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors duration-300">
+                                    {tile.name}
+                                </h3>
+                                
+                                <!-- Enhanced Description -->
+                                <p class="text-gray-500 leading-relaxed flex-grow text-center">
+                                    {tile.description}
+                                </p>
+                                
+                                <!-- Enhanced Call-to-action -->
+                                <div class="mt-6 flex items-center justify-center text-primary-600 group-hover:text-primary-700 transition-all duration-300">
+                                    <span class="text-sm font-semibold mr-2 group-hover:mr-3 transition-all duration-300">
+                                        {t('home.tiles.explore')}
+                                    </span>
+                                    <svg 
+                                        class="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" 
+                                        fill="currentColor" 
+                                        viewBox="0 0 20 20" 
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path 
+                                            fill-rule="evenodd" 
+                                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" 
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Content Showcase Section -->
+    <section class="bg-white py-16 lg:py-24">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
+                    {lang === 'en' ? 'Latest Updates' : 'Dernières Actualités'}
+                </h2>
+                <p class="font-light text-gray-500 lg:mb-16 sm:text-xl">
+                    {lang === 'en' 
+                        ? 'Stay informed about our latest research developments, publications, and opportunities.'
+                        : 'Restez informé de nos derniers développements de recherche, publications et opportunités.'
+                    }
+                </p>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-3">
+                <!-- Recent Events -->
+                {recentEvents.length > 0 && (
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <svg class="w-6 h-6 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-900">
+                                {lang === 'en' ? 'Recent Events' : 'Événements Récents'}
+                            </h3>
+                        </div>
+                        <div class="space-y-4">
+                            {recentEvents.map((event) => (
+                                <div class="border-l-4 border-primary-500 pl-4">
+                                    <h4 class="font-semibold text-gray-900 text-sm">
+                                        {event.data.title}
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {new Date(event.data.date).toLocaleDateString(lang === 'en' ? 'en-US' : 'fr-FR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </p>
+                                    <p class="text-sm text-gray-600 mt-2 line-clamp-2">
+                                        {event.data.description}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                        <div class="mt-6">
+                            <a href={`/${lang}/news`} class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors">
+                                {lang === 'en' ? 'View all events' : 'Voir tous les événements'}
+                                <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                )}
+
+                <!-- Recent Publications -->
+                {recentPublications.length > 0 && (
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <svg class="w-6 h-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-900">
+                                {lang === 'en' ? 'Recent Publications' : 'Publications Récentes'}
+                            </h3>
+                        </div>
+                        <div class="space-y-4">
+                            {recentPublications.map((publication) => (
+                                <div class="border-l-4 border-green-500 pl-4">
+                                    <h4 class="font-semibold text-gray-900 text-sm">
+                                        {publication.data.title}
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {publication.data.authors.slice(0, 2).join(', ')}
+                                        {publication.data.authors.length > 2 && ` et al.`} • {publication.data.year}
+                                    </p>
+                                    <p class="text-xs text-primary-600 mt-1 capitalize">
+                                        {publication.data.type}
+                                        {publication.data.venue && ` • ${publication.data.venue}`}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                        <div class="mt-6">
+                            <a href={`/${lang}/production/publications`} class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors">
+                                {lang === 'en' ? 'View all publications' : 'Voir toutes les publications'}
+                                <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                )}
+
+                <!-- Active Job Offers -->
+                {activeJobOffers.length > 0 && (
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <svg class="w-6 h-6 text-purple-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-900">
+                                {lang === 'en' ? 'Open Positions' : 'Postes Ouverts'}
+                            </h3>
+                        </div>
+                        <div class="space-y-4">
+                            {activeJobOffers.map((job) => (
+                                <div class="border-l-4 border-purple-500 pl-4">
+                                    <h4 class="font-semibold text-gray-900 text-sm">
+                                        {job.data.title}
+                                    </h4>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-600">
+                                            {job.data.project}
+                                        </span>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 capitalize">
+                                            {job.data.type}
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {job.data.location} • {lang === 'en' ? 'Deadline' : 'Date limite'}: {new Date(job.data.deadline).toLocaleDateString(lang === 'en' ? 'en-US' : 'fr-FR')}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                        <div class="mt-6">
+                            <a href={`/${lang}/join-us`} class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors">
+                                {lang === 'en' ? 'View all positions' : 'Voir tous les postes'}
+                                <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Content Slot -->
+    <div class="bg-gray-50">
+        <slot />
+    </div>
+
+    <!-- Enhanced interaction styles with Flowbite compatibility -->
+    <style>
+        /* Smooth animations for reduced motion users */
+        @media (prefers-reduced-motion: reduce) {
+            .tile-card a {
+                transform: none !important;
+                transition: none !important;
+            }
+            
+            .tile-card svg {
+                transform: none !important;
+                transition: none !important;
+            }
+            
+            .tile-card {
+                animation: none !important;
+            }
+        }
+        
+        /* Enhanced focus styles for better accessibility */
+        .tile-card a:focus {
+            outline: 3px solid #3B82F6;
+            outline-offset: 3px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .tile-card a {
+                border-width: 3px;
+            }
+            
+            .tile-card a:hover {
+                border-color: #1D4ED8;
+                background-color: #F8FAFC;
+            }
+            
+
+        }
+        
+        /* Ensure tiles have equal height */
+        .tile-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tile-card a {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Animation keyframes for tile entrance */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .tile-card {
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        /* Staggered animation delays */
+        .tile-card[data-index="0"] { animation-delay: 0.1s; }
+        .tile-card[data-index="1"] { animation-delay: 0.2s; }
+        .tile-card[data-index="2"] { animation-delay: 0.3s; }
+        .tile-card[data-index="3"] { animation-delay: 0.4s; }
+        .tile-card[data-index="4"] { animation-delay: 0.5s; }
+        .tile-card[data-index="5"] { animation-delay: 0.6s; }
+        .tile-card[data-index="6"] { animation-delay: 0.7s; }
+        .tile-card[data-index="7"] { animation-delay: 0.8s; }
+        
+        /* Line clamp utility for consistent text truncation */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Enhanced hover effects for dynamic content cards */
+        .bg-gray-50:hover {
+            background-color: #F8FAFC;
+            transition: background-color 0.2s ease;
+        }
+        
+
+        
+        /* Responsive grid adjustments */
+        @media (max-width: 768px) {
+            .tile-card {
+                animation-delay: 0.1s !important;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .tile-card a {
+                transform: none !important;
+                box-shadow: none !important;
+                border: 1px solid #000 !important;
+            }
+        }
+        
+        /* Loading state for dynamic content */
+        .content-loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .content-loaded {
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+
+    <!-- Enhanced JavaScript for interactions and accessibility -->
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Enhanced keyboard navigation for tile cards
+            const tileLinks = document.querySelectorAll('.tile-card a');
+            const heroButtons = document.querySelectorAll('section a[href]');
+            const dynamicContentLinks = document.querySelectorAll('.bg-gray-50 a[href]');
+            
+            // Tile interaction enhancements
+            tileLinks.forEach((link, index) => {
+                // Enhanced keyboard interaction feedback
+                link.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        // Add visual feedback with scale animation
+                        this.style.transform = 'translateY(-4px) scale(1.02)';
+                        this.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+                        
+                        setTimeout(() => {
+                            this.style.transform = '';
+                            this.style.boxShadow = '';
+                            // Navigate to the link
+                            window.location.href = this.href;
+                        }, 200);
+                    }
+                });
+                
+                // Enhanced focus management
+                link.addEventListener('focus', function() {
+                    this.setAttribute('aria-describedby', `tile-description-${index}`);
+                    // Announce to screen readers
+                    const announcement = document.createElement('div');
+                    announcement.setAttribute('aria-live', 'polite');
+                    announcement.setAttribute('aria-atomic', 'true');
+                    announcement.className = 'sr-only';
+                    announcement.textContent = `Focused on ${this.getAttribute('aria-label')}`;
+                    document.body.appendChild(announcement);
+                    setTimeout(() => document.body.removeChild(announcement), 1000);
+                });
+                
+                link.addEventListener('blur', function() {
+                    this.removeAttribute('aria-describedby');
+                });
+                
+                // Mouse interaction enhancements
+                link.addEventListener('mouseenter', function() {
+                    // Preload the target page for faster navigation
+                    if ('requestIdleCallback' in window) {
+                        requestIdleCallback(() => {
+                            const linkElement = document.createElement('link');
+                            linkElement.rel = 'prefetch';
+                            linkElement.href = this.href;
+                            document.head.appendChild(linkElement);
+                        });
+                    }
+                });
+            });
+            
+            // Hero button enhancements
+            heroButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Add ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        if (ripple.parentNode) {
+                            ripple.parentNode.removeChild(ripple);
+                        }
+                    }, 600);
+                });
+            });
+            
+            // Intersection Observer for scroll animations
+            if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('content-loaded');
+                            entry.target.classList.remove('content-loading');
+                        }
+                    });
+                }, observerOptions);
+                
+                // Observe dynamic content sections
+                document.querySelectorAll('.bg-gray-50').forEach(section => {
+                    section.classList.add('content-loading');
+                    observer.observe(section);
+                });
+            }
+            
+            // Enhanced accessibility announcements
+            const announcePageLoad = () => {
+                const announcement = document.createElement('div');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.setAttribute('aria-atomic', 'true');
+                announcement.className = 'sr-only';
+                announcement.textContent = document.querySelector('h1').textContent + ' page loaded successfully';
+                document.body.appendChild(announcement);
+                setTimeout(() => {
+                    if (announcement.parentNode) {
+                        document.body.removeChild(announcement);
+                    }
+                }, 2000);
+            };
+            
+            // Announce page load for screen readers
+            setTimeout(announcePageLoad, 500);
+            
+            // Add skip link functionality
+            const skipLink = document.createElement('a');
+            skipLink.href = '#main-content';
+            skipLink.textContent = 'Skip to main content';
+            skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-2 rounded z-50';
+            skipLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const mainContent = document.querySelector('#main-content') || document.querySelector('main') || document.querySelector('section');
+                if (mainContent) {
+                    mainContent.focus();
+                    mainContent.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+            document.body.insertBefore(skipLink, document.body.firstChild);
+            
+            // Analytics tracking placeholder (will be implemented in task 21)
+            const trackInteraction = (element, action) => {
+                // Future analytics implementation
+                console.log(`Interaction tracked: ${action} on ${element.href || element.textContent}`);
+            };
+            
+            // Track tile clicks
+            tileLinks.forEach(link => {
+                link.addEventListener('click', () => trackInteraction(link, 'tile_click'));
+            });
+            
+            // Track hero button clicks
+            heroButtons.forEach(button => {
+                button.addEventListener('click', () => trackInteraction(button, 'hero_button_click'));
+            });
+            
+            // Track dynamic content link clicks
+            dynamicContentLinks.forEach(link => {
+                link.addEventListener('click', () => trackInteraction(link, 'dynamic_content_click'));
+            });
+        });
+        
+        // Add ripple animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            
+            .sr-only:focus {
+                position: static;
+                width: auto;
+                height: auto;
+                padding: inherit;
+                margin: inherit;
+                overflow: visible;
+                clip: auto;
+                white-space: normal;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</BaseLayout>

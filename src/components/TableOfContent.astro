@@ -1,0 +1,278 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+---
+
+<aside class="lg:w-64 flex-shrink-0">
+    <div class="sticky top-24 bg-gray-50 rounded-lg p-4 border border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+            {t("toc.title")}
+        </h3>
+        <nav id="table-of-contents" aria-label={t("toc.title")}>
+            <!-- TOC will be populated by JavaScript -->
+            <ul id="toc-list" class="space-y-2 text-sm">
+                <!-- Dynamically populated -->
+            </ul>
+        </nav>
+    </div>
+</aside>
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tocList = document.getElementById("toc-list");
+        const article = document.querySelector("article");
+
+        if (!tocList || !article) return;
+
+        // Find all headings in the article
+        const headings = article.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        if (headings.length === 0) {
+            // Hide TOC if no headings found
+            const tocContainer = document
+                .querySelector("#table-of-contents")
+                .closest("aside");
+            if (tocContainer) {
+                tocContainer.style.display = "none";
+            }
+            return;
+        }
+
+        // Generate TOC items
+        const tocItems = [];
+        headings.forEach((heading) => {
+            // Create ID if it doesn't exist
+            if (!heading.id) {
+                const text = heading.textContent || "";
+                heading.id =
+                    "heading-" +
+                    text
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, "")
+                        .replace(/\s+/g, "-")
+                        .replace(/-+/g, "-")
+                        .trim();
+            }
+
+            const level = parseInt(heading.tagName.charAt(1));
+            const text = heading.textContent || "";
+
+            tocItems.push({
+                id: heading.id,
+                text: text,
+                level: level,
+            });
+        });
+
+        // Build TOC HTML
+        let tocHTML = "";
+        tocItems.forEach((item, index) => {
+            const indent = Math.max(0, item.level - 2) * 16; // 16px per level, starting from h2
+            const isActive = index === 0 ? "toc-active" : "";
+
+            tocHTML += `
+                        <li style="margin-left: ${indent}px;">
+                            <a href="#${item.id}" 
+                               class="toc-link block py-1 px-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors ${isActive}"
+                               data-target="${item.id}">
+                                ${item.text}
+                            </a>
+                        </li>
+                    `;
+        });
+
+        tocList.innerHTML = tocHTML;
+
+        // Add click handlers for smooth scrolling with header offset
+        const tocLinks = tocList.querySelectorAll(".toc-link");
+        tocLinks.forEach((link) => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute("data-target");
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    // Remove active class from all links
+                    tocLinks.forEach((l) =>
+                        l.classList.remove(
+                            "toc-active",
+                            "text-primary-600",
+                            "bg-primary-50",
+                        ),
+                    );
+
+                    // Add active class to clicked link
+                    this.classList.add(
+                        "toc-active",
+                        "text-primary-600",
+                        "bg-primary-50",
+                    );
+
+                    // Calculate header height and add extra offset
+                    const header = document.getElementById("site-header");
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const extraOffset = 20; // Additional spacing for better UX
+                    const totalOffset = headerHeight + extraOffset;
+
+                    // Calculate target position
+                    const targetPosition =
+                        targetElement.offsetTop - totalOffset;
+
+                    // Smooth scroll to target with proper offset
+                    window.scrollTo({
+                        top: Math.max(0, targetPosition),
+                        behavior: "smooth",
+                    });
+
+                    // Update URL hash without triggering scroll
+                    if (history.pushState) {
+                        history.pushState(null, null, `#${targetId}`);
+                    }
+
+                    // Focus the target for accessibility (after a short delay)
+                    setTimeout(() => {
+                        targetElement.focus();
+                    }, 100);
+                }
+            });
+        });
+
+        // Highlight current section on scroll
+        let ticking = false;
+        function updateActiveSection() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    // Calculate header height and offset for scroll position detection
+                    const header = document.getElementById("site-header");
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const extraOffset = 20;
+                    const totalOffset = headerHeight + extraOffset;
+                    const scrollPosition = window.scrollY + totalOffset;
+
+                    let activeHeading = null;
+
+                    headings.forEach((heading) => {
+                        if (heading.offsetTop <= scrollPosition) {
+                            activeHeading = heading;
+                        }
+                    });
+
+                    if (activeHeading) {
+                        // Remove active class from all links
+                        tocLinks.forEach((link) => {
+                            link.classList.remove(
+                                "toc-active",
+                                "text-primary-600",
+                                "bg-primary-50",
+                            );
+                            link.classList.add("text-gray-600");
+                        });
+
+                        // Add active class to current section
+                        const activeLink = tocList.querySelector(
+                            `[data-target="${activeHeading.id}"]`,
+                        );
+                        if (activeLink) {
+                            activeLink.classList.remove("text-gray-600");
+                            activeLink.classList.add(
+                                "toc-active",
+                                "text-primary-600",
+                                "bg-primary-50",
+                            );
+                        }
+                    }
+
+                    ticking = false;
+                });
+            }
+            ticking = true;
+        }
+
+        // Handle direct hash navigation (e.g., when page loads with #hash or hash changes)
+        function handleHashNavigation() {
+            const hash = window.location.hash;
+            if (hash) {
+                const targetElement = document.querySelector(hash);
+                if (targetElement) {
+                    // Calculate header height and offset
+                    const header = document.getElementById("site-header");
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    const extraOffset = 20;
+                    const totalOffset = headerHeight + extraOffset;
+
+                    // Calculate target position
+                    const targetPosition =
+                        targetElement.offsetTop - totalOffset;
+
+                    // Scroll to target with proper offset
+                    window.scrollTo({
+                        top: Math.max(0, targetPosition),
+                        behavior: "smooth",
+                    });
+
+                    // Update active TOC link
+                    const targetId = hash.substring(1);
+                    tocLinks.forEach((link) => {
+                        link.classList.remove(
+                            "toc-active",
+                            "text-primary-600",
+                            "bg-primary-50",
+                        );
+                        link.classList.add("text-gray-600");
+                    });
+
+                    const activeLink = tocList.querySelector(
+                        `[data-target="${targetId}"]`,
+                    );
+                    if (activeLink) {
+                        activeLink.classList.remove("text-gray-600");
+                        activeLink.classList.add(
+                            "toc-active",
+                            "text-primary-600",
+                            "bg-primary-50",
+                        );
+                    }
+                }
+            }
+        }
+
+        // Listen for scroll events
+        window.addEventListener("scroll", updateActiveSection);
+
+        // Listen for hash changes
+        window.addEventListener("hashchange", handleHashNavigation);
+
+        // Initial call to set active section
+        updateActiveSection();
+
+        // Handle initial hash if present
+        if (window.location.hash) {
+            // Delay to ensure page is fully loaded
+            setTimeout(handleHashNavigation, 100);
+        }
+    });
+</script>
+
+<style>
+    /* Ensure smooth scrolling behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Add scroll padding to account for fixed header */
+    html {
+        scroll-padding-top: 100px;
+    }
+
+    /* TOC active state styling */
+    .toc-active {
+        font-weight: 500;
+    }
+
+    /* Improve focus visibility for accessibility */
+    .toc-link:focus {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+    }
+</style>
