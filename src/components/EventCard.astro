@@ -191,8 +191,7 @@ const isSoon = (date: Date) => {
                         class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors duration-200"
                         aria-label={`${t("news.external-link")} - ${event.data.title}`}
                     >
-                        {isUpcoming(event.data.date) &&
-                        event.data.type !== "press"
+                        {isUpcoming(event.data.date)
                             ? t("events.register")
                             : t("news.external-link")}
                         <svg

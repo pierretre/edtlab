@@ -222,12 +222,12 @@ const isSoon = (date: Date) => {
         event.data.url && (
             <section class="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white">
                 <h2 class="text-xl font-semibold mb-3">
-                    {isUpcoming(event.data.date) && event.data.type !== "press"
+                    {isUpcoming(event.data.date)
                         ? "Prêt à Participer ?"
                         : "En Savoir Plus"}
                 </h2>
                 <p class="mb-4 text-primary-100">
-                    {isUpcoming(event.data.date) && event.data.type !== "press"
+                    {isUpcoming(event.data.date)
                         ? "Inscrivez-vous à cet événement ou obtenez plus d'informations."
                         : "Visitez la page officielle pour plus de détails."}
                 </p>
@@ -251,8 +251,7 @@ const isSoon = (date: Date) => {
                                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                             />
                         </svg>
-                        {isUpcoming(event.data.date) &&
-                        event.data.type !== "press"
+                        {isUpcoming(event.data.date)
                             ? t("events.register")
                             : t("events.learn-more")}
                     </a>

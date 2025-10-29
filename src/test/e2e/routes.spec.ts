@@ -6,40 +6,40 @@ test.describe('Route Testing', () => {
         '/en/',
         '/fr/',
         '/en/program',
-        '/fr/program',
+        '/fr/programme',
         '/en/focused-projects',
-        '/fr/focused-projects',
+        '/fr/projets-cibles',
         '/en/production',
         '/fr/production',
         '/en/demo-center',
-        '/fr/demo-center',
+        '/fr/centre-demo',
         '/en/resources',
-        '/fr/resources',
+        '/fr/ressources',
         '/en/news',
-        '/fr/news',
+        '/fr/actualites',
         '/en/join-us',
-        '/fr/join-us',
+        '/fr/nous-rejoindre',
         '/en/contact',
         '/fr/contact',
         '/en/about',
-        '/fr/about'
+        '/fr/a-propos'
     ];
 
     const subRoutes = [
         '/en/production/publications',
         '/fr/production/publications',
         '/en/production/platform',
-        '/fr/production/platform',
+        '/fr/production/plateforme',
         '/en/focused-projects/fp1',
-        '/fr/focused-projects/fp1',
+        '/fr/projets-cibles/pc1',
         '/en/focused-projects/fp2',
-        '/fr/focused-projects/fp2',
+        '/fr/projets-cibles/pc2',
         '/en/focused-projects/fp3',
-        '/fr/focused-projects/fp3',
+        '/fr/projets-cibles/pc3',
         '/en/focused-projects/fp4',
-        '/fr/focused-projects/fp4',
+        '/fr/projets-cibles/pc4',
         '/en/focused-projects/fp5',
-        '/fr/focused-projects/fp5'
+        '/fr/projets-cibles/pc5'
     ];
 
     test('homepage should redirect to language-specific page', async ({ page }) => {
@@ -83,13 +83,13 @@ test.describe('Route Testing', () => {
     });
 
     test('should have consistent navigation across languages', async ({ page }) => {
-        // Test English navigation
+        // Test English navigation - use the main site header navigation
         await page.goto('/en/program');
-        const enNavigation = await page.locator('nav').textContent();
+        const enNavigation = await page.locator('#site-header nav, nav#site-header').textContent();
 
-        // Test French navigation
-        await page.goto('/fr/program');
-        const frNavigation = await page.locator('nav').textContent();
+        // Test French navigation - use the correct French URL
+        await page.goto('/fr/programme');
+        const frNavigation = await page.locator('#site-header nav, nav#site-header').textContent();
 
         // Both should have navigation content
         expect(enNavigation).toBeTruthy();

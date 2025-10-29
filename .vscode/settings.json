@@ -2,6 +2,7 @@
     "kiroAgent.trustedCommands": [
         "npm run *",
         "npm test",
-        "curl -I http://localhost:4322/*"
+        "curl -I http://localhost:4322/*",
+        "npx playwright install"
     ]
 }

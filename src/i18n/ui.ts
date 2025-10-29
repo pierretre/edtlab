@@ -170,6 +170,7 @@ export const ui = {
         '404.contact-us': 'Nous Contacter',
         '404.helpful-links': 'Vous cherchez peut-être :',
         'breadcrumb.projets-cibles': 'Projets Ciblés',
+        'breadcrumb.focused-projects': 'Projets Ciblés',
         'breadcrumb.aria-label': 'Fil d\'Ariane',
         'home.hero.learn-more': 'En Savoir Plus',
         'home.hero.contact-us': 'Nous Contacter',
