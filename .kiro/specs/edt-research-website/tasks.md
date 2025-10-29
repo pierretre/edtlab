@@ -203,16 +203,28 @@
   - Enable build system with proper static site generation
   - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
 
+## Code Quality and Refactoring
+
+- [x] 26. Refactor duplicate utility functions across codebase
+  - Identify and catalog all duplicate utility functions across different files
+  - Create centralized utility modules organized by functional categories (string, date, validation, etc.)
+  - Consolidate duplicate functions into single, well-designed interfaces
+  - Update all import statements to reference centralized utility functions
+  - Ensure TypeScript types and JSDoc documentation for all utility functions
+  - Maintain test coverage and update test imports for refactored utilities
+  - Verify no regression issues are introduced during refactoring
+  - _GitHub Issue: #2 - Refactoring of utils functions_
+
 ## Testing and Quality Assurance
 
-- [ ] 26. Implement automated testing suite
+- [ ] 27. Implement automated testing suite
   - Create unit tests for critical components
   - Add route testing to verify all pages are accessible
   - Implement automated accessibility testing with axe-core
   - Set up content validation and schema testing
   - _Requirements: 26.1, 26.2, 26.3, 33.2_
 
-- [x] 27. Set up CI/CD pipeline with automated testing
+- [x] 28. Set up CI/CD pipeline with automated testing
   - Create GitHub Actions workflow for automated testing
   - Configure unit test execution on pull requests and pushes
   - Add route testing to verify all content pages are accessible
@@ -220,7 +232,7 @@
   - Set up test coverage reporting and quality gates
   - _Requirements: 26.1, 26.2, 26.3, 20.2_
 
-- [ ] 28. Add manual testing procedures
+- [ ] 29. Add manual testing procedures
   - Create accessibility testing procedures with assistive technology
   - Document keyboard navigation testing protocols
   - Set up content review and translation validation processes
@@ -229,14 +241,14 @@
 
 ## Deployment and Infrastructure
 
-- [ ] 29. Set up build and deployment pipeline
+- [ ] 30. Set up build and deployment pipeline
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
   - Set up Docker containerization with Nginx
   - Configure deployment to VPS with SSL/TLS certificates
   - _Requirements: 20.1, 20.2, 20.3, 20.4, 20.5, 17.1, 17.2_
 
-- [ ] 30. Configure production monitoring and maintenance
+- [ ] 31. Configure production monitoring and maintenance
   - Set up uptime monitoring and performance alerts
   - Implement error tracking and log management
   - Configure automated security updates and backups
@@ -245,7 +257,7 @@
 
 ## Final Integration and Launch
 
-- [ ] 31. Populate initial content and perform final testing
+- [ ] 32. Populate initial content and perform final testing
   - Migrate existing program content and documentation
   - Populate all content sections with initial bilingual content
   - Perform comprehensive accessibility and performance testing

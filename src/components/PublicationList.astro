@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import { getPublicationTypeTranslation } from "../utils";
 import FilterBar from "./FilterBar.astro";
 
 interface Props {
@@ -27,22 +28,6 @@ const years = [...new Set(allPublications.map((pub) => pub.data.year))].sort(
 );
 const types = ["journal", "conference", "book", "report"] as const;
 
-// Helper function to get type translation
-const getTypeTranslation = (type: string) => {
-    switch (type) {
-        case "journal":
-            return t("publications.type.journal");
-        case "conference":
-            return t("publications.type.conference");
-        case "book":
-            return t("publications.type.book");
-        case "report":
-            return t("publications.type.report");
-        default:
-            return type;
-    }
-};
-
 // Prepare filter configuration
 const filterConfig = [
     {
@@ -53,7 +38,7 @@ const filterConfig = [
             { value: "", label: t("publications.filter.all-types") },
             ...types.map((type) => ({
                 value: type,
-                label: getTypeTranslation(type),
+                label: getPublicationTypeTranslation(type, lang),
             })),
         ],
     },
@@ -135,7 +120,10 @@ const filterConfig = [
                             </td>
                             <td class="px-6 py-4">
                                 <span class="bg-blue-100 text-primary-600 text-xs font-medium px-2.5 py-0.5 rounded">
-                                    {getTypeTranslation(publication.data.type)}
+                                    {getPublicationTypeTranslation(
+                                        publication.data.type,
+                                        lang,
+                                    )}
                                 </span>
                             </td>
                             <td class="px-6 py-4">{publication.data.year}</td>

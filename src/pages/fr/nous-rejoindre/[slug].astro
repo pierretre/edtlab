@@ -1,6 +1,13 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../../i18n/utils";
+import {
+    formatDate,
+    isDeadlinePassed,
+    isDeadlineApproaching,
+    getProjectColor,
+    getJobTypeColor,
+} from "../../../utils";
 import PageLayout from "../../../layouts/PageLayout.astro";
 
 export async function getStaticPaths() {
@@ -19,7 +26,6 @@ export async function getStaticPaths() {
 }
 
 const { jobOffer } = Astro.props as { jobOffer: CollectionEntry<"job-offers"> };
-const { slug } = Astro.params;
 const lang = "fr";
 const t = useTranslations(lang);
 
@@ -32,65 +38,6 @@ if (!jobOffer) {
 
 // Get the rendered content
 const { Content } = await jobOffer.render();
-
-// Helper function to get project color
-const getProjectColor = (project: string) => {
-    switch (project) {
-        case "PC1":
-            return "bg-blue-100 text-primary-600 border-blue-200";
-        case "PC2":
-            return "bg-green-100 text-green-800 border-green-200";
-        case "PC3":
-            return "bg-yellow-100 text-yellow-800 border-yellow-200";
-        case "PC4":
-            return "bg-purple-100 text-purple-800 border-purple-200";
-        case "PC5":
-            return "bg-red-100 text-red-800 border-red-200";
-        case "General":
-            return "bg-gray-100 text-gray-800 border-gray-200";
-        default:
-            return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-};
-
-// Helper function to get type color
-const getTypeColor = (type: string) => {
-    switch (type) {
-        case "postdoc":
-            return "bg-indigo-100 text-indigo-800 border-indigo-200";
-        case "phd":
-            return "bg-emerald-100 text-emerald-800 border-emerald-200";
-        case "engineer":
-            return "bg-orange-100 text-orange-800 border-orange-200";
-        case "intern":
-            return "bg-pink-100 text-pink-800 border-pink-200";
-        default:
-            return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-};
-
-// Format deadline date
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString("fr-FR", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-};
-
-// Check if deadline has passed
-const isDeadlinePassed = (deadline: Date) => {
-    const now = new Date();
-    return deadline < now;
-};
-
-// Check if deadline is approaching (within 30 days)
-const isDeadlineApproaching = (deadline: Date) => {
-    const now = new Date();
-    const timeDiff = deadline.getTime() - now.getTime();
-    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return daysDiff <= 30 && daysDiff > 0;
-};
 ---
 
 <PageLayout
@@ -132,7 +79,7 @@ const isDeadlineApproaching = (deadline: Date) => {
                 {jobOffer.data.project}
             </span>
             <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(jobOffer.data.type)}`}
+                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getJobTypeColor(jobOffer.data.type)}`}
             >
                 {t(`job-offers.type.${jobOffer.data.type}`)}
             </span>
@@ -208,7 +155,7 @@ const isDeadlineApproaching = (deadline: Date) => {
                     <p
                         class={`font-medium ${isDeadlinePassed(jobOffer.data.deadline) ? "text-red-600" : ""}`}
                     >
-                        {formatDate(jobOffer.data.deadline)}
+                        {formatDate(jobOffer.data.deadline, lang)}
                     </p>
                 </div>
             </div>

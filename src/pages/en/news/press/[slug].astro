@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../../../i18n/utils";
+import { formatDate, isRecent, getPressTypeColor } from "../../../../utils";
 import PageLayout from "../../../../layouts/PageLayout.astro";
 
 export async function getStaticPaths() {
@@ -26,7 +27,6 @@ export async function getStaticPaths() {
 const { pressRelease } = Astro.props as {
     pressRelease: CollectionEntry<"press-releases">;
 };
-const { slug } = Astro.params;
 const lang = "en";
 const t = useTranslations(lang);
 
@@ -39,41 +39,6 @@ if (!pressRelease) {
 
 // Get the rendered content
 const { Content } = await pressRelease.render();
-
-// Helper function to get press release type color
-const getTypeColor = (type: string) => {
-    switch (type) {
-        case "announcement":
-            return "bg-blue-100 text-primary-600 border-blue-200";
-        case "partnership":
-            return "bg-green-100 text-green-800 border-green-200";
-        case "award":
-            return "bg-yellow-100 text-yellow-800 border-yellow-200";
-        case "milestone":
-            return "bg-purple-100 text-purple-800 border-purple-200";
-        case "general":
-            return "bg-gray-100 text-gray-800 border-gray-200";
-        default:
-            return "bg-red-100 text-red-800 border-red-200";
-    }
-};
-
-// Format press release date
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-};
-
-// Check if press release is recent (within 30 days)
-const isRecent = (date: Date) => {
-    const now = new Date();
-    const timeDiff = now.getTime() - date.getTime();
-    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return daysDiff <= 30;
-};
 ---
 
 <PageLayout
@@ -115,7 +80,7 @@ const isRecent = (date: Date) => {
                 Press Release
             </span>
             <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(pressRelease.data.type)}`}
+                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getPressTypeColor(pressRelease.data.type)}`}
             >
                 {
                     pressRelease.data.type.charAt(0).toUpperCase() +
@@ -157,7 +122,7 @@ const isRecent = (date: Date) => {
                         >Published</span
                     >
                     <p class="font-medium text-primary-600">
-                        {formatDate(pressRelease.data.date)}
+                        {formatDate(pressRelease.data.date, lang)}
                     </p>
                 </div>
             </div>

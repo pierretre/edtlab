@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import { formatDate } from "../utils";
 
 interface Props {
     lang: "en" | "fr";
@@ -27,15 +28,6 @@ const sortedPressReleases = allPressReleases.sort((a, b) => {
 const displayPressReleases = maxItems
     ? sortedPressReleases.slice(0, maxItems)
     : sortedPressReleases;
-
-// Format press release date
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-};
 ---
 
 <div class="py-4 mb-8">
@@ -72,7 +64,7 @@ const formatDate = (date: Date) => {
                                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    {formatDate(pressRelease.data.date)}
+                                    {formatDate(pressRelease.data.date, lang)}
                                 </div>
                             </div>
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-4">

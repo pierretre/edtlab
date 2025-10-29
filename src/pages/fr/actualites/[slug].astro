@@ -1,6 +1,13 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../../i18n/utils";
+import {
+    formatDate,
+    isUpcoming,
+    isToday,
+    isSoon,
+    getEventTypeColor,
+} from "../../../utils";
 import PageLayout from "../../../layouts/PageLayout.astro";
 
 export async function getStaticPaths() {
@@ -19,7 +26,7 @@ export async function getStaticPaths() {
 }
 
 const { event } = Astro.props as { event: CollectionEntry<"events"> };
-const { slug } = Astro.params;
+
 const lang = "fr";
 const t = useTranslations(lang);
 
@@ -32,55 +39,6 @@ if (!event) {
 
 // Get the rendered content
 const { Content } = await event.render();
-
-// Helper function to get event type color
-const getTypeColor = (type: string) => {
-    switch (type) {
-        case "conference":
-            return "bg-blue-100 text-primary-600 border-blue-200";
-        case "workshop":
-            return "bg-green-100 text-green-800 border-green-200";
-        case "seminar":
-            return "bg-purple-100 text-purple-800 border-purple-200";
-        case "press":
-            return "bg-red-100 text-red-800 border-red-200";
-        default:
-            return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-};
-
-// Format event date
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString("fr-FR", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-};
-
-// Check if event is upcoming
-const isUpcoming = (date: Date) => {
-    const now = new Date();
-    return date > now;
-};
-
-// Check if event is today
-const isToday = (date: Date) => {
-    const now = new Date();
-    return (
-        date.getDate() === now.getDate() &&
-        date.getMonth() === now.getMonth() &&
-        date.getFullYear() === now.getFullYear()
-    );
-};
-
-// Check if event is soon (within 7 days)
-const isSoon = (date: Date) => {
-    const now = new Date();
-    const timeDiff = date.getTime() - now.getTime();
-    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return daysDiff <= 7 && daysDiff > 0;
-};
 ---
 
 <PageLayout
@@ -117,7 +75,7 @@ const isSoon = (date: Date) => {
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
             <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(event.data.type)}`}
+                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getEventTypeColor(event.data.type)}`}
             >
                 {t(`events.type.${event.data.type}`)}
             </span>
@@ -174,7 +132,7 @@ const isSoon = (date: Date) => {
                     <p
                         class={`font-medium ${isUpcoming(event.data.date) ? "text-primary-600" : ""}`}
                     >
-                        {formatDate(event.data.date)}
+                        {formatDate(event.data.date, lang)}
                     </p>
                 </div>
             </div>

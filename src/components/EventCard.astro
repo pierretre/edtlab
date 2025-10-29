@@ -1,6 +1,13 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import {
+    formatDate,
+    isUpcoming,
+    isToday,
+    isSoon,
+    getEventTypeColor,
+} from "../utils";
 
 interface Props {
     event: CollectionEntry<"events">;
@@ -9,55 +16,6 @@ interface Props {
 
 const { event, lang } = Astro.props;
 const t = useTranslations(lang);
-
-// Helper function to get event type color
-const getTypeColor = (type: string) => {
-    switch (type) {
-        case "conference":
-            return "bg-blue-100 text-primary-600";
-        case "workshop":
-            return "bg-green-100 text-green-800";
-        case "seminar":
-            return "bg-purple-100 text-purple-800";
-        case "press":
-            return "bg-red-100 text-red-800";
-        default:
-            return "bg-gray-100 text-gray-800";
-    }
-};
-
-// Format event date
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-};
-
-// Check if event is upcoming
-const isUpcoming = (date: Date) => {
-    const now = new Date();
-    return date > now;
-};
-
-// Check if event is today
-const isToday = (date: Date) => {
-    const now = new Date();
-    return (
-        date.getDate() === now.getDate() &&
-        date.getMonth() === now.getMonth() &&
-        date.getFullYear() === now.getFullYear()
-    );
-};
-
-// Check if event is soon (within 7 days)
-const isSoon = (date: Date) => {
-    const now = new Date();
-    const timeDiff = date.getTime() - now.getTime();
-    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return daysDiff <= 7 && daysDiff > 0;
-};
 ---
 
 <div
@@ -67,7 +25,7 @@ const isSoon = (date: Date) => {
         <!-- Header with badges -->
         <div class="flex flex-wrap gap-2 mb-3">
             <span
-                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(event.data.type)}`}
+                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getEventTypeColor(event.data.type)}`}
             >
                 {t(`events.type.${event.data.type}`)}
             </span>
@@ -127,7 +85,7 @@ const isSoon = (date: Date) => {
                         ? "text-primary-600 font-medium"
                         : ""}
                 >
-                    {formatDate(event.data.date)}
+                    {formatDate(event.data.date, lang)}
                 </span>
             </div>
             {
