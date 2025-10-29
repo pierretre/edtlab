@@ -8,8 +8,6 @@ url: "https://example.com/workshop"
 lang: "fr"
 ---
 
-# Atelier Jumeaux Numériques : Applications Industrielles
-
 ## Aperçu de l'Atelier
 
 Rejoignez-nous pour un atelier intensif pratique axé sur l'implémentation pratique de la technologie des jumeaux numériques dans les environnements industriels. Cet atelier rassemble chercheurs, ingénieurs et professionnels de l'industrie pour explorer les applications du monde réel et partager les meilleures pratiques.

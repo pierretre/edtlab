@@ -8,8 +8,6 @@ url: "https://example.com/conference"
 lang: "fr"
 ---
 
-# Conférence Internationale sur les Jumeaux Numériques 2024
-
 ## Détails de l'Événement
 
 Rejoignez-nous pour la première conférence internationale sur la technologie des jumeaux numériques, avec des présentations principales, des sessions techniques et des opportunités de réseautage.

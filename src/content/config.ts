@@ -27,14 +27,27 @@ const publicationsCollection = defineCollection({
     })
 });
 
-// Events collection schema
+// Events collection schema (excluding press releases)
 const eventsCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
         date: z.date(),
-        type: z.enum(['conference', 'workshop', 'seminar', 'press']),
+        type: z.enum(['conference', 'workshop', 'seminar']),
         location: z.string().optional(),
+        description: z.string(),
+        url: z.string().url().optional(),
+        lang: z.enum(['en', 'fr']),
+    })
+});
+
+// Press releases collection schema
+const pressReleasesCollection = defineCollection({
+    type: 'content',
+    schema: z.object({
+        title: z.string(),
+        date: z.date(),
+        type: z.enum(['announcement', 'partnership', 'award', 'milestone', 'general']),
         description: z.string(),
         url: z.string().url().optional(),
         lang: z.enum(['en', 'fr']),
@@ -75,6 +88,7 @@ export const collections = {
     'pages': pagesCollection,
     'publications': publicationsCollection,
     'events': eventsCollection,
+    'press-releases': pressReleasesCollection,
     'job-offers': jobOffersCollection,
     'menu': menuCollection
 };

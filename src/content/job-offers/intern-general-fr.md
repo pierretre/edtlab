@@ -9,8 +9,6 @@ requirements: ["Actuellement inscrit en programme d'Ingénierie ou Informatique"
 lang: "fr"
 ---
 
-# Stage d'Été - Recherche en Jumeaux Numériques
-
 ## Aperçu du Poste
 
 Rejoignez notre équipe de recherche pour un stage de 6 mois axé sur les technologies de jumeaux numériques. C'est une excellente opportunité pour les étudiants d'acquérir une expérience pratique dans la recherche de pointe tout en contribuant à des projets concrets.
@@ -29,15 +27,6 @@ Rejoignez notre équipe de recherche pour un stage de 6 mois axé sur les techno
 - Développement d'interface utilisateur
 - Optimisation des performances
 - Revue de littérature et analyse de l'état de l'art
-
-## Exigences
-
-- Actuellement inscrit en dernière année de Licence ou Master
-- Spécialisation en Ingénierie, Informatique, ou domaine connexe
-- Excellentes performances académiques (moyenne > 12/20 ou équivalent)
-- Expérience en programmation dans n'importe quel langage
-- Véritable intérêt pour la recherche et l'innovation
-- Bonnes compétences de communication en anglais ou français
 
 ## Ce Que Vous Gagnerez
 

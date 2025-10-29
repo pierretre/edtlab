@@ -9,8 +9,6 @@ requirements: ["Bachelor's or Master's in Software Engineering", "5+ years softw
 lang: "en"
 ---
 
-# Research Engineer - Software Development
-
 ## Position Overview
 
 Join our PC3 team as a Research Engineer focusing on software development for our digital twin platform. You'll be responsible for implementing scalable solutions and integrating various system components.
@@ -22,15 +20,6 @@ Join our PC3 team as a Research Engineer focusing on software development for ou
 - Optimize system performance and scalability
 - Collaborate with research teams on prototype development
 - Maintain code quality and documentation standards
-
-## Required Qualifications
-
-- Bachelor's or Master's degree in Software Engineering or Computer Science
-- Minimum 5 years of professional software development experience
-- Proficiency in C++, Java, or Python
-- Experience with distributed systems and microservices
-- Knowledge of database systems and data management
-- Familiarity with version control systems (Git)
 
 ## Preferred Qualifications
 

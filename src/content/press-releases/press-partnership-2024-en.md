@@ -1,13 +1,11 @@
 ---
 title: "EDT Program Announces Strategic Partnership with Leading Industrial Companies"
 date: 2024-05-15
-type: "press"
+type: "partnership"
 description: "New partnerships with major industrial players will accelerate digital twin technology adoption across manufacturing sectors"
 url: "https://example.com/partnership-announcement"
 lang: "en"
 ---
-
-# EDT Program Announces Strategic Partnership with Leading Industrial Companies
 
 ## Press Release - May 15, 2024
 

@@ -9,8 +9,6 @@ requirements: ["Master en Informatique ou Ingénierie", "Solide formation en app
 lang: "fr"
 ---
 
-# Doctorant - Apprentissage Automatique pour Jumeaux Numériques
-
 ## Aperçu du Poste
 
 Nous recherchons un doctorant motivé pour rejoindre le Projet PC2, en se concentrant sur les applications d'apprentissage automatique pour les systèmes de jumeaux numériques dans les environnements industriels.
