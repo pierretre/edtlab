@@ -4,7 +4,7 @@ date: 2024-06-15
 type: "conference"
 location: "Paris, France"
 description: "Annual conference bringing together researchers and practitioners in digital twin technology"
-url: "https://example.com/conference"
+url: "http://edtlab.fr/"
 lang: "en"
 ---
 

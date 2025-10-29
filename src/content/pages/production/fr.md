@@ -22,4 +22,4 @@ Accédez à notre liste complète de publications organisées par type et année
 
 Documentation et ressources pour la plateforme de recherche EDT.
 
-[Voir la Documentation de la Plateforme](/fr/production/platform)
+[Voir la Documentation de la Plateforme](/fr/production/plateforme)

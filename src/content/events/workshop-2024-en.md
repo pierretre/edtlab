@@ -4,7 +4,7 @@ date: 2024-03-20
 type: "workshop"
 location: "Lyon, France"
 description: "Hands-on workshop exploring practical applications of digital twin technology in industrial settings"
-url: "https://example.com/workshop"
+url: "http://edtlab.fr/"
 lang: "en"
 ---
 
