@@ -63,7 +63,7 @@ const { Content } = await page.render();
         page.data.lastModified && (
             <footer class="mt-12 pt-6 border-t border-gray-200">
                 <p class="text-sm text-gray-500">
-                    {lang === "en" ? "Last updated:" : "Dernière mise à jour :"}
+                    {t('page.last-updated')}
                     <time datetime={page.data.lastModified.toISOString()}>
                         {page.data.lastModified.toLocaleDateString(
                             lang === "en" ? "en-US" : "fr-FR",

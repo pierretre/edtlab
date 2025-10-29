@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import { linkHelpers } from "../i18n/links";
 import { formatDate } from "../utils";
 
 interface Props {
@@ -40,11 +41,10 @@ const displayPressReleases = maxItems
                             <div class="flex-1">
                                 <h4 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
                                     <a
-                                        href={
-                                            lang === "fr"
-                                                ? `/fr/actualites/presse/${pressRelease.slug.replace("-fr", "")}`
-                                                : `/en/news/press/${pressRelease.slug.replace("-en", "")}`
-                                        }
+                                        href={linkHelpers.press(
+                                            lang,
+                                            pressRelease.slug,
+                                        )}
                                         class="hover:text-primary-600 transition-colors duration-200"
                                     >
                                         {pressRelease.data.title}
@@ -68,9 +68,7 @@ const displayPressReleases = maxItems
                                 </div>
                             </div>
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-4">
-                                {lang === "fr"
-                                    ? "Communiqué de Presse"
-                                    : "Press Release"}
+                                {t("news.press-release")}
                             </span>
                         </div>
 
@@ -80,11 +78,10 @@ const displayPressReleases = maxItems
 
                         <div class="flex items-center justify-between">
                             <a
-                                href={
-                                    lang === "fr"
-                                        ? `/fr/actualites/presse/${pressRelease.slug.replace("-fr", "")}`
-                                        : `/en/news/press/${pressRelease.slug.replace("-en", "")}`
-                                }
+                                href={linkHelpers.press(
+                                    lang,
+                                    pressRelease.slug,
+                                )}
                                 class="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-600 transition-colors duration-200"
                             >
                                 {t("news.read-full-release")}
@@ -156,7 +153,7 @@ const displayPressReleases = maxItems
             sortedPressReleases.length > maxItems && (
                 <div class="mt-6 text-center">
                     <a
-                        href={lang === "fr" ? "/fr/actualites" : "/en/news"}
+                        href={linkHelpers.newsIndex(lang)}
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-colors duration-200"
                     >
                         {t("news.view-all-press-releases")}

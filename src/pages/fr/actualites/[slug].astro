@@ -66,7 +66,7 @@ const { Content } = await event.render();
                     stroke-width="2"
                     d="M15 19l-7-7 7-7"></path>
             </svg>
-            Retour aux Actualités
+            {t("news.back-to-news")}
         </a>
     </div>
 
@@ -181,13 +181,13 @@ const { Content } = await event.render();
             <section class="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white">
                 <h2 class="text-xl font-semibold mb-3">
                     {isUpcoming(event.data.date)
-                        ? "Prêt à Participer ?"
-                        : "En Savoir Plus"}
+                        ? t("news.ready-to-participate")
+                        : t("events.learn-more")}
                 </h2>
                 <p class="mb-4 text-primary-100">
                     {isUpcoming(event.data.date)
-                        ? "Inscrivez-vous à cet événement ou obtenez plus d'informations."
-                        : "Visitez la page officielle pour plus de détails."}
+                        ? t("news.register-event")
+                        : t("news.visit-official-page")}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a

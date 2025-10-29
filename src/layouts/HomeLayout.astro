@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { linkHelpers } from "../i18n/links";
 import { getEntry, getCollection } from "astro:content";
 
 export interface Props {
@@ -102,15 +103,15 @@ const tiles = menuSections.map(section => ({
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
             <!-- Hero Badge -->
             <a 
-                href={`/${lang}/news`} 
+                href={linkHelpers.newsIndex(lang)} 
                 class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors" 
-                aria-label={lang === 'en' ? 'View latest research updates and announcements' : 'Voir les dernières mises à jour et annonces de recherche'}
+                aria-label={t('home.news-banner.aria-label')}
             >
                 <span class="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">
-                    {lang === 'en' ? 'New' : 'Nouveau'}
+                    {t('home.news-banner.new')}
                 </span> 
                 <span class="text-sm font-medium">
-                    {lang === 'en' ? 'Latest research updates and announcements' : 'Dernières mises à jour et annonces de recherche'}
+                    {t('home.news-banner.text')}
                 </span> 
                 <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
@@ -122,21 +123,18 @@ const tiles = menuSections.map(section => ({
                 {t('site.title')}
             </h1>
             <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48">
-                {lang === 'en' 
-                    ? 'Advancing the science and engineering of digital twins through multidisciplinary research, innovative methodologies, and collaborative platforms.'
-                    : 'Faire progresser la science et l\'ingénierie des jumeaux numériques grâce à la recherche multidisciplinaire, des méthodologies innovantes et des plateformes collaboratives.'
-                }
+                {t('home.hero.subtitle')}
             </p>
             
             <!-- Hero Action Buttons -->
             <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <a href={`/${lang}/program`} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 transition-colors">
+                <a href={linkHelpers.page(lang, 'program')} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 transition-colors">
                     {t('home.hero.learn-more')}
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                     </svg>
                 </a>
-                <a href={`/${lang}/contact`} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors">
+                <a href={linkHelpers.page(lang, 'contact')} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors">
                     <svg class="mr-2 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
                     </svg>
@@ -147,24 +145,24 @@ const tiles = menuSections.map(section => ({
             <!-- Hero Statistics -->
             <div class="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36">
                 <span class="font-semibold text-gray-400 uppercase">
-                    {lang === 'en' ? 'Trusted by leading research institutions' : 'Approuvé par les principales institutions de recherche'}
+                    {t('home.stats.trusted-by')}
                 </span>
                 <div class="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between">
                     <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
                         <span class="text-2xl font-bold text-primary-600">5</span>
-                        <p class="text-sm">{lang === 'en' ? 'Focused Projects' : 'Projets Ciblés'}</p>
+                        <p class="text-sm">{t('home.stats.focused-projects')}</p>
                     </div>
                     <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
                         <span class="text-2xl font-bold text-primary-600">40+</span>
-                        <p class="text-sm">{lang === 'en' ? 'Use Cases' : 'Cas d\'Usage'}</p>
+                        <p class="text-sm">{t('home.stats.use-cases')}</p>
                     </div>
                     <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
                         <span class="text-2xl font-bold text-primary-600">{activeJobOffers.length}</span>
-                        <p class="text-sm">{lang === 'en' ? 'Open Positions' : 'Postes Ouverts'}</p>
+                        <p class="text-sm">{t('home.stats.open-positions')}</p>
                     </div>
                     <div class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 transition-colors">
                         <span class="text-2xl font-bold text-primary-600">{recentPublications.length}+</span>
-                        <p class="text-sm">{lang === 'en' ? 'Publications' : 'Publications'}</p>
+                        <p class="text-sm">{t('home.stats.publications')}</p>
                     </div>
                 </div>
             </div>
@@ -188,11 +186,11 @@ const tiles = menuSections.map(section => ({
                 {tiles.map((tile, index) => (
                     <div class="group tile-card" data-index={index}>
                         <a 
-                            href={`/${lang}/${tile.slug}`}
+                            href={linkHelpers.page(lang, tile.slug)}
                             class="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg hover:border-primary-300 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary-300"
                             role="button"
                             tabindex="0"
-                            aria-label={`${lang === 'en' ? 'Navigate to' : 'Naviguer vers'} ${tile.name}`}
+                            aria-label={`${t('home.tiles.navigate-to')} ${tile.name}`}
                         >
                             <div class="flex flex-col items-center text-center h-full">
                                 <!-- Enhanced Icon with gradient background -->
@@ -254,13 +252,10 @@ const tiles = menuSections.map(section => ({
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
-                    {lang === 'en' ? 'Latest Updates' : 'Dernières Actualités'}
+                    {t('home.updates.title')}
                 </h2>
                 <p class="font-light text-gray-500 lg:mb-16 sm:text-xl">
-                    {lang === 'en' 
-                        ? 'Stay informed about our latest research developments, publications, and opportunities.'
-                        : 'Restez informé de nos derniers développements de recherche, publications et opportunités.'
-                    }
+                    {t('home.updates.subtitle')}
                 </p>
             </div>
 
@@ -273,7 +268,7 @@ const tiles = menuSections.map(section => ({
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                             <h3 class="text-xl font-bold text-gray-900">
-                                {lang === 'en' ? 'Recent Events' : 'Événements Récents'}
+                                {t('home.updates.recent-events')}
                             </h3>
                         </div>
                         <div class="space-y-4">
@@ -296,8 +291,8 @@ const tiles = menuSections.map(section => ({
                             ))}
                         </div>
                         <div class="mt-6">
-                            <a href={`/${lang}/news`} class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors">
-                                {lang === 'en' ? 'View all events' : 'Voir tous les événements'}
+                            <a href={linkHelpers.newsIndex(lang)} class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors">
+                                {t('home.updates.view-all-events')}
                                 <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                 </svg>
@@ -314,7 +309,7 @@ const tiles = menuSections.map(section => ({
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                             </svg>
                             <h3 class="text-xl font-bold text-gray-900">
-                                {lang === 'en' ? 'Recent Publications' : 'Publications Récentes'}
+                                {t('home.updates.recent-publications')}
                             </h3>
                         </div>
                         <div class="space-y-4">
@@ -335,8 +330,8 @@ const tiles = menuSections.map(section => ({
                             ))}
                         </div>
                         <div class="mt-6">
-                            <a href={`/${lang}/production/publications`} class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors">
-                                {lang === 'en' ? 'View all publications' : 'Voir toutes les publications'}
+                            <a href={linkHelpers.page(lang, 'production/publications')} class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors">
+                                {t('home.updates.view-all-publications')}
                                 <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                 </svg>
@@ -353,7 +348,7 @@ const tiles = menuSections.map(section => ({
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                             </svg>
                             <h3 class="text-xl font-bold text-gray-900">
-                                {lang === 'en' ? 'Open Positions' : 'Postes Ouverts'}
+                                {t('home.updates.open-positions')}
                             </h3>
                         </div>
                         <div class="space-y-4">
@@ -371,14 +366,14 @@ const tiles = menuSections.map(section => ({
                                         </span>
                                     </div>
                                     <p class="text-xs text-gray-500 mt-1">
-                                        {job.data.location} • {lang === 'en' ? 'Deadline' : 'Date limite'}: {new Date(job.data.deadline).toLocaleDateString(lang === 'en' ? 'en-US' : 'fr-FR')}
+                                        {job.data.location} • {t('job-offers.deadline')}: {new Date(job.data.deadline).toLocaleDateString(lang === 'en' ? 'en-US' : 'fr-FR')}
                                     </p>
                                 </div>
                             ))}
                         </div>
                         <div class="mt-6">
-                            <a href={`/${lang}/join-us`} class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors">
-                                {lang === 'en' ? 'View all positions' : 'Voir tous les postes'}
+                            <a href={linkHelpers.careers(lang)} class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors">
+                                {t('home.updates.view-all-positions')}
                                 <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                 </svg>
