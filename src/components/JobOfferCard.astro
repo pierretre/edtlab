@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import { linkHelpers } from "../i18n/links";
 import {
     formatDate,
     isDeadlineApproaching,
@@ -142,9 +143,7 @@ const t = useTranslations(lang);
 
         <!-- Action button -->
         <a
-            href={lang === "fr"
-                ? `/fr/nous-rejoindre/${jobOffer.slug.replace("-fr", "")}`
-                : `/en/join-us/${jobOffer.slug.replace("-en", "")}`}
+            href={linkHelpers.jobOffer(lang, jobOffer.slug)}
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
             aria-label={t("job-offers.view-details-aria").replace(
                 "{title}",
