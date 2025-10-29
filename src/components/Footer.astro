@@ -7,7 +7,7 @@ const t = useTranslations(lang);
 const menu = await getEntry("menu", lang);
 ---
 
-<footer class="bg-[#e5e5e5] text-gray-800 w-full" role="contentinfo">
+<div class="bg-[#e5e5e5] text-gray-800 w-full">
     <div
         class="max-w-5xl mx-auto px-6 py-10 flex flex-wrap md:flex-nowrap justify-between gap-8"
     >
@@ -15,7 +15,7 @@ const menu = await getEntry("menu", lang);
         <div class="flex-1 min-w-[250px]">
             <img
                 src="https://www.pepr-ia.fr/wp-content/uploads/2024/03/Group-6.png"
-                alt="République Française France 2030"
+                alt="République Française France 2030 - Logo officiel du programme de financement"
                 class="w-72 h-auto mb-4"
             />
             <p class="text-sm text-gray-600">
@@ -26,63 +26,95 @@ const menu = await getEntry("menu", lang);
         <!-- Middle column -->
         <div class="flex-1 min-w-[250px]">
             <!-- Piloted by -->
-            <h6 class="border-l-2 border-primary-600 pl-3 mb-3">
+            <h3
+                class="border-l-2 border-primary-600 pl-3 mb-3 text-lg font-semibold"
+            >
                 {t("footer.piloted-by")}
-            </h6>
-            <div class="flex items-center space-x-4 mb-4 flex-wrap">
-                <img
-                    src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-pilote-cea.png"
-                    alt="CEA"
-                    class="h-10 w-auto"
-                />
-                <img
-                    src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/12/LOGO_CNRS_2023_BLEU.png"
-                    alt="CNRS"
-                    class="h-10 w-auto"
-                />
-                <img
-                    src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/08/logo_inria-1.png"
-                    alt="Inria"
-                    class="h-8 w-auto"
-                />
+            </h3>
+            <div
+                class="flex items-center space-x-4 mb-4 flex-wrap"
+                role="list"
+                aria-label={t("footer.piloted-by")}
+            >
+                <div role="listitem">
+                    <img
+                        src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-pilote-cea.png"
+                        alt="CEA - Commissariat à l'énergie atomique et aux énergies alternatives"
+                        class="h-10 w-auto"
+                    />
+                </div>
+                <div role="listitem">
+                    <img
+                        src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/12/LOGO_CNRS_2023_BLEU.png"
+                        alt="CNRS - Centre national de la recherche scientifique"
+                        class="h-10 w-auto"
+                    />
+                </div>
+                <div role="listitem">
+                    <img
+                        src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/08/logo_inria-1.png"
+                        alt="Inria - Institut national de recherche en informatique et en automatique"
+                        class="h-8 w-auto"
+                    />
+                </div>
             </div>
 
             <!-- Funded by -->
-            <h6 class="border-l-2 border-primary-600 pl-3 mb-3">
+            <h3
+                class="border-l-2 border-primary-600 pl-3 mb-3 text-lg font-semibold"
+            >
                 {t("footer.funded-by")}
-            </h6>
-            <div class="flex items-center mb-4">
-                <img
-                    src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-finance-france-2030.png"
-                    alt="France 2030"
-                    class="h-10 w-auto"
-                />
+            </h3>
+            <div
+                class="flex items-center mb-4"
+                role="list"
+                aria-label={t("footer.funded-by")}
+            >
+                <div role="listitem">
+                    <img
+                        src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-finance-france-2030.png"
+                        alt="France 2030 - Plan d'investissement d'avenir"
+                        class="h-10 w-auto"
+                    />
+                </div>
             </div>
 
             <!-- Operated by -->
-            <h6 class="border-l-2 border-primary-600 pl-3 mb-3">
+            <h3
+                class="border-l-2 border-primary-600 pl-3 mb-3 text-lg font-semibold"
+            >
                 {t("footer.operated-by")}
-            </h6>
-            <div class="flex items-center">
-                <img
-                    src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-finance-anr.png"
-                    alt="ANR"
-                    class="h-10 w-auto"
-                />
+            </h3>
+            <div
+                class="flex items-center"
+                role="list"
+                aria-label={t("footer.operated-by")}
+            >
+                <div role="listitem">
+                    <img
+                        src="https://www.pepr-cybersecurite.fr/wp-content/uploads/2023/03/logo-finance-anr.png"
+                        alt="ANR - Agence nationale de la recherche"
+                        class="h-10 w-auto"
+                    />
+                </div>
             </div>
         </div>
 
         <!-- Right column -->
-        <div class="flex-1 min-w-[200px] hidden md:block">
-            <ul class="space-y-2 text-primary-600 font-medium">
+        <nav
+            class="flex-1 min-w-[200px] hidden md:block"
+            role="navigation"
+            aria-label="Footer navigation"
+        >
+            <ul class="space-y-2 text-primary-600 font-medium" role="list">
                 {
                     menu &&
                         menu.data.sections &&
                         menu.data.sections.map((section) => (
-                            <li>
+                            <li role="listitem">
                                 <a
                                     href={`/${lang}/${section.href}`}
-                                    class="hover:underline"
+                                    class="hover:underline focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded"
                                 >
                                     {section.name}
                                 </a>
@@ -90,6 +122,6 @@ const menu = await getEntry("menu", lang);
                         ))
                 }
             </ul>
-        </div>
+        </nav>
     </div>
-</footer>
+</div>

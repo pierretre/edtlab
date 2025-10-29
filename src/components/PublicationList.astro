@@ -73,31 +73,77 @@ const filterConfig = [
     />
 
     <!-- Publications Table -->
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
+    <div
+        class="relative overflow-x-auto shadow-md sm:rounded-lg"
+        role="region"
+        aria-label={t("accessibility.table-caption")}
+    >
+        <table
+            class="w-full text-sm text-left rtl:text-right text-gray-500"
+            role="table"
+            aria-label={t("publications.table.title")}
+        >
+            <caption class="sr-only">
+                {t("publications.table.title")} - {
+                    t("accessibility.table-caption")
+                }
+            </caption>
+            <thead
+                class="text-xs text-gray-700 uppercase bg-gray-50"
+                role="rowgroup"
+            >
+                <tr role="row">
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                        role="columnheader"
+                        aria-sort="none"
+                    >
                         {t("publications.table.title")}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                        role="columnheader"
+                        aria-sort="none"
+                    >
                         {t("publications.table.authors")}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                        role="columnheader"
+                        aria-sort="none"
+                    >
                         {t("publications.table.type")}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                        role="columnheader"
+                        aria-sort="none"
+                    >
                         {t("publications.table.year")}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                        role="columnheader"
+                        aria-sort="none"
+                    >
                         {t("publications.table.venue")}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                        role="columnheader"
+                        aria-sort="none"
+                    >
                         {t("publications.table.links")}
                     </th>
                 </tr>
             </thead>
-            <tbody id="publications-tbody">
+            <tbody id="publications-tbody" role="rowgroup">
                 {
                     sortedPublications.map((publication) => (
                         <tr
@@ -105,20 +151,25 @@ const filterConfig = [
                             data-type={publication.data.type}
                             data-year={publication.data.year.toString()}
                             data-search-text={`${publication.data.title} ${publication.data.authors.join(" ")} ${publication.data.venue || ""}`.toLowerCase()}
+                            role="row"
                         >
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            <th
+                                scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                                role="rowheader"
+                            >
                                 <div class="max-w-xs">
                                     <div class="font-semibold">
                                         {publication.data.title}
                                     </div>
                                 </div>
-                            </td>
-                            <td class="px-6 py-4">
+                            </th>
+                            <td class="px-6 py-4" role="cell">
                                 <div class="max-w-xs">
                                     {publication.data.authors.join(", ")}
                                 </div>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4" role="cell">
                                 <span class="bg-blue-100 text-primary-600 text-xs font-medium px-2.5 py-0.5 rounded">
                                     {getPublicationTypeTranslation(
                                         publication.data.type,
@@ -126,13 +177,15 @@ const filterConfig = [
                                     )}
                                 </span>
                             </td>
-                            <td class="px-6 py-4">{publication.data.year}</td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4" role="cell">
+                                {publication.data.year}
+                            </td>
+                            <td class="px-6 py-4" role="cell">
                                 <div class="max-w-xs">
                                     {publication.data.venue || "-"}
                                 </div>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4" role="cell">
                                 <div class="flex space-x-2">
                                     {publication.data.url && (
                                         <a
@@ -140,8 +193,16 @@ const filterConfig = [
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                                            aria-label={`${t("publications.link.view")} ${publication.data.title} - ${t("accessibility.opens-new-window")}`}
                                         >
                                             {t("publications.link.view")}
+                                            <span class="sr-only">
+                                                {" "}
+                                                -{" "}
+                                                {t(
+                                                    "accessibility.opens-new-window",
+                                                )}
+                                            </span>
                                         </a>
                                     )}
                                     {publication.data.doi && (
@@ -150,8 +211,16 @@ const filterConfig = [
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="text-green-600 hover:text-green-800 text-sm font-medium"
+                                            aria-label={`DOI ${publication.data.doi} - ${t("accessibility.opens-new-window")}`}
                                         >
                                             DOI
+                                            <span class="sr-only">
+                                                {" "}
+                                                -{" "}
+                                                {t(
+                                                    "accessibility.opens-new-window",
+                                                )}
+                                            </span>
                                         </a>
                                     )}
                                 </div>

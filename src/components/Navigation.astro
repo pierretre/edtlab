@@ -1,9 +1,10 @@
 ---
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { getEntry } from "astro:content";
 import LanguageToggle from "./LanguageToggle.astro";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
 
 // Get menu data from content collection
 const currentMenu = await getEntry("menu", lang);
@@ -36,8 +37,9 @@ const currentPath = Astro.url.pathname;
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         aria-controls="navbar-language"
         aria-expanded="false"
+        aria-label={t("accessibility.menu-toggle")}
         >
-        <span class="sr-only">Open main menu</span>
+        <span class="sr-only">{t("accessibility.menu-toggle")}</span>
         <svg
             class="w-5 h-5"
             aria-hidden="true"
@@ -57,7 +59,7 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <!-- Center: Desktop menu (wraps below if too tight, hidden on mobile) -->
-    <div class="hidden lg:flex flex-wrap justify-center basis-full order-3">
+    <nav class="hidden lg:flex flex-wrap justify-center basis-full order-3" role="navigation" aria-label={t("accessibility.main-navigation")}>
         <ul class="flex flex-nowrap space-x-4 items-center justify-center gap-x-2 lg:gap-x-4">
         {
             menuSections.map((section) => {
@@ -102,10 +104,12 @@ const currentPath = Astro.url.pathname;
                     <div
                         class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-44"
                         style="top: 100%;"
+                        role="menu"
+                        aria-label={`${section.name} submenu`}
                     >
-                        <ul class="py-2 text-sm text-gray-700">
+                        <ul class="py-2 text-sm text-gray-700" role="none">
                         {section.items.map((sub) => (
-                            <li>
+                            <li role="none">
                             <a
                                 href={`/${lang}/${sub.href}`}
                                 class={`block px-4 py-2 hover:bg-gray-100 ${
@@ -113,6 +117,8 @@ const currentPath = Astro.url.pathname;
                                     ? "text-primary-600 font-medium"
                                     : ""
                                 }`}
+                                role="menuitem"
+                                aria-current={currentPath === `/${lang}/${sub.href}` ? "page" : undefined}
                             >
                                 {sub.name}
                             </a>
@@ -140,12 +146,12 @@ const currentPath = Astro.url.pathname;
             })
         }
         </ul>
-    </div>
+    </nav>
     </div>
 
 
     <!-- Mobile menu -->
-    <div class="lg:hidden hidden" id="navbar-language">
+    <div class="lg:hidden hidden" id="navbar-language" role="navigation" aria-label={t("accessibility.main-navigation")}>
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50">
             {
                 menuSections.map((section) => (

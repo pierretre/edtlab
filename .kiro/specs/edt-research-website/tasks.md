@@ -148,7 +148,7 @@
   - Add basic keyboard navigation support
   - _Requirements: 30.1, 30.2, 30.3, 29.1, 29.2_
 
-- [ ] 19. Enhance RGAA 4.1 AA compliance features
+- [x] 19. Enhance RGAA 4.1 AA compliance features
   - Add semantic HTML structure with proper heading hierarchy
   - Implement ARIA labels and roles for complex components
   - Ensure all interactive elements have accessible names
@@ -232,7 +232,7 @@
   - Set up test coverage reporting and quality gates
   - _Requirements: 26.1, 26.2, 26.3, 20.2_
 
-- [ ] 29. Enhance CI pipeline with comprehensive route and link testing
+- [x] 29. Enhance CI pipeline with comprehensive route and link testing
   - Create separate script for route accessibility testing with current routes (excluding content-specific routes)
   - Update Playwright configuration to include comprehensive link verification testing
   - Implement automated testing of all internal and external links from each web page
