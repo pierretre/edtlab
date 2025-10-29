@@ -13,7 +13,7 @@ const t = useTranslations(lang);
 
 // Get all non-press events for the current language
 const allEvents = await getCollection("events", (event) => {
-    return event.data.lang === lang && event.data.type !== "press";
+    return event.data.lang === lang;
 });
 
 // Sort events by date (newest first)
