@@ -19,8 +19,10 @@ const { event, lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<div
+<article
     class="event-card max-w-sm bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
+    role="article"
+    aria-labelledby={`event-title-${event.slug}`}
 >
     <div class="p-5">
         <!-- Header with badges -->
@@ -54,11 +56,12 @@ const t = useTranslations(lang);
         </div>
 
         <!-- Title -->
-        <h5
+        <h3
+            id={`event-title-${event.slug}`}
             class="mb-2 text-xl font-bold tracking-tight text-gray-900 line-clamp-2"
         >
             {event.data.title}
-        </h5>
+        </h3>
 
         <!-- Description -->
         <p class="mb-3 text-gray-700 text-sm line-clamp-3">
@@ -73,6 +76,7 @@ const t = useTranslations(lang);
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -97,6 +101,7 @@ const t = useTranslations(lang);
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
+                            aria-hidden="true"
                         >
                             <path
                                 stroke-linecap="round"
@@ -156,6 +161,7 @@ const t = useTranslations(lang);
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
+                            aria-hidden="true"
                         >
                             <path
                                 stroke-linecap="round"
@@ -169,7 +175,7 @@ const t = useTranslations(lang);
             }
         </div>
     </div>
-</div>
+</article>
 
 <style>
     .line-clamp-1 {

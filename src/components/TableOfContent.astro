@@ -6,13 +6,21 @@ const t = useTranslations(lang);
 ---
 
 <aside class="lg:w-64 flex-shrink-0">
-    <div class="sticky top-24 bg-gray-50 rounded-lg p-4 border border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+    <div
+        class="sticky top-24 bg-gray-50 rounded-lg p-4 border border-gray-200"
+        role="complementary"
+        aria-labelledby="toc-heading"
+    >
+        <h2 id="toc-heading" class="text-lg font-semibold text-gray-900 mb-4">
             {t("toc.title")}
-        </h3>
-        <nav id="table-of-contents" aria-label={t("toc.title")}>
+        </h2>
+        <nav
+            id="table-of-contents"
+            aria-labelledby="toc-heading"
+            role="navigation"
+        >
             <!-- TOC will be populated by JavaScript -->
-            <ul id="toc-list" class="space-y-2 text-sm">
+            <ul id="toc-list" class="space-y-2 text-sm" role="list">
                 <!-- Dynamically populated -->
             </ul>
         </nav>

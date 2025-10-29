@@ -37,11 +37,16 @@ const t = useTranslations(lang);
                         class={`block ${compact ? "mb-1" : "mb-2"} text-xs font-medium text-gray-900`}
                     >
                         {filter.label}
+                        <span class="sr-only">
+                            {" "}
+                            - {t("accessibility.optional-field")}
+                        </span>
                     </label>
                     {filter.type === "select" ? (
                         <select
                             id={filter.id}
                             class={`bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full ${compact ? "p-2" : "p-2.5"}`}
+                            aria-describedby={`${filter.id}-description`}
                         >
                             {filter.options?.map((option) => (
                                 <option value={option.value}>
@@ -55,6 +60,8 @@ const t = useTranslations(lang);
                             id={filter.id}
                             class={`bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full ${compact ? "p-2" : "p-2.5"}`}
                             placeholder={filter.placeholder}
+                            aria-describedby={`${filter.id}-description`}
+                            role="searchbox"
                         />
                     )}
                 </div>

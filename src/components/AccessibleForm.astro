@@ -1,0 +1,296 @@
+---
+/**
+ * Accessible Form Components
+ *
+ * Provides enhanced accessibility features for form elements including:
+ * - Required field indicators
+ * - Error message association
+ * - Proper labeling
+ * - ARIA attributes
+ * - Keyboard navigation support
+ */
+
+import { useTranslations, getLangFromUrl } from "../i18n/utils";
+
+export interface FormFieldProps {
+    id: string;
+    label: string;
+    type?: "text" | "email" | "tel" | "url" | "password" | "search";
+    required?: boolean;
+    error?: string;
+    description?: string;
+    placeholder?: string;
+    value?: string;
+    autocomplete?: string;
+    class?: string;
+}
+
+export interface SelectFieldProps {
+    id: string;
+    label: string;
+    options: { value: string; label: string }[];
+    required?: boolean;
+    error?: string;
+    description?: string;
+    value?: string;
+    class?: string;
+}
+
+export interface TextareaFieldProps {
+    id: string;
+    label: string;
+    required?: boolean;
+    error?: string;
+    description?: string;
+    placeholder?: string;
+    value?: string;
+    rows?: number;
+    class?: string;
+}
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+---
+
+<!-- This file exports reusable form field components -->
+<script>
+    // Form field component factory
+    (window as any).AccessibleForm = {
+        createField: function (props: any) {
+            const {
+                id,
+                label,
+                type = "text",
+                required = false,
+                error,
+                description,
+                placeholder,
+                value = "",
+                autocomplete,
+                className = "",
+            } = props;
+
+            const fieldId = id;
+            const errorId = error ? `${id}-error` : null;
+            const descriptionId = description ? `${id}-description` : null;
+            const ariaDescribedBy = [errorId, descriptionId]
+                .filter(Boolean)
+                .join(" ");
+
+            return `
+                <div class="form-field ${className}">
+                    <label for="${fieldId}" class="block text-sm font-medium text-gray-900 mb-2">
+                        ${label}
+                        ${required ? '<span class="text-red-500 ml-1" aria-label="required">*</span>' : ""}
+                        ${!required ? '<span class="sr-only"> - Optional field</span>' : ""}
+                    </label>
+                    
+                    ${
+                        description
+                            ? `
+                        <div id="${descriptionId}" class="text-sm text-gray-600 mb-2">
+                            ${description}
+                        </div>
+                    `
+                            : ""
+                    }
+                    
+                    <input
+                        type="${type}"
+                        id="${fieldId}"
+                        name="${fieldId}"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${error ? "border-red-500" : ""}"
+                        ${placeholder ? `placeholder="${placeholder}"` : ""}
+                        ${value ? `value="${value}"` : ""}
+                        ${autocomplete ? `autocomplete="${autocomplete}"` : ""}
+                        ${required ? "required" : ""}
+                        ${ariaDescribedBy ? `aria-describedby="${ariaDescribedBy}"` : ""}
+                        ${error ? 'aria-invalid="true"' : 'aria-invalid="false"'}
+                    />
+                    
+                    ${
+                        error
+                            ? `
+                        <div id="${errorId}" class="mt-2 text-sm text-red-600" role="alert" aria-live="polite">
+                            ${error}
+                        </div>
+                    `
+                            : ""
+                    }
+                </div>
+            `;
+        },
+
+        createSelect: function (props: any) {
+            const {
+                id,
+                label,
+                options,
+                required = false,
+                error,
+                description,
+                value = "",
+                className = "",
+            } = props;
+
+            const fieldId = id;
+            const errorId = error ? `${id}-error` : null;
+            const descriptionId = description ? `${id}-description` : null;
+            const ariaDescribedBy = [errorId, descriptionId]
+                .filter(Boolean)
+                .join(" ");
+
+            return `
+                <div class="form-field ${className}">
+                    <label for="${fieldId}" class="block text-sm font-medium text-gray-900 mb-2">
+                        ${label}
+                        ${required ? '<span class="text-red-500 ml-1" aria-label="required">*</span>' : ""}
+                        ${!required ? '<span class="sr-only"> - Optional field</span>' : ""}
+                    </label>
+                    
+                    ${
+                        description
+                            ? `
+                        <div id="${descriptionId}" class="text-sm text-gray-600 mb-2">
+                            ${description}
+                        </div>
+                    `
+                            : ""
+                    }
+                    
+                    <select
+                        id="${fieldId}"
+                        name="${fieldId}"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${error ? "border-red-500" : ""}"
+                        ${required ? "required" : ""}
+                        ${ariaDescribedBy ? `aria-describedby="${ariaDescribedBy}"` : ""}
+                        ${error ? 'aria-invalid="true"' : 'aria-invalid="false"'}
+                    >
+                        ${options
+                            .map(
+                                (option: any) => `
+                            <option value="${option.value}" ${option.value === value ? "selected" : ""}>
+                                ${option.label}
+                            </option>
+                        `,
+                            )
+                            .join("")}
+                    </select>
+                    
+                    ${
+                        error
+                            ? `
+                        <div id="${errorId}" class="mt-2 text-sm text-red-600" role="alert" aria-live="polite">
+                            ${error}
+                        </div>
+                    `
+                            : ""
+                    }
+                </div>
+            `;
+        },
+
+        createTextarea: function (props: any) {
+            const {
+                id,
+                label,
+                required = false,
+                error,
+                description,
+                placeholder,
+                value = "",
+                rows = 4,
+                className = "",
+            } = props;
+
+            const fieldId = id;
+            const errorId = error ? `${id}-error` : null;
+            const descriptionId = description ? `${id}-description` : null;
+            const ariaDescribedBy = [errorId, descriptionId]
+                .filter(Boolean)
+                .join(" ");
+
+            return `
+                <div class="form-field ${className}">
+                    <label for="${fieldId}" class="block text-sm font-medium text-gray-900 mb-2">
+                        ${label}
+                        ${required ? '<span class="text-red-500 ml-1" aria-label="required">*</span>' : ""}
+                        ${!required ? '<span class="sr-only"> - Optional field</span>' : ""}
+                    </label>
+                    
+                    ${
+                        description
+                            ? `
+                        <div id="${descriptionId}" class="text-sm text-gray-600 mb-2">
+                            ${description}
+                        </div>
+                    `
+                            : ""
+                    }
+                    
+                    <textarea
+                        id="${fieldId}"
+                        name="${fieldId}"
+                        rows="${rows}"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${error ? "border-red-500" : ""}"
+                        ${placeholder ? `placeholder="${placeholder}"` : ""}
+                        ${required ? "required" : ""}
+                        ${ariaDescribedBy ? `aria-describedby="${ariaDescribedBy}"` : ""}
+                        ${error ? 'aria-invalid="true"' : 'aria-invalid="false"'}
+                    >${value}</textarea>
+                    
+                    ${
+                        error
+                            ? `
+                        <div id="${errorId}" class="mt-2 text-sm text-red-600" role="alert" aria-live="polite">
+                            ${error}
+                        </div>
+                    `
+                            : ""
+                    }
+                </div>
+            `;
+        },
+    };
+</script>
+
+<style>
+    .form-field {
+        @apply mb-4;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+        outline: 2px solid var(--color-focus);
+        outline-offset: 2px;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            border-width: 2px;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline-width: 3px;
+        }
+    }
+
+    /* Error state styling */
+    .form-field input[aria-invalid="true"],
+    .form-field select[aria-invalid="true"],
+    .form-field textarea[aria-invalid="true"] {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 1px #ef4444;
+    }
+
+    /* Required field indicator */
+    .form-field [aria-label="required"] {
+        color: #ef4444;
+        font-weight: bold;
+    }
+</style>

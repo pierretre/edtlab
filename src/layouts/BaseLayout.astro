@@ -2,6 +2,7 @@
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
+import AccessibilityUtils from "../components/AccessibilityUtils.astro";
 import "../styles/global.css";
 
 export interface Props {
@@ -143,13 +144,16 @@ const alternateUrl =
         />
     </head>
     <body class="site-layout">
-        <!-- Skip links for accessibility -->
-        <div class="sr-only">
+        <!-- Enhanced skip links for accessibility -->
+        <div class="skip-links">
             <a href="#main-content" class="skip-link">
                 {t("accessibility.skip-to-content")}
             </a>
             <a href="#navigation" class="skip-link">
                 {t("accessibility.skip-to-navigation")}
+            </a>
+            <a href="#footer" class="skip-link">
+                {t("accessibility.skip-to-footer")}
             </a>
         </div>
 
@@ -160,6 +164,7 @@ const alternateUrl =
                 id="navigation"
                 class="bg-white shadow-sm border-b border-gray-200"
                 role="banner"
+                aria-label={t("accessibility.main-navigation")}
             >
                 <!-- Main navigation -->
                 <Navigation />
@@ -177,7 +182,28 @@ const alternateUrl =
         </div>
 
         <!-- Footer -->
-        <Footer />
+        <footer id="footer" role="contentinfo" aria-label="Site footer">
+            <Footer />
+        </footer>
+
+        <!-- Accessibility utilities -->
+        <AccessibilityUtils />
+
+        <!-- ARIA live region for announcements -->
+        <div
+            id="aria-live-region"
+            aria-live="polite"
+            aria-atomic="true"
+            class="sr-only"
+        >
+        </div>
+        <div
+            id="aria-live-region-assertive"
+            aria-live="assertive"
+            aria-atomic="true"
+            class="sr-only"
+        >
+        </div>
 
         <!-- Focus management script -->
         <script is:inline>
@@ -250,41 +276,93 @@ const alternateUrl =
                     }
                 });
 
+                // Enhanced announcement system
+                window.announceToScreenReader = function (
+                    message,
+                    priority = "polite",
+                ) {
+                    const liveRegion =
+                        priority === "assertive"
+                            ? document.getElementById(
+                                  "aria-live-region-assertive",
+                              )
+                            : document.getElementById("aria-live-region");
+
+                    if (liveRegion) {
+                        liveRegion.textContent = message;
+
+                        // Clear after announcement
+                        setTimeout(() => {
+                            liveRegion.textContent = "";
+                        }, 1000);
+                    }
+                };
+
                 // Announce page changes to screen readers
                 const announcePageChange = function () {
-                    const announcement = document.createElement("div");
-                    announcement.setAttribute("aria-live", "polite");
-                    announcement.setAttribute("aria-atomic", "true");
-                    announcement.className = "sr-only";
-                    announcement.textContent = "Page loaded: " + document.title;
-                    document.body.appendChild(announcement);
+                    const pageTitle = document.title;
+                    const mainHeading = document.querySelector("h1");
+                    const message = mainHeading
+                        ? `Page loaded: ${mainHeading.textContent}`
+                        : `Page loaded: ${pageTitle}`;
 
-                    // Remove announcement after screen reader has time to read it
-                    setTimeout(function () {
-                        if (announcement.parentNode) {
-                            announcement.parentNode.removeChild(announcement);
-                        }
-                    }, 1000);
+                    window.announceToScreenReader(message);
                 };
 
                 // Announce initial page load
-                announcePageChange();
+                setTimeout(announcePageChange, 500);
             });
 
-            // Handle reduced motion preferences
-            if (
-                window.matchMedia &&
-                window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            ) {
-                document.documentElement.style.scrollBehavior = "auto";
-            }
+            // Enhanced accessibility preferences handling
+            const handleAccessibilityPreferences = function () {
+                // Handle reduced motion preferences
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-motion: reduce)")
+                        .matches
+                ) {
+                    document.documentElement.style.scrollBehavior = "auto";
+                    document.documentElement.classList.add("reduce-motion");
+                }
 
-            // Handle high contrast mode
-            if (
-                window.matchMedia &&
-                window.matchMedia("(prefers-contrast: high)").matches
-            ) {
-                document.documentElement.classList.add("high-contrast");
+                // Handle high contrast mode
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-contrast: high)").matches
+                ) {
+                    document.documentElement.classList.add("high-contrast");
+                }
+
+                // Handle color scheme preferences
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches
+                ) {
+                    document.documentElement.classList.add("dark-mode");
+                }
+
+                // Handle font size preferences
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-data: reduce)").matches
+                ) {
+                    document.documentElement.classList.add("reduce-data");
+                }
+            };
+
+            handleAccessibilityPreferences();
+
+            // Listen for preference changes
+            if (window.matchMedia) {
+                window
+                    .matchMedia("(prefers-reduced-motion: reduce)")
+                    .addEventListener("change", handleAccessibilityPreferences);
+                window
+                    .matchMedia("(prefers-contrast: high)")
+                    .addEventListener("change", handleAccessibilityPreferences);
+                window
+                    .matchMedia("(prefers-color-scheme: dark)")
+                    .addEventListener("change", handleAccessibilityPreferences);
             }
 
             document.addEventListener("DOMContentLoaded", () => {
@@ -307,6 +385,135 @@ const alternateUrl =
                 // Optional: if content inside header might dynamically change
                 const observer = new ResizeObserver(adjustPageOffset);
                 observer.observe(header);
+            });
+
+            // Enhanced keyboard navigation support
+            document.addEventListener("keydown", function (e) {
+                // Handle escape key for closing modals/dropdowns
+                if (e.key === "Escape") {
+                    // Close any open dropdowns
+                    const openDropdowns = document.querySelectorAll(
+                        '[aria-expanded="true"]',
+                    );
+                    openDropdowns.forEach((dropdown) => {
+                        dropdown.setAttribute("aria-expanded", "false");
+                        const target = document.getElementById(
+                            dropdown.getAttribute("aria-controls"),
+                        );
+                        if (target) {
+                            target.classList.add("hidden");
+                        }
+                    });
+
+                    // Close any open modals
+                    const openModals = document.querySelectorAll(
+                        '[role="dialog"]:not([hidden])',
+                    );
+                    openModals.forEach((modal) => {
+                        modal.setAttribute("hidden", "");
+                        // Return focus to trigger element if available
+                        const trigger = modal.getAttribute("data-trigger-id");
+                        if (trigger) {
+                            const triggerElement =
+                                document.getElementById(trigger);
+                            if (triggerElement) {
+                                triggerElement.focus();
+                            }
+                        }
+                    });
+                }
+
+                // Handle arrow keys for menu navigation
+                if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                    const activeElement = document.activeElement;
+                    if (
+                        activeElement &&
+                        activeElement.getAttribute("role") === "menuitem"
+                    ) {
+                        e.preventDefault();
+                        const menu = activeElement.closest('[role="menu"]');
+                        if (menu) {
+                            const menuItems =
+                                menu.querySelectorAll('[role="menuitem"]');
+                            const currentIndex =
+                                Array.from(menuItems).indexOf(activeElement);
+                            let nextIndex;
+
+                            if (e.key === "ArrowDown") {
+                                nextIndex =
+                                    currentIndex + 1 >= menuItems.length
+                                        ? 0
+                                        : currentIndex + 1;
+                            } else {
+                                nextIndex =
+                                    currentIndex - 1 < 0
+                                        ? menuItems.length - 1
+                                        : currentIndex - 1;
+                            }
+
+                            menuItems[nextIndex].focus();
+                        }
+                    }
+                }
+            });
+
+            // Enhanced form validation and error handling
+            document.addEventListener(
+                "invalid",
+                function (e) {
+                    e.preventDefault();
+                    const field = e.target;
+                    const fieldId = field.id;
+                    const errorId = fieldId + "-error";
+                    let errorElement = document.getElementById(errorId);
+
+                    if (!errorElement) {
+                        errorElement = document.createElement("div");
+                        errorElement.id = errorId;
+                        errorElement.className = "error-message";
+                        errorElement.setAttribute("role", "alert");
+                        errorElement.setAttribute("aria-live", "polite");
+                        field.parentNode.appendChild(errorElement);
+                    }
+
+                    // Set error message based on validation type
+                    let errorMessage = "";
+                    if (field.validity.valueMissing) {
+                        errorMessage =
+                            field.getAttribute("data-required-message") ||
+                            "This field is required";
+                    } else if (field.validity.typeMismatch) {
+                        errorMessage =
+                            field.getAttribute("data-type-message") ||
+                            "Please enter a valid value";
+                    } else if (field.validity.patternMismatch) {
+                        errorMessage =
+                            field.getAttribute("data-pattern-message") ||
+                            "Please match the requested format";
+                    }
+
+                    errorElement.textContent = errorMessage;
+                    field.setAttribute("aria-describedby", errorId);
+                    field.setAttribute("aria-invalid", "true");
+
+                    // Focus the field and announce error
+                    field.focus();
+                    window.announceToScreenReader(errorMessage, "assertive");
+                },
+                true,
+            );
+
+            // Clear errors on valid input
+            document.addEventListener("input", function (e) {
+                const field = e.target;
+                if (field.checkValidity()) {
+                    const errorId = field.id + "-error";
+                    const errorElement = document.getElementById(errorId);
+                    if (errorElement) {
+                        errorElement.textContent = "";
+                    }
+                    field.setAttribute("aria-invalid", "false");
+                }
             });
         </script>
     </body>
