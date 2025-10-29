@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.props as { page: CollectionEntry<"pages"> };
-const { lang, slug } = Astro.params;
+const { lang } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
 
 if (!page) {

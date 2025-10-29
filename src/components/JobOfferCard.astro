@@ -1,6 +1,13 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import {
+    formatDate,
+    isDeadlineApproaching,
+    isDeadlinePassed,
+    getProjectColor,
+    getJobTypeColor,
+} from "../utils";
 
 interface Props {
     jobOffer: CollectionEntry<"job-offers">;
@@ -9,65 +16,6 @@ interface Props {
 
 const { jobOffer, lang } = Astro.props;
 const t = useTranslations(lang);
-
-// Helper function to get project color
-const getProjectColor = (project: string) => {
-    switch (project) {
-        case "PC1":
-            return "bg-blue-100 text-primary-600";
-        case "PC2":
-            return "bg-green-100 text-green-800";
-        case "PC3":
-            return "bg-yellow-100 text-yellow-800";
-        case "PC4":
-            return "bg-purple-100 text-purple-800";
-        case "PC5":
-            return "bg-red-100 text-red-800";
-        case "General":
-            return "bg-gray-100 text-gray-800";
-        default:
-            return "bg-gray-100 text-gray-800";
-    }
-};
-
-// Helper function to get type color
-const getTypeColor = (type: string) => {
-    switch (type) {
-        case "postdoc":
-            return "bg-indigo-100 text-indigo-800";
-        case "phd":
-            return "bg-emerald-100 text-emerald-800";
-        case "engineer":
-            return "bg-orange-100 text-orange-800";
-        case "intern":
-            return "bg-pink-100 text-pink-800";
-        default:
-            return "bg-gray-100 text-gray-800";
-    }
-};
-
-// Format deadline date
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-};
-
-// Check if deadline is approaching (within 30 days)
-const isDeadlineApproaching = (deadline: Date) => {
-    const now = new Date();
-    const timeDiff = deadline.getTime() - now.getTime();
-    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return daysDiff <= 30 && daysDiff > 0;
-};
-
-// Check if deadline has passed
-const isDeadlinePassed = (deadline: Date) => {
-    const now = new Date();
-    return deadline < now;
-};
 ---
 
 <div
@@ -82,7 +30,7 @@ const isDeadlinePassed = (deadline: Date) => {
                 {jobOffer.data.project}
             </span>
             <span
-                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(jobOffer.data.type)}`}
+                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getJobTypeColor(jobOffer.data.type)}`}
             >
                 {t(`job-offers.type.${jobOffer.data.type}`)}
             </span>
@@ -157,7 +105,7 @@ const isDeadlinePassed = (deadline: Date) => {
                         : ""}
                 >
                     {t("job-offers.deadline")}: {
-                        formatDate(jobOffer.data.deadline)
+                        formatDate(jobOffer.data.deadline, lang)
                     }
                 </span>
             </div>
