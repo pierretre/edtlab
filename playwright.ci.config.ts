@@ -27,12 +27,6 @@ export default defineConfig({
         },
     ],
 
-    webServer: {
-        command: 'npm run preview',
-        url: 'http://localhost:4321',
-        reuseExistingServer: !process.env.CI,
-        timeout: 120 * 1000,
-        stderr: 'pipe',
-        stdout: 'pipe',
-    },
+    // Don't start webServer in CI - we manage it manually
+    // webServer is commented out for CI usage
 });

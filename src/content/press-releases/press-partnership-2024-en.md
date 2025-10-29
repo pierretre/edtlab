@@ -3,7 +3,7 @@ title: "EDT Program Announces Strategic Partnership with Leading Industrial Comp
 date: 2024-05-15
 type: "partnership"
 description: "New partnerships with major industrial players will accelerate digital twin technology adoption across manufacturing sectors"
-url: "https://example.com/partnership-announcement"
+url: "http://edtlab.fr/"
 lang: "en"
 ---
 

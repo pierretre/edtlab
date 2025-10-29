@@ -3,7 +3,7 @@ title: "Le Programme EDT Annonce un Partenariat Stratégique avec des Entreprise
 date: 2024-05-15
 type: "partnership"
 description: "De nouveaux partenariats avec des acteurs industriels majeurs accéléreront l'adoption de la technologie des jumeaux numériques dans les secteurs manufacturiers"
-url: "https://example.com/partnership-announcement"
+url: "http://edtlab.fr/"
 lang: "fr"
 ---
 

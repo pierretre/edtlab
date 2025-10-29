@@ -5,5 +5,5 @@ type: "conference"
 year: 2023
 venue: "International Conference on Digital Twins"
 doi: "10.1000/183"
-url: "https://example.com/conference-paper"
+url: "http://edtlab.fr/"
 ---

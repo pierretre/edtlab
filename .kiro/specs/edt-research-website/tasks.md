@@ -232,7 +232,17 @@
   - Set up test coverage reporting and quality gates
   - _Requirements: 26.1, 26.2, 26.3, 20.2_
 
-- [ ] 29. Add manual testing procedures
+- [ ] 29. Enhance CI pipeline with comprehensive route and link testing
+  - Create separate script for route accessibility testing with current routes (excluding content-specific routes)
+  - Update Playwright configuration to include comprehensive link verification testing
+  - Implement automated testing of all internal and external links from each web page
+  - Add link validation to ensure no broken links exist across the site
+  - Configure CI to run link verification as part of the testing pipeline
+  - Set up proper error reporting and failure handling for broken links
+  - Ensure route testing covers all main navigation paths and content pages
+  - _Requirements: 26.1, 26.2, 26.3, 4.1, 4.2_
+
+- [ ] 30. Add manual testing procedures
   - Create accessibility testing procedures with assistive technology
   - Document keyboard navigation testing protocols
   - Set up content review and translation validation processes
@@ -241,14 +251,14 @@
 
 ## Deployment and Infrastructure
 
-- [ ] 30. Set up build and deployment pipeline
+- [ ] 31. Set up build and deployment pipeline
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
   - Set up Docker containerization with Nginx
   - Configure deployment to VPS with SSL/TLS certificates
   - _Requirements: 20.1, 20.2, 20.3, 20.4, 20.5, 17.1, 17.2_
 
-- [ ] 31. Configure production monitoring and maintenance
+- [ ] 32. Configure production monitoring and maintenance
   - Set up uptime monitoring and performance alerts
   - Implement error tracking and log management
   - Configure automated security updates and backups
@@ -257,7 +267,7 @@
 
 ## Final Integration and Launch
 
-- [ ] 32. Populate initial content and perform final testing
+- [ ] 33. Populate initial content and perform final testing
   - Migrate existing program content and documentation
   - Populate all content sections with initial bilingual content
   - Perform comprehensive accessibility and performance testing
