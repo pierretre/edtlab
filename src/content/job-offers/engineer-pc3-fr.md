@@ -9,8 +9,6 @@ requirements: ["Licence ou Master en Génie Logiciel", "5+ années d'expérience
 lang: "fr"
 ---
 
-# Ingénieur de Recherche - Développement Logiciel
-
 ## Aperçu du Poste
 
 Rejoignez notre équipe PC3 en tant qu'Ingénieur de Recherche spécialisé dans le développement logiciel pour notre plateforme de jumeaux numériques. Vous serez responsable de l'implémentation de solutions évolutives et de l'intégration de divers composants système.
@@ -22,15 +20,6 @@ Rejoignez notre équipe PC3 en tant qu'Ingénieur de Recherche spécialisé dans
 - Optimiser les performances et l'évolutivité du système
 - Collaborer avec les équipes de recherche sur le développement de prototypes
 - Maintenir la qualité du code et les standards de documentation
-
-## Qualifications Requises
-
-- Licence ou Master en Génie Logiciel ou Informatique
-- Minimum 5 années d'expérience professionnelle en développement logiciel
-- Maîtrise de C++, Java, ou Python
-- Expérience avec les systèmes distribués et microservices
-- Connaissance des systèmes de bases de données et gestion de données
-- Familiarité avec les systèmes de contrôle de version (Git)
 
 ## Qualifications Préférées
 

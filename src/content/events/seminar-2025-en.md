@@ -8,8 +8,6 @@ url: "https://example.com/seminar"
 lang: "en"
 ---
 
-# Future of Digital Twins in Engineering
-
 ## Seminar Overview
 
 This seminar explores the cutting-edge developments and future directions in digital twin technology, with a focus on engineering applications. Leading researchers and industry experts will share their insights on emerging trends and breakthrough innovations.

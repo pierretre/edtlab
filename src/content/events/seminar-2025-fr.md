@@ -8,8 +8,6 @@ url: "https://example.com/seminar"
 lang: "fr"
 ---
 
-# Avenir des Jumeaux Numériques en Ingénierie
-
 ## Aperçu du Séminaire
 
 Ce séminaire explore les développements de pointe et les directions futures de la technologie des jumeaux numériques, avec un focus sur les applications d'ingénierie. Des chercheurs de premier plan et des experts de l'industrie partageront leurs perspectives sur les tendances émergentes et les innovations révolutionnaires.

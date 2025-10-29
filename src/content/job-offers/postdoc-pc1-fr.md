@@ -9,8 +9,6 @@ requirements: ["Doctorat en Ingénierie ou Informatique", "Expérience avec la t
 lang: "fr"
 ---
 
-# Chercheur Postdoctoral - Modélisation de Jumeaux Numériques
-
 ## Aperçu du Poste
 
 Nous recherchons un chercheur postdoctoral hautement motivé pour rejoindre notre équipe travaillant sur le Projet PC1, en se concentrant sur les techniques avancées de modélisation de jumeaux numériques pour les applications d'ingénierie.
@@ -22,14 +20,6 @@ Nous recherchons un chercheur postdoctoral hautement motivé pour rejoindre notr
 - Publier les résultats de recherche dans des revues à fort impact
 - Participer aux réunions et présentations de projet
 - Encadrer des étudiants diplômés
-
-## Qualifications
-
-- Doctorat en Ingénierie, Informatique ou domaine connexe
-- Solide formation en technologie des jumeaux numériques
-- Expérience avec les logiciels de simulation et de modélisation
-- Excellentes compétences en programmation (Python, C++, MATLAB)
-- Solides compétences de communication écrite et orale en anglais
 
 ## Processus de Candidature
 

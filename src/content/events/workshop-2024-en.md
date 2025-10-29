@@ -8,8 +8,6 @@ url: "https://example.com/workshop"
 lang: "en"
 ---
 
-# Digital Twin Workshop: Industrial Applications
-
 ## Workshop Overview
 
 Join us for an intensive hands-on workshop focused on the practical implementation of digital twin technology in industrial environments. This workshop brings together researchers, engineers, and industry professionals to explore real-world applications and share best practices.

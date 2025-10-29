@@ -9,8 +9,6 @@ requirements: ["PhD in Engineering or Computer Science", "Experience with digita
 lang: "en"
 ---
 
-# Postdoctoral Researcher - Digital Twin Modeling
-
 ## Position Overview
 
 We are seeking a highly motivated postdoctoral researcher to join our team working on Project PC1, focusing on advanced digital twin modeling techniques for engineering applications.
@@ -22,14 +20,6 @@ We are seeking a highly motivated postdoctoral researcher to join our team worki
 - Publish research findings in high-impact journals
 - Participate in project meetings and presentations
 - Mentor graduate students
-
-## Qualifications
-
-- PhD in Engineering, Computer Science, or related field
-- Strong background in digital twin technology
-- Experience with simulation and modeling software
-- Excellent programming skills (Python, C++, MATLAB)
-- Strong written and oral communication skills in English
 
 ## Application Process
 

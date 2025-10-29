@@ -10,10 +10,13 @@ interface Props {
 const { lang, maxItems } = Astro.props;
 const t = useTranslations(lang);
 
-// Get all press release events for the current language
-const allPressReleases = await getCollection("events", (event) => {
-    return event.data.lang === lang && event.data.type === "press";
-});
+// Get all press releases for the current language
+const allPressReleases = await getCollection(
+    "press-releases",
+    (pressRelease) => {
+        return pressRelease.data.lang === lang;
+    },
+);
 
 // Sort press releases by date (newest first)
 const sortedPressReleases = allPressReleases.sort((a, b) => {
@@ -45,7 +48,11 @@ const formatDate = (date: Date) => {
                             <div class="flex-1">
                                 <h4 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
                                     <a
-                                        href={`/${lang}/events/${pressRelease.slug}`}
+                                        href={
+                                            lang === "fr"
+                                                ? `/fr/actualites/presse/${pressRelease.slug.replace("-fr", "")}`
+                                                : `/en/news/press/${pressRelease.slug.replace("-en", "")}`
+                                        }
                                         class="hover:text-primary-600 transition-colors duration-200"
                                     >
                                         {pressRelease.data.title}
@@ -69,7 +76,9 @@ const formatDate = (date: Date) => {
                                 </div>
                             </div>
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-4">
-                                {t("events.type.press")}
+                                {lang === "fr"
+                                    ? "Communiqué de Presse"
+                                    : "Press Release"}
                             </span>
                         </div>
 
@@ -79,7 +88,11 @@ const formatDate = (date: Date) => {
 
                         <div class="flex items-center justify-between">
                             <a
-                                href={`/${lang}/events/${pressRelease.slug}`}
+                                href={
+                                    lang === "fr"
+                                        ? `/fr/actualites/presse/${pressRelease.slug.replace("-fr", "")}`
+                                        : `/en/news/press/${pressRelease.slug.replace("-en", "")}`
+                                }
                                 class="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-600 transition-colors duration-200"
                             >
                                 {t("news.read-full-release")}
@@ -151,7 +164,7 @@ const formatDate = (date: Date) => {
             sortedPressReleases.length > maxItems && (
                 <div class="mt-6 text-center">
                     <a
-                        href={`/${lang}/news`}
+                        href={lang === "fr" ? "/fr/actualites" : "/en/news"}
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-colors duration-200"
                     >
                         {t("news.view-all-press-releases")}

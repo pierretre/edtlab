@@ -161,7 +161,9 @@ const isSoon = (date: Date) => {
         <!-- Action buttons -->
         <div class="flex flex-col gap-2">
             <a
-                href={`/${lang}/events/${event.slug}`}
+                href={lang === "fr"
+                    ? `/fr/actualites/${event.slug.replace("-fr", "")}`
+                    : `/en/news/${event.slug.replace("-en", "")}`}
                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
                 aria-label={`${t("events.view-details")} - ${event.data.title}`}
             >

@@ -9,8 +9,6 @@ requirements: ["Currently enrolled in Engineering or Computer Science program", 
 lang: "en"
 ---
 
-# Summer Internship - Digital Twin Research
-
 ## Position Overview
 
 Join our research team for a 6-month internship focused on digital twin technologies. This is an excellent opportunity for students to gain hands-on experience in cutting-edge research while contributing to real-world projects.
@@ -29,15 +27,6 @@ Join our research team for a 6-month internship focused on digital twin technolo
 - User interface development
 - Performance optimization
 - Literature review and state-of-the-art analysis
-
-## Requirements
-
-- Currently enrolled in final year of Bachelor's or Master's program
-- Major in Engineering, Computer Science, or related field
-- Strong academic performance (GPA > 3.0 or equivalent)
-- Programming experience in any language
-- Genuine interest in research and innovation
-- Good communication skills in English or French
 
 ## What You'll Gain
 

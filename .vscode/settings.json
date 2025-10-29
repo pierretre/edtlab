@@ -1,6 +1,7 @@
 {
     "kiroAgent.trustedCommands": [
         "npm run *",
-        "npm test"
+        "npm test",
+        "curl -I http://localhost:4322/*"
     ]
 }

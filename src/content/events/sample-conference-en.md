@@ -8,8 +8,6 @@ url: "https://example.com/conference"
 lang: "en"
 ---
 
-# International Conference on Digital Twins 2024
-
 ## Event Details
 
 Join us for the premier international conference on digital twin technology, featuring keynote presentations, technical sessions, and networking opportunities.

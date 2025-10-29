@@ -1,12 +1,10 @@
 ---
 title: "EDT Program Receives Additional Funding for Phase 2"
 date: 2024-02-10
-type: "press"
+type: "milestone"
 description: "The Engineering Digital Twins research program has been awarded additional funding to expand its research activities into Phase 2"
 lang: "en"
 ---
-
-# EDT Program Receives Additional Funding for Phase 2
 
 ## Press Release - February 10, 2024
 
