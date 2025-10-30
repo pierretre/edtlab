@@ -1,0 +1,239 @@
+---
+// Performance monitoring component for Core Web Vitals tracking
+export interface Props {
+  enableAnalytics?: boolean;
+  gaTrackingId?: string;
+}
+
+const { enableAnalytics = false, gaTrackingId } = Astro.props;
+---
+
+<!-- Core Web Vitals and Performance Monitoring -->
+<script is:inline define:vars={{ enableAnalytics, gaTrackingId }}>
+  // Core Web Vitals tracking
+  function getCLS(onPerfEntry) {
+    if (typeof PerformanceObserver !== 'undefined') {
+      const observer = new PerformanceObserver((list) => {
+        let clsValue = 0;
+        const entries = list.getEntries();
+        for (const entry of entries) {
+          if (!entry.hadRecentInput) {
+            clsValue += entry.value;
+          }
+        }
+        if (clsValue > 0) {
+          onPerfEntry({
+            name: 'CLS',
+            value: clsValue,
+            rating: clsValue > 0.25 ? 'poor' : clsValue > 0.1 ? 'needs-improvement' : 'good'
+          });
+        }
+      });
+      observer.observe({ type: 'layout-shift', buffered: true });
+    }
+  }
+
+  function getFID(onPerfEntry) {
+    if (typeof PerformanceObserver !== 'undefined') {
+      const observer = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        for (const entry of entries) {
+          onPerfEntry({
+            name: 'FID',
+            value: entry.processingStart - entry.startTime,
+            rating: entry.processingStart - entry.startTime > 300 ? 'poor' : 
+                   entry.processingStart - entry.startTime > 100 ? 'needs-improvement' : 'good'
+          });
+        }
+      });
+      observer.observe({ type: 'first-input', buffered: true });
+    }
+  }
+
+  function getLCP(onPerfEntry) {
+    if (typeof PerformanceObserver !== 'undefined') {
+      const observer = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        if (lastEntry) {
+          onPerfEntry({
+            name: 'LCP',
+            value: lastEntry.startTime,
+            rating: lastEntry.startTime > 4000 ? 'poor' : 
+                   lastEntry.startTime > 2500 ? 'needs-improvement' : 'good'
+          });
+        }
+      });
+      observer.observe({ type: 'largest-contentful-paint', buffered: true });
+    }
+  }
+
+  function getFCP(onPerfEntry) {
+    if (typeof PerformanceObserver !== 'undefined') {
+      const observer = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        for (const entry of entries) {
+          if (entry.name === 'first-contentful-paint') {
+            onPerfEntry({
+              name: 'FCP',
+              value: entry.startTime,
+              rating: entry.startTime > 3000 ? 'poor' : 
+                     entry.startTime > 1800 ? 'needs-improvement' : 'good'
+            });
+          }
+        }
+      });
+      observer.observe({ type: 'paint', buffered: true });
+    }
+  }
+
+  function getTTFB(onPerfEntry) {
+    if (typeof PerformanceObserver !== 'undefined') {
+      const observer = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        for (const entry of entries) {
+          if (entry.entryType === 'navigation') {
+            const ttfb = entry.responseStart - entry.requestStart;
+            onPerfEntry({
+              name: 'TTFB',
+              value: ttfb,
+              rating: ttfb > 800 ? 'poor' : ttfb > 200 ? 'needs-improvement' : 'good'
+            });
+          }
+        }
+      });
+      observer.observe({ type: 'navigation', buffered: true });
+    }
+  }
+
+  // Performance metrics collection
+  const performanceMetrics = {};
+
+  function handlePerfEntry(metric) {
+    performanceMetrics[metric.name] = metric;
+    
+    // Log to console in development
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      console.log(`${metric.name}: ${metric.value.toFixed(2)}ms (${metric.rating})`);
+    }
+
+    // Send to analytics if enabled
+    if (enableAnalytics && typeof gtag !== 'undefined') {
+      gtag('event', metric.name, {
+        event_category: 'Web Vitals',
+        event_label: metric.rating,
+        value: Math.round(metric.value),
+        non_interaction: true,
+      });
+    }
+
+    // Store in localStorage for debugging
+    try {
+      const stored = JSON.parse(localStorage.getItem('webVitals') || '{}');
+      stored[metric.name] = {
+        value: metric.value,
+        rating: metric.rating,
+        timestamp: Date.now(),
+        url: window.location.pathname
+      };
+      localStorage.setItem('webVitals', JSON.stringify(stored));
+    } catch (e) {
+      // Ignore localStorage errors
+    }
+  }
+
+  // Initialize Core Web Vitals tracking
+  document.addEventListener('DOMContentLoaded', function() {
+    getCLS(handlePerfEntry);
+    getFID(handlePerfEntry);
+    getLCP(handlePerfEntry);
+    getFCP(handlePerfEntry);
+    getTTFB(handlePerfEntry);
+
+    // Track page load time
+    window.addEventListener('load', function() {
+      const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+      handlePerfEntry({
+        name: 'Page Load Time',
+        value: loadTime,
+        rating: loadTime > 3000 ? 'poor' : loadTime > 1500 ? 'needs-improvement' : 'good'
+      });
+    });
+
+    // Track resource loading performance
+    if (typeof PerformanceObserver !== 'undefined') {
+      const resourceObserver = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        let totalResourceTime = 0;
+        let resourceCount = 0;
+
+        for (const entry of entries) {
+          if (entry.entryType === 'resource') {
+            totalResourceTime += entry.duration;
+            resourceCount++;
+          }
+        }
+
+        if (resourceCount > 0) {
+          const avgResourceTime = totalResourceTime / resourceCount;
+          handlePerfEntry({
+            name: 'Average Resource Load Time',
+            value: avgResourceTime,
+            rating: avgResourceTime > 1000 ? 'poor' : avgResourceTime > 500 ? 'needs-improvement' : 'good'
+          });
+        }
+      });
+      resourceObserver.observe({ type: 'resource', buffered: true });
+    }
+  });
+
+  // Expose performance data for debugging
+  window.getPerformanceMetrics = function() {
+    return performanceMetrics;
+  };
+
+  // Performance budget warnings (development only)
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        const warnings = [];
+        
+        if (performanceMetrics.LCP && performanceMetrics.LCP.value > 2500) {
+          warnings.push(`LCP is ${performanceMetrics.LCP.value.toFixed(0)}ms (target: <2500ms)`);
+        }
+        
+        if (performanceMetrics.FID && performanceMetrics.FID.value > 100) {
+          warnings.push(`FID is ${performanceMetrics.FID.value.toFixed(0)}ms (target: <100ms)`);
+        }
+        
+        if (performanceMetrics.CLS && performanceMetrics.CLS.value > 0.1) {
+          warnings.push(`CLS is ${performanceMetrics.CLS.value.toFixed(3)} (target: <0.1)`);
+        }
+
+        if (warnings.length > 0) {
+          console.warn('Performance Budget Warnings:', warnings);
+        } else {
+          console.log('✅ All Core Web Vitals are within target ranges');
+        }
+      }, 3000);
+    });
+  }
+</script>
+
+<!-- Google Analytics (optional) -->
+{enableAnalytics && gaTrackingId && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}></script>
+    <script is:inline define:vars={{ gaTrackingId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', gaTrackingId, {
+        // Privacy-friendly settings
+        anonymize_ip: true,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
+      });
+    </script>
+  </>
+)}
