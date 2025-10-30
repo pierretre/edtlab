@@ -3,7 +3,6 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import AccessibilityUtils from "../components/AccessibilityUtils.astro";
-import PerformanceMonitor from "../components/PerformanceMonitor.astro";
 import "../styles/global.css";
 
 export interface Props {
@@ -126,157 +125,8 @@ const alternateUrl =
             src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"
         ></script>
 
-        <!-- Performance Monitoring and Analytics -->
-        <script is:inline>
-            // Service Worker Registration
-            if ("serviceWorker" in navigator) {
-                window.addEventListener("load", () => {
-                    navigator.serviceWorker
-                        .register("/sw.js")
-                        .then((registration) => {
-                            console.log("SW registered: ", registration);
-                        })
-                        .catch((registrationError) => {
-                            console.log(
-                                "SW registration failed: ",
-                                registrationError,
-                            );
-                        });
-                });
-            }
-
-            // Resource hints for performance
-            function addResourceHints() {
-                // Preconnect to external domains
-                const preconnectDomains = [
-                    "https://cdn.jsdelivr.net",
-                    "https://www.googletagmanager.com",
-                ];
-
-                preconnectDomains.forEach((domain) => {
-                    const link = document.createElement("link");
-                    link.rel = "preconnect";
-                    link.href = domain;
-                    link.crossOrigin = "anonymous";
-                    document.head.appendChild(link);
-                });
-
-                // DNS prefetch for likely next pages
-                const dnsPrefetchDomains = [
-                    "https://fonts.googleapis.com",
-                    "https://www.google-analytics.com",
-                ];
-
-                dnsPrefetchDomains.forEach((domain) => {
-                    const link = document.createElement("link");
-                    link.rel = "dns-prefetch";
-                    link.href = domain;
-                    document.head.appendChild(link);
-                });
-            }
-
-            // Critical resource loading optimization
-            function optimizeCriticalResources() {
-                // Preload critical CSS
-                const criticalCSS = document.querySelector(
-                    'link[rel="stylesheet"]',
-                );
-                if (criticalCSS) {
-                    criticalCSS.setAttribute("rel", "preload");
-                    criticalCSS.setAttribute("as", "style");
-                    criticalCSS.setAttribute(
-                        "onload",
-                        "this.onload=null;this.rel='stylesheet'",
-                    );
-                }
-
-                // Optimize font loading
-                const fontLinks = document.querySelectorAll(
-                    'link[rel="preload"][as="font"]',
-                );
-                fontLinks.forEach((link) => {
-                    link.setAttribute("crossorigin", "anonymous");
-                });
-            }
-
-            // Initialize performance optimizations
-            document.addEventListener("DOMContentLoaded", () => {
-                addResourceHints();
-                optimizeCriticalResources();
-            });
-
-            // Performance budget monitoring
-            window.addEventListener("load", () => {
-                // Monitor bundle size
-                if (performance.getEntriesByType) {
-                    const resources = performance.getEntriesByType("resource");
-                    let totalSize = 0;
-                    let jsSize = 0;
-                    let cssSize = 0;
-                    let imageSize = 0;
-
-                    resources.forEach((resource) => {
-                        if (resource.transferSize) {
-                            totalSize += resource.transferSize;
-
-                            if (resource.name.endsWith(".js")) {
-                                jsSize += resource.transferSize;
-                            } else if (resource.name.endsWith(".css")) {
-                                cssSize += resource.transferSize;
-                            } else if (
-                                resource.name.match(
-                                    /\.(png|jpg|jpeg|gif|svg|webp|avif)$/,
-                                )
-                            ) {
-                                imageSize += resource.transferSize;
-                            }
-                        }
-                    });
-
-                    // Log performance budget warnings in development
-                    if (
-                        window.location.hostname === "localhost" ||
-                        window.location.hostname === "127.0.0.1"
-                    ) {
-                        const budgets = {
-                            total: 2000000, // 2MB
-                            js: 500000, // 500KB
-                            css: 100000, // 100KB
-                            images: 1000000, // 1MB
-                        };
-
-                        const warnings = [];
-                        if (totalSize > budgets.total)
-                            warnings.push(
-                                `Total size: ${(totalSize / 1024).toFixed(0)}KB (budget: ${(budgets.total / 1024).toFixed(0)}KB)`,
-                            );
-                        if (jsSize > budgets.js)
-                            warnings.push(
-                                `JS size: ${(jsSize / 1024).toFixed(0)}KB (budget: ${(budgets.js / 1024).toFixed(0)}KB)`,
-                            );
-                        if (cssSize > budgets.css)
-                            warnings.push(
-                                `CSS size: ${(cssSize / 1024).toFixed(0)}KB (budget: ${(budgets.css / 1024).toFixed(0)}KB)`,
-                            );
-                        if (imageSize > budgets.images)
-                            warnings.push(
-                                `Image size: ${(imageSize / 1024).toFixed(0)}KB (budget: ${(budgets.images / 1024).toFixed(0)}KB)`,
-                            );
-
-                        if (warnings.length > 0) {
-                            console.warn(
-                                "Performance Budget Exceeded:",
-                                warnings,
-                            );
-                        } else {
-                            console.log(
-                                "✅ All resource budgets are within limits",
-                            );
-                        }
-                    }
-                }
-            });
-        </script>
+        <!-- Analytics placeholder - to be implemented in task 21 -->
+        <!-- Google Analytics will be added here -->
 
         <!-- JSON-LD structured data -->
         <script
@@ -338,9 +188,6 @@ const alternateUrl =
 
         <!-- Accessibility utilities -->
         <AccessibilityUtils />
-
-        <!-- Performance monitoring -->
-        <PerformanceMonitor enableAnalytics={false} />
 
         <!-- ARIA live region for announcements -->
         <div

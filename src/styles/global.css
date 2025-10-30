@@ -47,9 +47,6 @@ body {
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Performance optimizations */
-    text-rendering: optimizeLegibility;
-    font-display: swap;
 }
 
 /* Sticky footer layout */
@@ -221,126 +218,15 @@ th {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
-
-    /* Disable will-change for reduced motion */
-    .performance-optimized {
-        will-change: auto;
-    }
-}
-
-/* Performance optimizations */
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* Optimize image rendering */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-}
-
-/* Loading states for performance */
-.loading {
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.loaded {
-    opacity: 1;
-}
-
-/* Image lazy loading optimization */
-img[loading="lazy"] {
-    /* Prevent layout shift */
-    min-height: 1px;
-    /* Smooth loading transition */
-    transition: opacity 0.3s ease-in-out;
-}
-
-/* Critical resource optimization */
-.critical-resource {
-    /* Prioritize critical resources */
-    content-visibility: auto;
-    contain-intrinsic-size: 0 500px;
-}
-
-/* Intersection observer optimization */
-.observe-visibility {
-    content-visibility: auto;
-    contain-intrinsic-size: 0 200px;
-}
-
-/* Performance optimized elements */
-.performance-optimized {
-    /* Enable hardware acceleration for smooth animations */
-    transform: translateZ(0);
-    /* Optimize repaints */
-    will-change: transform;
-}
-
-/* Container queries for modern browsers */
-@supports (container-type: inline-size) {
-    .responsive-container {
-        container-type: inline-size;
-    }
-
-    @container (min-width: 768px) {
-        .container-responsive {
-            /* Responsive styles based on container */
-        }
-    }
-}
-
-/* Optimize for different connection speeds */
-@media (prefers-reduced-data: reduce) {
-
-    /* Reduce data usage for slow connections */
-    img {
-        /* Reduce image quality for slow connections */
-        image-rendering: pixelated;
-    }
-
-    /* Disable non-essential animations */
-    * {
-        animation: none !important;
-        transition: none !important;
-    }
-}
-
-/* Performance monitoring styles */
-.performance-warning {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: #ff6b6b;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    z-index: 9999;
-    display: none;
 }
 
 /* Print styles */
 @media print {
-
-    /* Hide non-essential elements */
-    .skip-links,
-    .site-navigation,
-    .site-footer,
-    .performance-monitor {
-        display: none !important;
-    }
-
     * {
         background: transparent !important;
         color: black !important;
         box-shadow: none !important;
         text-shadow: none !important;
-        transition: none !important;
     }
 
     a[href]:after {
@@ -351,17 +237,5 @@ img[loading="lazy"] {
     h2,
     h3 {
         page-break-after: avoid;
-        page-break-inside: avoid;
-    }
-
-    p,
-    li {
-        page-break-inside: avoid;
-    }
-
-    /* Optimize images for print */
-    img {
-        max-width: 100% !important;
-        height: auto !important;
     }
 }
