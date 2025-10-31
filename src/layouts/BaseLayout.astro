@@ -3,6 +3,7 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import AccessibilityUtils from "../components/AccessibilityUtils.astro";
+import MatomoAnalytics from "../components/MatomoAnalytics.astro";
 import "../styles/global.css";
 
 export interface Props {
@@ -125,8 +126,15 @@ const alternateUrl =
             src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"
         ></script>
 
-        <!-- Analytics placeholder - to be implemented in task 21 -->
-        <!-- Google Analytics will be added here -->
+        <!-- Matomo Analytics Integration -->
+        <!-- Load Matomo analytics with GDPR compliance -->
+        <MatomoAnalytics
+            siteId={import.meta.env.MATOMO_SITE_ID}
+            matomoUrl={import.meta.env.MATOMO_URL}
+            respectDnt={import.meta.env.MATOMO_RESPECT_DNT !== "0"}
+            anonymizeIp={import.meta.env.MATOMO_ANONYMIZE_IP !== "0"}
+            cookieConsent={false}
+        />
 
         <!-- JSON-LD structured data -->
         <script
@@ -188,6 +196,8 @@ const alternateUrl =
 
         <!-- Accessibility utilities -->
         <AccessibilityUtils />
+
+        <!-- Cookie consent disabled - using anonymous analytics only -->
 
         <!-- ARIA live region for announcements -->
         <div
