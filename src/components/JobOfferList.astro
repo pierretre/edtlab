@@ -15,7 +15,7 @@ const allJobOffers = await getCollection("job-offers", ({ data }) => {
     return data.lang === lang;
 });
 
-// Sort job offers by deadline (closest first) and then by title
+// Sort job offers by deadline status, then by publication date (newest first), then by deadline
 const sortedJobOffers = allJobOffers.sort((a, b) => {
     // First, sort by deadline status (active deadlines first)
     const now = new Date();
@@ -25,7 +25,16 @@ const sortedJobOffers = allJobOffers.sort((a, b) => {
     if (aActive && !bActive) return -1;
     if (!aActive && bActive) return 1;
 
-    // Then by deadline date
+    // For active jobs, sort by publication date (newest first)
+    if (aActive && bActive) {
+        if (a.data.publishedDate.getTime() !== b.data.publishedDate.getTime()) {
+            return (
+                b.data.publishedDate.getTime() - a.data.publishedDate.getTime()
+            );
+        }
+    }
+
+    // Then by deadline date (closest first)
     if (a.data.deadline.getTime() !== b.data.deadline.getTime()) {
         return a.data.deadline.getTime() - b.data.deadline.getTime();
     }

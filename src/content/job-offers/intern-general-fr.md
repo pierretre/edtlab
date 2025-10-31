@@ -4,6 +4,7 @@ project: "General"
 type: "intern"
 location: "Paris, France"
 deadline: 2024-11-30
+publishedDate: 2024-01-10
 description: "Opportunité de stage de 6 mois en recherche et développement de jumeaux numériques"
 requirements: ["Actuellement inscrit en programme d'Ingénierie ou Informatique", "Excellentes performances académiques", "Compétences en programmation dans n'importe quel langage", "Intérêt pour la recherche et l'innovation"]
 lang: "fr"
