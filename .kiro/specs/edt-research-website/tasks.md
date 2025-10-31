@@ -131,14 +131,6 @@
   - Ensure all images meet RGAA 4.1 requirements for alternative text
   - _Requirements: 28.3, 31.3, 3.2, 16.2_
 
-- [ ] 17. Implement search functionality across content
-  - Build site-wide search using Flowbite Search component
-  - Index all content collections for search capability
-  - Implement search results display with relevance ranking
-  - Integrate search component into BaseLayout header
-  - Ensure search response time under 2 seconds
-  - _Requirements: 1.2, 1.4_
-
 ## Accessibility Implementation
 
 - [x] 18. Implement basic accessibility foundation
@@ -180,11 +172,14 @@
 
 ## Analytics and Monitoring
 
-- [ ] 23. Integrate Google Analytics and user tracking
-  - Set up Google Analytics with GDPR compliance
-  - Implement user behavior and engagement tracking
-  - Add geographic distribution and language preference tracking
+- [ ] 23. Integrate Matomo analytics with Docker deployment
+  - Set up Matomo Docker container with MySQL database
+  - Configure Matomo tracking script integration in BaseLayout component
+  - Implement GDPR-compliant analytics with privacy controls
+  - Add user behavior and engagement tracking with custom events
+  - Configure geographic distribution and language preference tracking
   - Track content performance and actionable interactions
+  - Set up Matomo dashboard for website analytics monitoring
   - _Requirements: 27.1, 27.2, 27.3, 27.4, 27.5_
 
 ## Content Management and Documentation
@@ -251,18 +246,25 @@
 
 ## Deployment and Infrastructure
 
-- [ ] 31. Set up build and deployment pipeline
+- [ ] 31. Set up build and deployment pipeline with Matomo integration
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
-  - Set up Docker containerization with Nginx
-  - Configure deployment to VPS with SSL/TLS certificates
+  - Set up Docker containerization with Nginx for web server
+  - Create Docker Compose configuration for multi-container deployment
+  - Configure Matomo Docker container with MySQL database
+  - Set up reverse proxy configuration for Matomo analytics access
+  - Configure deployment to VPS with SSL/TLS certificates for both website and Matomo
+  - Ensure proper network configuration between containers
   - _Requirements: 20.1, 20.2, 20.3, 20.4, 20.5, 17.1, 17.2_
 
-- [ ] 32. Configure production monitoring and maintenance
-  - Set up uptime monitoring and performance alerts
-  - Implement error tracking and log management
-  - Configure automated security updates and backups
+- [ ] 32. Configure production monitoring and maintenance with Matomo
+  - Set up uptime monitoring and performance alerts for both website and Matomo
+  - Implement error tracking and log management for multi-container setup
+  - Configure automated security updates and backups for website and Matomo database
   - Add content freshness monitoring and validation
+  - Set up Matomo database backup and maintenance procedures
+  - Configure log rotation and monitoring for Docker containers
+  - Implement health checks for all services (website, Matomo, MySQL)
   - _Requirements: 17.3, 17.4, 17.5_
 
 ## Final Integration and Launch
