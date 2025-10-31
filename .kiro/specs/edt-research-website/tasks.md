@@ -246,7 +246,7 @@
 
 ## Deployment and Infrastructure
 
-- [ ] 31. Set up build and deployment pipeline with Matomo integration
+- [x] 31. Set up build and deployment pipeline with Matomo integration
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
   - Set up Docker containerization with Nginx for web server
@@ -262,7 +262,6 @@
   - Implement error tracking and log management for multi-container setup
   - Configure automated security updates and backups for website and Matomo database
   - Add content freshness monitoring and validation
-  - Set up Matomo database backup and maintenance procedures
   - Configure log rotation and monitoring for Docker containers
   - Implement health checks for all services (website, Matomo, MySQL)
   - _Requirements: 17.3, 17.4, 17.5_

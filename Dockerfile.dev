@@ -1,0 +1,17 @@
+# Development Dockerfile for EDT Research Website
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Expose port for development server
+EXPOSE 4321
+
+# Default command for development
+CMD ["npm", "run", "dev", "--", "--host"]
