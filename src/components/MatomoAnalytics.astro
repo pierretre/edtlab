@@ -1,0 +1,270 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+
+export interface Props {
+    siteId?: string;
+    matomoUrl?: string;
+    respectDnt?: boolean;
+    anonymizeIp?: boolean;
+    enableLinkTracking?: boolean;
+    enableHeartBeatTimer?: boolean;
+    trackPageView?: boolean;
+    cookieConsent?: boolean;
+}
+
+const {
+    siteId = import.meta.env.MATOMO_SITE_ID || "1",
+    matomoUrl = import.meta.env.MATOMO_URL || "https://analytics.yourdomain.com",
+    respectDnt = import.meta.env.MATOMO_RESPECT_DNT !== "0",
+    anonymizeIp = import.meta.env.MATOMO_ANONYMIZE_IP !== "0",
+    enableLinkTracking = true,
+    enableHeartBeatTimer = true,
+    trackPageView = true,
+    cookieConsent = true,
+} = Astro.props;
+
+// Get current language for tracking
+const lang = getLangFromUrl(Astro.url);
+
+// Only load in production or when explicitly enabled
+const isDev = import.meta.env.DEV;
+const enableAnalytics = !isDev || import.meta.env.MATOMO_DEV_MODE === "1";
+
+// Clean matomo URL (remove trailing slash)
+const cleanMatomoUrl = matomoUrl.replace(/\/$/, "");
+---
+
+{enableAnalytics && (
+    <script is:inline define:vars={{ 
+        siteId, 
+        matomoUrl: cleanMatomoUrl, 
+        respectDnt, 
+        anonymizeIp, 
+        enableLinkTracking, 
+        enableHeartBeatTimer, 
+        trackPageView,
+        cookieConsent,
+        lang 
+    }}>
+        // Matomo Analytics with GDPR compliance
+        var _paq = window._paq = window._paq || [];
+        
+        // GDPR compliance settings
+        if (respectDnt) {
+            _paq.push(['setDoNotTrack', true]);
+        }
+        
+        if (anonymizeIp) {
+            _paq.push(['setAnonymizeIp', true]);
+        }
+
+        // Cookie consent handling - disabled for anonymous analytics
+        // We use cookieless tracking for anonymous analytics only
+        if (cookieConsent) {
+            // Disable cookies for anonymous tracking
+            _paq.push(['disableCookies']);
+        }
+
+        // Custom dimensions for language tracking
+        _paq.push(['setCustomDimension', 1, lang]);
+        
+        // Track page view if enabled
+        if (trackPageView) {
+            _paq.push(['trackPageView']);
+        }
+        
+        // Enable link tracking
+        if (enableLinkTracking) {
+            _paq.push(['enableLinkTracking']);
+        }
+        
+        // Enable heart beat timer for accurate time tracking
+        if (enableHeartBeatTimer) {
+            _paq.push(['enableHeartBeatTimer', 30]); // 30 seconds
+        }
+
+        // Additional tracking configurations
+        _paq.push(['setTrackerUrl', matomoUrl + '/matomo.php']);
+        _paq.push(['setSiteId', siteId]);
+
+        // Load Matomo tracking script
+        (function() {
+            var u = matomoUrl + "/";
+            var d = document;
+            var g = d.createElement('script');
+            var s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+
+        // Enhanced tracking functions
+        window.matomoTrack = {
+            // Track custom events
+            trackEvent: function(category, action, name, value) {
+                if (window._paq) {
+                    _paq.push(['trackEvent', category, action, name, value]);
+                }
+            },
+            
+            // Track downloads
+            trackDownload: function(url, filename) {
+                if (window._paq) {
+                    _paq.push(['trackLink', url, 'download', filename]);
+                }
+            },
+            
+            // Track outbound links
+            trackOutboundLink: function(url, linkType) {
+                if (window._paq) {
+                    _paq.push(['trackLink', url, linkType || 'link']);
+                }
+            },
+            
+            // Track site search
+            trackSiteSearch: function(keyword, category, resultsCount) {
+                if (window._paq) {
+                    _paq.push(['trackSiteSearch', keyword, category, resultsCount]);
+                }
+            },
+            
+            // Track content interaction
+            trackContentInteraction: function(interaction, name, piece, target) {
+                if (window._paq) {
+                    _paq.push(['trackContentInteraction', interaction, name, piece, target]);
+                }
+            },
+            
+            // Track goal conversion
+            trackGoal: function(goalId, customRevenue) {
+                if (window._paq) {
+                    _paq.push(['trackGoal', goalId, customRevenue]);
+                }
+            },
+            
+            // Set custom variables
+            setCustomVariable: function(index, name, value, scope) {
+                if (window._paq) {
+                    _paq.push(['setCustomVariable', index, name, value, scope || 'page']);
+                }
+            },
+            
+            // Set user ID for cross-device tracking
+            setUserId: function(userId) {
+                if (window._paq) {
+                    _paq.push(['setUserId', userId]);
+                }
+            },
+            
+            // Cookie management - disabled for anonymous analytics
+            enableCookies: function() {
+                // Cookies are disabled for anonymous analytics
+                console.log('Cookies are disabled for anonymous analytics');
+            },
+            
+            disableCookies: function() {
+                // Cookies are already disabled for anonymous analytics
+                console.log('Cookies are already disabled for anonymous analytics');
+            },
+            
+            // Check consent status - always false for anonymous analytics
+            hasConsent: function() {
+                return false; // No cookies used for anonymous analytics
+            }
+        };
+
+        // Auto-track common interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track publication downloads
+            document.querySelectorAll('a[href*=".pdf"], a[href*=".doc"], a[href*=".zip"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    var filename = this.href.split('/').pop();
+                    window.matomoTrack.trackDownload(this.href, filename);
+                });
+            });
+            
+            // Track external links
+            document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.hostname + '"])').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    window.matomoTrack.trackOutboundLink(this.href, 'outbound');
+                });
+            });
+            
+            // Track job application links
+            document.querySelectorAll('a[href*="job"], a[href*="career"], a[href*="apply"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    window.matomoTrack.trackEvent('Recruitment', 'Job Link Click', this.textContent.trim());
+                });
+            });
+            
+            // Track contact form interactions
+            document.querySelectorAll('form[action*="contact"]').forEach(function(form) {
+                form.addEventListener('submit', function() {
+                    window.matomoTrack.trackEvent('Contact', 'Form Submit', 'Contact Form');
+                });
+            });
+            
+            // Track search interactions
+            document.querySelectorAll('input[type="search"], input[name*="search"]').forEach(function(input) {
+                input.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter' && this.value.trim()) {
+                        window.matomoTrack.trackSiteSearch(this.value.trim());
+                    }
+                });
+            });
+            
+            // Track language switching
+            document.querySelectorAll('a[hreflang], button[data-lang]').forEach(function(element) {
+                element.addEventListener('click', function() {
+                    var targetLang = this.getAttribute('hreflang') || this.getAttribute('data-lang');
+                    if (targetLang) {
+                        window.matomoTrack.trackEvent('Language', 'Switch', targetLang);
+                    }
+                });
+            });
+            
+            // Track content engagement (time spent reading)
+            var startTime = Date.now();
+            var engagementTracked = false;
+            
+            // Track engagement after 30 seconds
+            setTimeout(function() {
+                if (!engagementTracked) {
+                    window.matomoTrack.trackEvent('Engagement', 'Time on Page', '30+ seconds');
+                    engagementTracked = true;
+                }
+            }, 30000);
+            
+            // Track scroll depth
+            var maxScroll = 0;
+            var scrollTracked = {25: false, 50: false, 75: false, 100: false};
+            
+            window.addEventListener('scroll', function() {
+                var scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+                maxScroll = Math.max(maxScroll, scrollPercent);
+                
+                [25, 50, 75, 100].forEach(function(threshold) {
+                    if (maxScroll >= threshold && !scrollTracked[threshold]) {
+                        window.matomoTrack.trackEvent('Scroll Depth', 'Percentage', threshold + '%');
+                        scrollTracked[threshold] = true;
+                    }
+                });
+            });
+        });
+    </script>
+)}
+
+<!-- Noscript fallback for tracking -->
+{enableAnalytics && (
+    <noscript>
+        <p>
+            <img 
+                src={`${cleanMatomoUrl}/matomo.php?idsite=${siteId}&rec=1`} 
+                style="border:0;" 
+                alt="" 
+                loading="lazy"
+            />
+        </p>
+    </noscript>
+)}
