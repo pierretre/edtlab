@@ -32,30 +32,35 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 ## 🚀 Quick Start
 
-### Local Development
+### Option 1: Docker Development (Recommended)
 
-1. **Clone and install dependencies**:
+1. **Clone the repository**:
    ```bash
    git clone <repository-url>
    cd edt-research-website
-   npm install
    ```
 
-2. **Set up local development environment** (includes Matomo analytics):
+2. **Start development environment**:
    ```bash
-   ./scripts/local-dev.sh setup
+   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
    ```
 
-3. **Start development server**:
-   ```bash
-   ./scripts/local-dev.sh start
-   ```
+3. **Access the services**:
+   - 🌐 **Website**: http://localhost:4321 (Astro dev server with hot reload)
+   - 📊 **Matomo Analytics**: http://localhost:8080
+   - 🗄️ **MySQL Database**: localhost:3306
 
-The website will be available at `http://localhost:4321` and Matomo analytics at `http://localhost:8080`.
+### Production Mode
 
-### Manual Setup
+For production (static files served by Nginx):
+```bash
+docker-compose up -d
+```
+- 🌐 **Website**: http://localhost:80
 
-If you prefer manual setup:
+### Option 2: Manual Development
+
+If you prefer manual setup without Docker:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
@@ -86,16 +91,18 @@ This website includes anonymous Matomo analytics integration. For detailed setup
 - [Project Structure](./docs/structure.md) - Content organization and conventions
 - [Technology Stack](./docs/tech.md) - Framework and tools overview
 
-## 🛠️ Development Scripts
+## 🛠️ Docker Commands
 
-| Script | Description |
-|--------|-------------|
-| `./scripts/local-dev.sh setup` | Set up complete local development environment |
-| `./scripts/local-dev.sh start` | Start website development server |
-| `./scripts/local-dev.sh matomo` | Set up Matomo analytics locally |
-| `./scripts/local-dev.sh status` | Check service status |
-| `./scripts/local-dev.sh stop` | Stop all services |
-| `./scripts/local-dev.sh reset` | Reset local environment |
+| Command | Description |
+|---------|-------------|
+| `docker-compose up -d` | Start production environment |
+| `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d` | Start development environment |
+| `docker-compose ps` | Check service status |
+| `docker-compose logs -f` | View service logs |
+| `docker-compose down` | Stop all services |
+| `docker-compose down -v` | Stop and remove all data |
+
+See [DOCKER-SETUP.md](DOCKER-SETUP.md) for individual service commands.
 
 ## 🌐 Content Management
 
@@ -114,6 +121,32 @@ The website supports bilingual content (English/French) with:
 - **Deployment**: Docker with Docker Compose
 - **Fonts**: Marianne (French government typeface)
 
+## 🚀 Production Deployment
+
+The website can be deployed to production using Docker with integrated Matomo analytics.
+
+### Docker Services
+
+- **Website**: Astro.js static site with Nginx
+- **Matomo**: Analytics platform with MySQL database  
+- **Nginx Proxy**: Reverse proxy with SSL termination
+- **Certbot**: Automatic SSL certificate management
+
+### Management Commands
+
+```bash
+# Check service status
+docker-compose ps
+
+# View service logs  
+docker-compose logs -f [service]
+
+# Stop services
+docker-compose down
+```
+
+For detailed Docker commands, see [DOCKER-SETUP.md](DOCKER-SETUP.md).
+
 ## 📈 Analytics & Privacy
 
 This website uses anonymous analytics to improve user experience:
@@ -122,14 +155,6 @@ This website uses anonymous analytics to improve user experience:
 - Geographic data is aggregated
 - Full GDPR compliance without consent banners
 - Legal notices in footer explain data usage
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test locally with `./scripts/local-dev.sh`
-5. Submit a pull request
 
 ## 📄 License
 
