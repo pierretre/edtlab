@@ -14,96 +14,133 @@ const currentPath = Astro.url.pathname;
 
 <nav id="site-header" class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
     <div class="max-w-screen-xl mx-auto flex items-center justify-between lg:p-2">
-    <!-- Left: Logo -->
-    <div class="flex-shrink-0">
-        <a href={`/${lang}/`} class="flex items-center space-x-3 rtl:space-x-reverse no-underline">
-            <img src="/logo.png" class="h-16 lg:h-20" alt="EDT Logo" aria-label={t("accessibility.home-link")} />
-        </a>
-    </div>
+        <!-- Left: Logo -->
+        <div class="flex-shrink-0">
+            <a href={`/${lang}/`} class="flex items-center space-x-3 rtl:space-x-reverse no-underline">
+                <img src="/logo.png" class="h-16 lg:h-20" alt="EDT Logo" aria-label={t("accessibility.home-link")} />
+            </a>
+        </div>
 
     <!-- Center: Desktop Menu -->
     <nav class="hidden lg:flex justify-center" role="navigation" aria-label={t("accessibility.main-navigation")}>
         <ul class="flex space-x-4 items-center">
             {
                 menuSections.map((section) => {
-                    const isActive =
-                        currentPath === `/${lang}/${section.href}` ||
-                        (section.items &&
-                        section.items.some((sub) => currentPath === `/${lang}/${sub.href}`));
+                const isActive =
+                    currentPath === `/${lang}/${section.href}` ||
+                    (section.items &&
+                    section.items.some((sub) => currentPath === `/${lang}/${sub.href}`));
 
-                    return (
-                        <li class="relative group flex items-center">
-                            <!-- Same submenu logic as before -->
-                            {section.items && section.items.length > 0 ? (
-                                <>
-                                    <a
-                                        href={`/${lang}/${section.href}`}
-                                        class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
-                                            before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                                            before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
-                                            hover:before:w-full hover:text-primary-600
-                                            ${isActive ? "text-primary-600 before:w-full" : ""}`
-                                        }
-                                    >
-                                        <span>{section.name}</span>
-                                        <svg class="w-2.5 h-2.5 mt-[6px] transition-transform group-hover:rotate-180"
-                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="m1 1 4 4 4-4" />
-                                        </svg>
-                                    </a>
-                                    <!-- Submenu remains unchanged -->
-                                </>
-                            ) : (
+                return (
+                    <li class="relative group flex items-center">
+                    {section.items && section.items.length > 0 ? (
+                        <>
+                        <!-- Link with submenu -->
+                        <a
+                            href={`/${lang}/${section.href}`}
+                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                                before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
+                                before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                                hover:before:w-full hover:text-primary-600
+                                ${isActive ? "text-primary-600 before:w-full" : ""}`
+                            }
+                        >
+                            <span>{section.name}</span>
+                            <svg
+                            class="w-2.5 h-2.5 mt-[6px] transition-transform group-hover:rotate-180"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 10 6"
+                            >
+                            <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="m1 1 4 4 4-4"
+                            />
+                            </svg>
+                        </a>
+
+                        <!-- Submenu -->
+                        <div
+                            class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
+                            style="top: 100%;"
+                            role="menu"
+                            aria-label={`${section.name} submenu`}
+                        >
+                            <ul class="text-sm text-gray-700 " role="none">
+                            {section.items.map((sub) => (
+                                <li role="none">
                                 <a
-                                    href={`/${lang}/${section.href}`}
-                                    class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
-                                        before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                                        before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
-                                        hover:before:w-full hover:text-primary-600
-                                        ${isActive ? "text-primary-600 before:w-full" : ""}`
-                                    }
+                                    href={`/${lang}/${sub.href}`}
+                                    class={`block p-2 hover:bg-gray-100 whitespace-nowrap ${
+                                    currentPath === `/${lang}/${sub.href}`
+                                        ? "text-primary-600 font-medium"
+                                        : ""
+                                    }`}
+                                    role="menuitem"
+                                    aria-current={currentPath === `/${lang}/${sub.href}` ? "page" : undefined}
                                 >
-                                    <span>{section.name}</span>
+                                    {sub.name}
                                 </a>
-                            )}
-                        </li>
-                    );
+                                </li>
+                            ))}
+                            </ul>
+                        </div>
+                        </>
+                    ) : (
+                        <!-- Simple link -->
+                        <a
+                        href={`/${lang}/${section.href}`}
+                        class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                            before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
+                            before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                            hover:before:w-full hover:text-primary-600
+                            ${isActive ? "text-primary-600 before:w-full" : ""}`
+                            }
+                        >
+                        <span>{section.name}</span>
+                        </a>
+                    )}
+                    </li>
+                );
                 })
             }
-        </ul>
-    </nav>
+            </ul>
+        </nav>
 
-    <!-- Right: Language toggle + burger -->
-    <div class="flex items-center space-x-2">
-        <LanguageToggle />
-        <button
-            data-collapse-toggle="navbar-language"
-            type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            aria-controls="navbar-language"
-            aria-expanded="false"
-            aria-label={t("accessibility.menu-toggle")}
-        >
-            <span class="sr-only">{t("accessibility.menu-toggle")}</span>
-            <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
+        <!-- Right: Language toggle + burger -->
+        <div class="flex items-center space-x-2">
+            <LanguageToggle />
+            <button
+                data-collapse-toggle="navbar-language"
+                type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                aria-controls="navbar-language"
+                aria-expanded="false"
+                aria-label={t("accessibility.menu-toggle")}
             >
-                <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 1h15M1 7h15M1 13h15"
-                />
-            </svg>
-        </button>
+                <span class="sr-only">{t("accessibility.menu-toggle")}</span>
+                <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 17 14"
+                >
+                    <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 1h15M1 7h15M1 13h15"
+                    />
+                </svg>
+            </button>
+        </div>
     </div>
-</div>
 
 
     <!-- Mobile menu -->
