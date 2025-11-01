@@ -73,19 +73,21 @@ If you prefer manual setup without Docker:
 
 ## 📊 Analytics Setup
 
-This website includes anonymous Matomo analytics integration. For detailed setup instructions:
+This website includes anonymous Matomo analytics integration with comprehensive privacy features.
 
-- **Local Testing**: See [Local Testing Guide](./docs/local-testing-guide.md)
-- **Production Setup**: See [Matomo Setup Guide](./docs/matomo-setup.md)
+**📖 Complete Setup Guide**: [Analytics Integration Guide](./docs/analytics-integration.md)
 
 ### Key Features:
+- ✅ **Environment-configurable** - Easy deployment across environments
 - ✅ **Cookieless tracking** - No cookie consent required
 - ✅ **IP anonymization** - Full privacy protection  
 - ✅ **GDPR compliant** - Anonymous data collection only
-- ✅ **Legal notices** - Clear privacy information in footer
+- ✅ **Do Not Track respect** - Honors browser privacy settings
+- ✅ **Publication tracking** - Automatic research interaction analytics
 
 ## 📚 Documentation
 
+- [Analytics Integration Guide](./docs/analytics-integration.md) - Complete Matomo setup and configuration
 - [Local Testing Guide](./docs/local-testing-guide.md) - Set up and test locally with Docker
 - [Matomo Setup Guide](./docs/matomo-setup.md) - Production analytics deployment
 - [Project Structure](./docs/structure.md) - Content organization and conventions
