@@ -35,13 +35,11 @@ services:
       MATOMO_DATABASE_USERNAME: matomo
       MATOMO_DATABASE_PASSWORD: matomo
       MATOMO_DATABASE_DBNAME: matomo
-      # Auto-setup configuration
-      MATOMO_GENERAL_SALT: dev_salt_change_in_production_12345678901234567890
-      MATOMO_GENERAL_TRUSTED_HOSTS: "localhost,127.0.0.1"
       # Skip database setup if already configured
       MATOMO_SKIP_BOOTSTRAP: 0
     volumes:
       - matomo-data:/var/www/html
+      - ./config/config.ini.php:/var/www/html/config/config.ini.php
     ports:
       - "8080:80"
 
