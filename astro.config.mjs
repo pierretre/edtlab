@@ -12,34 +12,6 @@ export default defineConfig({
     inlineStylesheets: 'auto',
     assets: '_assets',
     assetsPrefix: '/',
-    // Enable compression and minification
-    minify: true,
-    // Split chunks for better caching
-    rollupOptions: {
-      output: {
-        // Create separate chunks for vendor libraries
-        manualChunks: {
-          'flowbite': ['flowbite'],
-        },
-        // Optimize chunk file names for caching
-        chunkFileNames: '_assets/js/[name]-[hash].js',
-        entryFileNames: '_assets/js/[name]-[hash].js',
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split('.');
-          const ext = info[info.length - 1];
-          if (/\.(css)$/.test(assetInfo.name)) {
-            return '_assets/css/[name]-[hash].[ext]';
-          }
-          if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico|webp|avif)$/i.test(assetInfo.name)) {
-            return '_assets/images/[name]-[hash].[ext]';
-          }
-          if (/\.(woff2?|eot|ttf|otf)$/i.test(assetInfo.name)) {
-            return '_assets/fonts/[name]-[hash].[ext]';
-          }
-          return '_assets/[name]-[hash].[ext]';
-        }
-      }
-    }
   },
   i18n: {
     defaultLocale: 'en',
@@ -61,6 +33,26 @@ export default defineConfig({
       rollupOptions: {
         external: [],
         output: {
+          // Create separate chunks for vendor libraries
+          manualChunks: {
+            'flowbite': ['flowbite'],
+          },
+          // Optimize chunk file names for caching
+          chunkFileNames: '_assets/js/[name]-[hash].js',
+          entryFileNames: '_assets/js/[name]-[hash].js',
+          assetFileNames: (assetInfo) => {
+            const name = assetInfo.name || '';
+            if (/\.(css)$/.test(name)) {
+              return '_assets/css/[name]-[hash].[ext]';
+            }
+            if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico|webp|avif)$/i.test(name)) {
+              return '_assets/images/[name]-[hash].[ext]';
+            }
+            if (/\.(woff2?|eot|ttf|otf)$/i.test(name)) {
+              return '_assets/fonts/[name]-[hash].[ext]';
+            }
+            return '_assets/[name]-[hash].[ext]';
+          },
           // Optimize chunk generation
           experimentalMinChunkSize: 1000,
         }
@@ -84,6 +76,7 @@ export default defineConfig({
       preprocessorOptions: {
         scss: {
           // Optimize SCSS compilation
+          api: 'legacy',
           outputStyle: 'compressed'
         }
       }
@@ -95,10 +88,7 @@ export default defineConfig({
     tailwind({
       // Let Tailwind handle base styles properly
       applyBaseStyles: true,
-      config: {
-        // Purge unused styles
-        content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-      }
+      configFile: './tailwind.config.js'
     }),
     mdx({
       // Optimize MDX processing
