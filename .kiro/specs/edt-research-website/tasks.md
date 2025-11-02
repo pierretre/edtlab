@@ -177,7 +177,7 @@
   - Configure static site generation for sub-3-second load times
   - Optimize images and assets for fast loading
   - Implement caching strategies and CDN-ready static files
-  - Add performance monitoring and Core Web Vitals tracking
+  - Optimize for fast loading and good user experience
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 1.1, 1.4_
 
 - [ ] 23. Add SEO optimization and search engine features
@@ -189,7 +189,7 @@
 
 ## Analytics and Monitoring
 
-- [ ] 24. Integrate Matomo analytics with Docker deployment
+- [x] 23. Integrate Matomo analytics with Docker deployment
   - Set up Matomo Docker container with MySQL database
   - Configure Matomo tracking script integration in BaseLayout component
   - Implement GDPR-compliant analytics with privacy controls
@@ -258,12 +258,12 @@
   - Create accessibility testing procedures with assistive technology
   - Document keyboard navigation testing protocols
   - Set up content review and translation validation processes
-  - Implement performance testing and monitoring procedures
+  - Implement basic testing procedures
   - _Requirements: 33.1, 33.4, 33.5_
 
 ## Deployment and Infrastructure
 
-- [ ] 32. Set up build and deployment pipeline with Matomo integration
+- [x] 31. Set up build and deployment pipeline with Matomo integration
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
   - Set up Docker containerization with Nginx for web server
@@ -279,7 +279,6 @@
   - Implement error tracking and log management for multi-container setup
   - Configure automated security updates and backups for website and Matomo database
   - Add content freshness monitoring and validation
-  - Set up Matomo database backup and maintenance procedures
   - Configure log rotation and monitoring for Docker containers
   - Implement health checks for all services (website, Matomo, MySQL)
   - _Requirements: 17.3, 17.4, 17.5_

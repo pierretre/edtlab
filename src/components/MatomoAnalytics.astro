@@ -1,0 +1,104 @@
+---
+// Get Matomo configuration from environment variables
+const matomoUrl = import.meta.env.MATOMO_URL || "http://localhost:8080";
+const matomoSiteId = import.meta.env.MATOMO_SITE_ID || "1";
+const enableCookies = import.meta.env.MATOMO_ENABLE_COOKIES === "true";
+const respectDNT = import.meta.env.MATOMO_RESPECT_DNT !== "false"; // Default to true
+const enableHeartbeat = import.meta.env.MATOMO_ENABLE_HEARTBEAT === "true";
+const heartbeatTimer = parseInt(import.meta.env.MATOMO_HEARTBEAT_TIMER || "15");
+const isDev = import.meta.env.DEV;
+
+// Clean URL for script (remove protocol for relative URLs)
+const cleanMatomoUrl = matomoUrl.replace(/^https?:/, "");
+---
+
+<!-- Matomo Analytics -->
+<script
+  is:inline
+  define:vars={{
+    matomoUrl: cleanMatomoUrl,
+    matomoSiteId,
+    enableCookies,
+    respectDNT,
+    enableHeartbeat,
+    heartbeatTimer,
+    isDev,
+  }}
+>
+  // Extend window interface for TypeScript
+  window._paq = window._paq || [];
+
+  // Development logging
+  if (isDev) {
+    console.log("Loading Matomo Analytics...", {
+      matomoUrl,
+      matomoSiteId,
+      enableCookies,
+      respectDNT,
+      enableHeartbeat,
+    });
+  }
+
+  var _paq = window._paq;
+
+  /* Tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  // Configure privacy settings
+  _paq.push(["setDoNotTrack", respectDNT]);
+
+  // Cookie settings for GDPR compliance
+  if (!enableCookies) {
+    _paq.push(["disableCookies"]);
+  }
+
+  // Enable heartbeat timer if configured
+  if (enableHeartbeat) {
+    _paq.push(["enableHeartBeatTimer", heartbeatTimer]);
+  }
+
+  // Track performance timing
+  _paq.push(["trackAllContentImpressions"]);
+
+  (function () {
+    var u = matomoUrl + "/";
+    _paq.push(["setTrackerUrl", u + "matomo.php"]);
+    _paq.push(["setSiteId", matomoSiteId]);
+
+    var d = document,
+      g = d.createElement("script"),
+      s = d.getElementsByTagName("script")[0];
+
+    g.type = "text/javascript";
+    g.async = true;
+    g.defer = true;
+    g.src = u + "matomo.js";
+
+    // Safely insert script
+    if (s && s.parentNode) {
+      s.parentNode.insertBefore(g, s);
+    }
+
+    // Error handling
+    g.onerror = function () {
+      if (isDev) {
+        console.warn(
+          "Failed to load Matomo analytics script from:",
+          u + "matomo.js",
+        );
+      }
+    };
+
+    // Success callback
+    g.onload = function () {
+      if (isDev) {
+        console.log("Matomo analytics script loaded successfully");
+      }
+    };
+  })();
+
+  if (isDev) {
+    console.log("Matomo _paq initialized:", _paq);
+  }
+</script>

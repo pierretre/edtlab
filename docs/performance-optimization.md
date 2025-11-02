@@ -74,7 +74,7 @@ The service worker provides:
 
 #### Real User Monitoring (RUM)
 - **Performance Observer**: Tracks all Core Web Vitals
-- **Analytics Integration**: Metrics sent to Google Analytics
+- **Analytics Integration**: Metrics sent to Matomo Analytics
 - **Local Storage**: Performance data stored for debugging
 - **Performance Budgets**: Automatic warnings for budget violations
 
@@ -279,7 +279,7 @@ Performance checks are integrated into the build process:
 - [Performance Best Practices](https://web.dev/fast/)
 
 ### Monitoring
-- [Google Analytics](https://analytics.google.com/)
+- [Matomo Analytics](https://matomo.org/)
 - [Core Web Vitals Report](https://support.google.com/webmasters/answer/9205520)
 - [PageSpeed Insights](https://pagespeed.web.dev/)
 

@@ -3,6 +3,13 @@
         "npm run *",
         "npm test",
         "curl -I http://localhost:4322/*",
-        "npx playwright install"
+        "npx playwright install",
+        "docker-compose up website",
+        "docker-compose down *",
+        "docker-compose build website",
+        "docker-compose build",
+        "docker compose up",
+        "docker compose up -d",
+        "docker compose ps"
     ]
 }
