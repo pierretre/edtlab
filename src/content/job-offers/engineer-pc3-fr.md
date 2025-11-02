@@ -4,6 +4,7 @@ project: "PC3"
 type: "engineer"
 location: "Toulouse, France"
 deadline: 2025-01-30
+publishedDate: 2024-01-20
 description: "Ingénieur de développement logiciel pour l'implémentation de plateforme de jumeaux numériques"
 requirements: ["Licence ou Master en Génie Logiciel", "5+ années d'expérience en développement logiciel", "Expérience avec C++, Java, ou Python", "Connaissance des systèmes distribués"]
 lang: "fr"

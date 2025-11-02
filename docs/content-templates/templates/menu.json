@@ -1,0 +1,128 @@
+{
+    "sections": [
+        {
+            "name": "Program",
+            "href": "/program",
+            "items": [
+                {
+                    "name": "Goals & Structure",
+                    "href": "/program#goals-and-objectives"
+                },
+                {
+                    "name": "Committee",
+                    "href": "/program#committee-and-governance"
+                },
+                {
+                    "name": "Partners",
+                    "href": "/program#partners-and-collaborators"
+                }
+            ]
+        },
+        {
+            "name": "Projects",
+            "href": "/focused-projects",
+            "items": [
+                {
+                    "name": "PC1 - Model Hybridization",
+                    "href": "/focused-projects/fp1"
+                },
+                {
+                    "name": "PC2 - Architecture & Interoperability",
+                    "href": "/focused-projects/fp2"
+                },
+                {
+                    "name": "PC3 - Development Lifecycle",
+                    "href": "/focused-projects/fp3"
+                },
+                {
+                    "name": "PC4 - Digital Coupling",
+                    "href": "/focused-projects/fp4"
+                },
+                {
+                    "name": "PC5 - Human Interactions",
+                    "href": "/focused-projects/fp5"
+                }
+            ]
+        },
+        {
+            "name": "Production",
+            "href": "/production",
+            "items": [
+                {
+                    "name": "Publications",
+                    "href": "/production/publications"
+                },
+                {
+                    "name": "Platform",
+                    "href": "/production/platform"
+                }
+            ]
+        },
+        {
+            "name": "Demo Center",
+            "href": "/demo-center"
+        },
+        {
+            "name": "Resources",
+            "href": "/resources"
+        },
+        {
+            "name": "News",
+            "href": "/news",
+            "items": [
+                {
+                    "name": "Events",
+                    "href": "/news#events"
+                },
+                {
+                    "name": "Press Releases",
+                    "href": "/news#press-releases"
+                }
+            ]
+        },
+        {
+            "name": "Join Us",
+            "href": "/join-us"
+        },
+        {
+            "name": "Contact",
+            "href": "/contact"
+        }
+    ]
+}
+
+<!-- 
+MENU TEMPLATE NOTES:
+
+Structure:
+- Each section has a "name" and "href"
+- Optional "items" array for dropdown menus
+- Items have "name" and "href" properties
+
+Guidelines:
+- Keep section names concise (1-2 words preferred)
+- Use descriptive item names that clearly indicate content
+- Ensure all hrefs correspond to actual pages
+- Maintain consistent URL structure across languages
+
+Language Versions:
+- Create separate files for each language: en.json, fr.json
+- Translate section and item names appropriately
+- Keep href structure consistent (language prefix handled by routing)
+
+Validation:
+- All hrefs must correspond to existing pages
+- Section names should match navigation expectations
+- Items are optional but recommended for complex sections
+
+Maintenance:
+- Update when new pages are added
+- Ensure consistency between English and French versions
+- Test all links after updates
+- Consider user experience and navigation flow
+
+Example Usage:
+- Save as `en.json` in `src/content/menu/` for English
+- Save as `fr.json` in `src/content/menu/` for French
+- The navigation component will automatically load the appropriate version
+-->
