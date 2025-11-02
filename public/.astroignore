@@ -1,0 +1,2 @@
+# Exclude backup directory from build
+_original/
