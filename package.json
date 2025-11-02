@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/optimize-build.js",
+    "build": "astro build",
     "build:fast": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -13,13 +13,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest --run --coverage",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "optimize": "node scripts/optimize-build.js",
-    "perf:analyze": "node scripts/optimize-build.js",
-    "images:analyze": "node scripts/optimize-images.js",
-    "images:optimize": "node scripts/optimize-images-actual.js optimize",
-    "images:optimize:aggressive": "node scripts/optimize-images-aggressive.js",
-    "images:restore": "node scripts/optimize-images-actual.js restore"
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",

@@ -1,0 +1,59 @@
+---
+/**
+ * OptimizedFigure - A simple wrapper around Astro's Picture component for content editors
+ *
+ * Usage in MDX files:
+ * ```
+ * import OptimizedFigure from '../../../components/OptimizedFigure.astro';
+ * import myImage from '../../../assets/images/my-image.png';
+ *
+ * <OptimizedFigure
+ *   src={myImage}
+ *   alt="Description of the image"
+ *   caption="Optional caption text"
+ * />
+ * ```
+ */
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+export interface Props {
+    src: ImageMetadata;
+    alt: string;
+    caption?: string;
+    class?: string;
+    loading?: "lazy" | "eager";
+    formats?: Array<"avif" | "webp" | "png" | "jpg" | "jpeg">;
+    quality?: number;
+}
+
+const {
+    src,
+    alt,
+    caption,
+    class: className = "",
+    loading = "lazy",
+    formats = ["avif", "webp"],
+    quality = 80,
+    ...rest
+} = Astro.props;
+---
+
+<figure class={`mb-6 ${className}`}>
+    <Picture
+        src={src}
+        formats={formats}
+        alt={alt}
+        class="w-full h-auto"
+        loading={loading}
+        quality={quality}
+        {...rest}
+    />
+    {
+        caption && (
+            <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
+                {caption}
+            </figcaption>
+        )
+    }
+</figure>

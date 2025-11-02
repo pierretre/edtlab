@@ -6,15 +6,23 @@ description: "Architecture, Composability and Interoperability - Focused Project
 toc: true
 ---
 
-import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
+import { Picture } from 'astro:assets';
+import pc2Image from '../../../../assets/images/INRIA_EDT_CBLOT_PC2.png';
 
 # PC2: Architecture, Composability and Interoperability
 
-<ResponsiveImage 
-  src="INRIA_EDT_CBLOT_PC2.png"
-  alt="PC2 Architecture, Composability and Interoperability project diagram showing modular digital twin architecture and federation approaches"
-  caption="PC2 Project Overview: Modular architecture and interoperability framework for composable digital twin systems"
-/>
+<figure class="mb-6">
+  <Picture 
+    src={pc2Image}
+    formats={['avif', 'webp']}
+    alt="PC2 Architecture, Composability and Interoperability project diagram showing modular digital twin architecture and federation approaches"
+    class="w-full h-auto"
+    loading="lazy"
+  />
+  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
+    PC2 Project Overview: Modular architecture and interoperability framework for composable digital twin systems
+  </figcaption>
+</figure>
 
 ## Project Overview
 
