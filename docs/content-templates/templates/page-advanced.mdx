@@ -1,0 +1,141 @@
+---
+title: "Advanced Page Title"
+href: "advanced-page-slug"
+lang: "en"  # or "fr"
+description: "Description for advanced page with interactive components and rich media"
+toc: true
+lastModified: 2024-01-01
+---
+
+import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import EventList from '../../../components/EventList.astro';
+import PublicationList from '../../../components/PublicationList.astro';
+import JobOfferList from '../../../components/JobOfferList.astro';
+
+# Advanced Page Title
+
+This template demonstrates how to use MDX components for rich, interactive content.
+
+## Images and Media
+
+Use the ResponsiveImage component for all images to ensure accessibility and responsive design:
+
+<ResponsiveImage 
+  src="image-filename.jpg"
+  alt="Descriptive alt text for accessibility"
+  caption="Optional caption that provides additional context about the image"
+/>
+
+### Image Guidelines
+- Always include descriptive `alt` text
+- Use meaningful filenames
+- Provide captions when they add value
+- Images should be placed in `src/assets/images/` or `public/`
+
+## Dynamic Content Lists
+
+### Recent Events
+Display events dynamically using the EventList component:
+
+<EventList 
+  limit={3}
+  showType={true}
+  lang="en"
+/>
+
+### Publications
+Show publications with filtering options:
+
+<PublicationList 
+  limit={5}
+  showFilters={true}
+  defaultType="all"
+  defaultYear="all"
+/>
+
+### Job Opportunities
+Display current job offers:
+
+<JobOfferList 
+  limit={3}
+  showProject={true}
+  lang="en"
+/>
+
+## Interactive Elements
+
+### Expandable Sections
+Use standard HTML details/summary for expandable content:
+
+<details>
+<summary>Click to expand additional information</summary>
+
+This content is hidden by default and can be expanded by clicking the summary.
+
+- Hidden bullet point 1
+- Hidden bullet point 2
+- Hidden bullet point 3
+
+</details>
+
+### Call-to-Action Sections
+
+<div class="bg-primary-50 border-l-4 border-primary-500 p-4 my-6">
+  <div class="flex">
+    <div class="ml-3">
+      <p class="text-sm text-primary-700">
+        <strong>Important Notice:</strong> Use this pattern for highlighting important information or calls-to-action.
+      </p>
+    </div>
+  </div>
+</div>
+
+## Content Organization
+
+### Multi-column Layouts
+Use CSS Grid classes for complex layouts:
+
+<div class="grid md:grid-cols-2 gap-6 my-8">
+  <div>
+    <h4>Left Column</h4>
+    <p>Content for the left column. This layout automatically adapts to mobile devices.</p>
+  </div>
+  <div>
+    <h4>Right Column</h4>
+    <p>Content for the right column. Use this for complementary information.</p>
+  </div>
+</div>
+
+### Tables
+Use standard Markdown tables with Tailwind classes for styling:
+
+| Feature | Basic Page | Advanced Page |
+|---------|------------|---------------|
+| Static Content | ✅ | ✅ |
+| Components | ❌ | ✅ |
+| Interactive Elements | ❌ | ✅ |
+| Dynamic Lists | ❌ | ✅ |
+
+## Accessibility Considerations
+
+- All images must have descriptive alt text
+- Use proper heading hierarchy (H1 → H2 → H3)
+- Ensure sufficient color contrast
+- Provide text alternatives for visual content
+- Test with keyboard navigation
+
+## Performance Notes
+
+- Components are loaded only when needed (Astro islands)
+- Images are automatically optimized
+- CSS is scoped to prevent conflicts
+- JavaScript is minimal and progressive
+
+---
+
+**Note for editors**:
+- Only import components you actually use
+- Test all interactive elements before publishing
+- Ensure all images have proper alt text
+- Validate the page loads correctly in both languages
+- Remove this note section before publishing

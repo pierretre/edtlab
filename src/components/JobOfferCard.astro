@@ -63,7 +63,7 @@ const t = useTranslations(lang);
             {jobOffer.data.description}
         </p>
 
-        <!-- Location and Deadline -->
+        <!-- Location, Published Date, and Deadline -->
         <div class="mb-4 space-y-2">
             <div class="flex items-center text-sm text-gray-600">
                 <svg
@@ -85,6 +85,23 @@ const t = useTranslations(lang);
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 {jobOffer.data.location}
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {t("job-offers.published")}: {
+                    formatDate(jobOffer.data.publishedDate, lang)
+                }
             </div>
             <div class="flex items-center text-sm text-gray-600">
                 <svg
