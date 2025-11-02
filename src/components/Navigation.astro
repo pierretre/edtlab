@@ -1,7 +1,9 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { getEntry } from "astro:content";
+import { Picture } from "astro:assets";
 import LanguageToggle from "./LanguageToggle.astro";
+import logoImageSvg from "../../src/assets/images/logo.svg";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
@@ -14,12 +16,24 @@ const currentPath = Astro.url.pathname;
 
 <nav id="site-header" class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
     <div class="max-w-screen-xl mx-auto flex items-center justify-between lg:p-2">
-        <!-- Left: Logo -->
-        <div class="flex-shrink-0">
-            <a href={`/${lang}/`} class="flex items-center space-x-3 rtl:space-x-reverse no-underline">
-                <img src="/logo.png" class="h-16 lg:h-20" alt="EDT Logo" aria-label={t("accessibility.home-link")} />
-            </a>
-        </div>
+    <!-- Left: Logo -->
+    <div class="flex-shrink-0">
+        <a href={`/${lang}/`} class="flex items-center space-x-3 rtl:space-x-reverse no-underline">
+            <Picture 
+                src={logoImageSvg}
+                alt="EDT Logo"
+                class="h-16 lg:h-20 w-auto image-render-pixel"
+                formats={['webp', 'png']}
+                quality={100}
+                sizes="(max-width: 768px) 160px, 200px"
+                widths={[160, 200, 320, 400]}
+                aria-label={t("accessibility.home-link")}
+                pictureAttributes={{
+                    class: "flex-shrink-0"
+                }}
+            />
+        </a>
+    </div>
 
     <!-- Center: Desktop Menu -->
     <nav class="hidden lg:flex justify-center" role="navigation" aria-label={t("accessibility.main-navigation")}>

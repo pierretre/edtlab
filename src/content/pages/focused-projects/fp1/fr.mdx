@@ -6,15 +6,23 @@ description: "Hybridation et Gestion des Modèles - Projet Ciblé 1 (PC1) du pro
 toc: true
 ---
 
-import ResponsiveImage from '../../../../components/ResponsiveImage.astro';
+import { Picture } from 'astro:assets';
+import pc1Image from '../../../../assets/images/INRIA_EDT_CBLOT_PC1.png';
 
 # PC1: Hybridation et Gestion des Modèles
 
-<ResponsiveImage 
-  src="INRIA_EDT_CBLOT_PC1.png"
-  alt="Diagramme du projet PC1 Hybridation et Gestion des Modèles montrant l'intégration de modèles hétérogènes et les opérateurs d'hybridation"
-  caption="Aperçu du projet PC1 : Approche d'hybridation et de gestion des modèles pour intégrer diverses techniques de modélisation dans les jumeaux numériques"
-/>
+<figure class="mb-6">
+  <Picture 
+    src={pc1Image}
+    formats={['avif', 'webp']}
+    alt="Diagramme du projet PC1 Hybridation et Gestion des Modèles montrant l'intégration de modèles hétérogènes et les opérateurs d'hybridation"
+    class="w-full h-auto"
+    loading="lazy"
+  />
+  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
+    Aperçu du projet PC1 : Approche d'hybridation et de gestion des modèles pour intégrer diverses techniques de modélisation dans les jumeaux numériques
+  </figcaption>
+</figure>
 
 ## Aperçu du Projet
 

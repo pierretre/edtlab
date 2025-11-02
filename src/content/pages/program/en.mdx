@@ -6,7 +6,9 @@ description: "EDT Research Program overview, goals, structure, and partners"
 toc: true
 ---
 
-import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import { Picture } from 'astro:assets';
+import physicalDigitalImage from '../../../assets/images/INRIA_EDT_CBLOT_PHYSICAL_DIGITAL.png';
+import crossCuttingActionsImage from '../../../assets/images/INRIA_EDT_CBLOT_AT_2.jpg';
 
 # EDT Research Program
 
@@ -14,11 +16,18 @@ import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 
 The Engineering Digital Twins (EDT) research program aims to advance the field of digital twin technology for engineering applications, creating a multidisciplinary community with international leadership in digital twin engineering.
 
-<ResponsiveImage 
-  src="INRIA_EDT_CBLOT_PHYSICAL_DIGITAL.png"
-  alt="Physical-Digital Twin relationship diagram showing the bidirectional coupling and data flows between physical and digital systems"
-  caption="Physical-Digital Twin Relationship: Conceptual framework showing the bidirectional coupling, data flows, and synchronization between physical and digital twin systems"
-/>
+<figure class="mb-6">
+  <Picture 
+    src={physicalDigitalImage}
+    formats={['avif', 'webp']}
+    alt="Physical-Digital Twin relationship diagram showing the bidirectional coupling and data flows between physical and digital systems"
+    class="w-full h-auto"
+    loading="lazy"
+  />
+  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
+    Physical-Digital Twin Relationship: Conceptual framework showing the bidirectional coupling, data flows, and synchronization between physical and digital twin systems
+  </figcaption>
+</figure>
 
 ## Vision
 
@@ -51,11 +60,18 @@ The program is organized into five tightly connected focused projects (PC1-PC5) 
 - **AT6**: Ethics and Sustainability
 - **AT7**: Dissemination and Exploitation
 
-<ResponsiveImage 
-  src="INRIA_EDT_CBLOT_AT_2.jpg"
-  alt="EDT Cross-cutting Actions (AT) diagram showing the seven transverse actions that coordinate and integrate the focused projects"
-  caption="EDT Cross-cutting Actions Framework: Seven transverse actions (AT1-AT7) that ensure coordination, integration, and community building across the research program"
-/>
+<figure class="mb-6">
+  <Picture 
+    src={crossCuttingActionsImage}
+    formats={['avif', 'webp']}
+    alt="EDT Cross-cutting Actions (AT) diagram showing the seven transverse actions that coordinate and integrate the focused projects"
+    class="w-full h-auto"
+    loading="lazy"
+  />
+  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
+    EDT Cross-cutting Actions Framework: Seven transverse actions (AT1-AT7) that ensure coordination, integration, and community building across the research program
+  </figcaption>
+</figure>
 
 ## Scientific Barriers
 

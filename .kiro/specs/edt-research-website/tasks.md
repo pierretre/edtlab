@@ -131,23 +131,40 @@
   - Ensure all images meet RGAA 4.1 requirements for alternative text
   - _Requirements: 28.3, 31.3, 3.2, 16.2_
 
+- [x] 17. Optimize images using Astro's Picture component and consolidate image assets
+  - Replace ResponsiveImage and OptimizedImage components with Astro's built-in Picture component
+  - Move all images from public/ folder to src/assets/images/ for Astro optimization
+  - Remove duplicate images between public/ and src/assets/images/ directories
+  - Update all image references throughout the codebase to use assets instead of public paths
+  - Implement Picture component with responsive breakpoints and modern formats (WebP, AVIF)
+  - Remove custom image optimization components that are no longer needed
+  - Ensure all images maintain proper alt text and accessibility compliance
+  - _Requirements: 4.3, 28.2, 31.3_
+
+- [ ] 18. Implement search functionality across content
+  - Build site-wide search using Flowbite Search component
+  - Index all content collections for search capability
+  - Implement search results display with relevance ranking
+  - Integrate search component into BaseLayout header
+  - Ensure search response time under 2 seconds
+  - _Requirements: 1.2, 1.4_
 ## Accessibility Implementation
 
-- [x] 18. Implement basic accessibility foundation
+- [x] 19. Implement basic accessibility foundation
   - Set up RGAA-compliant color contrast ratios in Tailwind config
   - Add accessible typography with Marianne font and proper line heights
   - Implement focus management and visible focus indicators
   - Add basic keyboard navigation support
   - _Requirements: 30.1, 30.2, 30.3, 29.1, 29.2_
 
-- [x] 19. Enhance RGAA 4.1 AA compliance features
+- [x] 20. Enhance RGAA 4.1 AA compliance features
   - Add semantic HTML structure with proper heading hierarchy
   - Implement ARIA labels and roles for complex components
   - Ensure all interactive elements have accessible names
   - Add alternative text requirements for all images
   - _Requirements: 28.1, 28.2, 28.3, 28.4, 31.1, 31.2, 31.3_
 
-- [ ] 20. Add screen reader and assistive technology support
+- [ ] 21. Add screen reader and assistive technology support
   - Implement proper content structure for screen readers
   - Add descriptive labels for all form elements
   - Create accessibility statement page
@@ -156,14 +173,14 @@
 
 ## Performance and SEO Optimization
 
-- [ ] 21. Implement performance optimization features
+- [x] 22. Implement performance optimization features
   - Configure static site generation for sub-3-second load times
   - Optimize images and assets for fast loading
   - Implement caching strategies and CDN-ready static files
-  - Add performance monitoring and Core Web Vitals tracking
+  - Optimize for fast loading and good user experience
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 1.1, 1.4_
 
-- [ ] 22. Add SEO optimization and search engine features
+- [ ] 23. Add SEO optimization and search engine features
   - Implement meta tags and structured data for search optimization
   - Generate XML sitemaps for search engine crawling
   - Optimize page titles and descriptions for search visibility
@@ -184,14 +201,14 @@
 
 ## Content Management and Documentation
 
-- [x] 24. Create content templates and editor documentation
+- [x] 25. Create content templates and editor documentation
   - Build markdown templates for different content types
   - Create comprehensive content creation guidelines
   - Document all available frontmatter options
   - Provide examples and templates for common content types
   - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 15.1, 15.2, 15.3, 15.4, 15.5_
 
-- [x] 25. Set up development environment and preview system
+- [x] 26. Set up development environment and preview system
   - Configure local development environment with hot-reload
   - Set up content preview functionality for both languages
   - Implement content validation and error handling
@@ -200,7 +217,7 @@
 
 ## Code Quality and Refactoring
 
-- [x] 26. Refactor duplicate utility functions across codebase
+- [x] 27. Refactor duplicate utility functions across codebase
   - Identify and catalog all duplicate utility functions across different files
   - Create centralized utility modules organized by functional categories (string, date, validation, etc.)
   - Consolidate duplicate functions into single, well-designed interfaces
@@ -212,14 +229,14 @@
 
 ## Testing and Quality Assurance
 
-- [ ] 27. Implement automated testing suite
+- [ ] 28. Implement automated testing suite
   - Create unit tests for critical components
   - Add route testing to verify all pages are accessible
   - Implement automated accessibility testing with axe-core
   - Set up content validation and schema testing
   - _Requirements: 26.1, 26.2, 26.3, 33.2_
 
-- [x] 28. Set up CI/CD pipeline with automated testing
+- [x] 29. Set up CI/CD pipeline with automated testing
   - Create GitHub Actions workflow for automated testing
   - Configure unit test execution on pull requests and pushes
   - Add route testing to verify all content pages are accessible
@@ -227,7 +244,7 @@
   - Set up test coverage reporting and quality gates
   - _Requirements: 26.1, 26.2, 26.3, 20.2_
 
-- [x] 29. Enhance CI pipeline with comprehensive route and link testing
+- [x] 30. Enhance CI pipeline with comprehensive route and link testing
   - Create separate script for route accessibility testing with current routes (excluding content-specific routes)
   - Update Playwright configuration to include comprehensive link verification testing
   - Implement automated testing of all internal and external links from each web page
@@ -237,11 +254,11 @@
   - Ensure route testing covers all main navigation paths and content pages
   - _Requirements: 26.1, 26.2, 26.3, 4.1, 4.2_
 
-- [ ] 30. Add manual testing procedures
+- [ ] 31. Add manual testing procedures
   - Create accessibility testing procedures with assistive technology
   - Document keyboard navigation testing protocols
   - Set up content review and translation validation processes
-  - Implement performance testing and monitoring procedures
+  - Implement basic testing procedures
   - _Requirements: 33.1, 33.4, 33.5_
 
 ## Deployment and Infrastructure
@@ -257,7 +274,7 @@
   - Ensure proper network configuration between containers
   - _Requirements: 20.1, 20.2, 20.3, 20.4, 20.5, 17.1, 17.2_
 
-- [ ] 32. Configure production monitoring and maintenance with Matomo
+- [ ] 33. Configure production monitoring and maintenance with Matomo
   - Set up uptime monitoring and performance alerts for both website and Matomo
   - Implement error tracking and log management for multi-container setup
   - Configure automated security updates and backups for website and Matomo database
@@ -268,7 +285,7 @@
 
 ## Final Integration and Launch
 
-- [ ] 33. Populate initial content and perform final testing
+- [ ] 34. Populate initial content and perform final testing
   - Migrate existing program content and documentation
   - Populate all content sections with initial bilingual content
   - Perform comprehensive accessibility and performance testing

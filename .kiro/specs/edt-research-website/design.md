@@ -460,7 +460,7 @@ The design ensures AA-level compliance with French accessibility guidelines:
 
 ### User Analytics
 
-- **Google Analytics**: Comprehensive traffic and behavior tracking
+- **Matomo Analytics**: Privacy-focused comprehensive traffic and behavior tracking
 - **User Journey Mapping**: Navigation patterns and content engagement
 - **Geographic Distribution**: Visitor location and language preferences
 - **Content Performance**: Page views, time on page, bounce rates
