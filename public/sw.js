@@ -207,11 +207,11 @@ async function clearQueuedAnalytics() {
     // Clear the analytics queue
 }
 
-// Performance monitoring
+// Message handling for analytics and other features
 self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'PERFORMANCE_METRICS') {
-        // Handle performance metrics from the main thread
-        console.log('Service Worker: Received performance metrics', event.data.metrics);
+    if (event.data && event.data.type === 'ANALYTICS_SYNC') {
+        // Handle analytics sync requests
+        console.log('Service Worker: Analytics sync requested');
     }
 });
 

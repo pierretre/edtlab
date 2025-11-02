@@ -361,8 +361,7 @@ img[loading="lazy"] {
     /* Hide non-essential elements */
     .skip-links,
     .site-navigation,
-    .site-footer,
-    .performance-monitor {
+    .site-footer {
         display: none !important;
     }
 

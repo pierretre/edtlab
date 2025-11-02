@@ -269,22 +269,20 @@ test.describe('Performance Tests', () => {
         }
     });
 
-    test('Performance monitoring is active', async ({ page }) => {
+    test('Basic page functionality works', async ({ page }) => {
         await page.goto('/en/');
         await page.waitForLoadState('networkidle');
 
-        // Check if performance monitoring functions are available
-        const hasPerformanceMonitoring = await page.evaluate(() => {
-            return typeof window.getPerformanceMetrics === 'function';
+        // Check that basic page elements are present
+        await expect(page.locator('main')).toBeVisible();
+        await expect(page.locator('nav').first()).toBeVisible();
+
+        // Check that Matomo analytics is loaded (if enabled)
+        const hasMatomoAnalytics = await page.evaluate(() => {
+            return typeof window._paq !== 'undefined';
         });
 
-        expect(hasPerformanceMonitoring).toBe(true);
-
-        // Get performance metrics
-        const metrics = await page.evaluate(() => {
-            return window.getPerformanceMetrics();
-        });
-
-        expect(metrics).toBeTruthy();
+        // Matomo should be available (analytics is enabled)
+        expect(hasMatomoAnalytics).toBe(true);
     });
 });
