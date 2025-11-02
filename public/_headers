@@ -1,0 +1,42 @@
+# Netlify headers for performance optimization
+# https://docs.netlify.com/routing/headers/
+
+# Cache static assets for 1 year
+/_assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache images for 1 month
+/images/*
+  Cache-Control: public, max-age=2592000
+
+# Cache fonts for 1 year
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache CSS and JS for 1 year (they have hashes)
+*.css
+  Cache-Control: public, max-age=31536000, immutable
+*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache HTML for 1 hour
+/*.html
+  Cache-Control: public, max-age=3600
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com; frame-ancestors 'none';
+
+# Preload critical resources
+/
+  Link: </src/assets/fonts/Marianne-Regular.woff2>; rel=preload; as=font; type=font/woff2; crossorigin
+  Link: </src/assets/fonts/Marianne-Bold.woff2>; rel=preload; as=font; type=font/woff2; crossorigin
+
+# Enable compression
+/*
+  Content-Encoding: gzip

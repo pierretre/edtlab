@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:fast": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
@@ -30,6 +31,7 @@
     "jsdom": "^25.0.1",
     "playwright": "^1.49.1",
     "sass-embedded": "^1.93.2",
+    "sharp": "^0.34.4",
     "vitest": "^2.1.8"
   }
 }
