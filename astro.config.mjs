@@ -5,6 +5,8 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
+  // Site URL for SEO and sitemap generation
+  site: 'https://www.edtlab.fr', // Update this to your actual domain
 
   output: 'static',
   build: {

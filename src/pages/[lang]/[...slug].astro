@@ -2,6 +2,11 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../i18n/utils";
 import PageLayout from "../../layouts/PageLayout.astro";
+import {
+    generatePageKeywords,
+    generateArticleSection,
+    generateArticleTags,
+} from "../../utils/keywords";
 
 export async function getStaticPaths() {
     const allPages = await getCollection("pages");
@@ -32,6 +37,11 @@ if (!page) {
 
 // Get the rendered content
 const { Content } = await page.render();
+
+// Generate SEO metadata using utility functions
+const pageKeywords = generatePageKeywords(page.data.href, lang as "en" | "fr");
+const articleSection = generateArticleSection(page.data.href);
+const articleTags = generateArticleTags(page.data.href, lang as "en" | "fr");
 ---
 
 <PageLayout
@@ -40,6 +50,10 @@ const { Content } = await page.render();
     lang={lang as "en" | "fr"}
     showBreadcrumb={true}
     showToc={page.data.toc}
+    keywords={pageKeywords}
+    modifiedTime={page.data.lastModified?.toISOString()}
+    articleSection={articleSection}
+    articleTag={articleTags}
 >
     <!-- Page Title -->
     <!-- <header class="mb-8">

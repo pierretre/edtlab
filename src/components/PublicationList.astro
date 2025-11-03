@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
 import { getPublicationTypeTranslation } from "../utils";
+import { generatePublicationStructuredData } from "../utils/seo";
 import FilterBar from "./FilterBar.astro";
 
 interface Props {
@@ -61,6 +62,19 @@ const filterConfig = [
         placeholder: t("publications.filter.search-placeholder"),
     },
 ];
+
+// Generate structured data for publications
+const publicationStructuredData = sortedPublications.map((pub) =>
+    generatePublicationStructuredData(
+        pub.data.title,
+        pub.data.authors,
+        pub.data.year.toString(),
+        pub.data.url,
+        pub.data.doi,
+        pub.data.venue,
+        pub.data.type,
+    ),
+);
 ---
 
 <div class="publications-container">
@@ -254,6 +268,17 @@ const filterConfig = [
         </span>
     </div>
 </div>
+
+<!-- Structured Data for Publications -->
+{
+    publicationStructuredData.map((data) => (
+        <script
+            type="application/ld+json"
+            is:inline
+            set:html={JSON.stringify(data)}
+        />
+    ))
+}
 
 <script>
     // Client-side filtering functionality
