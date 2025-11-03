@@ -8,41 +8,43 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    command: npm run dev -- --host
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    command: npm run dev -- --host --watch
 
-  # Matomo Database
   matomo-db:
-    image: mysql:8.0
+    image: mariadb:10.5
     environment:
       MYSQL_ROOT_PASSWORD: REDACTED
       MYSQL_DATABASE: matomo
       MYSQL_USER: matomo
       MYSQL_PASSWORD: matomo
+    command: --max-allowed-packet=64MB
     volumes:
       - matomo-db-data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
-  # Matomo Analytics
   matomo:
-    image: matomo:4-apache
+    image: matomo:latest
     depends_on:
-      - matomo-db
+      matomo-db:
+        condition: service_healthy
     environment:
-      # Database connection
       MATOMO_DATABASE_HOST: matomo-db
       MATOMO_DATABASE_ADAPTER: mysql
-      MATOMO_DATABASE_TABLES_PREFIX: matomo_
-      MATOMO_DATABASE_USERNAME: matomo
-      MATOMO_DATABASE_PASSWORD: matomo
       MATOMO_DATABASE_DBNAME: matomo
-      # Skip database setup if already configured
-      MATOMO_SKIP_BOOTSTRAP: 0
+      MATOMO_DATABASE_TABLES_PREFIX: matomo_
+      MATOMO_DATABASE_USER: matomo
+      MATOMO_DATABASE_PASSWORD: matomo
     volumes:
       - matomo-data:/var/www/html
-      - ./config/config.ini.php:/var/www/html/config/config.ini.php
     ports:
       - "8080:80"
-
 
 volumes:
   matomo-db-data:

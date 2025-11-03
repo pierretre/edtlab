@@ -649,21 +649,7 @@ const tiles = menuSections.map(section => ({
             // Announce page load for screen readers
             setTimeout(announcePageLoad, 500);
             
-            // Add skip link functionality
-            const skipLink = document.createElement('a');
-            skipLink.href = '#main-content';
-            skipLink.textContent = 'Skip to main content';
-            skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-2 rounded z-50';
-            skipLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                const mainContent = document.querySelector('#main-content') || document.querySelector('main') || document.querySelector('section');
-                if (mainContent) {
-                    mainContent.focus();
-                    mainContent.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-            document.body.insertBefore(skipLink, document.body.firstChild);
-            
+
             // Analytics tracking placeholder (will be implemented in task 21)
             const trackInteraction = (element, action) => {
                 // Future analytics implementation

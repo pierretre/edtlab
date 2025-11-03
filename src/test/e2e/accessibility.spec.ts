@@ -43,19 +43,7 @@ test.describe('Accessibility Tests', () => {
         expect(h1Count).toBeGreaterThanOrEqual(1);
     });
 
-    test('should have skip links for keyboard navigation', async ({ page }) => {
-        await page.goto('/');
 
-        // Focus on the page and press Tab to reveal skip links
-        await page.keyboard.press('Tab');
-
-        // Check if skip link is visible when focused
-        const skipLink = page.locator('a[href="#main-content"], a[href="#main"], .skip-link');
-        const skipLinkCount = await skipLink.count();
-
-        // Skip links might not be implemented yet, so we just check structure
-        expect(skipLinkCount).toBeGreaterThanOrEqual(0);
-    });
 
     test('should support keyboard navigation', async ({ page }) => {
         await page.goto('/en/program');

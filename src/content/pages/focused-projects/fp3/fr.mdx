@@ -6,23 +6,16 @@ description: "Méthodologie, Cycle de Développement et Langages - Projet Ciblé
 toc: true
 ---
 
-import { Picture } from 'astro:assets';
+import OptimizedFigure from '../../../../components/OptimizedFigure.astro';
 import pc3Image from '../../../../assets/images/INRIA_EDT_CBLOT_PC3.png';
 
 # PC3: Méthodologie, Cycle de Développement et Langages
 
-<figure class="mb-6">
-  <Picture 
-    src={pc3Image}
-    formats={['avif', 'webp']}
-    alt="Diagramme du projet PC3 Méthodologie, Cycle de Développement et Langages montrant le cadre complet de développement pour les jumeaux numériques"
-    class="w-full h-auto"
-    loading="lazy"
-  />
-  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
-    Aperçu du projet PC3 : Cadre méthodologique et cycle de développement complet pour l'ingénierie des jumeaux numériques
-  </figcaption>
-</figure>
+<OptimizedFigure
+  src={pc3Image}
+  alt="Diagramme du projet PC3 Méthodologie, Cycle de Développement et Langages montrant le cadre complet de développement pour les jumeaux numériques"
+  caption="Aperçu du projet PC3 : Cadre méthodologique et cycle de développement complet pour l'ingénierie des jumeaux numériques"
+/>
 
 ## Aperçu du Projet
 

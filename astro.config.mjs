@@ -85,6 +85,17 @@ export default defineConfig({
   },
   // Performance and SEO optimizations
   compressHTML: true,
+
+  // Image optimization
+  image: {
+    // Enable image optimization
+    service: {
+      entrypoint: 'astro/assets/services/sharp'
+    },
+    // Default image formats and quality
+    domains: [],
+    remotePatterns: []
+  },
   integrations: [
     tailwind({
       // Let Tailwind handle base styles properly
