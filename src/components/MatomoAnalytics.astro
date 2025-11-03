@@ -12,7 +12,7 @@ const isDev = import.meta.env.DEV;
 const cleanMatomoUrl = matomoUrl.replace(/^https?:/, "");
 ---
 
-<!-- Matomo Analytics -->
+<!-- Matomo Analytics with Partytown --><!-- Initialize _paq on main thread for immediate tracking -->
 <script
   is:inline
   define:vars={{
@@ -25,12 +25,12 @@ const cleanMatomoUrl = matomoUrl.replace(/^https?:/, "");
     isDev,
   }}
 >
-  // Extend window interface for TypeScript
+  // Initialize _paq on main thread for immediate use
   window._paq = window._paq || [];
 
   // Development logging
   if (isDev) {
-    console.log("Loading Matomo Analytics...", {
+    console.log("Initializing Matomo Analytics with Partytown...", {
       matomoUrl,
       matomoSiteId,
       enableCookies,
@@ -61,11 +61,28 @@ const cleanMatomoUrl = matomoUrl.replace(/^https?:/, "");
   // Track performance timing
   _paq.push(["trackAllContentImpressions"]);
 
+  // Set tracker URL and site ID
+  var u = matomoUrl + "/";
+  _paq.push(["setTrackerUrl", u + "matomo.php"]);
+  _paq.push(["setSiteId", matomoSiteId]);
+
+  if (isDev) {
+    console.log("Matomo _paq initialized:", _paq);
+  }
+</script>
+
+<!-- Load Matomo script via Partytown (runs in web worker) -->
+<script
+  type="text/partytown"
+  is:inline
+  define:vars={{
+    matomoUrl: cleanMatomoUrl,
+    isDev,
+  }}
+>
+  // This script runs in a web worker via Partytown
   (function () {
     var u = matomoUrl + "/";
-    _paq.push(["setTrackerUrl", u + "matomo.php"]);
-    _paq.push(["setSiteId", matomoSiteId]);
-
     var d = document,
       g = d.createElement("script"),
       s = d.getElementsByTagName("script")[0];
@@ -93,12 +110,10 @@ const cleanMatomoUrl = matomoUrl.replace(/^https?:/, "");
     // Success callback
     g.onload = function () {
       if (isDev) {
-        console.log("Matomo analytics script loaded successfully");
+        console.log(
+          "Matomo analytics script loaded successfully in web worker",
+        );
       }
     };
   })();
-
-  if (isDev) {
-    console.log("Matomo _paq initialized:", _paq);
-  }
 </script>
