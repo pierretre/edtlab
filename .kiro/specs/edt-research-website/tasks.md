@@ -284,3 +284,13 @@
   - Perform comprehensive accessibility and performance testing
   - Validate all requirements are met and functional
   - _Requirements: 16.1, 16.2, 16.3, 16.4, 16.5_
+
+- [x] 35. Build interactive contact form on contact page
+  - Create ContactForm component with Flowbite form elements
+  - Implement form validation with client-side and server-side validation
+  - Add bilingual form labels and error messages
+  - Integrate form submission handling with email functionality
+  - Ensure RGAA 4.1 accessibility compliance for form elements
+  - Add proper ARIA labels and error announcements
+  - Implement form success and error states with user feedback
+  - _Requirements: 3.8, 28.1, 28.2, 31.1, 31.2_

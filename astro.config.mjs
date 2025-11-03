@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
@@ -63,6 +64,15 @@ export default defineConfig({
           en: 'en',
           fr: 'fr'
         }
+      }
+    }),
+    partytown({
+      // Configuration for Partytown
+      config: {
+        // Forward events to the main thread
+        forward: ['dataLayer.push'],
+        // Debug mode (disable in production)
+        debug: false
       }
     })
   ]

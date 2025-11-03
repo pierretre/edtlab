@@ -1,0 +1,441 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<form id="contact-form" class="space-y-8" novalidate>
+    <!-- Name Field -->
+    <div>
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("contact.form.name")}
+            <span class="text-red-500" aria-label={t("contact.form.required")}
+                >*</span
+            >
+        </label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+            placeholder={t("contact.form.name-placeholder")}
+            required
+            aria-describedby="name-error"
+            autocomplete="name"
+        />
+        <div
+            id="name-error"
+            class="mt-1 text-sm text-red-600 hidden"
+            role="alert"
+            aria-live="polite"
+        >
+        </div>
+    </div>
+
+    <!-- Email Field -->
+    <div>
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("contact.form.email")}
+            <span class="text-red-500" aria-label={t("contact.form.required")}
+                >*</span
+            >
+        </label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+            placeholder={t("contact.form.email-placeholder")}
+            required
+            aria-describedby="email-error"
+            autocomplete="email"
+        />
+        <div
+            id="email-error"
+            class="mt-1 text-sm text-red-600 hidden"
+            role="alert"
+            aria-live="polite"
+        >
+        </div>
+    </div>
+
+    <!-- Organization Field -->
+    <div>
+        <label
+            for="organization"
+            class="block mb-2 text-sm font-medium text-gray-900"
+        >
+            {t("contact.form.organization")}
+        </label>
+        <input
+            type="text"
+            id="organization"
+            name="organization"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+            placeholder={t("contact.form.organization-placeholder")}
+            aria-describedby="organization-help"
+            autocomplete="organization"
+        />
+        <div id="organization-help" class="mt-1 text-sm text-gray-500">
+            {t("contact.form.organization-help")}
+        </div>
+    </div>
+
+    <!-- Subject Field -->
+    <div>
+        <label
+            for="subject"
+            class="block mb-2 text-sm font-medium text-gray-900"
+        >
+            {t("contact.form.subject")}
+            <span class="text-red-500" aria-label={t("contact.form.required")}
+                >*</span
+            >
+        </label>
+        <select
+            id="subject"
+            name="subject"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+            required
+            aria-describedby="subject-error"
+        >
+            <option value="">{t("contact.form.subject-placeholder")}</option>
+            <option value="general">{t("contact.form.subject-general")}</option>
+            <option value="collaboration"
+                >{t("contact.form.subject-collaboration")}</option
+            >
+            <option value="research"
+                >{t("contact.form.subject-research")}</option
+            >
+            <option value="technical"
+                >{t("contact.form.subject-technical")}</option
+            >
+            <option value="media">{t("contact.form.subject-media")}</option>
+            <option value="other">{t("contact.form.subject-other")}</option>
+        </select>
+        <div
+            id="subject-error"
+            class="mt-1 text-sm text-red-600 hidden"
+            role="alert"
+            aria-live="polite"
+        >
+        </div>
+    </div>
+
+    <!-- Message Field -->
+    <div>
+        <label
+            for="message"
+            class="block mb-2 text-sm font-medium text-gray-900"
+        >
+            {t("contact.form.message")}
+            <span class="text-red-500" aria-label={t("contact.form.required")}
+                >*</span
+            >
+        </label>
+        <textarea
+            id="message"
+            name="message"
+            rows="6"
+            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
+            placeholder={t("contact.form.message-placeholder")}
+            required
+            aria-describedby="message-error message-help"
+            minlength="10"
+            maxlength="2000"></textarea>
+        <div id="message-help" class="mt-1 text-sm text-gray-500">
+            {t("contact.form.message-help")}
+        </div>
+        <div
+            id="message-error"
+            class="mt-1 text-sm text-red-600 hidden"
+            role="alert"
+            aria-live="polite"
+        >
+        </div>
+    </div>
+
+    <!-- Privacy Notice -->
+    <div class="flex items-start">
+        <div class="flex items-center h-5">
+            <input
+                id="privacy"
+                name="privacy"
+                type="checkbox"
+                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
+                required
+                aria-describedby="privacy-error privacy-text"
+            />
+        </div>
+        <div class="ml-3 text-sm">
+            <label
+                for="privacy"
+                id="privacy-text"
+                class="font-light text-gray-500"
+            >
+                {t("contact.form.privacy-notice")}
+                <span
+                    class="text-red-500"
+                    aria-label={t("contact.form.required")}>*</span
+                >
+            </label>
+            <div
+                id="privacy-error"
+                class="mt-1 text-sm text-red-600 hidden"
+                role="alert"
+                aria-live="polite"
+            >
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+        <button
+            type="submit"
+            class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+            id="submit-button"
+        >
+            <span id="submit-text">{t("contact.form.submit")}</span>
+            <span id="submit-loading" class="hidden">
+                <svg
+                    class="inline w-4 h-4 mr-2 text-white animate-spin"
+                    viewBox="0 0 100 101"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="m100 50.5908c0 27.2899-22.1781 49.4081-49.4081 49.4081s-49.4081-22.1182-49.4081-49.4081c0-27.2899 22.1781-49.4081 49.4081-49.4081s49.4081 22.1182 49.4081 49.4081z"
+                        fill="currentColor"></path>
+                    <path
+                        d="m93.9676 39.0409c0-15.1956-12.3244-27.52-27.52-27.52s-27.52 12.3244-27.52 27.52 12.3244 27.52 27.52 27.52 27.52-12.3244 27.52-27.52z"
+                        fill="currentFill"></path>
+                </svg>
+                {t("contact.form.sending")}
+            </span>
+        </button>
+    </div>
+
+    <!-- Success Message -->
+    <div
+        id="success-message"
+        class="hidden p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200"
+        role="alert"
+        aria-live="polite"
+    >
+        <div class="flex items-center">
+            <svg
+                class="flex-shrink-0 w-4 h-4 mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="font-medium">{t("contact.form.success-title")}</span>
+        </div>
+        <div class="mt-2">
+            {t("contact.form.success-message")}
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div
+        id="error-message"
+        class="hidden p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200"
+        role="alert"
+        aria-live="polite"
+    >
+        <div class="flex items-center">
+            <svg
+                class="flex-shrink-0 w-4 h-4 mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="font-medium">{t("contact.form.error-title")}</span>
+        </div>
+        <div class="mt-2" id="error-details">
+            {t("contact.form.error-message")}
+        </div>
+    </div>
+</form>
+
+<script>
+    // Form validation and submission handling
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("contact-form") as HTMLFormElement;
+        const submitButton = document.getElementById(
+            "submit-button",
+        ) as HTMLButtonElement;
+        const submitText = document.getElementById(
+            "submit-text",
+        ) as HTMLElement;
+        const submitLoading = document.getElementById(
+            "submit-loading",
+        ) as HTMLElement;
+        const successMessage = document.getElementById(
+            "success-message",
+        ) as HTMLElement;
+        const errorMessage = document.getElementById(
+            "error-message",
+        ) as HTMLElement;
+        const errorDetails = document.getElementById(
+            "error-details",
+        ) as HTMLElement;
+
+        // Form field validation
+        const validateField = (
+            field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+        ): boolean => {
+            const errorElement = document.getElementById(
+                `${field.name}-error`,
+            ) as HTMLElement;
+            let isValid = true;
+            let errorText = "";
+
+            // Clear previous error state
+            field.classList.remove(
+                "border-red-500",
+                "focus:border-red-500",
+                "focus:ring-red-500",
+            );
+            field.classList.add(
+                "border-gray-300",
+                "focus:border-primary-500",
+                "focus:ring-primary-500",
+            );
+            errorElement.classList.add("hidden");
+            errorElement.textContent = "";
+
+            // Required field validation
+            if (field.hasAttribute("required") && !field.value.trim()) {
+                isValid = false;
+                errorText =
+                    field.name === "privacy"
+                        ? "You must accept the privacy notice to continue."
+                        : "This field is required.";
+            }
+
+            // Email validation
+            if (field.type === "email" && field.value.trim()) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(field.value.trim())) {
+                    isValid = false;
+                    errorText = "Please enter a valid email address.";
+                }
+            }
+
+            // Message length validation
+            if (field.name === "message" && field.value.trim()) {
+                if (field.value.trim().length < 10) {
+                    isValid = false;
+                    errorText = "Message must be at least 10 characters long.";
+                } else if (field.value.trim().length > 2000) {
+                    isValid = false;
+                    errorText = "Message must be less than 2000 characters.";
+                }
+            }
+
+            // Show error if validation failed
+            if (!isValid) {
+                field.classList.remove(
+                    "border-gray-300",
+                    "focus:border-primary-500",
+                    "focus:ring-primary-500",
+                );
+                field.classList.add(
+                    "border-red-500",
+                    "focus:border-red-500",
+                    "focus:ring-red-500",
+                );
+                errorElement.textContent = errorText;
+                errorElement.classList.remove("hidden");
+                field.setAttribute("aria-invalid", "true");
+            } else {
+                field.setAttribute("aria-invalid", "false");
+            }
+
+            return isValid;
+        };
+
+        // Real-time validation on blur
+        const fields = form.querySelectorAll("input, textarea, select");
+        fields.forEach((field) => {
+            field.addEventListener("blur", () =>
+                validateField(field as HTMLInputElement),
+            );
+            field.addEventListener("input", () => {
+                // Clear error state on input
+                if (field.classList.contains("border-red-500")) {
+                    validateField(field as HTMLInputElement);
+                }
+            });
+        });
+
+        // Form submission
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // Hide previous messages
+            successMessage.classList.add("hidden");
+            errorMessage.classList.add("hidden");
+
+            // Validate all fields
+            let isFormValid = true;
+            fields.forEach((field) => {
+                if (!validateField(field as HTMLInputElement)) {
+                    isFormValid = false;
+                }
+            });
+
+            if (!isFormValid) {
+                // Focus on first error field
+                const firstError = form.querySelector(
+                    ".border-red-500",
+                ) as HTMLElement;
+                if (firstError) {
+                    firstError.focus();
+                }
+                return;
+            }
+
+            // Show loading state
+            submitButton.disabled = true;
+            submitText.classList.add("hidden");
+            submitLoading.classList.remove("hidden");
+
+            try {
+                // TODO: implement mailing
+            } catch (error) {
+                // Show error message
+                errorDetails.textContent =
+                    "There was a problem sending your message. Please try again later or contact us directly via email.";
+                errorMessage.classList.remove("hidden");
+
+                // Scroll to error message
+                errorMessage.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+
+                // Focus on error message for screen readers
+                errorMessage.focus();
+            } finally {
+                // Reset button state
+                submitButton.disabled = false;
+                submitText.classList.remove("hidden");
+                submitLoading.classList.add("hidden");
+            }
+        });
+    });
+</script>
