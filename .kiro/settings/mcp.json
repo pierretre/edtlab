@@ -9,7 +9,10 @@
       ],
       "env": {},
       "disabled": false,
-      "disabledTools": []
+      "disabledTools": [],
+      "autoApprove": [
+        "search_astro_docs"
+      ]
     }
   }
 }

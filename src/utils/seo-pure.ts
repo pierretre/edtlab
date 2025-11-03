@@ -1,43 +1,7 @@
-export interface SitemapEntry {
-    url: string;
-    lastmod?: string;
-    changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-    priority?: number;
-}
-
 export interface StructuredData {
     '@context': string;
     '@type': string;
     [key: string]: any;
-}
-
-/**
- * Generate XML sitemap content
- */
-export function generateSitemapXML(entries: SitemapEntry[]): string {
-    const xmlEntries = entries.map(entry => {
-        let xml = `  <url>\n    <loc>${entry.url}</loc>\n`;
-
-        if (entry.lastmod) {
-            xml += `    <lastmod>${entry.lastmod}</lastmod>\n`;
-        }
-
-        if (entry.changefreq) {
-            xml += `    <changefreq>${entry.changefreq}</changefreq>\n`;
-        }
-
-        if (entry.priority !== undefined) {
-            xml += `    <priority>${entry.priority}</priority>\n`;
-        }
-
-        xml += `  </url>`;
-        return xml;
-    }).join('\n');
-
-    return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${xmlEntries}
-</urlset>`;
 }
 
 /**

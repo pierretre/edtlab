@@ -7,7 +7,7 @@ export const GET: APIRoute = async ({ site }) => {
 Allow: /
 
 # Sitemap
-Sitemap: ${baseUrl}/sitemap.xml
+Sitemap: ${baseUrl}/sitemap-index.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
