@@ -37,7 +37,7 @@ Any static assets, like images, can be placed in the `public/` directory.
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd edt-research-website
+   cd edtlab
    ```
 
 2. **Start development environment**:

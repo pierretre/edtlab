@@ -1,0 +1,19 @@
+---
+import type { StructuredData } from "../utils/seo";
+
+export interface Props {
+    structuredData?: StructuredData[];
+}
+
+const { structuredData = [] } = Astro.props;
+---
+
+<!-- Additional SEO structured data -->{
+    structuredData.map((data) => (
+        <script
+            type="application/ld+json"
+            is:inline
+            set:html={JSON.stringify(data)}
+        />
+    ))
+}

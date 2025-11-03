@@ -1,0 +1,67 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+
+export interface Props {
+    href: string;
+    class?: string;
+    title?: string;
+    "aria-label"?: string;
+    target?: string;
+    rel?: string;
+}
+
+const {
+    href,
+    class: className = "",
+    title,
+    "aria-label": ariaLabel,
+    target,
+    rel,
+} = Astro.props;
+
+// Get current language from URL
+const currentLang = getLangFromUrl(Astro.url);
+
+// Build proper internal link with language prefix
+const buildInternalLink = (path: string, lang: string): string => {
+    // If path already has language prefix, return as is
+    if (path.match(/^\/[a-z]{2}\//)) {
+        return path;
+    }
+
+    // If path is external (starts with http), return as is
+    if (path.startsWith("http")) {
+        return path;
+    }
+
+    // If path starts with /, add language prefix
+    if (path.startsWith("/")) {
+        return `/${lang}${path}`;
+    }
+
+    // Otherwise, add language prefix and leading slash
+    return `/${lang}/${path}`;
+};
+
+const finalHref = buildInternalLink(href, currentLang);
+
+// Determine if this is an external link
+const isExternal = href.startsWith("http") || href.startsWith("//");
+
+// Set appropriate rel attribute for external links
+const finalRel = isExternal ? rel || "noopener noreferrer" : rel;
+
+// Set appropriate target for external links
+const finalTarget = isExternal && !target ? "_blank" : target;
+---
+
+<a
+    href={finalHref}
+    class={className}
+    title={title}
+    aria-label={ariaLabel}
+    target={finalTarget}
+    rel={finalRel}
+>
+    <slot />
+</a>
