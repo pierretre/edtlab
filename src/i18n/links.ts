@@ -20,8 +20,7 @@
  * ```
  */
 
-import { enToFrMapping, frToEnMapping, getCorrespondingPage } from './page-mapping';
-import type { UIKey } from './ui';
+import { enToFrMapping, getCorrespondingPage } from './page-mapping';
 
 export type Lang = 'en' | 'fr';
 export type ContentType = 'news' | 'press' | 'job-offers' | 'events';

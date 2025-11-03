@@ -125,7 +125,7 @@ async function networkFirst(request) {
 
 // Fallback response for offline scenarios
 async function fallbackResponse(request) {
-    const url = new URL(request.url);
+    // const url = new URL(request.url); // Unused for now
 
     // Return offline page for navigation requests
     if (request.mode === 'navigate') {

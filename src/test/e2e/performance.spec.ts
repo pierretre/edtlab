@@ -279,7 +279,7 @@ test.describe('Performance Tests', () => {
 
         // Check that Matomo analytics is loaded (if enabled)
         const hasMatomoAnalytics = await page.evaluate(() => {
-            return typeof window._paq !== 'undefined';
+            return typeof (window as any)._paq !== 'undefined';
         });
 
         // Matomo should be available (analytics is enabled)
