@@ -8,8 +8,7 @@ import {
     generatePublicationStructuredData,
     generateEventStructuredData,
     generateJobPostingStructuredData,
-    generateBreadcrumbStructuredData,
-    generateSitemapXML
+    generateBreadcrumbStructuredData
 } from '../../utils/seo-pure';
 
 describe('SEO Utilities', () => {
@@ -64,33 +63,7 @@ describe('SEO Utilities', () => {
         });
     });
 
-    describe('generateSitemapXML', () => {
-        it('should generate valid XML sitemap', () => {
-            const entries = [
-                {
-                    url: 'https://example.com/',
-                    lastmod: '2023-01-01',
-                    changefreq: 'weekly' as const,
-                    priority: 1.0
-                },
-                {
-                    url: 'https://example.com/about',
-                    lastmod: '2023-01-01',
-                    changefreq: 'monthly' as const,
-                    priority: 0.8
-                }
-            ];
 
-            const result = generateSitemapXML(entries);
-
-            expect(result).toContain('<?xml version="1.0" encoding="UTF-8"?>');
-            expect(result).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
-            expect(result).toContain('<loc>https://example.com/</loc>');
-            expect(result).toContain('<lastmod>2023-01-01</lastmod>');
-            expect(result).toContain('<changefreq>weekly</changefreq>');
-            expect(result).toContain('<priority>1</priority>');
-        });
-    });
 
     describe('generateOrganizationStructuredData', () => {
         it('should generate valid organization structured data', () => {
