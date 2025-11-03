@@ -141,13 +141,6 @@
   - Ensure all images maintain proper alt text and accessibility compliance
   - _Requirements: 4.3, 28.2, 31.3_
 
-- [ ] 18. Implement search functionality across content
-  - Build site-wide search using Flowbite Search component
-  - Index all content collections for search capability
-  - Implement search results display with relevance ranking
-  - Integrate search component into BaseLayout header
-  - Ensure search response time under 2 seconds
-  - _Requirements: 1.2, 1.4_
 ## Accessibility Implementation
 
 - [x] 19. Implement basic accessibility foundation
