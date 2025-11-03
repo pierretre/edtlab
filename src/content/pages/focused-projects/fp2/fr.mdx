@@ -6,23 +6,16 @@ description: "Architecture, Composabilité et Interopérabilité - Projet Ciblé
 toc: true
 ---
 
-import { Picture } from 'astro:assets';
+import OptimizedFigure from '../../../../components/OptimizedFigure.astro';
 import pc2Image from '../../../../assets/images/INRIA_EDT_CBLOT_PC2.png';
 
 # PC2: Architecture, Composabilité et Interopérabilité
 
-<figure class="mb-6">
-  <Picture 
-    src={pc2Image}
-    formats={['avif', 'webp']}
-    alt="Diagramme du projet PC2 Architecture, Composabilité et Interopérabilité montrant l'architecture modulaire des jumeaux numériques et les approches de fédération"
-    class="w-full h-auto"
-    loading="lazy"
-  />
-  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
-    Aperçu du projet PC2 : Architecture modulaire et cadre d'interopérabilité pour des systèmes de jumeaux numériques composables
-  </figcaption>
-</figure>
+<OptimizedFigure
+  src={pc2Image}
+  alt="Diagramme du projet PC2 Architecture, Composabilité et Interopérabilité montrant l'architecture modulaire des jumeaux numériques et les approches de fédération"
+  caption="Aperçu du projet PC2 : Architecture modulaire et cadre d'interopérabilité pour des systèmes de jumeaux numériques composables"
+/>
 
 ## Aperçu du Projet
 

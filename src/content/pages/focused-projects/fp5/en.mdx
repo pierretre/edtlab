@@ -6,23 +6,16 @@ description: "Human-Digital Twin Interactions - Focused Project 5 (PC5) of the E
 toc: true
 ---
 
-import { Picture } from 'astro:assets';
+import OptimizedFigure from '../../../../components/OptimizedFigure.astro';
 import pc5Image from '../../../../assets/images/INRIA_EDT_CBLOT_PC5.png';
 
 # PC5: Human-Digital Twin Interactions
 
-<figure class="mb-6">
-  <Picture 
-    src={pc5Image}
-    formats={['avif', 'webp']}
-    alt="PC5 Human-Digital Twin Interactions project diagram showing various interaction modalities including VR, AR, and collaborative interfaces"
-    class="w-full h-auto"
-    loading="lazy"
-  />
-  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
-    PC5 Project Overview: Human-computer interaction framework for immersive and collaborative digital twin experiences
-  </figcaption>
-</figure>
+<OptimizedFigure
+  src={pc5Image}
+  alt="PC5 Human-Digital Twin Interactions project diagram showing various interaction modalities including VR, AR, and collaborative interfaces"
+  caption="PC5 Project Overview: Human-computer interaction framework for immersive and collaborative digital twin experiences"
+/>
 
 ## Project Overview
 

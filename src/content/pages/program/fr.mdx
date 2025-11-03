@@ -6,7 +6,7 @@ description: "Aperçu du programme de recherche EDT, objectifs, structure et par
 toc: true
 ---
 
-import { Picture } from 'astro:assets';
+import OptimizedFigure from '../../../components/OptimizedFigure.astro';
 import physicalDigitalImage from '../../../assets/images/INRIA_EDT_CBLOT_PHYSICAL_DIGITAL.png';
 import crossCuttingActionsImage from '../../../assets/images/INRIA_EDT_CBLOT_AT_2.jpg';
 
@@ -16,18 +16,12 @@ import crossCuttingActionsImage from '../../../assets/images/INRIA_EDT_CBLOT_AT_
 
 Le programme de recherche Engineering Digital Twins (EDT) vise à faire progresser le domaine de la technologie des jumeaux numériques pour les applications d'ingénierie, créant une communauté multidisciplinaire avec un leadership international en ingénierie des jumeaux numériques.
 
-<figure class="mb-6">
-  <Picture 
-    src={physicalDigitalImage}
-    formats={['avif', 'webp']}
-    alt="Diagramme de relation Jumeau Physique-Numérique montrant le couplage bidirectionnel et les flux de données entre systèmes physiques et numériques"
-    class="w-full h-auto"
-    loading="lazy"
-  />
-  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
-    Relation Jumeau Physique-Numérique : Cadre conceptuel montrant le couplage bidirectionnel, les flux de données et la synchronisation entre systèmes de jumeaux physiques et numériques
-  </figcaption>
-</figure>
+<OptimizedFigure
+  src={physicalDigitalImage}
+  alt="Diagramme de relation Jumeau Physique-Numérique montrant le couplage bidirectionnel et les flux de données entre systèmes physiques et numériques"
+  caption="Relation Jumeau Physique-Numérique : Cadre conceptuel montrant le couplage bidirectionnel, les flux de données et la synchronisation entre systèmes de jumeaux physiques et numériques"
+  loading="eager"
+/>
 
 ## Vision
 
@@ -60,18 +54,11 @@ Le programme est organisé en cinq projets ciblés étroitement connectés (PC1-
 - **AT6** : Éthique et Durabilité
 - **AT7** : Dissémination et Exploitation
 
-<figure class="mb-6">
-  <Picture 
-    src={crossCuttingActionsImage}
-    formats={['avif', 'webp']}
-    alt="Diagramme des Actions Transverses (AT) EDT montrant les sept actions transverses qui coordonnent et intègrent les projets ciblés"
-    class="w-full h-auto"
-    loading="lazy"
-  />
-  <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
-    Cadre des Actions Transverses EDT : Sept actions transverses (AT1-AT7) qui assurent la coordination, l'intégration et la construction de communauté à travers le programme de recherche
-  </figcaption>
-</figure>
+<OptimizedFigure
+  src={crossCuttingActionsImage}
+  alt="Diagramme des Actions Transverses (AT) EDT montrant les sept actions transverses qui coordonnent et intègrent les projets ciblés"
+  caption="Cadre des Actions Transverses EDT : Sept actions transverses (AT1-AT7) qui assurent la coordination, l'intégration et la construction de communauté à travers le programme de recherche"
+/>
 
 ## Barrières Scientifiques
 

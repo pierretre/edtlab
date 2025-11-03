@@ -1,6 +1,6 @@
 ---
 /**
- * OptimizedFigure - A simple wrapper around Astro's Picture component for content editors
+ * OptimizedFigure - An optimized wrapper around Astro's Picture component for content editors
  *
  * Usage in MDX files:
  * ```
@@ -11,6 +11,7 @@
  *   src={myImage}
  *   alt="Description of the image"
  *   caption="Optional caption text"
+ *   loading="lazy" // or "eager" for above-the-fold images
  * />
  * ```
  */
@@ -25,6 +26,8 @@ export interface Props {
     loading?: "lazy" | "eager";
     formats?: Array<"avif" | "webp" | "png" | "jpg" | "jpeg">;
     quality?: number;
+    widths?: number[];
+    sizes?: string;
 }
 
 const {
@@ -32,9 +35,11 @@ const {
     alt,
     caption,
     class: className = "",
-    loading = "lazy",
+    loading = "eager",
     formats = ["avif", "webp"],
-    quality = 80,
+    quality = 60,
+    widths = [400, 800, 1200],
+    sizes = "(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1200px",
     ...rest
 } = Astro.props;
 ---
@@ -47,6 +52,9 @@ const {
         class="w-full h-auto"
         loading={loading}
         quality={quality}
+        widths={widths}
+        sizes={sizes}
+        decoding="async"
         {...rest}
     />
     {

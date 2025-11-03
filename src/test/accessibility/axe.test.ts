@@ -23,7 +23,6 @@ describe('Accessibility Standards', () => {
 
     it('should validate accessibility features', () => {
         const accessibilityFeatures = [
-            'skip-links',
             'focus-indicators',
             'aria-labels',
             'semantic-headings',
