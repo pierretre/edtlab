@@ -1,31 +1,33 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../i18n/utils";
-import PageLayout from "../../layouts/PageLayout.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getLayoutFromType } from "../../utils";
 
 export async function getStaticPaths() {
     const allPages = await getCollection("pages");
 
     return allPages.map((page: CollectionEntry<"pages">) => {
-        const { lang, href, layout } = page.data;
+        const { lang, href, type } = page.data;
 
         return {
             params: {
                 lang: lang,
                 slug: href,
-                layout: layout ?? "tests",
             },
             props: {
                 page,
+                type,
             },
         };
     });
 }
 
-const { page } = Astro.props as { page: CollectionEntry<"pages"> };
-const { lang, layout } = Astro.params;
-console.log(Astro.params);
+const { page, type } = Astro.props as {
+    page: CollectionEntry<"pages">;
+    type: string;
+};
+const { lang } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
 
 if (!page) {
@@ -35,9 +37,9 @@ if (!page) {
     });
 }
 
-const layoutSetting = page.data.layout;
 // Get the rendered content
 const { Content } = await page.render();
+const Layout = getLayoutFromType(type);
 ---
 
 <BaseLayout
@@ -48,17 +50,7 @@ const { Content } = await page.render();
     lang={lang as "en" | "fr"}
     showBreadcrumb={true}
 >
-    {
-        layoutSetting ? (
-            <Content />
-        ) : (
-            <PageLayout
-                title={page.data.title}
-                lang={lang as "en" | "fr"}
-                showToc={page.data.toc ?? false}
-            >
-                <Content />
-            </PageLayout>
-        )
-    }
+    <Layout frontmatter={page.data}>
+        <Content />
+    </Layout>
 </BaseLayout>

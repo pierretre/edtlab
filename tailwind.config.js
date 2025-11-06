@@ -163,7 +163,16 @@ export default {
                 // Accessible shadows using new color scheme
                 'focus': '0 0 0 3px oklch(51.708% 0.11741 288.23 / 0.5)',  // Scampi focus ring
                 'focus-error': '0 0 0 3px oklch(62.8% 0.228 17 / 0.5)',    // Error red focus ring
-            }
+            },
+            keyframes: {
+                slideInLeft: {
+                    '0%': { transform: 'translateX(-50px)', opacity: '0' },
+                    '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+            },
+            animation: {
+                slideInLeft: 'slideInLeft 0.5s ease-out forwards',
+            },
         },
     },
     plugins: [

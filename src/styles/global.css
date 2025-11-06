@@ -114,6 +114,7 @@
         @apply min-h-11 font-sans rounded-md border-2 border-gray-300 p-3 transition-colors duration-200;
     }
 
+    .card:focus,
     input:focus,
     textarea:focus,
     select:focus {
@@ -132,6 +133,51 @@
 
     th {
         @apply font-semibold bg-gray-50 text-gray-900;
+    }
+
+    .header-blue-bell {
+        @apply bg-gradient-to-br from-blue-bell-500 to-blue-bell-700;
+    }
+
+    .header-hit-pink {
+        @apply bg-gradient-to-br from-hit-pink-500 to-hit-pink-700;
+    }
+
+    .header-marzipan {
+        @apply bg-gradient-to-br from-marzipan-400 to-marzipan-600;
+    }
+
+    .card {
+        @apply rounded-lg hover:shadow shadow-sm p-6 border border-gray-200 transition-all duration-300;
+    }
+
+    details>summary {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    details>summary h3 {
+        display: inline;
+        margin: 0;
+    }
+
+    summary {
+        list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* Example custom arrow */
+    summary::before {
+        content: "▸";
+        margin-right: 0.5rem;
+        transition: transform 0.2s;
+    }
+
+    details[open] summary::before {
+        transform: rotate(90deg);
     }
 }
 
@@ -153,7 +199,7 @@
 
     /* Button variants */
     .btn-primary {
-        @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-2 focus:ring-primary-200 px-6 py-3 rounded-md font-medium transition-colors;
+        @apply items-center p-3 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200 hover:text-gray-200;
     }
 
     .btn-secondary {
@@ -169,7 +215,7 @@
         @apply text-gray-700 leading-relaxed;
     }
 
-    .prose h1 {
+    /* .prose h1 {
         @apply text-3xl font-bold text-gray-900 mb-6 mt-8 first:mt-0;
     }
 
@@ -183,7 +229,7 @@
 
     .prose h4 {
         @apply text-lg font-medium text-gray-800 mb-2 mt-4;
-    }
+    } */
 
     .prose p {
         @apply mb-4 text-base leading-relaxed;
@@ -213,7 +259,7 @@
         @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono;
     }
 
-    .prose pre {
+    s .prose pre {
         @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
     }
 
@@ -221,13 +267,10 @@
         @apply border-l-4 border-primary-300 pl-4 italic text-gray-600 mb-4;
     }
 
-    .prose a {
-        @apply text-primary-600 hover:text-primary-700 underline decoration-primary-300 hover:decoration-primary-500 transition-colors;
-    }
+    /* .prose a {
+        @apply text-primary-600 hover:text-primary-700 decoration-primary-300 hover:decoration-primary-500 transition-colors;
+    } */
 
-    .prose table {
-        @apply w-full border-collapse mb-6;
-    }
 
     .prose th {
         @apply bg-gray-50 font-semibold text-gray-900 p-3 text-left border-b-2 border-gray-200;
@@ -235,10 +278,6 @@
 
     .prose td {
         @apply p-3 border-b border-gray-200;
-    }
-
-    .prose img {
-        @apply rounded-lg shadow-md mb-4;
     }
 
     .prose hr {

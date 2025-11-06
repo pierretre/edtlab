@@ -48,9 +48,9 @@ const projects = pages
     .sort((a, b) => a.data.href.localeCompare(b.data.href));
     
 const colorMap: Record<string, string> = {
-    'blue-bell': 'bg-gradient-to-br from-blue-bell-300 to-blue-bell-500',
-    'hit-pink': 'bg-gradient-to-br from-hit-pink-300 to-hit-pink-500',
-    'marzipan': 'bg-gradient-to-br from-marzipan-300 to-marzipan-500',
+    'blue-bell': 'header-blue-bell',
+    'hit-pink': 'header-hit-pink',
+    'marzipan': 'header-marzipan',
 };
 
 const tiles = projects.map(project => {
@@ -88,7 +88,7 @@ console.log('Tiles generated:', tiles);
             
             <!-- Hero Action Buttons -->
             <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <a href={linkHelpers.page(lang, 'program')} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 transition-colors">
+                <a href={linkHelpers.page(lang, 'program')} class="inline-flex justify-center btn-primary text-base font-medium rounded-lg">
                     {t('home.hero.learn-more')}
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -138,7 +138,7 @@ console.log('Tiles generated:', tiles);
                     <div class="group tile-card" data-index={index}>
                         <a 
                             href={linkHelpers.page(lang, tile.slug)}
-                            class={`block h-full p-6 ${tile.backgroundColor} border border-gray-200 rounded-lg shadow hover:shadow-lg hover:border-primary-300 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary-300`}
+                            class={`block h-full p-6 ${tile.backgroundColor} card`}
                             role="button"
                             tabindex="0"
                             aria-label={`${t('home.tiles.navigate-to')} ${tile.name}`}

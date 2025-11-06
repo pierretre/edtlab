@@ -11,7 +11,7 @@ const pagesCollection = defineCollection({
         toc: z.boolean().default(false),
         lastModified: z.date().optional(),
         color: z.string().optional(),
-        layout: z.string().optional(),
+        type: z.string().optional().default('page'),
         illustration: z.string().optional(),
     })
 });

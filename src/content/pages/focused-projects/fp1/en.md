@@ -1,0 +1,138 @@
+---
+title: "PC1: Model Hybridization and Management"
+href: "focused-projects/fp1"
+lang: "en"
+description: "Developing systematic approaches for combining physical models and data-based models through standardized interfaces and hybridization operators in digital twins"
+toc: true
+color: "blue-bell"
+type: "project"
+illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC1.png"
+projectId: "PC1"
+---
+
+## Context
+
+A **Digital Twin (DT)** is an organized set of digital models representing a real-world physical object or system throughout its lifecycle. It continuously updates through real-time sensor data and uses reasoning methods such as **simulation** and **machine learning** to support decision-making.  
+
+Digital Twins can:
+- Predict behaviors (e.g., failure forecasting or event prediction)  
+- Prescribe real-time actions (e.g., adapting to environmental changes or updating requirements)
+
+Creating a DT involves multiple disciplines — **architecture description**, **modeling & simulation**, and **data science** — each producing intricate models tailored to specific questions.
+
+## Model Classification Dimensions
+
+Models in a Digital Twin can be characterized along several non-exhaustive dimensions:
+
+| **Dimension** | **Description** |
+|---------------|-----------------|
+| **Inference Method** | How conclusions are drawn. *Inductive* models arise from observed data patterns, while *deductive* models apply theoretical principles. |
+| **Modeling Approach** | *Empirical* models rely on data observation; *mechanistic* models are grounded in physical or theoretical laws. |
+| **Concern** | The aspect of the system being modeled — e.g., behavioral, safety, structural, or extra-functional (performance, usability). |
+| **Purpose** | *Descriptive* models represent what exists; *prescriptive* models define what should be done. |
+| **Fidelity** | Degree of realism. *Low-fidelity* models are faster but limited; *high-fidelity* models are more accurate but computationally intensive. |
+| **Temporal Aspect** | *Static* models describe one moment; *dynamic* models evolve over time. |
+
+## Model Hybridization
+
+Digital Twins often use multiple models (data-based, mechanistic, etc.), each with strengths and limitations. **Hybridization** seeks to combine these models to leverage their complementary capabilities.
+
+Examples include:
+- **Physically Informed Neural Networks (PINNs):** Combining neural networks trained on real data with mechanistic simulation outputs.
+- **Uncertainty quantification:** Integrating uncertainties from both the Physical Twin (PT) and the DT for improved performance and anomaly detection.
+
+To enable systematic hybridization, the following are needed:
+1. **Homogeneous model interfaces** for querying and manipulating models  
+2. **Operators and workflows** defining hybridization patterns  
+3. **Uncertainty management** and reliability assurance
+
+## Scientific Topics
+
+1. Interface for Hybridization(s)  
+2. Hybridization Operators (for both workflow and model combination)  
+3. Interface and Composition Analysis  
+
+## Main Objectives
+
+1. Provide interfaces to manipulate any model and its usage  
+2. Simplify model hybridization via dedicated operators  
+3. Ensure reliable and consistent hybridization management  
+
+## Associated Use Cases
+
+Use cases in **PC1** will include diverse Digital Twins representing various physical entities.  
+Special focus: **combining data-based and mechanistic models** to validate PC1 concepts and tools.
+
+## Governance & Project Partners
+
+**Principal Investigator:**  
+- *Julien Deantoni*, Université Côte d’Azur (UniCA)
+
+**Steering Body:**  
+- UniCA, Inria, Telecom Paris, UPPA  
+
+**Participating Partners:**  
+- Inria (Hycomes, DiverSE, Kairos, Parkas)  
+- CNRS (IRIT/ACADIE)  
+- UniCA  
+- INRAE  
+- UPPA  
+- Telecom Paris (LabSoc, ACES)  
+- ENPC  
+- Univ. de Bourgogne  
+- CEA (LITEN)  
+- Univ. Toulouse 3 (Aniti)  
+- Univ. Toulouse Jean Jaurès (IRIT/SM@RT)
+
+## Project Implementation
+
+The project is structured into **three cohesive work packages**, with **multi-fidelity** and **uncertainty** addressed throughout.
+
+<details>
+      <summary><h3>Workpackage 1: Interface for Hybridization(s)</h3></summary>
+
+**Leader:** UPPA  
+**Partners:** Inria (DiverSE, Hycomes, Kairos, Parkas), UniCA, INRAE, Telecom Paris (ACES)
+
+**Objectives:**
+- Standardize the manipulation and characterization of heterogeneous models  
+- Ensure homogeneous and automatic reasoning while preserving model specificity  
+
+**Key Tasks:**
+1. Create structured metadata for model management  
+2. Provide functional and extra-functional interfaces for hybridization  
+3. Enable model mutation and adaptation capabilities 
+
+</details>
+
+<details>
+<summary><h3>Workpackage 2: Hybridization Operators</h3></summary>
+
+**Leader:** Kairos (Inria)  
+**Partners:** DiverSE (Inria), INRAE, IRIT/ACADIE (CNRS), Telecom Paris (LabSoc), Université de Bourgogne  
+
+**Objectives:**
+- Identify and formalize **structural and behavioral hybridization patterns**  
+- Replace ad-hoc processes with **systematic hybridization operators**  
+
+**Key Tasks:**
+1. Elicit and formalize operators for **simulation workflows**  
+2. Define operators for **model hybridization**  
+
+</details>
+
+<details>
+<summary><h3>Workpackage 3: Interface and Composition Analysis</h3></summary>
+
+**Leader:** Telecom Paris (LabSoc)  
+**Partners:** Inria (DiverSE, Hycomes, Parkas), CNRS IRIT (ACADIE), ENPC, UPPA, CEA (LITEN), UniCA, Univ. Toulouse 3 (Aniti), Univ. Toulouse Jean Jaurès (IRIT/SM@RT)
+
+**Objectives:**
+- Provide analysis of **models**, **interfaces**, and **hybridization operators**
+
+**Key Tasks:**
+1. Analyze models to enrich their interfaces  
+2. Identify synergies and hybridization opportunities across interfaces  
+3. Analyze hybridization operators to improve resulting model interfaces  
+
+</details>

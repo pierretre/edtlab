@@ -44,7 +44,7 @@ import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 #### Example
 ```mdx
 <ResponsiveImage 
-  src="INRIA_EDT_CBLOT_PC1.jpg"
+  src="/src/assets/images/INRIA_EDT_CBLOT_PC1.jpg"
   alt="PC1 project diagram showing model hybridization workflow with data inputs, processing stages, and output validation"
   caption="PC1 Model Hybridization: Workflow diagram illustrating the integration of physical and data-driven models in digital twin applications"
 />
