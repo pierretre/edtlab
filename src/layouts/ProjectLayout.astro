@@ -23,10 +23,12 @@ const t = useTranslations(
     (Astro.props.frontmatter?.lang as "en" | "fr") || "en",
 );
 
+console.log("ProjectLayout Astro.props:", Astro.props);
 const { frontmatter, headings } = Astro.props as Props;
 const color = frontmatter?.color || "primary";
 const illustration = frontmatter?.illustration || "";
 const showToc = frontmatter?.toc && headings && headings.length > 0;
+console.log("showToc:", showToc);
 
 // Handle image import
 let projectImage: ImageMetadata | undefined;

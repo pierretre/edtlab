@@ -19,9 +19,7 @@ const { jobOffer, lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<div
-    class="job-offer-card max-w-sm bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
->
+<div class="card max-w-sm">
     <div class="p-5">
         <!-- Header with badges -->
         <div class="flex flex-wrap gap-2 mb-3">
@@ -157,7 +155,7 @@ const t = useTranslations(lang);
         <!-- Action button -->
         <a
             href={linkHelpers.jobOffer(lang, jobOffer.slug)}
-            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
+            class="btn-primary inline-flex"
             aria-label={t("job-offers.view-details-aria").replace(
                 "{title}",
                 jobOffer.data.title,

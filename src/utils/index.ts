@@ -12,3 +12,4 @@ export * from './date';
 export * from './color';
 export * from './translation';
 export * from './validation';
+export * from './layout';

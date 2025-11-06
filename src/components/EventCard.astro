@@ -20,7 +20,7 @@ const t = useTranslations(lang);
 ---
 
 <article
-    class="event-card max-w-sm bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
+    class="card max-w-sm"
     role="article"
     aria-labelledby={`event-title-${event.slug}`}
 >
@@ -126,7 +126,7 @@ const t = useTranslations(lang);
         <div class="flex flex-col gap-2">
             <a
                 href={linkHelpers.event(lang, event.slug)}
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors duration-200"
+                class="inline-flex btn-primary"
                 aria-label={`${t("events.view-details")} - ${event.data.title}`}
             >
                 {t("events.view-details")}
