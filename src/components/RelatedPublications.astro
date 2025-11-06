@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import PublicationCard from "./PublicationCard.astro";
+
+export interface Props {
+    project?: string;
+}
+
+const { project } = Astro.props as Props;
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+
+// Get related publications for this project
+let relatedPublications: any[] = [];
+if (project) {
+    try {
+        const allPublications = await getCollection("publications");
+
+        // Filter publications explicitly associated with this project
+        relatedPublications = allPublications
+            .filter((pub) => pub.data.project === project)
+            .slice(0, 3); // Limit to 3 most relevant publications
+    } catch (error) {
+        console.warn(`Could not load publications: ${error}`);
+    }
+}
+---
+
+<!-- Related Publications Section -->{
+    relatedPublications.length > 0 && (
+        <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <h2 class="font-semibold text-gray-900 mb-4">
+                Related Publications
+            </h2>
+            <div class="space-y-3">
+                {relatedPublications.map((publication) => (
+                    <PublicationCard publication={publication.data} />
+                ))}
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100">
+                <a
+                    href={`/${lang}/production/publications?project=${project}`}
+                    class="text-sm text-primary-600 hover:text-primary-800 font-medium transition-colors"
+                >
+                    {t("projects.related-publications.view-all")} →
+                </a>
+            </div>
+        </div>
+    )
+}

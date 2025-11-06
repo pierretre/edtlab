@@ -63,9 +63,11 @@ export const ui = {
         'publications.filter.title': 'Filter Publications',
         'publications.filter.type': 'Publication Type',
         'publications.filter.year': 'Publication Year',
+        'publications.filter.project': 'Project',
         'publications.filter.search': 'Search',
         'publications.filter.all-types': 'All Types',
         'publications.filter.all-years': 'All Years',
+        'publications.filter.all-projects': 'All Projects',
         'publications.filter.search-placeholder': 'Search titles, authors...',
         'publications.filter.clear': 'Clear All Filters',
         'publications.table.title': 'Title',
@@ -264,6 +266,11 @@ export const ui = {
         // Contact page content
         'contact.hero.title': 'Contact us',
         'contact.description': 'Contact information and form for the EDT research program',
+        'projects.related-publications.view-all': 'View all publications',
+        'projects.project-resources.title': 'Project Resources',
+        'projects.project-resources.open-positions': 'Open Positions',
+        'projects.project-resources.tools-and-resources': 'Tools and Resources',
+        'projects.project-resources.demonstrators': 'Demonstrators',
     },
     fr: {
         'nav.home': 'Accueil',
@@ -323,9 +330,11 @@ export const ui = {
         'publications.filter.title': 'Filtrer les Publications',
         'publications.filter.type': 'Type de Publication',
         'publications.filter.year': 'Année de Publication',
+        'publications.filter.project': 'Projet',
         'publications.filter.search': 'Rechercher',
         'publications.filter.all-types': 'Tous les Types',
         'publications.filter.all-years': 'Toutes les Années',
+        'publications.filter.all-projects': 'Tous les Projets',
         'publications.filter.search-placeholder': 'Rechercher titres, auteurs...',
         'publications.filter.clear': 'Effacer Tous les Filtres',
         'publications.table.title': 'Titre',
@@ -524,7 +533,12 @@ export const ui = {
         'contact.form.error-message': 'Il y a eu un problème lors de l\'envoi de votre message. Veuillez réessayer plus tard ou nous contacter directement par email.',
         // Contact page content
         'contact.hero.title': 'Nous contacter',
-        'contact.description': 'Informations de contact et formulaire pour le programme de recherche EDT'
+        'contact.description': 'Informations de contact et formulaire pour le programme de recherche EDT',
+        'projects.related-publications.view-all': 'Voir toutes les publications',
+        'projects.project-resources.title': 'Ressources du Projet',
+        'projects.project-resources.open-positions': 'Postes Ouverts',
+        'projects.project-resources.tools-and-resources': 'Outils et Ressources',
+        'projects.project-resources.demonstrators': 'Démonstrateurs',
     },
 } as const;
 

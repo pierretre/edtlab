@@ -27,6 +27,7 @@ const publicationsCollection = defineCollection({
         venue: z.string().optional(),
         doi: z.string().optional(),
         url: z.string().url().optional(),
+        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']),
     })
 });
 

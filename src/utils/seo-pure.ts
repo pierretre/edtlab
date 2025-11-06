@@ -72,6 +72,7 @@ export function generatePublicationStructuredData(
     title: string,
     authors: string[],
     datePublished: string,
+    project: 'PC1' | 'PC2' | 'PC3' | 'PC4' | 'PC5',
     url?: string,
     doi?: string,
     venue?: string,
@@ -102,6 +103,10 @@ export function generatePublicationStructuredData(
             '@type': 'Thing',
             name: 'Digital Twins',
             description: 'Engineering Digital Twins Research'
+        },
+        isPartOf: {
+            '@type': 'Project',
+            name: project
         }
     };
 }

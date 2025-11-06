@@ -5,10 +5,10 @@ import {
     formatDate,
     isDeadlinePassed,
     isDeadlineApproaching,
-    getProjectColor,
     getJobTypeColor,
 } from "../../../utils";
 import PageLayout from "../../../layouts/PageLayout.astro";
+import ProjectTag from "../../../components/ProjectTag.astro";
 
 export async function getStaticPaths() {
     const frenchJobOffers = await getCollection("job-offers", ({ data }) => {
@@ -73,11 +73,7 @@ const { Content } = await jobOffer.render();
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getProjectColor(jobOffer.data.project)}`}
-            >
-                {jobOffer.data.project}
-            </span>
+            <ProjectTag project={jobOffer.data.project} />
             <span
                 class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getJobTypeColor(jobOffer.data.type)}`}
             >
