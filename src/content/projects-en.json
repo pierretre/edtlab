@@ -1,0 +1,32 @@
+[
+    {
+        "name": "PC1: Model Hybridization",
+        "href": "focused-projects/fp1",
+        "description": "PC1 focuses on the hybridization and management of heterogeneous models within digital twins. The project addresses the challenge of combining physical models and data-based models through systematic approaches, interfaces, and operators.",
+        "color": "blue-bell"
+    },
+    {
+        "name": "PC2: Architecture & Interoperability",
+        "href": "focused-projects/fp2",
+        "description": "PC2 aims to establish a robust architectural framework and interoperability standards for digital twins, facilitating seamless integration and communication between diverse systems and models.",
+        "color": "blue-bell"
+    },
+    {
+        "name": "PC3: Methodology & Languages",
+        "href": "focused-projects/fp3",
+        "description": "PC3 focuses on the development of methodologies and languages for the specification, design, and implementation of digital twins, promoting best practices and reusability.",
+        "color": "blue-bell"
+    },
+    {
+        "name": "PC4: Digital Coupling",
+        "href": "focused-projects/fp4",
+        "description": "PC4 aims to enhance the digital coupling of physical and virtual systems within digital twins, ensuring accurate representation and interaction between real-world and digital entities.",
+        "color": "hit-pink"
+    },
+    {
+        "name": "PC5: Human Interactions",
+        "href": "focused-projects/fp5",
+        "description": "PC5 focuses on the integration of human interactions within digital twins, addressing the challenges of user experience, collaboration, and decision-making in complex environments.",
+        "color": "marzipan"
+    }
+]

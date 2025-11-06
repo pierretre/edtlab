@@ -5,7 +5,6 @@ const DYNAMIC_CACHE = 'edt-dynamic-v1';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [
-    '/',
     '/en/',
     '/fr/',
     '/src/assets/fonts/Marianne-Regular.woff2',

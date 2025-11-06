@@ -99,43 +99,18 @@ const menu = await getEntry("menu", lang);
                 </div>
             </div>
         </div>
-
-        <!-- Right column -->
-        <nav
-            class="flex-1 min-w-[200px] hidden md:block"
-            role="navigation"
-            aria-label="Footer navigation"
-        >
-            <ul class="space-y-2 text-primary-600 font-medium" role="list">
-                {
-                    menu &&
-                        menu.data.sections &&
-                        menu.data.sections.map((section) => (
-                            <li role="listitem">
-                                <a
-                                    href={`/${lang}/${section.href}`}
-                                    class="hover:underline focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded"
-                                >
-                                    {section.name}
-                                </a>
-                            </li>
-                        ))
-                }
-            </ul>
-        </nav>
     </div>
 
     <!-- Legal mentions and analytics notice -->
     <div
         class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm text-gray-600"
     >
-        <div class="flex-1">
+        <div class="flex-1 mb-2">
             <h4 class="font-semibold text-gray-800 mb-2">
                 {t("footer.legal-mentions")}
             </h4>
-            <p>{t("footer.analytics-notice")}</p>
-            <p>{t("footer.analytics-details")}</p>
-            <p>{t("footer.no-cookies")}</p>
+            <span>{t("footer.analytics-line1")}</span>
+            <span>{t("footer.analytics-line2")}</span>
         </div>
     </div>
 </div>
