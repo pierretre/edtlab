@@ -13,12 +13,12 @@ const { items } = Astro.props;
 {
     items.length > 1 && (
         <nav
-            class="flex mb-6"
+            class="flex"
             aria-label={t("breadcrumb.aria-label")}
             role="navigation"
         >
             <ol
-                class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
+                class="m-0 inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
                 role="list"
             >
                 {items.map((item, index) => (

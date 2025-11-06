@@ -11,10 +11,11 @@ import {
     generateAlternateUrls,
     generateOrganizationStructuredData,
     type StructuredData,
+    generateBreadcrumbStructuredData,
 } from "../utils/seo";
 import { combineKeywords } from "../utils/seo-keywords";
-
 import "../styles/global.css";
+import Breadcrumb from "../components/Breadcrumb.astro";
 
 export interface Props {
     title?: string;
@@ -30,6 +31,7 @@ export interface Props {
     modifiedTime?: string;
     articleSection?: string;
     articleTag?: string[];
+    showBreadcrumb?: boolean;
 }
 
 const {
@@ -46,6 +48,7 @@ const {
     modifiedTime,
     articleSection,
     articleTag = [],
+    showBreadcrumb = true,
 } = Astro.props;
 
 // Get language from URL or use prop
@@ -92,6 +95,53 @@ const allStructuredData = [defaultStructuredData, ...structuredData];
 
 // Generate keywords meta tag using translations
 const allKeywords = combineKeywords(keywords, lang);
+
+// Get language from URL or use prop
+let finalBreadcrumbItems: Array<{ name: string; href?: string }> = [];
+
+if (showBreadcrumb) {
+    const currentPath = Astro.url.pathname;
+    const pathSegments = currentPath
+        .split("/")
+        .filter((segment) => segment && segment !== lang);
+
+    finalBreadcrumbItems = [{ name: t("nav.home"), href: `/${lang}/` }];
+
+    // Build breadcrumb from path segments
+    let currentHref = `/${lang}`;
+    for (let i = 0; i < pathSegments.length; i++) {
+        const segment = pathSegments[i];
+        currentHref += `/${segment}`;
+
+        // Get translated name for common segments
+        const segmentKey = `breadcrumb.${segment}` as keyof typeof t;
+        const segmentName =
+            t(segmentKey) ||
+            segment.charAt(0).toUpperCase() +
+                segment.slice(1).replace("-", " ");
+
+        const isLastItem = i === pathSegments.length - 1;
+        // Don't add href for the last item (current page)
+        finalBreadcrumbItems.push({
+            name: isLastItem ? title : segmentName,
+            href: isLastItem ? undefined : currentHref,
+        });
+    }
+
+    // Generate breadcrumb structured data
+    const baseUrl =
+        Astro.site?.toString().replace(/\/$/, "") || "http://localhost:4321";
+    const breadcrumbItems = finalBreadcrumbItems
+        .filter((item) => item.href)
+        .map((item) => ({
+            name: item.name,
+            url: `${baseUrl}${item.href}`,
+        }));
+
+    if (breadcrumbItems.length > 0) {
+        structuredData.push(generateBreadcrumbStructuredData(breadcrumbItems));
+    }
+}
 ---
 
 <!doctype html>
@@ -229,11 +279,8 @@ const allKeywords = combineKeywords(keywords, lang);
                 window.addEventListener("load", () => {
                     navigator.serviceWorker
                         .register("/sw.js")
-                        .then((registration) => {
-                            console.log("SW registered: ", registration);
-                        })
                         .catch((registrationError) => {
-                            console.log(
+                            console.error(
                                 "SW registration failed: ",
                                 registrationError,
                             );
@@ -271,6 +318,14 @@ const allKeywords = combineKeywords(keywords, lang);
 
             <!-- Main content area -->
             <main role="main" class="site-content">
+                <div class="mx-auto p-4 max-w-6xl">
+                    <!-- Breadcrumb Navigation -->
+                    {
+                        showBreadcrumb && (
+                            <Breadcrumb items={finalBreadcrumbItems} />
+                        )
+                    }
+                </div>
                 <slot />
             </main>
         </div>

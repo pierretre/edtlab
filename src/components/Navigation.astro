@@ -35,8 +35,8 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <!-- Center: Desktop Menu -->
-    <nav class="hidden lg:flex justify-center" role="navigation" aria-label={t("accessibility.main-navigation")}>
-        <ul class="flex space-x-4 items-center">
+    <nav class="hidden lg:flex justify-center items-center" role="navigation" aria-label={t("accessibility.main-navigation")}>
+        <ul class="flex space-x-4 items-center m-0 p-0">
             {
                 menuSections.map((section) => {
                 const isActive =
@@ -83,21 +83,21 @@ const currentPath = Astro.url.pathname;
                             role="menu"
                             aria-label={`${section.name} submenu`}
                         >
-                            <ul class="text-sm text-gray-700 " role="none">
+                            <ul class="text-sm text-gray-700 m-0 p-0" role="none">
                             {section.items.map((sub) => (
-                                <li role="none">
-                                <a
-                                    href={`/${lang}/${sub.href}`}
-                                    class={`block p-2 hover:bg-gray-100 whitespace-nowrap ${
-                                    currentPath === `/${lang}/${sub.href}`
-                                        ? "text-primary-600 font-medium"
-                                        : ""
-                                    }`}
-                                    role="menuitem"
-                                    aria-current={currentPath === `/${lang}/${sub.href}` ? "page" : undefined}
-                                >
-                                    {sub.name}
-                                </a>
+                                <li class="m-0 p-0" role="none">
+                                    <a
+                                        href={`/${lang}/${sub.href}`}
+                                        class={`block p-2 hover:bg-gray-100 whitespace-nowrap ${
+                                        currentPath === `/${lang}/${sub.href}`
+                                            ? "text-primary-600 font-medium"
+                                            : ""
+                                        }`}
+                                        role="menuitem"
+                                        aria-current={currentPath === `/${lang}/${sub.href}` ? "page" : undefined}
+                                    >
+                                        {sub.name}
+                                    </a>
                                 </li>
                             ))}
                             </ul>

@@ -8,8 +8,7 @@ import partytown from "@astrojs/partytown";
 // https://astro.build/config
 export default defineConfig({
   // Site URL for SEO and sitemap generation
-  site: 'https://www.edtlab.fr', // Update this to your actual domain
-
+  site: 'https://www.edtlab.fr',
   output: 'static',
   build: {
     format: 'directory',
@@ -19,10 +18,10 @@ export default defineConfig({
     assetsPrefix: '/',
   },
   i18n: {
-    defaultLocale: 'en',
     locales: ['en', 'fr'],
+    defaultLocale: 'en',
     routing: {
-      prefixDefaultLocale: true
+      prefixDefaultLocale: true,
     }
   },
   vite: {

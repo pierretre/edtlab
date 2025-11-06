@@ -9,7 +9,10 @@ const pagesCollection = defineCollection({
         lang: z.enum(['en', 'fr']),
         description: z.string().optional(),
         toc: z.boolean().default(false),
-        lastModified: z.date().optional()
+        lastModified: z.date().optional(),
+        color: z.string().optional(),
+        layout: z.string().optional(),
+        illustration: z.string().optional(),
     })
 });
 
@@ -81,7 +84,7 @@ const menuCollection = defineCollection({
                 name: z.string(),
                 href: z.string()
             })).optional()
-        }))
+        })),
     })
 });
 

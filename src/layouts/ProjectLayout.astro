@@ -1,0 +1,38 @@
+---
+import ProjectHero from "../components/ProjectHero.astro";
+import { undefined } from "astro:schema";
+
+export interface Props {
+    frontmatter?: {
+        title: string;
+        href: string;
+        lang: string;
+        description: string;
+        toc: boolean;
+        color: string;
+        illustration: string;
+        file: string;
+        url: string;
+    };
+    headings?: { depth: number; slug: string; text: string }[];
+    [key: string]: any;
+}
+const { frontmatter } = Astro.props as Props;
+const color = frontmatter?.color || "gray";
+const illustration = frontmatter?.illustration || "";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/images/*.{jpeg,jpg,png,gif}",
+);
+---
+
+<div class="bg-red-100">
+    <ProjectHero
+        color={color}
+        image={images[illustration]() ?? undefined}
+        imageAlt={frontmatter?.title || "Project Illustration"}
+    />
+    <section class="container mx-auto px-4 py-6 max-w-6xl">
+        <slot />
+    </section>
+</div>
