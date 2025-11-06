@@ -6,9 +6,9 @@ import {
     formatDate,
     isDeadlineApproaching,
     isDeadlinePassed,
-    getProjectColor,
     getJobTypeColor,
 } from "../utils";
+import ProjectTag from "./ProjectTag.astro";
 
 interface Props {
     jobOffer: CollectionEntry<"job-offers">;
@@ -25,11 +25,7 @@ const t = useTranslations(lang);
     <div class="p-5">
         <!-- Header with badges -->
         <div class="flex flex-wrap gap-2 mb-3">
-            <span
-                class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getProjectColor(jobOffer.data.project)}`}
-            >
-                {jobOffer.data.project}
-            </span>
+            <ProjectTag project={jobOffer.data.project} />
             <span
                 class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getJobTypeColor(jobOffer.data.type)}`}
             >

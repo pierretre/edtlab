@@ -8,7 +8,6 @@ import {
     isDeadlinePassed,
     isRecent,
     getEventTypeColor,
-    getProjectColor,
     getJobTypeColor,
     getPressTypeColor,
     getEventTypeTranslation,
@@ -125,14 +124,6 @@ describe('Color Utilities', () => {
             expect(getEventTypeColor('conference')).toContain('scampi');
             expect(getEventTypeColor('workshop')).toContain('blue');
             expect(getEventTypeColor('invalid')).toContain('gray');
-        });
-    });
-
-    describe('getProjectColor', () => {
-        it('should return correct colors for project types', () => {
-            expect(getProjectColor('PC1')).toContain('scampi');
-            expect(getProjectColor('PC2')).toContain('blue');
-            expect(getProjectColor('invalid')).toContain('gray');
         });
     });
 

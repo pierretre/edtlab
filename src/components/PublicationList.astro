@@ -4,6 +4,8 @@ import { useTranslations } from "../i18n/utils";
 import { getPublicationTypeTranslation } from "../utils";
 import { generatePublicationStructuredData } from "../utils/seo";
 import FilterBar from "./FilterBar.astro";
+import PublicationCard from "./PublicationCard.astro";
+import type { Publication } from "../models/Publication.model";
 
 interface Props {
     lang: "en" | "fr";
@@ -28,6 +30,7 @@ const years = [...new Set(allPublications.map((pub) => pub.data.year))].sort(
     (a, b) => b - a,
 );
 const types = ["journal", "conference", "book", "report"] as const;
+const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 
 // Prepare filter configuration
 const filterConfig = [
@@ -56,6 +59,18 @@ const filterConfig = [
         ],
     },
     {
+        id: "project-filter",
+        label: t("publications.filter.project"),
+        type: "select" as const,
+        options: [
+            { value: "", label: t("publications.filter.all-projects") },
+            ...projects.map((project) => ({
+                value: project,
+                label: project,
+            })),
+        ],
+    },
+    {
         id: "search-filter",
         label: t("publications.filter.search"),
         type: "search" as const,
@@ -69,6 +84,7 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         pub.data.title,
         pub.data.authors,
         pub.data.year.toString(),
+        pub.data.project,
         pub.data.url,
         pub.data.doi,
         pub.data.venue,
@@ -83,167 +99,22 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         lang={lang}
         filters={filterConfig}
         clearButtonId="clear-filters"
-        compact={false}
+        compact={true}
     />
 
     <!-- Publications Table -->
     <div
-        class="relative overflow-x-auto shadow-md sm:rounded-lg"
+        class="relative overflow-x-auto"
         role="region"
         aria-label={t("accessibility.table-caption")}
     >
-        <table
-            class="w-full text-sm text-left rtl:text-right text-gray-500"
-            role="table"
-            aria-label={t("publications.table.title")}
-        >
-            <caption class="sr-only">
-                {t("publications.table.title")} - {
-                    t("accessibility.table-caption")
-                }
-            </caption>
-            <thead
-                class="text-xs text-gray-700 uppercase bg-gray-50"
-                role="rowgroup"
-            >
-                <tr role="row">
-                    <th
-                        scope="col"
-                        class="px-6 py-3"
-                        role="columnheader"
-                        aria-sort="none"
-                    >
-                        {t("publications.table.title")}
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-6 py-3"
-                        role="columnheader"
-                        aria-sort="none"
-                    >
-                        {t("publications.table.authors")}
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-6 py-3"
-                        role="columnheader"
-                        aria-sort="none"
-                    >
-                        {t("publications.table.type")}
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-6 py-3"
-                        role="columnheader"
-                        aria-sort="none"
-                    >
-                        {t("publications.table.year")}
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-6 py-3"
-                        role="columnheader"
-                        aria-sort="none"
-                    >
-                        {t("publications.table.venue")}
-                    </th>
-                    <th
-                        scope="col"
-                        class="px-6 py-3"
-                        role="columnheader"
-                        aria-sort="none"
-                    >
-                        {t("publications.table.links")}
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="publications-tbody" role="rowgroup">
-                {
-                    sortedPublications.map((publication) => (
-                        <tr
-                            class="publication-row bg-white border-b hover:bg-gray-50"
-                            data-type={publication.data.type}
-                            data-year={publication.data.year.toString()}
-                            data-search-text={`${publication.data.title} ${publication.data.authors.join(" ")} ${publication.data.venue || ""}`.toLowerCase()}
-                            role="row"
-                        >
-                            <th
-                                scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                                role="rowheader"
-                            >
-                                <div class="max-w-xs">
-                                    <div class="font-semibold">
-                                        {publication.data.title}
-                                    </div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4" role="cell">
-                                <div class="max-w-xs">
-                                    {publication.data.authors.join(", ")}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4" role="cell">
-                                <span class="bg-blue-100 text-primary-600 text-xs font-medium px-2.5 py-0.5 rounded">
-                                    {getPublicationTypeTranslation(
-                                        publication.data.type,
-                                        lang,
-                                    )}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4" role="cell">
-                                {publication.data.year}
-                            </td>
-                            <td class="px-6 py-4" role="cell">
-                                <div class="max-w-xs">
-                                    {publication.data.venue || "-"}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4" role="cell">
-                                <div class="flex space-x-2">
-                                    {publication.data.url && (
-                                        <a
-                                            href={publication.data.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="text-primary-600 hover:text-primary-600 text-sm font-medium"
-                                            aria-label={`${t("publications.link.view")} ${publication.data.title} - ${t("accessibility.opens-new-window")}`}
-                                        >
-                                            {t("publications.link.view")}
-                                            <span class="sr-only">
-                                                {" "}
-                                                -{" "}
-                                                {t(
-                                                    "accessibility.opens-new-window",
-                                                )}
-                                            </span>
-                                        </a>
-                                    )}
-                                    {publication.data.doi && (
-                                        <a
-                                            href={`https://doi.org/${publication.data.doi}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="text-green-600 hover:text-green-800 text-sm font-medium"
-                                            aria-label={`DOI ${publication.data.doi} - ${t("accessibility.opens-new-window")}`}
-                                        >
-                                            DOI
-                                            <span class="sr-only">
-                                                {" "}
-                                                -{" "}
-                                                {t(
-                                                    "accessibility.opens-new-window",
-                                                )}
-                                            </span>
-                                        </a>
-                                    )}
-                                </div>
-                            </td>
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </table>
+        {
+            sortedPublications.map((publication) => (
+                <PublicationCard
+                    publication={publication.data as Publication}
+                />
+            ))
+        }
     </div>
 
     <!-- No Results Message -->
@@ -292,12 +163,12 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         const searchFilter = document.getElementById(
             "search-filter",
         ) as HTMLInputElement;
+        const projectFilter = document.getElementById(
+            "project-filter",
+        ) as HTMLSelectElement;
         const clearFilters = document.getElementById(
             "clear-filters",
         ) as HTMLButtonElement;
-        const tbody = document.getElementById(
-            "publications-tbody",
-        ) as HTMLTableSectionElement;
         const noResults = document.getElementById(
             "no-results",
         ) as HTMLDivElement;
@@ -312,6 +183,7 @@ const publicationStructuredData = sortedPublications.map((pub) =>
             const typeValue = typeFilter.value;
             const yearValue = yearFilter.value;
             const searchValue = searchFilter.value.toLowerCase().trim();
+            const projectValue = projectFilter.value;
 
             let visibleCount = 0;
 
@@ -319,13 +191,18 @@ const publicationStructuredData = sortedPublications.map((pub) =>
                 const rowType = row.dataset.type;
                 const rowYear = row.dataset.year;
                 const rowSearchText = row.dataset.searchText || "";
+                const rowProject = row.dataset.project;
 
                 const typeMatch = !typeValue || rowType === typeValue;
                 const yearMatch = !yearValue || rowYear === yearValue;
                 const searchMatch =
                     !searchValue || rowSearchText.includes(searchValue);
+                console.log(projectValue);
+                const projectMatch =
+                    !projectValue || rowProject === projectValue; // Adjust this line based on how project is stored
 
-                const shouldShow = typeMatch && yearMatch && searchMatch;
+                const shouldShow =
+                    typeMatch && yearMatch && searchMatch && projectMatch;
 
                 if (shouldShow) {
                     row.style.display = "";
@@ -344,10 +221,8 @@ const publicationStructuredData = sortedPublications.map((pub) =>
             );
 
             if (visibleCount === 0) {
-                tbody.style.display = "none";
                 noResults.style.display = "block";
             } else {
-                tbody.style.display = "";
                 noResults.style.display = "none";
             }
         }
@@ -356,6 +231,7 @@ const publicationStructuredData = sortedPublications.map((pub) =>
             typeFilter.value = "";
             yearFilter.value = "";
             searchFilter.value = "";
+            projectFilter.value = "";
             filterPublications();
         }
 
@@ -363,7 +239,17 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         typeFilter.addEventListener("change", filterPublications);
         yearFilter.addEventListener("change", filterPublications);
         searchFilter.addEventListener("input", filterPublications);
+        projectFilter.addEventListener("change", filterPublications);
         clearFilters.addEventListener("click", clearAllFilters);
+
+        // Default values from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        typeFilter.value = urlParams.get("type") || "";
+        yearFilter.value = urlParams.get("year") || "";
+        searchFilter.value = urlParams.get("search") || "";
+        projectFilter.value = urlParams.get("project") || "";
+
+        filterPublications();
     });
 </script>
 

@@ -104,9 +104,28 @@
   - Integrate events into news index pages using PageLayout
   - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5, 3.6_
 
+## Project Pages and Management
+
+- [x] 14. Create project pages and management
+- [ ] 14.1 Build individual project pages (PC1-PC5)
+  - Create dynamic project page template with ProjectLayout and ProjectHero components
+  - Display project objectives, participants, and progress using structured content
+  - Show related publications and resources for each project through content integration
+  - Implement responsive design with optional table of contents sidebar
+  - Ensure proper image handling and optimization for project illustrations
+  - _Requirements: 2.3, 4.2, 16.2, 28.2, 31.3_
+
+- [ ] 14.2 Implement projects listing and navigation
+  - Create projects overview page with all 5 projects using existing focused-projects index pages
+  - Build project cards with key information and links using TileGrid component
+  - Implement filtering and search within projects through navigation structure
+  - Ensure consistent project branding and color schemes across all project pages
+  - Integrate project navigation with main site navigation menu
+  - _Requirements: 2.3, 9.1, 1.3, 3.2_
+
 ## Front Page and User Experience
 
-- [x] 14. Enhance front page with interactive content using HomeLayout
+- [x] 15. Enhance front page with interactive content using HomeLayout
   - Update `src/pages/[lang]/index.astro` to use HomeLayout component
   - Build Hero section using Flowbite Hero component
   - Implement 8 interactive navigation tiles using Flowbite Cards
@@ -114,7 +133,7 @@
   - Replace placeholder content with dynamic content from collections
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 1.1_
 
-- [x] 15. Update color scheme to Scampi and Woodsmoke palette
+- [x] 16. Update color scheme to Scampi and Woodsmoke palette
   - Replace existing EDT color scheme with Scampi primary colors
   - Update secondary colors to Woodsmoke palette
   - Ensure RGAA 4.1 AA compliance with new color contrast ratios
@@ -122,7 +141,7 @@
   - Verify accessibility across all components and pages
   - _Requirements: 30.1, 30.2, 30.3_
 
-- [x] 16. Integrate project diagrams and visual content from assets
+- [x] 17. Integrate project diagrams and visual content from assets
   - Add project overview diagrams (PC1-PC5) to focused projects pages
   - Integrate main program architecture diagrams into program page
   - Add physical-digital twin relationship diagram to relevant sections
@@ -131,7 +150,7 @@
   - Ensure all images meet RGAA 4.1 requirements for alternative text
   - _Requirements: 28.3, 31.3, 3.2, 16.2_
 
-- [x] 17. Optimize images using Astro's Picture component and consolidate image assets
+- [x] 18. Optimize images using Astro's Picture component and consolidate image assets
   - Replace ResponsiveImage and OptimizedImage components with Astro's built-in Picture component
   - Move all images from public/ folder to src/assets/images/ for Astro optimization
   - Remove duplicate images between public/ and src/assets/images/ directories
@@ -182,7 +201,7 @@
 
 ## Analytics and Monitoring
 
-- [x] 23. Integrate Matomo analytics with Docker deployment
+- [x] 24. Integrate Matomo analytics with Docker deployment
   - Set up Matomo Docker container with MySQL database
   - Configure Matomo tracking script integration in BaseLayout component
   - Implement GDPR-compliant analytics with privacy controls
@@ -256,7 +275,7 @@
 
 ## Deployment and Infrastructure
 
-- [x] 31. Set up build and deployment pipeline with Matomo integration
+- [x] 32. Set up build and deployment pipeline with Matomo integration
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
   - Set up Docker containerization with Nginx for web server

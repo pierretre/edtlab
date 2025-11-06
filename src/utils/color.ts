@@ -14,19 +14,6 @@ export const EVENT_TYPE_COLORS = {
 } as const;
 
 /**
- * Project color mappings using Tailwind CSS classes
- */
-export const PROJECT_COLORS = {
-    PC1: "bg-scampi-100 text-scampi-800 border-scampi-200",
-    PC2: "bg-blue-100 text-blue-800 border-blue-200",
-    PC3: "bg-green-100 text-green-800 border-green-200",
-    PC4: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    PC5: "bg-purple-100 text-purple-800 border-purple-200",
-    General: "bg-gray-100 text-gray-800 border-gray-200",
-    default: "bg-gray-100 text-gray-800 border-gray-200"
-} as const;
-
-/**
  * Job offer type color mappings using Tailwind CSS classes
  */
 export const JOB_TYPE_COLORS = {
@@ -56,15 +43,6 @@ export const PRESS_TYPE_COLORS = {
  */
 export function getEventTypeColor(type: string): string {
     return EVENT_TYPE_COLORS[type as keyof typeof EVENT_TYPE_COLORS] || EVENT_TYPE_COLORS.default;
-}
-
-/**
- * Get color classes for project types
- * @param project - The project identifier
- * @returns Tailwind CSS classes for the project
- */
-export function getProjectColor(project: string): string {
-    return PROJECT_COLORS[project as keyof typeof PROJECT_COLORS] || PROJECT_COLORS.default;
 }
 
 /**
