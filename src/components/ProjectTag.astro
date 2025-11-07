@@ -17,8 +17,6 @@ const { project } = Astro.props as Props;
 const color =
     PROJECT_COLORS[project as keyof typeof PROJECT_COLORS] ||
     PROJECT_COLORS.default;
-
-console.log(project, color);
 ---
 
 <span
