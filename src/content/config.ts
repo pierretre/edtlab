@@ -11,8 +11,8 @@ const pagesCollection = defineCollection({
         toc: z.boolean().default(false),
         lastModified: z.date().optional(),
         color: z.string().optional(),
-        type: z.string().optional().default('page'),
         illustration: z.string().optional(),
+        template: z.string().optional(),
     })
 });
 
@@ -42,6 +42,8 @@ const eventsCollection = defineCollection({
         description: z.string(),
         url: z.string().url().optional(),
         lang: z.enum(['en', 'fr']),
+        photo: z.string().optional(),
+        template: z.string().optional()
     })
 });
 
@@ -51,10 +53,12 @@ const pressReleasesCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         date: z.date(),
-        type: z.enum(['announcement', 'partnership', 'award', 'milestone', 'general']),
         description: z.string(),
         url: z.string().url().optional(),
         lang: z.enum(['en', 'fr']),
+        photo: z.string().optional(),
+        tags: z.array(z.string()).optional(),
+        template: z.string().optional()
     })
 });
 
@@ -71,6 +75,7 @@ const jobOffersCollection = defineCollection({
         description: z.string(),
         requirements: z.array(z.string()),
         lang: z.enum(['en', 'fr']),
+        template: z.string().optional()
     })
 });
 

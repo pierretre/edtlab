@@ -23,7 +23,7 @@
 import { enToFrMapping, getCorrespondingPage } from './page-mapping';
 
 export type Lang = 'en' | 'fr';
-export type ContentType = 'news' | 'press' | 'job-offers' | 'events';
+export type ContentType = 'news' | 'press-releases' | 'job-offers' | 'events';
 
 /**
  * Content type to route mappings
@@ -33,17 +33,17 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
         en: 'news',
         fr: 'actualites'
     },
-    press: {
-        en: 'news/press',
-        fr: 'actualites/presse'
+    'press-releases': {
+        en: 'news/press-releases',
+        fr: 'actualites/communiques-de-presse'
     },
     'job-offers': {
         en: 'join-us',
         fr: 'nous-rejoindre'
     },
     events: {
-        en: 'news',
-        fr: 'actualites'
+        en: 'news/events',
+        fr: 'actualites/evenements'
     }
 };
 
@@ -52,23 +52,23 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
  * @param lang - Current language ('en' | 'fr')
  * @param contentType - Type of content
  * @param slug - Content slug (with or without language suffix)
+ * @param withoutLangSuffix - Whether the slug is provided without language suffix
  * @returns Localized URL path
  */
 export function getContentLink(
     lang: Lang,
     contentType: ContentType,
-    slug?: string
+    slug?: string,
+    withoutLangSuffix: boolean = false
 ): string {
     const route = CONTENT_ROUTES[contentType][lang];
-
+    let link;
     if (!slug) {
-        return `/${lang}/${route}`;
+        link = `/${route}`;
+    } else {
+        link = `/${route}/${slug}`;
     }
-
-    // Remove language suffix from slug if present
-    const cleanSlug = getCleanSlug(slug);
-
-    return `/${lang}/${route}/${cleanSlug}`;
+    return !withoutLangSuffix ? `/${lang}${link}` : link;
 }
 
 /**
@@ -88,15 +88,6 @@ export function getPageLink(lang: Lang, pageKey: string): string {
     }
 
     return `/${lang}/${localizedPath}`;
-}
-
-/**
- * Get the clean slug without language suffix
- * @param slug - Original slug with potential language suffix
- * @returns Clean slug without language suffix
- */
-export function getCleanSlug(slug: string): string {
-    return slug.replace(/-(?:en|fr)$/, '');
 }
 
 /**
@@ -184,7 +175,7 @@ export const linkHelpers = {
     /**
      * Generate press release link
      */
-    press: (lang: Lang, slug?: string) => getContentLink(lang, 'press', slug),
+    press: (lang: Lang, slug?: string) => getContentLink(lang, 'press-releases', slug),
 
     /**
      * Generate job offer link

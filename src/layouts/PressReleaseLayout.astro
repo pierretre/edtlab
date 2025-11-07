@@ -1,50 +1,21 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import { useTranslations } from "../../../../i18n/utils";
-import { formatDate, isRecent, getPressTypeColor } from "../../../../utils";
-import PageLayout from "../../../../layouts/PageLayout.astro";
+import { useTranslations } from "../i18n/utils";
+import type { PressRelease } from "../models/PressRelease.model";
+import { formatDate, isRecent } from "../utils";
+import PageLayout from "./PageLayout.astro";
 
-export async function getStaticPaths() {
-    const englishPressReleases = await getCollection(
-        "press-releases",
-        ({ data }) => {
-            return data.lang === "en";
-        },
-    );
-
-    return englishPressReleases.map(
-        (pressRelease: CollectionEntry<"press-releases">) => {
-            return {
-                params: {
-                    slug: pressRelease.slug.replace("-en", ""), // Remove language suffix from slug
-                },
-                props: { pressRelease },
-            };
-        },
-    );
+export interface Props {
+    frontmatter: PressRelease;
 }
 
-const { pressRelease } = Astro.props as {
-    pressRelease: CollectionEntry<"press-releases">;
-};
-const lang = "en";
+const { frontmatter } = Astro.props;
+const lang = frontmatter.lang as "en" | "fr";
 const t = useTranslations(lang);
-
-if (!pressRelease) {
-    return new Response(null, {
-        status: 404,
-        statusText: "Not found",
-    });
-}
-
-// Get the rendered content
-const { Content } = await pressRelease.render();
 ---
 
 <PageLayout
-    title={pressRelease.data.title}
-    description={pressRelease.data.description || t("site.description")}
-    lang={lang}
+    title={frontmatter.title}
+    description={frontmatter.description || t("site.description")}
     showBreadcrumb={true}
     showToc={false}
 >
@@ -74,21 +45,10 @@ const { Content } = await pressRelease.render();
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <span
-                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200"
-            >
-                {t("news.press-release")}
-            </span>
-            <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getPressTypeColor(pressRelease.data.type)}`}
-            >
-                {
-                    pressRelease.data.type.charAt(0).toUpperCase() +
-                        pressRelease.data.type.slice(1)
-                }
-            </span>
+            <!-- TODO: put TAGS here -->
+
             {
-                isRecent(pressRelease.data.date) && (
+                isRecent(frontmatter.date) && (
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
                         {t("news.recent")}
                     </span>
@@ -98,7 +58,7 @@ const { Content } = await pressRelease.render();
 
         <!-- Title -->
         <h1 class="text-4xl font-bold text-gray-900 mb-4">
-            {pressRelease.data.title}
+            {frontmatter.title}
         </h1>
 
         <!-- Meta Information -->
@@ -122,7 +82,7 @@ const { Content } = await pressRelease.render();
                         >{t("news.published")}</span
                     >
                     <p class="font-medium text-primary-600">
-                        {formatDate(pressRelease.data.date, lang)}
+                        {formatDate(frontmatter.date, lang)}
                     </p>
                 </div>
             </div>
@@ -130,13 +90,13 @@ const { Content } = await pressRelease.render();
     </header>
 
     <!-- Press Release Content -->
-    <div class="prose prose-lg max-w-none">
-        <Content />
-    </div>
+    <slot
+        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
+    />
 
     <!-- External Link Section -->
     {
-        pressRelease.data.url && (
+        frontmatter.url && (
             <section class="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white">
                 <h2 class="text-xl font-semibold mb-3">
                     {t("events.learn-more")}
@@ -146,7 +106,7 @@ const { Content } = await pressRelease.render();
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a
-                        href={pressRelease.data.url}
+                        href={frontmatter.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         class="inline-flex items-center justify-center px-6 py-3 bg-white text-primary-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"

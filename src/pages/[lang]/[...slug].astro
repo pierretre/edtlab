@@ -1,32 +1,21 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../i18n/utils";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getLayoutFromType } from "../../utils";
+import {
+    getLayoutFromTemplateOrCollection,
+    generateAllPagesStaticPaths,
+} from "../../utils";
 
 export async function getStaticPaths() {
-    const allPages = await getCollection("pages");
-
-    return allPages.map((page: CollectionEntry<"pages">) => {
-        const { lang, href, type } = page.data;
-
-        return {
-            params: {
-                lang: lang,
-                slug: href,
-            },
-            props: {
-                page,
-                type,
-            },
-        };
-    });
+    return await generateAllPagesStaticPaths();
 }
 
-const { page, type } = Astro.props as {
+const { page, template } = Astro.props as {
     page: CollectionEntry<"pages">;
-    type: string;
+    template: string;
 };
+
 const { lang } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
 
@@ -39,7 +28,9 @@ if (!page) {
 
 // Get the rendered content
 const { Content } = await page.render();
-const Layout = getLayoutFromType(type);
+const Layout = getLayoutFromTemplateOrCollection(page.collection, template);
+
+console.log("Using layout:", Layout ? Layout.name : "None");
 ---
 
 <BaseLayout

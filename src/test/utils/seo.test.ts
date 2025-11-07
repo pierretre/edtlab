@@ -92,6 +92,7 @@ describe('SEO Utilities', () => {
                 'Test Article',
                 ['John Doe', 'Jane Smith'],
                 '2023-01-01',
+                'PC1',
                 'https://example.com/article',
                 '10.1000/test',
                 'Test Journal',

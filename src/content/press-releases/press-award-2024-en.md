@@ -1,9 +1,9 @@
 ---
 title: "EDT Research Team Wins Prestigious European Innovation Award"
 date: 2024-09-20
-type: "award"
 description: "The EDT program's breakthrough research in real-time digital twin synchronization receives recognition at the European Research Excellence Awards"
 lang: "en"
+photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Press Release - September 20, 2024
