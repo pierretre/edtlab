@@ -197,9 +197,8 @@ const publicationStructuredData = sortedPublications.map((pub) =>
                 const yearMatch = !yearValue || rowYear === yearValue;
                 const searchMatch =
                     !searchValue || rowSearchText.includes(searchValue);
-                console.log(projectValue);
                 const projectMatch =
-                    !projectValue || rowProject === projectValue; // Adjust this line based on how project is stored
+                    !projectValue || rowProject === projectValue;
 
                 const shouldShow =
                     typeMatch && yearMatch && searchMatch && projectMatch;

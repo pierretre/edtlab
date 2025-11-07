@@ -140,7 +140,7 @@
     }
 
     .header-hit-pink {
-        @apply bg-gradient-to-br from-hit-pink-500 to-hit-pink-700;
+        @apply bg-gradient-to-br from-hit-pink-400 to-hit-pink-600;
     }
 
     .header-marzipan {
@@ -385,7 +385,7 @@ th {
 }
 
 /* Performance optimizations */
-img,
+/* img,
 picture,
 video,
 canvas,
@@ -393,10 +393,9 @@ svg {
     display: block;
     max-width: 100%;
     height: auto;
-    /* Optimize image rendering */
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
-}
+} */
 
 /* Loading states for performance */
 .loading {

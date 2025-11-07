@@ -58,6 +58,11 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache with network fallback
 self.addEventListener('fetch', (event) => {
+    if (self.location.hostname === "localhost") {
+        // Bypass cache completely
+        return fetch(event.request);
+    }
+
     const { request } = event;
     const url = new URL(request.url);
 
