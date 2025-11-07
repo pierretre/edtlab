@@ -9,7 +9,6 @@ import {
     isRecent,
     getEventTypeColor,
     getJobTypeColor,
-    getPressTypeColor,
     getEventTypeTranslation,
     getPublicationTypeTranslation,
     getJobTypeTranslation,
@@ -132,14 +131,6 @@ describe('Color Utilities', () => {
             expect(getJobTypeColor('postdoc')).toContain('scampi');
             expect(getJobTypeColor('phd')).toContain('blue');
             expect(getJobTypeColor('invalid')).toContain('gray');
-        });
-    });
-
-    describe('getPressTypeColor', () => {
-        it('should return correct colors for press types', () => {
-            expect(getPressTypeColor('announcement')).toContain('scampi');
-            expect(getPressTypeColor('award')).toContain('yellow');
-            expect(getPressTypeColor('invalid')).toContain('gray');
         });
     });
 });

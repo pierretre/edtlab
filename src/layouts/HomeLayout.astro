@@ -61,8 +61,6 @@ const tiles = projects.map(project => {
         backgroundColor: project.data.color ? colorMap[project.data.color] || 'bg-gray-100' : 'bg-gray-100'
     };
 });
-
-console.log('Tiles generated:', tiles);
 ---
 
 <BaseLayout
@@ -138,7 +136,7 @@ console.log('Tiles generated:', tiles);
                     <div class="group tile-card" data-index={index}>
                         <a 
                             href={linkHelpers.page(lang, tile.slug)}
-                            class={`block h-full p-6 ${tile.backgroundColor} card`}
+                            class={`card block h-full p-6 ${tile.backgroundColor}`}
                             role="button"
                             tabindex="0"
                             aria-label={`${t('home.tiles.navigate-to')} ${tile.name}`}
@@ -146,17 +144,17 @@ console.log('Tiles generated:', tiles);
                             <div class={"flex flex-col items-center text-center h-full"}>
                                
                                 <!-- Enhanced Title -->
-                                <h3 class="mb-3 text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors duration-300">
+                                <h3 class="mb-3 text-xl font-bold text-white group-hover:text-primary-100 transition-colors duration-300">
                                     {tile.name}
                                 </h3>
                                 
                                 <!-- Enhanced Description -->
-                                <p class="text-gray-800 leading-relaxed flex-grow text-center">
+                                <p class="text-white leading-relaxed flex-grow text-center">
                                     {tile.description}
                                 </p>
                                 
                                 <!-- Enhanced Call-to-action -->
-                                <div class="mt-6 flex items-center justify-center text-primary-600 group-hover:text-primary-700 transition-all duration-300">
+                                <div class="mt-6 flex items-center justify-center text-white group-hover:text-primary-100 transition-all duration-300">
                                     <span class="text-sm font-semibold mr-2 group-hover:mr-3 transition-all duration-300">
                                         {t('home.tiles.explore')}
                                     </span>

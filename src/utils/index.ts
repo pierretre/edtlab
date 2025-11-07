@@ -13,3 +13,4 @@ export * from './color';
 export * from './translation';
 export * from './validation';
 export * from './layout';
+export * from './pages';

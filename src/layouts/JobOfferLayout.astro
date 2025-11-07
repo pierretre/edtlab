@@ -1,56 +1,35 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import { useTranslations } from "../../../i18n/utils";
+import { formatDate } from "../utils/date";
 import {
-    formatDate,
-    isDeadlinePassed,
     isDeadlineApproaching,
+    isDeadlinePassed,
     getJobTypeColor,
-} from "../../../utils";
-import PageLayout from "../../../layouts/PageLayout.astro";
-import ProjectTag from "../../../components/ProjectTag.astro";
+} from "../utils";
+import PageLayout from "./PageLayout.astro";
+import ProjectTag from "../components/ProjectTag.astro";
+import type { JobOffer } from "../models/JobOffer.model";
+import { useTranslations } from "../i18n/utils";
 
-export async function getStaticPaths() {
-    const frenchJobOffers = await getCollection("job-offers", ({ data }) => {
-        return data.lang === "fr";
-    });
-
-    return frenchJobOffers.map((jobOffer: CollectionEntry<"job-offers">) => {
-        return {
-            params: {
-                slug: jobOffer.slug.replace("-fr", ""), // Remove language suffix from slug
-            },
-            props: { jobOffer },
-        };
-    });
+export interface Props {
+    frontmatter: JobOffer;
 }
 
-const { jobOffer } = Astro.props as { jobOffer: CollectionEntry<"job-offers"> };
-const lang = "fr";
+const { frontmatter } = Astro.props;
+const lang = frontmatter.lang as "en" | "fr";
 const t = useTranslations(lang);
-
-if (!jobOffer) {
-    return new Response(null, {
-        status: 404,
-        statusText: "Not found",
-    });
-}
-
-// Get the rendered content
-const { Content } = await jobOffer.render();
 ---
 
 <PageLayout
-    title={jobOffer.data.title}
-    description={jobOffer.data.description || t("site.description")}
-    lang={lang}
+    title={frontmatter.title}
+    description={frontmatter.description || t("site.description")}
+    lang={lang as "en" | "fr"}
     showBreadcrumb={true}
-    showToc={false}
+    showToc={true}
 >
     <!-- Back to Join Us link -->
     <div class="mb-6">
         <a
-            href="/fr/nous-rejoindre"
+            href={`/${lang}/join-us`}
             class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
         >
             <svg
@@ -73,21 +52,21 @@ const { Content } = await jobOffer.render();
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <ProjectTag project={jobOffer.data.project} />
+            <ProjectTag project={frontmatter.project} />
             <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getJobTypeColor(jobOffer.data.type)}`}
+                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getJobTypeColor(frontmatter.type)}`}
             >
-                {t(`job-offers.type.${jobOffer.data.type}`)}
+                {t(`job-offers.type.${frontmatter.type}`)}
             </span>
             {
-                isDeadlineApproaching(jobOffer.data.deadline) && (
+                isDeadlineApproaching(frontmatter.deadline) && (
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
                         {t("job-offers.deadline-approaching")}
                     </span>
                 )
             }
             {
-                isDeadlinePassed(jobOffer.data.deadline) && (
+                isDeadlinePassed(frontmatter.deadline) && (
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200">
                         {t("job-offers.deadline-passed")}
                     </span>
@@ -97,7 +76,7 @@ const { Content } = await jobOffer.render();
 
         <!-- Title -->
         <h1 class="text-4xl font-bold text-gray-900 mb-4">
-            {jobOffer.data.title}
+            {frontmatter.title}
         </h1>
 
         <!-- Meta Information -->
@@ -127,7 +106,7 @@ const { Content } = await jobOffer.render();
                     <span class="text-sm font-medium text-gray-500"
                         >{t("job-offers.location")}</span
                     >
-                    <p class="font-medium">{jobOffer.data.location}</p>
+                    <p class="font-medium">{frontmatter.location}</p>
                 </div>
             </div>
             <div class="flex items-center text-gray-700">
@@ -149,9 +128,9 @@ const { Content } = await jobOffer.render();
                         >{t("job-offers.deadline")}</span
                     >
                     <p
-                        class={`font-medium ${isDeadlinePassed(jobOffer.data.deadline) ? "text-red-600" : ""}`}
+                        class={`font-medium ${isDeadlinePassed(frontmatter.deadline) ? "text-red-600" : ""}`}
                     >
-                        {formatDate(jobOffer.data.deadline, lang)}
+                        {formatDate(frontmatter.deadline, lang)}
                     </p>
                 </div>
             </div>
@@ -159,19 +138,19 @@ const { Content } = await jobOffer.render();
     </header>
 
     <!-- Job Offer Content -->
-    <div class="prose prose-lg max-w-none">
-        <Content />
-    </div>
+    <slot
+        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
+    />
 
     <!-- Requirements Section -->
     {
-        jobOffer.data.requirements && jobOffer.data.requirements.length > 0 && (
+        frontmatter.requirements && frontmatter.requirements.length > 0 && (
             <section class="mt-8 p-6 bg-primary-50 rounded-lg border border-primary-200">
                 <h2 class="text-xl font-semibold text-primary-800 mb-4">
                     {t("job-offers.requirements")}
                 </h2>
                 <ul class="space-y-2">
-                    {jobOffer.data.requirements.map((requirement) => (
+                    {frontmatter.requirements.map((requirement) => (
                         <li class="flex items-start">
                             <svg
                                 class="w-5 h-5 text-primary-600 mr-3 mt-0.5 flex-shrink-0"
@@ -204,7 +183,7 @@ const { Content } = await jobOffer.render();
         </p>
         <div class="flex flex-col sm:flex-row gap-3">
             <a
-                href={`mailto:careers@edt-program.fr?subject=${encodeURIComponent(`Candidature: ${jobOffer.data.title}`)}`}
+                href={`mailto:careers@edt-program.fr?subject=${encodeURIComponent(`Application: ${frontmatter.title}`)}`}
                 class="inline-flex items-center justify-center px-6 py-3 bg-white text-primary-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
                 <svg
@@ -223,7 +202,7 @@ const { Content } = await jobOffer.render();
                 {t("job-offers.apply-now")}
             </a>
             <a
-                href="/fr/nous-rejoindre"
+                href={`/${lang}/join-us`}
                 class="inline-flex items-center justify-center px-6 py-3 bg-primary-500 text-white font-medium rounded-lg hover:bg-primary-400 transition-colors duration-200"
             >
                 {t("job-offers.view-all-positions")}

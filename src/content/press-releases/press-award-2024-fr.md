@@ -1,9 +1,9 @@
 ---
 title: "L'Équipe de Recherche EDT Remporte un Prix d'Innovation Européen Prestigieux"
 date: 2024-09-20
-type: "award"
 description: "La recherche révolutionnaire du programme EDT en synchronisation de jumeaux numériques en temps réel reçoit une reconnaissance aux Prix d'Excellence de la Recherche Européenne"
 lang: "fr"
+photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Communiqué de Presse - 20 septembre 2024

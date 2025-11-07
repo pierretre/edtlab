@@ -1,38 +1,123 @@
 ---
+import { formatDate } from "../utils/date";
+import {
+    isDeadlineApproaching,
+    isDeadlinePassed,
+    getJobTypeColor,
+} from "../utils";
+import PageLayout from "./PageLayout.astro";
+import ProjectTag from "../components/ProjectTag.astro";
+import type { Event } from "../models/Event.model";
+import { useTranslations } from "../i18n/utils";
 
+export interface Props {
+    frontmatter: Event;
+}
+
+const { frontmatter } = Astro.props;
+const lang = frontmatter.lang as "en" | "fr";
+const t = useTranslations(lang);
 ---
 
-<!-- Page Title --><!-- <header class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">
-            {page.data.title}
-        </h1>
-        {
-            page.data.description && (
-                <p class="text-xl text-gray-600 leading-relaxed">
-                    {page.data.description}
-                </p>
-            )
-        }
-    </header> --><!-- Page Content -->
-<Content />
+<PageLayout
+    title={frontmatter.title}
+    description={frontmatter.description || t("site.description")}
+    lang={lang as "en" | "fr"}
+    showBreadcrumb={true}
+    showToc={true}
+>
+    <!-- Back to Join Us link -->
+    <div class="mb-6">
+        <a
+            href={`/${lang}/join-us`}
+            class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
+        >
+            <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"></path>
+            </svg>
+            {t("news.back-to-news")}
+        </a>
+    </div>
 
-<!-- Last Modified Date -->
-<!-- {
-        page.data.lastModified && (
-            <footer class="mt-12 pt-6 border-t border-gray-200">
-                <p class="text-sm text-gray-500">
-                    {t('page.last-updated')}
-                    <time datetime={page.data.lastModified.toISOString()}>
-                        {page.data.lastModified.toLocaleDateString(
-                            lang === "en" ? "en-US" : "fr-FR",
-                            {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                            },
-                        )}
-                    </time>
-                </p>
-            </footer>
-        )
-    } -->
+    <!-- Event Header -->
+    <header class="mb-8">
+        <!-- Badges -->
+        <div class="flex flex-wrap gap-2 mb-4">
+            <!-- TODO: put TAGS here -->
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            {frontmatter.title}
+        </h1>
+
+        <!-- Meta Information -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 bg-gray-50 rounded-lg border"
+        >
+            <div class="flex items-center text-gray-700">
+                <svg
+                    class="w-5 h-5 mr-3 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    ></path>
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <div>
+                    <span class="text-sm font-medium text-gray-500"
+                        >{t("job-offers.location")}</span
+                    >
+                    <p class="font-medium">{frontmatter.location}</p>
+                </div>
+            </div>
+            <div class="flex items-center text-gray-700">
+                <svg
+                    class="w-5 h-5 mr-3 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    ></path>
+                </svg>
+                <div>
+                    <span class="text-sm font-medium text-gray-500"
+                        >{t("events.date")}</span
+                    >
+                    <p class="font-medium">
+                        {formatDate(frontmatter.date, lang)}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Job Offer Content -->
+    <slot
+        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
+    />
+</PageLayout>

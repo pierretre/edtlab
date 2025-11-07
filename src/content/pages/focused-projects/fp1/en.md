@@ -5,7 +5,7 @@ lang: "en"
 description: "Developing systematic approaches for combining physical models and data-based models through standardized interfaces and hybridization operators in digital twins"
 toc: true
 color: "blue-bell"
-type: "project"
+template: "project"
 illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC1.png"
 projectId: "PC1"
 ---

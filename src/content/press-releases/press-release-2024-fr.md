@@ -1,9 +1,9 @@
 ---
 title: "Le Programme EDT Reçoit un Financement Supplémentaire pour la Phase 2"
 date: 2024-02-10
-type: "milestone"
 description: "Le programme de recherche Jumeaux Numériques d'Ingénierie a reçu un financement supplémentaire pour étendre ses activités de recherche en Phase 2"
 lang: "fr"
+photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Communiqué de Presse - 10 février 2024

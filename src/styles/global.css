@@ -148,7 +148,7 @@
     }
 
     .card {
-        @apply rounded-lg hover:shadow shadow-sm p-6 border border-gray-200 transition-all duration-300;
+        @apply rounded-lg hover:shadow-lg shadow p-6 border border-gray-200 transition-all duration-300;
     }
 
     details>summary {
