@@ -1,5 +1,5 @@
 # Minimal production Docker image for EDT Research Website
-FROM node:18-alpine AS builder
+FROM node:18 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -41,6 +41,13 @@ server {
     }
     
     # Handle client-side routing
+    # Redirect the exact site root to the default locale at the server level
+    # This avoids relying on client-side or meta-refresh redirects in production.
+    location = / {
+        return 301 /en/;
+    }
+
+    # Handle client-side routing for all other paths
     location / {
         try_files \$uri \$uri/ /index.html;
     }
