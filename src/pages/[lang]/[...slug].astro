@@ -29,8 +29,6 @@ if (!page) {
 // Get the rendered content
 const { Content } = await page.render();
 const Layout = getLayoutFromTemplateOrCollection(page.collection, template);
-
-console.log("Using layout:", Layout ? Layout.name : "None");
 ---
 
 <BaseLayout
