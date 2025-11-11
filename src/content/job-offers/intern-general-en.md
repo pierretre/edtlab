@@ -4,12 +4,11 @@ project: "General"
 type: "intern"
 location: "Paris, France"
 deadline: 2024-11-30
+publishedDate: 2024-01-10
 description: "6-month internship opportunity in digital twin research and development"
 requirements: ["Currently enrolled in Engineering or Computer Science program", "Strong academic performance", "Programming skills in any language", "Interest in research and innovation"]
 lang: "en"
 ---
-
-# Summer Internship - Digital Twin Research
 
 ## Position Overview
 
@@ -29,15 +28,6 @@ Join our research team for a 6-month internship focused on digital twin technolo
 - User interface development
 - Performance optimization
 - Literature review and state-of-the-art analysis
-
-## Requirements
-
-- Currently enrolled in final year of Bachelor's or Master's program
-- Major in Engineering, Computer Science, or related field
-- Strong academic performance (GPA > 3.0 or equivalent)
-- Programming experience in any language
-- Genuine interest in research and innovation
-- Good communication skills in English or French
 
 ## What You'll Gain
 

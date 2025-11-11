@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import { linkHelpers } from "../i18n/links";
+import { formatDate } from "../utils";
 
 interface Props {
     lang: "en" | "fr";
@@ -10,10 +12,13 @@ interface Props {
 const { lang, maxItems } = Astro.props;
 const t = useTranslations(lang);
 
-// Get all press release events for the current language
-const allPressReleases = await getCollection("events", (event) => {
-    return event.data.lang === lang && event.data.type === "press";
-});
+// Get all press releases for the current language
+const allPressReleases = await getCollection(
+    "press-releases",
+    (pressRelease) => {
+        return pressRelease.data.lang === lang;
+    },
+);
 
 // Sort press releases by date (newest first)
 const sortedPressReleases = allPressReleases.sort((a, b) => {
@@ -24,15 +29,6 @@ const sortedPressReleases = allPressReleases.sort((a, b) => {
 const displayPressReleases = maxItems
     ? sortedPressReleases.slice(0, maxItems)
     : sortedPressReleases;
-
-// Format press release date
-const formatDate = (date: Date) => {
-    return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-};
 ---
 
 <div class="py-4 mb-8">
@@ -43,14 +39,17 @@ const formatDate = (date: Date) => {
                     <article class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200">
                         <div class="flex items-start justify-between mb-3">
                             <div class="flex-1">
-                                <h4 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
                                     <a
-                                        href={`/${lang}/events/${pressRelease.slug}`}
+                                        href={linkHelpers.press(
+                                            lang,
+                                            pressRelease.slug,
+                                        )}
                                         class="hover:text-primary-600 transition-colors duration-200"
                                     >
                                         {pressRelease.data.title}
                                     </a>
-                                </h4>
+                                </h3>
                                 <div class="flex items-center text-sm text-gray-500 mb-3">
                                     <svg
                                         class="w-4 h-4 mr-2"
@@ -65,11 +64,11 @@ const formatDate = (date: Date) => {
                                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    {formatDate(pressRelease.data.date)}
+                                    {formatDate(pressRelease.data.date, lang)}
                                 </div>
                             </div>
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-4">
-                                {t("events.type.press")}
+                                {t("news.press-release")}
                             </span>
                         </div>
 
@@ -79,7 +78,10 @@ const formatDate = (date: Date) => {
 
                         <div class="flex items-center justify-between">
                             <a
-                                href={`/${lang}/events/${pressRelease.slug}`}
+                                href={linkHelpers.press(
+                                    lang,
+                                    pressRelease.slug,
+                                )}
                                 class="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-600 transition-colors duration-200"
                             >
                                 {t("news.read-full-release")}
@@ -151,7 +153,7 @@ const formatDate = (date: Date) => {
             sortedPressReleases.length > maxItems && (
                 <div class="mt-6 text-center">
                     <a
-                        href={`/${lang}/news`}
+                        href={linkHelpers.newsIndex(lang)}
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-600 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-colors duration-200"
                     >
                         {t("news.view-all-press-releases")}

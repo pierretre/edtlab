@@ -4,12 +4,11 @@ project: "PC2"
 type: "phd"
 location: "Lyon, France"
 deadline: 2025-03-15
+publishedDate: 2024-02-01
 description: "PhD opportunity in machine learning applications for digital twin systems"
 requirements: ["Master's degree in Computer Science or Engineering", "Strong background in machine learning", "Programming experience in Python", "Research experience preferred"]
 lang: "en"
 ---
-
-# PhD Student - Machine Learning for Digital Twins
 
 ## Position Overview
 
@@ -21,14 +20,6 @@ We are seeking a motivated PhD student to join Project PC2, focusing on machine 
 - Integration of sensor data with predictive models
 - Optimization of digital twin performance using AI techniques
 - Validation in industrial use cases
-
-## Qualifications
-
-- Master's degree in Computer Science, Engineering, or related field
-- Strong background in machine learning and data science
-- Proficiency in Python, TensorFlow/PyTorch
-- Experience with industrial systems is a plus
-- Excellent analytical and problem-solving skills
 
 ## What We Offer
 

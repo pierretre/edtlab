@@ -1,9 +1,12 @@
 ---
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { getEntry } from "astro:content";
+import { Picture } from "astro:assets";
 import LanguageToggle from "./LanguageToggle.astro";
+import logoImagePng from "../../src/assets/images/logo.png";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
 
 // Get menu data from content collection
 const currentMenu = await getEntry("menu", lang);
@@ -11,146 +14,174 @@ const menuSections = currentMenu?.data.sections || [];
 const currentPath = Astro.url.pathname;
 ---
 
-<nav id="site-header" class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 gap-y-2">
-    <!-- Left: Logo -->
-    <div class="flex items-center flex-shrink-0">
-        <a
-        href={`/${lang}/`}
-        class="flex items-center space-x-3 rtl:space-x-reverse no-underline"
+<nav
+    id="site-header"
+    class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200"
+>
+    <div
+        class="max-w-screen-xl min-h-20 lg:min-h-24 mx-auto flex items-center justify-between lg:p-1"
+    >
+        <div class="flex-shrink-0 h-full flex items-center">
+            <a href={`/${lang}/`} class="flex items-center no-underline h-full">
+                <Picture
+                    src={logoImagePng}
+                    alt="EDT Logo"
+                    class="h-full w-auto object-contain"
+                    sizes="(max-width: 768px) 120px, 160px"
+                    widths={[120, 160, 240, 320]}
+                    quality={80}
+                    format="webp"
+                    pictureAttributes={{
+                        class: "flex-shrink-0 h-full",
+                    }}
+                    loading={"eager"}
+                    decoding={"sync"}
+                />
+            </a>
+        </div>
+
+        <nav
+            class="hidden lg:flex justify-center items-center"
+            role="navigation"
+            aria-label={t("accessibility.main-navigation")}
         >
-        <img src="/favicon.svg" class="h-8" alt="EDT Logo" />
-        <span class="text-2xl font-semibold whitespace-nowrap">
-            EDT LAB
-        </span>
-        </a>
-    </div>
+            <ul class="flex space-x-4 items-center m-0 p-0">
+                {
+                    menuSections.map((section) => {
+                        const isActive =
+                            currentPath === `/${lang}/${section.href}` ||
+                            (section.items &&
+                                section.items.some(
+                                    (sub) =>
+                                        currentPath === `/${lang}/${sub.href}`,
+                                ));
 
-    <!-- Right: Language toggle + burger button (ALWAYS top right) -->
-    <div class="flex items-center space-x-2 flex-shrink-0 ml-auto order-2">
-        <LanguageToggle />
+                        return (
+                            <li class="relative group flex items-center">
+                                {section.items && section.items.length > 0 ? (
+                                    <>
+                                        <a
+                                            href={`/${lang}/${section.href}`}
+                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                                    before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
+                                    before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                                    hover:before:w-full hover:text-primary-600
+                                    ${isActive ? "text-primary-600 before:w-full" : ""}`}
+                                        >
+                                            <span>{section.name}</span>
+                                            <svg
+                                                class="w-2.5 h-2.5 mt-[6px] transition-transform group-hover:rotate-180"
+                                                aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 10 6"
+                                            >
+                                                <path
+                                                    stroke="currentColor"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="m1 1 4 4 4-4"
+                                                />
+                                            </svg>
+                                        </a>
 
-        <button
-        data-collapse-toggle="navbar-language"
-        type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-        aria-controls="navbar-language"
-        aria-expanded="false"
-        >
-        <span class="sr-only">Open main menu</span>
-        <svg
-            class="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-        >
-            <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15"
-            />
-        </svg>
-        </button>
-    </div>
-
-    <!-- Center: Desktop menu (wraps below if too tight, hidden on mobile) -->
-    <div class="hidden lg:flex flex-wrap justify-center basis-full order-3">
-        <ul class="flex flex-nowrap space-x-4 items-center justify-center gap-x-2 lg:gap-x-4">
-        {
-            menuSections.map((section) => {
-            const isActive =
-                currentPath === `/${lang}/${section.href}` ||
-                (section.items &&
-                section.items.some((sub) => currentPath === `/${lang}/${sub.href}`));
-
-            return (
-                <li class="relative group flex items-center">
-                {section.items && section.items.length > 0 ? (
-                    <>
-                    <!-- Link with submenu -->
-                    <a
-                        href={`/${lang}/${section.href}`}
-                        class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
-                            before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                            before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
-                            hover:before:w-full hover:text-primary-600
-                            ${isActive ? "text-primary-600 before:w-full" : ""}`
-                        }
-                    >
-                        <span>{section.name}</span>
-                        <svg
-                        class="w-2.5 h-2.5 mt-[6px] transition-transform group-hover:rotate-180"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 10 6"
-                        >
-                        <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="m1 1 4 4 4-4"
-                        />
-                        </svg>
-                    </a>
-
-                    <!-- Submenu -->
-                    <div
-                        class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-44"
-                        style="top: 100%;"
-                    >
-                        <ul class="py-2 text-sm text-gray-700">
-                        {section.items.map((sub) => (
-                            <li>
-                            <a
-                                href={`/${lang}/${sub.href}`}
-                                class={`block px-4 py-2 hover:bg-gray-100 ${
-                                currentPath === `/${lang}/${sub.href}`
-                                    ? "text-primary-600 font-medium"
-                                    : ""
-                                }`}
-                            >
-                                {sub.name}
-                            </a>
+                                        <div
+                                            class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
+                                            style="top: 100%;"
+                                            role="menu"
+                                            aria-label={`${section.name} submenu`}
+                                        >
+                                            <ul
+                                                class="text-sm text-gray-700 m-0 p-0"
+                                                role="none"
+                                            >
+                                                {section.items.map((sub) => (
+                                                    <li
+                                                        class="m-0 p-0"
+                                                        role="none"
+                                                    >
+                                                        <a
+                                                            href={`/${lang}/${sub.href}`}
+                                                            class={`block p-2 hover:bg-gray-100 whitespace-nowrap ${
+                                                                currentPath ===
+                                                                `/${lang}/${sub.href}`
+                                                                    ? "text-primary-600 font-medium"
+                                                                    : ""
+                                                            }`}
+                                                            role="menuitem"
+                                                            aria-current={
+                                                                currentPath ===
+                                                                `/${lang}/${sub.href}`
+                                                                    ? "page"
+                                                                    : undefined
+                                                            }
+                                                        >
+                                                            {sub.name}
+                                                        </a>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <a
+                                        href={`/${lang}/${section.href}`}
+                                        class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                                before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
+                                before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                                hover:before:w-full hover:text-primary-600
+                                ${isActive ? "text-primary-600 before:w-full" : ""}`}
+                                    >
+                                        <span>{section.name}</span>
+                                    </a>
+                                )}
                             </li>
-                        ))}
-                        </ul>
-                    </div>
-                    </>
-                ) : (
-                    <!-- Simple link -->
-                    <a
-                    href={`/${lang}/${section.href}`}
-                    class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
-                        before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                        before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
-                        hover:before:w-full hover:text-primary-600
-                        ${isActive ? "text-primary-600 before:w-full" : ""}`
-                        }
-                    >
-                    <span>{section.name}</span>
-                    </a>
-                )}
-                </li>
-            );
-            })
-        }
-        </ul>
-    </div>
+                        );
+                    })
+                }
+            </ul>
+        </nav>
+
+        <div class="flex items-center space-x-2">
+            <LanguageToggle />
+            <button
+                data-collapse-toggle="navbar-language"
+                type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                aria-controls="navbar-language"
+                aria-expanded="false"
+                aria-label={t("accessibility.menu-toggle")}
+            >
+                <span class="sr-only">{t("accessibility.menu-toggle")}</span>
+                <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 17 14"
+                >
+                    <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M1 1h15M1 7h15M1 13h15"></path>
+                </svg>
+            </button>
+        </div>
     </div>
 
-
-    <!-- Mobile menu -->
-    <div class="lg:hidden hidden" id="navbar-language">
+    <div
+        class="lg:hidden hidden"
+        id="navbar-language"
+        role="navigation"
+        aria-label={t("accessibility.main-navigation")}
+    >
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50">
             {
-                menuSections.map((section) => (
+                menuSections.map((section) =>
                     section.items && section.items.length > 0 ? (
-                        <!-- Mobile dropdown section -->
                         <div>
                             <button
                                 type="button"
@@ -159,11 +190,26 @@ const currentPath = Astro.url.pathname;
                                 aria-expanded="false"
                             >
                                 {section.name}
-                                <svg class="w-2.5 h-2.5 ml-2.5 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                <svg
+                                    class="w-2.5 h-2.5 ml-2.5 inline"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 10 6"
+                                >
+                                    <path
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="m1 1 4 4 4-4"
+                                    />
                                 </svg>
                             </button>
-                            <div id={`mobile-dropdown-${section.href}`} class="hidden pl-4">
+                            <div
+                                id={`mobile-dropdown-${section.href}`}
+                                class="hidden pl-4"
+                            >
                                 {section.items.map((item) => (
                                     <a
                                         href={`/${lang}/${item.href}`}
@@ -175,54 +221,56 @@ const currentPath = Astro.url.pathname;
                             </div>
                         </div>
                     ) : (
-                        <!-- Simple mobile link -->
                         <a
                             href={`/${lang}/${section.href}`}
                             class="text-gray-700 hover:text-primary-600 block px-3 py-2 text-base font-medium no-underline"
                         >
                             {section.name}
                         </a>
-                    )
-                ))
+                    ),
+                )
             }
         </div>
     </div>
 </nav>
 
-<!-- JavaScript for navigation functionality -->
 <script is:inline>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener("DOMContentLoaded", function () {
         // Initialize mobile menu toggle
-        const mobileMenuButton = document.querySelector('[data-collapse-toggle="navbar-language"]');
-        const mobileMenu = document.getElementById('navbar-language');
-        
+        const mobileMenuButton = document.querySelector(
+            '[data-collapse-toggle="navbar-language"]',
+        );
+        const mobileMenu = document.getElementById("navbar-language");
+
         if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', function() {
-                const isHidden = mobileMenu.classList.contains('hidden');
+            mobileMenuButton.addEventListener("click", function () {
+                const isHidden = mobileMenu.classList.contains("hidden");
                 if (isHidden) {
-                    mobileMenu.classList.remove('hidden');
-                    mobileMenuButton.setAttribute('aria-expanded', 'true');
+                    mobileMenu.classList.remove("hidden");
+                    mobileMenuButton.setAttribute("aria-expanded", "true");
                 } else {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenu.classList.add("hidden");
+                    mobileMenuButton.setAttribute("aria-expanded", "false");
                 }
             });
         }
 
         // Initialize mobile dropdown collapses
-        const mobileDropdownButtons = document.querySelectorAll('[data-collapse-toggle^="mobile-dropdown-"]');
-        mobileDropdownButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                const targetId = button.getAttribute('data-collapse-toggle');
+        const mobileDropdownButtons = document.querySelectorAll(
+            '[data-collapse-toggle^="mobile-dropdown-"]',
+        );
+        mobileDropdownButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                const targetId = button.getAttribute("data-collapse-toggle");
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
-                    const isHidden = targetElement.classList.contains('hidden');
+                    const isHidden = targetElement.classList.contains("hidden");
                     if (isHidden) {
-                        targetElement.classList.remove('hidden');
-                        button.setAttribute('aria-expanded', 'true');
+                        targetElement.classList.remove("hidden");
+                        button.setAttribute("aria-expanded", "true");
                     } else {
-                        targetElement.classList.add('hidden');
-                        button.setAttribute('aria-expanded', 'false');
+                        targetElement.classList.add("hidden");
+                        button.setAttribute("aria-expanded", "false");
                     }
                 }
             });

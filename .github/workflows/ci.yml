@@ -71,14 +71,27 @@ jobs:
       
     - name: Run accessibility tests
       run: |
-        npm run preview &
-        sleep 5
-        npx playwright test --config=playwright.config.ts
+        # Kill any existing processes on port 4321
+        pkill -f "astro preview" || true
+        sleep 2
         
-  route-validation:
-    name: Route Validation
+        # Start preview server in background
+        npm run preview &
+        PREVIEW_PID=$!
+        
+        # Wait for server to be ready
+        timeout 30 bash -c 'until curl -f http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done'
+        
+        # Run tests
+        npx playwright test src/test/e2e/accessibility.spec.ts --config=playwright.ci.config.ts
+        
+        # Clean up
+        kill $PREVIEW_PID || true
+        
+  link-verification:
+    name: Link Verification Testing
     runs-on: ubuntu-latest
-    needs: test
+    needs: accessibility-test
     
     steps:
     - name: Checkout code
@@ -96,58 +109,72 @@ jobs:
     - name: Build project
       run: npm run build
       
-    - name: Start preview server
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+      
+    - name: Run link verification tests
       run: |
-        npm run preview &
-        sleep 5
+        # Kill any existing processes on port 4321
+        pkill -f "astro preview" || true
+        sleep 2
         
-    - name: Test route accessibility
-      run: |
+        # Start preview server in background
+        npm run preview &
+        PREVIEW_PID=$!
+        
         # Wait for server to be ready
         timeout 30 bash -c 'until curl -f http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done'
         
-        # Test main routes are accessible
-        echo "Testing main routes..."
-        curl -f http://localhost:4321/ || exit 1
-        curl -f http://localhost:4321/en/ || exit 1
-        curl -f http://localhost:4321/fr/ || exit 1
+        # Run tests
+        npx playwright test src/test/e2e/link-verification.spec.ts --config=playwright.ci.config.ts
         
-        # Test main content pages
-        routes=(
-          "en/program" "fr/program"
-          "en/focused-projects" "fr/focused-projects"
-          "en/production" "fr/production"
-          "en/demo-center" "fr/demo-center"
-          "en/resources" "fr/resources"
-          "en/news" "fr/news"
-          "en/join-us" "fr/join-us"
-          "en/contact" "fr/contact"
-          "en/about" "fr/about"
-        )
+        # Clean up
+        kill $PREVIEW_PID || true
         
-        failed_routes=0
-        for route in "${routes[@]}"; do
-          echo "Testing route: /$route"
-          if curl -f "http://localhost:4321/$route" > /dev/null 2>&1; then
-            echo "✅ Route /$route is accessible"
-          else
-            echo "⚠️  Route /$route not accessible (may not be implemented yet)"
-            ((failed_routes++))
-          fi
-        done
+  route-validation:
+    name: Route Validation
+    runs-on: ubuntu-latest
+    needs: link-verification
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
         
-        echo "Route validation completed. $failed_routes routes not accessible."
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build project
+      run: npm run build
+      
+    - name: Test route accessibility
+      run: |
+        # Kill any existing processes on port 4321
+        pkill -f "astro preview" || true
+        sleep 2
         
-        # Don't fail the build for missing routes during development
-        if [ $failed_routes -gt 8 ]; then
-          echo "Too many routes failing - this might indicate a serious issue"
-          exit 1
-        fi
+        # Start preview server in background
+        npm run preview &
+        PREVIEW_PID=$!
+        
+        # Wait for server to be ready
+        timeout 30 bash -c 'until curl -f http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done'
+        
+        # Run route tests using Playwright
+        npx playwright test src/test/e2e/routes.spec.ts --config=playwright.ci.config.ts
+        
+        # Clean up
+        kill $PREVIEW_PID || true
 
   quality-gates:
     name: Quality Gates
     runs-on: ubuntu-latest
-    needs: [test, accessibility-test, route-validation]
+    needs: [test, accessibility-test, link-verification, route-validation]
     if: github.event_name == 'pull_request'
     
     steps:
@@ -181,54 +208,3 @@ jobs:
         echo "Running code quality checks..."
         npm run check
         echo "Code quality validation completed"
-
-  deployment-check:
-    name: Deployment Readiness
-    runs-on: ubuntu-latest
-    needs: [test, accessibility-test, route-validation]
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build for production
-      run: npm run build
-      
-    - name: Validate production build
-      run: |
-        echo "Validating production build..."
-        
-        # Check if build directory exists and contains expected files
-        if [ ! -d "dist" ]; then
-          echo "Error: Build directory not found"
-          exit 1
-        fi
-        
-        # Check for essential files
-        essential_files=("index.html" "404.html")
-        for file in "${essential_files[@]}"; do
-          if [ ! -f "dist/$file" ]; then
-            echo "Warning: $file not found in build output"
-          fi
-        done
-        
-        # Check build size (basic check)
-        build_size=$(du -sh dist | cut -f1)
-        echo "Build size: $build_size"
-        
-        echo "Production build validation completed"
-        
-    - name: Deployment status
-      run: |
-        echo "✅ All checks passed - Ready for deployment"
-        echo "Build artifacts are available in the dist/ directory"

@@ -4,12 +4,11 @@ project: "General"
 type: "intern"
 location: "Paris, France"
 deadline: 2024-11-30
+publishedDate: 2024-01-10
 description: "Opportunité de stage de 6 mois en recherche et développement de jumeaux numériques"
 requirements: ["Actuellement inscrit en programme d'Ingénierie ou Informatique", "Excellentes performances académiques", "Compétences en programmation dans n'importe quel langage", "Intérêt pour la recherche et l'innovation"]
 lang: "fr"
 ---
-
-# Stage d'Été - Recherche en Jumeaux Numériques
 
 ## Aperçu du Poste
 
@@ -29,15 +28,6 @@ Rejoignez notre équipe de recherche pour un stage de 6 mois axé sur les techno
 - Développement d'interface utilisateur
 - Optimisation des performances
 - Revue de littérature et analyse de l'état de l'art
-
-## Exigences
-
-- Actuellement inscrit en dernière année de Licence ou Master
-- Spécialisation en Ingénierie, Informatique, ou domaine connexe
-- Excellentes performances académiques (moyenne > 12/20 ou équivalent)
-- Expérience en programmation dans n'importe quel langage
-- Véritable intérêt pour la recherche et l'innovation
-- Bonnes compétences de communication en anglais ou français
 
 ## Ce Que Vous Gagnerez
 

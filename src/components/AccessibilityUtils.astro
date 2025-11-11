@@ -1,0 +1,377 @@
+---
+/**
+ * Accessibility Utilities Component
+ *
+ * Provides common accessibility patterns and utilities including:
+ * - Screen reader announcements
+ * - Focus management
+ * - ARIA live regions
+ * - Keyboard navigation helpers
+ */
+
+// Accessibility utilities component - no imports needed
+---
+
+<!-- Accessibility utility functions -->
+<script is:inline>
+    // Global accessibility utilities
+    window.A11yUtils = {
+        // Announce message to screen readers
+        announce: function (message, priority = "polite") {
+            const liveRegion =
+                priority === "assertive"
+                    ? document.getElementById("aria-live-region-assertive")
+                    : document.getElementById("aria-live-region");
+
+            if (liveRegion) {
+                liveRegion.textContent = message;
+                setTimeout(() => {
+                    liveRegion.textContent = "";
+                }, 1000);
+            }
+        },
+
+        // Focus management
+        focus: {
+            // Set focus to element with optional announcement
+            set: function (element, announce = false) {
+                if (typeof element === "string") {
+                    element =
+                        document.getElementById(element) ||
+                        document.querySelector(element);
+                }
+
+                if (element) {
+                    element.focus();
+                    if (announce) {
+                        const label =
+                            element.getAttribute("aria-label") ||
+                            element.getAttribute("title") ||
+                            element.textContent ||
+                            "Element focused";
+                        window.A11yUtils.announce(`Focused on ${label}`);
+                    }
+                }
+            },
+
+            // Get all focusable elements within a container
+            getFocusable: function (container) {
+                const focusableSelectors = [
+                    "a[href]",
+                    "button:not([disabled])",
+                    "input:not([disabled])",
+                    "select:not([disabled])",
+                    "textarea:not([disabled])",
+                    '[tabindex]:not([tabindex="-1"])',
+                    '[contenteditable="true"]',
+                ].join(", ");
+
+                return container.querySelectorAll(focusableSelectors);
+            },
+
+            // Trap focus within a container (for modals)
+            trap: function (container) {
+                const focusableElements = this.getFocusable(container);
+                const firstElement = focusableElements[0];
+                const lastElement =
+                    focusableElements[focusableElements.length - 1];
+
+                const handleTabKey = function (e) {
+                    if (e.key === "Tab") {
+                        if (e.shiftKey) {
+                            if (document.activeElement === firstElement) {
+                                e.preventDefault();
+                                lastElement.focus();
+                            }
+                        } else {
+                            if (document.activeElement === lastElement) {
+                                e.preventDefault();
+                                firstElement.focus();
+                            }
+                        }
+                    }
+                };
+
+                container.addEventListener("keydown", handleTabKey);
+
+                // Return cleanup function
+                return function () {
+                    container.removeEventListener("keydown", handleTabKey);
+                };
+            },
+        },
+
+        // ARIA utilities
+        aria: {
+            // Update ARIA attributes
+            update: function (element, attributes) {
+                if (typeof element === "string") {
+                    element =
+                        document.getElementById(element) ||
+                        document.querySelector(element);
+                }
+
+                if (element) {
+                    Object.keys(attributes).forEach((attr) => {
+                        if (attr.startsWith("aria-") || attr === "role") {
+                            element.setAttribute(attr, attributes[attr]);
+                        }
+                    });
+                }
+            },
+
+            // Toggle ARIA expanded state
+            toggleExpanded: function (trigger, target) {
+                if (typeof trigger === "string") {
+                    trigger =
+                        document.getElementById(trigger) ||
+                        document.querySelector(trigger);
+                }
+                if (typeof target === "string") {
+                    target =
+                        document.getElementById(target) ||
+                        document.querySelector(target);
+                }
+
+                if (trigger && target) {
+                    const isExpanded =
+                        trigger.getAttribute("aria-expanded") === "true";
+                    trigger.setAttribute("aria-expanded", !isExpanded);
+
+                    if (isExpanded) {
+                        target.classList.add("hidden");
+                        window.A11yUtils.announce("Collapsed");
+                    } else {
+                        target.classList.remove("hidden");
+                        window.A11yUtils.announce("Expanded");
+                    }
+                }
+            },
+        },
+
+        // Keyboard navigation helpers
+        keyboard: {
+            // Handle arrow key navigation in lists/menus
+            handleArrowKeys: function (container, orientation = "vertical") {
+                const items = container.querySelectorAll(
+                    '[role="menuitem"], [role="option"], [tabindex="0"]',
+                );
+
+                container.addEventListener("keydown", function (e) {
+                    const currentIndex = Array.from(items).indexOf(
+                        document.activeElement,
+                    );
+                    let nextIndex = -1;
+
+                    if (orientation === "vertical") {
+                        if (e.key === "ArrowDown") {
+                            e.preventDefault();
+                            nextIndex =
+                                currentIndex + 1 >= items.length
+                                    ? 0
+                                    : currentIndex + 1;
+                        } else if (e.key === "ArrowUp") {
+                            e.preventDefault();
+                            nextIndex =
+                                currentIndex - 1 < 0
+                                    ? items.length - 1
+                                    : currentIndex - 1;
+                        }
+                    } else {
+                        if (e.key === "ArrowRight") {
+                            e.preventDefault();
+                            nextIndex =
+                                currentIndex + 1 >= items.length
+                                    ? 0
+                                    : currentIndex + 1;
+                        } else if (e.key === "ArrowLeft") {
+                            e.preventDefault();
+                            nextIndex =
+                                currentIndex - 1 < 0
+                                    ? items.length - 1
+                                    : currentIndex - 1;
+                        }
+                    }
+
+                    if (nextIndex >= 0) {
+                        items[nextIndex].focus();
+                    }
+
+                    // Handle Home/End keys
+                    if (e.key === "Home") {
+                        e.preventDefault();
+                        items[0].focus();
+                    } else if (e.key === "End") {
+                        e.preventDefault();
+                        items[items.length - 1].focus();
+                    }
+                });
+            },
+        },
+
+        // Form validation helpers
+        form: {
+            // Validate form and show errors accessibly
+            validate: function (form) {
+                const fields = form.querySelectorAll("input, select, textarea");
+                let isValid = true;
+                let firstInvalidField = null;
+
+                fields.forEach((field) => {
+                    if (!field.checkValidity()) {
+                        isValid = false;
+                        if (!firstInvalidField) {
+                            firstInvalidField = field;
+                        }
+
+                        // Show error message
+                        this.showError(field, field.validationMessage);
+                    } else {
+                        // Clear error message
+                        this.clearError(field);
+                    }
+                });
+
+                if (!isValid && firstInvalidField) {
+                    firstInvalidField.focus();
+                    window.A11yUtils.announce(
+                        "Form contains errors. Please review and correct.",
+                        "assertive",
+                    );
+                }
+
+                return isValid;
+            },
+
+            // Show error message for field
+            showError: function (field, message) {
+                const errorId = field.id + "-error";
+                let errorElement = document.getElementById(errorId);
+
+                if (!errorElement) {
+                    errorElement = document.createElement("div");
+                    errorElement.id = errorId;
+                    errorElement.className = "error-message";
+                    errorElement.setAttribute("role", "alert");
+                    errorElement.setAttribute("aria-live", "polite");
+                    field.parentNode.appendChild(errorElement);
+                }
+
+                errorElement.textContent = message;
+                field.setAttribute("aria-describedby", errorId);
+                field.setAttribute("aria-invalid", "true");
+            },
+
+            // Clear error message for field
+            clearError: function (field) {
+                const errorId = field.id + "-error";
+                const errorElement = document.getElementById(errorId);
+
+                if (errorElement) {
+                    errorElement.textContent = "";
+                }
+
+                field.setAttribute("aria-invalid", "false");
+                field.removeAttribute("aria-describedby");
+            },
+        },
+
+        // Color contrast utilities
+        contrast: {
+            // Check if color combination meets WCAG standards
+            check: function (foreground, background, level = "AA") {
+                // This is a simplified version - in production, use a proper color contrast library
+                const getLuminance = function (color) {
+                    // Convert hex to RGB and calculate luminance
+                    const hex = color.replace("#", "");
+                    const r = parseInt(hex.substr(0, 2), 16) / 255;
+                    const g = parseInt(hex.substr(2, 2), 16) / 255;
+                    const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+                    const sRGB = [r, g, b].map((c) => {
+                        return c <= 0.03928
+                            ? c / 12.92
+                            : Math.pow((c + 0.055) / 1.055, 2.4);
+                    });
+
+                    return (
+                        0.2126 * sRGB[0] + 0.7152 * sRGB[1] + 0.0722 * sRGB[2]
+                    );
+                };
+
+                const l1 = getLuminance(foreground);
+                const l2 = getLuminance(background);
+                const ratio =
+                    (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+
+                const thresholds = {
+                    AA: 4.5,
+                    AAA: 7,
+                    "AA-large": 3,
+                    "AAA-large": 4.5,
+                };
+
+                return ratio >= thresholds[level];
+            },
+        },
+    };
+
+    // Initialize accessibility features when DOM is ready
+    document.addEventListener("DOMContentLoaded", function () {
+        // Auto-enhance forms
+        const forms = document.querySelectorAll("form");
+        forms.forEach((form) => {
+            form.addEventListener("submit", function (e) {
+                if (!window.A11yUtils.form.validate(form)) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Auto-enhance dropdown menus
+        const dropdowns = document.querySelectorAll('[aria-haspopup="true"]');
+        dropdowns.forEach((dropdown) => {
+            dropdown.addEventListener("click", function (e) {
+                e.preventDefault();
+                const targetId = dropdown.getAttribute("aria-controls");
+                const target = document.getElementById(targetId);
+                if (target) {
+                    window.A11yUtils.aria.toggleExpanded(dropdown, target);
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    /* Utility classes for accessibility */
+    .visually-hidden {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+    }
+
+    .focus-visible {
+        outline: 2px solid var(--color-focus);
+        outline-offset: 2px;
+    }
+
+    .error-message {
+        color: var(--color-error);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    /* High contrast mode enhancements */
+    @media (prefers-contrast: high) {
+        .focus-visible {
+            outline-width: 3px;
+        }
+    }
+</style>

@@ -5,5 +5,6 @@ type: "journal"
 year: 2024
 venue: "Journal of Engineering Digital Twins"
 doi: "10.1000/182"
-url: "https://example.com/publication"
+url: "http://edtlab.fr/"
+project: "PC1"
 ---

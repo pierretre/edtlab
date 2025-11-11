@@ -1,0 +1,80 @@
+---
+import { Picture } from "astro:assets";
+
+export interface Props {
+    color: string;
+    image?: ImageMetadata;
+    imageAlt: string;
+    title: string;
+    description: string;
+    projectId?: string;
+}
+
+const { color, image, imageAlt, title, description, projectId } = Astro.props;
+
+const colorMap: Record<string, string> = {
+    "blue-bell": "header-blue-bell",
+    "hit-pink": "header-hit-pink",
+    marzipan: "header-marzipan",
+};
+
+const currentColor =
+    colorMap[color] || "bg-gradient-to-br from-gray-300 to-gray-500";
+---
+
+<section class={`${currentColor} py-8 lg:py-16`}>
+    <div
+        class="grid w-full max-w-screen-xl mx-auto px-4 lg:grid-cols-12 lg:gap-8 xl:gap-0"
+    >
+        <!-- Text content section (left) -->
+        <div
+            class="mr-auto place-self-center lg:col-span-5 animate-slideInLeft"
+        >
+            <h1
+                class="max-w-2xl mb-4 text-3xl font-extrabold tracking-tight leading-none text-white md:text-4xl xl:text-5xl"
+            >
+                {title}
+            </h1>
+            <p
+                class="max-w-2xl mb-6 font-light text-white lg:mb-8 md:text-lg lg:text-xl"
+            >
+                {description}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a
+                    href="#related-publications"
+                    class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 focus:ring-4 focus:ring-white/25 transition-all duration-200"
+                >
+                    See Publications
+                    <svg
+                        class="w-5 h-5 ml-2 -mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                        ><path
+                            fill-rule="evenodd"
+                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path></svg
+                    >
+                </a>
+            </div>
+        </div>
+
+        <!-- Image section (right) -->
+        {
+            image && (
+                <div class="hidden lg:mt-0 lg:col-span-7 lg:flex">
+                    <Picture
+                        src={image}
+                        alt={imageAlt}
+                        loading="eager"
+                        quality={80}
+                        widths={[400, 600, 800]}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        decoding="async"
+                    />
+                </div>
+            )
+        }
+    </div>
+</section>

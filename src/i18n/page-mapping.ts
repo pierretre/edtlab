@@ -24,7 +24,7 @@ export const enToFrMapping: PageMapping = {
     'news': 'actualites',
     'join-us': 'nous-rejoindre',
     'contact': 'contact', // Both use same href but different lang
-    'about': 'about' // Both use same href but different lang
+    'about': 'a-propos'
 };
 
 // French to English page mappings (reverse of above)
@@ -58,7 +58,7 @@ export function getCorrespondingPage(
     }
 
     // Special cases where both languages use the same href
-    const samehrefPages = ['contact', 'about'];
+    const samehrefPages = ['contact'];
     if (samehrefPages.includes(cleanHref)) {
         return cleanHref; // Return same href, the content collection will handle language filtering
     }

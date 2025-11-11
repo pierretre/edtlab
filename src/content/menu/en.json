@@ -13,23 +13,23 @@
                     "href": "focused-projects"
                 },
                 {
-                    "name": "Project 1 (PC1)",
+                    "name": "PC1: Model Hybridization",
                     "href": "focused-projects/fp1"
                 },
                 {
-                    "name": "Project 2 (PC2)",
+                    "name": "PC2: Architecture & Interoperability",
                     "href": "focused-projects/fp2"
                 },
                 {
-                    "name": "Project 3 (PC3)",
+                    "name": "PC3: Methodology & Languages",
                     "href": "focused-projects/fp3"
                 },
                 {
-                    "name": "Project 4 (PC4)",
+                    "name": "PC4: Digital Coupling",
                     "href": "focused-projects/fp4"
                 },
                 {
-                    "name": "Project 5 (PC5)",
+                    "name": "PC5: Human Interactions",
                     "href": "focused-projects/fp5"
                 }
             ]

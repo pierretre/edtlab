@@ -4,11 +4,9 @@ date: 2025-01-15
 type: "seminar"
 location: "Online"
 description: "Seminar exploring emerging trends and future directions in digital twin technology for engineering applications"
-url: "https://example.com/seminar"
+url: "http://edtlab.fr/"
 lang: "en"
 ---
-
-# Future of Digital Twins in Engineering
 
 ## Seminar Overview
 

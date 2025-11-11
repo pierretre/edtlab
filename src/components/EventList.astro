@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
+import { getEventTypeTranslation } from "../utils";
 import EventCard from "./EventCard.astro";
 import FilterBar from "./FilterBar.astro";
 
@@ -35,22 +36,6 @@ const displayEvents = maxEvents ? sortedEvents.slice(0, maxEvents) : sortedEvent
 // Get unique types for filters
 const types = ["conference", "workshop", "seminar", "press"] as const;
 
-// Helper function to get type translation
-const getTypeTranslation = (type: string) => {
-    switch (type) {
-        case "conference":
-            return t("events.type.conference");
-        case "workshop":
-            return t("events.type.workshop");
-        case "seminar":
-            return t("events.type.seminar");
-        case "press":
-            return t("events.type.press");
-        default:
-            return type;
-    }
-};
-
 // Separate upcoming and past events
 const now = new Date();
 const upcomingEvents = displayEvents.filter(event => event.data.date > now);
@@ -66,7 +51,7 @@ const filterConfig = [
             { value: "", label: t("events.filter.all-types") },
             ...types.map(type => ({
                 value: type,
-                label: getTypeTranslation(type)
+                label: getEventTypeTranslation(type, lang)
             }))
         ]
     },
@@ -169,11 +154,9 @@ const filterConfig = [
                 const searchValue = searchFilter?.value.toLowerCase().trim() || "";
 
                 let visibleCount = 0;
-                const now = new Date();
 
                 eventItems.forEach((item) => {
                     const itemType = item.dataset.type;
-                    const itemDate = new Date(item.dataset.date || "");
                     const itemUpcoming = item.dataset.upcoming === "true";
                     const itemSearchText = item.dataset.searchText || "";
 

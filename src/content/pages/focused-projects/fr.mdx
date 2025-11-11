@@ -6,16 +6,18 @@ description: "Aperçu des cinq projets ciblés (PC1-PC5) du programme de recherc
 toc: true
 ---
 
-import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import OptimizedFigure from '../../../components/OptimizedFigure.astro';
+import mainArchitectureImage from '../../../assets/images/INRIA_EDT_CBLOT_main_3.jpg';
 
 # Projets Ciblés
 
 Le programme de recherche EDT est organisé en cinq projets ciblés (PC1-PC5), chacun abordant des aspects spécifiques de la technologie des jumeaux numériques.
 
-<ResponsiveImage 
-  src="INRIA_EDT_CBLOT_main 3.jpg"
+<OptimizedFigure
+  src={mainArchitectureImage}
   alt="Aperçu de l'architecture du programme de recherche EDT montrant les cinq projets ciblés et leurs interconnexions"
   caption="Architecture du programme de recherche EDT : Aperçu des cinq projets ciblés (PC1-PC5) et de leur structure collaborative"
+  loading="eager"
 />
 
 ## Aperçu des Projets

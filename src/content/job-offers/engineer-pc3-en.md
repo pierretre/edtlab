@@ -4,12 +4,11 @@ project: "PC3"
 type: "engineer"
 location: "Toulouse, France"
 deadline: 2025-01-30
+publishedDate: 2024-01-20
 description: "Software development engineer for digital twin platform implementation"
 requirements: ["Bachelor's or Master's in Software Engineering", "5+ years software development experience", "Experience with C++, Java, or Python", "Knowledge of distributed systems"]
 lang: "en"
 ---
-
-# Research Engineer - Software Development
 
 ## Position Overview
 
@@ -22,15 +21,6 @@ Join our PC3 team as a Research Engineer focusing on software development for ou
 - Optimize system performance and scalability
 - Collaborate with research teams on prototype development
 - Maintain code quality and documentation standards
-
-## Required Qualifications
-
-- Bachelor's or Master's degree in Software Engineering or Computer Science
-- Minimum 5 years of professional software development experience
-- Proficiency in C++, Java, or Python
-- Experience with distributed systems and microservices
-- Knowledge of database systems and data management
-- Familiarity with version control systems (Git)
 
 ## Preferred Qualifications
 
