@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { isValidLanguage } from '../../utils';
 
 describe('Internationalization', () => {
     it('should support required languages', () => {
@@ -21,8 +22,6 @@ describe('Internationalization', () => {
     });
 
     it('should validate language codes', () => {
-        const isValidLanguage = (lang: string) => ['en', 'fr'].includes(lang);
-
         expect(isValidLanguage('en')).toBe(true);
         expect(isValidLanguage('fr')).toBe(true);
         expect(isValidLanguage('es')).toBe(false);

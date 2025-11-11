@@ -4,11 +4,9 @@ date: 2024-06-15
 type: "conference"
 location: "Paris, France"
 description: "Conférence annuelle rassemblant chercheurs et praticiens en technologie des jumeaux numériques"
-url: "https://example.com/conference"
+url: "http://edtlab.fr/"
 lang: "fr"
 ---
-
-# Conférence Internationale sur les Jumeaux Numériques 2024
 
 ## Détails de l'Événement
 

@@ -31,5 +31,8 @@ export default defineConfig({
         command: 'npm run preview',
         url: 'http://localhost:4321',
         reuseExistingServer: !process.env.CI,
+        timeout: 120 * 1000,
+        stderr: 'pipe',
+        stdout: 'pipe',
     },
 });

@@ -4,12 +4,11 @@ project: "PC1"
 type: "postdoc"
 location: "Paris, France"
 deadline: 2024-12-31
+publishedDate: 2024-01-15
 description: "Recherche d'un chercheur postdoctoral pour travailler sur les techniques avancées de modélisation de jumeaux numériques"
 requirements: ["Doctorat en Ingénierie ou Informatique", "Expérience avec la technologie des jumeaux numériques", "Solides compétences en programmation", "Maîtrise de l'anglais"]
 lang: "fr"
 ---
-
-# Chercheur Postdoctoral - Modélisation de Jumeaux Numériques
 
 ## Aperçu du Poste
 
@@ -22,14 +21,6 @@ Nous recherchons un chercheur postdoctoral hautement motivé pour rejoindre notr
 - Publier les résultats de recherche dans des revues à fort impact
 - Participer aux réunions et présentations de projet
 - Encadrer des étudiants diplômés
-
-## Qualifications
-
-- Doctorat en Ingénierie, Informatique ou domaine connexe
-- Solide formation en technologie des jumeaux numériques
-- Expérience avec les logiciels de simulation et de modélisation
-- Excellentes compétences en programmation (Python, C++, MATLAB)
-- Solides compétences de communication écrite et orale en anglais
 
 ## Processus de Candidature
 

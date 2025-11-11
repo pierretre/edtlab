@@ -4,12 +4,11 @@ project: "PC3"
 type: "engineer"
 location: "Toulouse, France"
 deadline: 2025-01-30
+publishedDate: 2024-01-20
 description: "Ingénieur de développement logiciel pour l'implémentation de plateforme de jumeaux numériques"
 requirements: ["Licence ou Master en Génie Logiciel", "5+ années d'expérience en développement logiciel", "Expérience avec C++, Java, ou Python", "Connaissance des systèmes distribués"]
 lang: "fr"
 ---
-
-# Ingénieur de Recherche - Développement Logiciel
 
 ## Aperçu du Poste
 
@@ -22,15 +21,6 @@ Rejoignez notre équipe PC3 en tant qu'Ingénieur de Recherche spécialisé dans
 - Optimiser les performances et l'évolutivité du système
 - Collaborer avec les équipes de recherche sur le développement de prototypes
 - Maintenir la qualité du code et les standards de documentation
-
-## Qualifications Requises
-
-- Licence ou Master en Génie Logiciel ou Informatique
-- Minimum 5 années d'expérience professionnelle en développement logiciel
-- Maîtrise de C++, Java, ou Python
-- Expérience avec les systèmes distribués et microservices
-- Connaissance des systèmes de bases de données et gestion de données
-- Familiarité avec les systèmes de contrôle de version (Git)
 
 ## Qualifications Préférées
 

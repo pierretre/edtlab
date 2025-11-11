@@ -35,3 +35,6 @@ export function getLocalizedUrl(lang: keyof typeof ui, url: string): string {
     const cleanUrl = url.replace(/^\/[a-z]{2}\//, '/').replace(/^\//, '');
     return `/${lang}/${cleanUrl}`;
 }
+
+// Re-export link utilities for convenience
+export { linkHelpers, getContentLink, getPageLink, getLocalizedLink, getAlternateLink } from './links';

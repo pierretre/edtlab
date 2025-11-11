@@ -2,7 +2,20 @@
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
+import AccessibilityUtils from "../components/AccessibilityUtils.astro";
+import MatomoAnalytics from "../components/MatomoAnalytics.astro";
+import {
+    optimizePageTitle,
+    optimizeMetaDescription,
+    generateCanonicalUrl,
+    generateAlternateUrls,
+    generateOrganizationStructuredData,
+    type StructuredData,
+    generateBreadcrumbStructuredData,
+} from "../utils/seo";
+import { combineKeywords } from "../utils/seo-keywords";
 import "../styles/global.css";
+import Breadcrumb from "../components/Breadcrumb.astro";
 
 export interface Props {
     title?: string;
@@ -11,6 +24,14 @@ export interface Props {
     canonical?: string;
     noindex?: boolean;
     lang?: "en" | "fr";
+    structuredData?: StructuredData[];
+    keywords?: string[];
+    author?: string;
+    publishedTime?: string;
+    modifiedTime?: string;
+    articleSection?: string;
+    articleTag?: string[];
+    showBreadcrumb?: boolean;
 }
 
 const {
@@ -20,31 +41,107 @@ const {
     canonical,
     noindex = false,
     lang: propLang,
+    structuredData = [],
+    keywords = [],
+    author,
+    publishedTime,
+    modifiedTime,
+    articleSection,
+    articleTag = [],
+    showBreadcrumb = true,
 } = Astro.props;
 
 // Get language from URL or use prop
 const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
 const t = useTranslations(lang);
 
-// Build page title
-const pageTitle = title ? `${title} | ${t("site.title")}` : t("site.title");
+// Build optimized page title
+const pageTitle = title
+    ? optimizePageTitle(title, t("site.title"))
+    : t("site.title");
 
-// Use provided description or default
-const pageDescription = description || t("site.description");
+// Use provided description or default, optimized for SEO
+const pageDescription = optimizeMetaDescription(
+    description || t("site.description"),
+);
 
 // Build canonical URL
-const canonicalUrl = canonical || Astro.url.href;
+const baseUrl =
+    Astro.site?.toString().replace(/\/$/, "") || "http://localhost:4321";
+const canonicalUrl =
+    canonical || generateCanonicalUrl(baseUrl, Astro.url.pathname);
 
 // Default image for social sharing
-const defaultImage = "/favicon.svg";
-const pageImage = image || defaultImage;
+const defaultImage = `${baseUrl}/favicon.png`;
+const pageImage = image
+    ? image.startsWith("http")
+        ? image
+        : `${baseUrl}${image}`
+    : defaultImage;
 
-// Build alternate language URLs
-const currentPath = Astro.url.pathname
-    .replace(/^\/[a-z]{2}\//, "/")
-    .replace(/^\//, "");
-const alternateUrl =
-    lang === "en" ? `/fr/${currentPath}` : `/en/${currentPath}`;
+// Generate alternate language URLs
+const alternateUrls = generateAlternateUrls(baseUrl, Astro.url.pathname, lang);
+
+// Generate default structured data
+const defaultStructuredData = generateOrganizationStructuredData(
+    t("site.title"),
+    t("site.description"),
+    baseUrl,
+    defaultImage,
+);
+
+// Combine all structured data
+const allStructuredData = [defaultStructuredData, ...structuredData];
+
+// Generate keywords meta tag using translations
+const allKeywords = combineKeywords(keywords, lang);
+
+// Get language from URL or use prop
+let finalBreadcrumbItems: Array<{ name: string; href?: string }> = [];
+
+if (showBreadcrumb) {
+    const currentPath = Astro.url.pathname;
+    const pathSegments = currentPath
+        .split("/")
+        .filter((segment) => segment && segment !== lang);
+
+    finalBreadcrumbItems = [{ name: t("nav.home"), href: `/${lang}/` }];
+
+    // Build breadcrumb from path segments
+    let currentHref = `/${lang}`;
+    for (let i = 0; i < pathSegments.length; i++) {
+        const segment = pathSegments[i];
+        currentHref += `/${segment}`;
+
+        // Get translated name for common segments
+        const segmentKey = `breadcrumb.${segment}` as keyof typeof t;
+        const segmentName =
+            t(segmentKey) ||
+            segment.charAt(0).toUpperCase() +
+                segment.slice(1).replace("-", " ");
+
+        const isLastItem = i === pathSegments.length - 1;
+        // Don't add href for the last item (current page)
+        finalBreadcrumbItems.push({
+            name: isLastItem ? title : segmentName,
+            href: isLastItem ? undefined : currentHref,
+        });
+    }
+
+    // Generate breadcrumb structured data
+    const baseUrl =
+        Astro.site?.toString().replace(/\/$/, "") || "http://localhost:4321";
+    const breadcrumbItems = finalBreadcrumbItems
+        .filter((item) => item.href)
+        .map((item) => ({
+            name: item.name,
+            url: `${baseUrl}${item.href}`,
+        }));
+
+    if (breadcrumbItems.length > 0) {
+        structuredData.push(generateBreadcrumbStructuredData(breadcrumbItems));
+    }
+}
 ---
 
 <!doctype html>
@@ -58,46 +155,98 @@ const alternateUrl =
         <title>{pageTitle}</title>
         <meta name="title" content={pageTitle} />
         <meta name="description" content={pageDescription} />
+        <meta name="keywords" content={allKeywords} />
+        {author && <meta name="author" content={author} />}
 
         <!-- Canonical URL -->
         <link rel="canonical" href={canonicalUrl} />
 
         <!-- Alternate language links -->
-        <link
-            rel="alternate"
-            hreflang={lang === "en" ? "fr" : "en"}
-            href={alternateUrl}
-        />
-        <link
-            rel="alternate"
-            hreflang="x-default"
-            href={`/en/${currentPath}`}
-        />
+        {
+            alternateUrls.map(({ hreflang, href }) => (
+                <link rel="alternate" hreflang={hreflang} href={href} />
+            ))
+        }
 
-        <!-- Favicon -->
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <!-- Favicon and Icons -->
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
 
         <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
+        <meta
+            property="og:type"
+            content={publishedTime ? "article" : "website"}
+        />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:image" content={pageImage} />
+        <meta property="og:image:alt" content={title || t("site.title")} />
         <meta
             property="og:locale"
             content={lang === "en" ? "en_US" : "fr_FR"}
         />
         <meta property="og:site_name" content={t("site.title")} />
+        {
+            publishedTime && (
+                <meta
+                    property="article:published_time"
+                    content={publishedTime}
+                />
+            )
+        }
+        {
+            modifiedTime && (
+                <meta property="article:modified_time" content={modifiedTime} />
+            )
+        }
+        {author && <meta property="article:author" content={author} />}
+        {
+            articleSection && (
+                <meta property="article:section" content={articleSection} />
+            )
+        }
+        {articleTag.map((tag) => <meta property="article:tag" content={tag} />)}
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={canonicalUrl} />
-        <meta property="twitter:title" content={pageTitle} />
-        <meta property="twitter:description" content={pageDescription} />
-        <meta property="twitter:image" content={pageImage} />
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonicalUrl} />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={pageImage} />
+        <meta name="twitter:image:alt" content={title || t("site.title")} />
 
-        <!-- SEO -->
-        {noindex && <meta name="robots" content="noindex, nofollow" />}
+        <!-- SEO and Robots -->
+        {
+            noindex ? (
+                <meta name="robots" content="noindex, nofollow" />
+            ) : (
+                <meta
+                    name="robots"
+                    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+                />
+            )
+        }
+
+        <!-- Additional SEO Meta Tags -->
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-TileColor" content="#665BA7" />
+        <meta name="theme-color" content="#665BA7" />
+
+        <!-- Language and Content -->
+        <meta http-equiv="content-language" content={lang} />
+        <meta name="language" content={lang === "en" ? "English" : "French"} />
+
+        <!-- Geographic targeting (France-based research program) -->
+        <meta name="geo.region" content="FR" />
+        <meta name="geo.country" content="France" />
+
+        <!-- Copyright and Rights -->
+        <meta
+            name="copyright"
+            content={`© ${new Date().getFullYear()} EDT Research Program`}
+        />
+        <meta name="rights" content="© EDT Research Program" />
 
         <!-- Accessibility -->
         <meta name="theme-color" content="#ffffff" />
@@ -118,45 +267,54 @@ const alternateUrl =
             type="font/woff2"
             crossorigin
         />
+        <link
+            rel="preload"
+            href="/src/assets/images/logo.png"
+            as="image"
+            type="image/png"
+        />
+        <link
+            rel="preload"
+            href="/src/styles/global.css"
+            as="style"
+            type="text/css"
+        />
 
         <script
             is:inline
             src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"
         ></script>
 
-        <!-- Analytics placeholder - to be implemented in task 21 -->
-        <!-- Google Analytics will be added here -->
+        <!-- Service Worker Registration -->
+        <script is:inline>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker
+                        .register("/sw.js")
+                        .catch((registrationError) => {
+                            console.error(
+                                "SW registration failed: ",
+                                registrationError,
+                            );
+                        });
+                });
+            }
+        </script>
+        <!-- JSON-LD Structured Data -->
+        {
+            allStructuredData.map((data) => (
+                <script
+                    type="application/ld+json"
+                    is:inline
+                    set:html={JSON.stringify(data)}
+                />
+            ))
+        }
 
-        <!-- JSON-LD structured data -->
-        <script
-            type="application/ld+json"
-            is:inline
-            set:html={JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                name: t("site.title"),
-                description: t("site.description"),
-                url: canonicalUrl,
-                logo: pageImage,
-                sameAs: [],
-            })}
-        />
+        <!-- Matomo Analytics Integration -->
+        <MatomoAnalytics />
     </head>
     <body class="site-layout">
-        <!-- Skip links for accessibility -->
-        <div class="sr-only">
-            <a href="#main-content" class="skip-link">
-                {
-                    lang === "en"
-                        ? "Skip to main content"
-                        : "Aller au contenu principal"
-                }
-            </a>
-            <a href="#navigation" class="skip-link">
-                {lang === "en" ? "Skip to navigation" : "Aller à la navigation"}
-            </a>
-        </div>
-
         <!-- Site wrapper for sticky footer -->
         <div class="site-wrapper">
             <!-- Header with navigation -->
@@ -164,52 +322,54 @@ const alternateUrl =
                 id="navigation"
                 class="bg-white shadow-sm border-b border-gray-200"
                 role="banner"
+                aria-label={t("accessibility.main-navigation")}
             >
                 <!-- Main navigation -->
                 <Navigation />
             </header>
 
             <!-- Main content area -->
-            <main
-                id="main-content"
-                role="main"
-                tabindex="-1"
-                class="site-content"
-            >
+            <main role="main" class="site-content">
+                <div class="mx-auto p-4 max-w-6xl">
+                    <!-- Breadcrumb Navigation -->
+                    {
+                        showBreadcrumb && (
+                            <Breadcrumb items={finalBreadcrumbItems} />
+                        )
+                    }
+                </div>
                 <slot />
             </main>
         </div>
 
         <!-- Footer -->
-        <Footer />
+        <footer id="footer" role="contentinfo" aria-label="Site footer">
+            <Footer />
+        </footer>
+
+        <!-- Accessibility utilities -->
+        <AccessibilityUtils />
+
+        <!-- ARIA live region for announcements -->
+        <div
+            id="aria-live-region"
+            aria-live="polite"
+            aria-atomic="true"
+            class="sr-only"
+        >
+        </div>
+        <div
+            id="aria-live-region-assertive"
+            aria-live="assertive"
+            aria-atomic="true"
+            class="sr-only"
+        >
+        </div>
 
         <!-- Focus management script -->
         <script is:inline>
             // Enhanced focus management for accessibility
             document.addEventListener("DOMContentLoaded", function () {
-                // Handle skip link focus
-                const skipLinks = document.querySelectorAll(".skip-link");
-                skipLinks.forEach(function (link) {
-                    link.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        const href = link.getAttribute("href");
-                        if (href) {
-                            const targetId = href.substring(1);
-                            const target = document.getElementById(targetId);
-                            if (target) {
-                                target.focus();
-                                target.scrollIntoView({ behavior: "smooth" });
-                            }
-                        }
-                    });
-                });
-
-                // Ensure main content is focusable for skip links
-                const mainContent = document.getElementById("main-content");
-                if (mainContent && !mainContent.hasAttribute("tabindex")) {
-                    mainContent.setAttribute("tabindex", "-1");
-                }
-
                 // Trap focus within modal dialogs if any
                 document.addEventListener("keydown", function (e) {
                     const isTabPressed = e.key === "Tab";
@@ -254,41 +414,93 @@ const alternateUrl =
                     }
                 });
 
+                // Enhanced announcement system
+                window.announceToScreenReader = function (
+                    message,
+                    priority = "polite",
+                ) {
+                    const liveRegion =
+                        priority === "assertive"
+                            ? document.getElementById(
+                                  "aria-live-region-assertive",
+                              )
+                            : document.getElementById("aria-live-region");
+
+                    if (liveRegion) {
+                        liveRegion.textContent = message;
+
+                        // Clear after announcement
+                        setTimeout(() => {
+                            liveRegion.textContent = "";
+                        }, 1000);
+                    }
+                };
+
                 // Announce page changes to screen readers
                 const announcePageChange = function () {
-                    const announcement = document.createElement("div");
-                    announcement.setAttribute("aria-live", "polite");
-                    announcement.setAttribute("aria-atomic", "true");
-                    announcement.className = "sr-only";
-                    announcement.textContent = "Page loaded: " + document.title;
-                    document.body.appendChild(announcement);
+                    const pageTitle = document.title;
+                    const mainHeading = document.querySelector("h1");
+                    const message = mainHeading
+                        ? `Page loaded: ${mainHeading.textContent}`
+                        : `Page loaded: ${pageTitle}`;
 
-                    // Remove announcement after screen reader has time to read it
-                    setTimeout(function () {
-                        if (announcement.parentNode) {
-                            announcement.parentNode.removeChild(announcement);
-                        }
-                    }, 1000);
+                    window.announceToScreenReader(message);
                 };
 
                 // Announce initial page load
-                announcePageChange();
+                setTimeout(announcePageChange, 500);
             });
 
-            // Handle reduced motion preferences
-            if (
-                window.matchMedia &&
-                window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            ) {
-                document.documentElement.style.scrollBehavior = "auto";
-            }
+            // Enhanced accessibility preferences handling
+            const handleAccessibilityPreferences = function () {
+                // Handle reduced motion preferences
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-motion: reduce)")
+                        .matches
+                ) {
+                    document.documentElement.style.scrollBehavior = "auto";
+                    document.documentElement.classList.add("reduce-motion");
+                }
 
-            // Handle high contrast mode
-            if (
-                window.matchMedia &&
-                window.matchMedia("(prefers-contrast: high)").matches
-            ) {
-                document.documentElement.classList.add("high-contrast");
+                // Handle high contrast mode
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-contrast: high)").matches
+                ) {
+                    document.documentElement.classList.add("high-contrast");
+                }
+
+                // Handle color scheme preferences
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches
+                ) {
+                    document.documentElement.classList.add("dark-mode");
+                }
+
+                // Handle font size preferences
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-data: reduce)").matches
+                ) {
+                    document.documentElement.classList.add("reduce-data");
+                }
+            };
+
+            handleAccessibilityPreferences();
+
+            // Listen for preference changes
+            if (window.matchMedia) {
+                window
+                    .matchMedia("(prefers-reduced-motion: reduce)")
+                    .addEventListener("change", handleAccessibilityPreferences);
+                window
+                    .matchMedia("(prefers-contrast: high)")
+                    .addEventListener("change", handleAccessibilityPreferences);
+                window
+                    .matchMedia("(prefers-color-scheme: dark)")
+                    .addEventListener("change", handleAccessibilityPreferences);
             }
 
             document.addEventListener("DOMContentLoaded", () => {
@@ -311,6 +523,135 @@ const alternateUrl =
                 // Optional: if content inside header might dynamically change
                 const observer = new ResizeObserver(adjustPageOffset);
                 observer.observe(header);
+            });
+
+            // Enhanced keyboard navigation support
+            document.addEventListener("keydown", function (e) {
+                // Handle escape key for closing modals/dropdowns
+                if (e.key === "Escape") {
+                    // Close any open dropdowns
+                    const openDropdowns = document.querySelectorAll(
+                        '[aria-expanded="true"]',
+                    );
+                    openDropdowns.forEach((dropdown) => {
+                        dropdown.setAttribute("aria-expanded", "false");
+                        const target = document.getElementById(
+                            dropdown.getAttribute("aria-controls"),
+                        );
+                        if (target) {
+                            target.classList.add("hidden");
+                        }
+                    });
+
+                    // Close any open modals
+                    const openModals = document.querySelectorAll(
+                        '[role="dialog"]:not([hidden])',
+                    );
+                    openModals.forEach((modal) => {
+                        modal.setAttribute("hidden", "");
+                        // Return focus to trigger element if available
+                        const trigger = modal.getAttribute("data-trigger-id");
+                        if (trigger) {
+                            const triggerElement =
+                                document.getElementById(trigger);
+                            if (triggerElement) {
+                                triggerElement.focus();
+                            }
+                        }
+                    });
+                }
+
+                // Handle arrow keys for menu navigation
+                if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                    const activeElement = document.activeElement;
+                    if (
+                        activeElement &&
+                        activeElement.getAttribute("role") === "menuitem"
+                    ) {
+                        e.preventDefault();
+                        const menu = activeElement.closest('[role="menu"]');
+                        if (menu) {
+                            const menuItems =
+                                menu.querySelectorAll('[role="menuitem"]');
+                            const currentIndex =
+                                Array.from(menuItems).indexOf(activeElement);
+                            let nextIndex;
+
+                            if (e.key === "ArrowDown") {
+                                nextIndex =
+                                    currentIndex + 1 >= menuItems.length
+                                        ? 0
+                                        : currentIndex + 1;
+                            } else {
+                                nextIndex =
+                                    currentIndex - 1 < 0
+                                        ? menuItems.length - 1
+                                        : currentIndex - 1;
+                            }
+
+                            menuItems[nextIndex].focus();
+                        }
+                    }
+                }
+            });
+
+            // Enhanced form validation and error handling
+            document.addEventListener(
+                "invalid",
+                function (e) {
+                    e.preventDefault();
+                    const field = e.target;
+                    const fieldId = field.id;
+                    const errorId = fieldId + "-error";
+                    let errorElement = document.getElementById(errorId);
+
+                    if (!errorElement) {
+                        errorElement = document.createElement("div");
+                        errorElement.id = errorId;
+                        errorElement.className = "error-message";
+                        errorElement.setAttribute("role", "alert");
+                        errorElement.setAttribute("aria-live", "polite");
+                        field.parentNode.appendChild(errorElement);
+                    }
+
+                    // Set error message based on validation type
+                    let errorMessage = "";
+                    if (field.validity.valueMissing) {
+                        errorMessage =
+                            field.getAttribute("data-required-message") ||
+                            "This field is required";
+                    } else if (field.validity.typeMismatch) {
+                        errorMessage =
+                            field.getAttribute("data-type-message") ||
+                            "Please enter a valid value";
+                    } else if (field.validity.patternMismatch) {
+                        errorMessage =
+                            field.getAttribute("data-pattern-message") ||
+                            "Please match the requested format";
+                    }
+
+                    errorElement.textContent = errorMessage;
+                    field.setAttribute("aria-describedby", errorId);
+                    field.setAttribute("aria-invalid", "true");
+
+                    // Focus the field and announce error
+                    field.focus();
+                    window.announceToScreenReader(errorMessage, "assertive");
+                },
+                true,
+            );
+
+            // Clear errors on valid input
+            document.addEventListener("input", function (e) {
+                const field = e.target;
+                if (field.checkValidity()) {
+                    const errorId = field.id + "-error";
+                    const errorElement = document.getElementById(errorId);
+                    if (errorElement) {
+                        errorElement.textContent = "";
+                    }
+                    field.setAttribute("aria-invalid", "false");
+                }
             });
         </script>
     </body>

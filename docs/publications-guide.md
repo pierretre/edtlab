@@ -44,7 +44,7 @@ type: "journal"  # Must be: journal, conference, book, or report
 year: 2024
 venue: "Journal/Conference/Publisher Name"  # Optional
 doi: "10.1000/xxx"  # Optional
-url: "https://example.com/publication"  # Optional
+url: "http://edtlab.fr/"  # Optional
 ---
 ```
 
@@ -153,7 +153,7 @@ type: "journal"
 year: 2024
 venue: "International Journal of Smart Manufacturing"
 doi: "10.1000/smartmfg.2024.001"
-url: "https://journal.example.com/articles/digital-twins-2024"
+url: "http://edtlab.fr/"
 lang: "en"
 ---
 

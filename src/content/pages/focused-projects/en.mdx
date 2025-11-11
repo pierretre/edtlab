@@ -6,16 +6,18 @@ description: "Overview of the five focused projects (PC1-PC5) in the EDT researc
 toc: true
 ---
 
-import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import OptimizedFigure from '../../../components/OptimizedFigure.astro';
+import mainArchitectureImage from '../../../assets/images/INRIA_EDT_CBLOT_main_3.jpg';
 
 # Focused Projects
 
 The EDT research program is organized into five focused projects (PC1-PC5), each addressing specific aspects of digital twin technology.
 
-<ResponsiveImage 
-  src="INRIA_EDT_CBLOT_main 3.jpg"
+<OptimizedFigure
+  src={mainArchitectureImage}
   alt="EDT Research Program Architecture Overview showing the five focused projects and their interconnections"
   caption="EDT Research Program Architecture: Overview of the five focused projects (PC1-PC5) and their collaborative structure"
+  loading="eager"
 />
 
 ## Project Overview

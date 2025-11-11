@@ -6,7 +6,9 @@ description: "EDT Research Program overview, goals, structure, and partners"
 toc: true
 ---
 
-import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import OptimizedFigure from '../../../components/OptimizedFigure.astro';
+import physicalDigitalImage from '../../../assets/images/INRIA_EDT_CBLOT_PHYSICAL_DIGITAL.png';
+import crossCuttingActionsImage from '../../../assets/images/INRIA_EDT_CBLOT_AT_2.jpg';
 
 # EDT Research Program
 
@@ -14,10 +16,11 @@ import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 
 The Engineering Digital Twins (EDT) research program aims to advance the field of digital twin technology for engineering applications, creating a multidisciplinary community with international leadership in digital twin engineering.
 
-<ResponsiveImage 
-  src="INRIA_EDT_CBLOT_PHYSICAL_DIGITAL.png"
+<OptimizedFigure
+  src={physicalDigitalImage}
   alt="Physical-Digital Twin relationship diagram showing the bidirectional coupling and data flows between physical and digital systems"
   caption="Physical-Digital Twin Relationship: Conceptual framework showing the bidirectional coupling, data flows, and synchronization between physical and digital twin systems"
+  loading="eager"
 />
 
 ## Vision
@@ -50,6 +53,12 @@ The program is organized into five tightly connected focused projects (PC1-PC5) 
 - **AT3**: Platform Integration
 - **AT6**: Ethics and Sustainability
 - **AT7**: Dissemination and Exploitation
+
+<OptimizedFigure
+  src={crossCuttingActionsImage}
+  alt="EDT Cross-cutting Actions (AT) diagram showing the seven transverse actions that coordinate and integrate the focused projects"
+  caption="EDT Cross-cutting Actions Framework: Seven transverse actions (AT1-AT7) that ensure coordination, integration, and community building across the research program"
+/>
 
 ## Scientific Barriers
 

@@ -353,7 +353,7 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 
 #### Acceptance Criteria
 
-1. THE EDT_Website SHALL integrate Google Analytics for comprehensive traffic measurement
+1. THE EDT_Website SHALL integrate Matomo Analytics for privacy-focused comprehensive traffic measurement
 2. THE EDT_Website SHALL track user behavior metrics including first visits, return visits, and browsing duration
 3. THE EDT_Website SHALL monitor geographic distribution of visitors for visibility assessment
 4. THE EDT_Website SHALL measure content engagement metrics including page views and time on page

@@ -1,10 +1,15 @@
-# Astro Starter Kit: Minimal
+# EDT Research Website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A multilingual research website platform built with Astro.js, featuring anonymous analytics with Matomo integration.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Features
+
+- 🌍 **Bilingual Support**: English and French content management
+- 📊 **Anonymous Analytics**: Cookieless Matomo integration with GDPR compliance
+- ♿ **Accessibility**: RGAA 4.1 AA compliant with screen reader support
+- 🎨 **Modern Design**: Tailwind CSS with Flowbite components
+- 📱 **Responsive**: Mobile-first design approach
+- 🔍 **SEO Optimized**: Meta tags, structured data, and sitemap generation
 
 ## 🚀 Project Structure
 
@@ -25,9 +30,37 @@ There's nothing special about `src/components/`, but that's where we like to put
 
 Any static assets, like images, can be placed in the `public/` directory.
 
-## 🧞 Commands
+## 🚀 Quick Start
 
-All commands are run from the root of the project, from a terminal:
+### Option 1: Docker Development (Recommended)
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd edtlab
+   ```
+
+2. **Start development environment**:
+   ```bash
+   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+   ```
+
+3. **Access the services**:
+   - 🌐 **Website**: http://localhost:4321 (Astro dev server with hot reload)
+   - 📊 **Matomo Analytics**: http://localhost:8080
+   - 🗄️ **MySQL Database**: localhost:3306
+
+### Production Mode
+
+For production (static files served by Nginx):
+```bash
+docker-compose up -d
+```
+- 🌐 **Website**: http://localhost:80
+
+### Option 2: Manual Development
+
+If you prefer manual setup without Docker:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
@@ -38,6 +71,93 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 📊 Analytics Setup
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This website includes anonymous Matomo analytics integration with comprehensive privacy features.
+
+**📖 Complete Setup Guide**: [Analytics Integration Guide](./docs/analytics-integration.md)
+
+### Key Features:
+- ✅ **Environment-configurable** - Easy deployment across environments
+- ✅ **Cookieless tracking** - No cookie consent required
+- ✅ **IP anonymization** - Full privacy protection  
+- ✅ **GDPR compliant** - Anonymous data collection only
+- ✅ **Do Not Track respect** - Honors browser privacy settings
+- ✅ **Publication tracking** - Automatic research interaction analytics
+
+## 📚 Documentation
+
+- [Analytics Integration Guide](./docs/analytics-integration.md) - Complete Matomo setup and configuration
+- [Local Testing Guide](./docs/local-testing-guide.md) - Set up and test locally with Docker
+- [Matomo Setup Guide](./docs/matomo-setup.md) - Production analytics deployment
+- [Project Structure](./docs/structure.md) - Content organization and conventions
+- [Technology Stack](./docs/tech.md) - Framework and tools overview
+
+## 🛠️ Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `docker-compose up -d` | Start production environment |
+| `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d` | Start development environment |
+| `docker-compose ps` | Check service status |
+| `docker-compose logs -f` | View service logs |
+| `docker-compose down` | Stop all services |
+| `docker-compose down -v` | Stop and remove all data |
+
+See [DOCKER-SETUP.md](DOCKER-SETUP.md) for individual service commands.
+
+## 🌐 Content Management
+
+The website supports bilingual content (English/French) with:
+- Markdown/MDX content files in `src/content/`
+- Automatic language routing with `/en/` and `/fr/` prefixes
+- Translation strings in `src/i18n/ui.ts`
+- Menu configuration in `src/content/menu/`
+
+## 🔧 Technology Stack
+
+- **Framework**: Astro.js 5.x with TypeScript
+- **Styling**: Tailwind CSS + Flowbite components
+- **Content**: Astro Content Collections with Zod validation
+- **Analytics**: Matomo (cookieless, anonymous)
+- **Deployment**: Docker with Docker Compose
+- **Fonts**: Marianne (French government typeface)
+
+## 🚀 Production Deployment
+
+The website can be deployed to production using Docker with integrated Matomo analytics.
+
+### Docker Services
+
+- **Website**: Astro.js static site with Nginx
+- **Matomo**: Analytics platform with MySQL database  
+- **Nginx Proxy**: Reverse proxy with SSL termination
+- **Certbot**: Automatic SSL certificate management
+
+### Management Commands
+
+```bash
+# Check service status
+docker-compose ps
+
+# View service logs  
+docker-compose logs -f [service]
+
+# Stop services
+docker-compose down
+```
+
+For detailed Docker commands, see [DOCKER-SETUP.md](DOCKER-SETUP.md).
+
+## 📈 Analytics & Privacy
+
+This website uses anonymous analytics to improve user experience:
+- No cookies or personal data collection
+- IP addresses are anonymized
+- Geographic data is aggregated
+- Full GDPR compliance without consent banners
+- Legal notices in footer explain data usage
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

@@ -4,11 +4,9 @@ date: 2024-03-20
 type: "workshop"
 location: "Lyon, France"
 description: "Atelier pratique explorant les applications pratiques de la technologie des jumeaux numériques dans les environnements industriels"
-url: "https://example.com/workshop"
+url: "http://edtlab.fr/"
 lang: "fr"
 ---
-
-# Atelier Jumeaux Numériques : Applications Industrielles
 
 ## Aperçu de l'Atelier
 

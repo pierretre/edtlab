@@ -13,23 +13,23 @@
                     "href": "projets-cibles"
                 },
                 {
-                    "name": "Projet 1 (PC1)",
+                    "name": "PC1: Hybridation des Modèles",
                     "href": "projets-cibles/pc1"
                 },
                 {
-                    "name": "Projet 2 (PC2)",
+                    "name": "PC2: Architecture & Interopérabilité",
                     "href": "projets-cibles/pc2"
                 },
                 {
-                    "name": "Projet 3 (PC3)",
+                    "name": "PC3: Méthodologie & Langages",
                     "href": "projets-cibles/pc3"
                 },
                 {
-                    "name": "Projet 4 (PC4)",
+                    "name": "PC4: Couplage Numérique",
                     "href": "projets-cibles/pc4"
                 },
                 {
-                    "name": "Projet 5 (PC5)",
+                    "name": "PC5: Interactions Humaines",
                     "href": "projets-cibles/pc5"
                 }
             ]

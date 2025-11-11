@@ -1,5 +1,5 @@
 {
-  "name": "edt-research-website",
+  "name": "edtlab-website",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -17,6 +17,8 @@
   "dependencies": {
     "@astrojs/check": "^0.9.5",
     "@astrojs/mdx": "^4.3.8",
+    "@astrojs/partytown": "^2.1.4",
+    "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^5.1.1",
     "@tailwindcss/typography": "^0.5.19",
     "astro": "^5.14.3",
@@ -30,6 +32,7 @@
     "jsdom": "^25.0.1",
     "playwright": "^1.49.1",
     "sass-embedded": "^1.93.2",
+    "sharp": "^0.34.4",
     "vitest": "^2.1.8"
   }
 }

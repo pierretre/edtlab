@@ -9,7 +9,10 @@ const pagesCollection = defineCollection({
         lang: z.enum(['en', 'fr']),
         description: z.string().optional(),
         toc: z.boolean().default(false),
-        lastModified: z.date().optional()
+        lastModified: z.date().optional(),
+        color: z.string().optional(),
+        illustration: z.string().optional(),
+        template: z.string().optional(),
     })
 });
 
@@ -24,20 +27,38 @@ const publicationsCollection = defineCollection({
         venue: z.string().optional(),
         doi: z.string().optional(),
         url: z.string().url().optional(),
+        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']),
     })
 });
 
-// Events collection schema
+// Events collection schema (excluding press releases)
 const eventsCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
         date: z.date(),
-        type: z.enum(['conference', 'workshop', 'seminar', 'press']),
+        type: z.enum(['conference', 'workshop', 'seminar']),
         location: z.string().optional(),
         description: z.string(),
         url: z.string().url().optional(),
         lang: z.enum(['en', 'fr']),
+        photo: z.string().optional(),
+        template: z.string().optional()
+    })
+});
+
+// Press releases collection schema
+const pressReleasesCollection = defineCollection({
+    type: 'content',
+    schema: z.object({
+        title: z.string(),
+        date: z.date(),
+        description: z.string(),
+        url: z.string().url().optional(),
+        lang: z.enum(['en', 'fr']),
+        photo: z.string().optional(),
+        tags: z.array(z.string()).optional(),
+        template: z.string().optional()
     })
 });
 
@@ -50,9 +71,11 @@ const jobOffersCollection = defineCollection({
         type: z.enum(['postdoc', 'phd', 'engineer', 'intern']),
         location: z.string(),
         deadline: z.date(),
+        publishedDate: z.date(),
         description: z.string(),
         requirements: z.array(z.string()),
         lang: z.enum(['en', 'fr']),
+        template: z.string().optional()
     })
 });
 
@@ -67,7 +90,7 @@ const menuCollection = defineCollection({
                 name: z.string(),
                 href: z.string()
             })).optional()
-        }))
+        })),
     })
 });
 
@@ -75,6 +98,7 @@ export const collections = {
     'pages': pagesCollection,
     'publications': publicationsCollection,
     'events': eventsCollection,
+    'press-releases': pressReleasesCollection,
     'job-offers': jobOffersCollection,
     'menu': menuCollection
 };

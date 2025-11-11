@@ -1,26 +1,22 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import { useTranslations } from "../../i18n/utils";
-import PageLayout from "../../layouts/PageLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+    getLayoutFromTemplateOrCollection,
+    generateAllPagesStaticPaths,
+} from "../../utils";
 
 export async function getStaticPaths() {
-    const allPages = await getCollection("pages");
-
-    return allPages.map((page: CollectionEntry<"pages">) => {
-        const { lang, href } = page.data;
-
-        return {
-            params: {
-                lang: lang,
-                slug: href,
-            },
-            props: { page },
-        };
-    });
+    return await generateAllPagesStaticPaths();
 }
 
-const { page } = Astro.props as { page: CollectionEntry<"pages"> };
-const { lang, slug } = Astro.params;
+const { page, template } = Astro.props as {
+    page: CollectionEntry<"pages">;
+    template: string;
+};
+
+const { lang } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
 
 if (!page) {
@@ -32,50 +28,20 @@ if (!page) {
 
 // Get the rendered content
 const { Content } = await page.render();
+const Layout = getLayoutFromTemplateOrCollection(page.collection, template);
+
+console.log("Using layout:", Layout ? Layout.name : "None");
 ---
 
-<PageLayout
+<BaseLayout
     title={page.data.title}
     description={page.data.description || t("site.description")}
+    canonical={page.data.canonical}
+    noindex={page.data.noindex}
     lang={lang as "en" | "fr"}
     showBreadcrumb={true}
-    showToc={page.data.toc}
 >
-    <!-- Page Title -->
-    <!-- <header class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">
-            {page.data.title}
-        </h1>
-        {
-            page.data.description && (
-                <p class="text-xl text-gray-600 leading-relaxed">
-                    {page.data.description}
-                </p>
-            )
-        }
-    </header> -->
-
-    <!-- Page Content -->
-    <Content />
-
-    <!-- Last Modified Date -->
-    <!-- {
-        page.data.lastModified && (
-            <footer class="mt-12 pt-6 border-t border-gray-200">
-                <p class="text-sm text-gray-500">
-                    {lang === "en" ? "Last updated:" : "Dernière mise à jour :"}
-                    <time datetime={page.data.lastModified.toISOString()}>
-                        {page.data.lastModified.toLocaleDateString(
-                            lang === "en" ? "en-US" : "fr-FR",
-                            {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                            },
-                        )}
-                    </time>
-                </p>
-            </footer>
-        )
-    } -->
-</PageLayout>
+    <Layout frontmatter={page.data}>
+        <Content />
+    </Layout>
+</BaseLayout>

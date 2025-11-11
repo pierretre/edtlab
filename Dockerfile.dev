@@ -1,0 +1,20 @@
+# Development Dockerfile for EDT Research Website
+FROM node:18
+
+# Set working directory
+WORKDIR /app
+
+# Install curl (and certificates) so you can test with curl
+RUN apt-get update && apt-get install -y curl ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Expose port for development server
+EXPOSE 4321
+
+# Default command for development
+CMD ["npm", "run", "dev", "--", "--host"]

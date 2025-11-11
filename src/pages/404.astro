@@ -1,6 +1,6 @@
 ---
 import { useTranslations } from "../i18n/utils";
-import PageLayout from "../layouts/PageLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
     return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];
@@ -14,12 +14,11 @@ const validLang = lang === "en" || lang === "fr" ? lang : "en";
 const t = useTranslations(validLang);
 ---
 
-<PageLayout
+<BaseLayout
     title={`404 - ${t("404.title")}`}
     description={t("404.description")}
     lang={validLang}
     showBreadcrumb={true}
-    showToc={false}
     noindex={true}
 >
     <!-- 404 Error Content -->
@@ -58,7 +57,7 @@ const t = useTranslations(validLang);
             >
                 <a
                     href={`/${validLang}/`}
-                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-300 transition-colors"
+                    class="inline-flex btn-primary text-base"
                 >
                     <svg
                         class="mr-2 -ml-1 w-5 h-5"
@@ -116,4 +115,4 @@ const t = useTranslations(validLang);
             </div>
         </div>
     </div>
-</PageLayout>
+</BaseLayout>

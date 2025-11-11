@@ -4,12 +4,11 @@ project: "PC2"
 type: "phd"
 location: "Lyon, France"
 deadline: 2025-03-15
+publishedDate: 2024-02-01
 description: "Opportunité de doctorat en applications d'apprentissage automatique pour les systèmes de jumeaux numériques"
 requirements: ["Master en Informatique ou Ingénierie", "Solide formation en apprentissage automatique", "Expérience de programmation en Python", "Expérience de recherche préférée"]
 lang: "fr"
 ---
-
-# Doctorant - Apprentissage Automatique pour Jumeaux Numériques
 
 ## Aperçu du Poste
 

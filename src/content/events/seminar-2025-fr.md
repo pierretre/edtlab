@@ -4,11 +4,9 @@ date: 2025-01-15
 type: "seminar"
 location: "En ligne"
 description: "Séminaire explorant les tendances émergentes et les directions futures de la technologie des jumeaux numériques pour les applications d'ingénierie"
-url: "https://example.com/seminar"
+url: "http://edtlab.fr/"
 lang: "fr"
 ---
-
-# Avenir des Jumeaux Numériques en Ingénierie
 
 ## Aperçu du Séminaire
 

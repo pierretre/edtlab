@@ -104,9 +104,28 @@
   - Integrate events into news index pages using PageLayout
   - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5, 3.6_
 
+## Project Pages and Management
+
+- [x] 14. Create project pages and management
+- [ ] 14.1 Build individual project pages (PC1-PC5)
+  - Create dynamic project page template with ProjectLayout and ProjectHero components
+  - Display project objectives, participants, and progress using structured content
+  - Show related publications and resources for each project through content integration
+  - Implement responsive design with optional table of contents sidebar
+  - Ensure proper image handling and optimization for project illustrations
+  - _Requirements: 2.3, 4.2, 16.2, 28.2, 31.3_
+
+- [ ] 14.2 Implement projects listing and navigation
+  - Create projects overview page with all 5 projects using existing focused-projects index pages
+  - Build project cards with key information and links using TileGrid component
+  - Implement filtering and search within projects through navigation structure
+  - Ensure consistent project branding and color schemes across all project pages
+  - Integrate project navigation with main site navigation menu
+  - _Requirements: 2.3, 9.1, 1.3, 3.2_
+
 ## Front Page and User Experience
 
-- [x] 14. Enhance front page with interactive content using HomeLayout
+- [x] 15. Enhance front page with interactive content using HomeLayout
   - Update `src/pages/[lang]/index.astro` to use HomeLayout component
   - Build Hero section using Flowbite Hero component
   - Implement 8 interactive navigation tiles using Flowbite Cards
@@ -114,7 +133,7 @@
   - Replace placeholder content with dynamic content from collections
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 1.1_
 
-- [x] 15. Update color scheme to Scampi and Woodsmoke palette
+- [x] 16. Update color scheme to Scampi and Woodsmoke palette
   - Replace existing EDT color scheme with Scampi primary colors
   - Update secondary colors to Woodsmoke palette
   - Ensure RGAA 4.1 AA compliance with new color contrast ratios
@@ -122,7 +141,7 @@
   - Verify accessibility across all components and pages
   - _Requirements: 30.1, 30.2, 30.3_
 
-- [ ] 16. Integrate project diagrams and visual content from assets
+- [x] 17. Integrate project diagrams and visual content from assets
   - Add project overview diagrams (PC1-PC5) to focused projects pages
   - Integrate main program architecture diagrams into program page
   - Add physical-digital twin relationship diagram to relevant sections
@@ -131,31 +150,33 @@
   - Ensure all images meet RGAA 4.1 requirements for alternative text
   - _Requirements: 28.3, 31.3, 3.2, 16.2_
 
-- [ ] 17. Implement search functionality across content
-  - Build site-wide search using Flowbite Search component
-  - Index all content collections for search capability
-  - Implement search results display with relevance ranking
-  - Integrate search component into BaseLayout header
-  - Ensure search response time under 2 seconds
-  - _Requirements: 1.2, 1.4_
+- [x] 18. Optimize images using Astro's Picture component and consolidate image assets
+  - Replace ResponsiveImage and OptimizedImage components with Astro's built-in Picture component
+  - Move all images from public/ folder to src/assets/images/ for Astro optimization
+  - Remove duplicate images between public/ and src/assets/images/ directories
+  - Update all image references throughout the codebase to use assets instead of public paths
+  - Implement Picture component with responsive breakpoints and modern formats (WebP, AVIF)
+  - Remove custom image optimization components that are no longer needed
+  - Ensure all images maintain proper alt text and accessibility compliance
+  - _Requirements: 4.3, 28.2, 31.3_
 
 ## Accessibility Implementation
 
-- [x] 18. Implement basic accessibility foundation
+- [x] 19. Implement basic accessibility foundation
   - Set up RGAA-compliant color contrast ratios in Tailwind config
   - Add accessible typography with Marianne font and proper line heights
   - Implement focus management and visible focus indicators
   - Add basic keyboard navigation support
   - _Requirements: 30.1, 30.2, 30.3, 29.1, 29.2_
 
-- [ ] 19. Enhance RGAA 4.1 AA compliance features
+- [x] 20. Enhance RGAA 4.1 AA compliance features
   - Add semantic HTML structure with proper heading hierarchy
   - Implement ARIA labels and roles for complex components
   - Ensure all interactive elements have accessible names
   - Add alternative text requirements for all images
   - _Requirements: 28.1, 28.2, 28.3, 28.4, 31.1, 31.2, 31.3_
 
-- [ ] 20. Add screen reader and assistive technology support
+- [ ] 21. Add screen reader and assistive technology support
   - Implement proper content structure for screen readers
   - Add descriptive labels for all form elements
   - Create accessibility statement page
@@ -164,14 +185,14 @@
 
 ## Performance and SEO Optimization
 
-- [ ] 21. Implement performance optimization features
+- [x] 22. Implement performance optimization features
   - Configure static site generation for sub-3-second load times
   - Optimize images and assets for fast loading
   - Implement caching strategies and CDN-ready static files
-  - Add performance monitoring and Core Web Vitals tracking
+  - Optimize for fast loading and good user experience
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 1.1, 1.4_
 
-- [ ] 22. Add SEO optimization and search engine features
+- [x] 23. Add SEO optimization and search engine features
   - Implement meta tags and structured data for search optimization
   - Generate XML sitemaps for search engine crawling
   - Optimize page titles and descriptions for search visibility
@@ -180,39 +201,54 @@
 
 ## Analytics and Monitoring
 
-- [ ] 23. Integrate Google Analytics and user tracking
-  - Set up Google Analytics with GDPR compliance
-  - Implement user behavior and engagement tracking
-  - Add geographic distribution and language preference tracking
+- [x] 24. Integrate Matomo analytics with Docker deployment
+  - Set up Matomo Docker container with MySQL database
+  - Configure Matomo tracking script integration in BaseLayout component
+  - Implement GDPR-compliant analytics with privacy controls
+  - Add user behavior and engagement tracking with custom events
+  - Configure geographic distribution and language preference tracking
   - Track content performance and actionable interactions
+  - Set up Matomo dashboard for website analytics monitoring
   - _Requirements: 27.1, 27.2, 27.3, 27.4, 27.5_
 
 ## Content Management and Documentation
 
-- [ ] 24. Create content templates and editor documentation
+- [x] 25. Create content templates and editor documentation
   - Build markdown templates for different content types
   - Create comprehensive content creation guidelines
   - Document all available frontmatter options
   - Provide examples and templates for common content types
   - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 15.1, 15.2, 15.3, 15.4, 15.5_
 
-- [x] 25. Set up development environment and preview system
+- [x] 26. Set up development environment and preview system
   - Configure local development environment with hot-reload
   - Set up content preview functionality for both languages
   - Implement content validation and error handling
   - Enable build system with proper static site generation
   - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
 
+## Code Quality and Refactoring
+
+- [x] 27. Refactor duplicate utility functions across codebase
+  - Identify and catalog all duplicate utility functions across different files
+  - Create centralized utility modules organized by functional categories (string, date, validation, etc.)
+  - Consolidate duplicate functions into single, well-designed interfaces
+  - Update all import statements to reference centralized utility functions
+  - Ensure TypeScript types and JSDoc documentation for all utility functions
+  - Maintain test coverage and update test imports for refactored utilities
+  - Verify no regression issues are introduced during refactoring
+  - _GitHub Issue: #2 - Refactoring of utils functions_
+
 ## Testing and Quality Assurance
 
-- [ ] 26. Implement automated testing suite
+- [ ] 28. Implement automated testing suite
   - Create unit tests for critical components
   - Add route testing to verify all pages are accessible
   - Implement automated accessibility testing with axe-core
   - Set up content validation and schema testing
   - _Requirements: 26.1, 26.2, 26.3, 33.2_
 
-- [x] 27. Set up CI/CD pipeline with automated testing
+- [x] 29. Set up CI/CD pipeline with automated testing
   - Create GitHub Actions workflow for automated testing
   - Configure unit test execution on pull requests and pushes
   - Add route testing to verify all content pages are accessible
@@ -220,34 +256,60 @@
   - Set up test coverage reporting and quality gates
   - _Requirements: 26.1, 26.2, 26.3, 20.2_
 
-- [ ] 28. Add manual testing procedures
+- [x] 30. Enhance CI pipeline with comprehensive route and link testing
+  - Create separate script for route accessibility testing with current routes (excluding content-specific routes)
+  - Update Playwright configuration to include comprehensive link verification testing
+  - Implement automated testing of all internal and external links from each web page
+  - Add link validation to ensure no broken links exist across the site
+  - Configure CI to run link verification as part of the testing pipeline
+  - Set up proper error reporting and failure handling for broken links
+  - Ensure route testing covers all main navigation paths and content pages
+  - _Requirements: 26.1, 26.2, 26.3, 4.1, 4.2_
+
+- [ ] 31. Add manual testing procedures
   - Create accessibility testing procedures with assistive technology
   - Document keyboard navigation testing protocols
   - Set up content review and translation validation processes
-  - Implement performance testing and monitoring procedures
+  - Implement basic testing procedures
   - _Requirements: 33.1, 33.4, 33.5_
 
 ## Deployment and Infrastructure
 
-- [ ] 29. Set up build and deployment pipeline
+- [x] 32. Set up build and deployment pipeline with Matomo integration
   - Configure automated build process for static site generation
   - Implement continuous deployment pipeline with testing
-  - Set up Docker containerization with Nginx
-  - Configure deployment to VPS with SSL/TLS certificates
+  - Set up Docker containerization with Nginx for web server
+  - Create Docker Compose configuration for multi-container deployment
+  - Configure Matomo Docker container with MySQL database
+  - Set up reverse proxy configuration for Matomo analytics access
+  - Configure deployment to VPS with SSL/TLS certificates for both website and Matomo
+  - Ensure proper network configuration between containers
   - _Requirements: 20.1, 20.2, 20.3, 20.4, 20.5, 17.1, 17.2_
 
-- [ ] 30. Configure production monitoring and maintenance
-  - Set up uptime monitoring and performance alerts
-  - Implement error tracking and log management
-  - Configure automated security updates and backups
+- [ ] 33. Configure production monitoring and maintenance with Matomo
+  - Set up uptime monitoring and performance alerts for both website and Matomo
+  - Implement error tracking and log management for multi-container setup
+  - Configure automated security updates and backups for website and Matomo database
   - Add content freshness monitoring and validation
+  - Configure log rotation and monitoring for Docker containers
+  - Implement health checks for all services (website, Matomo, MySQL)
   - _Requirements: 17.3, 17.4, 17.5_
 
 ## Final Integration and Launch
 
-- [ ] 31. Populate initial content and perform final testing
+- [x] 34. Populate initial content and perform final testing
   - Migrate existing program content and documentation
   - Populate all content sections with initial bilingual content
   - Perform comprehensive accessibility and performance testing
   - Validate all requirements are met and functional
   - _Requirements: 16.1, 16.2, 16.3, 16.4, 16.5_
+
+- [x] 35. Build interactive contact form on contact page
+  - Create ContactForm component with Flowbite form elements
+  - Implement form validation with client-side and server-side validation
+  - Add bilingual form labels and error messages
+  - Integrate form submission handling with email functionality
+  - Ensure RGAA 4.1 accessibility compliance for form elements
+  - Add proper ARIA labels and error announcements
+  - Implement form success and error states with user feedback
+  - _Requirements: 3.8, 28.1, 28.2, 31.1, 31.2_
