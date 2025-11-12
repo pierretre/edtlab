@@ -120,7 +120,6 @@ export function generateEventStructuredData(
     startDate: string,
     location?: string,
     url?: string,
-    eventType: 'conference' | 'workshop' | 'seminar' = 'conference'
 ): StructuredData {
     return {
         '@context': 'https://schema.org',
@@ -250,8 +249,7 @@ export function generateCanonicalUrl(baseUrl: string, pathname: string): string 
  */
 export function generateAlternateUrls(
     baseUrl: string,
-    pathname: string,
-    currentLang: 'en' | 'fr'
+    pathname: string
 ): { hreflang: string; href: string }[] {
     const cleanBaseUrl = baseUrl.replace(/\/$/, '');
 

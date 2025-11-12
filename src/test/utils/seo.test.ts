@@ -55,7 +55,7 @@ describe('SEO Utilities', () => {
 
     describe('generateAlternateUrls', () => {
         it('should generate alternate language URLs', () => {
-            const result = generateAlternateUrls('https://example.com', '/en/about', 'en');
+            const result = generateAlternateUrls('https://example.com', '/en/about');
             expect(result).toHaveLength(3);
             expect(result[0]).toEqual({ hreflang: 'en', href: 'https://example.com/en/about' });
             expect(result[1]).toEqual({ hreflang: 'fr', href: 'https://example.com/fr/about' });
@@ -116,8 +116,7 @@ describe('SEO Utilities', () => {
                 'A test conference about digital twins',
                 '2023-06-01T09:00:00Z',
                 'Paris, France',
-                'https://example.com/conference',
-                'conference'
+                'https://example.com/conference'
             );
 
             expect(result['@context']).toBe('https://schema.org');

@@ -8,7 +8,9 @@ export function getLangFromUrl(url: URL) {
 
 export function useTranslations(lang: keyof typeof ui) {
     return function t(key: UIKey) {
-        return ui[lang][key] || ui[defaultLang][key];
+        // Access via any to avoid strict indexing issues across language maps
+        const uiAny: any = ui;
+        return uiAny[lang]?.[key] || uiAny[defaultLang]?.[key];
     }
 }
 
