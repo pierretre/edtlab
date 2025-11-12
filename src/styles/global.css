@@ -111,14 +111,14 @@
     input,
     textarea,
     select {
-        @apply min-h-11 font-sans rounded-md border-2 border-gray-300 p-3 transition-colors duration-200;
+        @apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5;
     }
 
     .card:focus,
     input:focus,
     textarea:focus,
     select:focus {
-        @apply outline-none border-primary-500 ring-2 ring-primary-200;
+        @apply outline-none ring-2 ring-primary-400;
     }
 
     /* Tables */
@@ -319,41 +319,6 @@
     clip: auto;
     white-space: normal;
 }
-
-/* Accessible button styles */
-button,
-.btn {
-    @apply min-h-11 min-w-11 font-medium rounded-md transition-all duration-200 cursor-pointer;
-}
-
-/* Accessible form elements */
-input,
-textarea,
-select {
-    @apply min-h-11 font-sans rounded-md border-2 border-gray-300 p-3 transition-colors duration-200;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    @apply outline-none border-primary-500 ring-2 ring-primary-200;
-}
-
-/* Tables */
-table {
-    @apply w-full border-collapse mb-4;
-}
-
-th,
-td {
-    @apply p-3 text-left border-b border-gray-200;
-}
-
-th {
-    @apply font-semibold bg-gray-50 text-gray-900;
-}
-
-
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {

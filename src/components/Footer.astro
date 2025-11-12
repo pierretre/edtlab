@@ -1,23 +1,24 @@
 ---
-import { getEntry } from "astro:content";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
-const menu = await getEntry("menu", lang);
 ---
 
 <div class="bg-[#e5e5e5] text-gray-800 w-full">
     <div class="max-w-5xl mx-auto p-6">
-        <div>
+        <div class="flex gap-8">
             <img
                 src="https://www.pepr-ia.fr/wp-content/uploads/2024/03/Group-6.png"
                 alt="République Française France 2030 - Logo officiel du programme de financement"
                 class="w-72 h-auto mb-4"
             />
-            <p class="text-sm text-gray-600">
-                {t("footer.tagline")}
-            </p>
+            <div class="my-auto">
+                <h5>Engineering Digital Twins</h5>
+                <p class="text-sm text-gray-600">
+                    {t("footer.tagline")}
+                </p>
+            </div>
         </div>
         <div class="text-sm">
             <h4 class="font-semibold text-gray-800 mb-2">
