@@ -219,18 +219,6 @@ npm run test:e2e
 3. Check RGAA compliance guidelines
 4. Review color contrast and keyboard navigation
 
-#### Route Validation Failures
-1. Check content file existence
-2. Verify Astro routing configuration
-3. Test routes locally: `npm run preview`
-4. Review URL structure consistency
-
-### Getting Help
-- Check GitHub Actions logs for detailed error messages
-- Review test output for specific failures
-- Use local validation script: `./scripts/validate-ci.sh`
-- Consult Astro documentation for framework-specific issues
-
 ## Maintenance
 
 ### Regular Tasks

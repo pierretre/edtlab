@@ -259,7 +259,7 @@ Configure nginx caching for better performance:
 
 ```nginx
 # Add to nginx/matomo.conf
-location ~* \.(css|js|png|jpg|jpeg|gif|ico|svg)$ {
+location ~* \\.(css|js|png|jpg|jpeg|gif|ico|svg)$ {
     expires 1y;
     add_header Cache-Control "public, immutable";
 }

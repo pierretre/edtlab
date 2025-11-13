@@ -17,10 +17,11 @@ Frontmatter is the YAML metadata at the top of each content file, enclosed betwe
 These fields are available across multiple content types:
 
 ### `title` (required)
+
 - **Type**: String
 - **Description**: The main title of the content
 - **Usage**: Displayed in navigation, page headers, and search results
-- **Guidelines**: 
+- **Guidelines**:
   - Keep under 60 characters for SEO
   - Use title case
   - Be descriptive and specific
@@ -30,6 +31,7 @@ title: "Digital Twin Framework for Engineering Applications"
 ```
 
 ### `lang` (required for most content)
+
 - **Type**: Enum (`"en"` | `"fr"`)
 - **Description**: Language of the content
 - **Usage**: Language-specific routing and content filtering
@@ -40,10 +42,11 @@ lang: "en"
 ```
 
 ### `description` (optional but recommended)
+
 - **Type**: String
 - **Description**: Brief description for SEO and content previews
 - **Usage**: Meta descriptions, search results, social media previews
-- **Guidelines**: 
+- **Guidelines**:
   - Keep between 120-160 characters
   - Include relevant keywords
   - Make it compelling and informative
@@ -59,10 +62,11 @@ Used for main content pages in `src/content/pages/`.
 ### Required Fields
 
 #### `href`
+
 - **Type**: String
 - **Description**: URL slug for the page
 - **Usage**: Generates the page URL
-- **Guidelines**: 
+- **Guidelines**:
   - Use kebab-case (lowercase with hyphens)
   - Keep short and descriptive
   - Must be unique within the language
@@ -74,6 +78,7 @@ href: "focused-projects"
 ### Optional Fields
 
 #### `toc`
+
 - **Type**: Boolean
 - **Default**: `false`
 - **Description**: Enable/disable table of contents generation
@@ -84,12 +89,43 @@ toc: true
 ```
 
 #### `lastModified`
+
 - **Type**: Date (YYYY-MM-DD)
 - **Description**: Last modification date
 - **Usage**: Content freshness indicators, change tracking
 
 ```yaml
 lastModified: 2024-01-15
+```
+
+#### `color`
+
+- **Type**: String (hex color)
+- **Description**: Optional theme color used for page header accents or meta visuals
+- **Usage**: Use a hex color string (e.g. `"#0a84ff"`) when a page needs a custom accent
+
+```yaml
+color: "#0a84ff"
+```
+
+#### `illustration`
+
+- **Type**: String
+- **Description**: Filename of an optional illustration image used for the page header or social previews
+- **Usage**: Store images in `src/assets/images/` or `public/` and reference the filename
+
+```yaml
+illustration: "header-illustration.jpg"
+```
+
+#### `template`
+
+- **Type**: String
+- **Description**: Optional template key to override the default page rendering layout
+- **Usage**: Use when a page should be rendered using a non-default layout; coordinate template names with developers
+
+```yaml
+template: "advanced"
 ```
 
 ## Publications Collection
@@ -99,6 +135,7 @@ Used for research publications in `src/content/publications/`.
 ### Required Fields
 
 #### `authors`
+
 - **Type**: Array of strings
 - **Description**: List of publication authors
 - **Usage**: Author listings, search, and filtering
@@ -109,6 +146,7 @@ authors: ["John Doe", "Jane Smith", "Pierre Dupont"]
 ```
 
 #### `type`
+
 - **Type**: Enum (`"journal"` | `"conference"` | `"book"` | `"report"`)
 - **Description**: Type of publication
 - **Usage**: Filtering and categorization
@@ -118,6 +156,7 @@ type: "journal"
 ```
 
 #### `year`
+
 - **Type**: Number
 - **Description**: Publication year
 - **Usage**: Chronological sorting and filtering
@@ -126,9 +165,22 @@ type: "journal"
 year: 2024
 ```
 
+### Required Fields (project association)
+
+#### `project`
+
+- **Type**: Enum (`"PC1"` | `"PC2"` | `"PC3"` | `"PC4"` | `"PC5"`)
+- **Description**: Focused project associated with the publication (used for filtering and project pages)
+- **Usage**: Associate publications to one of the focused projects
+
+```yaml
+project: "PC1"
+```
+
 ### Optional Fields
 
 #### `venue`
+
 - **Type**: String
 - **Description**: Journal name, conference name, or publisher
 - **Usage**: Publication details and credibility
@@ -138,6 +190,7 @@ venue: "Journal of Engineering Digital Twins"
 ```
 
 #### `doi`
+
 - **Type**: String
 - **Description**: Digital Object Identifier
 - **Usage**: Academic linking and citation
@@ -147,6 +200,7 @@ doi: "10.1000/182"
 ```
 
 #### `url`
+
 - **Type**: URL string
 - **Description**: Direct link to publication
 - **Usage**: External linking to full text
@@ -162,6 +216,7 @@ Used for events in `src/content/events/`.
 ### Required Fields
 
 #### `date`
+
 - **Type**: Date (YYYY-MM-DD)
 - **Description**: Event date
 - **Usage**: Chronological sorting and filtering
@@ -171,6 +226,7 @@ date: 2024-06-15
 ```
 
 #### `type`
+
 - **Type**: Enum (`"conference"` | `"workshop"` | `"seminar"`)
 - **Description**: Type of event
 - **Usage**: Categorization and filtering
@@ -179,9 +235,30 @@ date: 2024-06-15
 type: "conference"
 ```
 
+#### `photo`
+
+- **Type**: String
+- **Description**: Filename of the event photo used for listings, cards and social previews. This field is required for events.
+- **Usage**: Store images in `src/assets/images/` or `public/` and reference the filename here. Prefer optimized images and provide descriptive filenames.
+
+```yaml
+photo: "event-photo.jpg"
+```
+
+#### `project` (optional)
+
+- **Type**: Enum (`"PC1"` | `"PC2"` | `"PC3"` | `"PC4"` | `"PC5"` | `"General"`)
+- **Description**: Optional association to a focused project. Use this to group or filter events by project.
+- **Usage**: Include the project short-code if the event is associated with a specific focused project.
+
+```yaml
+project: "PC1"
+```
+
 ### Optional Fields
 
 #### `location`
+
 - **Type**: String
 - **Description**: Event location (city, country, or "Virtual")
 - **Usage**: Event details and logistics
@@ -191,6 +268,7 @@ location: "Paris, France"
 ```
 
 #### `url`
+
 - **Type**: URL string
 - **Description**: Official event website
 - **Usage**: External linking for registration and details
@@ -206,6 +284,7 @@ Used for press releases in `src/content/press-releases/`.
 ### Required Fields
 
 #### `date`
+
 - **Type**: Date (YYYY-MM-DD)
 - **Description**: Publication date of press release
 - **Usage**: Chronological sorting and news organization
@@ -214,24 +293,60 @@ Used for press releases in `src/content/press-releases/`.
 date: 2024-02-10
 ```
 
-#### `type`
-- **Type**: Enum (`"announcement"` | `"partnership"` | `"award"` | `"milestone"` | `"general"`)
-- **Description**: Type of press release
-- **Usage**: Categorization and filtering
+#### `photo`
+
+- **Type**: String
+- **Description**: Filename of the press-release hero image used in listings, cards and social previews. This field is required for press releases.
+- **Usage**: Store images in `src/assets/images/` or `public/` and reference the filename here. Prefer high-resolution images suitable for social previews.
 
 ```yaml
-type: "milestone"
+photo: "press-photo.jpg"
 ```
+
+### Notes on `type` vs `tags`
+
+The codebase's current content schema (see `src/content/config.ts`) does not define a `type` enum for press releases. Instead, press releases may use the optional `tags` array and an optional `template` field for categorization and rendering hints. If you previously used a `type` field, please migrate to `tags` (for filtering) or update the schema first and coordinate with developers.
 
 ### Optional Fields
 
+#### `tags`
+
+- **Type**: Array of strings
+- **Description**: Labels used for filtering and grouping press releases (e.g. `"announcement"`, `"partnership"`)
+- **Usage**: Use tags instead of a dedicated `type` enum for flexible categorization
+
+```yaml
+tags: ["announcement", "milestone"]
+```
+
 #### `url`
+
 - **Type**: URL string
 - **Description**: Link to external press coverage
 - **Usage**: Reference to media coverage or official announcements
 
 ```yaml
 url: "https://news.example.com/edt-funding-announcement"
+```
+
+#### `template`
+
+- **Type**: String (optional)
+- **Description**: Optional template key for rendering the press release with a specific layout
+- **Usage**: Leave blank for default rendering or set to a named template
+
+```yaml
+template: "compact"
+```
+
+#### `project` (optional)
+
+- **Type**: Enum (`"PC1"` | `"PC2"` | `"PC3"` | `"PC4"` | `"PC5"` | `"General"`)
+- **Description**: Optional association to a focused project. Use this to group or filter press releases by project.
+- **Usage**: Include the project short-code if the press release is associated with a specific focused project.
+
+```yaml
+project: "PC1"
 ```
 
 ## Job Offers Collection
@@ -241,6 +356,7 @@ Used for job postings in `src/content/job-offers/`.
 ### Required Fields
 
 #### `project`
+
 - **Type**: Enum (`"PC1"` | `"PC2"` | `"PC3"` | `"PC4"` | `"PC5"` | `"General"`)
 - **Description**: Associated research project
 - **Usage**: Project-based filtering and organization
@@ -250,6 +366,7 @@ project: "PC1"
 ```
 
 #### `type`
+
 - **Type**: Enum (`"postdoc"` | `"phd"` | `"engineer"` | `"intern"`)
 - **Description**: Position type
 - **Usage**: Position-based filtering and categorization
@@ -259,6 +376,7 @@ type: "postdoc"
 ```
 
 #### `location`
+
 - **Type**: String
 - **Description**: Job location
 - **Usage**: Geographic information for applicants
@@ -268,6 +386,7 @@ location: "Paris, France"
 ```
 
 #### `deadline`
+
 - **Type**: Date (YYYY-MM-DD)
 - **Description**: Application deadline
 - **Usage**: Urgency indicators and automatic filtering
@@ -277,6 +396,7 @@ deadline: 2024-12-31
 ```
 
 #### `publishedDate`
+
 - **Type**: Date (YYYY-MM-DD)
 - **Description**: Date when the job offer was first published
 - **Usage**: Chronological sorting and content freshness indicators
@@ -286,6 +406,7 @@ publishedDate: 2024-01-15
 ```
 
 #### `requirements`
+
 - **Type**: Array of strings
 - **Description**: List of job requirements
 - **Usage**: Qualification details and applicant screening
@@ -305,11 +426,13 @@ Used for navigation menus in `src/content/menu/`.
 ### Required Fields
 
 #### `sections`
+
 - **Type**: Array of section objects
 - **Description**: Navigation structure
 - **Usage**: Automatic menu generation
 
 Each section object contains:
+
 - `name` (string): Display name
 - `href` (string): URL path
 - `items` (optional array): Dropdown menu items

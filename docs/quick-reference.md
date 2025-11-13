@@ -13,6 +13,7 @@ lang: "en" # or "fr"
 description: "SEO description"
 toc: true # or false
 lastModified: 2024-01-01 # optional
+template: "new" # optional
 ---
 ```
 
@@ -230,15 +231,6 @@ npm run astro check
 **Press Types**: `announcement`, `partnership`, `award`, `milestone`, `general`  
 **Projects**: `PC1`, `PC2`, `PC3`, `PC4`, `PC5`, `General`  
 **Languages**: `en`, `fr`
-
-## Emergency Contacts
-
-| Issue Type | Contact |
-|------------|---------|
-| Content Questions | [content@edt-program.fr](mailto:content@edt-program.fr) |
-| Technical Problems | [tech@edt-program.fr](mailto:tech@edt-program.fr) |
-| Accessibility Issues | [accessibility@edt-program.fr](mailto:accessibility@edt-program.fr) |
-| Urgent Site Issues | [urgent@edt-program.fr](mailto:urgent@edt-program.fr) |
 
 ## Useful Links
 

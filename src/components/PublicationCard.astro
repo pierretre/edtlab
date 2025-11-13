@@ -17,7 +17,9 @@ const { publication } = Astro.props as Props;
     data-project={publication.project}
     role="row"
 >
-    <h3 class="flex font-medium justify-between text-gray-900 leading-tight">
+    <h3
+        class="flex items-baseline font-medium justify-between text-gray-900 leading-tight"
+    >
         {
             publication.url ? (
                 <a

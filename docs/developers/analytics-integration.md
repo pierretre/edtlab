@@ -26,18 +26,20 @@ The website uses Matomo (formerly Piwik) for privacy-focused web analytics. The 
 Astro reads environment files in priority order:
 
 **Development Mode (`npm run dev`):**
+
 1. `.env.local` (highest priority, not committed)
-2. `.env.development.local` 
+2. `.env.development.local`
 3. `.env.development` ✅ (your main dev config)
 4. `.env` (base config)
 
 **Production Mode (`npm run build`):**
+
 1. `.env.local` (highest priority, not committed)
 2. `.env.production.local`
 3. `.env.production` ✅ (your main prod config)
 4. `.env` (base config)
 
-### Required Environment Variables
+## Required Environment Variables
 
 ```bash
 # Required
@@ -45,7 +47,7 @@ MATOMO_URL=http://localhost:8080
 MATOMO_SITE_ID=3
 ```
 
-### Optional Environment Variables
+## Optional Environment Variables
 
 ```bash
 # Privacy & Performance Settings
@@ -55,9 +57,10 @@ MATOMO_ENABLE_HEARTBEAT=true         # Default: false (accurate time tracking)
 MATOMO_HEARTBEAT_TIMER=15            # Default: 15 seconds
 ```
 
-### Environment File Examples
+## Environment File Examples
 
 **Development (`.env.development`):**
+
 ```bash
 # Development Environment Configuration
 
@@ -86,6 +89,7 @@ SITE_NAME="EDT Research Program Dev"
 ```
 
 **Production (`.env.production`):**
+
 ```bash
 # Production Environment Configuration
 
@@ -124,12 +128,12 @@ _paq.push(['setDoNotTrack', respectDNT]);
 
 // GDPR-compliant cookieless tracking
 if (!enableCookies) {
-  _paq.push(['disableCookies']);
+ _paq.push(['disableCookies']);
 }
 
 // Performance tracking with heartbeat
 if (enableHeartbeat) {
-  _paq.push(['enableHeartBeatTimer', heartbeatTimer]);
+ _paq.push(['enableHeartBeatTimer', heartbeatTimer]);
 }
 ```
 
@@ -142,42 +146,42 @@ The project includes a complete Docker setup for Matomo:
 ```yaml
 # docker-compose.dev.yml
 services:
-  # Matomo Database
-  matomo-db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: matomo
-      MYSQL_USER: matomo
-      MYSQL_PASSWORD: matomo
-    volumes:
-      - matomo-db-data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
+ # Matomo Database
+ matomo-db:
+  image: mysql:8.0
+  environment:
+   MYSQL_ROOT_PASSWORD: rootpassword
+   MYSQL_DATABASE: matomo
+   MYSQL_USER: matomo
+   MYSQL_PASSWORD: matomo
+  volumes:
+   - matomo-db-data:/var/lib/mysql
+  command: --default-authentication-plugin=mysql_native_password
 
-  # Matomo Analytics
-  matomo:
-    image: matomo:4-apache
-    depends_on:
-      - matomo-db
-    environment:
-      MATOMO_DATABASE_HOST: matomo-db
-      MATOMO_DATABASE_ADAPTER: mysql
-      MATOMO_DATABASE_TABLES_PREFIX: matomo_
-      MATOMO_DATABASE_USERNAME: matomo
-      MATOMO_DATABASE_PASSWORD: matomo
-      MATOMO_DATABASE_DBNAME: matomo
-      MATOMO_GENERAL_SALT: dev_salt_change_in_production_12345678901234567890
-      MATOMO_GENERAL_TRUSTED_HOSTS: "localhost,localhost:8080,127.0.0.1,127.0.0.1:8080"
-      MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK: 1
-      MATOMO_SKIP_BOOTSTRAP: 0
-    volumes:
-      - matomo-data:/var/www/html
-    ports:
-      - "8080:80"
+ # Matomo Analytics
+ matomo:
+  image: matomo:4-apache
+  depends_on:
+   - matomo-db
+  environment:
+   MATOMO_DATABASE_HOST: matomo-db
+   MATOMO_DATABASE_ADAPTER: mysql
+   MATOMO_DATABASE_TABLES_PREFIX: matomo_
+   MATOMO_DATABASE_USERNAME: matomo
+   MATOMO_DATABASE_PASSWORD: matomo
+   MATOMO_DATABASE_DBNAME: matomo
+   MATOMO_GENERAL_SALT: dev_salt_change_in_production_12345678901234567890
+   MATOMO_GENERAL_TRUSTED_HOSTS: "localhost,localhost:8080,127.0.0.1,127.0.0.1:8080"
+   MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK: 1
+   MATOMO_SKIP_BOOTSTRAP: 0
+  volumes:
+   - matomo-data:/var/www/html
+  ports:
+   - "8080:80"
 
 volumes:
-  matomo-db-data:
-  matomo-data:
+ matomo-db-data:
+ matomo-data:
 ```
 
 ### Starting Matomo
@@ -198,7 +202,7 @@ docker-compose -f docker-compose.dev.yml logs matomo
 ### Initial Setup Steps
 
 1. **Start Matomo**: `docker-compose -f docker-compose.dev.yml up -d matomo`
-2. **Access Dashboard**: http://localhost:8080
+2. **Access Dashboard**: <http://localhost:8080>
 3. **Complete Setup**: Follow the Matomo installation wizard
 4. **Get Site ID**: Note the Site ID from your Matomo dashboard
 5. **Update Environment**: Set `MATOMO_SITE_ID` in your `.env.development`
@@ -209,7 +213,7 @@ If you encounter trusted hosts errors, the Docker Compose configuration includes
 
 ```yaml
 environment:
-  MATOMO_GENERAL_TRUSTED_HOSTS: "localhost,localhost:8080,127.0.0.1,127.0.0.1:8080"
+ MATOMO_GENERAL_TRUSTED_HOSTS: "localhost,localhost:8080,127.0.0.1,127.0.0.1:8080"
 ```
 
 For additional hosts, update this environment variable.
@@ -258,20 +262,20 @@ const cleanMatomoUrl = matomoUrl.replace(/^https?:/, '');
 ---
 
 {shouldLoadMatomo && (
-  <!-- Matomo Analytics -->
-  <script is:inline define:vars={{ 
-    matomoUrl: cleanMatomoUrl, 
-    matomoSiteId, 
-    enableCookies, 
-    respectDNT, 
-    enableHeartbeat, 
-    heartbeatTimer, 
-    isDev 
-  }}>
-    // Privacy-focused Matomo initialization
-    // Error handling and development logging
-    // Async script loading with callbacks
-  </script>
+ <!-- Matomo Analytics -->
+ <script is:inline define:vars={{ 
+  matomoUrl: cleanMatomoUrl, 
+  matomoSiteId, 
+  enableCookies, 
+  respectDNT, 
+  enableHeartbeat, 
+  heartbeatTimer, 
+  isDev 
+ }}>
+  // Privacy-focused Matomo initialization
+  // Error handling and development logging
+  // Async script loading with callbacks
+ </script>
 )}
 ```
 
@@ -302,26 +306,26 @@ The publications system includes built-in analytics:
 ```javascript
 // Filter usage tracking
 if (window._paq) {
-  if (typeValue) {
-    window._paq.push(['trackEvent', 'Publications', 'Filter', 'Type: ' + typeValue]);
-  }
-  if (yearValue) {
-    window._paq.push(['trackEvent', 'Publications', 'Filter', 'Year: ' + yearValue]);
-  }
-  if (searchValue) {
-    window._paq.push(['trackSiteSearch', searchValue, 'Publications', visibleCount]);
-  }
+ if (typeValue) {
+  window._paq.push(['trackEvent', 'Publications', 'Filter', 'Type: ' + typeValue]);
+ }
+ if (yearValue) {
+  window._paq.push(['trackEvent', 'Publications', 'Filter', 'Year: ' + yearValue]);
+ }
+ if (searchValue) {
+  window._paq.push(['trackSiteSearch', searchValue, 'Publications', visibleCount]);
+ }
 }
 
 // Publication link clicks
 document.querySelectorAll('.publication-link').forEach(link => {
-  link.addEventListener('click', function() {
-    if (window._paq) {
-      const publicationType = this.dataset.publicationType;
-      const publicationTitle = this.dataset.publicationTitle;
-      window._paq.push(['trackEvent', 'Publications', 'View', `${publicationType}: ${publicationTitle}`]);
-    }
-  });
+ link.addEventListener('click', function() {
+  if (window._paq) {
+   const publicationType = this.dataset.publicationType;
+   const publicationTitle = this.dataset.publicationTitle;
+   window._paq.push(['trackEvent', 'Publications', 'View', `${publicationType}: ${publicationTitle}`]);
+  }
+ });
 });
 ```
 
@@ -332,17 +336,17 @@ You can add custom tracking throughout the application:
 ```javascript
 // Basic event tracking
 if (window._paq) {
-  window._paq.push(['trackEvent', 'Category', 'Action', 'Name', Value]);
+ window._paq.push(['trackEvent', 'Category', 'Action', 'Name', Value]);
 }
 
 // Site search tracking
 if (window._paq) {
-  window._paq.push(['trackSiteSearch', 'search term', 'category', resultsCount]);
+ window._paq.push(['trackSiteSearch', 'search term', 'category', resultsCount]);
 }
 
 // Goal tracking
 if (window._paq) {
-  window._paq.push(['trackGoal', goalId]);
+ window._paq.push(['trackGoal', goalId]);
 }
 ```
 
@@ -362,11 +366,11 @@ In development mode, check the browser console for:
 ```javascript
 // Configuration logging
 Loading Matomo Analytics... {
-  matomoUrl: "//localhost:8080",
-  matomoSiteId: "3",
-  enableCookies: false,
-  respectDNT: true,
-  enableHeartbeat: true
+ matomoUrl: "//localhost:8080",
+ matomoSiteId: "3",
+ enableCookies: false,
+ respectDNT: true,
+ enableHeartbeat: true
 }
 
 // Event tracking
@@ -386,13 +390,14 @@ Loading Matomo Analytics... {
 ### Environment Setup
 
 1. **Create Production Environment**:
-   ```bash
-   # .env.production
-   MATOMO_URL=https://analytics.yourdomain.com
-   MATOMO_SITE_ID=1
-   MATOMO_ENABLE_COOKIES=false
-   MATOMO_RESPECT_DNT=true
-   ```
+
+  ```bash
+  # .env.production
+  MATOMO_URL=https://analytics.yourdomain.com
+  MATOMO_SITE_ID=1
+  MATOMO_ENABLE_COOKIES=false
+  MATOMO_RESPECT_DNT=true
+  ```
 
 2. **SSL Configuration**: Ensure HTTPS for production Matomo
 3. **Domain Configuration**: Update trusted hosts for production domain
@@ -404,26 +409,26 @@ The project includes production-ready Nginx configuration (`nginx/matomo.conf`):
 
 ```nginx
 server {
-    listen 443 ssl http2;
-    server_name analytics.yourdomain.com;
+  listen 443 ssl http2;
+  server_name analytics.yourdomain.com;
 
-    # SSL Configuration
-    ssl_certificate /etc/nginx/ssl/matomo.crt;
-    ssl_certificate_key /etc/nginx/ssl/matomo.key;
+  # SSL Configuration
+  ssl_certificate /etc/nginx/ssl/matomo.crt;
+  ssl_certificate_key /etc/nginx/ssl/matomo.key;
     
-    # Security headers
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    add_header X-Content-Type-Options nosniff always;
-    add_header X-Frame-Options DENY always;
+  # Security headers
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+  add_header X-Content-Type-Options nosniff always;
+  add_header X-Frame-Options DENY always;
     
-    # Proxy to Matomo
-    location / {
-        proxy_pass http://matomo:80;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
+  # Proxy to Matomo
+  location / {
+    proxy_pass http://matomo:80;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
 }
 ```
 
@@ -432,47 +437,55 @@ server {
 ### Common Issues
 
 1. **Analytics not loading**
-   - Check `MATOMO_URL` and `MATOMO_SITE_ID` environment variables
-   - Verify Matomo server is accessible
-   - Check browser console for error messages
+
+- Check `MATOMO_URL` and `MATOMO_SITE_ID` environment variables
+- Verify Matomo server is accessible
+- Check browser console for error messages
 
 2. **Trusted hosts error**
-   - Update Docker Compose `MATOMO_GENERAL_TRUSTED_HOSTS`
-   - Manually edit `config/config.ini.php` in Matomo container
-   - Restart Matomo container after changes
+
+- Update Docker Compose `MATOMO_GENERAL_TRUSTED_HOSTS`
+- Manually edit `config/config.ini.php` in Matomo container
+- Restart Matomo container after changes
 
 3. **No data in Matomo**
-   - Verify site ID matches Matomo dashboard
-   - Check if Do Not Track is enabled (see Important Notes)
-   - Ensure JavaScript is enabled in browser
+
+- Verify site ID matches Matomo dashboard
+- Check if Do Not Track is enabled (see Important Notes)
+- Ensure JavaScript is enabled in browser
 
 4. **CORS issues**
-   - Verify Matomo server allows requests from your domain
-   - Check SSL certificate validity
-   - Ensure proper proxy configuration
+
+- Verify Matomo server allows requests from your domain
+- Check SSL certificate validity
+- Ensure proper proxy configuration
 
 ### Debug Steps
 
 1. **Check Environment Variables**:
-   ```javascript
-   console.log('MATOMO_URL:', import.meta.env.MATOMO_URL);
-   console.log('MATOMO_SITE_ID:', import.meta.env.MATOMO_SITE_ID);
-   ```
+
+```javascript
+console.log('MATOMO_URL:', import.meta.env.MATOMO_URL);
+console.log('MATOMO_SITE_ID:', import.meta.env.MATOMO_SITE_ID);
+```
 
 2. **Verify Script Loading**:
-   - Open browser Network tab
-   - Look for `matomo.js` request
-   - Check for 200 status code
+
+- Open browser Network tab
+- Look for `matomo.js` request
+- Check for 200 status code
 
 3. **Test Matomo Server**:
-   ```bash
-   curl http://localhost:8080/matomo.php
-   ```
+
+```bash
+curl http://localhost:8080/matomo.php
+```
 
 4. **Check Container Logs**:
-   ```bash
-   docker-compose -f docker-compose.dev.yml logs matomo
-   ```
+
+```bash
+docker-compose -f docker-compose.dev.yml logs matomo
+```
 
 ## Important Notes
 
@@ -482,22 +495,26 @@ server {
 
 - **If users have DNT enabled in their browser, NO analytics data will be collected**
 - **To receive analytics data during development/testing, you must either:**
-  1. **Disable DNT in your browser** (recommended for testing), OR
-  2. **Set `MATOMO_RESPECT_DNT=false` in your environment** (not recommended for production)
+
+ 1. **Disable DNT in your browser** (recommended for testing), OR
+ 2. **Set `MATOMO_RESPECT_DNT=false` in your environment** (not recommended for production)
 
 ### Browser DNT Settings
 
 To disable Do Not Track for testing:
 
 **Chrome/Edge:**
+
 1. Settings → Privacy and security → Cookies and other site data
 2. Turn off "Send a 'Do Not Track' request"
 
 **Firefox:**
+
 1. Settings → Privacy & Security
 2. Under "Enhanced Tracking Protection", uncheck "Send websites a 'Do Not Track' signal"
 
 **Safari:**
+
 1. Safari → Preferences → Privacy
 2. Uncheck "Prevent cross-site tracking"
 
