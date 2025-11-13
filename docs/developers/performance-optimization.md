@@ -204,19 +204,19 @@ The website enforces strict performance budgets:
 ### Performance Testing
 
 1. **Lighthouse**
-   ```bash
-   npx lighthouse http://localhost:4321 --view
-   ```
+```bash
+npx lighthouse http://localhost:4321 --view
+```
 
 2. **WebPageTest**
-   - Test from multiple locations
-   - Analyze waterfall charts
-   - Check for optimization opportunities
+- Test from multiple locations
+- Analyze waterfall charts
+- Check for optimization opportunities
 
 3. **Chrome DevTools**
-   - Use Performance tab for detailed analysis
-   - Check Network tab for resource loading
-   - Analyze Coverage tab for unused code
+- Use Performance tab for detailed analysis
+- Check Network tab for resource loading
+- Analyze Coverage tab for unused code
 
 ## Continuous Monitoring
 

@@ -22,7 +22,6 @@ const normalizedNews = pressReleaseItems.map((item) => ({
 
 // Get unique projects and types for filters
 const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
-const types = ["postdoc", "phd", "engineer", "intern"] as const;
 
 const normalizedEvents = events.map((item) => ({ ...item, type: "event" }));
 const feed = [...normalizedNews, ...normalizedEvents].sort(
@@ -69,268 +68,234 @@ const feed = [...normalizedNews, ...normalizedEvents].sort(
             </label>
             <select id="category-filter">
                 <option value="">{t("news.filter.all-categories")}</option>
-                <option value="news">{t("news.filter.type.news")}</option>
-                <option value="event">{t("news.filter.type.event")}</option>
+                <option value="news">{t("badge.news")}</option>
+                <option value="event">{t("badge.event")}</option>
             </select>
         </div>
 
-        {t("news.filter.project")}
-    </div>
-    <select id="project-filter">
-        <option value="">{t("news.filter.all-projects")}</option>
-        <option value="news">{t("news.filter.type.news")}</option>
-        <option value="event">{t("news.filter.type.event")}</option>
-    </select>
-</div>
-
-<!-- Search Filter -->
-<div>
-    <label
-        for="search-filter"
-        class="block mb-2 text-sm font-medium text-gray-900"
-    >
-        {t("news.filter.search")}
-    </label>
-    <input
-        type="text"
-        id="search-filter"
-        placeholder={t("news.filter.search-placeholder")}
-    />
-</div>
-
-<div class="hidden md:block" aria-hidden="true"></div>
-<div class="hidden md:block" aria-hidden="true"></div>
-<div class="hidden md:block" aria-hidden="true"></div>
-
-<div class="h-full flex flex-col justify-end">
-    <button
-        id="clear-filters"
-        class="text-primary-600 hover:text-primary-600 text-sm font-medium"
-        aria-colindex="6"
-    >
-        {t("news.filter.clear")}
-    </button>
-</div>
-
-<!-- Compact filter bar: lightweight, small footprint -->
-<div class="flex items-center justify-between mb-6 space-x-4">
-    <div class="flex items-center space-x-4 w-full md:w-auto">
-        <div class="flex items-center space-x-2">
-            <label for="news-search" class="sr-only"
-                >{t("news.filter.search-label")}</label
+        <!-- Search Filter -->
+        <div>
+            <label
+                for="search-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
             >
+                {t("news.filter.search")}
+            </label>
             <input
-                id="news-search"
-                type="search"
+                type="text"
+                id="search-filter"
                 placeholder={t("news.filter.search-placeholder")}
-                class="px-3 py-2 border rounded-md text-sm"
             />
         </div>
 
-        <div class="flex items-center">
-            <label for="news-type" class="sr-only"
-                >{t("news.filter.type-label")}</label
-            >
-            <select id="news-type" class="px-3 py-2 border rounded-md text-sm">
-                <option value="all">{t("news.filter.type.all")}</option>
-                <option value="news">{t("news.filter.type.news")}</option>
-                <option value="event">{t("news.filter.type.event")}</option>
-            </select>
-        </div>
+        <!-- <div class="hidden md:block" aria-hidden="true"></div> -->
+        <div class="hidden md:block" aria-hidden="true"></div>
+        <div class="hidden md:block" aria-hidden="true"></div>
 
-        <div class="flex items-center">
-            <label for="news-sort" class="sr-only"
-                >{t("news.filter.sort-label")}</label
+        <div class="h-full flex flex-col justify-end">
+            <button
+                id="clear-filters"
+                class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                aria-colindex="6"
             >
-            <select id="news-sort" class="px-3 py-2 border rounded-md text-sm">
-                <option value="newest">{t("news.filter.sort.newest")}</option>
-                <option value="oldest">{t("news.filter.sort.oldest")}</option>
-            </select>
+                {t("news.filter.clear")}
+            </button>
         </div>
-
-        <button
-            id="news-reset"
-            type="button"
-            class="text-sm text-gray-500 hover:text-gray-700"
-            aria-label={t("filter.clear")}>{t("filter.clear")}</button
+    </div>
+    <section class="mb-12">
+        <div
+            id="unified-list"
+            class="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-    </div>
+            {feed.map((item) => <UnifiedCard item={item} lang={lang} t={t} />)}
+        </div>
+        <!-- Pagination controls -->
+        <nav
+            id="news-pagination"
+            class="mt-6 flex items-center justify-center space-x-2"
+            aria-label="Pagination"
+        >
+        </nav>
+    </section>
 
-    <div class="text-sm text-gray-600">
-        {
-            t("news.summary")
-                .replace("{items}", feed.length.toString())
-                .replace("{news}", pressReleaseItems.length.toString())
-                .replace("{events}", events.length.toString())
-        }
-    </div>
-</div>
-<section class="mb-12">
-    <div
-        id="unified-list"
-        class="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-    >
-        {feed.map((item) => <UnifiedCard item={item} lang={lang} t={t} />)}
-    </div>
-    <!-- Pagination controls -->
-    <nav
-        id="news-pagination"
-        class="mt-6 flex items-center justify-center space-x-2"
-        aria-label="Pagination"
-    >
-    </nav>
-</section>
+    <!-- Lightweight client-side filtering/sorting with pagination (keeps page light) -->
+    <script type="module" is:inline>
+        const qs = (s, el = document) => el.querySelector(s);
+        const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
 
-<!-- Lightweight client-side filtering/sorting with pagination (keeps page light) -->
-<script type="module" is:inline>
-    const qs = (s, el = document) => el.querySelector(s);
-    const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
+        const PAGE_SIZE = 12;
+        let currentPage = 1;
 
-    const PAGE_SIZE = 12;
-    let currentPage = 1;
-
-    function renderPagination(totalPages) {
-        const container = qs("#news-pagination");
-        if (!container) return;
-        container.innerHTML = "";
-        if (totalPages <= 1) {
-            container.style.display = "none";
-            return;
-        }
-        container.style.display = "";
-
-        const makeButton = (text, ariaLabel, disabled) => {
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.className =
-                "px-3 py-1 rounded text-sm border bg-white hover:bg-gray-50";
-            btn.textContent = text;
-            if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
-            if (disabled) btn.disabled = true;
-            return btn;
-        };
-
-        // Prev
-        const prev = makeButton("‹", "Previous page", currentPage === 1);
-        prev.addEventListener("click", () => {
-            if (currentPage > 1) {
-                currentPage--;
-                updatePageDisplay();
+        function renderPagination(totalPages) {
+            const container = qs("#news-pagination");
+            if (!container) return;
+            container.innerHTML = "";
+            if (totalPages <= 1) {
+                container.style.display = "none";
+                return;
             }
-        });
-        container.appendChild(prev);
+            container.style.display = "";
 
-        for (let i = 1; i <= totalPages; i++) {
-            const pageBtn = makeButton(i.toString(), `Page ${i}`, false);
-            if (i === currentPage) {
-                pageBtn.classList.add("font-semibold", "bg-gray-100");
-                pageBtn.setAttribute("aria-current", "page");
+            const makeButton = (text, ariaLabel, disabled) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className =
+                    "px-3 py-1 rounded text-sm border bg-white hover:bg-gray-50";
+                btn.textContent = text;
+                if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
+                if (disabled) btn.disabled = true;
+                return btn;
+            };
+
+            // Prev
+            const prev = makeButton("‹", "Previous page", currentPage === 1);
+            prev.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePageDisplay();
+                }
+            });
+            container.appendChild(prev);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = makeButton(i.toString(), `Page ${i}`, false);
+                if (i === currentPage) {
+                    pageBtn.classList.add("font-semibold", "bg-gray-100");
+                    pageBtn.setAttribute("aria-current", "page");
+                }
+                pageBtn.addEventListener("click", () => {
+                    currentPage = i;
+                    updatePageDisplay();
+                });
+                container.appendChild(pageBtn);
             }
-            pageBtn.addEventListener("click", () => {
-                currentPage = i;
+
+            const next = makeButton("›", "Next page", false);
+            next.addEventListener("click", () => {
+                currentPage++;
                 updatePageDisplay();
             });
-            container.appendChild(pageBtn);
+            container.appendChild(next);
         }
 
-        const next = makeButton("›", "Next page", false);
-        next.addEventListener("click", () => {
-            currentPage++;
+        function updatePageDisplay() {
+            const list = qs("#unified-list");
+            if (!list) return;
+            const matched = qsa(".news-item", list).filter(
+                (c) => c.dataset.matched === "1",
+            );
+            const totalPages = Math.max(
+                1,
+                Math.ceil(matched.length / PAGE_SIZE),
+            );
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            // Hide all first
+            qsa(".news-item", list).forEach((c) => {
+                c.style.display = "none";
+            });
+
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const end = start + PAGE_SIZE;
+            matched.forEach((c, idx) => {
+                if (idx >= start && idx < end) c.style.display = "";
+            });
+
+            renderPagination(totalPages);
+        }
+
+        function applyFilters() {
+            const searchEl = qs("#search-filter");
+            const search = (searchEl ? searchEl.value : "")
+                .trim()
+                .toLowerCase();
+            const typeEl = qs("#category-filter");
+            const type = typeEl ? typeEl.value : "";
+            const projectEl = qs("#project-filter");
+            const project = projectEl ? projectEl.value : "";
+
+            const list = qs("#unified-list");
+            if (!list) return;
+
+            // Mark matched items
+            qsa(".news-item", list).forEach((item) => {
+                const title = (item.dataset.title || "").toLowerCase();
+                const location = (item.dataset.location || "").toLowerCase();
+                const itemType = item.dataset.type || "news";
+                const itemProject = (item.dataset.project || "").toString();
+
+                const matchesType =
+                    !type ||
+                    type === "" ||
+                    type === "all" ||
+                    (type === "news" && itemType === "news") ||
+                    (type === "event" && itemType === "event");
+
+                const matchesProject =
+                    !project || project === "" || itemProject === project;
+
+                const matchesSearch =
+                    !search ||
+                    title.includes(search) ||
+                    location.includes(search);
+
+                item.dataset.matched =
+                    matchesType && matchesSearch && matchesProject ? "1" : "0";
+            });
+
+            // Sorting children in-place by data-date (newest first)
+            const children = qsa(".news-item", list).slice();
+            children.sort((a, b) => {
+                const ad = parseInt(a.dataset.date || "0", 10);
+                const bd = parseInt(b.dataset.date || "0", 10);
+                return bd - ad;
+            });
+            children.forEach((c) => list.appendChild(c));
+
+            // Reset to first page on filter change
+            currentPage = 1;
             updatePageDisplay();
-        });
-        container.appendChild(next);
-    }
-
-    function updatePageDisplay() {
-        const list = qs("#unified-list");
-        if (!list) return;
-        const matched = qsa(".news-item", list).filter(
-            (c) => c.dataset.matched === "1",
-        );
-        const totalPages = Math.max(1, Math.ceil(matched.length / PAGE_SIZE));
-        if (currentPage > totalPages) currentPage = totalPages;
-
-        // Hide all first
-        qsa(".news-item", list).forEach((c) => {
-            c.style.display = "none";
-        });
-
-        const start = (currentPage - 1) * PAGE_SIZE;
-        const end = start + PAGE_SIZE;
-        matched.forEach((c, idx) => {
-            if (idx >= start && idx < end) c.style.display = "";
-        });
-
-        renderPagination(totalPages);
-    }
-
-    function applyFilters() {
-        const search = qs("#news-search").value.trim().toLowerCase();
-        const type = qs("#news-type").value;
-        const sort = qs("#news-sort").value;
-
-        const list = qs("#unified-list");
-        if (!list) return;
-
-        // Mark matched items
-        qsa(".news-item", list).forEach((item) => {
-            const title = (item.dataset.title || "").toLowerCase();
-            const location = (item.dataset.location || "").toLowerCase();
-            const itemType = item.dataset.type || "news";
-            const matchesType =
-                type === "all" ||
-                (type === "news" && itemType === "news") ||
-                (type === "event" && itemType === "event");
-            const matchesSearch =
-                !search || title.includes(search) || location.includes(search);
-            item.dataset.matched = matchesType && matchesSearch ? "1" : "0";
-        });
-
-        // Sorting children in-place by data-date (keep DOM order)
-        const children = qsa(".news-item", list).slice();
-        children.sort((a, b) => {
-            const ad = parseInt(a.dataset.date || "0", 10);
-            const bd = parseInt(b.dataset.date || "0", 10);
-            return sort === "newest" ? bd - ad : ad - bd;
-        });
-        children.forEach((c) => list.appendChild(c));
-
-        // Reset to first page on filter change
-        currentPage = 1;
-        updatePageDisplay();
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const inputs = [qs("#news-search"), qs("#news-type"), qs("#news-sort")];
-        inputs.forEach((i) => i && i.addEventListener("input", applyFilters));
-
-        // Reset button clears filters and reapplies
-        const resetBtn = qs("#news-reset");
-        if (resetBtn) {
-            resetBtn.addEventListener("click", () => {
-                const s = qs("#news-search");
-                const type = qs("#news-type");
-                const sort = qs("#news-sort");
-                if (s) s.value = "";
-                if (type) type.value = "all";
-                if (sort) sort.value = "newest";
-                currentPage = 1;
-                applyFilters();
-                if (s) s.focus();
-            });
         }
 
-        // small UX: debounce search
-        let debounceTimer;
-        const searchEl = qs("#news-search");
-        if (searchEl) {
-            searchEl.addEventListener("input", () => {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(applyFilters, 200);
-            });
-        }
+        document.addEventListener("DOMContentLoaded", () => {
+            // Wire actual filter inputs present in the template
+            const inputs = [
+                qs("#search-filter"),
+                qs("#category-filter"),
+                qs("#project-filter"),
+            ];
+            inputs.forEach(
+                (i) => i && i.addEventListener("input", applyFilters),
+            );
 
-        // initial apply
-        applyFilters();
-    });
-</script>
+            // Reset / clear button clears filters and reapplies
+            const resetBtn = qs("#clear-filters");
+            if (resetBtn) {
+                resetBtn.addEventListener("click", () => {
+                    const s = qs("#search-filter");
+                    const type = qs("#category-filter");
+                    const proj = qs("#project-filter");
+                    if (s) s.value = "";
+                    if (type) type.value = "";
+                    if (proj) proj.value = "";
+                    currentPage = 1;
+                    applyFilters();
+                    if (s) s.focus();
+                });
+            }
+
+            // small UX: debounce search
+            let debounceTimer;
+            const searchElem = qs("#search-filter");
+            if (searchElem) {
+                searchElem.addEventListener("input", () => {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(applyFilters, 200);
+                });
+            }
+
+            // initial apply
+            applyFilters();
+        });
+    </script>
+</div>

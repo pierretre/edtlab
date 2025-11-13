@@ -1,10 +1,13 @@
 ---
 title: "Press Release Title"
 date: 2024-02-10  # Publication date in YYYY-MM-DD format
-type: "announcement"  # Options: "announcement", "partnership", "award", "milestone", "general"
+photo: "press-photo.jpg"  # REQUIRED: filename of the press release hero image used in listings and social previews
+project: "PC1"  # Optional: associate press release with a focused project (PC1..PC5 or General)
 description: "Brief summary of the press release for listings and social media"
 url: "https://external-coverage.com"  # Optional: Link to external press coverage
 lang: "en"  # Language: "en" or "fr"
+tags: ["announcement"]  # Optional: tags for filtering and categorization
+template: "default"  # Optional: rendering template key
 ---
 
 ## Press Release - [Date]
@@ -18,12 +21,15 @@ Brief, compelling summary of the news in 1-2 sentences that captures the key mes
 ## Main Content
 
 ### Opening Paragraph
+
 Start with the most newsworthy information - who, what, when, where, and why. This paragraph should be able to stand alone as a complete summary.
 
 ### Background Information
+
 Provide context and background information that helps readers understand the significance of the announcement.
 
 ### Key Details
+
 Present the important details in a logical order:
 
 - **Specific Information**: Concrete details about the announcement
@@ -32,11 +38,13 @@ Present the important details in a logical order:
 - **Scope**: Scale and reach of the initiative
 
 ### Quotes
+
 Include relevant quotes from key stakeholders:
 
 > "This development represents a significant milestone in our research program," said Dr. [Name], [Title] at [Institution]. "The implications for digital twin technology are substantial and will benefit both academic research and industrial applications."
 
 ### Supporting Information
+
 Additional details that support the main announcement:
 
 - Technical specifications or capabilities
@@ -47,6 +55,7 @@ Additional details that support the main announcement:
 ## About [Organization/Program]
 
 Brief boilerplate paragraph about the EDT research program or announcing organization, including:
+
 - Mission and objectives
 - Key achievements
 - Institutional affiliations
@@ -81,12 +90,14 @@ Email: [contact@organization.edu]
 ---
 
 **Template Notes**:
+
 - **Date**: Use the actual publication date of the press release
 - **Type**: Choose the most appropriate category for filtering and organization
 - **Description**: Write a compelling summary under 160 characters for social media
 - **URL**: Include if there's external press coverage or official announcement page
 
 **Writing Guidelines**:
+
 - Use inverted pyramid structure (most important information first)
 - Write in third person
 - Use active voice and present tense
@@ -95,16 +106,19 @@ Email: [contact@organization.edu]
 - Avoid jargon and technical terms that general audiences won't understand
 
 **Distribution**:
+
 - Coordinate with communications team before publishing
 - Ensure all quotes are approved by speakers
 - Verify all facts and figures
 - Include high-quality images when available
 
 **File Naming**:
+
 - English: `press-title-year-en.md` in `src/content/press-releases/`
 - French: `press-title-year-fr.md` in `src/content/press-releases/`
 
 **SEO Considerations**:
+
 - Include relevant keywords in title and description
 - Use descriptive headings
 - Link to related content on the website

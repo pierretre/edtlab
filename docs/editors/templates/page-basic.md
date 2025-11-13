@@ -5,6 +5,9 @@ lang: "en"  # or "fr"
 description: "Brief description of the page content for SEO and navigation"
 toc: true  # Set to true to enable table of contents, false to disable
 lastModified: 2024-01-01  # Optional: Last modification date (YYYY-MM-DD format)
+color: "#0a84ff"  # Optional: theme color or hex code for page header accent
+illustration: "illustration-filename.jpg"  # Optional: illustration filename
+template: "default"  # Optional: template key to render this page
 ---
 
 # Page Title
@@ -46,7 +49,8 @@ Conclude with relevant contact information or next steps for the reader.
 
 ---
 
-**Note for editors**: 
+**Note for editors**:
+
 - Replace all placeholder text with actual content
 - Ensure the `href` matches the file location relative to `src/content/pages/`
 - Set `lang` to match the language of your content

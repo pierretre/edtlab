@@ -41,8 +41,10 @@ const eventsCollection = defineCollection({
         location: z.string().optional(),
         description: z.string(),
         url: z.string().url().optional(),
+        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General']).optional(),
         lang: z.enum(['en', 'fr']),
-        photo: z.string().optional(),
+        photo: z.string(),
+        tags: z.array(z.string()).optional().default([]),
         template: z.string().optional()
     })
 });
@@ -55,9 +57,10 @@ const pressReleasesCollection = defineCollection({
         date: z.date(),
         description: z.string(),
         url: z.string().url().optional(),
+        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General']).optional(),
         lang: z.enum(['en', 'fr']),
-        photo: z.string().optional(),
-        tags: z.array(z.string()).optional(),
+        photo: z.string(),
+        tags: z.array(z.string()).optional().default([]),
         template: z.string().optional()
     })
 });
