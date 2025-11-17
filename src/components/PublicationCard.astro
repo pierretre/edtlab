@@ -1,12 +1,13 @@
 ---
 import type { Publication } from "../models/Publication.model";
-import ProjectTag from "./ProjectTag.astro";
+import { useTranslations } from "../i18n/utils";
+import Badge from "./Badge.astro";
 
 export interface Props {
     publication: Publication;
 }
-
 const { publication } = Astro.props as Props;
+const t = useTranslations(publication.lang as "en" | "fr");
 ---
 
 <div
@@ -35,7 +36,7 @@ const { publication } = Astro.props as Props;
             )
         }
 
-        <ProjectTag project={publication.project} />
+        <Badge key={publication.project} t={t} />
     </h3>
     <p class="text-xs text-gray-600 mt-1">
         {publication.authors.join(", ")} • {publication.year}

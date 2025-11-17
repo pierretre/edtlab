@@ -2,6 +2,8 @@
 import ProjectHero from "../components/ProjectHero.astro";
 import TableOfContent from "../components/TableOfContent.astro";
 import RelatedPublications from "../components/RelatedPublications.astro";
+import RelatedJobOffers from "../components/RelatedJobOffers.astro";
+import RelatedNews from "../components/RelatedNews.astro";
 
 export interface Props {
     frontmatter?: {
@@ -61,8 +63,14 @@ const projectId =
                     />
 
                     <!-- Related Publications Section -->
-                    <div class="mt-8">
+                    <div class="mt-8 space-y-6">
                         <RelatedPublications project={projectId} />
+
+                        <!-- Related Job Offers -->
+                        <RelatedJobOffers project={projectId} />
+
+                        <!-- Related News & Events -->
+                        <RelatedNews project={projectId} />
                     </div>
                 </article>
             </main>

@@ -34,16 +34,16 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
         fr: 'actualites'
     },
     'press-releases': {
-        en: 'news/press-releases',
-        fr: 'actualites/communiques-de-presse'
+        en: 'news',
+        fr: 'actualites'
     },
     'job-offers': {
         en: 'join-us',
         fr: 'nous-rejoindre'
     },
     events: {
-        en: 'news/events',
-        fr: 'actualites/evenements'
+        en: 'news',
+        fr: 'actualites'
     }
 };
 
@@ -63,11 +63,17 @@ export function getContentLink(
 ): string {
     const route = CONTENT_ROUTES[contentType][lang];
     let link;
-    if (!slug) {
+    // If a slug is provided, remove any trailing language suffix ("-en" or "-fr").
+    const cleanSlug = slug ? slug.replace(/-(en|fr)$/, '') : undefined;
+
+    if (!cleanSlug) {
         link = `/${route}`;
     } else {
-        link = `/${route}/${slug}`;
+        link = `/${route}/${cleanSlug}`;
     }
+
+    // console.log(`2) getContentLink - lang: ${lang}, contentType: ${contentType}, slug: ${slug}, withoutLangSuffix: ${withoutLangSuffix} => link before suffix check: ${link}`);
+
     return !withoutLangSuffix ? `/${lang}${link}` : link;
 }
 

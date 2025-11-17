@@ -3,8 +3,9 @@ export interface PressRelease {
     date: Date;
     description: string;
     url?: string;
+    project?: 'PC1' | 'PC2' | 'PC3' | 'PC4' | 'PC5' | 'General';
     lang: 'en' | 'fr';
-    photo?: string;
-    tags?: string[];
+    photo: string;
+    tags: string[];
     template?: string;
 }

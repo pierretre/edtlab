@@ -4,7 +4,8 @@ date: 2024-02-10
 description: "The Engineering Digital Twins research program has been awarded additional funding to expand its research activities into Phase 2"
 lang: "en"
 photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
-tags: ["PC1"]
+tags: ["announcement"]
+project: PC1
 ---
 
 ## Press Release - February 10, 2024

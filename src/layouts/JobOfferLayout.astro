@@ -1,14 +1,10 @@
 ---
 import { formatDate } from "../utils/date";
-import {
-    isDeadlineApproaching,
-    isDeadlinePassed,
-    getJobTypeColor,
-} from "../utils";
+import { isDeadlineApproaching, isDeadlinePassed } from "../utils";
 import PageLayout from "./PageLayout.astro";
-import ProjectTag from "../components/ProjectTag.astro";
 import type { JobOffer } from "../models/JobOffer.model";
 import { useTranslations } from "../i18n/utils";
+import Badge from "../components/Badge.astro";
 
 export interface Props {
     frontmatter: JobOffer;
@@ -52,24 +48,17 @@ const t = useTranslations(lang);
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <ProjectTag project={frontmatter.project} />
-            <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getJobTypeColor(frontmatter.type)}`}
-            >
-                {t(`job-offers.type.${frontmatter.type}`)}
-            </span>
+            <Badge key={frontmatter.project} t={t} />
+            <Badge key={`job-offers.type.${frontmatter.type}`} t={t} />
+
             {
                 isDeadlineApproaching(frontmatter.deadline) && (
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
-                        {t("job-offers.deadline-approaching")}
-                    </span>
+                    <Badge key="job-offers.deadline-approaching" t={t} />
                 )
             }
             {
                 isDeadlinePassed(frontmatter.deadline) && (
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200">
-                        {t("job-offers.deadline-passed")}
-                    </span>
+                    <Badge key="job-offers.deadline-passed" t={t} />
                 )
             }
         </div>

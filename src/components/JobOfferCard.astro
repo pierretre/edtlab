@@ -2,13 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 import { useTranslations } from "../i18n/utils";
 import { linkHelpers } from "../i18n/links";
-import {
-    formatDate,
-    isDeadlineApproaching,
-    isDeadlinePassed,
-    getJobTypeColor,
-} from "../utils";
-import ProjectTag from "./ProjectTag.astro";
+import { formatDate, isDeadlineApproaching, isDeadlinePassed } from "../utils";
+import Badge from "./Badge.astro";
 
 interface Props {
     jobOffer: CollectionEntry<"job-offers">;
@@ -16,30 +11,25 @@ interface Props {
 }
 
 const { jobOffer, lang } = Astro.props;
+
 const t = useTranslations(lang);
 ---
 
-<div class="card max-w-sm">
+<div class="card max-w-sm h-full flex flex-col">
     <!-- Header with badges -->
     <div class="flex flex-wrap gap-2 mb-3">
-        <ProjectTag project={jobOffer.data.project} />
-        <span
-            class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getJobTypeColor(jobOffer.data.type)}`}
-        >
-            {t(`job-offers.type.${jobOffer.data.type}`)}
-        </span>
+        <Badge key={jobOffer.data.project} t={t} />
+
+        <Badge key={`job-offers.type.${jobOffer.data.type}`} t={t} />
+
         {
             isDeadlineApproaching(jobOffer.data.deadline) && (
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                    {t("job-offers.deadline-approaching")}
-                </span>
+                <Badge key="job-offers.deadline-approaching" t={t} />
             )
         }
         {
             isDeadlinePassed(jobOffer.data.deadline) && (
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                    {t("job-offers.deadline-passed")}
-                </span>
+                <Badge key="job-offers.deadline-passed" t={t} />
             )
         }
     </div>
@@ -123,7 +113,7 @@ const t = useTranslations(lang);
     <!-- Requirements preview -->
     {
         jobOffer.data.requirements.length > 0 && (
-            <div class="mb-4">
+            <div>
                 <h6 class="text-sm font-semibold text-gray-900 mb-2">
                     {t("job-offers.key-requirements")}:
                 </h6>
@@ -152,7 +142,7 @@ const t = useTranslations(lang);
     <!-- Action button -->
     <a
         href={linkHelpers.jobOffer(lang, jobOffer.slug)}
-        class="btn-primary inline-flex"
+        class="btn-primary inline-flex mt-auto mx-auto"
         aria-label={t("job-offers.view-details-aria").replace(
             "{title}",
             jobOffer.data.title,

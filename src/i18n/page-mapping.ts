@@ -57,12 +57,6 @@ export function getCorrespondingPage(
         return '';
     }
 
-    // Special cases where both languages use the same href
-    const samehrefPages = ['contact'];
-    if (samehrefPages.includes(cleanHref)) {
-        return cleanHref; // Return same href, the content collection will handle language filtering
-    }
-
     // Get the mapping based on current language
     const mapping = currentLang === 'en' ? enToFrMapping : frToEnMapping;
 

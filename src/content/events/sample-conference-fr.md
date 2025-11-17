@@ -6,6 +6,7 @@ location: "Paris, France"
 description: "Conférence annuelle rassemblant chercheurs et praticiens en technologie des jumeaux numériques"
 url: "http://edtlab.fr/"
 lang: "fr"
+photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Détails de l'Événement

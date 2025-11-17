@@ -1,0 +1,75 @@
+---
+import { formatDate } from "../utils";
+import { linkHelpers } from "../i18n/links";
+import type { Event } from "../models/Event.model";
+import type { PressRelease } from "../models/PressRelease.model";
+import Badge from "./Badge.astro";
+
+export interface Props {
+    item: Event | PressRelease;
+    lang: "en" | "fr";
+    category: "event" | "press-release";
+    t: any;
+    slug: string;
+}
+
+const { item, lang, category, t, slug } = Astro.props;
+---
+
+<div
+    class="news-item card relative max-w-sm p-0 bg-white border border-gray-200 rounded-lg shadow"
+    data-title={item.title?.toLowerCase() ?? ""}
+    data-date={item.date.getTime()}
+    data-location={category === "event"
+        ? ((item as any).location?.toLowerCase() ?? "")
+        : ""}
+    data-tags={item.tags?.join(",").toLowerCase() ?? ""}
+    data-description={item.description?.toLowerCase() ?? ""}
+    data-project={item.project ?? ""}
+>
+    <!-- Badges -->
+    <div class="absolute top-2 left-2 z-10">
+        {(<Badge key={category} t={t} />)}
+        <!-- Tag badges -->
+        {item.tags?.map((tag) => <Badge key={tag} t={t} />)}
+        {item.project && <Badge key={item.project} t={t} />}
+    </div>
+
+    <a
+        href={category === "press-release"
+            ? linkHelpers.press(lang, slug)
+            : linkHelpers.event(lang, slug)}
+        class="relative block h-48 overflow-hidden group rounded-t-lg"
+    >
+        <img
+            class="h-full w-full object-cover transform transition duration-500 group-hover:scale-105"
+            src={item.photo}
+            alt={item.title}
+        />
+        <div
+            class="absolute inset-0 bg-black bg-opacity-0 transition duration-500 group-hover:bg-opacity-30"
+        >
+        </div>
+    </a>
+    <div class="p-3">
+        <div class="flex justify-between">
+            <p class="text-sm">
+                {formatDate(item.date, lang)}
+            </p>
+            <p class="text-sm">
+                {category === "event" ? (item as any).location : ""}
+            </p>
+        </div>
+
+        <h4 class="text-base">
+            <a
+                href={category === "press-release"
+                    ? linkHelpers.press(lang, slug)
+                    : linkHelpers.event(lang, slug)}
+                class="hover:text-primary-600 text-gray-800 transition-colors duration-200"
+            >
+                {item.title}
+            </a>
+        </h4>
+    </div>
+</div>
