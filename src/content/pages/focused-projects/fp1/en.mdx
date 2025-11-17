@@ -10,6 +10,8 @@ illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC1.png"
 projectId: "PC1"
 ---
 
+import PartnersGrid from '../../../../components/PartnersGrid.astro';
+
 ## Context
 
 A **Digital Twin (DT)** is an organized set of digital models representing a real-world physical object or system throughout its lifecycle. It continuously updates through real-time sensor data and uses reasoning methods such as **simulation** and **machine learning** to support decision-making.  
@@ -24,14 +26,14 @@ Creating a DT involves multiple disciplines — **architecture description**, **
 
 Models in a Digital Twin can be characterized along several non-exhaustive dimensions:
 
-| **Dimension** | **Description** |
-|---------------|-----------------|
-| **Inference Method** | How conclusions are drawn. *Inductive* models arise from observed data patterns, while *deductive* models apply theoretical principles. |
-| **Modeling Approach** | *Empirical* models rely on data observation; *mechanistic* models are grounded in physical or theoretical laws. |
-| **Concern** | The aspect of the system being modeled — e.g., behavioral, safety, structural, or extra-functional (performance, usability). |
-| **Purpose** | *Descriptive* models represent what exists; *prescriptive* models define what should be done. |
-| **Fidelity** | Degree of realism. *Low-fidelity* models are faster but limited; *high-fidelity* models are more accurate but computationally intensive. |
-| **Temporal Aspect** | *Static* models describe one moment; *dynamic* models evolve over time. |
+| **Dimension**         | **Description**                                                                                                                          |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Inference Method**  | How conclusions are drawn. *Inductive* models arise from observed data patterns, while *deductive* models apply theoretical principles.  |
+| **Modeling Approach** | *Empirical* models rely on data observation; *mechanistic* models are grounded in physical or theoretical laws.                          |
+| **Concern**           | The aspect of the system being modeled — e.g., behavioral, safety, structural, or extra-functional (performance, usability).             |
+| **Purpose**           | *Descriptive* models represent what exists; *prescriptive* models define what should be done.                                            |
+| **Fidelity**          | Degree of realism. *Low-fidelity* models are faster but limited; *high-fidelity* models are more accurate but computationally intensive. |
+| **Temporal Aspect**   | *Static* models describe one moment; *dynamic* models evolve over time.                                                                  |
 
 ## Model Hybridization
 
@@ -63,26 +65,14 @@ To enable systematic hybridization, the following are needed:
 Use cases in **PC1** will include diverse Digital Twins representing various physical entities.  
 Special focus: **combining data-based and mechanistic models** to validate PC1 concepts and tools.
 
-## Governance & Project Partners
+## Investigator & Project Partners
 
 **Principal Investigator:**  
 - *Julien Deantoni*, Université Côte d’Azur (UniCA)
-
-**Steering Body:**  
-- UniCA, Inria, Telecom Paris, UPPA  
-
+ 
 **Participating Partners:**  
-- Inria (Hycomes, DiverSE, Kairos, Parkas)  
-- CNRS (IRIT/ACADIE)  
-- UniCA  
-- INRAE  
-- UPPA  
-- Telecom Paris (LabSoc, ACES)  
-- ENPC  
-- Univ. de Bourgogne  
-- CEA (LITEN)  
-- Univ. Toulouse 3 (Aniti)  
-- Univ. Toulouse Jean Jaurès (IRIT/SM@RT)
+
+<PartnersGrid partners={['Inria', 'CNRS']} ></PartnersGrid>
 
 ## Project Implementation
 
