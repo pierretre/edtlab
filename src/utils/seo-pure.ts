@@ -4,6 +4,33 @@ export interface StructuredData {
     [key: string]: any;
 }
 
+function cleanObject<T extends Record<string, any>>(obj: T): T {
+    if (!obj || typeof obj !== 'object') return obj;
+
+    if (Array.isArray(obj)) {
+        return obj
+            .map(item => cleanObject(item))
+            .filter(item => item !== undefined && item !== null && !(typeof item === 'object' && Object.keys(item).length === 0)) as any;
+    }
+
+    const result: Record<string, any> = {};
+    for (const [k, v] of Object.entries(obj)) {
+        if (v === undefined || v === null) continue;
+
+        if (typeof v === 'object') {
+            const cleaned = cleanObject(v as any);
+            if (cleaned === undefined) continue;
+            if (Array.isArray(cleaned) && cleaned.length === 0) continue;
+            if (typeof cleaned === 'object' && Object.keys(cleaned).length === 0) continue;
+            result[k] = cleaned;
+        } else {
+            result[k] = v;
+        }
+    }
+
+    return result as T;
+}
+
 /**
  * Generate structured data for organization
  */
@@ -13,7 +40,7 @@ export function generateOrganizationStructuredData(
     url: string,
     logo?: string
 ): StructuredData {
-    return {
+    return cleanObject({
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name,
@@ -23,15 +50,13 @@ export function generateOrganizationStructuredData(
             '@type': 'ImageObject',
             url: logo
         } : undefined,
-        sameAs: [
-            // Add social media or official links here
-        ],
+        sameAs: [],
         contactPoint: {
             '@type': 'ContactPoint',
             contactType: 'general',
             availableLanguage: ['English', 'French']
         }
-    };
+    });
 }
 
 /**
@@ -45,7 +70,7 @@ export function generateResearchProjectStructuredData(
     endDate?: string,
     funding?: string[]
 ): StructuredData {
-    return {
+    return cleanObject({
         '@context': 'https://schema.org',
         '@type': 'ResearchProject',
         name,
@@ -62,7 +87,7 @@ export function generateResearchProjectStructuredData(
             name: 'Digital Twins',
             description: 'Engineering Digital Twins Research'
         }
-    };
+    });
 }
 
 /**
@@ -79,8 +104,7 @@ export function generatePublicationStructuredData(
     type: 'journal' | 'conference' | 'book' | 'report' = 'journal'
 ): StructuredData {
     const schemaType = type === 'book' ? 'Book' : 'ScholarlyArticle';
-
-    return {
+    return cleanObject({
         '@context': 'https://schema.org',
         '@type': schemaType,
         headline: title,
@@ -107,8 +131,9 @@ export function generatePublicationStructuredData(
         isPartOf: {
             '@type': 'Project',
             name: project
-        }
-    };
+        },
+        keywords: []
+    });
 }
 
 /**
@@ -118,27 +143,44 @@ export function generateEventStructuredData(
     name: string,
     description: string,
     startDate: string,
-    location?: string,
+    location?: string | { name?: string; address?: string; city?: string; country?: string },
     url?: string,
+    endDate?: string,
+    image?: string,
 ): StructuredData {
-    return {
+    const place =
+        typeof location === 'string'
+            ? { '@type': 'Place', name: location }
+            : location
+                ? {
+                    '@type': 'Place',
+                    name: location.name,
+                    address: location.address ? {
+                        '@type': 'PostalAddress',
+                        streetAddress: location.address,
+                        addressLocality: location.city,
+                        addressCountry: location.country
+                    } : undefined
+                }
+                : undefined;
+
+    return cleanObject({
         '@context': 'https://schema.org',
         '@type': 'Event',
         name,
         description,
         startDate,
-        location: location ? {
-            '@type': 'Place',
-            name: location
-        } : undefined,
+        endDate,
+        location: place,
         url,
+        image: image ? { '@type': 'ImageObject', url: image } : undefined,
         eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
         eventStatus: 'https://schema.org/EventScheduled',
         organizer: {
             '@type': 'Organization',
             name: 'EDT Research Program'
         }
-    };
+    });
 }
 
 /**
@@ -151,9 +193,10 @@ export function generateJobPostingStructuredData(
     datePosted: string,
     validThrough: string,
     employmentType: 'FULL_TIME' | 'PART_TIME' | 'CONTRACTOR' | 'TEMPORARY' | 'INTERN' = 'FULL_TIME',
-    requirements?: string[]
+    requirements?: string[],
+    baseSalary?: { currency: string; value: number }
 ): StructuredData {
-    return {
+    return cleanObject({
         '@context': 'https://schema.org',
         '@type': 'JobPosting',
         title,
@@ -175,8 +218,53 @@ export function generateJobPostingStructuredData(
         },
         qualifications: requirements?.join(', '),
         industry: 'Research and Development',
-        occupationalCategory: 'Research'
-    };
+        occupationalCategory: 'Research',
+        baseSalary: baseSalary ? {
+            '@type': 'MonetaryAmount',
+            currency: baseSalary.currency,
+            value: {
+                '@type': 'QuantitativeValue',
+                value: baseSalary.value
+            }
+        } : undefined
+    });
+}
+
+/**
+ * Generate structured data for press release (NewsArticle / PressRelease)
+ */
+export function generatePressReleaseStructuredData(
+    headline: string,
+    description: string,
+    datePublished: string,
+    url?: string,
+    image?: string | string[],
+    author?: string | string[],
+    publisher?: string,
+    keywords?: string[]
+): StructuredData {
+    const authors = Array.isArray(author) ? author : author ? [author] : undefined;
+
+    return cleanObject({
+        '@context': 'https://schema.org',
+        '@type': 'PressRelease',
+        headline,
+        description,
+        datePublished,
+        url,
+        image: image ? (Array.isArray(image) ? image.map(i => ({ '@type': 'ImageObject', url: i })) : { '@type': 'ImageObject', url: image }) : undefined,
+        author: authors ? authors.map(a => ({ '@type': 'Person', name: a })) : undefined,
+        publisher: publisher ? { '@type': 'Organization', name: publisher } : undefined,
+        keywords
+    });
+}
+
+/**
+ * Convert a StructuredData object to an escaped JSON-LD string for embedding in a <script type="application/ld+json"> tag
+ */
+export function generateJsonLdString(data: StructuredData): string {
+    const cleaned = cleanObject(data);
+    return JSON.stringify(cleaned);
 }
 
 /**

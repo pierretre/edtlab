@@ -4,6 +4,7 @@ import type { PressRelease } from "../models/PressRelease.model";
 import { formatDate, isRecent } from "../utils";
 import PageLayout from "./PageLayout.astro";
 import Badge from "../components/Badge.astro";
+import { generatePressReleaseStructuredData } from "../utils/seo";
 
 export interface Props {
     frontmatter: PressRelease;
@@ -12,6 +13,17 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const lang = frontmatter.lang as "en" | "fr";
 const t = useTranslations(lang);
+
+const pressStructuredData = generatePressReleaseStructuredData(
+    frontmatter.title,
+    frontmatter.description,
+    frontmatter.date.toISOString().split("T")[0],
+    frontmatter.url,
+    frontmatter.photo,
+    undefined,
+    undefined,
+    frontmatter.tags,
+);
 ---
 
 <PageLayout
@@ -20,6 +32,11 @@ const t = useTranslations(lang);
     showBreadcrumb={true}
     showToc={false}
 >
+    <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(pressStructuredData)}
+    />
     <!-- Back to News link -->
     <div class="mb-6">
         <a

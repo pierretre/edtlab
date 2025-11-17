@@ -5,6 +5,8 @@ export {
     generatePublicationStructuredData,
     generateEventStructuredData,
     generateJobPostingStructuredData,
+    generatePressReleaseStructuredData,
+    generateJsonLdString,
     generateBreadcrumbStructuredData,
     optimizePageTitle,
     optimizeMetaDescription,
