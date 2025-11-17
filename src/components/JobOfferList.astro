@@ -11,9 +11,10 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 // Get all job offers for the current language
-const allJobOffers = await getCollection("job-offers", ({ data }) => {
-    return data.lang === lang;
-});
+const allJobOffers = await getCollection(
+    "job-offers",
+    ({ data }) => data.lang === lang,
+);
 
 // Sort job offers by deadline status, then by publication date (newest first), then by deadline
 const sortedJobOffers = allJobOffers.sort((a, b) => {
@@ -190,20 +191,14 @@ const expiredJobOffers = sortedJobOffers.filter(
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
     >
         {
-            sortedJobOffers.map((jobOffer) => {
-                const isExpired = jobOffer.data.deadline < new Date();
-                return (
-                    <div
-                        class="job-offer-item"
-                        data-project={jobOffer.data.project}
-                        data-type={jobOffer.data.type}
-                        data-status={isExpired ? "expired" : "active"}
-                        data-search-text={`${jobOffer.data.title} ${jobOffer.data.description} ${jobOffer.data.location} ${jobOffer.data.requirements.join(" ")}`.toLowerCase()}
-                    >
-                        <JobOfferCard jobOffer={jobOffer} lang={lang} />
-                    </div>
-                );
-            })
+            sortedJobOffers.map((jobOffer) => (
+                <JobOfferCard
+                    item={jobOffer.data}
+                    lang={lang}
+                    t={t}
+                    slug={jobOffer.slug}
+                />
+            ))
         }
     </div>
 

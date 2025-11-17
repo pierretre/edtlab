@@ -39,9 +39,14 @@ if (project) {
                 {t("projects.related-job-offers.title")}
             </h2>
 
-            <div class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {relatedJobOffers.map((jobOffer) => (
-                    <JobOfferCard jobOffer={jobOffer} lang={lang} />
+                    <JobOfferCard
+                        item={jobOffer.data}
+                        lang={lang}
+                        t={t}
+                        slug={jobOffer.slug}
+                    />
                 ))}
             </div>
 

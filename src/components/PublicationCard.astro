@@ -1,20 +1,19 @@
 ---
 import type { Publication } from "../models/Publication.model";
-import { useTranslations } from "../i18n/utils";
 import Badge from "./Badge.astro";
 
 export interface Props {
     publication: Publication;
+    t: any;
 }
-const { publication } = Astro.props as Props;
-const t = useTranslations(publication.lang as "en" | "fr");
+const { publication, t } = Astro.props as Props;
 ---
 
 <div
     class="publication-row border-l-4 border-primary-200 pl-3"
     data-type={publication.type}
     data-year={publication.year.toString()}
-    data-search-text={`${publication.title} ${publication.authors.join(" ")} ${publication.venue || ""}`.toLowerCase()}
+    data-search-text={`${JSON.stringify(publication)}`.toLowerCase()}
     data-project={publication.project}
     role="row"
 >
