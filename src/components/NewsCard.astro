@@ -17,15 +17,11 @@ const { item, lang, category, t, slug } = Astro.props;
 ---
 
 <div
-    class="news-item card relative max-w-sm p-0 bg-white border border-gray-200 rounded-lg shadow"
-    data-title={item.title?.toLowerCase() ?? ""}
+    class="news-item card relative p-0 bg-white border border-gray-200 rounded-lg shadow"
+    data-category={category}
     data-date={item.date.getTime()}
-    data-location={category === "event"
-        ? ((item as any).location?.toLowerCase() ?? "")
-        : ""}
-    data-tags={item.tags?.join(",").toLowerCase() ?? ""}
-    data-description={item.description?.toLowerCase() ?? ""}
     data-project={item.project ?? ""}
+    data-search-text={`${JSON.stringify(item)}`.toLowerCase()}
 >
     <!-- Badges -->
     <div class="absolute top-2 left-2 z-10">

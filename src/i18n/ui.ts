@@ -56,7 +56,7 @@ export const ui = {
         'home.tiles.title': 'Explore Our Projects',
         'home.tiles.subtitle': 'Navigate through our comprehensive research program and discover our contributions to engineering digital twins.',
         'home.tiles.explore': 'Explore',
-        'footer.tagline': 'Fundamental research projects serving the national strategy',
+        'footer.tagline': 'Fundamental research project serving the national strategy',
         'footer.piloted-by': 'Piloted by',
         'footer.funded-by': 'Funded by',
         'footer.operated-by': 'Operated by',
@@ -151,6 +151,9 @@ export const ui = {
         'news.view-all-press-releases': 'View All Press Releases',
         'news.recent-events': 'Recent Events',
         'news.recent-events-description': 'Latest conferences, workshops, and seminars',
+        'news.no-results': 'No news items found matching your criteria.',
+        'news.no-results-description': 'Try adjusting your filters or search terms.',
+        'news.results-count': 'Showing {count} news items',
         // Sorting for news/event lists
         'news.filter.sort': 'Sort by',
         'news.filter.sort.date-desc': 'Date (newest first)',
@@ -276,7 +279,10 @@ export const ui = {
         // Contact page content
         'contact.hero.title': 'Contact us',
         'contact.description': 'Contact information and form for the EDT research program',
+        // Project page related sections
+        'project-hero.related-publications-button': 'See Publications',
         'projects.related-publications.view-all': 'View all publications',
+        'projects.related-publications.title': 'Related publications',
         'projects.related-job-offers.title': 'Related job offers',
         'projects.related-job-offers.view-all': 'View all positions',
         'projects.related-news-events.title': 'Related news & events',
@@ -338,7 +344,7 @@ export const ui = {
         'home.tiles.title': 'Explorez Nos Projets',
         'home.tiles.subtitle': 'Naviguez dans notre programme de recherche complet et découvrez nos contributions aux jumeaux numériques d\'ingénierie.',
         'home.tiles.explore': 'Explorer',
-        'footer.tagline': 'Des projets de recherche fondamentale au service de la stratégie nationale',
+        'footer.tagline': 'Un projet de recherche fondamentale au service de la stratégie nationale',
         'footer.piloted-by': 'Piloté par',
         'footer.funded-by': 'Financé par',
         'footer.operated-by': 'Opéré par',
@@ -433,6 +439,9 @@ export const ui = {
         'news.view-all-press-releases': 'Voir Tous les Communiqués de Presse',
         'news.recent-events': 'Événements Récents',
         'news.recent-events-description': 'Dernières conférences, ateliers et séminaires',
+        'news.no-results': 'Aucune actualité trouvée correspondant à vos critères.',
+        'news.no-results-description': 'Essayez d\'ajuster vos filtres ou vos termes de recherche.',
+        'news.results-count': 'Affichage de {count} actualités',
         // Sorting for news/event lists
         'news.filter.sort': 'Trier par',
         'news.filter.sort.date-desc': 'Date (les plus récents d\'abord)',
@@ -558,7 +567,10 @@ export const ui = {
         // Contact page content
         'contact.hero.title': 'Nous contacter',
         'contact.description': 'Informations de contact et formulaire pour le programme de recherche EDT',
+        // Project page related sections
+        'project-hero.related-publications-button': 'Voir les Publications',
         'projects.related-publications.view-all': 'Voir toutes les publications',
+        'projects.related-publications.title': 'Publications liées',
         'projects.related-job-offers.title': 'Offres d\'emploi liées',
         'projects.related-job-offers.view-all': 'Voir tous les postes',
         'projects.related-news-events.title': 'Actualités et événements liés',

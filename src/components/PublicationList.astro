@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
 import { generatePublicationStructuredData } from "../utils/seo";
 import PublicationCard from "./PublicationCard.astro";
-import type { Publication } from "../models/Publication.model";
 
 interface Props {
     lang: "en" | "fr";
@@ -140,9 +139,7 @@ const publicationStructuredData = sortedPublications.map((pub) =>
     >
         {
             sortedPublications.map((publication) => (
-                <PublicationCard
-                    publication={publication.data as Publication}
-                />
+                <PublicationCard publication={publication.data} t={t} />
             ))
         }
     </div>

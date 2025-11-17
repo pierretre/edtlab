@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import NewsCard from "./NewsCard.astro";
 import { linkHelpers } from "../i18n/links";
+import type { CollectionEntry } from "astro:content";
 
 export interface Props {
     project?: string;
@@ -21,32 +22,27 @@ if (project) {
             (item) => item.data.lang === lang,
         );
 
-        const events = await getCollection("events", (item) => {
-            return item.data.lang === lang;
-        });
+        const events = await getCollection(
+            "events",
+            (item) => item.data.lang === lang,
+        );
 
-        const relatedPress = pressReleases
+        const relatedPress: (CollectionEntry<"press-releases"> & {
+            category: "press-release";
+        })[] = pressReleases
             .filter((p) => p.data.project === project)
-            .map((p) => ({
-                category: "press-release",
-                slug: p.slug,
-                data: p.data,
-                date: p.data.date,
-            }));
+            .map((p) => ({ ...p, category: "press-release" }));
 
-        const relatedEvents = events
+        const relatedEvents: (CollectionEntry<"events"> & {
+            category: "event";
+        })[] = events
             .filter((e) => e.data.project === project)
-            .map((e) => ({
-                category: "event",
-                slug: e.slug,
-                data: e.data,
-                date: e.data.date,
-            }));
+            .map((e) => ({ ...e, category: "event" }));
 
         // Combine and sort by date (newest first)
         relatedItems = [...relatedPress, ...relatedEvents]
-            .sort((a, b) => b.date.getTime() - a.date.getTime())
-            .slice(0, 4);
+            .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+            .slice(0, 3); // Limit to 3 items
     } catch (error) {
         console.warn(`Could not load news/events: ${error}`);
     }
@@ -66,7 +62,7 @@ if (project) {
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {relatedItems.map((item) => (
                     <NewsCard
-                        item={item}
+                        item={item.data}
                         lang={lang}
                         category={item.category}
                         t={t}

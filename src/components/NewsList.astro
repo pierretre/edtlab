@@ -28,7 +28,7 @@ const feed = [...pressReleaseItems, ...events];
 const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 ---
 
-<div class="container mx-auto max-w-8xl">
+<div class="container mx-auto px-4 py-6 max-w-8xl">
     <!-- Filters Section -->
     <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
         <!-- Project Filter -->
@@ -144,6 +144,25 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
         </nav>
     </section>
 
+    <!-- No Results Message -->
+    <div id="no-results" class="hidden text-center py-32">
+        <div class="max-w-md mx-auto">
+            <h3 class="mt-4 text-lg font-medium text-gray-900">
+                {t("news.no-results")}
+            </h3>
+            <p class="mt-2 text-gray-500">
+                {t("news.no-results-description")}
+            </p>
+        </div>
+    </div>
+
+    <!-- Results Count -->
+    <div class="mt-6 text-sm text-gray-600 text-center">
+        <span id="results-count" data-template={t("news.results-count")}>
+            {t("news.results-count").replace("{count}", feed.length.toString())}
+        </span>
+    </div>
+
     <script type="module" is:inline>
         const qs = (s, el = document) => el.querySelector(s);
         const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
@@ -225,6 +244,28 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             });
 
             renderPagination(totalPages);
+
+            // Update results count and show/hide no-results message
+            const noResults = qs("#no-results");
+            const resultsCount = qs("#results-count");
+            const visibleCount = matched.length;
+            if (resultsCount) {
+                const template = resultsCount.dataset.template || "{count}";
+                resultsCount.textContent = template.replace(
+                    "{count}",
+                    visibleCount.toString(),
+                );
+            }
+
+            if (noResults) {
+                if (visibleCount === 0) {
+                    list.style.display = "none";
+                    noResults.style.display = "block";
+                } else {
+                    list.style.display = "";
+                    noResults.style.display = "none";
+                }
+            }
         }
 
         function applyFilters() {
@@ -241,35 +282,18 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             if (!list) return;
 
             qsa(".news-item", list).forEach((item) => {
-                const title = (item.dataset.title || "").toLowerCase();
-                const location = (item.dataset.location || "").toLowerCase();
                 const itemCategory = item.dataset.category || "";
-                const itemTags = (item.dataset.tags || "").toLowerCase();
-                const itemDescription = (
-                    item.dataset.description ?? ""
-                ).toLowerCase();
-                const itemDate = item.dataset.date || "";
                 const itemProject = (item.dataset.project ?? "").toLowerCase();
+                const itemSearchText = item.dataset.searchText || "";
 
                 const matchesCategory =
-                    !category ||
-                    category === "" ||
-                    category === "all" ||
-                    (category === "news" && itemCategory === "news") ||
-                    (category === "event" && itemCategory === "event");
+                    !category || category === "" || itemCategory === category;
                 const matchesProject =
                     !project ||
                     project === "" ||
                     itemProject === project.toLowerCase();
                 const matchesSearch =
-                    !search ||
-                    title.includes(search) ||
-                    location.includes(search) ||
-                    itemCategory.includes(search) ||
-                    itemTags.includes(search) ||
-                    itemDescription.includes(search) ||
-                    itemDate.includes(search) ||
-                    itemProject.includes(search);
+                    !search || itemSearchText.includes(search);
 
                 item.dataset.matched =
                     matchesCategory && matchesSearch && matchesProject

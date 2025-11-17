@@ -7,10 +7,7 @@ export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const pressReleaseEntries = await generateTypePagesStaticPaths("press-releases");
     const jobOfferEntries = await generateTypePagesStaticPaths("job-offers");
 
-    const tmp = [...baseEntries, ...eventEntries, ...pressReleaseEntries, ...jobOfferEntries];
-    console.log(`Generated total static paths: ${tmp.length}`);
-    console.log(tmp.map(e => e.params));
-    return tmp;
+    return [...baseEntries, ...eventEntries, ...pressReleaseEntries, ...jobOfferEntries];
 }
 
 /**
