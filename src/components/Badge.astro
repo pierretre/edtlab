@@ -1,0 +1,16 @@
+---
+import type { Badge } from "../models/Badge.model";
+import { getBadge } from "../utils/badge";
+
+export interface Props {
+    key: string;
+    t: any;
+}
+
+const { key, t } = Astro.props;
+const badge: Badge = getBadge(key, t);
+---
+
+<span class={`badge ${badge.color} ${badge.backgroundColor}`}>
+    {badge.label}
+</span>

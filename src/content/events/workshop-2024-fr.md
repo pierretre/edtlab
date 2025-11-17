@@ -6,6 +6,7 @@ location: "Lyon, France"
 description: "Atelier pratique explorant les applications pratiques de la technologie des jumeaux numériques dans les environnements industriels"
 url: "http://edtlab.fr/"
 lang: "fr"
+photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Aperçu de l'Atelier

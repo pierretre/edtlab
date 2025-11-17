@@ -6,6 +6,7 @@ location: "Online"
 description: "Seminar exploring emerging trends and future directions in digital twin technology for engineering applications"
 url: "http://edtlab.fr/"
 lang: "en"
+photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Seminar Overview

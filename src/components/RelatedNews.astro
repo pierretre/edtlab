@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import NewsCard from "./NewsCard.astro";
+import { linkHelpers } from "../i18n/links";
+
+export interface Props {
+    project?: string;
+}
+
+const { project } = Astro.props as Props;
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+
+let relatedItems: any[] = [];
+if (project) {
+    try {
+        const pressReleases = await getCollection(
+            "press-releases",
+            (item) => item.data.lang === lang,
+        );
+
+        const events = await getCollection("events", (item) => {
+            return item.data.lang === lang;
+        });
+
+        const relatedPress = pressReleases
+            .filter((p) => p.data.project === project)
+            .map((p) => ({
+                category: "press-release",
+                slug: p.slug,
+                data: p.data,
+                date: p.data.date,
+            }));
+
+        const relatedEvents = events
+            .filter((e) => e.data.project === project)
+            .map((e) => ({
+                category: "event",
+                slug: e.slug,
+                data: e.data,
+                date: e.data.date,
+            }));
+
+        // Combine and sort by date (newest first)
+        relatedItems = [...relatedPress, ...relatedEvents]
+            .sort((a, b) => b.date.getTime() - a.date.getTime())
+            .slice(0, 4);
+    } catch (error) {
+        console.warn(`Could not load news/events: ${error}`);
+    }
+}
+---
+
+<!-- Related News & Events Section -->{
+    relatedItems.length > 0 && (
+        <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <h2
+                id="related-news-events"
+                class="font-semibold text-gray-900 mb-4"
+            >
+                {t("projects.related-news-events.title")}
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {relatedItems.map((item) => (
+                    <NewsCard
+                        item={item}
+                        lang={lang}
+                        category={item.category}
+                        t={t}
+                        slug={item.slug}
+                    />
+                ))}
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-gray-100">
+                <a
+                    href={`${linkHelpers.newsIndex(lang)}?project=${project}`}
+                    class="text-sm text-primary-600 hover:text-primary-800 font-medium transition-colors"
+                >
+                    {t("projects.related-news-events.view-all")} →
+                </a>
+            </div>
+        </div>
+    )
+}

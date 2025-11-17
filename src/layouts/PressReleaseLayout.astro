@@ -3,6 +3,7 @@ import { useTranslations } from "../i18n/utils";
 import type { PressRelease } from "../models/PressRelease.model";
 import { formatDate, isRecent } from "../utils";
 import PageLayout from "./PageLayout.astro";
+import Badge from "../components/Badge.astro";
 
 export interface Props {
     frontmatter: PressRelease;
@@ -45,8 +46,7 @@ const t = useTranslations(lang);
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <!-- TODO: put TAGS here -->
-
+            {frontmatter.tags.map((tag) => <Badge key={tag} t={t} />)}
             {
                 isRecent(frontmatter.date) && (
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">

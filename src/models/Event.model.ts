@@ -5,7 +5,9 @@ export interface Event {
     location?: string,
     description: string,
     url?: string,
+    project?: 'PC1' | 'PC2' | 'PC3' | 'PC4' | 'PC5' | 'General';
     lang: "en" | "fr",
-    photo?: string,
+    photo: string,
     template?: string,
+    tags: string[],
 }

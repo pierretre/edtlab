@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import JobOfferCard from "./JobOfferCard.astro";
+import { linkHelpers } from "../i18n/links";
+
+export interface Props {
+    project?: string;
+}
+
+const { project } = Astro.props as Props;
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+
+let relatedJobOffers: any[] = [];
+if (project) {
+    try {
+        const allJobOffers = await getCollection("job-offers", ({ data }) => {
+            return data.lang === lang;
+        });
+
+        relatedJobOffers = allJobOffers
+            .filter((job) => job.data.project === project)
+            .slice(0, 3);
+    } catch (error) {
+        console.warn(`Could not load job offers: ${error}`);
+    }
+}
+---
+
+<!-- Related Job Offers Section -->{
+    relatedJobOffers.length > 0 && (
+        <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <h2
+                id="related-job-offers"
+                class="font-semibold text-gray-900 mb-4"
+            >
+                {t("projects.related-job-offers.title")}
+            </h2>
+
+            <div class="space-y-3">
+                {relatedJobOffers.map((jobOffer) => (
+                    <JobOfferCard jobOffer={jobOffer} lang={lang} />
+                ))}
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-gray-100">
+                <a
+                    href={`${linkHelpers.careers(lang)}?project=${project}`}
+                    class="text-sm text-primary-600 hover:text-primary-800 font-medium transition-colors"
+                >
+                    {t("projects.related-job-offers.view-all")} →
+                </a>
+            </div>
+        </div>
+    )
+}

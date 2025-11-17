@@ -1,0 +1,360 @@
+---
+import { getCollection } from "astro:content";
+import { useTranslations } from "../i18n/utils";
+import NewsCard from "./NewsCard.astro";
+
+interface Props {
+    lang: "en" | "fr";
+    pageSize?: number;
+}
+
+const { lang } = Astro.props as Props;
+const t = useTranslations(lang);
+
+// Load content
+const events = (
+    await getCollection("events", (event) => event.data.lang === lang)
+).map((e) => ({ ...e, category: "event" }));
+const pressReleaseItems = (
+    await getCollection(
+        "press-releases",
+        (pressRelease) => pressRelease.data.lang === lang,
+    )
+).map((p) => ({ ...p, category: "press-release" }));
+
+const feed = [...pressReleaseItems, ...events];
+
+// Project filter options
+const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
+---
+
+<div class="container mx-auto max-w-8xl">
+    <!-- Filters Section -->
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
+        <!-- Project Filter -->
+        <div>
+            <label
+                for="project-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("news.filter.project")}
+            </label>
+            <select id="project-filter">
+                <option value="">{t("news.filter.all-projects")}</option>
+                {
+                    projects.map((project) => (
+                        <option value={project}>{project}</option>
+                    ))
+                }
+            </select>
+        </div>
+
+        <!-- Category Filter -->
+        <div>
+            <label
+                for="category-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("news.filter.category")}
+            </label>
+            <select id="category-filter">
+                <option value="">{t("news.filter.all-categories")}</option>
+                <option value="press-release">{t("badge.press-release")}</option
+                >
+                <option value="event">{t("badge.event")}</option>
+            </select>
+        </div>
+
+        <!-- Sort Filter -->
+        <div>
+            <label
+                for="sort-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("news.filter.sort")}
+            </label>
+            <select id="sort-filter">
+                <option value="date-desc"
+                    >{t("news.filter.sort.date-desc")}</option
+                >
+                <option value="date-asc"
+                    >{t("news.filter.sort.date-asc")}</option
+                >
+                <option value="title-asc"
+                    >{t("news.filter.sort.title-asc")}</option
+                >
+                <option value="title-desc"
+                    >{t("news.filter.sort.title-desc")}</option
+                >
+            </select>
+        </div>
+
+        <!-- Search Filter -->
+        <div>
+            <label
+                for="search-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("news.filter.search")}
+            </label>
+            <input
+                type="text"
+                id="search-filter"
+                placeholder={t("news.filter.search-placeholder")}
+            />
+        </div>
+
+        <div class="hidden md:block" aria-hidden="true"></div>
+
+        <div class="h-full flex flex-col justify-end">
+            <button
+                id="clear-filters"
+                class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                aria-colindex="6"
+            >
+                {t("news.filter.clear")}
+            </button>
+        </div>
+    </div>
+
+    <section class="mb-12">
+        <div
+            id="unified-list"
+            class="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+            {
+                feed.map((item) => (
+                    <NewsCard
+                        item={item.data}
+                        lang={lang}
+                        category={item.category}
+                        t={t}
+                        slug={item.slug}
+                    />
+                ))
+            }
+        </div>
+
+        <!-- Pagination controls -->
+        <nav
+            id="news-pagination"
+            class="mt-6 flex items-center justify-center space-x-2"
+            aria-label="Pagination"
+        >
+        </nav>
+    </section>
+
+    <script type="module" is:inline>
+        const qs = (s, el = document) => el.querySelector(s);
+        const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
+
+        const PAGE_SIZE = 12;
+        let currentPage = 1;
+
+        function renderPagination(totalPages) {
+            const container = qs("#news-pagination");
+            if (!container) return;
+            container.innerHTML = "";
+            if (totalPages <= 1) {
+                container.style.display = "none";
+                return;
+            }
+            container.style.display = "";
+
+            const makeButton = (text, ariaLabel, disabled) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className =
+                    "px-3 py-1 rounded text-sm border bg-white hover:bg-gray-50";
+                btn.textContent = text;
+                if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
+                if (disabled) btn.disabled = true;
+                return btn;
+            };
+
+            const prev = makeButton("‹", "Previous page", currentPage === 1);
+            prev.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePageDisplay();
+                }
+            });
+            container.appendChild(prev);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = makeButton(i.toString(), `Page ${i}`, false);
+                if (i === currentPage) {
+                    pageBtn.classList.add("font-semibold", "bg-gray-100");
+                    pageBtn.setAttribute("aria-current", "page");
+                }
+                pageBtn.addEventListener("click", () => {
+                    currentPage = i;
+                    updatePageDisplay();
+                });
+                container.appendChild(pageBtn);
+            }
+
+            const next = makeButton("›", "Next page", false);
+            next.addEventListener("click", () => {
+                currentPage++;
+                updatePageDisplay();
+            });
+            container.appendChild(next);
+        }
+
+        function updatePageDisplay() {
+            const list = qs("#unified-list");
+            if (!list) return;
+            const matched = qsa(".news-item", list).filter(
+                (c) => c.dataset.matched === "1",
+            );
+            const totalPages = Math.max(
+                1,
+                Math.ceil(matched.length / PAGE_SIZE),
+            );
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            qsa(".news-item", list).forEach((c) => {
+                c.style.display = "none";
+            });
+
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const end = start + PAGE_SIZE;
+            matched.forEach((c, idx) => {
+                if (idx >= start && idx < end) c.style.display = "";
+            });
+
+            renderPagination(totalPages);
+        }
+
+        function applyFilters() {
+            const searchEl = qs("#search-filter");
+            const search = (searchEl ? searchEl.value : "")
+                .trim()
+                .toLowerCase();
+            const categoryEl = qs("#category-filter");
+            const category = categoryEl ? categoryEl.value : "";
+            const projectEl = qs("#project-filter");
+            const project = projectEl ? projectEl.value : "";
+
+            const list = qs("#unified-list");
+            if (!list) return;
+
+            qsa(".news-item", list).forEach((item) => {
+                const title = (item.dataset.title || "").toLowerCase();
+                const location = (item.dataset.location || "").toLowerCase();
+                const itemCategory = item.dataset.category || "";
+                const itemTags = (item.dataset.tags || "").toLowerCase();
+                const itemDescription = (
+                    item.dataset.description ?? ""
+                ).toLowerCase();
+                const itemDate = item.dataset.date || "";
+                const itemProject = (item.dataset.project ?? "").toLowerCase();
+
+                const matchesCategory =
+                    !category ||
+                    category === "" ||
+                    category === "all" ||
+                    (category === "news" && itemCategory === "news") ||
+                    (category === "event" && itemCategory === "event");
+                const matchesProject =
+                    !project ||
+                    project === "" ||
+                    itemProject === project.toLowerCase();
+                const matchesSearch =
+                    !search ||
+                    title.includes(search) ||
+                    location.includes(search) ||
+                    itemCategory.includes(search) ||
+                    itemTags.includes(search) ||
+                    itemDescription.includes(search) ||
+                    itemDate.includes(search) ||
+                    itemProject.includes(search);
+
+                item.dataset.matched =
+                    matchesCategory && matchesSearch && matchesProject
+                        ? "1"
+                        : "0";
+            });
+
+            // Sorting
+            const sortEl = qs("#sort-filter");
+            const sortVal = sortEl ? sortEl.value : "date-desc";
+
+            const children = qsa(".news-item", list).slice();
+            children.sort((a, b) => {
+                const ad = parseInt(a.dataset.date || "0", 10);
+                const bd = parseInt(b.dataset.date || "0", 10);
+
+                if (sortVal === "date-desc") return bd - ad;
+                if (sortVal === "date-asc") return ad - bd;
+
+                // title compares (dataset.title is lowercased in NewsCard)
+                const at = (a.dataset.title || "").toLowerCase();
+                const bt = (b.dataset.title || "").toLowerCase();
+                if (sortVal === "title-asc") return at.localeCompare(bt);
+                if (sortVal === "title-desc") return bt.localeCompare(at);
+
+                // default fallback: newest first
+                return bd - ad;
+            });
+            children.forEach((c) => list.appendChild(c));
+
+            currentPage = 1;
+            updatePageDisplay();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Grab filter elements
+            const projectFilter = qs("#project-filter");
+            const categoryFilter = qs("#category-filter");
+            const searchFilter = qs("#search-filter");
+            const sortFilter = qs("#sort-filter");
+
+            // Wire selects to change, search to debounced input
+            if (projectFilter)
+                projectFilter.addEventListener("change", applyFilters);
+            if (categoryFilter)
+                categoryFilter.addEventListener("change", applyFilters);
+
+            let debounceTimer;
+            if (searchFilter) {
+                searchFilter.addEventListener("input", () => {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(applyFilters, 200);
+                });
+            }
+
+            // Reset / clear button clears filters and reapplies
+            const resetBtn = qs("#clear-filters");
+            if (resetBtn) {
+                resetBtn.addEventListener("click", () => {
+                    if (searchFilter) searchFilter.value = "";
+                    if (categoryFilter) categoryFilter.value = "";
+                    if (projectFilter) projectFilter.value = "";
+                    currentPage = 1;
+                    applyFilters();
+                    if (searchFilter) searchFilter.focus();
+                });
+            }
+
+            // Default values from URL parameters (support both ?type= and ?category= for compatibility)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (categoryFilter) {
+                categoryFilter.value = urlParams.get("category") || "";
+            }
+            if (projectFilter) {
+                projectFilter.value = urlParams.get("project") || "";
+            }
+            if (searchFilter) {
+                searchFilter.value = urlParams.get("search") || "";
+            }
+            if (sortFilter) {
+                sortFilter.value = urlParams.get("sort") || "date-desc";
+            }
+
+            // initial apply
+            applyFilters();
+        });
+    </script>
+</div>

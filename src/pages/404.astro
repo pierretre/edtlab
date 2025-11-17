@@ -1,5 +1,5 @@
 ---
-import { useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
@@ -9,8 +9,7 @@ export async function getStaticPaths() {
 // Get language from params
 const { lang } = Astro.params;
 
-// Validate language parameter
-const validLang = lang === "en" || lang === "fr" ? lang : "en";
+const validLang = (lang || getLangFromUrl(Astro.url) || "en") as "en" | "fr";
 const t = useTranslations(validLang);
 ---
 
@@ -24,24 +23,6 @@ const t = useTranslations(validLang);
     <!-- 404 Error Content -->
     <div class="text-center py-16">
         <div class="max-w-md mx-auto">
-            <!-- Error Icon -->
-            <div class="mb-8">
-                <svg
-                    class="mx-auto h-24 w-24 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1"
-                        d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-3-8a9 9 0 110 18 9 9 0 010-18z"
-                    ></path>
-                </svg>
-            </div>
-
             <!-- Error Message -->
             <h1 class="text-6xl font-bold text-gray-900 mb-4">404</h1>
             <h2 class="text-2xl font-semibold text-gray-700 mb-4">

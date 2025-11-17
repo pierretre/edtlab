@@ -151,6 +151,12 @@ export const ui = {
         'news.view-all-press-releases': 'View All Press Releases',
         'news.recent-events': 'Recent Events',
         'news.recent-events-description': 'Latest conferences, workshops, and seminars',
+        // Sorting for news/event lists
+        'news.filter.sort': 'Sort by',
+        'news.filter.sort.date-desc': 'Date (newest first)',
+        'news.filter.sort.date-asc': 'Date (oldest first)',
+        'news.filter.sort.title-asc': 'Title (A → Z)',
+        'news.filter.sort.title-desc': 'Title (Z → A)',
         // News page UI
         'news.page-title': 'News & Events',
         // NewsLayout project/category/search labels
@@ -161,7 +167,7 @@ export const ui = {
         'news.filter.search': 'Search',
         'news.filter.search-placeholder': 'Search...',
         'news.filter.clear': 'Clear All Filters',
-        'badge.news': 'News',
+        'badge.press-release': 'Press Release',
         'badge.event': 'Event',
         'news.summary': '{items} items • {news} news • {events} events',
         'events.view-all': 'View All Events',
@@ -237,8 +243,7 @@ export const ui = {
         'home.tiles.navigate-to': 'Navigate to',
         // Legal mentions and analytics
         'footer.legal-mentions': 'Legal Mentions',
-        'footer.analytics-line1': 'This website uses anonymous analytics about page visits, user interactions, and geographic distribution to improve user experience.',
-        'footer.analytics-line2': 'No cookies are used for tracking purposes. No personal data is collected or stored.',
+        'footer.analytics': 'This website uses anonymous analytics about page visits, user interactions, and geographic distribution to improve user experience. No cookies are used for tracking purposes. No personal data is collected or stored.',
         // Contact form translations
         'contact.form.title': 'Contact Us',
         'contact.form.description': 'Have a question about our research program? Want to collaborate or learn more? We\'d love to hear from you.',
@@ -272,6 +277,10 @@ export const ui = {
         'contact.hero.title': 'Contact us',
         'contact.description': 'Contact information and form for the EDT research program',
         'projects.related-publications.view-all': 'View all publications',
+        'projects.related-job-offers.title': 'Related job offers',
+        'projects.related-job-offers.view-all': 'View all positions',
+        'projects.related-news-events.title': 'Related news & events',
+        'projects.related-news-events.view-all': 'View all news & events',
         'projects.project-resources.title': 'Project Resources',
         'projects.project-resources.open-positions': 'Open Positions',
         'projects.project-resources.tools-and-resources': 'Tools and Resources',
@@ -424,6 +433,12 @@ export const ui = {
         'news.view-all-press-releases': 'Voir Tous les Communiqués de Presse',
         'news.recent-events': 'Événements Récents',
         'news.recent-events-description': 'Dernières conférences, ateliers et séminaires',
+        // Sorting for news/event lists
+        'news.filter.sort': 'Trier par',
+        'news.filter.sort.date-desc': 'Date (les plus récents d\'abord)',
+        'news.filter.sort.date-asc': 'Date (les plus anciens d\'abord)',
+        'news.filter.sort.title-asc': 'Titre (A → Z)',
+        'news.filter.sort.title-desc': 'Titre (Z → A)',
         // News page UI
         'news.page-title': 'Actualités et Événements',
         // NewsLayout project/category/search labels
@@ -434,7 +449,7 @@ export const ui = {
         'news.filter.search': 'Rechercher',
         'news.filter.search-placeholder': 'Rechercher...',
         'news.filter.clear': 'Effacer Tous les Filtres',
-        'badge.news': 'Actualité',
+        'badge.press-release': 'Communiqué de Presse',
         'badge.event': 'Événement',
         'news.summary': '{items} éléments • {news} actualités • {events} événements',
         'events.view-all': 'Voir Tous les Événements',
@@ -510,9 +525,7 @@ export const ui = {
         'home.tiles.navigate-to': 'Naviguer vers',
         // Legal mentions and analytics
         'footer.legal-mentions': 'Mentions Légales',
-        'footer.analytics-notice': 'Ce site web utilise des analyses anonymes pour améliorer l\'expérience utilisateur. Aucune donnée personnelle n\'est collectée ou stockée.',
-        'footer.analytics-details': 'Nous collectons des statistiques anonymes sur les visites de pages, les interactions des utilisateurs et la répartition géographique.',
-        'footer.no-cookies': 'Aucun cookie n\'est utilisé à des fins de suivi.',
+        'footer.analytics': 'Ce site utilise des analyses anonymes concernant les visites de pages, les interactions des utilisateurs et la répartition géographique pour améliorer l\'expérience utilisateur. Aucun cookie n\'est utilisé à des fins de suivi. Aucune donnée personnelle n\'est collectée ou stockée.',
         // Contact form translations
         'contact.form.title': 'Nous Contacter',
         'contact.form.description': 'Vous avez une question sur notre programme de recherche ? Vous souhaitez collaborer ou en savoir plus ? Nous serions ravis de vous entendre.',
@@ -546,6 +559,10 @@ export const ui = {
         'contact.hero.title': 'Nous contacter',
         'contact.description': 'Informations de contact et formulaire pour le programme de recherche EDT',
         'projects.related-publications.view-all': 'Voir toutes les publications',
+        'projects.related-job-offers.title': 'Offres d\'emploi liées',
+        'projects.related-job-offers.view-all': 'Voir tous les postes',
+        'projects.related-news-events.title': 'Actualités et événements liés',
+        'projects.related-news-events.view-all': 'Voir toutes les actualités et événements',
         'projects.project-resources.title': 'Ressources du Projet',
         'projects.project-resources.open-positions': 'Postes Ouverts',
         'projects.project-resources.tools-and-resources': 'Outils et Ressources',
