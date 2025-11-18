@@ -1,23 +1,25 @@
 ---
 import type { Publication } from "../models/Publication.model";
-import ProjectTag from "./ProjectTag.astro";
+import Badge from "./Badge.astro";
 
 export interface Props {
     publication: Publication;
+    t: any;
 }
-
-const { publication } = Astro.props as Props;
+const { publication, t } = Astro.props as Props;
 ---
 
 <div
     class="publication-row border-l-4 border-primary-200 pl-3"
     data-type={publication.type}
     data-year={publication.year.toString()}
-    data-search-text={`${publication.title} ${publication.authors.join(" ")} ${publication.venue || ""}`.toLowerCase()}
+    data-search-text={`${JSON.stringify(publication)}`.toLowerCase()}
     data-project={publication.project}
     role="row"
 >
-    <h3 class="flex font-medium justify-between text-gray-900 leading-tight">
+    <h3
+        class="flex items-baseline font-medium justify-between text-gray-900 leading-tight"
+    >
         {
             publication.url ? (
                 <a
@@ -33,7 +35,7 @@ const { publication } = Astro.props as Props;
             )
         }
 
-        <ProjectTag project={publication.project} />
+        <Badge key={publication.project} t={t} />
     </h3>
     <p class="text-xs text-gray-600 mt-1">
         {publication.authors.join(", ")} • {publication.year}

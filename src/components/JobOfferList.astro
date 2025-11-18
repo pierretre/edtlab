@@ -11,9 +11,10 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 // Get all job offers for the current language
-const allJobOffers = await getCollection("job-offers", ({ data }) => {
-    return data.lang === lang;
-});
+const allJobOffers = await getCollection(
+    "job-offers",
+    ({ data }) => data.lang === lang,
+);
 
 // Sort job offers by deadline status, then by publication date (newest first), then by deadline
 const sortedJobOffers = allJobOffers.sort((a, b) => {
@@ -44,21 +45,8 @@ const sortedJobOffers = allJobOffers.sort((a, b) => {
 });
 
 // Get unique projects and types for filters
-const projects = ["PC1", "PC2", "PC3", "PC4", "PC5", "General"] as const;
+const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 const types = ["postdoc", "phd", "engineer", "intern"] as const;
-
-// Helper function to get type translation
-const getTypeTranslation = (type: string) => {
-    return t(`job-offers.type.${type}` as any);
-};
-
-// Helper function to get project translation
-const getProjectTranslation = (project: string) => {
-    if (project === "General") {
-        return t("job-offers.project.general");
-    }
-    return project;
-};
 
 // Count active job offers
 const activeJobOffers = sortedJobOffers.filter(
@@ -79,7 +67,7 @@ const expiredJobOffers = sortedJobOffers.filter(
                 <h2 class="text-lg font-semibold text-primary-800 mb-1">
                     {t("job-offers.current-opportunities")}
                 </h2>
-                <p class="text-primary-600 text-sm font-bold">
+                <p class="text-primary-600 text-sm font-bold mb-0">
                     {
                         t("job-offers.active-count").replace(
                             "{count}",
@@ -115,101 +103,82 @@ const expiredJobOffers = sortedJobOffers.filter(
     </div>
 
     <!-- Filters Section -->
-    <div class="mb-6 p-4 bg-gray-50 rounded-lg border">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <!-- Project Filter -->
-            <div>
-                <label
-                    for="project-filter"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                >
-                    {t("job-offers.filter.project")}
-                </label>
-                <select
-                    id="project-filter"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5"
-                >
-                    <option value=""
-                        >{t("job-offers.filter.all-projects")}</option
-                    >
-                    {
-                        projects.map((project) => (
-                            <option value={project}>
-                                {getProjectTranslation(project)}
-                            </option>
-                        ))
-                    }
-                </select>
-            </div>
-
-            <!-- Type Filter -->
-            <div>
-                <label
-                    for="type-filter"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                >
-                    {t("job-offers.filter.type")}
-                </label>
-                <select
-                    id="type-filter"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5"
-                >
-                    <option value="">{t("job-offers.filter.all-types")}</option>
-                    {
-                        types.map((type) => (
-                            <option value={type}>
-                                {getTypeTranslation(type)}
-                            </option>
-                        ))
-                    }
-                </select>
-            </div>
-
-            <!-- Status Filter -->
-            <div>
-                <label
-                    for="status-filter"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                >
-                    {t("job-offers.filter.status")}
-                </label>
-                <select
-                    id="status-filter"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5"
-                >
-                    <option value="">{t("job-offers.filter.all-status")}</option
-                    >
-                    <option value="active"
-                        >{t("job-offers.filter.active")}</option
-                    >
-                    <option value="expired"
-                        >{t("job-offers.filter.expired")}</option
-                    >
-                </select>
-            </div>
-
-            <!-- Search Filter -->
-            <div>
-                <label
-                    for="search-filter"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                >
-                    {t("job-offers.filter.search")}
-                </label>
-                <input
-                    type="text"
-                    id="search-filter"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5"
-                    placeholder={t("job-offers.filter.search-placeholder")}
-                />
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
+        <!-- Project Filter -->
+        <div>
+            <label
+                for="project-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("job-offers.filter.project")}
+            </label>
+            <select id="project-filter">
+                <option value="">{t("job-offers.filter.all-projects")}</option>
+                {
+                    projects.map((project) => (
+                        <option value={project}>{project}</option>
+                    ))
+                }
+            </select>
         </div>
 
-        <!-- Clear Filters Button -->
-        <div class="mt-4">
+        <!-- Type Filter -->
+        <div>
+            <label
+                for="type-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("job-offers.filter.type")}
+            </label>
+            <select id="type-filter">
+                <option value="">{t("job-offers.filter.all-types")}</option>
+                {
+                    types.map((type) => (
+                        <option value={type}>
+                            {t(`job-offers.type.${type}`)}
+                        </option>
+                    ))
+                }
+            </select>
+        </div>
+
+        <!-- Status Filter -->
+        <div>
+            <label
+                for="status-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("job-offers.filter.status")}
+            </label>
+            <select id="status-filter">
+                <option value="">{t("job-offers.filter.all-status")}</option>
+                <option value="active">{t("job-offers.filter.active")}</option>
+                <option value="expired">{t("job-offers.filter.expired")}</option
+                >
+            </select>
+        </div>
+
+        <!-- Search Filter -->
+        <div>
+            <label
+                for="search-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("job-offers.filter.search")}
+            </label>
+            <input
+                type="text"
+                id="search-filter"
+                placeholder={t("job-offers.filter.search-placeholder")}
+            />
+        </div>
+        <div class="hidden md:block" aria-hidden="true"></div>
+
+        <div class="h-full flex flex-col justify-end">
             <button
                 id="clear-filters"
                 class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                aria-colindex="6"
             >
                 {t("job-offers.filter.clear")}
             </button>
@@ -222,39 +191,20 @@ const expiredJobOffers = sortedJobOffers.filter(
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
     >
         {
-            sortedJobOffers.map((jobOffer) => {
-                const isExpired = jobOffer.data.deadline < new Date();
-                return (
-                    <div
-                        class="job-offer-item"
-                        data-project={jobOffer.data.project}
-                        data-type={jobOffer.data.type}
-                        data-status={isExpired ? "expired" : "active"}
-                        data-search-text={`${jobOffer.data.title} ${jobOffer.data.description} ${jobOffer.data.location} ${jobOffer.data.requirements.join(" ")}`.toLowerCase()}
-                    >
-                        <JobOfferCard jobOffer={jobOffer} lang={lang} />
-                    </div>
-                );
-            })
+            sortedJobOffers.map((jobOffer) => (
+                <JobOfferCard
+                    item={jobOffer.data}
+                    lang={lang}
+                    t={t}
+                    slug={jobOffer.slug}
+                />
+            ))
         }
     </div>
 
     <!-- No Results Message -->
-    <div id="no-results" class="hidden text-center py-12">
+    <div id="no-results" class="hidden text-center py-32">
         <div class="max-w-md mx-auto">
-            <svg
-                class="mx-auto h-12 w-12 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h8zM8 14v.01M12 14v.01M16 14v.01"
-                ></path>
-            </svg>
             <h3 class="mt-4 text-lg font-medium text-gray-900">
                 {t("job-offers.no-results")}
             </h3>
@@ -371,6 +321,15 @@ const expiredJobOffers = sortedJobOffers.filter(
         statusFilter.addEventListener("change", filterJobOffers);
         searchFilter.addEventListener("input", filterJobOffers);
         clearFilters.addEventListener("click", clearAllFilters);
+
+        // Default values from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        typeFilter.value = urlParams.get("type") || "";
+        statusFilter.value = urlParams.get("status") || "";
+        searchFilter.value = urlParams.get("search") || "";
+        projectFilter.value = urlParams.get("project") || "";
+
+        filterJobOffers();
     });
 </script>
 

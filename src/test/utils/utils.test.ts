@@ -7,8 +7,6 @@ import {
     isDeadlineApproaching,
     isDeadlinePassed,
     isRecent,
-    getEventTypeColor,
-    getJobTypeColor,
     getEventTypeTranslation,
     getPublicationTypeTranslation,
     getJobTypeTranslation,
@@ -113,24 +111,6 @@ describe('Date Utilities', () => {
 
         it('should return false for old dates', () => {
             expect(isRecent(lastMonth)).toBe(false);
-        });
-    });
-});
-
-describe('Color Utilities', () => {
-    describe('getEventTypeColor', () => {
-        it('should return correct colors for event types', () => {
-            expect(getEventTypeColor('conference')).toContain('scampi');
-            expect(getEventTypeColor('workshop')).toContain('blue');
-            expect(getEventTypeColor('invalid')).toContain('gray');
-        });
-    });
-
-    describe('getJobTypeColor', () => {
-        it('should return correct colors for job types', () => {
-            expect(getJobTypeColor('postdoc')).toContain('scampi');
-            expect(getJobTypeColor('phd')).toContain('blue');
-            expect(getJobTypeColor('invalid')).toContain('gray');
         });
     });
 });

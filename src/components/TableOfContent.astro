@@ -5,7 +5,7 @@ const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
 ---
 
-<aside class="lg:w-64 flex-shrink-0">
+<aside class="hidden lg:block lg:w-64 flex-shrink-0">
     <div
         class="sticky top-24 bg-gray-50 rounded-lg p-4 border border-gray-200"
         role="complementary"

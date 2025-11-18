@@ -1,30 +1,32 @@
 ---
-import { getEntry } from "astro:content";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
-const menu = await getEntry("menu", lang);
 ---
 
 <div class="bg-[#e5e5e5] text-gray-800 w-full">
-    <div class="max-w-5xl mx-auto p-6">
-        <div>
+    <div class="max-w-5xl mx-auto p-6 gap-6">
+        <div class="flex gap-6 flex-wrap lg:mb-6">
             <img
-                src="https://www.pepr-ia.fr/wp-content/uploads/2024/03/Group-6.png"
+                src="/FR2030_Endossement_RVB_H.svg"
                 alt="République Française France 2030 - Logo officiel du programme de financement"
-                class="w-72 h-auto mb-4"
+                class="max-w-72 h-auto"
             />
-            <p class="text-sm text-gray-600">
-                {t("footer.tagline")}
-            </p>
+            <div class="my-auto">
+                <h5>Engineering Digital Twins</h5>
+                <p class="text-sm text-gray-600">
+                    {t("footer.tagline")}
+                </p>
+            </div>
         </div>
         <div class="text-sm">
-            <h4 class="font-semibold text-gray-800 mb-2">
+            <h5>
                 {t("footer.legal-mentions")}
-            </h4>
-            <span>{t("footer.analytics-line1")}</span>
-            <span>{t("footer.analytics-line2")}</span>
+            </h5>
+            <p class="text-sm">
+                {t("footer.analytics")}
+            </p>
         </div>
     </div>
 </div>

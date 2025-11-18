@@ -1,0 +1,58 @@
+---
+import json from "../content/partners.json";
+import { Picture } from "astro:assets";
+import type { Partner } from "../models/Partner.model";
+
+export interface Props {
+    partners: string[];
+}
+
+const { partners } = Astro.props;
+
+let partnersData: Partner[] = [];
+
+partners.forEach((p) => {
+    if (Object.keys(json).includes(p)) {
+        partnersData.push({ shortname: p, ...json[p] } as Partner);
+    }
+});
+
+for (const p of partnersData) {
+    try {
+        p.logo = (await import(p.logo)).default;
+    } catch {
+        console.error(
+            `Could not load logo for partner: ${p.shortname}, path: ${p.logo}`,
+        );
+    }
+}
+---
+
+<div class="w-full py-8">
+    <div class="mx-auto max-w-7xl px-4">
+        <div
+            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 place-items-center"
+        >
+            {
+                partnersData.map((p) => (
+                    <div
+                        class="flex flex-col items-center group"
+                        title={p.fullname}
+                    >
+                        <Picture
+                            src={p.logo}
+                            alt={p.fullname ?? ""}
+                            class="h-12 w-auto object-contain"
+                            loading="lazy"
+                        />
+                        {/* {p.children && p.children.length > 0 && (
+                            <div class="mt-2 hidden group-hover:block text-xs text-gray-500 text-center">
+                                {p.children.join(", ")}
+                            </div>
+                        )} */}
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</div>

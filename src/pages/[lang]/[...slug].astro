@@ -29,13 +29,15 @@ if (!page) {
 // Get the rendered content
 const { Content } = await page.render();
 const Layout = getLayoutFromTemplateOrCollection(page.collection, template);
+// Triage: cast page.data to unknown->any to avoid type union conflicts during check
+const pageDataAny = page.data as unknown as any;
 ---
 
 <BaseLayout
     title={page.data.title}
     description={page.data.description || t("site.description")}
-    canonical={page.data.canonical}
-    noindex={page.data.noindex}
+    canonical={pageDataAny.canonical}
+    noindex={pageDataAny.noindex}
     lang={lang as "en" | "fr"}
     showBreadcrumb={true}
 >

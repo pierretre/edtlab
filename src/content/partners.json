@@ -1,0 +1,99 @@
+{
+    "Inria": {
+        "fullname": "Institut National de Recherche en Informatique et en Automatique",
+        "logo": "/src/assets/images/partners/Inria.png",
+        "children": [
+            "Hycomes",
+            "DiverSE",
+            "Kairos",
+            "Parkas",
+            "Wimmics",
+            "Moex",
+            "Spirals",
+            "MARACAS",
+            "MEDISIM",
+            "Kopernick",
+            "Hybrid",
+            "Aviz",
+            "ILDA",
+            "VirtUs"
+        ]
+    },
+    "CNRS": {
+        "fullname": "Centre National de la Recherche Scientifique",
+        "logo": "/src/assets/images/partners/CNRS.png",
+        "children": [
+            "IRIT/ACADIE",
+            "CRAN",
+            "LaBRI",
+            "ICube",
+            "LS2N",
+            "TSCF (INRAE)",
+            "CRTD (CNAM)",
+            "LMPS"
+        ]
+    },
+    "INRAE": {
+        "fullname": "Institut National de Recherche pour l'Agriculture, l’Alimentation et l’Environnement",
+        "logo": "/src/assets/images/partners/INRAE.png",
+        "children": [
+            "P4S (IMT)",
+            "TSCF (INRAE)"
+        ]
+    },
+    "UPPA": {
+        "fullname": "Université de Pau et des Pays de l’Adour",
+        "logo": "/src/assets/images/partners/UPPA.png",
+        "children": []
+    },
+    "Télécom Paris": {
+        "fullname": "Télécom Paris – Institut Polytechnique de Paris",
+        "logo": null,
+        "children": [
+            "LabSoc",
+            "ACES"
+        ]
+    },
+    "ENPC": {
+        "fullname": "École des Ponts ParisTech",
+        "logo": null,
+        "children": []
+    },
+    "Université de Bourgogne": {
+        "fullname": "Université Bourgogne-Europe",
+        "logo": null,
+        "children": [
+            "CIAD (Université de Bourgogne)",
+            "LIB (Université Bourgogne)"
+        ]
+    },
+    "CEA": {
+        "fullname": "Commissariat à l'énergie atomique et aux énergies alternatives",
+        "logo": null,
+        "children": [
+            "LITEN",
+            "LIST",
+            "CEA Tech Occitanie"
+        ]
+    },
+    "Université Toulouse 3 (Aniti)": {
+        "fullname": "Université Toulouse III – Paul Sabatier (ANITI)",
+        "logo": null,
+        "children": []
+    },
+    "Université Toulouse Jean Jaurès": {
+        "fullname": "Université Toulouse Jean-Jaurès",
+        "logo": null,
+        "children": [
+            "IRIT/SM@RT"
+        ]
+    },
+    "IMT (Institut Mines-Télécom)": {
+        "fullname": "Institut Mines-Télécom",
+        "logo": null,
+        "children": [
+            "P4S",
+            "INUIT"
+        ]
+    }
+}
