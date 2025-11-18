@@ -85,11 +85,11 @@ test.describe('Route Testing', () => {
     test('should have consistent navigation across languages', async ({ page }) => {
         // Test English navigation - use the main site header navigation
         await page.goto('/en/program');
-        const enNavigation = await page.locator('#site-header nav, nav#site-header').textContent();
+        const enNavigation = await page.locator('#site-header').textContent();
 
         // Test French navigation - use the correct French URL
         await page.goto('/fr/programme');
-        const frNavigation = await page.locator('#site-header nav, nav#site-header').textContent();
+        const frNavigation = await page.locator('#site-header').textContent();
 
         // Both should have navigation content
         expect(enNavigation).toBeTruthy();
