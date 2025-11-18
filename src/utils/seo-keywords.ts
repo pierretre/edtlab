@@ -8,7 +8,10 @@ export function getDefaultKeywords(lang: 'en' | 'fr'): string[] {
 
     try {
         const baseKeywords = t('seo.keywords.base');
-        return baseKeywords.split(',').map(keyword => keyword.trim()).filter(keyword => keyword.length > 0);
+        return baseKeywords
+            .split(',')
+            .map((keyword: string) => keyword.trim())
+            .filter((keyword: string) => keyword.length > 0);
     } catch (error) {
         // Fallback to hardcoded keywords if translation is missing
         console.warn('SEO keywords translation missing, using fallback');
@@ -26,7 +29,10 @@ export function getKeywords(key: string, lang: 'en' | 'fr'): string[] {
 
     try {
         const keywords = t(`seo.keywords.${key}` as any);
-        return keywords.split(',').map(keyword => keyword.trim()).filter(keyword => keyword.length > 0);
+        return keywords
+            .split(',')
+            .map((keyword: string) => keyword.trim())
+            .filter((keyword: string) => keyword.length > 0);
     } catch (error) {
         // Return empty array if translation is missing
         return [];

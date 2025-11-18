@@ -1,11 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
-import { getPublicationTypeTranslation } from "../utils";
 import { generatePublicationStructuredData } from "../utils/seo";
-import FilterBar from "./FilterBar.astro";
 import PublicationCard from "./PublicationCard.astro";
-import type { Publication } from "../models/Publication.model";
 
 interface Props {
     lang: "en" | "fr";
@@ -32,52 +29,6 @@ const years = [...new Set(allPublications.map((pub) => pub.data.year))].sort(
 const types = ["journal", "conference", "book", "report"] as const;
 const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 
-// Prepare filter configuration
-const filterConfig = [
-    {
-        id: "type-filter",
-        label: t("publications.filter.type"),
-        type: "select" as const,
-        options: [
-            { value: "", label: t("publications.filter.all-types") },
-            ...types.map((type) => ({
-                value: type,
-                label: getPublicationTypeTranslation(type, lang),
-            })),
-        ],
-    },
-    {
-        id: "year-filter",
-        label: t("publications.filter.year"),
-        type: "select" as const,
-        options: [
-            { value: "", label: t("publications.filter.all-years") },
-            ...years.map((year) => ({
-                value: year.toString(),
-                label: year.toString(),
-            })),
-        ],
-    },
-    {
-        id: "project-filter",
-        label: t("publications.filter.project"),
-        type: "select" as const,
-        options: [
-            { value: "", label: t("publications.filter.all-projects") },
-            ...projects.map((project) => ({
-                value: project,
-                label: project,
-            })),
-        ],
-    },
-    {
-        id: "search-filter",
-        label: t("publications.filter.search"),
-        type: "search" as const,
-        placeholder: t("publications.filter.search-placeholder"),
-    },
-];
-
 // Generate structured data for publications
 const publicationStructuredData = sortedPublications.map((pub) =>
     generatePublicationStructuredData(
@@ -95,12 +46,90 @@ const publicationStructuredData = sortedPublications.map((pub) =>
 
 <div class="publications-container">
     <!-- Filters Section -->
-    <FilterBar
-        lang={lang}
-        filters={filterConfig}
-        clearButtonId="clear-filters"
-        compact={true}
-    />
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
+        <!-- Project Filter -->
+        <div>
+            <label
+                for="project-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("publications.filter.project")}
+            </label>
+            <select id="project-filter">
+                <option value="">{t("publications.filter.all-projects")}</option
+                >
+                {
+                    projects.map((project) => (
+                        <option value={project}>{project}</option>
+                    ))
+                }
+            </select>
+        </div>
+
+        <!-- Type Filter -->
+        <div>
+            <label
+                for="type-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("publications.filter.type")}
+            </label>
+            <select id="type-filter">
+                <option value="">{t("publications.filter.all-types")}</option>
+                {
+                    types.map((type) => (
+                        <option value={type}>
+                            {t(`publications.type.${type}`)}
+                        </option>
+                    ))
+                }
+            </select>
+        </div>
+
+        <!-- Year Filter -->
+        <div>
+            <label
+                for="year-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("publications.filter.year")}
+            </label>
+            <select id="year-filter">
+                <option value="">{t("publications.filter.all-years")}</option>
+                {
+                    years.map((year) => (
+                        <option value={year.toString()}>{year}</option>
+                    ))
+                }
+            </select>
+        </div>
+
+        <!-- Search Filter -->
+        <div>
+            <label
+                for="search-filter"
+                class="block mb-2 text-sm font-medium text-gray-900"
+            >
+                {t("publications.filter.search")}
+            </label>
+            <input
+                type="text"
+                id="search-filter"
+                placeholder={t("publications.filter.search-placeholder")}
+            />
+        </div>
+        <div class="hidden md:block" aria-hidden="true"></div>
+
+        <div class="h-full flex flex-col justify-end">
+            <button
+                id="clear-filters"
+                class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                aria-colindex="6"
+            >
+                {t("publications.filter.clear")}
+            </button>
+        </div>
+    </div>
 
     <!-- Publications Table -->
     <div
@@ -110,9 +139,7 @@ const publicationStructuredData = sortedPublications.map((pub) =>
     >
         {
             sortedPublications.map((publication) => (
-                <PublicationCard
-                    publication={publication.data as Publication}
-                />
+                <PublicationCard publication={publication.data} t={t} />
             ))
         }
     </div>

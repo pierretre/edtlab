@@ -1,57 +1,53 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import { useTranslations } from "../i18n/utils";
 import { linkHelpers } from "../i18n/links";
-import {
-    formatDate,
-    isDeadlineApproaching,
-    isDeadlinePassed,
-    getJobTypeColor,
-} from "../utils";
-import ProjectTag from "./ProjectTag.astro";
+import { formatDate, isDeadlineApproaching, isDeadlinePassed } from "../utils";
+import Badge from "./Badge.astro";
+import type { JobOffer } from "../models/JobOffer.model";
 
 interface Props {
-    jobOffer: CollectionEntry<"job-offers">;
+    item: JobOffer;
     lang: "en" | "fr";
+    t: any;
+    slug: string;
 }
 
-const { jobOffer, lang } = Astro.props;
-const t = useTranslations(lang);
+const { item, lang, t, slug } = Astro.props;
+const isExpired = item.deadline < new Date();
 ---
 
-<div class="card max-w-sm">
+<div
+    class="job-offer-item card h-full flex flex-col"
+    data-project={item.project}
+    data-type={item.type}
+    data-status={isExpired ? "expired" : "active"}
+    data-search-text={`${JSON.stringify(item)}`.toLowerCase()}
+>
     <!-- Header with badges -->
     <div class="flex flex-wrap gap-2 mb-3">
-        <ProjectTag project={jobOffer.data.project} />
-        <span
-            class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getJobTypeColor(jobOffer.data.type)}`}
-        >
-            {t(`job-offers.type.${jobOffer.data.type}`)}
-        </span>
+        <Badge key={item.project} t={t} />
+
+        <Badge key={`job-offers.type.${item.type}`} t={t} />
+
         {
-            isDeadlineApproaching(jobOffer.data.deadline) && (
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                    {t("job-offers.deadline-approaching")}
-                </span>
+            isDeadlineApproaching(item.deadline) && (
+                <Badge key="job-offers.deadline-approaching" t={t} />
             )
         }
         {
-            isDeadlinePassed(jobOffer.data.deadline) && (
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                    {t("job-offers.deadline-passed")}
-                </span>
+            isDeadlinePassed(item.deadline) && (
+                <Badge key="job-offers.deadline-passed" t={t} />
             )
         }
     </div>
 
     <!-- Title -->
-    <h4 class="mb-2 font-bold tracking-tight text-gray-900 line-clamp-2">
-        {jobOffer.data.title}
-    </h4>
+    <h3 class="mb-2 font-bold tracking-tight text-gray-900 line-clamp-2">
+        {item.title}
+    </h3>
 
     <!-- Description -->
     <p class="mb-3 text-gray-700 text-sm line-clamp-3">
-        {jobOffer.data.description}
+        {item.description}
     </p>
 
     <!-- Location, Published Date, and Deadline -->
@@ -75,7 +71,7 @@ const t = useTranslations(lang);
                     stroke-width="2"
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
-            {jobOffer.data.location}
+            {item.location}
         </div>
         <div class="flex items-center text-sm text-gray-600">
             <svg
@@ -90,9 +86,7 @@ const t = useTranslations(lang);
                     stroke-width="2"
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            {t("job-offers.published")}: {
-                formatDate(jobOffer.data.publishedDate, lang)
-            }
+            {t("job-offers.published")}: {formatDate(item.publishedDate, lang)}
         </div>
         <div class="flex items-center text-sm text-gray-600">
             <svg
@@ -108,39 +102,31 @@ const t = useTranslations(lang);
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 ></path>
             </svg>
-            <span
-                class={isDeadlinePassed(jobOffer.data.deadline)
-                    ? "text-red-600"
-                    : ""}
-            >
-                {t("job-offers.deadline")}: {
-                    formatDate(jobOffer.data.deadline, lang)
-                }
+            <span class={isDeadlinePassed(item.deadline) ? "text-red-600" : ""}>
+                {t("job-offers.deadline")}: {formatDate(item.deadline, lang)}
             </span>
         </div>
     </div>
 
     <!-- Requirements preview -->
     {
-        jobOffer.data.requirements.length > 0 && (
-            <div class="mb-4">
-                <h6 class="text-sm font-semibold text-gray-900 mb-2">
-                    {t("job-offers.key-requirements")}:
-                </h6>
+        item.requirements.length > 0 && (
+            <div>
+                <div class="text-sm font-semibold text-gray-900 mb-2">
+                    {t("job-offers.key-requirements")}
+                </div>
                 <ul class="text-sm text-gray-600 space-y-1">
-                    {jobOffer.data.requirements.slice(0, 2).map((req) => (
+                    {item.requirements.slice(0, 2).map((req) => (
                         <li class="flex items-start">
                             <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 mr-2 flex-shrink-0" />
                             <span class="line-clamp-1">{req}</span>
                         </li>
                     ))}
-                    {jobOffer.data.requirements.length > 2 && (
+                    {item.requirements.length > 2 && (
                         <li class="text-gray-500 text-xs">
                             {t("job-offers.more-requirements").replace(
                                 "{count}",
-                                (
-                                    jobOffer.data.requirements.length - 2
-                                ).toString(),
+                                (item.requirements.length - 2).toString(),
                             )}
                         </li>
                     )}
@@ -151,11 +137,11 @@ const t = useTranslations(lang);
 
     <!-- Action button -->
     <a
-        href={linkHelpers.jobOffer(lang, jobOffer.slug)}
-        class="btn-primary inline-flex"
+        href={linkHelpers.jobOffer(lang, slug)}
+        class="btn-primary inline-flex mt-auto mx-auto"
         aria-label={t("job-offers.view-details-aria").replace(
             "{title}",
-            jobOffer.data.title,
+            item.title,
         )}
     >
         {t("job-offers.view-details")}

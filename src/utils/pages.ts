@@ -12,7 +12,7 @@ export async function generateAllPagesStaticPaths(): Promise<any[]> {
 
 /**
  * Generate base pages from the pages collection
- * @returns 
+ * @returns Array of static path entries
  */
 async function generateBasePagesStaticPaths() {
     const allPages = await getCollection("pages");
@@ -34,9 +34,9 @@ async function generateBasePagesStaticPaths() {
 }
 
 /**
- * 
- * @param collection 
- * @returns 
+ * Generate static paths for content types like events, press releases, job offers
+ * @param collection - The content collection name
+ * @returns Array of static path entries
  */
 async function generateTypePagesStaticPaths(collection: "press-releases" | "events" | "job-offers"): Promise<any[]> {
     const allEntries = await getCollection(collection);
@@ -51,10 +51,13 @@ async function generateTypePagesStaticPaths(collection: "press-releases" | "even
                 true,
             );
 
+            // Remove lang suffix from link for slug param
+            const cleanSlug = link ? link.replace(/-(en|fr)$/, '') : undefined;
+
             return {
                 params: {
                     lang: lang,
-                    slug: link,
+                    slug: cleanSlug,
                 },
                 props: {
                     page: entry,

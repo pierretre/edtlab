@@ -1,14 +1,11 @@
 ---
 import { formatDate } from "../utils/date";
-import {
-    isDeadlineApproaching,
-    isDeadlinePassed,
-    getJobTypeColor,
-} from "../utils";
+import { isDeadlineApproaching, isDeadlinePassed } from "../utils";
 import PageLayout from "./PageLayout.astro";
-import ProjectTag from "../components/ProjectTag.astro";
 import type { JobOffer } from "../models/JobOffer.model";
 import { useTranslations } from "../i18n/utils";
+import Badge from "../components/Badge.astro";
+import { generateJobPostingStructuredData } from "../utils/seo";
 
 export interface Props {
     frontmatter: JobOffer;
@@ -17,6 +14,17 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const lang = frontmatter.lang as "en" | "fr";
 const t = useTranslations(lang);
+
+const jobStructuredData = generateJobPostingStructuredData(
+    frontmatter.title,
+    frontmatter.description,
+    frontmatter.location,
+    frontmatter.publishedDate.toISOString().split("T")[0],
+    frontmatter.deadline.toISOString().split("T")[0],
+    "FULL_TIME",
+    frontmatter.requirements,
+    undefined,
+);
 ---
 
 <PageLayout
@@ -26,6 +34,11 @@ const t = useTranslations(lang);
     showBreadcrumb={true}
     showToc={true}
 >
+    <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(jobStructuredData)}
+    />
     <!-- Back to Join Us link -->
     <div class="mb-6">
         <a
@@ -52,24 +65,17 @@ const t = useTranslations(lang);
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <ProjectTag project={frontmatter.project} />
-            <span
-                class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getJobTypeColor(frontmatter.type)}`}
-            >
-                {t(`job-offers.type.${frontmatter.type}`)}
-            </span>
+            <Badge key={frontmatter.project} t={t} />
+            <Badge key={`job-offers.type.${frontmatter.type}`} t={t} />
+
             {
                 isDeadlineApproaching(frontmatter.deadline) && (
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
-                        {t("job-offers.deadline-approaching")}
-                    </span>
+                    <Badge key="job-offers.deadline-approaching" t={t} />
                 )
             }
             {
                 isDeadlinePassed(frontmatter.deadline) && (
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200">
-                        {t("job-offers.deadline-passed")}
-                    </span>
+                    <Badge key="job-offers.deadline-passed" t={t} />
                 )
             }
         </div>
@@ -201,10 +207,7 @@ const t = useTranslations(lang);
                 </svg>
                 {t("job-offers.apply-now")}
             </a>
-            <a
-                href={`/${lang}/join-us`}
-                class="inline-flex items-center justify-center px-6 py-3 bg-primary-500 text-white font-medium rounded-lg hover:bg-primary-400 transition-colors duration-200"
-            >
+            <a href={`/${lang}/join-us`} class="btn-primary-light">
                 {t("job-offers.view-all-positions")}
             </a>
         </div>

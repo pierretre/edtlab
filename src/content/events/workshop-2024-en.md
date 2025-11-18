@@ -6,6 +6,7 @@ location: "Lyon, France"
 description: "Hands-on workshop exploring practical applications of digital twin technology in industrial settings"
 url: "http://edtlab.fr/"
 lang: "en"
+photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Workshop Overview
