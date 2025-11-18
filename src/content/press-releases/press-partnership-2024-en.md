@@ -4,7 +4,7 @@ date: 2024-05-15
 description: "New partnerships with major industrial players will accelerate digital twin technology adoption across manufacturing sectors"
 url: "http://edtlab.fr/"
 lang: "en"
-photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
+photo: "/src/assets/images/news-covers/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Press Release - May 15, 2024
