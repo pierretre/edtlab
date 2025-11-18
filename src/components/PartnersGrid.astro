@@ -8,24 +8,31 @@ export interface Props {
 }
 
 const { partners } = Astro.props;
+const logos = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/images/partners/*.{svg,jpg,png,gif,webp}",
+);
 
-let partnersData: Partner[] = [];
+// Resolve partner entries and load their logo image metadata.
+// Use Promise.all so `partnersData` is an array of resolved objects (not Promises).
+const partnersData: (Partner & { image: ImageMetadata })[] = await Promise.all(
+    partners.map(async (shortname) => {
+        const jsonKey = shortname as keyof typeof json;
+        const meta = json[jsonKey] as Partner | undefined;
 
-partners.forEach((p) => {
-    if (Object.keys(json).includes(p)) {
-        partnersData.push({ shortname: p, ...json[p] } as Partner);
-    }
-});
+        if (!meta) {
+            throw new Error(`Partner not found in JSON: ${shortname}`);
+        }
 
-for (const p of partnersData) {
-    try {
-        p.logo = (await import(p.logo)).default;
-    } catch {
-        console.error(
-            `Could not load logo for partner: ${p.shortname}, path: ${p.logo}`,
-        );
-    }
-}
+        try {
+            const image = (await logos[meta.logo]()).default;
+            return { ...meta, image };
+        } catch (err) {
+            throw new Error(
+                `Could not load logo for partner "${meta.shortname}". Path attempted: ${meta.logo}. Original error: ${err}`,
+            );
+        }
+    }),
+);
 ---
 
 <div class="w-full py-8">
@@ -40,11 +47,12 @@ for (const p of partnersData) {
                         title={p.fullname}
                     >
                         <Picture
-                            src={p.logo}
+                            src={p.image}
                             alt={p.fullname ?? ""}
                             class="h-12 w-auto object-contain"
                             loading="lazy"
                         />
+
                         {/* {p.children && p.children.length > 0 && (
                             <div class="mt-2 hidden group-hover:block text-xs text-gray-500 text-center">
                                 {p.children.join(", ")}
