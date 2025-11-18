@@ -6,7 +6,7 @@ location: "Paris, France"
 description: "Annual conference bringing together researchers and practitioners in digital twin technology"
 url: "http://edtlab.fr/"
 lang: "en"
-photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
+photo: "/src/assets/images/news-covers/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Event Details

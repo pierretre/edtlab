@@ -16,6 +16,7 @@ const t = useTranslations(lang);
 const events = (
     await getCollection("events", (event) => event.data.lang === lang)
 ).map((e) => ({ ...e, category: NewsCategory.Event }));
+
 const pressReleaseItems = (
     await getCollection(
         "press-releases",
@@ -23,8 +24,26 @@ const pressReleaseItems = (
     )
 ).map((p) => ({ ...p, category: NewsCategory.PressRelease }));
 
+const covers = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
+);
+
 const feed = [...pressReleaseItems, ...events];
 
+// Add cover images to feed items
+const feedWithCovers = await Promise.all(
+    feed.map(async (item) => {
+        try {
+            const coverImagePath = item.data.photo;
+            const coverImage = (await covers[coverImagePath]()).default;
+            return { ...item, coverImage: coverImage };
+        } catch (err) {
+            throw new Error(
+                `Could not load cover image for news item "${item.data.title}". Path attempted: ${item.data.photo}. Original error: ${err}`,
+            );
+        }
+    }),
+);
 // Project filter options
 const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 ---
@@ -124,11 +143,12 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             class="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
             {
-                feed.map((item) => (
+                feedWithCovers.map((item) => (
                     <NewsCard
                         item={item.data}
                         lang={lang}
                         category={item.category}
+                        coverImage={item.coverImage}
                         t={t}
                         slug={item.slug}
                     />

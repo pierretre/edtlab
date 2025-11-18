@@ -4,7 +4,7 @@ date: 2024-05-15
 description: "De nouveaux partenariats avec des acteurs industriels majeurs accéléreront l'adoption de la technologie des jumeaux numériques dans les secteurs manufacturiers"
 url: "http://edtlab.fr/"
 lang: "fr"
-photo: "/src/assets/images/press-releases/Digital-Twins-Cover-image.jpg"
+photo: "/src/assets/images/news-covers/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Communiqué de Presse - 15 mai 2024
