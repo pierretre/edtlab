@@ -5,16 +5,18 @@ import type { Event } from "../models/Event.model";
 import type { PressRelease } from "../models/PressRelease.model";
 import Badge from "./Badge.astro";
 import { NewsCategory } from "../models/NewsCategory.model";
+import { Picture } from "astro:assets";
 
 export interface Props {
     item: Event | PressRelease;
     lang: "en" | "fr";
     category: NewsCategory;
+    coverImage: ImageMetadata;
     t: any;
     slug: string;
 }
 
-const { item, lang, category, t, slug } = Astro.props;
+const { item, lang, category, coverImage, t, slug } = Astro.props;
 ---
 
 <div
@@ -38,9 +40,9 @@ const { item, lang, category, t, slug } = Astro.props;
             : linkHelpers.event(lang, slug)}
         class="relative block h-48 overflow-hidden group rounded-t-lg"
     >
-        <img
+        <Picture
             class="h-full w-full object-cover transform transition duration-500 group-hover:scale-105"
-            src={item.photo}
+            src={coverImage}
             alt={item.title}
         />
         <div
