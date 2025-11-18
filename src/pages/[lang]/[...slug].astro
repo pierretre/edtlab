@@ -28,7 +28,10 @@ if (!page) {
 
 // Get the rendered content
 const { Content } = await page.render();
-const Layout = getLayoutFromTemplateOrCollection(page.collection, template);
+const Layout: any = getLayoutFromTemplateOrCollection(
+    page.collection,
+    template,
+);
 // Triage: cast page.data to unknown->any to avoid type union conflicts during check
 const pageDataAny = page.data as unknown as any;
 ---

@@ -4,18 +4,10 @@ import TableOfContent from "../components/TableOfContent.astro";
 import RelatedPublications from "../components/RelatedPublications.astro";
 import RelatedJobOffers from "../components/RelatedJobOffers.astro";
 import RelatedNews from "../components/RelatedNews.astro";
+import type { Project } from "../models/Project.model";
 
 export interface Props {
-    frontmatter?: {
-        title: string;
-        href: string;
-        lang: string;
-        description: string;
-        toc: boolean;
-        color: string;
-        illustration: string;
-        projectId?: string;
-    };
+    frontmatter: Project;
     headings?: { depth: number; slug: string; text: string }[];
     [key: string]: any;
 }

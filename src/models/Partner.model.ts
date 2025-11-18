@@ -1,6 +1,6 @@
 export interface Partner {
     shortname: string;
     fullname: string;
-    logo: any;
+    logo: string;
     children?: string[];
 }

@@ -4,6 +4,7 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import NewsCard from "./NewsCard.astro";
 import { linkHelpers } from "../i18n/links";
 import type { CollectionEntry } from "astro:content";
+import { NewsCategory } from "../models/NewsCategory.model";
 
 export interface Props {
     project?: string;
@@ -28,16 +29,16 @@ if (project) {
         );
 
         const relatedPress: (CollectionEntry<"press-releases"> & {
-            category: "press-release";
+            category: NewsCategory.PressRelease;
         })[] = pressReleases
             .filter((p) => p.data.project === project)
-            .map((p) => ({ ...p, category: "press-release" }));
+            .map((p) => ({ ...p, category: NewsCategory.PressRelease }));
 
         const relatedEvents: (CollectionEntry<"events"> & {
-            category: "event";
+            category: NewsCategory.Event;
         })[] = events
             .filter((e) => e.data.project === project)
-            .map((e) => ({ ...e, category: "event" }));
+            .map((e) => ({ ...e, category: NewsCategory.Event }));
 
         // Combine and sort by date (newest first)
         relatedItems = [...relatedPress, ...relatedEvents]

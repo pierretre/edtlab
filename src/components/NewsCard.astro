@@ -4,11 +4,12 @@ import { linkHelpers } from "../i18n/links";
 import type { Event } from "../models/Event.model";
 import type { PressRelease } from "../models/PressRelease.model";
 import Badge from "./Badge.astro";
+import { NewsCategory } from "../models/NewsCategory.model";
 
 export interface Props {
     item: Event | PressRelease;
     lang: "en" | "fr";
-    category: "event" | "press-release";
+    category: NewsCategory;
     t: any;
     slug: string;
 }
@@ -32,7 +33,7 @@ const { item, lang, category, t, slug } = Astro.props;
     </div>
 
     <a
-        href={category === "press-release"
+        href={category === NewsCategory.PressRelease
             ? linkHelpers.press(lang, slug)
             : linkHelpers.event(lang, slug)}
         class="relative block h-48 overflow-hidden group rounded-t-lg"
@@ -59,7 +60,7 @@ const { item, lang, category, t, slug } = Astro.props;
 
         <h4 class="text-base">
             <a
-                href={category === "press-release"
+                href={category === NewsCategory.PressRelease
                     ? linkHelpers.press(lang, slug)
                     : linkHelpers.event(lang, slug)}
                 class="hover:text-primary-600 text-gray-800 transition-colors duration-200"
