@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { useTranslations } from "../i18n/utils";
 import NewsCard from "./NewsCard.astro";
+import { NewsCategory } from "../models/NewsCategory.model";
 
 interface Props {
     lang: "en" | "fr";
@@ -14,13 +15,13 @@ const t = useTranslations(lang);
 // Load content
 const events = (
     await getCollection("events", (event) => event.data.lang === lang)
-).map((e) => ({ ...e, category: "event" }));
+).map((e) => ({ ...e, category: NewsCategory.Event }));
 const pressReleaseItems = (
     await getCollection(
         "press-releases",
         (pressRelease) => pressRelease.data.lang === lang,
     )
-).map((p) => ({ ...p, category: "press-release" }));
+).map((p) => ({ ...p, category: NewsCategory.PressRelease }));
 
 const feed = [...pressReleaseItems, ...events];
 
