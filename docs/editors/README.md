@@ -58,9 +58,9 @@ All content must be created in both English and French:
 
 ## Getting Help
 
-- **Style Guide**: See `guidelines/content-style-guide.md`
-- **Frontmatter Reference**: See `guidelines/frontmatter-reference.md`
-- **Component Guide**: See `guidelines/component-usage.md`
+- **Style Guide**: See [guidelines/content-style-guide.md](guidelines/content-style-guide.md)
+- **Frontmatter Reference**: See [guidelines/frontmatter-reference.md](guidelines/frontmatter-reference.md)
+- **Component Guide**: See [guidelines/component-usage.md](guidelines/component-usage.md)
 
 ## Validation
 

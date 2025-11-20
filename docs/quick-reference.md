@@ -5,6 +5,7 @@ A handy reference for content editors working on the EDT Research Website.
 ## Content Types Quick Reference
 
 ### Pages (`src/content/pages/`)
+
 ```yaml
 ---
 title: "Page Title"
@@ -18,6 +19,7 @@ template: "new" # optional
 ```
 
 ### Publications (`src/content/publications/`)
+
 ```yaml
 ---
 title: "Publication Title"
@@ -31,6 +33,7 @@ url: "https://..." # optional
 ```
 
 ### Events (`src/content/events/`)
+
 ```yaml
 ---
 title: "Event Title"
@@ -44,6 +47,7 @@ lang: "en" # or "fr"
 ```
 
 ### Job Offers (`src/content/job-offers/`)
+
 ```yaml
 ---
 title: "Position Title"
@@ -59,6 +63,7 @@ lang: "en" # or "fr"
 ```
 
 ### Press Releases (`src/content/press-releases/`)
+
 ```yaml
 ---
 title: "Press Release Title"
@@ -83,9 +88,10 @@ lang: "en" # or "fr"
 
 ## MDX Components
 
-### ResponsiveImage
+### OptimizedFigure
+
 ```mdx
-<ResponsiveImage 
+<OptimizedFigure 
   src="image.jpg"
   alt="Descriptive alt text"
   caption="Optional caption"
@@ -93,6 +99,7 @@ lang: "en" # or "fr"
 ```
 
 ### EventList
+
 ```mdx
 <EventList 
   limit={5}
@@ -103,6 +110,7 @@ lang: "en" # or "fr"
 ```
 
 ### PublicationList
+
 ```mdx
 <PublicationList 
   limit={10}
@@ -113,6 +121,7 @@ lang: "en" # or "fr"
 ```
 
 ### JobOfferList
+
 ```mdx
 <JobOfferList 
   limit={3}
@@ -125,6 +134,7 @@ lang: "en" # or "fr"
 ## Common Tailwind Classes
 
 ### Layout
+
 ```css
 grid md:grid-cols-2 gap-6    /* Two-column grid */
 flex items-center justify-between    /* Flex layout */
@@ -132,6 +142,7 @@ container mx-auto px-4    /* Centered container */
 ```
 
 ### Spacing
+
 ```css
 p-4    /* Padding all sides */
 m-6    /* Margin all sides */
@@ -140,6 +151,7 @@ mb-4   /* Margin bottom */
 ```
 
 ### Colors (Scampi Theme)
+
 ```css
 bg-primary-50     /* Light background */
 text-primary-700  /* Dark text */
@@ -147,6 +159,7 @@ border-primary-500    /* Border color */
 ```
 
 ### Typography
+
 ```css
 text-lg font-semibold    /* Large, semi-bold text */
 text-sm text-gray-600    /* Small, gray text */
@@ -228,20 +241,15 @@ npm run astro check
 **Publication Types**: `journal`, `conference`, `book`, `report`  
 **Event Types**: `conference`, `workshop`, `seminar`  
 **Job Types**: `postdoc`, `phd`, `engineer`, `intern`  
-**Press Types**: `announcement`, `partnership`, `award`, `milestone`, `general`  
 **Projects**: `PC1`, `PC2`, `PC3`, `PC4`, `PC5`, `General`  
 **Languages**: `en`, `fr`
 
 ## Useful Links
 
 - [Full Documentation](README.md)
-- [Style Guide](guidelines/content-style-guide.md)
-- [Component Guide](guidelines/component-usage.md)
-- [Accessibility Guide](guidelines/accessibility-guide.md)
+- [Style Guide](editors/guidelines/content-style-guide.md)
+- [Component Guide](editors/guidelines/component-usage.md)
+- [Accessibility Guide](editors/guidelines/accessibility-guide.md)
 - [Troubleshooting](troubleshooting-faq.md)
 - [Astro Docs](https://docs.astro.build/)
 - [Tailwind Docs](https://tailwindcss.com/docs)
-
----
-
-**Print this page and keep it handy while editing content!**
