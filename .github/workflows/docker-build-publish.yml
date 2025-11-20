@@ -1,13 +1,8 @@
 name: "Docker: Build and Publish"
 
 on:
-  workflow_dispatch:
-
-  push:
-    tags:
-      - 'v*'       # for example: v1.0.0, v2.3.5, etc.
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   build_publish:

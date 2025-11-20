@@ -10,7 +10,7 @@ illustration: "illustration-filename.jpg"  # Optional: illustration filename
 template: "advanced"  # Optional: template key to render this page with a special layout
 ---
 
-import ResponsiveImage from '../../../components/ResponsiveImage.astro';
+import OptimizedFigure from '../../../components/OptimizedFigure.astro';
 import EventList from '../../../components/EventList.astro';
 import PublicationList from '../../../components/PublicationList.astro';
 import JobOfferList from '../../../components/JobOfferList.astro';
@@ -21,9 +21,9 @@ This template demonstrates how to use MDX components for rich, interactive conte
 
 ## Images and Media
 
-Use the ResponsiveImage component for all images to ensure accessibility and responsive design:
+Use the OptimizedFigure component for all images to ensure accessibility and responsive design:
 
-<ResponsiveImage 
+<OptimizedFigure 
   src="image-filename.jpg"
   alt="Descriptive alt text for accessibility"
   caption="Optional caption that provides additional context about the image"

@@ -48,7 +48,7 @@ const feedWithCovers = await Promise.all(
 const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 ---
 
-<div class="container mx-auto px-4 py-6 max-w-8xl">
+<div class="container mx-auto max-w-8xl">
     <!-- Filters Section -->
     <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
         <!-- Project Filter -->
@@ -205,7 +205,7 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
                 const btn = document.createElement("button");
                 btn.type = "button";
                 btn.className =
-                    "px-3 py-1 rounded text-sm border bg-white hover:bg-gray-50";
+                    "px-3 py-1 rounded text-sm bg-white hover:bg-gray-50 ";
                 btn.textContent = text;
                 if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
                 if (disabled) btn.disabled = true;
@@ -213,6 +213,8 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             };
 
             const prev = makeButton("‹", "Previous page", currentPage === 1);
+            prev.classList.remove("text-sm");
+            prev.classList.add("text-lg");
             prev.addEventListener("click", () => {
                 if (currentPage > 1) {
                     currentPage--;
@@ -224,7 +226,11 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             for (let i = 1; i <= totalPages; i++) {
                 const pageBtn = makeButton(i.toString(), `Page ${i}`, false);
                 if (i === currentPage) {
-                    pageBtn.classList.add("font-semibold", "bg-gray-100");
+                    pageBtn.classList.add(
+                        "underline",
+                        "bg-gray-100",
+                        "font-bold",
+                    );
                     pageBtn.setAttribute("aria-current", "page");
                 }
                 pageBtn.addEventListener("click", () => {
@@ -235,6 +241,8 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             }
 
             const next = makeButton("›", "Next page", false);
+            next.classList.remove("text-sm");
+            next.classList.add("text-lg");
             next.addEventListener("click", () => {
                 currentPage++;
                 updatePageDisplay();
