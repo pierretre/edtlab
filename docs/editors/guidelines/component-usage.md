@@ -5,6 +5,7 @@ This guide explains how to use MDX components in advanced content pages to creat
 ## Overview
 
 MDX allows you to use Astro components directly in your markdown content, enabling:
+
 - Interactive elements and dynamic content
 - Consistent styling and behavior
 - Reusable content patterns
@@ -13,15 +14,16 @@ MDX allows you to use Astro components directly in your markdown content, enabli
 
 ## Available Components
 
-### ResponsiveImage
+### OptimizedFigure
 
 Displays images with responsive sizing, accessibility features, and optional captions.
 
 #### Usage
-```mdx
-import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 
-<ResponsiveImage 
+```mdx
+import OptimizedFigure from '../../../components/OptimizedFigure.astro';
+
+<OptimizedFigure 
   src="image-filename.jpg"
   alt="Descriptive alt text for accessibility"
   caption="Optional caption providing additional context"
@@ -29,6 +31,7 @@ import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 ```
 
 #### Props
+
 - `src` (required): Image filename (relative to `src/assets/images/` or `public/`)
 - `alt` (required): Alternative text for screen readers
 - `caption` (optional): Caption text displayed below the image
@@ -36,14 +39,16 @@ import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 - `height` (optional): Maximum height constraint
 
 #### Guidelines
+
 - Always provide descriptive alt text
 - Use captions to provide additional context, not just repeat the alt text
 - Optimize images before adding them to the project
 - Use meaningful filenames
 
 #### Example
+
 ```mdx
-<ResponsiveImage 
+<OptimizedFigure 
   src="/src/assets/images/INRIA_EDT_CBLOT_PC1.jpg"
   alt="PC1 project diagram showing model hybridization workflow with data inputs, processing stages, and output validation"
   caption="PC1 Model Hybridization: Workflow diagram illustrating the integration of physical and data-driven models in digital twin applications"
@@ -55,6 +60,7 @@ import ResponsiveImage from '../../../components/ResponsiveImage.astro';
 Displays a filtered list of events with customizable display options.
 
 #### Usage
+
 ```mdx
 import EventList from '../../../components/EventList.astro';
 
@@ -67,6 +73,7 @@ import EventList from '../../../components/EventList.astro';
 ```
 
 #### Props
+
 - `limit` (optional): Maximum number of events to display (default: 10)
 - `showType` (optional): Show event type badges (default: true)
 - `lang` (required): Language filter ("en" or "fr")
@@ -74,6 +81,7 @@ import EventList from '../../../components/EventList.astro';
 - `showPast` (optional): Include past events (default: false)
 
 #### Guidelines
+
 - Use appropriate limits to avoid overwhelming users
 - Consider the page context when choosing filters
 - Include both upcoming and recent events when relevant
@@ -83,6 +91,7 @@ import EventList from '../../../components/EventList.astro';
 Displays publications with filtering and sorting capabilities.
 
 #### Usage
+
 ```mdx
 import PublicationList from '../../../components/PublicationList.astro';
 
@@ -96,6 +105,7 @@ import PublicationList from '../../../components/PublicationList.astro';
 ```
 
 #### Props
+
 - `limit` (optional): Maximum number of publications to display
 - `showFilters` (optional): Display filter controls (default: true)
 - `defaultType` (optional): Default publication type filter
@@ -104,6 +114,7 @@ import PublicationList from '../../../components/PublicationList.astro';
 - `showVenue` (optional): Display venue information (default: true)
 
 #### Guidelines
+
 - Enable filters for large publication lists
 - Consider the target audience when setting defaults
 - Provide clear categorization
@@ -113,6 +124,7 @@ import PublicationList from '../../../components/PublicationList.astro';
 Displays current job opportunities with project-based filtering.
 
 #### Usage
+
 ```mdx
 import JobOfferList from '../../../components/JobOfferList.astro';
 
@@ -125,6 +137,7 @@ import JobOfferList from '../../../components/JobOfferList.astro';
 ```
 
 #### Props
+
 - `limit` (optional): Maximum number of job offers to display
 - `showProject` (optional): Display project badges (default: true)
 - `lang` (required): Language filter ("en" or "fr")
@@ -132,6 +145,7 @@ import JobOfferList from '../../../components/JobOfferList.astro';
 - `showDeadline` (optional): Display application deadlines (default: true)
 
 #### Guidelines
+
 - Keep job lists current and relevant
 - Highlight urgent deadlines
 - Provide clear project associations
@@ -141,6 +155,7 @@ import JobOfferList from '../../../components/JobOfferList.astro';
 Generates an interactive table of contents for long-form content.
 
 #### Usage
+
 ```mdx
 import TableOfContents from '../../../components/TableOfContents.astro';
 
@@ -151,11 +166,13 @@ import TableOfContents from '../../../components/TableOfContents.astro';
 ```
 
 #### Props
+
 - `maxDepth` (optional): Maximum heading level to include (default: 3)
 - `showNumbers` (optional): Show section numbers (default: false)
 - `sticky` (optional): Make TOC sticky on scroll (default: true)
 
 #### Guidelines
+
 - Use for pages with multiple sections
 - Consider mobile experience with sticky positioning
 - Limit depth to maintain usability
@@ -165,6 +182,7 @@ import TableOfContents from '../../../components/TableOfContents.astro';
 Displays navigation breadcrumbs for page hierarchy.
 
 #### Usage
+
 ```mdx
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 
@@ -178,10 +196,12 @@ import Breadcrumb from '../../../components/Breadcrumb.astro';
 ```
 
 #### Props
+
 - `items` (required): Array of breadcrumb items with `name` and `href`
 - `separator` (optional): Custom separator character (default: "/")
 
 #### Guidelines
+
 - Provide logical navigation hierarchy
 - Keep breadcrumb labels concise
 - Ensure all links are functional
@@ -274,12 +294,14 @@ Create tabbed interfaces for organized content:
 ## Best Practices
 
 ### Performance Considerations
+
 - Only import components you actually use
 - Optimize images before including them
 - Use appropriate limits for dynamic lists
 - Test page load times with components
 
 ### Accessibility Guidelines
+
 - Provide alt text for all images
 - Use semantic HTML structure
 - Ensure keyboard navigation works
@@ -287,12 +309,14 @@ Create tabbed interfaces for organized content:
 - Maintain proper heading hierarchy
 
 ### Responsive Design
+
 - Test components on mobile devices
 - Use responsive grid classes
 - Consider touch interfaces
 - Ensure readable text sizes
 
 ### Content Organization
+
 - Use components to enhance, not replace, good content structure
 - Maintain logical information hierarchy
 - Group related content together
@@ -303,26 +327,31 @@ Create tabbed interfaces for organized content:
 ### Common Issues
 
 #### Component Not Rendering
+
 - Check import path is correct
 - Verify component exists in the components directory
 - Ensure all required props are provided
 
 #### Styling Issues
+
 - Check Tailwind classes are applied correctly
 - Verify responsive breakpoints work as expected
 - Test in different browsers
 
 #### Performance Problems
+
 - Reduce number of components per page
 - Optimize images and media
 - Check for unnecessary re-renders
 
 #### Accessibility Violations
+
 - Run automated accessibility tests
 - Test with keyboard navigation
 - Verify screen reader compatibility
 
 ### Debugging Tips
+
 - Use browser developer tools
 - Check console for error messages
 - Validate HTML structure
@@ -331,9 +360,10 @@ Create tabbed interfaces for organized content:
 ## Advanced Usage
 
 ### Custom Component Styling
+
 ```mdx
 <div class="custom-component-wrapper">
-  <ResponsiveImage 
+  <OptimizedFigure 
     src="diagram.jpg"
     alt="Custom styled diagram"
     class="border-2 border-primary-300 rounded-lg"
@@ -342,6 +372,7 @@ Create tabbed interfaces for organized content:
 ```
 
 ### Combining Components
+
 ```mdx
 <div class="grid lg:grid-cols-3 gap-8">
   <div class="lg:col-span-2">
@@ -354,6 +385,7 @@ Create tabbed interfaces for organized content:
 ```
 
 ### Conditional Content
+
 ```mdx
 {/* Show different content based on language */}
 {lang === 'en' ? (
@@ -366,6 +398,7 @@ Create tabbed interfaces for organized content:
 ## Component Development
 
 ### Creating New Components
+
 When creating new reusable components:
 
 1. Follow Astro component conventions
@@ -376,6 +409,7 @@ When creating new reusable components:
 6. Update this guide with usage instructions
 
 ### Component Guidelines
+
 - Keep components focused and reusable
 - Include proper error handling
 - Follow accessibility best practices

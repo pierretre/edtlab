@@ -47,7 +47,7 @@ The `MatomoAnalytics.astro` component has been updated to use Partytown:
 
 The following environment variables control Matomo configuration:
 
-- `MATOMO_URL`: Matomo server URL (default: "http://localhost:8080")
+- `MATOMO_URL`: Matomo server URL (default: "<http://localhost:8080>")
 - `MATOMO_SITE_ID`: Site ID in Matomo (default: "1")
 - `MATOMO_ENABLE_COOKIES`: Enable cookies (default: false for GDPR compliance)
 - `MATOMO_RESPECT_DNT`: Respect Do Not Track headers (default: true)
@@ -84,6 +84,7 @@ To enable debug mode for development:
 ## Performance Impact
 
 With Partytown:
+
 - Main thread blocking time is reduced
 - Page load performance improves
 - User interactions remain responsive
