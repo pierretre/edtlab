@@ -57,7 +57,7 @@ const expiredJobOffers = sortedJobOffers.filter(
 );
 ---
 
-<div class="job-offers-container">
+<div class="w-full mb-12">
     <!-- Header with statistics -->
     <div class="mb-6 p-4 bg-primary-50 rounded-lg border border-primary-200">
         <div
@@ -102,247 +102,263 @@ const expiredJobOffers = sortedJobOffers.filter(
         </div>
     </div>
 
-    <!-- Filters Section -->
-    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
-        <!-- Project Filter -->
-        <div>
-            <label
-                for="project-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("job-offers.filter.project")}
-            </label>
-            <select id="project-filter">
-                <option value="">{t("job-offers.filter.all-projects")}</option>
-                {
-                    projects.map((project) => (
-                        <option value={project}>{project}</option>
-                    ))
-                }
-            </select>
-        </div>
+    <div class="flex flex-col lg:flex-row gap-10">
+        <!-- Sidebar -->
+        <aside class="lg:w-64 flex-shrink-0">
+            <div class="flex flex-col gap-2 sticky lg:top-24">
+                <!-- Project Filter -->
+                <div>
+                    <label
+                        for="project-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("job-offers.filter.project")}
+                    </label>
+                    <select id="project-filter">
+                        <option value=""
+                            >{t("job-offers.filter.all-projects")}</option
+                        >
+                        {
+                            projects.map((project) => (
+                                <option value={project}>{project}</option>
+                            ))
+                        }
+                    </select>
+                </div>
 
-        <!-- Type Filter -->
-        <div>
-            <label
-                for="type-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("job-offers.filter.type")}
-            </label>
-            <select id="type-filter">
-                <option value="">{t("job-offers.filter.all-types")}</option>
-                {
-                    types.map((type) => (
-                        <option value={type}>
-                            {t(`job-offers.type.${type}`)}
-                        </option>
-                    ))
-                }
-            </select>
-        </div>
+                <!-- Type Filter -->
+                <div>
+                    <label
+                        for="type-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("job-offers.filter.type")}
+                    </label>
+                    <select id="type-filter">
+                        <option value=""
+                            >{t("job-offers.filter.all-types")}</option
+                        >
+                        {
+                            types.map((type) => (
+                                <option value={type}>
+                                    {t(`job-offers.type.${type}`)}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
 
-        <!-- Status Filter -->
-        <div>
-            <label
-                for="status-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("job-offers.filter.status")}
-            </label>
-            <select id="status-filter">
-                <option value="">{t("job-offers.filter.all-status")}</option>
-                <option value="active">{t("job-offers.filter.active")}</option>
-                <option value="expired">{t("job-offers.filter.expired")}</option
+                <!-- Status Filter -->
+                <div>
+                    <label
+                        for="status-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("job-offers.filter.status")}
+                    </label>
+                    <select id="status-filter">
+                        <option value=""
+                            >{t("job-offers.filter.all-status")}</option
+                        >
+                        <option value="active"
+                            >{t("job-offers.filter.active")}</option
+                        >
+                        <option value="expired"
+                            >{t("job-offers.filter.expired")}</option
+                        >
+                    </select>
+                </div>
+
+                <!-- Search Filter -->
+                <div>
+                    <label
+                        for="search-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("job-offers.filter.search")}
+                    </label>
+                    <input
+                        type="text"
+                        id="search-filter"
+                        placeholder={t("job-offers.filter.search-placeholder")}
+                    />
+                </div>
+                <div class="hidden md:block" aria-hidden="true"></div>
+
+                <div class="flex justify-center">
+                    <button
+                        id="clear-filters"
+                        class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                    >
+                        {t("job-offers.filter.clear")}
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1">
+            <!-- Results Count -->
+            <div class="mb-6 text-sm text-gray-600 text-center">
+                <span
+                    id="results-count"
+                    data-template={t("job-offers.results-count")}
                 >
-            </select>
-        </div>
+                    {
+                        t("job-offers.results-count").replace(
+                            "{count}",
+                            sortedJobOffers.length.toString(),
+                        )
+                    }
+                </span>
+            </div>
 
-        <!-- Search Filter -->
-        <div>
-            <label
-                for="search-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("job-offers.filter.search")}
-            </label>
-            <input
-                type="text"
-                id="search-filter"
-                placeholder={t("job-offers.filter.search-placeholder")}
-            />
-        </div>
-        <div class="hidden md:block" aria-hidden="true"></div>
-
-        <div class="h-full flex flex-col justify-end">
-            <button
-                id="clear-filters"
-                class="text-primary-600 hover:text-primary-600 text-sm font-medium"
-                aria-colindex="6"
-            >
-                {t("job-offers.filter.clear")}
-            </button>
-        </div>
-    </div>
-
-    <!-- Job Offers Grid -->
-    <div
-        id="job-offers-grid"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-    >
-        {
-            sortedJobOffers.map((jobOffer) => (
-                <JobOfferCard
-                    item={jobOffer.data}
-                    lang={lang}
-                    t={t}
-                    slug={jobOffer.slug}
-                />
-            ))
-        }
-    </div>
-
-    <!-- No Results Message -->
-    <div id="no-results" class="hidden text-center py-32">
-        <div class="max-w-md mx-auto">
-            <h3 class="mt-4 text-lg font-medium text-gray-900">
-                {t("job-offers.no-results")}
-            </h3>
-            <p class="mt-2 text-gray-500">
-                {t("job-offers.no-results-description")}
-            </p>
-        </div>
-    </div>
-
-    <!-- Results Count -->
-    <div class="mt-6 text-sm text-gray-600 text-center">
-        <span id="results-count" data-template={t("job-offers.results-count")}>
-            {
-                t("job-offers.results-count").replace(
-                    "{count}",
-                    sortedJobOffers.length.toString(),
-                )
-            }
-        </span>
-    </div>
-</div>
-
-<script>
-    // Client-side filtering functionality
-    document.addEventListener("DOMContentLoaded", function () {
-        const projectFilter = document.getElementById(
-            "project-filter",
-        ) as HTMLSelectElement;
-        const typeFilter = document.getElementById(
-            "type-filter",
-        ) as HTMLSelectElement;
-        const statusFilter = document.getElementById(
-            "status-filter",
-        ) as HTMLSelectElement;
-        const searchFilter = document.getElementById(
-            "search-filter",
-        ) as HTMLInputElement;
-        const clearFilters = document.getElementById(
-            "clear-filters",
-        ) as HTMLButtonElement;
-        const grid = document.getElementById(
-            "job-offers-grid",
-        ) as HTMLDivElement;
-        const noResults = document.getElementById(
-            "no-results",
-        ) as HTMLDivElement;
-        const resultsCount = document.getElementById(
-            "results-count",
-        ) as HTMLSpanElement;
-        const items = Array.from(
-            document.querySelectorAll(".job-offer-item"),
-        ) as HTMLDivElement[];
-
-        function filterJobOffers() {
-            const projectValue = projectFilter.value;
-            const typeValue = typeFilter.value;
-            const statusValue = statusFilter.value;
-            const searchValue = searchFilter.value.toLowerCase().trim();
-
-            let visibleCount = 0;
-
-            items.forEach((item) => {
-                const itemProject = item.dataset.project;
-                const itemType = item.dataset.type;
-                const itemStatus = item.dataset.status;
-                const itemSearchText = item.dataset.searchText || "";
-
-                const projectMatch =
-                    !projectValue || itemProject === projectValue;
-                const typeMatch = !typeValue || itemType === typeValue;
-                const statusMatch = !statusValue || itemStatus === statusValue;
-                const searchMatch =
-                    !searchValue || itemSearchText.includes(searchValue);
-
-                const shouldShow =
-                    projectMatch && typeMatch && statusMatch && searchMatch;
-
-                if (shouldShow) {
-                    item.style.display = "";
-                    visibleCount++;
-                } else {
-                    item.style.display = "none";
+            <!-- Job Offers Grid -->
+            <div id="job-offers-grid" class="grid grid-cols-1 gap-6">
+                {
+                    sortedJobOffers.map((jobOffer) => (
+                        <JobOfferCard
+                            item={jobOffer.data}
+                            lang={lang}
+                            t={t}
+                            slug={jobOffer.slug}
+                        />
+                    ))
                 }
-            });
+            </div>
 
-            // Update results count and show/hide no results message
-            const template =
-                resultsCount.dataset.template || "Showing {count} job offers";
-            resultsCount.textContent = template.replace(
-                "{count}",
-                visibleCount.toString(),
-            );
+            <!-- No Results Message -->
+            <div id="no-results" class="hidden text-center py-32">
+                <div class="max-w-md mx-auto">
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">
+                        {t("job-offers.no-results")}
+                    </h3>
+                    <p class="mt-2 text-gray-500">
+                        {t("job-offers.no-results-description")}
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
 
-            if (visibleCount === 0) {
-                grid.style.display = "none";
-                noResults.style.display = "block";
-            } else {
-                grid.style.display = "";
-                noResults.style.display = "none";
+    <script>
+        // Client-side filtering functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const projectFilter = document.getElementById(
+                "project-filter",
+            ) as HTMLSelectElement;
+            const typeFilter = document.getElementById(
+                "type-filter",
+            ) as HTMLSelectElement;
+            const statusFilter = document.getElementById(
+                "status-filter",
+            ) as HTMLSelectElement;
+            const searchFilter = document.getElementById(
+                "search-filter",
+            ) as HTMLInputElement;
+            const clearFilters = document.getElementById(
+                "clear-filters",
+            ) as HTMLButtonElement;
+            const grid = document.getElementById(
+                "job-offers-grid",
+            ) as HTMLDivElement;
+            const noResults = document.getElementById(
+                "no-results",
+            ) as HTMLDivElement;
+            const resultsCount = document.getElementById(
+                "results-count",
+            ) as HTMLSpanElement;
+            const items = Array.from(
+                document.querySelectorAll(".job-offer-item"),
+            ) as HTMLDivElement[];
+
+            function filterJobOffers() {
+                const projectValue = projectFilter.value;
+                const typeValue = typeFilter.value;
+                const statusValue = statusFilter.value;
+                const searchValue = searchFilter.value.toLowerCase().trim();
+
+                let visibleCount = 0;
+
+                items.forEach((item) => {
+                    const itemProject = item.dataset.project;
+                    const itemType = item.dataset.type;
+                    const itemStatus = item.dataset.status;
+                    const itemSearchText = item.dataset.searchText || "";
+
+                    const projectMatch =
+                        !projectValue || itemProject === projectValue;
+                    const typeMatch = !typeValue || itemType === typeValue;
+                    const statusMatch =
+                        !statusValue || itemStatus === statusValue;
+                    const searchMatch =
+                        !searchValue || itemSearchText.includes(searchValue);
+
+                    const shouldShow =
+                        projectMatch && typeMatch && statusMatch && searchMatch;
+
+                    if (shouldShow) {
+                        item.style.display = "";
+                        visibleCount++;
+                    } else {
+                        item.style.display = "none";
+                    }
+                });
+
+                // Update results count and show/hide no results message
+                const template =
+                    resultsCount.dataset.template ||
+                    "Showing {count} job offers";
+                resultsCount.textContent = template.replace(
+                    "{count}",
+                    visibleCount.toString(),
+                );
+
+                if (visibleCount === 0) {
+                    grid.style.display = "none";
+                    noResults.style.display = "block";
+                } else {
+                    grid.style.display = "";
+                    noResults.style.display = "none";
+                }
             }
-        }
 
-        function clearAllFilters() {
-            projectFilter.value = "";
-            typeFilter.value = "";
-            statusFilter.value = "";
-            searchFilter.value = "";
+            function clearAllFilters() {
+                projectFilter.value = "";
+                typeFilter.value = "";
+                statusFilter.value = "";
+                searchFilter.value = "";
+                filterJobOffers();
+            }
+
+            // Add event listeners
+            projectFilter.addEventListener("change", filterJobOffers);
+            typeFilter.addEventListener("change", filterJobOffers);
+            statusFilter.addEventListener("change", filterJobOffers);
+            searchFilter.addEventListener("input", filterJobOffers);
+            clearFilters.addEventListener("click", clearAllFilters);
+
+            // Default values from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            typeFilter.value = urlParams.get("type") || "";
+            statusFilter.value = urlParams.get("status") || "";
+            searchFilter.value = urlParams.get("search") || "";
+            projectFilter.value = urlParams.get("project") || "";
+
             filterJobOffers();
+        });
+    </script>
+
+    <style>
+        .job-offers-container {
+            @apply w-full;
         }
 
-        // Add event listeners
-        projectFilter.addEventListener("change", filterJobOffers);
-        typeFilter.addEventListener("change", filterJobOffers);
-        statusFilter.addEventListener("change", filterJobOffers);
-        searchFilter.addEventListener("input", filterJobOffers);
-        clearFilters.addEventListener("click", clearAllFilters);
+        .job-offer-item {
+            transition: opacity 0.2s ease;
+        }
 
-        // Default values from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        typeFilter.value = urlParams.get("type") || "";
-        statusFilter.value = urlParams.get("status") || "";
-        searchFilter.value = urlParams.get("search") || "";
-        projectFilter.value = urlParams.get("project") || "";
-
-        filterJobOffers();
-    });
-</script>
-
-<style>
-    .job-offers-container {
-        @apply w-full;
-    }
-
-    .job-offer-item {
-        transition: opacity 0.2s ease;
-    }
-
-    #job-offers-grid {
-        min-height: 200px;
-    }
-</style>
+        #job-offers-grid {
+            min-height: 200px;
+        }
+    </style>
+</div>

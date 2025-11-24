@@ -20,7 +20,7 @@ const { item, lang, category, coverImage, t, slug } = Astro.props;
 ---
 
 <div
-    class="news-item card relative p-0 bg-white border border-gray-200 rounded-lg shadow"
+    class="news-item card hover:shadow-lg relative p-0 bg-white border border-gray-200 rounded-lg shadow"
     data-category={category}
     data-date={item.date.getTime()}
     data-project={item.project ?? ""}
@@ -41,12 +41,12 @@ const { item, lang, category, coverImage, t, slug } = Astro.props;
         class="relative block h-48 overflow-hidden group rounded-t-lg"
     >
         <Picture
-            class="h-full w-full object-cover transform transition duration-500 group-hover:scale-105"
+            class="h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-105"
             src={coverImage}
             alt={item.title}
         />
         <div
-            class="absolute inset-0 bg-black bg-opacity-0 transition duration-500 group-hover:bg-opacity-30"
+            class="absolute inset-0 bg-black bg-opacity-0 transition duration-200 group-hover:bg-opacity-30"
         >
         </div>
     </a>

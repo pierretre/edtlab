@@ -42,11 +42,10 @@ if (project) {
         .slice(0, 3)
         .map(async (item) => {
           try {
-            const coverImagePath = item.data.photo;
-            const coverImage = (await covers[coverImagePath]()).default;
+            const coverImage = (await covers[item.data.photo]()).default;
             return { ...item, coverImage: coverImage };
           } catch (err) {
-            throw new Error(
+            console.error(
               `Could not load cover image for news item "${item.data.title}". Path attempted: ${item.data.photo}. Original error: ${err}`,
             );
           }

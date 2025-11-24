@@ -15,8 +15,9 @@ const { item, lang, t, slug } = Astro.props;
 const isExpired = item.deadline < new Date();
 ---
 
-<div
-    class="job-offer-item card h-full flex flex-col"
+<a
+    href={linkHelpers.jobOffer(lang, slug)}
+    class="job-offer-item card group hover:shadow-lg h-full flex flex-col"
     data-project={item.project}
     data-type={item.type}
     data-status={isExpired ? "expired" : "active"}
@@ -41,17 +42,12 @@ const isExpired = item.deadline < new Date();
     </div>
 
     <!-- Title -->
-    <h3 class="mb-2 font-bold tracking-tight text-gray-900 line-clamp-2">
+    <h3 class="font-bold tracking-tight text-gray-900 line-clamp-2">
         {item.title}
     </h3>
 
-    <!-- Description -->
-    <p class="mb-3 text-gray-700 text-sm line-clamp-3">
-        {item.description}
-    </p>
-
     <!-- Location, Published Date, and Deadline -->
-    <div class="mb-4 space-y-2">
+    <div class="mb-4 flex justify-between flex-wrap gap-3">
         <div class="flex items-center text-sm text-gray-600">
             <svg
                 class="w-4 h-4 mr-2"
@@ -108,6 +104,10 @@ const isExpired = item.deadline < new Date();
         </div>
     </div>
 
+    <!-- Description -->
+    <p class="text-gray-700 text-sm line-clamp-3">
+        {item.description}
+    </p>
     <!-- Requirements preview -->
     {
         item.requirements.length > 0 && (
@@ -134,52 +134,4 @@ const isExpired = item.deadline < new Date();
             </div>
         )
     }
-
-    <!-- Action button -->
-    <a
-        href={linkHelpers.jobOffer(lang, slug)}
-        class="btn-primary inline-flex mt-auto mx-auto"
-        aria-label={t("job-offers.view-details-aria").replace(
-            "{title}",
-            item.title,
-        )}
-    >
-        {t("job-offers.view-details")}
-        <svg
-            class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-            aria-hidden="true"
-            fill="none"
-            viewBox="0 0 14 10"
-        >
-            <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"></path>
-        </svg>
-    </a>
-</div>
-
-<style>
-    .line-clamp-1 {
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-</style>
+</a>

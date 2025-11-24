@@ -10,7 +10,7 @@ const { publication, t } = Astro.props as Props;
 ---
 
 <div
-    class="publication-row border-l-4 border-primary-200 pl-3"
+    class="publication-item hover:bg-gray-100 transition-colors duration-300 border-l-4 border-primary-200 pl-3"
     data-type={publication.type}
     data-year={publication.year.toString()}
     data-search-text={`${JSON.stringify(publication)}`.toLowerCase()}
