@@ -16,6 +16,7 @@ import {
 import { combineKeywords } from "../utils/seo-keywords";
 import "../styles/global.css";
 import Breadcrumb from "../components/Breadcrumb.astro";
+import BackToTopButton from "../components/BackToTopButton.astro";
 
 export interface Props {
     title?: string;
@@ -656,5 +657,7 @@ if (showBreadcrumb) {
                 }
             });
         </script>
+
+        <BackToTopButton />
     </body>
 </html>

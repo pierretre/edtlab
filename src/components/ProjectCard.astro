@@ -1,0 +1,75 @@
+---
+import { Picture } from "astro:assets";
+
+export interface Props {
+    title: string;
+    description: string;
+    color?: string;
+    coverImage?: ImageMetadata;
+    t: any;
+    slug: string;
+}
+
+const colorMap: Record<string, string> = {
+    "blue-bell": "header-blue-bell",
+    "hit-pink": "header-hit-pink",
+    marzipan: "header-marzipan",
+};
+
+const { title, slug, description, color, coverImage, t } = Astro.props as Props;
+
+const backgroundColor = colorMap[color || ""] || "bg-gray-100";
+---
+
+<a
+    href={slug}
+    class={`card p-0 group animate-slideInUp flex flex-col h-full ${backgroundColor}`}
+    role="button"
+    tabindex="0"
+    aria-label={`${t("home.tiles.navigate-to")} ${title}`}
+>
+    {
+        coverImage ? (
+            <Picture
+                class="h-full w-full object-cover"
+                src={coverImage}
+                alt={title}
+                sizes="(max-width: 600px) 300px, 600px"
+                widths={[300, 400, 600]}
+                quality={80}
+                format="webp"
+                loading={"eager"}
+                decoding={"async"}
+            />
+        ) : (
+            <h3 class="mb-3 text-xl font-bold text-white transition-colors duration-300">
+                {title}
+            </h3>
+        )
+    }
+
+    <div class="p-4">
+        <p class="text-white leading-relaxed flex-grow text-center">
+            {description}
+        </p>
+
+        <div
+            class="flex items-center justify-center text-white group-hover:text-white/70"
+        >
+            <span class="text-sm font-semibold mr-2">
+                {t("home.tiles.explore")}
+            </span>
+            <svg
+                class="w-4 h-4 transform"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+        </div>
+    </div>
+</a>

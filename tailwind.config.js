@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -169,9 +170,14 @@ export default {
                     '0%': { transform: 'translateX(-50px)', opacity: '0' },
                     '100%': { transform: 'translateX(0)', opacity: '1' },
                 },
+                slideInUp: {
+                    '0%': { transform: 'translateY(30px)', opacity: '0' },
+                    '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
             },
             animation: {
                 slideInLeft: 'slideInLeft 0.5s ease-out forwards',
+                slideInUp: 'slideInUp 0.6s ease-out forwards'
             },
         },
     },

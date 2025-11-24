@@ -35,28 +35,32 @@ Any static assets, like images, can be placed in the `public/` directory.
 ### Option 1: Docker Development (Recommended)
 
 1. **Clone the repository**:
+
    ```bash
    git clone <repository-url>
    cd edtlab
    ```
 
 2. **Start development environment**:
+
    ```bash
    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
    ```
 
 3. **Access the services**:
-   - 🌐 **Website**: http://localhost:4321 (Astro dev server with hot reload)
-   - 📊 **Matomo Analytics**: http://localhost:8080
+   - 🌐 **Website**: <http://localhost:4321> (Astro dev server with hot reload)
+   - 📊 **Matomo Analytics**: <http://localhost:8080>
    - 🗄️ **MySQL Database**: localhost:3306
 
 ### Production Mode
 
 For production (static files served by Nginx):
+
 ```bash
 docker-compose up -d
 ```
-- 🌐 **Website**: http://localhost:80
+
+- 🌐 **Website**: <http://localhost:80>
 
 ### Option 2: Manual Development
 
@@ -77,7 +81,8 @@ This website includes anonymous Matomo analytics integration with comprehensive 
 
 **📖 Complete Setup Guide**: [Analytics Integration Guide](./docs/analytics-integration.md)
 
-### Key Features:
+### Key Features
+
 - ✅ **Environment-configurable** - Easy deployment across environments
 - ✅ **Cookieless tracking** - No cookie consent required
 - ✅ **IP anonymization** - Full privacy protection  
@@ -109,6 +114,7 @@ See [DOCKER-SETUP.md](DOCKER-SETUP.md) for individual service commands.
 ## 🌐 Content Management
 
 The website supports bilingual content (English/French) with:
+
 - Markdown/MDX content files in `src/content/`
 - Automatic language routing with `/en/` and `/fr/` prefixes
 - Translation strings in `src/i18n/ui.ts`
@@ -152,6 +158,7 @@ For detailed Docker commands, see [DOCKER-SETUP.md](DOCKER-SETUP.md).
 ## 📈 Analytics & Privacy
 
 This website uses anonymous analytics to improve user experience:
+
 - No cookies or personal data collection
 - IP addresses are anonymized
 - Geographic data is aggregated

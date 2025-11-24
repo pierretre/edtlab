@@ -1,0 +1,72 @@
+---
+
+---
+
+<!-- Back to Top Button -->
+<button
+    id="back-to-top"
+    class="hidden fixed bottom-6 right-6 z-50 items-center justify-center w-12 h-12 rounded-full bg-primary-600 text-white shadow-lg ring-2 ring-primary-300/40 hover:bg-primary-700 focus:outline-none focus-visible:ring-4"
+    aria-label="Back to top"
+    title="Back to top"
+>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6 transform rotate-180"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+    >
+        <path
+            fill-rule="evenodd"
+            d="M3.293 9.293a1 1 0 011.414 0L9 13.586V3a1 1 0 112 0v10.586l4.293-4.293a1 1 0 011.414 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414z"
+            clip-rule="evenodd"></path>
+    </svg>
+</button>
+
+<script type="module">
+    // Back to Top behavior: show button after scrolling down, smooth scroll on click/keyboard
+    const btn = document.getElementById("back-to-top");
+    if (btn) {
+        const showAfter = 300; // px scrolled
+        const toggleVisibility = () => {
+            if (window.scrollY > showAfter) {
+                btn.classList.remove("hidden");
+                btn.classList.add("inline-flex");
+                btn.setAttribute("aria-hidden", "false");
+            } else {
+                btn.classList.add("hidden");
+                btn.classList.remove("inline-flex");
+                btn.setAttribute("aria-hidden", "true");
+            }
+        };
+
+        // initial check
+        toggleVisibility();
+
+        let ticking = false;
+        window.addEventListener(
+            "scroll",
+            () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        toggleVisibility();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            },
+            { passive: true },
+        );
+
+        const toTop = (evt) => {
+            if (evt) evt.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            btn.blur();
+        };
+
+        btn.addEventListener("click", toTop);
+        btn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") toTop(e);
+        });
+    }
+</script>

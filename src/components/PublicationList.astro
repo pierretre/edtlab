@@ -4,11 +4,11 @@ import { useTranslations } from "../i18n/utils";
 import { generatePublicationStructuredData } from "../utils/seo";
 import PublicationCard from "./PublicationCard.astro";
 
-interface Props {
+export interface Props {
     lang: "en" | "fr";
 }
 
-const { lang } = Astro.props;
+const { lang } = Astro.props as Props;
 const t = useTranslations(lang);
 
 // Get all publications for the current language
@@ -44,251 +44,255 @@ const publicationStructuredData = sortedPublications.map((pub) =>
 );
 ---
 
-<div class="publications-container">
-    <!-- Filters Section -->
-    <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
-        <!-- Project Filter -->
-        <div>
-            <label
-                for="project-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("publications.filter.project")}
-            </label>
-            <select id="project-filter">
-                <option value="">{t("publications.filter.all-projects")}</option
+<div class="w-full">
+    <div class="flex flex-col lg:flex-row gap-10">
+        <!-- Filters Section -->
+        <aside class="lg:w-64 flex-shrink-0">
+            <div class="flex flex-col gap-2 sticky lg:top-24">
+                <!-- Project Filter -->
+                <div>
+                    <label
+                        for="project-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("publications.filter.project")}
+                    </label>
+                    <select id="project-filter">
+                        <option value=""
+                            >{t("publications.filter.all-projects")}</option
+                        >
+                        {
+                            projects.map((project) => (
+                                <option value={project}>{project}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Type Filter -->
+                <div>
+                    <label
+                        for="type-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("publications.filter.type")}
+                    </label>
+                    <select id="type-filter">
+                        <option value=""
+                            >{t("publications.filter.all-types")}</option
+                        >
+                        {
+                            types.map((type) => (
+                                <option value={type}>
+                                    {t(`publications.type.${type}`)}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Year Filter -->
+                <div>
+                    <label
+                        for="year-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("publications.filter.year")}
+                    </label>
+                    <select id="year-filter">
+                        <option value=""
+                            >{t("publications.filter.all-years")}</option
+                        >
+                        {
+                            years.map((year) => (
+                                <option value={year.toString()}>{year}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Search Filter -->
+                <div>
+                    <label
+                        for="search-filter"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                        {t("publications.filter.search")}
+                    </label>
+                    <input
+                        type="text"
+                        id="search-filter"
+                        placeholder={t(
+                            "publications.filter.search-placeholder",
+                        )}
+                    />
+                </div>
+                <div class="hidden md:block" aria-hidden="true"></div>
+
+                <div class="h-full flex flex-col justify-end">
+                    <button
+                        id="clear-filters"
+                        class="text-primary-600 hover:text-primary-600 text-sm font-medium"
+                        aria-colindex="6"
+                    >
+                        {t("publications.filter.clear")}
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1">
+            <!-- Results Count -->
+            <div class="mb-6 text-sm text-gray-600 text-center">
+                <span
+                    id="results-count"
+                    data-template={t("publications.results-count")}
                 >
+                    {
+                        t("publications.results-count").replace(
+                            "{count}",
+                            sortedPublications.length.toString(),
+                        )
+                    }
+                </span>
+            </div>
+
+            <div
+                class="relative overflow-x-auto"
+                role="region"
+                aria-label={t("accessibility.table-caption")}
+            >
                 {
-                    projects.map((project) => (
-                        <option value={project}>{project}</option>
+                    sortedPublications.map((publication) => (
+                        <PublicationCard publication={publication.data} t={t} />
                     ))
                 }
-            </select>
-        </div>
+            </div>
 
-        <!-- Type Filter -->
-        <div>
-            <label
-                for="type-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("publications.filter.type")}
-            </label>
-            <select id="type-filter">
-                <option value="">{t("publications.filter.all-types")}</option>
-                {
-                    types.map((type) => (
-                        <option value={type}>
-                            {t(`publications.type.${type}`)}
-                        </option>
-                    ))
-                }
-            </select>
-        </div>
+            <!-- No Results Message -->
+            <div id="no-results" class="hidden text-center py-32">
+                <div class="max-w-md mx-auto">
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">
+                        {t("publications.no-results")}
+                    </h3>
+                    <p class="mt-2 text-gray-500">
+                        {t("publications.no-results-description")}
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
 
-        <!-- Year Filter -->
-        <div>
-            <label
-                for="year-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("publications.filter.year")}
-            </label>
-            <select id="year-filter">
-                <option value="">{t("publications.filter.all-years")}</option>
-                {
-                    years.map((year) => (
-                        <option value={year.toString()}>{year}</option>
-                    ))
-                }
-            </select>
-        </div>
-
-        <!-- Search Filter -->
-        <div>
-            <label
-                for="search-filter"
-                class="block mb-2 text-sm font-medium text-gray-900"
-            >
-                {t("publications.filter.search")}
-            </label>
-            <input
-                type="text"
-                id="search-filter"
-                placeholder={t("publications.filter.search-placeholder")}
+    <!-- Structured Data for Publications -->
+    {
+        publicationStructuredData.map((data) => (
+            <script
+                type="application/ld+json"
+                is:inline
+                set:html={JSON.stringify(data)}
             />
-        </div>
-        <div class="hidden md:block" aria-hidden="true"></div>
+        ))
+    }
 
-        <div class="h-full flex flex-col justify-end">
-            <button
-                id="clear-filters"
-                class="text-primary-600 hover:text-primary-600 text-sm font-medium"
-                aria-colindex="6"
-            >
-                {t("publications.filter.clear")}
-            </button>
-        </div>
-    </div>
+    <script>
+        // Client-side filtering functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const typeFilter = document.getElementById(
+                "type-filter",
+            ) as HTMLSelectElement;
+            const yearFilter = document.getElementById(
+                "year-filter",
+            ) as HTMLSelectElement;
+            const searchFilter = document.getElementById(
+                "search-filter",
+            ) as HTMLInputElement;
+            const projectFilter = document.getElementById(
+                "project-filter",
+            ) as HTMLSelectElement;
+            const clearFilters = document.getElementById(
+                "clear-filters",
+            ) as HTMLButtonElement;
+            const noResults = document.getElementById(
+                "no-results",
+            ) as HTMLDivElement;
+            const resultsCount = document.getElementById(
+                "results-count",
+            ) as HTMLSpanElement;
+            const rows = Array.from(
+                document.querySelectorAll(".publication-item"),
+            ) as HTMLDivElement[];
 
-    <!-- Publications Table -->
-    <div
-        class="relative overflow-x-auto"
-        role="region"
-        aria-label={t("accessibility.table-caption")}
-    >
-        {
-            sortedPublications.map((publication) => (
-                <PublicationCard publication={publication.data} t={t} />
-            ))
-        }
-    </div>
+            function filterPublications() {
+                const typeValue = typeFilter.value;
+                const yearValue = yearFilter.value;
+                const searchValue = searchFilter.value.toLowerCase().trim();
+                const projectValue = projectFilter.value;
 
-    <!-- No Results Message -->
-    <div id="no-results" class="hidden text-center py-8 text-gray-500">
-        <p class="text-lg">
-            {t("publications.no-results")}
-        </p>
-    </div>
+                let visibleCount = 0;
 
-    <!-- Results Count -->
-    <div class="mt-4 text-sm text-gray-600">
-        <span
-            id="results-count"
-            data-template={t("publications.results-count")}
-        >
-            {
-                t("publications.results-count").replace(
+                rows.forEach((row) => {
+                    const rowType = row.dataset.type;
+                    const rowYear = row.dataset.year;
+                    const rowSearchText = row.dataset.searchText || "";
+                    const rowProject = row.dataset.project;
+
+                    const typeMatch = !typeValue || rowType === typeValue;
+                    const yearMatch = !yearValue || rowYear === yearValue;
+                    const searchMatch =
+                        !searchValue || rowSearchText.includes(searchValue);
+                    const projectMatch =
+                        !projectValue || rowProject === projectValue;
+
+                    const shouldShow =
+                        typeMatch && yearMatch && searchMatch && projectMatch;
+
+                    if (shouldShow) {
+                        row.style.display = "";
+                        visibleCount++;
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+
+                // Update results count and show/hide no results message
+                const template =
+                    resultsCount.dataset.template ||
+                    "Showing {count} publications";
+                resultsCount.textContent = template.replace(
                     "{count}",
-                    sortedPublications.length.toString(),
-                )
-            }
-        </span>
-    </div>
-</div>
+                    visibleCount.toString(),
+                );
 
-<!-- Structured Data for Publications -->
-{
-    publicationStructuredData.map((data) => (
-        <script
-            type="application/ld+json"
-            is:inline
-            set:html={JSON.stringify(data)}
-        />
-    ))
-}
-
-<script>
-    // Client-side filtering functionality
-    document.addEventListener("DOMContentLoaded", function () {
-        const typeFilter = document.getElementById(
-            "type-filter",
-        ) as HTMLSelectElement;
-        const yearFilter = document.getElementById(
-            "year-filter",
-        ) as HTMLSelectElement;
-        const searchFilter = document.getElementById(
-            "search-filter",
-        ) as HTMLInputElement;
-        const projectFilter = document.getElementById(
-            "project-filter",
-        ) as HTMLSelectElement;
-        const clearFilters = document.getElementById(
-            "clear-filters",
-        ) as HTMLButtonElement;
-        const noResults = document.getElementById(
-            "no-results",
-        ) as HTMLDivElement;
-        const resultsCount = document.getElementById(
-            "results-count",
-        ) as HTMLSpanElement;
-        const rows = Array.from(
-            document.querySelectorAll(".publication-row"),
-        ) as HTMLTableRowElement[];
-
-        function filterPublications() {
-            const typeValue = typeFilter.value;
-            const yearValue = yearFilter.value;
-            const searchValue = searchFilter.value.toLowerCase().trim();
-            const projectValue = projectFilter.value;
-
-            let visibleCount = 0;
-
-            rows.forEach((row) => {
-                const rowType = row.dataset.type;
-                const rowYear = row.dataset.year;
-                const rowSearchText = row.dataset.searchText || "";
-                const rowProject = row.dataset.project;
-
-                const typeMatch = !typeValue || rowType === typeValue;
-                const yearMatch = !yearValue || rowYear === yearValue;
-                const searchMatch =
-                    !searchValue || rowSearchText.includes(searchValue);
-                const projectMatch =
-                    !projectValue || rowProject === projectValue;
-
-                const shouldShow =
-                    typeMatch && yearMatch && searchMatch && projectMatch;
-
-                if (shouldShow) {
-                    row.style.display = "";
-                    visibleCount++;
+                if (visibleCount === 0) {
+                    noResults.style.display = "block";
                 } else {
-                    row.style.display = "none";
+                    noResults.style.display = "none";
                 }
-            });
-
-            // Update results count and show/hide no results message
-            const template =
-                resultsCount.dataset.template || "Showing {count} publications";
-            resultsCount.textContent = template.replace(
-                "{count}",
-                visibleCount.toString(),
-            );
-
-            if (visibleCount === 0) {
-                noResults.style.display = "block";
-            } else {
-                noResults.style.display = "none";
             }
-        }
 
-        function clearAllFilters() {
-            typeFilter.value = "";
-            yearFilter.value = "";
-            searchFilter.value = "";
-            projectFilter.value = "";
+            function clearAllFilters() {
+                typeFilter.value = "";
+                yearFilter.value = "";
+                searchFilter.value = "";
+                projectFilter.value = "";
+                filterPublications();
+            }
+
+            // Add event listeners
+            typeFilter.addEventListener("change", filterPublications);
+            yearFilter.addEventListener("change", filterPublications);
+            searchFilter.addEventListener("input", filterPublications);
+            projectFilter.addEventListener("change", filterPublications);
+            clearFilters.addEventListener("click", clearAllFilters);
+
+            // Default values from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            typeFilter.value = urlParams.get("type") || "";
+            yearFilter.value = urlParams.get("year") || "";
+            searchFilter.value = urlParams.get("search") || "";
+            projectFilter.value = urlParams.get("project") || "";
+
             filterPublications();
-        }
-
-        // Add event listeners
-        typeFilter.addEventListener("change", filterPublications);
-        yearFilter.addEventListener("change", filterPublications);
-        searchFilter.addEventListener("input", filterPublications);
-        projectFilter.addEventListener("change", filterPublications);
-        clearFilters.addEventListener("click", clearAllFilters);
-
-        // Default values from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        typeFilter.value = urlParams.get("type") || "";
-        yearFilter.value = urlParams.get("year") || "";
-        searchFilter.value = urlParams.get("search") || "";
-        projectFilter.value = urlParams.get("project") || "";
-
-        filterPublications();
-    });
-</script>
-
-<style>
-    .publications-container {
-        @apply w-full;
-    }
-
-    .publication-row {
-        transition: background-color 0.2s ease;
-    }
-
-    .publication-row:hover {
-        @apply bg-gray-50;
-    }
-</style>
+        });
+    </script>
+</div>

@@ -34,7 +34,7 @@ const t = useTranslations(lang);
         if (!tocList || !article) return;
 
         // Find all headings in the article
-        const headings = article.querySelectorAll("h1, h2, h3, h4, h5, h6");
+        const headings = article.querySelectorAll("h1, h2");
 
         if (headings.length === 0) {
             // Hide TOC if no headings found

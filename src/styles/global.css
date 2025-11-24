@@ -148,11 +148,15 @@
     }
 
     .card {
-        @apply rounded-lg hover:shadow-lg shadow p-6 border border-gray-200 transition-all duration-300;
+        @apply rounded-lg shadow p-4 border border-gray-200 transition-all duration-300;
     }
 
     .badge {
         @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium;
+    }
+
+    details {
+        @apply card mb-3 bg-white;
     }
 
     details>summary {
