@@ -1,8 +1,8 @@
 ---
-import { linkHelpers } from "../i18n/links";
-import { formatDate, isDeadlineApproaching, isDeadlinePassed } from "../utils";
+import { linkHelpers } from "@i18n/links";
+import { formatDate, isDeadlineApproaching, isDeadlinePassed } from "@utils/.";
 import Badge from "./Badge.astro";
-import type { JobOffer } from "../models/JobOffer.model";
+import type { JobOffer } from "@models/JobOffer.model";
 
 interface Props {
     item: JobOffer;
