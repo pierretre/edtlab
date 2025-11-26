@@ -18,25 +18,11 @@ if (project) {
     const covers = import.meta.glob<{ default: ImageMetadata }>(
       "/src/assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
     );
-    const pressReleases = (
-      await getCollection(
-        "press-releases",
-        (item) => item.data.lang === lang && item.data.project === project,
-      )
-    ).map((e) => ({ ...e, category: NewsCategory.PressRelease }));
-
-    const events = (
-      await getCollection(
-        "events",
-        (item) => item.data.lang === lang && item.data.project === project,
-      )
-    ).map((e) => ({ ...e, category: NewsCategory.Event }));
-
-    const feed = [...pressReleases, ...events];
+    const news = await getCollection("news", (item) => item.data.lang === lang);
 
     // Add cover images to feed items
     relatedItems = await Promise.all(
-      feed
+      news
         .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
         .slice(0, 3)
         .map(async (item) => {
@@ -68,7 +54,6 @@ if (project) {
           <NewsCard
             item={item.data}
             lang={lang}
-            category={item.category}
             coverImage={item.coverImage}
             t={t}
             slug={item.slug}

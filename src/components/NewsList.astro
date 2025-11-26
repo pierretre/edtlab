@@ -1,8 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import { useTranslations } from "../i18n/utils";
+import { useTranslations } from "@i18n/utils";
 import NewsCard from "./NewsCard.astro";
-import { NewsCategory } from "../models/NewsCategory.model";
 
 interface Props {
     lang: "en" | "fr";
@@ -13,26 +12,15 @@ const { lang } = Astro.props as Props;
 const t = useTranslations(lang);
 
 // Load content
-const events = (
-    await getCollection("events", (event) => event.data.lang === lang)
-).map((e) => ({ ...e, category: NewsCategory.Event }));
-
-const pressReleaseItems = (
-    await getCollection(
-        "press-releases",
-        (pressRelease) => pressRelease.data.lang === lang,
-    )
-).map((p) => ({ ...p, category: NewsCategory.PressRelease }));
+const news = await getCollection("news", (item) => item.data.lang === lang);
 
 const covers = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
+    "@assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
 );
-
-const feed = [...pressReleaseItems, ...events];
 
 // Add cover images to feed items
 const feedWithCovers = await Promise.all(
-    feed.map(async (item) => {
+    news.map(async (item) => {
         try {
             const coverImagePath = item.data.photo;
             const coverImage = (await covers[coverImagePath]()).default;
@@ -138,7 +126,7 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
                         id="clear-filters"
                         class="text-primary-600 hover:underline text-sm font-medium"
                     >
-                        {t("news.filter.clear")}
+                        {t("filter.clear")}
                     </button>
                 </div>
             </div>
@@ -155,7 +143,7 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
                     {
                         t("news.results-count").replace(
                             "{count}",
-                            feed.length.toString(),
+                            news.length.toString(),
                         )
                     }
                 </span>
@@ -171,7 +159,6 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
                         <NewsCard
                             item={item.data}
                             lang={lang}
-                            category={item.category}
                             coverImage={item.coverImage}
                             t={t}
                             slug={item.slug}
@@ -350,7 +337,7 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 
         qsa(".news-item", list).forEach((item) => {
             const itemCategory = item.dataset.category || "";
-            const itemProject = (item.dataset.project ?? "").toLowerCase();
+            const itemTags = item.dataset.tags.toLowerCase() || "";
             const itemSearchText = item.dataset.searchText || "";
 
             const matchesCategory =
@@ -358,7 +345,9 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             const matchesProject =
                 !project ||
                 project === "" ||
-                itemProject === project.toLowerCase();
+                itemTags.includes(project.toLowerCase());
+
+            console.log(itemTags, project);
             const matchesSearch = !search || itemSearchText.includes(search);
 
             item.dataset.matched =

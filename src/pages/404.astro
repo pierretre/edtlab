@@ -56,7 +56,7 @@ const t = useTranslations(validLang);
                 </a>
 
                 <a
-                    href={`/${validLang}/contact`}
+                    href={linkHelpers.page(validLang, "contact-us")}
                     class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-300 transition-colors"
                 >
                     {t("404.contact-us")}
@@ -70,25 +70,25 @@ const t = useTranslations(validLang);
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                     <a
-                        href={`/${validLang}/program`}
+                        href={linkHelpers.page(validLang, "program")}
                         class="text-primary-600 hover:text-primary-600 hover:underline"
                     >
                         {t("nav.program")}
                     </a>
                     <a
-                        href={`/${validLang}/focused-projects`}
+                        href={linkHelpers.page(validLang, "focused-projects")}
                         class="text-primary-600 hover:text-primary-600 hover:underline"
                     >
                         {t("nav.focused-projects")}
                     </a>
                     <a
-                        href={`/${validLang}/production`}
+                        href={linkHelpers.page(validLang, "publications")}
                         class="text-primary-600 hover:text-primary-600 hover:underline"
                     >
                         {t("nav.production")}
                     </a>
                     <a
-                        href={`/${validLang}/news`}
+                        href={linkHelpers.page(validLang, "news")}
                         class="text-primary-600 hover:text-primary-600 hover:underline"
                     >
                         {t("nav.news")}

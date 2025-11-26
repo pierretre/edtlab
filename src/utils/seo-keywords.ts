@@ -1,4 +1,4 @@
-import { useTranslations } from '../i18n/utils';
+import { useTranslations } from '@i18n/utils';
 
 /**
  * Get default SEO keywords from translations

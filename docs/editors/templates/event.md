@@ -1,7 +1,7 @@
 ---
 title: "Event Title"
 date: 2024-06-15  # Event date in YYYY-MM-DD format
-type: "conference"  # Options: "conference", "workshop", "seminar"
+newsType: "event"  # Options: "conference", "workshop", "seminar"
 photo: "event-photo.jpg"  # REQUIRED: filename of the event photo used for listings and social previews
 project: "PC1"  # Optional: associate event with a focused project (PC1..PC5 or General)
 location: "City, Country"  # Optional: Physical or virtual location

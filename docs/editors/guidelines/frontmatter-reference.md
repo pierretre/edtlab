@@ -232,7 +232,7 @@ date: 2024-06-15
 - **Usage**: Categorization and filtering
 
 ```yaml
-type: "conference"
+newsType: "event"
 ```
 
 #### `photo`

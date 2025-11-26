@@ -1,0 +1,14 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import NewsList from "@components/NewsList.astro";
+
+const lang = getLangFromUrl(Astro.url) as "en" | "fr";
+const t = useTranslations(lang);
+---
+
+<div class="mx-auto p-4 max-w-8xl">
+    <h1 class="max-w-6xl mx-auto">
+        {t("news.page-title")}
+    </h1>
+    <NewsList lang={lang} />
+</div>

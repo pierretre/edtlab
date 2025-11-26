@@ -1,9 +1,8 @@
-import EventLayout from "../layouts/EventLayout.astro";
-import JobOfferLayout from "../layouts/JobOfferLayout.astro";
-import NewsLayout from "../layouts/NewsLayout.astro";
-import PageLayout from "../layouts/PageLayout.astro";
-import PressReleaseLayout from "../layouts/PressReleaseLayout.astro";
-import ProjectLayout from "../layouts/ProjectLayout.astro";
+import NewsItemLayout from "@layouts/NewsItemLayout.astro";
+import JobOfferLayout from "@layouts/JobOfferLayout.astro";
+import NewsPageLayout from "@layouts/NewsPageLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import ProjectLayout from "@layouts/ProjectLayout.astro";
 
 /**
  * Get layout component based on template or collection
@@ -24,10 +23,10 @@ export function getLayoutFromTemplateOrCollection(collection: string, template?:
  */
 function getLayoutFromTemplate(template: string) {
     switch (template) {
-        case 'project':
+        case 'project-page':
             return ProjectLayout;
         case 'news-page':
-            return NewsLayout;
+            return NewsPageLayout;
         default:
             return PageLayout;
     }
@@ -40,16 +39,10 @@ function getLayoutFromTemplate(template: string) {
  */
 function getLayoutFromCollection(collection: string) {
     switch (collection) {
-        case 'events':
-            return EventLayout;
         case 'job-offers':
             return JobOfferLayout;
         case 'news':
-            return NewsLayout;
-        case 'press-releases':
-            return PressReleaseLayout;
-        case 'projects':
-            return ProjectLayout;
+            return NewsItemLayout;
         default:
             return PageLayout;
     }
