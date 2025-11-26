@@ -19,7 +19,7 @@ import {
     isValidPressType,
     isValidContentFileName,
     hasValidLanguagePrefix
-} from '../../utils';
+} from '@utils/.';
 
 describe('Date Utilities', () => {
     const testDate = new Date('2024-06-15');

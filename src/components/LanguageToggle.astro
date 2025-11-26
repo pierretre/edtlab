@@ -9,9 +9,9 @@
  * - Light mode optimized design
  * - Smooth transitions and hover effects
  */
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import { languages } from "../i18n/ui";
-import { getCorrespondingPage } from "../i18n/page-mapping";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { languages } from "@i18n/ui";
+import { getCorrespondingPage } from "@i18n/page-mapping";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);

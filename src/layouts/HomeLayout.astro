@@ -1,9 +1,9 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import { linkHelpers } from "../i18n/links";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { linkHelpers } from "@i18n/links";
 import { getCollection } from "astro:content";
-import ProjectCard from "../components/ProjectCard.astro";
+import ProjectCard from "@components/ProjectCard.astro";
 
 export interface Props {
     title?: string;

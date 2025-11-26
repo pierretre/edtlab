@@ -1,11 +1,11 @@
 ---
-import { formatDate } from "../utils/date";
+import { formatDate } from "@utils/date";
 import { isDeadlineApproaching, isDeadlinePassed } from "../utils";
 import PageLayout from "./PageLayout.astro";
-import type { JobOffer } from "../models/JobOffer.model";
-import { useTranslations } from "../i18n/utils";
-import Badge from "../components/Badge.astro";
-import { generateJobPostingStructuredData } from "../utils/seo";
+import type { JobOffer } from "@models/JobOffer.model";
+import { useTranslations } from "@i18n/utils";
+import Badge from "@components/Badge.astro";
+import { generateJobPostingStructuredData } from "@utils/seo";
 
 export interface Props {
     frontmatter: JobOffer;

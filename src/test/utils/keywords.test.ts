@@ -3,7 +3,7 @@ import {
     generatePageKeywords,
     generateArticleSection,
     generateArticleTags
-} from '../../utils/keywords';
+} from '@utils/keywords';
 
 describe('Keywords Utilities', () => {
     describe('generatePageKeywords', () => {

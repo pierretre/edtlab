@@ -1,9 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import NewsCard from "./NewsCard.astro";
-import { linkHelpers } from "../i18n/links";
-import { NewsCategory } from "../models/NewsCategory.model";
+import { linkHelpers } from "@i18n/links";
 
 export interface Props {
   project?: string;

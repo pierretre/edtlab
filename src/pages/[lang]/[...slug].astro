@@ -1,11 +1,11 @@
 ---
 import { type CollectionEntry } from "astro:content";
-import { useTranslations } from "../../i18n/utils";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import { useTranslations } from "@i18n/utils";
+import BaseLayout from "@layouts/BaseLayout.astro";
 import {
     getLayoutFromTemplateOrCollection,
     generateAllPagesStaticPaths,
-} from "../../utils";
+} from "@utils/.";
 
 export async function getStaticPaths() {
     return await generateAllPagesStaticPaths();

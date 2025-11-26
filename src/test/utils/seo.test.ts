@@ -9,7 +9,7 @@ import {
     generateEventStructuredData,
     generateJobPostingStructuredData,
     generateBreadcrumbStructuredData
-} from '../../utils/seo-pure';
+} from '@utils/seo-pure';
 
 describe('SEO Utilities', () => {
     describe('optimizePageTitle', () => {
