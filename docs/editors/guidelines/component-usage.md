@@ -21,7 +21,7 @@ Displays images with responsive sizing, accessibility features, and optional cap
 #### Usage
 
 ```mdx
-import OptimizedFigure from '../../../components/OptimizedFigure.astro';
+import OptimizedFigure from '@components/OptimizedFigure.astro';
 
 <OptimizedFigure 
   src="image-filename.jpg"
@@ -62,7 +62,7 @@ Displays a filtered list of events with customizable display options.
 #### Usage
 
 ```mdx
-import EventList from '../../../components/EventList.astro';
+import EventList from '@components/EventList.astro';
 
 <EventList 
   limit={5}
@@ -93,7 +93,7 @@ Displays publications with filtering and sorting capabilities.
 #### Usage
 
 ```mdx
-import PublicationList from '../../../components/PublicationList.astro';
+import PublicationList from '@components/PublicationList.astro';
 
 <PublicationList 
   limit={10}
@@ -126,7 +126,7 @@ Displays current job opportunities with project-based filtering.
 #### Usage
 
 ```mdx
-import JobOfferList from '../../../components/JobOfferList.astro';
+import JobOfferList from '@components/JobOfferList.astro';
 
 <JobOfferList 
   limit={5}
@@ -157,7 +157,7 @@ Generates an interactive table of contents for long-form content.
 #### Usage
 
 ```mdx
-import TableOfContents from '../../../components/TableOfContents.astro';
+import TableOfContents from '@components/TableOfContents.astro';
 
 <TableOfContents 
   maxDepth={3}
@@ -184,7 +184,7 @@ Displays navigation breadcrumbs for page hierarchy.
 #### Usage
 
 ```mdx
-import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Breadcrumb from '@components/Breadcrumb.astro';
 
 <Breadcrumb 
   items={[

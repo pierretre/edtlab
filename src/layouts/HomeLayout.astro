@@ -28,11 +28,8 @@ const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
 const t = useTranslations(lang);
 
 // Get dynamic content from collections for enhanced front page
-const allEvents = await getCollection(
-    "events",
-    ({ data }) => data.lang === lang,
-);
-const recentEvents = allEvents
+const news = await getCollection("news", ({ data }) => data.lang === lang);
+const recentEvents = news
     .sort(
         (a, b) =>
             new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
@@ -52,7 +49,7 @@ const activeJobOffers = allJobOffers.slice(0, 3);
 const pages = await getCollection("pages", ({ data }) => data.lang === lang);
 const projects = pages
     .filter((page) => page.filePath?.includes("focused-projects/fp"))
-    .sort((a, b) => a.data.href.localeCompare(b.data.href));
+    .sort((a, b) => a.slug.localeCompare(b.slug));
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
     "/src/assets/images/*.{eg,jpg,png,gif,webp}",
@@ -76,7 +73,7 @@ const tiles = await Promise.all(
 
         return {
             title: project.data.title,
-            slug: linkHelpers.page(lang, project.data.href),
+            slug: linkHelpers.page(lang, project.slug),
             description: project.data.description ?? "",
             color: project.data.color,
             coverImage: projectImage,
@@ -142,30 +139,43 @@ const tiles = await Promise.all(
                     class="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between"
                 >
                     <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >5</span
+                        <a
+                            href={linkHelpers.page(lang, "focused-projects")}
+                            class="text-2xl font-bold text-primary-600">5</a
                         >
                         <p class="text-sm">
                             {t("home.stats.focused-projects")}
                         </p>
                     </div>
                     <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >40+</span
+                        <a
+                            href={linkHelpers.page(lang, "platform")}
+                            class="text-2xl font-bold text-primary-600">1</a
+                        >
+                        <p class="text-sm">{t("home.stats.platform")}</p>
+                    </div>
+                    <div class="mr-5 mb-5 lg:mb-0">
+                        <a
+                            href={linkHelpers.page(lang, "use-cases")}
+                            class="text-2xl font-bold text-primary-600">40+</a
                         >
                         <p class="text-sm">{t("home.stats.use-cases")}</p>
                     </div>
                     <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >{activeJobOffers.length}</span
-                        >
-                        <p class="text-sm">{t("home.stats.open-positions")}</p>
-                    </div>
-                    <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >{recentPublications.length}+</span
+                        <a
+                            href={linkHelpers.page(lang, "publications")}
+                            class="text-2xl font-bold text-primary-600"
+                            >{recentPublications.length}+</a
                         >
                         <p class="text-sm">{t("home.stats.publications")}</p>
+                    </div>
+                    <div class="mr-5 mb-5 lg:mb-0">
+                        <a
+                            href={linkHelpers.page(lang, "join-us")}
+                            class="text-2xl font-bold text-primary-600"
+                            >{activeJobOffers.length}</a
+                        >
+                        <p class="text-sm">{t("home.stats.open-positions")}</p>
                     </div>
                 </div>
             </div>
@@ -338,7 +348,7 @@ const tiles = await Promise.all(
                                 <a
                                     href={linkHelpers.page(
                                         lang,
-                                        "production/publications",
+                                        "publications",
                                     )}
                                     class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
                                 >

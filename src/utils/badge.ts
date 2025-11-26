@@ -2,7 +2,7 @@
  * Badge utility functions for consistent badge styling
  */
 
-import type { Badge } from "../models/Badge.model";
+import type { Badge } from "@models/Badge.model";
 
 const BACKGROUND_COLORS = {
     PC1: "bg-blue-bell-200",

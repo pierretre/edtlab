@@ -9,7 +9,7 @@ A handy reference for content editors working on the EDT Research Website.
 ```yaml
 ---
 title: "Page Title"
-href: "page-slug"
+href: "page-slug" # deprecated
 lang: "en" # or "fr"
 description: "SEO description"
 toc: true # or false
@@ -32,13 +32,13 @@ url: "https://..." # optional
 ---
 ```
 
-### Events (`src/content/events/`)
+### Events (`src/content/news/`)
 
 ```yaml
 ---
 title: "Event Title"
 date: 2024-06-15
-type: "conference" # conference|workshop|seminar
+newsType: "event" 
 location: "City, Country" # optional
 description: "Brief description"
 url: "https://..." # optional
@@ -62,28 +62,14 @@ lang: "en" # or "fr"
 ---
 ```
 
-### Press Releases (`src/content/press-releases/`)
-
-```yaml
----
-title: "Press Release Title"
-date: 2024-02-10
-type: "announcement" # announcement|partnership|award|milestone|general
-description: "Brief summary"
-url: "https://..." # optional
-lang: "en" # or "fr"
----
-```
-
 ## File Locations
 
 | Content Type | Location | File Pattern |
 |--------------|----------|--------------|
 | Pages | `src/content/pages/[section]/` | `en.md`, `fr.md` |
 | Publications | `src/content/publications/` | `title-slug.md` |
-| Events | `src/content/events/` | `event-name-year-en.md` |
+| News | `src/content/news/` | `event-name-year-en.md` |
 | Job Offers | `src/content/job-offers/` | `position-type-project-year-en.md` |
-| Press Releases | `src/content/press-releases/` | `press-title-year-en.md` |
 | Navigation | `src/content/menu/` | `en.json`, `fr.json` |
 
 ## MDX Components

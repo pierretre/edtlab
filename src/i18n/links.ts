@@ -5,7 +5,7 @@
  * @example
  * ```astro
  * ---
- * import { linkHelpers } from '../i18n/links';
+ * import { linkHelpers } from '@i18n/links';
  * const lang = 'fr';
  * ---
  * 

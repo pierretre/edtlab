@@ -5,8 +5,8 @@ const pagesCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
-        href: z.string(),
-        lang: z.enum(['en', 'fr']),
+        href: z.string().optional(),
+        lang: z.enum(['en', 'fr']).optional(),
         description: z.string().optional(),
         toc: z.boolean().default(false),
         lastModified: z.date().optional(),
@@ -31,37 +31,20 @@ const publicationsCollection = defineCollection({
     })
 });
 
-// Events collection schema (excluding press releases)
-const eventsCollection = defineCollection({
+// News collection schema (excluding press releases)
+const newsCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
         date: z.date(),
-        type: z.enum(['conference', 'workshop', 'seminar']),
+        newsType: z.enum(['event', 'press-release']),
         location: z.string().optional(),
         description: z.string(),
         url: z.string().url().optional(),
-        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']).optional(),
         lang: z.enum(['en', 'fr']),
         photo: z.string(),
         tags: z.array(z.string()).optional().default([]),
-        template: z.string().optional()
-    })
-});
-
-// Press releases collection schema
-const pressReleasesCollection = defineCollection({
-    type: 'content',
-    schema: z.object({
-        title: z.string(),
-        date: z.date(),
-        description: z.string(),
-        url: z.string().url().optional(),
-        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']).optional(),
-        lang: z.enum(['en', 'fr']),
-        photo: z.string(),
-        tags: z.array(z.string()).optional().default([]),
-        template: z.string().optional()
+        template: z.string().optional(),
     })
 });
 
@@ -100,8 +83,7 @@ const menuCollection = defineCollection({
 export const collections = {
     'pages': pagesCollection,
     'publications': publicationsCollection,
-    'events': eventsCollection,
-    'press-releases': pressReleasesCollection,
+    'news': newsCollection,
     'job-offers': jobOffersCollection,
     'menu': menuCollection
 };
