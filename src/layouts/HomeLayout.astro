@@ -197,17 +197,21 @@ const tiles = await Promise.all(
             </div>
 
             <!-- Enhanced Tile Grid with Flowbite Card styling -->
-            <div class="grid gap-6 mb-6 lg:mb-16 md:grid-cols-2 lg:grid-cols-3">
+            <div
+                class="px-6 lg:px-0 flex flex-wrap justify-center gap-6 mb-6 lg:mb-16"
+            >
                 {
                     tiles.map((tile) => (
-                        <ProjectCard
-                            title={tile.title}
-                            description={tile.description}
-                            color={tile.color}
-                            coverImage={tile.coverImage}
-                            t={t}
-                            slug={tile.slug}
-                        />
+                        <div class="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+                            <ProjectCard
+                                title={tile.title}
+                                description={tile.description}
+                                color={tile.color}
+                                coverImage={tile.coverImage}
+                                t={t}
+                                slug={tile.slug}
+                            />
+                        </div>
                     ))
                 }
             </div>
@@ -228,7 +232,10 @@ const tiles = await Promise.all(
                 </p>
             </div>
 
-            <div class="grid gap-8 lg:grid-cols-3">
+            <div
+                class="grid gap-8 lg:grid-cols-3"
+                style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"
+            >
                 <!-- Recent Events -->
                 {
                     recentEvents.length > 0 && (
