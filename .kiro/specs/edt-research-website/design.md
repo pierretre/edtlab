@@ -521,3 +521,175 @@ FROM nginx:alpine AS production
 - **Content Freshness**: Automated checks for outdated content
 
 This design provides a comprehensive foundation for building a high-performance, accessible, and maintainable bilingual research website that meets all specified requirements while providing excellent user and developer experiences.
+
+
+## Image Optimization Strategy
+
+### Astro Picture Component Integration
+
+The website uses Astro's built-in Picture component for automatic image optimization:
+
+#### Implementation Approach
+- **Asset Location**: All images stored in `src/assets/images/` for Astro's automatic optimization
+- **Component Usage**: Astro's Picture component replaces custom image optimization components
+- **Format Generation**: Automatic generation of WebP and AVIF formats with fallbacks
+- **Responsive Images**: Multiple breakpoints generated automatically based on sizes attribute
+- **Performance**: Build-time optimization reduces runtime overhead
+
+#### Benefits
+- **Automatic Optimization**: No manual image processing required
+- **Modern Formats**: Automatic WebP/AVIF generation with PNG/JPEG fallbacks
+- **Responsive**: Automatic srcset generation for different screen sizes
+- **Accessibility**: Maintains alt text and ARIA attributes
+- **Performance**: Optimized images reduce page load times
+
+#### Migration from Public Assets
+- **Consolidation**: Images moved from `public/` to `src/assets/images/`
+- **Deduplication**: Duplicate images between public and assets removed
+- **Reference Updates**: All image references updated to use asset imports
+- **Component Removal**: Custom ResponsiveImage and OptimizedImage components removed
+
+### Image Organization
+
+```
+src/assets/images/
+├── logo.png                    # Site logo
+├── logo.svg                    # SVG logo variant
+├── investigators/              # Team member photos
+│   └── avatar.png
+├── news-covers/                # News article cover images
+│   └── Digital-Twins-Cover-image.jpg
+├── partners/                   # Partner organization logos
+│   ├── CNRS.png
+│   ├── INRAE.png
+│   ├── Inria.png
+│   └── UPPA.png
+└── INRIA_EDT_CBLOT_*.{jpg,png} # Project illustrations and diagrams
+```
+
+## Updated Deployment and Infrastructure
+
+### Build and Deployment
+
+- **Static Site Generation**: Pre-rendered HTML, CSS, and JavaScript using Astro build process
+- **Docker Containerization**: Multi-stage Docker build with Nginx serving static files
+- **Automated Deployment**: CI/CD pipeline with GitHub Actions for testing and deployment
+- **Environment Management**: Separate development and production Docker configurations
+- **Container Orchestration**: Docker Compose for multi-container local development
+
+### Production Infrastructure
+
+#### Docker Multi-Stage Build
+```dockerfile
+# Stage 1: Build the static site
+FROM node:18 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production --ignore-scripts
+COPY . .
+RUN npm run build
+
+# Stage 2: Serve with Nginx
+FROM nginx:alpine AS production
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/default.conf
+RUN chown -R nginx:nginx /usr/share/nginx/html
+EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+#### VPS Deployment
+- **Web Server**: Nginx serving static files with optimized caching configuration
+- **Domain**: www.edtlab.fr with DNS configuration
+- **SSL/TLS**: Let's Encrypt certificates with automatic renewal
+- **Container Management**: Docker with health checks and automatic restart policies
+- **Backup Strategy**: Git-based version control with container image versioning
+
+### Development Environment
+
+#### Docker Compose Configuration
+```yaml
+services:
+  astro:
+    # Development server with hot-reload and file watching
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4321:4321"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    command: npm run dev -- --host --watch
+
+  matomo-db:
+    # MariaDB database for Matomo analytics
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: REDACTED
+      MYSQL_DATABASE: matomo
+      MYSQL_USER: matomo
+      MYSQL_PASSWORD: matomo
+    command: --max-allowed-packet=64MB
+    volumes:
+      - matomo-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  matomo:
+    # Matomo analytics platform
+    image: matomo:latest
+    depends_on:
+      matomo-db:
+        condition: service_healthy
+    environment:
+      MATOMO_DATABASE_HOST: matomo-db
+      MATOMO_DATABASE_ADAPTER: mysql
+      MATOMO_DATABASE_DBNAME: matomo
+      MATOMO_DATABASE_TABLES_PREFIX: matomo_
+      MATOMO_DATABASE_USER: matomo
+      MATOMO_DATABASE_PASSWORD: matomo
+    volumes:
+      - matomo-data:/var/www/html
+    ports:
+      - "8080:80"
+
+volumes:
+  matomo-db-data:
+  matomo-data:
+```
+
+### Analytics Integration
+
+#### Matomo Self-Hosted Analytics
+- **Privacy-Focused**: GDPR-compliant analytics without third-party tracking
+- **Multi-Container Setup**: Separate containers for Matomo application and MariaDB database
+- **Data Ownership**: All analytics data stored in self-hosted database
+- **Integration**: Matomo tracking script integrated in BaseLayout component
+- **Access**: Matomo dashboard accessible at port 8080 in development
+
+#### Tracking Implementation
+- **Script Integration**: Matomo tracking code in BaseLayout with Partytown for performance
+- **Event Tracking**: Custom events for user interactions and content engagement
+- **Privacy Controls**: Cookie consent and data anonymization options
+- **Performance**: Partytown integration moves analytics to web worker
+
+### Monitoring and Maintenance
+
+- **Container Health**: Docker health checks with automatic restart on failure
+- **Uptime Monitoring**: Continuous availability monitoring with alerting
+- **Performance Monitoring**: Core Web Vitals tracking and optimization
+- **Security Updates**: Regular dependency and container image updates
+- **Log Management**: Centralized logging for all containers
+- **Database Backups**: Automated MariaDB backups for Matomo data
+- **Content Versioning**: Git-based version control for all content changes
+
+This design provides a comprehensive foundation for a production-ready, performant, and maintainable bilingual research website with self-hosted analytics.
