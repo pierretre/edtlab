@@ -1,6 +1,5 @@
 import NewsItemLayout from "@layouts/NewsItemLayout.astro";
 import JobOfferLayout from "@layouts/JobOfferLayout.astro";
-import NewsPageLayout from "@layouts/NewsPageLayout.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
 
@@ -25,8 +24,6 @@ function getLayoutFromTemplate(template: string) {
     switch (template) {
         case 'project-page':
             return ProjectLayout;
-        case 'news-page':
-            return NewsPageLayout;
         default:
             return PageLayout;
     }

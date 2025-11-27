@@ -27,11 +27,12 @@ const COLORS = {
 } as const;
 
 export function getBadge(value: string, t: any): Badge {
-    let color = COLORS[value as keyof typeof COLORS] || COLORS.default;
-    let backgroundColor = BACKGROUND_COLORS[value as keyof typeof BACKGROUND_COLORS] || BACKGROUND_COLORS.default;
+    const color = COLORS[value as keyof typeof COLORS] || COLORS.default;
+    const backgroundColor = BACKGROUND_COLORS[value as keyof typeof BACKGROUND_COLORS] || BACKGROUND_COLORS.default;
+    const upperedValue = value.charAt(0).toUpperCase() + value.slice(1);
 
     return {
-        label: t(`badge.${value}`) || t(value) || value,
+        label: t(`badge.${value}`) || t(value) || upperedValue,
         color: color,
         backgroundColor: backgroundColor,
     };
