@@ -3,7 +3,8 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { getEntry } from "astro:content";
 import { Picture } from "astro:assets";
 import LanguageToggle from "./LanguageToggle.astro";
-import logoImagePng from "../../src/assets/images/logo.png";
+import logoEN from "../../src/assets/images/logo-en.png";
+import logoFR from "../../src/assets/images/logo-fr.png";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
@@ -12,6 +13,7 @@ const t = useTranslations(lang);
 const currentMenu = await getEntry("menu", lang);
 const menuSections = currentMenu?.data.sections || [];
 const currentPath = Astro.url.pathname;
+const logoImagePng = lang === "fr" ? logoFR : logoEN;
 ---
 
 <nav
