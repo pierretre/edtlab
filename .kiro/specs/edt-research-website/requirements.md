@@ -220,10 +220,11 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 #### Acceptance Criteria
 
 1. THE EDT_Website SHALL support migration of existing program content including vision, goals, and project descriptions
-2. THE EDT_Website SHALL organize existing content about PC1-PC5 projects into structured pages
+2. THE EDT_Website SHALL organize existing content about PC1-PC5 projects into structured pages with bilingual support
 3. THE EDT_Website SHALL incorporate program information including committee structure, partners, and funding details
 4. THE EDT_Website SHALL utilize existing use case descriptions and demonstrator information
 5. THE EDT_Website SHALL structure existing scientific content into appropriate website sections
+6. THE EDT_Website SHALL support project-specific illustrations and diagrams from the assets directory
 
 ## Developer Requirements
 
@@ -443,3 +444,15 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 2. THE EDT_Website SHALL require Alternative_Text input for all images during content creation
 3. THE EDT_Website SHALL validate content structure and heading hierarchy before publication
 4. THE EDT_Website SHALL provide accessibility checklist for content review process
+
+### Requirement 35
+
+**User Story:** As a Developer, I want to use Astro's built-in Picture component for image optimization, so that images are automatically optimized for different devices and formats.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL use Astro's Picture component for all image rendering
+2. THE EDT_Website SHALL store all images in src/assets/images/ for automatic optimization
+3. THE EDT_Website SHALL generate responsive images with multiple breakpoints
+4. THE EDT_Website SHALL serve modern image formats (WebP, AVIF) with fallbacks
+5. THE EDT_Website SHALL maintain proper alt text and accessibility for all optimized images
