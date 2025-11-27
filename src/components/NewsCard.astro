@@ -17,7 +17,7 @@ const { item, lang, coverImage, t, slug } = Astro.props;
 ---
 
 <div
-    class="news-item card hover:shadow-lg relative p-0 bg-white border border-gray-200 rounded-lg shadow"
+    class="news-item card hover:shadow-lg relative p-0 bg-white border border-gray-200 rounded-lg shadow max-w-sm w-full mx-auto"
     data-date={item.date.getTime()}
     data-tags={item.tags?.join(",")}
     data-category={item.newsType}
@@ -25,7 +25,7 @@ const { item, lang, coverImage, t, slug } = Astro.props;
 >
     <!-- Badges -->
     <div class="absolute top-2 left-2 z-10 gap-2 flex flex-wrap">
-        {(<Badge key={item.newsType} t={t} />)}
+        <Badge key={item.newsType} t={t} />
         <!-- Tag badges -->
         {item.tags?.map((tag) => <Badge key={tag} t={t} />)}
     </div>
