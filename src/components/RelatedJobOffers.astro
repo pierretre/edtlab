@@ -21,7 +21,7 @@ if (project) {
         });
 
         relatedJobOffers = allJobOffers
-            .filter((job) => job.data.project === project)
+            .filter((job) => job.data.tags.includes(project))
             .slice(0, 3);
     } catch (error) {
         console.warn(`Could not load job offers: ${error}`);

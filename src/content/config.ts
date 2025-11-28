@@ -27,7 +27,7 @@ const publicationsCollection = defineCollection({
         venue: z.string().optional(),
         doi: z.string().optional(),
         url: z.string().url().optional(),
-        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']),
+        tags: z.array(z.string()).optional().default([]),
     })
 });
 
@@ -53,7 +53,6 @@ const jobOffersCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
-        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General']),
         type: z.enum(['postdoc', 'phd', 'engineer', 'intern']),
         location: z.string(),
         deadline: z.date(),
@@ -61,7 +60,8 @@ const jobOffersCollection = defineCollection({
         description: z.string(),
         requirements: z.array(z.string()),
         lang: z.enum(['en', 'fr']),
-        template: z.string().optional()
+        template: z.string().optional(),
+        tags: z.array(z.string()).optional().default([])
     })
 });
 

@@ -79,10 +79,8 @@ export interface FilterSystemConfig<T = any> {
  * - Applying filters to content items
  * - Synchronizing state with URL parameters
  * - Handling user interactions
- * 
- * @template T The type of items being filtered
  */
-export interface FilterManager<T = any> {
+export interface FilterManager {
     /**
      * Apply all active filters to content items
      * Updates visibility of items based on current filter state
@@ -310,7 +308,7 @@ export function createFilterSystemConfig<T = any>(
  * 
  * @template T The type of items being filtered
  */
-export class FilterManagerImpl<T = any> implements FilterManager<T> {
+export class FilterManagerImpl<T = any> implements FilterManager {
     private config: FilterSystemConfig<T>;
     private filterState: Map<string, string>;
     private debounceTimers: Map<string, number>;

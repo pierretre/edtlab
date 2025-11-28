@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isValidLanguage } from '@utils/.';
+import { isValidLanguage } from '@utils/validation';
 
 describe('Internationalization', () => {
     it('should support required languages', () => {

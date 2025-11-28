@@ -7,7 +7,6 @@ import {
     validateFilterConfig,
     FilterManagerImpl,
     type FilterSystemConfig,
-    type FilterConfig,
 } from '../../utils/filtering';
 
 describe('validateFilterConfig', () => {

@@ -18,14 +18,18 @@ const isExpired = item.deadline < new Date();
 <a
     href={linkHelpers.jobOffer(lang, slug)}
     class="job-offer-item card group hover:shadow-lg h-full flex flex-col"
-    data-project={item.project}
+    data-tags={(item.tags ?? []).join(" ").toLowerCase()}
     data-type={item.type}
     data-status={isExpired ? "expired" : "active"}
     data-search-text={`${JSON.stringify(item)}`.toLowerCase()}
 >
     <!-- Header with badges -->
     <div class="flex flex-wrap gap-2 mb-3">
-        <Badge key={item.project} t={t} />
+        {
+            (item.tags || [])
+                .filter((tag) => tag && tag.trim())
+                .map((tag) => <Badge key={tag} t={t} />)
+        }
 
         <Badge key={`job-offers.type.${item.type}`} t={t} />
 

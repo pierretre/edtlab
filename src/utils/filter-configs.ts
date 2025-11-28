@@ -31,7 +31,7 @@ interface DOMItemData {
  * - Search (title, description, location)
  * 
  * Expected data attributes on job offer items:
- * - data-project: The project code (PC1-PC5, General)
+ * - data-tags: Space-separated list of tags (including project codes like PC1-PC5, General)
  * - data-type: The job type (postdoc, phd, engineer, intern)
  * - data-status: The status (active, expired)
  * - data-search-text: Combined searchable text (title, description, location)
@@ -59,11 +59,14 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'General', translationKey: 'job-offers.filter.general' }
+                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
-                return data.project === value;
+                // Check if the project tag is present in the tags string
+                const tags = (data.tags || '').toLowerCase();
+                const projectTag = value.toLowerCase();
+                return tags.includes(projectTag);
             },
             urlParam: 'project',
             defaultValue: ''
@@ -145,7 +148,7 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
  * - Search (title, authors, venue)
  * 
  * Expected data attributes on publication items:
- * - data-project: The project code (PC1-PC5)
+ * - data-tags: Space-separated list of tags (including project codes like PC1-PC5)
  * - data-type: The publication type (journal, conference, book, report)
  * - data-year: The publication year
  * - data-search-text: Combined searchable text (title, authors, venue)
@@ -179,11 +182,15 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC2', label: 'PC2' },
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
-                { value: 'PC5', label: 'PC5' }
+                { value: 'PC5', label: 'PC5' },
+                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
-                return data.project === value;
+                // Check if the project tag is present in the tags string
+                const tags = (data.tags || '').toLowerCase();
+                const projectTag = value.toLowerCase();
+                return tags.includes(projectTag);
             },
             urlParam: 'project',
             defaultValue: ''
@@ -298,7 +305,8 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC2', label: 'PC2' },
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
-                { value: 'PC5', label: 'PC5' }
+                { value: 'PC5', label: 'PC5' },
+                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -432,6 +440,27 @@ export function getJobOfferStatus(deadline: Date): 'active' | 'expired' {
 }
 
 /**
+ * Helper function to prepare tags string for a job offer
+ * Converts tags array to a space-separated lowercase string
+ * 
+ * @param jobOffer - The job offer object
+ * @returns Space-separated lowercase tags string
+ * 
+ * @example
+ * ```typescript
+ * const tagsString = prepareJobOfferTagsString(jobOffer);
+ * // Use in data-tags attribute
+ * ```
+ */
+export function prepareJobOfferTagsString(jobOffer: JobOffer): string {
+    if (!jobOffer.tags || jobOffer.tags.length === 0) {
+        return '';
+    }
+
+    return jobOffer.tags.join(' ').toLowerCase();
+}
+
+/**
  * Helper function to prepare search text for a job offer
  * Combines title, description, and location into a single searchable string
  * 
@@ -452,6 +481,27 @@ export function prepareJobOfferSearchText(jobOffer: JobOffer): string {
     ];
 
     return parts.join(' ').toLowerCase();
+}
+
+/**
+ * Helper function to prepare tags string for a publication
+ * Converts tags array to a space-separated lowercase string
+ * 
+ * @param publication - The publication object
+ * @returns Space-separated lowercase tags string
+ * 
+ * @example
+ * ```typescript
+ * const tagsString = preparePublicationTagsString(publication);
+ * // Use in data-tags attribute
+ * ```
+ */
+export function preparePublicationTagsString(publication: Publication): string {
+    if (!publication.tags || publication.tags.length === 0) {
+        return '';
+    }
+
+    return publication.tags.join(' ').toLowerCase();
 }
 
 /**

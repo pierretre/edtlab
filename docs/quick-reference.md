@@ -51,7 +51,8 @@ lang: "en" # or "fr"
 ```yaml
 ---
 title: "Position Title"
-project: "PC1" # PC1|PC2|PC3|PC4|PC5|General
+tags:
+  - "PC1" # PC1|PC2|PC3|PC4|PC5|General
 type: "postdoc" # postdoc|phd|engineer|intern
 location: "City, Country"
 deadline: 2024-12-31

@@ -14,7 +14,7 @@ const { publication, t } = Astro.props as Props;
     data-type={publication.type}
     data-year={publication.year.toString()}
     data-search-text={`${JSON.stringify(publication)}`.toLowerCase()}
-    data-project={publication.project}
+    data-tags={(publication.tags ?? []).join(" ").toLowerCase()}
     role="row"
 >
     <h3
@@ -35,7 +35,13 @@ const { publication, t } = Astro.props as Props;
             )
         }
 
-        <Badge key={publication.project} t={t} />
+        <div class="flex gap-1 flex-wrap justify-end">
+            {
+                (publication.tags || [])
+                    .filter((tag) => tag && tag.trim())
+                    .map((tag) => <Badge key={tag} t={t} />)
+            }
+        </div>
     </h3>
     <p class="text-xs text-gray-600 mt-1">
         {publication.authors.join(", ")} • {publication.year}

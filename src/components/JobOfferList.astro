@@ -3,11 +3,7 @@ import { getCollection } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import JobOfferCard from "./JobOfferCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
-import {
-    jobOffersFilterConfig,
-    getJobOfferStatus,
-    prepareJobOfferSearchText,
-} from "@utils/filter-configs";
+import { jobOffersFilterConfig } from "@utils/filter-configs";
 
 interface Props {
     lang: "en" | "fr";

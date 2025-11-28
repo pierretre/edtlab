@@ -7,7 +7,6 @@ import FilterSidebar from "./FilterSidebar.astro";
 import {
     publicationsFilterConfig,
     getAvailableYears,
-    preparePublicationSearchText,
 } from "@utils/filter-configs";
 
 export interface Props {
@@ -55,7 +54,7 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         pub.data.title,
         pub.data.authors,
         pub.data.year.toString(),
-        pub.data.project,
+        pub.data.tags,
         pub.data.url,
         pub.data.doi,
         pub.data.venue,
