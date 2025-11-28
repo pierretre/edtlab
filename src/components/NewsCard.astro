@@ -17,7 +17,7 @@ const { item, lang, coverImage, t, slug } = Astro.props;
 ---
 
 <div
-    class="news-item card hover:shadow-lg relative p-0 bg-white border border-gray-200 rounded-lg shadow max-w-sm w-full mx-auto"
+    class="news-item card hover:shadow-lg relative p-0 bg-white border border-gray-200 rounded-lg shadow max-w-sm w-full mx-auto h-full flex flex-col"
     data-date={item.date.getTime()}
     data-tags={item.tags?.join(",")}
     data-category={item.newsType}
@@ -34,7 +34,7 @@ const { item, lang, coverImage, t, slug } = Astro.props;
         href={item.newsType === "press-release"
             ? linkHelpers.press(lang, slug)
             : linkHelpers.event(lang, slug)}
-        class="relative block h-48 overflow-hidden group rounded-t-lg"
+        class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0"
     >
         <Picture
             class="h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-105"
@@ -46,8 +46,8 @@ const { item, lang, coverImage, t, slug } = Astro.props;
         >
         </div>
     </a>
-    <div class="p-3">
-        <div class="flex justify-between">
+    <div class="p-3 flex-grow flex flex-col">
+        <div class="flex justify-between mb-2">
             <p class="text-sm">
                 {formatDate(item.date, lang)}
             </p>
@@ -56,7 +56,7 @@ const { item, lang, coverImage, t, slug } = Astro.props;
             </p>
         </div>
 
-        <h4 class="text-base">
+        <h4 class="text-base line-clamp-3">
             <a
                 href={item.newsType === "press-release"
                     ? linkHelpers.press(lang, slug)
