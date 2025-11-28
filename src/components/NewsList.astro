@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import NewsCard from "./NewsCard.astro";
+import FilterSidebar from "./FilterSidebar.astro";
+import { newsFilterConfig } from "@utils/filter-configs";
 
 interface Props {
     lang: "en" | "fr";
@@ -32,106 +34,19 @@ const feedWithCovers = await Promise.all(
         }
     }),
 );
-// Project filter options
-const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 ---
 
-<div class="container mx-auto max-w-8xl">
-    <div class="flex flex-col lg:flex-row gap-10">
+<div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+    <div
+        class="flex flex-col lg:flex-row gap-10 max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8"
+    >
         <!-- Sidebar -->
-        <aside class="lg:w-64 flex-shrink-0">
-            <div class="grid grid-cols-1 gap-2 sticky lg:top-24">
-                <!-- Project Filter -->
-                <div>
-                    <label
-                        for="project-filter"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                        {t("news.filter.project")}
-                    </label>
-                    <select id="project-filter" class="w-full">
-                        <option value="">
-                            {t("news.filter.all-projects")}
-                        </option>
-                        {
-                            projects.map((project) => (
-                                <option value={project}>{project}</option>
-                            ))
-                        }
-                    </select>
-                </div>
 
-                <!-- Category Filter -->
-                <div>
-                    <label
-                        for="category-filter"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                        {t("news.filter.category")}
-                    </label>
-                    <select id="category-filter" class="w-full">
-                        <option value="">
-                            {t("news.filter.all-categories")}
-                        </option>
-                        <option value="press-release"
-                            >{t("badge.press-release")}</option
-                        >
-                        <option value="event">{t("badge.event")}</option>
-                    </select>
-                </div>
-
-                <!-- Sort Filter -->
-                <div>
-                    <label
-                        for="sort-filter"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                        {t("news.filter.sort")}
-                    </label>
-                    <select id="sort-filter" class="w-full">
-                        <option value="date-desc">
-                            {t("news.filter.sort.date-desc")}
-                        </option>
-                        <option value="date-asc">
-                            {t("news.filter.sort.date-asc")}
-                        </option>
-                        <option value="title-asc">
-                            {t("news.filter.sort.title-asc")}
-                        </option>
-                        <option value="title-desc">
-                            {t("news.filter.sort.title-desc")}
-                        </option>
-                    </select>
-                </div>
-
-                <!-- Search -->
-                <div>
-                    <label
-                        for="search-filter"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                        {t("news.filter.search")}
-                    </label>
-                    <input
-                        id="search-filter"
-                        type="text"
-                        class="w-full"
-                        placeholder={t("news.filter.search-placeholder")}
-                    />
-                </div>
-
-                <!-- Clear Filters -->
-                <div class="flex justify-center">
-                    <button
-                        id="clear-filters"
-                        class="text-primary-600 hover:underline text-sm font-medium"
-                    >
-                        {t("filter.clear")}
-                    </button>
-                </div>
-            </div>
-        </aside>
-
+        <FilterSidebar
+            filters={newsFilterConfig.filters}
+            lang={lang}
+            clearButtonText={t("filter.clear")}
+        />
         <!-- Main content -->
         <main class="flex-1">
             <!-- Results Count -->
@@ -151,8 +66,7 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
 
             <div
                 id="unified-list"
-                class="grid gap-6"
-                style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
                 {
                     feedWithCovers.map((item) => (
@@ -189,48 +103,56 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
     </div>
 </div>
 
-<script type="module" is:inline>
-    const qs = (s, el = document) => el.querySelector(s);
-    const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
+<script>
+    import { FilterManagerImpl } from "@utils/filtering";
+    import { newsFilterConfig } from "@utils/filter-configs";
 
     const PAGE_SIZE = 12;
     let currentPage = 1;
+    let filterManager: FilterManagerImpl | null = null;
 
-    function renderPagination(totalPages) {
-        const container = qs("#news-pagination");
+    function renderPagination(totalPages: number) {
+        const container = document.querySelector("#news-pagination");
         if (!container) return;
         container.innerHTML = "";
 
         if (totalPages <= 1) {
-            container.style.display = "none";
+            (container as HTMLElement).style.display = "none";
             return;
         }
-        container.style.display = "";
+        (container as HTMLElement).style.display = "";
 
         const ul = document.createElement("ul");
         ul.className = "inline-flex -space-x-px text-sm m-0 p-0";
 
-        const makeItem = (label, disabled, onClick, extra = "") => {
+        const makeItem = (
+            label: string,
+            disabled: boolean,
+            onClick: () => void,
+            extra = "",
+        ) => {
             const li = document.createElement("li");
             const a = document.createElement("a");
 
-            a.type = "a";
             a.href = "#";
             a.innerHTML = label;
 
             a.className = `flex items-center justify-center text-heading font-medium w-9 h-9 border border-gray-300 text-body hover:bg-gray-100 hover:text-gray-700 ${extra}`;
 
-            if (disabled) {
-                a.classList.add("hover:text-fg-brand");
+            if (!disabled) {
+                a.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    onClick();
+                });
             } else {
-                a.addEventListener("click", onClick);
+                a.classList.add("opacity-50", "cursor-not-allowed");
             }
 
             li.appendChild(a);
             return li;
         };
 
-        // ◀ Previous
+        // Previous button
         ul.appendChild(
             makeItem(
                 `<span class="sr-only">Previous</span>
@@ -249,7 +171,7 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
         for (let i = 1; i <= totalPages; i++) {
             ul.appendChild(
                 makeItem(
-                    i,
+                    i.toString(),
                     false,
                     () => {
                         currentPage = i;
@@ -262,7 +184,7 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
             );
         }
 
-        // ▶ Next
+        // Next button
         ul.appendChild(
             makeItem(
                 `<span class="sr-only">Next</span>
@@ -281,156 +203,115 @@ const projects = ["PC1", "PC2", "PC3", "PC4", "PC5"] as const;
     }
 
     function updatePageDisplay() {
-        const list = qs("#unified-list");
+        const list = document.querySelector("#unified-list");
         if (!list) return;
-        const matched = qsa(".news-item", list).filter(
-            (c) => c.dataset.matched === "1",
+
+        const matched = Array.from(list.querySelectorAll(".news-item")).filter(
+            (c) => !(c as HTMLElement).classList.contains("hidden"),
         );
+
         const totalPages = Math.max(1, Math.ceil(matched.length / PAGE_SIZE));
         if (currentPage > totalPages) currentPage = totalPages;
 
-        qsa(".news-item", list).forEach((c) => {
-            c.style.display = "none";
+        // Remove pagination class from all items first
+        Array.from(list.querySelectorAll(".news-item")).forEach((c) => {
+            (c as HTMLElement).classList.remove("pagination-hidden");
         });
 
+        // Add pagination class to items not on current page
         const start = (currentPage - 1) * PAGE_SIZE;
         const end = start + PAGE_SIZE;
         matched.forEach((c, idx) => {
-            if (idx >= start && idx < end) c.style.display = "";
+            if (idx < start || idx >= end) {
+                (c as HTMLElement).classList.add("pagination-hidden");
+            }
         });
 
         renderPagination(totalPages);
-
-        // Update results count and show/hide no-results message
-        const noResults = qs("#no-results");
-        const resultsCount = qs("#results-count");
-        const visibleCount = matched.length;
-        if (resultsCount) {
-            const template = resultsCount.dataset.template || "{count}";
-            resultsCount.textContent = template.replace(
-                "{count}",
-                visibleCount.toString(),
-            );
-        }
-
-        if (noResults) {
-            if (visibleCount === 0) {
-                list.style.display = "none";
-                noResults.style.display = "block";
-            } else {
-                list.style.display = "";
-                noResults.style.display = "none";
-            }
-        }
     }
 
-    function applyFilters() {
-        const searchEl = qs("#search-filter");
-        const search = (searchEl ? searchEl.value : "").trim().toLowerCase();
-        const categoryEl = qs("#category-filter");
-        const category = categoryEl ? categoryEl.value : "";
-        const projectEl = qs("#project-filter");
-        const project = projectEl ? projectEl.value : "";
+    function applySorting() {
+        const sortEl = document.getElementById(
+            "sort-filter",
+        ) as HTMLSelectElement;
+        if (!sortEl) return;
 
-        const list = qs("#unified-list");
+        const sortVal = sortEl.value;
+        const list = document.querySelector("#unified-list");
         if (!list) return;
 
-        qsa(".news-item", list).forEach((item) => {
-            const itemCategory = item.dataset.category || "";
-            const itemTags = item.dataset.tags.toLowerCase() || "";
-            const itemSearchText = item.dataset.searchText || "";
-
-            const matchesCategory =
-                !category || category === "" || itemCategory === category;
-            const matchesProject =
-                !project ||
-                project === "" ||
-                itemTags.includes(project.toLowerCase());
-
-            console.log(itemTags, project);
-            const matchesSearch = !search || itemSearchText.includes(search);
-
-            item.dataset.matched =
-                matchesCategory && matchesSearch && matchesProject ? "1" : "0";
-        });
-
-        // Sorting
-        const sortEl = qs("#sort-filter");
-        const sortVal = sortEl ? sortEl.value : "date-desc";
-
-        const children = qsa(".news-item", list).slice();
+        const children = Array.from(list.querySelectorAll(".news-item"));
         children.sort((a, b) => {
-            const ad = parseInt(a.dataset.date || "0", 10);
-            const bd = parseInt(b.dataset.date || "0", 10);
+            const aEl = a as HTMLElement;
+            const bEl = b as HTMLElement;
+            const ad = parseInt(aEl.dataset.date || "0", 10);
+            const bd = parseInt(bEl.dataset.date || "0", 10);
 
             if (sortVal === "date-desc") return bd - ad;
             if (sortVal === "date-asc") return ad - bd;
 
-            // title compares (dataset.title is lowercased in NewsCard)
-            const at = (a.dataset.title || "").toLowerCase();
-            const bt = (b.dataset.title || "").toLowerCase();
+            const at = (aEl.dataset.title || "").toLowerCase();
+            const bt = (bEl.dataset.title || "").toLowerCase();
             if (sortVal === "title-asc") return at.localeCompare(bt);
             if (sortVal === "title-desc") return bt.localeCompare(at);
 
-            // default fallback: newest first
             return bd - ad;
         });
-        children.forEach((c) => list.appendChild(c));
 
-        currentPage = 1;
-        updatePageDisplay();
+        children.forEach((c) => list.appendChild(c));
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Grab filter elements
-        const projectFilter = qs("#project-filter");
-        const categoryFilter = qs("#category-filter");
-        const searchFilter = qs("#search-filter");
-        const sortFilter = qs("#sort-filter");
+        // Initialize filter manager
+        filterManager = new FilterManagerImpl(newsFilterConfig);
 
-        // Wire selects to change, search to debounced input
-        if (projectFilter)
-            projectFilter.addEventListener("change", applyFilters);
-        if (categoryFilter)
-            categoryFilter.addEventListener("change", applyFilters);
+        // Override applyFilters to integrate with pagination
+        const originalApplyFilters =
+            filterManager.applyFilters.bind(filterManager);
+        filterManager.applyFilters = function () {
+            originalApplyFilters();
+            applySorting();
+            currentPage = 1;
+            updatePageDisplay();
+        };
 
-        let debounceTimer;
-        if (searchFilter) {
-            searchFilter.addEventListener("input", () => {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(applyFilters, 200);
-            });
-        }
+        filterManager.initialize();
 
-        // Reset / clear button clears filters and reapplies
-        const resetBtn = qs("#clear-filters");
-        if (resetBtn) {
-            resetBtn.addEventListener("click", () => {
-                if (searchFilter) searchFilter.value = "";
-                if (categoryFilter) categoryFilter.value = "";
-                if (projectFilter) projectFilter.value = "";
-                currentPage = 1;
-                applyFilters();
-                if (searchFilter) searchFilter.focus();
-            });
-        }
-
-        // Default values from URL parameters (support both ?type= and ?category= for compatibility)
-        const urlParams = new URLSearchParams(window.location.search);
-        if (categoryFilter) {
-            categoryFilter.value = urlParams.get("category") || "";
-        }
-        if (projectFilter) {
-            projectFilter.value = urlParams.get("project") || "";
-        }
-        if (searchFilter) {
-            searchFilter.value = urlParams.get("search") || "";
-        }
+        // Handle sorting separately
+        const sortFilter = document.getElementById("sort-filter");
         if (sortFilter) {
-            sortFilter.value = urlParams.get("sort") || "date-desc";
+            sortFilter.addEventListener("change", () => {
+                applySorting();
+                currentPage = 1;
+                updatePageDisplay();
+            });
         }
 
-        // initial apply
-        applyFilters();
+        // Initial display
+        applySorting();
+        updatePageDisplay();
     });
 </script>
+
+<style>
+    /* Break out of parent container - requires custom CSS for viewport calculations */
+    .news-list-breakout {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+
+    /* News item styles - using Tailwind @apply */
+    .news-item {
+        @apply w-full h-auto;
+    }
+
+    /* Hidden states for filtering and pagination */
+    .news-item.hidden,
+    .news-item.pagination-hidden {
+        @apply !hidden;
+    }
+</style>

@@ -1,0 +1,148 @@
+---
+/**
+ * FilterSidebar Component
+ * 
+ * A reusable sidebar component for rendering filter controls based on configuration.
+ * Supports select dropdowns, search inputs, and custom filters with full accessibility
+ * and internationalization support.
+ * 
+ * @component
+ * @example
+ * ```astro
+ * <FilterSidebar
+ *   filters={jobOffersFilterConfig.filters}
+ *   lang="en"
+ *   clearButtonText={t('filter.clear')}
+ * />
+ * ```
+ */
+
+import type { FilterConfig } from '@utils/filtering';
+import { useTranslations } from '@i18n/utils';
+
+export interface Props {
+    /** Array of filter configurations to render */
+    filters: FilterConfig[];
+    /** Current language for translations */
+    lang: 'en' | 'fr';
+    /** Text for the clear filters button */
+    clearButtonText: string;
+    /** Optional CSS classes for the sidebar container */
+    class?: string;
+}
+
+const { filters, lang, clearButtonText, class: className = '' } = Astro.props;
+const t = useTranslations(lang);
+
+/**
+ * Get translated label for a filter
+ * Uses the translationKey if available, falls back to the filter's label property
+ */
+function getFilterLabel(filter: FilterConfig): string {
+    if (filter.translationKey) {
+        const translated = t(filter.translationKey as any);
+        if (translated && translated !== filter.translationKey) {
+            return translated;
+        }
+    }
+    return filter.label;
+}
+
+/**
+ * Get translated label for a filter option
+ * Uses the translationKey if available, falls back to the option's label property
+ */
+function getOptionLabel(option: { value: string; label: string; translationKey?: string }): string {
+    if (option.translationKey) {
+        const translated = t(option.translationKey as any);
+        if (translated && translated !== option.translationKey) {
+            return translated;
+        }
+    }
+    return option.label;
+}
+---
+
+<aside class={`lg:w-64 flex-shrink-0`} role="complementary" aria-label="Filters">
+    <div class="grid grid-cols-1 p-2 lg:sticky lg:top-24">
+        {filters.map((filter) => (
+            <div class="filter-group">
+                {filter.type === 'select' && filter.options && (
+                    <div>
+                        <label
+                            for={filter.id}
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                        >
+                            {getFilterLabel(filter)}
+                        </label>
+                        <select
+                            id={filter.id}
+                            name={filter.id}
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            aria-label={getFilterLabel(filter)}
+                        >
+                            {filter.options.map((option) => (
+                                <option value={option.value}>
+                                    {getOptionLabel(option)}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )}
+
+                {filter.type === 'search' && (
+                    <div>
+                        <label
+                            for={filter.id}
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                        >
+                            {getFilterLabel(filter)}
+                        </label>
+                        <input
+                            type="text"
+                            id={filter.id}
+                            name={filter.id}
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            placeholder={filter.label}
+                            aria-label={getFilterLabel(filter)}
+                        />
+                    </div>
+                )}
+
+                {filter.type === 'custom' && (
+                    <div>
+                        <label
+                            for={filter.id}
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                        >
+                            {getFilterLabel(filter)}
+                        </label>
+                        <div
+                            id={filter.id}
+                            role="group"
+                            aria-label={getFilterLabel(filter)}
+                        >
+                            <!-- Custom filter content would be rendered here -->
+                            <!-- This is a placeholder for custom filter implementations -->
+                        </div>
+                    </div>
+                )}
+            </div>
+        ))}
+
+        <!-- Spacer for visual separation -->
+        <div class="hidden md:block" aria-hidden="true"></div>
+
+        <!-- Clear Filters Button -->
+        <div class="h-full flex flex-col justify-end">
+            <button
+                id="clear-filters"
+                type="button"
+                class="text-primary-600 hover:text-primary-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded px-2 py-1"
+                aria-label={clearButtonText}
+            >
+                {clearButtonText}
+            </button>
+        </div>
+    </div>
+</aside>
