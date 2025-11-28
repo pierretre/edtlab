@@ -174,7 +174,8 @@ year: 2024
 - **Usage**: Associate publications to one of the focused projects
 
 ```yaml
-project: "PC1"
+tags:
+  - "PC1"
 ```
 
 ### Optional Fields
@@ -252,7 +253,8 @@ photo: "event-photo.jpg"
 - **Usage**: Include the project short-code if the event is associated with a specific focused project.
 
 ```yaml
-project: "PC1"
+tags:
+  - "PC1"
 ```
 
 ### Optional Fields
@@ -346,7 +348,8 @@ template: "compact"
 - **Usage**: Include the project short-code if the press release is associated with a specific focused project.
 
 ```yaml
-project: "PC1"
+tags:
+  - "PC1"
 ```
 
 ## Job Offers Collection
@@ -362,7 +365,8 @@ Used for job postings in `src/content/job-offers/`.
 - **Usage**: Project-based filtering and organization
 
 ```yaml
-project: "PC1"
+tags:
+  - "PC1"
 ```
 
 #### `type`

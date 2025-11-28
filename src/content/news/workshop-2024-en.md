@@ -31,7 +31,7 @@ Join us for an intensive hands-on workshop focused on the practical implementati
 
 This workshop is designed for:
 
-- Research engineers and scientists
+- Engineers and scientists
 - Industrial automation professionals
 - Graduate students in engineering
 - Technology managers and decision makers

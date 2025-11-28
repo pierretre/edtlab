@@ -2,7 +2,8 @@
 title: "Press Release Title"
 date: 2024-02-10  # Publication date in YYYY-MM-DD format
 photo: "press-photo.jpg"  # REQUIRED: filename of the press release hero image used in listings and social previews
-project: "PC1"  # Optional: associate press release with a focused project (PC1..PC5 or General)
+tags:
+  - "PC1"  # Optional: associate press release with a focused project (PC1..PC5 or General)
 description: "Brief summary of the press release for listings and social media"
 url: "https://external-coverage.com"  # Optional: Link to external press coverage
 lang: "en"  # Language: "en" or "fr"

@@ -1,6 +1,7 @@
 ---
 title: "PhD Position - Human-Computer Interaction for Digital Twins"
-project: "PC5"
+tags:
+  - "PC5"
 type: "phd"
 location: "Brest, France"
 deadline: 2024-06-30

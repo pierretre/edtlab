@@ -1,6 +1,7 @@
 ---
 title: "Doctorant - Apprentissage Automatique pour Jumeaux Numériques"
-project: "PC2"
+tags:
+  - "PC2"
 type: "phd"
 location: "Lyon, France"
 deadline: 2025-03-15

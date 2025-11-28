@@ -1,6 +1,7 @@
 ---
 title: "Stage d'Été - Recherche en Jumeaux Numériques"
-project: "General"
+tags:
+  - "General"
 type: "intern"
 location: "Paris, France"
 deadline: 2024-11-30

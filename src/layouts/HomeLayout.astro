@@ -4,6 +4,7 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { linkHelpers } from "@i18n/links";
 import { getCollection } from "astro:content";
 import ProjectCard from "@components/ProjectCard.astro";
+import Badge from "@components/Badge.astro";
 
 export interface Props {
     title?: string;
@@ -405,13 +406,18 @@ const tiles = await Promise.all(
                                         <h4 class="font-semibold text-gray-900 text-sm">
                                             {job.data.title}
                                         </h4>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-600">
-                                                {job.data.project}
-                                            </span>
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 capitalize">
-                                                {job.data.type}
-                                            </span>
+                                        <div class="flex items-center gap-2 mt-1 flex-wrap">
+                                            {(job.data.tags || [])
+                                                .filter(
+                                                    (tag) => tag && tag.trim(),
+                                                )
+                                                .map((tag) => (
+                                                    <Badge key={tag} t={t} />
+                                                ))}
+                                            <Badge
+                                                key={`job-offers.type.${job.data.type}`}
+                                                t={t}
+                                            />
                                         </div>
                                         <p class="text-xs text-gray-500 mt-1">
                                             {job.data.location} •{" "}

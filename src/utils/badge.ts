@@ -10,6 +10,7 @@ const BACKGROUND_COLORS = {
     PC3: "bg-blue-bell-200",
     PC4: "bg-hit-pink-200",
     PC5: "bg-marzipan-200",
+    General: "bg-primary-200",
     'job-offers.deadline-approaching': "bg-yellow-800",
     'job-offers.deadline-passed': "bg-red-800",
     default: "bg-gray-100",
@@ -21,18 +22,28 @@ const COLORS = {
     PC3: "text-blue-bell-900",
     PC4: "text-hit-pink-900",
     PC5: "text-marzipan-900",
+    General: "text-primary-900",
     'job-offers.deadline-approaching': "text-yellow-100",
     'job-offers.deadline-passed': "text-red-100",
     default: "text-gray-800"
 } as const;
 
 export function getBadge(value: string, t: any): Badge {
+    // Safety check for undefined or empty values
+    if (!value || typeof value !== 'string') {
+        return {
+            label: '',
+            color: COLORS.default,
+            backgroundColor: BACKGROUND_COLORS.default,
+        };
+    }
+
     const color = COLORS[value as keyof typeof COLORS] || COLORS.default;
     const backgroundColor = BACKGROUND_COLORS[value as keyof typeof BACKGROUND_COLORS] || BACKGROUND_COLORS.default;
     const upperedValue = value.charAt(0).toUpperCase() + value.slice(1);
 
     return {
-        label: t(`badge.${value}`) || t(value) || upperedValue,
+        label: t(`badge.${value.toLowerCase()}`) || t(value) || upperedValue,
         color: color,
         backgroundColor: backgroundColor,
     };
