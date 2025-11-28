@@ -10,71 +10,96 @@ illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC2.png"
 projectId: "PC2"
 ---
 
-# PC2: Architecture, Composabilité et Interopérabilité
+import PartnersGrid from '@components/PartnersGrid.astro';
+import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
+import avatar from '@assets/images/investigators/avatar.png';
 
-## Aperçu du Projet
+## Aperçu
 
-PC2 aborde le défi de construire des jumeaux numériques modulaires qui peuvent être composés et fédérés, s'éloignant des implémentations monolithiques et ad-hoc vers des architectures systématiques et évolutives permettant une mise à l'échelle industrielle de la technologie des jumeaux numériques.
+Les jumeaux numériques (JN) sont apparus comme un moyen d'interagir avec le monde physique et d'explorer des scénarios hypothétiques à différents niveaux d'abstraction. Cependant, la plupart des JN sont des entités monolithiques conçues de manière ad-hoc pour des jumeaux physiques (JP) spécifiques.
 
-## Sujets Scientifiques
+Pour permettre une mise à l'échelle industrielle de cette technologie, nous devons rendre possible la construction de JN à partir de parties modulaires, de manière similaire à la façon dont Gustave Eiffel a révolutionné le génie civil à la fin du 19ème siècle avec la construction modulaire de la Tour Eiffel.
 
-1. **Architecture Modulaire pour les JN**: Permettre une composition flexible et la gestion de la variabilité
-2. **Composition des JN**: Orchestration au niveau du déploiement pour une fédération dynamique
-3. **Interopérabilité des Services JN**: Graphes de connaissances et technologies du web sémantique
-4. **Gestion de l'Échelle, Fidélité et Incertitude**: Gestion des incertitudes composées à travers les frontières des JN
+Les défis concernent la manière dont les JN peuvent être modularisés pour permettre la composition à la fois au moment de la conception et du déploiement, aux niveaux syntaxique (forme concrète des interfaces) et sémantique (alignements d'ontologies). Cette modularisation concerne également les services fournis par les JN, incluant le traitement de données et l'exploration de scénarios basée sur l'apprentissage automatique.
 
-## Objectifs Principaux
+Avoir un JN modélisant un JP à l'échelle 1:1 est à la fois un argument marketing et un oxymore scientifique. Un modèle est toujours "faux" par rapport à la réalité, mais certains modèles peuvent être utiles si vous comprenez leur distance par rapport à la réalité. Cela s'étend sur trois dimensions : échelle, fidélité et gestion de l'incertitude. L'échelle et la fidélité représentent le niveau d'abstraction (l'échelle de la carte), tandis que la gestion de l'incertitude reflète la confiance dans les valeurs d'attributs du JN (par exemple, la largeur de la rivière est de 10m ± 2m). Une fois identifiées au sein d'un JN, celles-ci peuvent être propagées à travers les frontières des JN au niveau de la fédération.
 
-- Modularisation des JN pour permettre une composition flexible abordant la variabilité, la fiabilité, l'économie et l'éthique
-- Composition des JN au niveau du déploiement pour permettre l'orchestration et la fédération
-- Interopérabilité de plusieurs JN utilisant les technologies de graphes de connaissances, d'ontologies et du web sémantique
-- Gestion de la fidélité et de l'incertitude à travers les systèmes de jumeaux numériques composés
-- Composition de services pour l'acquisition de données, l'apprentissage automatique évolutif et l'adaptation dynamique
+Le projet se concentre sur l'architecture modulaire, la composition, l'interopérabilité et la gestion de l'échelle, de la fidélité et de l'incertitude avec des objectifs clairs : permettre la modularisation pour une composition flexible, l'orchestration au déploiement, l'interopérabilité sémantique via les graphes de connaissances, et une propagation appropriée de l'incertitude à travers les systèmes fédérés.
 
-## Méthodologie
+## Cas d'Usage Associés
 
-Le projet est organisé en trois packages de travail complémentaires :
+Les cas d'usage dans **PC2** nécessitent l'**interopérabilité** comme caractéristique critique, ainsi que des cas démontrant des **approches modulaires** pour construire des JN ou organiser des **fédérations de JN**.
 
-### WP2.1: Architecture de Référence JN
-- Théorie unifiée des méta-données pour la gestion de la variabilité, fidélité et incertitude
-- Motifs d'architecture de référence pour les systèmes de jumeaux numériques modulaires
-- Fondation pour la composition systématique et l'interopérabilité
+## Investigateur et Partenaires du Projet
 
-### WP2.2: Modularisation et Composabilité JN
-- Construction de JN à partir de composants pré-existants et rétro-ingénierie
-- Composition au moment de la conception (composants logiciels) et du déploiement (Systèmes de Systèmes)
-- Gestion de l'évolution pour les systèmes neuromorphiques et adaptatifs
+### Investigateur Principal :
 
-### WP2.3: Interopérabilité Sémantique JN
-- Technologies du web sémantique pour l'alignement d'ontologies entre JN indépendants
-- Amélioration et validation de la qualité des graphes de connaissances
-- Suivi sémantique des expériences et interactions de jumeaux numériques
+<PrincipalInvestigator
+name="Jean-Marc Jézéquel"
+headline="Professeur d'Ingénierie Logicielle à l'Université de Rennes/Inria"
+picture={avatar}
+>
+Jean-Marc Jézéquel est Professeur d'Ingénierie Logicielle à l'Université de Rennes et membre de l'équipe DiverSE à IRISA/Inria, ainsi que fellow de l'Institut Universitaire de France (IUF). Depuis 2024, il est Président d'Informatics Europe. De 2012 à 2020, il a été Directeur d'IRISA, l'un des plus grands laboratoires publics de recherche en informatique en France. En 2016, il a reçu la Médaille d'Argent du CNRS et en 2020 le prix de carrière IEEE/ACM MODELS. Il a été professeur invité à l'Université McGill en 2022. Ses intérêts incluent l'ingénierie logicielle dirigée par les modèles pour les jumeaux numériques avec des contraintes de qualité de service, incluant sécurité, fiabilité, performance, temporalité, etc. Il est le PI du projet franco-allemand MBDO pour aider à construire des jumeaux numériques pour l'Industrie 5.0 de manière DevOps. Il est l'auteur de 4 livres et de plus de 300 publications dans des revues et conférences internationales.
+</PrincipalInvestigator>
 
-## Résultats Attendus
+### Partenaires Participants :
 
-- Architecture de référence pour les systèmes de jumeaux numériques modulaires
-- Cadres de composition pour la fédération au moment de la conception et à l'exécution
-- Solutions d'interopérabilité sémantique utilisant les graphes de connaissances et ontologies
-- Méthodes de propagation d'incertitude à travers les systèmes de jumeaux numériques composés
-- Approches validées à travers des cas d'usage nécessitant interopérabilité et fédération
+<PartnersGrid partners={['Inria', 'IMT', 'CEA', 'CNRS']} ></PartnersGrid>
 
-## Équipe et Collaborateurs
+## Mise en Œuvre du Projet
 
-## Équipe et Collaborateurs
+Le projet est structuré en **trois packages de travail complémentaires**, abordant l'architecture modulaire, la composition et l'interopérabilité sémantique.
 
-### Investigateur Principal
-**Jean-Marc Jézéquel**, Université de Rennes/Inria  
-Professeur d'ingénierie logicielle et membre de l'équipe DiverSE à IRISA/Inria. Fellow de l'Institut Universitaire de France (IUF) et Président d'Informatics Europe depuis 2024. Expert en ingénierie logicielle dirigée par les modèles pour les jumeaux numériques avec contraintes de qualité de service.
+<details>
+<summary><h3>Workpackage1 : Architecture de Référence JN</h3></summary>
 
-### Comité de Pilotage
-- **Inria** - Institut national de recherche en sciences et technologies du numérique
-- **IMT** - Institut Mines-Télécom
+**Responsable :** DiverSE (Inria)  
+**Partenaires :** P4S (IMT), List (CEA), CRAN (CNRS), DISP (Univ. Lumière Lyon 2), UPPA
 
-### Partenaires Participants
-- **Équipes Inria** : DiverSE, Wimmics, Moex
-- **Instituts de Recherche** : P4S (IMT), List (CEA), CRAN (CNRS)
-- **Universités** : DISP (Université Lumière Lyon 2), CIAD (Université de Bourgogne), IRIT/SM@RT (Université Toulouse Jean Jaurès), UPPA
+**Objectifs :**
+- Développer une théorie unifiée des méta-données pour la gestion de la **variabilité, fidélité et incertitude**
+- Établir des motifs d'architecture de référence pour les systèmes de jumeaux numériques modulaires
+- Créer une fondation pour la composition systématique et l'interopérabilité
 
-### Ressources
-- **11 doctorants** (4 pour WP2.1 et WP2.2, 3 pour WP2.3)
-- **1 ingénieur** pendant 3 ans contribuant aux livrables logiciels
+**Tâches Clés :**
+1. Définir un cadre de méta-données pour les caractéristiques des JN
+2. Établir des motifs architecturaux pour la conception modulaire de JN
+3. Développer des lignes directrices pour la propagation de variabilité et d'incertitude
+
+</details>
+
+<details>
+<summary><h3>Workpackage2 : Modularisation et Composabilité JN</h3></summary>
+
+**Responsable :** P4S (IMT)  
+**Partenaires :** DiverSE (Inria), DISP (Univ. Lumière Lyon 2), CIAD (U. de Bourgogne)
+
+**Objectifs :**
+- Permettre la construction de JN à partir de **parties pré-existantes** ou par rétro-ingénierie
+- Supporter la composition au **moment de la conception** (composants logiciels) et au **moment du déploiement** (Systèmes de Systèmes)
+- Gérer l'évolution incluant les systèmes neuromorphiques
+
+**Tâches Clés :**
+1. Développer des méthodologies de construction de JN basées sur les composants
+2. Créer des mécanismes de composition et d'orchestration à l'exécution
+3. Implémenter la gestion de l'évolution pour les systèmes adaptatifs
+
+</details>
+
+<details>
+<summary><h3>Workpackage3 : Interopérabilité Sémantique JN</h3></summary>
+
+**Responsable :** Moex (Inria)  
+**Partenaires :** Wimmics (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), IGN
+
+**Objectifs :**
+- Appliquer les **technologies du web sémantique** pour l'alignement d'ontologies entre JN conçus indépendamment
+- Améliorer et valider la **qualité des graphes de connaissances**
+- Maintenir des traces sémantiques des expériences de jumeaux numériques
+
+**Tâches Clés :**
+1. Développer des méthodes d'alignement d'ontologies pour la fédération de JN
+2. Créer des cadres d'évaluation de qualité des graphes de connaissances
+3. Implémenter le suivi sémantique pour les interactions et expériences de JN
+
+</details>
