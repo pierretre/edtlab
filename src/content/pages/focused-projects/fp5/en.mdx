@@ -10,97 +10,143 @@ illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC5.png"
 projectId: "PC5"
 ---
 
-# PC5: Human-Digital Twin Interactions
+import PartnersGrid from '@components/PartnersGrid.astro';
+import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
+import avatar from '@assets/images/investigators/avatar.png';
 
-## Project Overview
+## Overview
 
-PC5 focuses on the human-computer interaction aspects of digital twins, developing interactive systems that enable users to visualize and interact with both physical and digital twins through various modalities including VR, AR, 2D interfaces, and collaborative environments.
+By its very nature, a digital twin strongly relies on data visualization and user interactions. Indeed, a DT usually embeds interactive systems that enable users to visualize and interact with both the physical and digital twins and their large amount of associated data.
 
-## Scientific Topics
+Those interactive systems can take multiple forms, from fully digital VR immersive systems to hybrid AR systems, but also 2D graphical user interfaces, and systems that imply physical input devices. They often propose collaborative asymmetrical (AV/VR/2D) interactive situations, which can also be a challenge.
 
-1. **3D Reconstruction**: Semi-automatic techniques for digital twin visual representation
-2. **Data Visualization**: Metaphors and approaches to augment DT understanding
-3. **Interaction Engineering**: Approaches to describe and generate user interactions
-4. **HCI Spatio-temporal Navigation**: Transitions between different views and scales
-5. **DT Validation & Verification**: Usability assessment from the user perspective
+Building such interactive systems from scratch or without automation is time-consuming and may prevent the generalization of DT as industrial tools. First, novel approaches are required to build the visual representation of the DT, which can be 3D models (to build, for example, by combining CAD models, 3D scans, pictures, and other media sources) or 2D various kinds of information. Users can then interactively finalize some parts of the DT. Additional visualization tools can also help reduce the bias of automatic reconstruction.
 
-## Main Objectives
+Then, DT come with usages that raise research questions regarding, from an HCI viewpoint, how to help users in visualizing data and interacting with it, especially when we use 3D. The visualization concerns not only the "raw" model of the physical twin but also all the data that can be used to enrich the model (additional information about how to use it). It raises new challenges about how to display large datasets of information and how and when to interact with them.
 
-- Develop semi-automatic techniques for 2D/3D construction of digital twin views
-- Create visualization metaphors to augment DT content understanding
-- Design approaches for describing and generating user interactions with DTs
-- Implement spatio-temporal transitions between different DT views
-- Establish usability assessment methods for digital twin interfaces
+Finally, all these points require validations, at different scales. To reduce the cost of developing the HCI facets of DT, the project must propose novel techniques that focus on their engineering.
 
-## Methodology
+The project focuses on 3D reconstruction, data visualization, interaction engineering, spatio-temporal navigation, and validation with clear objectives: developing semi-automatic construction techniques, creating visualization metaphors, designing interaction approaches, implementing seamless transitions, and establishing usability assessment methods.
 
-The project is structured into five complementary work packages:
+## Associated Use Cases
 
-### WP5.1: DT Digital Representation/Reconstruction and Design
-- 3D reconstruction including AR viewpoint computation
-- 2D reconstruction with multi-view visualization and data fusion
-- Error correction and multi-source data integration
-- Earth DT reconstruction and visualization (with CNES collaboration)
+Use cases in **PC5** span multiple scales:
 
-### WP5.2: DT Visualization Augmentations
-- Enriched visualization of large datasets in 2D/3D, AR and VR
-- Collaboration enhancement including avatar systems
-- Human body models for surgical intervention preparation and evaluation
-- Immersive analytics for complex data exploration
+- **Territory Scale**: Reconstructing the DT of a city or area and populating it with virtual humans to better understand current limitations and how the DT can enhance it
+- **Building/Factory Scale**: Reconstructing the DT of a reconfigurable assembly line, providing AR augmentation for workers and VR visualization for experts who can help remotely
+- **Technical Object Scale**: Reconstructing the DT of a complex system (car, satellite) to train people for maintenance tasks using VR interactions, then using AR augmentations when physically in front of the physical twin
 
-### WP5.3: DT Interaction Design and Engineering
-- Interaction engineering including tangible user interfaces
-- Co-engineering between multiple stakeholders
-- Interaction narration and evolution management
-- Multi-modal interaction design
+## Investigator & Project Partners
 
-### WP5.4: DT Transitions Engineering
-- Solution space transitions for different DT configurations
-- Spatial (3D) transitions for navigation and exploration
-- Media transitions (AR to VR to 2D) for seamless user experience
-- Cross-platform interaction continuity
+### Principal Investigator:
 
-### WP5.5: DT Interactive Validation & Verification
-- Ergonomics and usability assessment for individual users
-- Group-scale validation for collaborative environments
-- VR front-end testing for useful and usable DT interfaces
-- User experience optimization
+<PrincipalInvestigator
+name="Thierry Duval"
+headline="Full Professor and Head of Computer Science Department at IMT Atlantique"
+picture={avatar}
+>
+Thierry Duval is a full Professor and the head of the Computer Science Department at IMT Atlantique in Brest. Since 2021 he is also the head of the INUIT team at Lab-STICC. He received a PhD degree in Computer Science from Centrale Nantes and the University of Nantes in 1993, and an Habilitation degree from University of Rennes 1 in 2012. His research interests include Virtual, Augmented, eXtended and Mixed Reality, Immersive Analytics, Collaborative Virtual Environments, as well as Software Engineering for interactive systems. He is currently involved in several collaborative projects (5G Metaverse, Reclassif, eNSEMBLE) where he conducts AR/VR/XR/MR/CVE research mainly applied to Industry of the Future where Digital Twins of factories are central elements of the projects. He has published over 100 communications in international conferences and journals.
+</PrincipalInvestigator>
 
-## Expected Outcomes
+### Participating Partners:
 
-- Semi-automatic reconstruction tools for digital twin visual representations
-- Comprehensive visualization frameworks for multi-modal DT interaction
-- Interaction engineering methodologies for complex DT systems
-- Seamless transition systems between different interaction modalities
-- Validated usability assessment frameworks for DT interfaces
+<PartnersGrid partners={['IMT', 'CEA', 'Inria']} ></PartnersGrid>
 
-## Use Cases
+## Project Implementation
 
-- **Territory Scale**: City/area DT reconstruction with virtual human populations
-- **Building/Factory Scale**: Reconfigurable assembly line DT with AR worker augmentation and VR expert monitoring
-- **Technical Object Scale**: Complex system DT (cars, satellites) for VR maintenance training and AR-assisted physical operations
+The project is structured into **five complementary work packages**, addressing reconstruction, visualization, interaction, transitions, and validation.
 
-## Team and Collaborators
+<details>
+<summary><h3>Workpackage1: DT Digital Representation/Reconstruction and Design</h3></summary>
 
-## Team and Collaborators
+**Leader:** Univ. Bourgogne  
+**Partners:** LIST (CEA), ILDA (Inria), Aviz (Inria), INUIT (IMT)
 
-### Principal Investigator
-**Thierry Duval**, IMT  
-Full Professor and head of the Computer Science Department at IMT Atlantique in Brest. Head of the INUIT team at Lab-STICC since 2021. Expert in Virtual, Augmented, eXtended and Mixed Reality, Immersive Analytics, and Collaborative Virtual Environments with focus on Industry of the Future applications.
+**Objectives:**
+- Develop **semi-automatic techniques** for 2D/3D construction of digital twin views
+- Handle **3D reconstruction** including AR viewpoint computation
+- Manage **2D reconstruction** with multi-view visualization and data fusion
 
-### Steering Body
-- **IMT** - Institut Mines-Télécom
-- **CEA** - French Alternative Energies and Atomic Energy Commission
-- **Université de Bourgogne**
-- **Inria** - French National Institute for Research in Digital Science and Technology
-- **Université de Rennes**
+**Key Tasks:**
+1. 3D reconstruction including AR viewpoint computation
+2. 2D reconstruction with multi-view visualization and error correction
+3. Multi-source data integration and fusion
+4. Earth DT reconstruction and visualization (with CNES collaboration)
 
-### Participating Partners
-- **IMT**: INUIT team
-- **Inria Teams**: DiverSE (Université Rennes), Hybrid, Aviz, ILDA, VirtUs
-- **Universities**: Elipse (Université Toulouse 3), ICS (Université Toulouse Capitole), G-SCOP (UGA-INP), LIB (Université Bourgogne), Sorbonne University
-- **Research Institutes**: LIST (CEA), CEA Tech Occitanie (CEA), CRTD (CNAM), UMMISCO (IRD), LAMIH (UPHF)
+</details>
 
-### Resources
-- **13 PhD students** (1 per identified task across all work packages)
-- **1 engineer** for 3 years supporting software development efforts
+<details>
+<summary><h3>Workpackage2: DT Visualization Augmentations</h3></summary>
+
+**Leader:** Aviz (Inria)  
+**Partners:** ILDA (Inria), Hybrid (Inria), INUIT (IMT), ELIPSE (Univ. Toulouse 3), G-SCOP (UGA-INP), Sorbonne University
+
+**Objectives:**
+- Create **visualization metaphors** to augment DT content understanding
+- Provide enriched visualization of **large datasets** in 2D/3D, AR and VR
+- Enhance **collaboration** including avatar systems
+
+**Key Tasks:**
+1. Develop enriched visualization for large datasets
+2. Implement collaboration enhancement including avatars
+3. Create human body models for surgical intervention preparation
+4. Design immersive analytics for complex data exploration
+
+</details>
+
+<details>
+<summary><h3>Workpackage3: DT Interaction Design and Engineering</h3></summary>
+
+**Leader:** ILDA (Inria)  
+**Partners:** ICS (Univ. Toulouse Capitole), ELIPSE (Univ. Toulouse 3), CRTD (CNAM), UMMISCO (IRD), LAMIH (UPHF)
+
+**Objectives:**
+- Design **approaches** for describing and generating user interactions with DTs
+- Implement **interaction engineering** including tangible user interfaces
+- Enable **co-engineering** between multiple stakeholders
+
+**Key Tasks:**
+1. Develop interaction engineering frameworks including tangible interfaces
+2. Create co-engineering methodologies for multiple stakeholders
+3. Implement interaction narration and evolution management
+4. Design multi-modal interaction systems
+
+</details>
+
+<details>
+<summary><h3>Workpackage4: DT Transitions Engineering</h3></summary>
+
+**Leader:** DiverSE (Univ. Rennes/Inria)  
+**Partners:** INUIT (IMT), ILDA (Inria), Hybrid (Inria), ELIPSE (Univ. Toulouse 3), CEA Tech Occitanie, LIST (CEA)
+
+**Objectives:**
+- Implement **spatio-temporal transitions** between different DT views
+- Enable **solution space transitions** for different configurations
+- Create **media transitions** (AR to VR to 2D) for seamless experience
+
+**Key Tasks:**
+1. Develop solution space transitions for DT configurations
+2. Implement spatial (3D) transitions for navigation and exploration
+3. Create media transitions for seamless user experience
+4. Ensure cross-platform interaction continuity
+
+</details>
+
+<details>
+<summary><h3>Workpackage5: DT Interactive Validation & Verification</h3></summary>
+
+**Leader:** LIST (CEA)  
+**Partners:** VirtUs (Inria), Hybrid (Inria), UMMISCO (IRD)
+
+**Objectives:**
+- Establish **usability assessment** methods for digital twin interfaces
+- Conduct **ergonomics** evaluation for individual users
+- Perform **group-scale validation** for collaborative environments
+
+**Key Tasks:**
+1. Develop usability assessment at individual user scale
+2. Create group-scale validation for collaborative environments
+3. Implement VR front-end testing for useful and usable DT interfaces
+4. Optimize user experience across different interaction modalities
+
+</details>
