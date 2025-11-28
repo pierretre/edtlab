@@ -423,3 +423,14 @@
 
 - [ ] 45. Final checkpoint - Ensure all filtering tests pass
   - Ensure all tests pass, ask the user if questions arise.
+
+## Internationalization Optimization
+
+- [x] 46. Optimize i18n translation files
+  - Analyze all translation key usage across the codebase
+  - Remove unused translation keys from ui.ts
+  - Consolidate duplicate or similar translation keys
+  - Refactor translation structure for better maintainability
+  - Update TypeScript types to reflect changes
+  - Verify no broken translations after optimization
+  - _Requirements: 24.1, 24.2, 24.3, 5.3, 5.4_
