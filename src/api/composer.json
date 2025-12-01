@@ -1,0 +1,6 @@
+{
+    "require": {
+        "getbrevo/brevo-php": "^1.0",
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}

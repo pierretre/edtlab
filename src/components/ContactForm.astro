@@ -295,6 +295,11 @@ const t = useTranslations(lang);
             const errorElement = document.getElementById(
                 `${field.name}-error`,
             ) as HTMLElement;
+
+            if (!errorElement) {
+                return true;
+            }
+
             let isValid = true;
             let errorText = "";
 
@@ -309,6 +314,7 @@ const t = useTranslations(lang);
                 "focus:border-primary-500",
                 "focus:ring-primary-500",
             );
+
             errorElement.classList.add("hidden");
             errorElement.textContent = "";
 
@@ -409,12 +415,45 @@ const t = useTranslations(lang);
             submitText.classList.add("hidden");
             submitLoading.classList.remove("hidden");
 
+            // Collect and log form data
+            const formData = new FormData(form);
+            const formValues = {
+                name: formData.get("name"),
+                email: formData.get("email"),
+                organization: formData.get("organization"),
+                subject: formData.get("subject"),
+                message: formData.get("message"),
+                privacy: formData.get("privacy") ? true : false,
+            };
+
+            console.log("Form submitted with values:", formValues);
+
             try {
-                // TODO: implement mailing
+                const response = await fetch("/api", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formValues),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Show success message
+                    successMessage.classList.remove("hidden");
+                    form.reset();
+                    successMessage.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                } else {
+                    throw new Error(result.error || "Failed to send message");
+                }
             } catch (error) {
                 // Show error message
                 errorDetails.textContent =
-                    "There was a problem sending your message. Please try again later or contact us directly via email.";
+                    error instanceof Error
+                        ? error.message
+                        : "There was a problem sending your message. Please try again later or contact us directly via email.";
                 errorMessage.classList.remove("hidden");
 
                 // Scroll to error message
@@ -422,9 +461,6 @@ const t = useTranslations(lang);
                     behavior: "smooth",
                     block: "center",
                 });
-
-                // Focus on error message for screen readers
-                errorMessage.focus();
             } finally {
                 // Reset button state
                 submitButton.disabled = false;
