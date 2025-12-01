@@ -41,9 +41,12 @@ const tiles = await Promise.all(
             }
         }
 
+        // Remove language suffix from slug (e.g., "focused-projects/fp1/en" -> "focused-projects/fp1")
+        const cleanSlug = project.slug.replace(/\/(en|fr)$/, "");
+
         return {
             title: project.data.title,
-            slug: linkHelpers.page(lang, project.slug),
+            slug: linkHelpers.page(lang, cleanSlug),
             description: project.data.description ?? "",
             color: project.data.color,
             coverImage: projectImage,
