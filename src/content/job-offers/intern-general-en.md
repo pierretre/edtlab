@@ -1,6 +1,7 @@
 ---
 title: "Summer Internship - Digital Twin Research"
-project: "General"
+tags:
+  - "General"
 type: "intern"
 location: "Paris, France"
 deadline: 2024-11-30

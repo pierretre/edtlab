@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getDefaultKeywords, combineKeywords, getKeywords } from '../../utils/seo-keywords';
+import { getDefaultKeywords, combineKeywords, getKeywords } from '@utils/seo-keywords';
 
 describe('SEO Keywords Utilities', () => {
     describe('getDefaultKeywords', () => {

@@ -1,6 +1,7 @@
 ---
 title: "Position Title - Specific Area/Project"
-project: "PC1"  # Options: "PC1", "PC2", "PC3", "PC4", "PC5", "General"
+tags:
+  - "PC1"  # Options: "PC1", "PC2", "PC3", "PC4", "PC5", "General"
 type: "postdoc"  # Options: "postdoc", "phd", "engineer", "intern"
 location: "City, Country"
 deadline: 2024-12-31  # Application deadline in YYYY-MM-DD format

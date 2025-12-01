@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import JobOfferCard from "./JobOfferCard.astro";
-import { linkHelpers } from "../i18n/links";
+import { linkHelpers } from "@i18n/links";
 
 export interface Props {
     project?: string;
@@ -21,7 +21,7 @@ if (project) {
         });
 
         relatedJobOffers = allJobOffers
-            .filter((job) => job.data.project === project)
+            .filter((job) => job.data.tags.includes(project))
             .slice(0, 3);
     } catch (error) {
         console.warn(`Could not load job offers: ${error}`);

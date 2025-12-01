@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import PublicationCard from "./PublicationCard.astro";
 
 export interface Props {
@@ -20,7 +20,7 @@ if (project) {
 
         // Filter publications explicitly associated with this project
         relatedPublications = allPublications
-            .filter((pub) => pub.data.project === project)
+            .filter((pub) => pub.data.tags.includes(project))
             .slice(0, 3); // Limit to 3 most relevant publications
     } catch (error) {
         console.warn(`Could not load publications: ${error}`);

@@ -1,6 +1,7 @@
 ---
 title: "Ingénieur de Recherche - Développement Logiciel"
-project: "PC3"
+tags:
+  - "PC3"
 type: "engineer"
 location: "Toulouse, France"
 deadline: 2025-01-30

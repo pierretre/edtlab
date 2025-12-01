@@ -23,6 +23,12 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 - **Alternative_Text**: Descriptive text for images and visual content for screen readers
 - **Color_Contrast**: Visual distinction between text and background colors for readability
 - **Focus_Indicator**: Visual indication of which element currently has keyboard focus
+- **Filter_System**: The collection of components, utilities, and logic that enables users to filter and search through lists of content items
+- **Filter_Configuration**: A declarative specification of available filters for a particular content type
+- **Filter_State**: The current values of all active filters
+- **Content_Item**: A piece of content (job offer, news article, or publication) that can be filtered
+- **Filter_Predicate**: A function that determines whether a content item matches the current filter criteria
+- **URL_Parameters**: Query string parameters that persist filter state in the browser URL
 
 ## Requirements
 
@@ -220,10 +226,11 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 #### Acceptance Criteria
 
 1. THE EDT_Website SHALL support migration of existing program content including vision, goals, and project descriptions
-2. THE EDT_Website SHALL organize existing content about PC1-PC5 projects into structured pages
+2. THE EDT_Website SHALL organize existing content about PC1-PC5 projects into structured pages with bilingual support
 3. THE EDT_Website SHALL incorporate program information including committee structure, partners, and funding details
 4. THE EDT_Website SHALL utilize existing use case descriptions and demonstrator information
 5. THE EDT_Website SHALL structure existing scientific content into appropriate website sections
+6. THE EDT_Website SHALL support project-specific illustrations and diagrams from the assets directory
 
 ## Developer Requirements
 
@@ -443,3 +450,112 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 2. THE EDT_Website SHALL require Alternative_Text input for all images during content creation
 3. THE EDT_Website SHALL validate content structure and heading hierarchy before publication
 4. THE EDT_Website SHALL provide accessibility checklist for content review process
+
+### Requirement 35
+
+**User Story:** As a Developer, I want to use Astro's built-in Picture component for image optimization, so that images are automatically optimized for different devices and formats.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL use Astro's Picture component for all image rendering
+2. THE EDT_Website SHALL store all images in src/assets/images/ for automatic optimization
+3. THE EDT_Website SHALL generate responsive images with multiple breakpoints
+4. THE EDT_Website SHALL serve modern image formats (WebP, AVIF) with fallbacks
+5. THE EDT_Website SHALL maintain proper alt text and accessibility for all optimized images
+
+## Content Filtering Requirements
+
+### Requirement 36
+
+**User Story:** As a Developer, I want a centralized filtering system, so that I can easily add or modify filters without duplicating code across components.
+
+#### Acceptance Criteria
+
+1. WHEN a Developer defines a filter configuration THEN the EDT_Website SHALL generate the appropriate UI elements and filtering logic automatically
+2. WHEN a Developer adds a new filter type to the configuration THEN the EDT_Website SHALL integrate it without requiring changes to the filtering logic
+3. WHEN a Developer modifies filter options THEN the EDT_Website SHALL update all affected components consistently
+4. THE EDT_Website SHALL provide type-safe filter configurations using TypeScript
+5. THE EDT_Website SHALL support multiple filter types including select dropdowns, text search, and custom filters
+
+### Requirement 37
+
+**User Story:** As a Developer, I want to define filters declaratively, so that the filtering behavior is clear and easy to understand.
+
+#### Acceptance Criteria
+
+1. WHEN a Developer creates a filter configuration THEN the configuration SHALL specify filter type, options, and matching logic in a single location
+2. THE filter configuration SHALL be separate from the UI rendering logic
+3. THE filter configuration SHALL support internationalization for filter labels and options
+4. WHEN a filter configuration is defined THEN the EDT_Website SHALL validate it at compile time using TypeScript types
+5. THE filter configuration SHALL support custom filter predicates for complex matching logic
+
+### Requirement 38
+
+**User Story:** As a Visitor, I want to filter content using multiple criteria simultaneously, so that I can find exactly what I'm looking for.
+
+#### Acceptance Criteria
+
+1. WHEN a Visitor selects multiple filter values THEN the EDT_Website SHALL apply all filters using AND logic
+2. WHEN a Visitor changes any filter value THEN the EDT_Website SHALL update the displayed results immediately
+3. WHEN a Visitor types in a search field THEN the EDT_Website SHALL debounce the input and filter after a short delay
+4. WHEN no items match the current filters THEN the EDT_Website SHALL display a "no results" message
+5. THE EDT_Website SHALL display the count of matching items
+
+### Requirement 39
+
+**User Story:** As a Visitor, I want my filter selections to persist in the URL, so that I can bookmark or share filtered views.
+
+#### Acceptance Criteria
+
+1. WHEN a Visitor applies filters THEN the EDT_Website SHALL update the URL query parameters to reflect the filter state
+2. WHEN a Visitor loads a page with filter parameters in the URL THEN the EDT_Website SHALL apply those filters automatically
+3. WHEN a Visitor shares a URL with filter parameters THEN the recipient SHALL see the same filtered view
+4. THE EDT_Website SHALL use human-readable parameter names in the URL
+5. THE EDT_Website SHALL handle missing or invalid URL parameters gracefully
+
+### Requirement 40
+
+**User Story:** As a Visitor, I want to clear all filters at once, so that I can quickly return to viewing all content.
+
+#### Acceptance Criteria
+
+1. WHEN a Visitor clicks the "clear filters" button THEN the EDT_Website SHALL reset all filter values to their defaults
+2. WHEN filters are cleared THEN the EDT_Website SHALL update the displayed results to show all items
+3. WHEN filters are cleared THEN the EDT_Website SHALL remove filter parameters from the URL
+4. WHEN filters are cleared THEN the EDT_Website SHALL focus the search input field for user convenience
+
+### Requirement 41
+
+**User Story:** As a Developer, I want the filtering system to work with different content types, so that I can reuse it across job offers, news, and publications.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL support filtering any content type that provides the required data attributes
+2. WHEN a Developer configures filters for a new content type THEN the EDT_Website SHALL work without modification to the core filtering logic
+3. THE EDT_Website SHALL support content-specific filter types (e.g., deadline status for job offers, publication year for publications)
+4. THE EDT_Website SHALL allow each content type to define its own set of filters independently
+5. THE EDT_Website SHALL support different sorting options for different content types
+
+### Requirement 42
+
+**User Story:** As a Developer, I want the filtering system to be performant, so that users experience smooth interactions even with large datasets.
+
+#### Acceptance Criteria
+
+1. WHEN a Visitor changes a filter THEN the EDT_Website SHALL update results within 100 milliseconds for datasets up to 1000 items
+2. WHEN a Visitor types in a search field THEN the EDT_Website SHALL debounce input to avoid excessive filtering operations
+3. THE EDT_Website SHALL use efficient DOM manipulation to show/hide filtered items
+4. THE EDT_Website SHALL avoid unnecessary re-renders or recalculations
+5. THE EDT_Website SHALL cache filter predicates when possible
+
+### Requirement 43
+
+**User Story:** As a Developer, I want the filtering system to be accessible, so that all users can effectively filter content.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL provide appropriate ARIA labels for all filter controls
+2. THE EDT_Website SHALL announce result count changes to screen readers
+3. THE EDT_Website SHALL support keyboard navigation for all filter controls
+4. WHEN filters are applied THEN the EDT_Website SHALL maintain focus management appropriately
+5. THE EDT_Website SHALL use semantic HTML elements for filter controls

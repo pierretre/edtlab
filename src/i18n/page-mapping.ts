@@ -10,6 +10,8 @@ export interface PageMapping {
 // English to French page mappings
 export const enToFrMapping: PageMapping = {
     'program': 'programme',
+    'program/governance-and-committees': 'programme/gouvernance-et-comites',
+    'program/partners-and-collaborators': 'programme/partenaires-et-collaborateurs',
     'focused-projects': 'projets-cibles',
     'focused-projects/fp1': 'projets-cibles/pc1',
     'focused-projects/fp2': 'projets-cibles/pc2',
@@ -17,13 +19,16 @@ export const enToFrMapping: PageMapping = {
     'focused-projects/fp4': 'projets-cibles/pc4',
     'focused-projects/fp5': 'projets-cibles/pc5',
     'production': 'production',
-    'production/publications': 'production/publications',
-    'production/platform': 'production/plateforme',
-    'demo-center': 'centre-demo',
-    'resources': 'ressources',
+    // 'production/publications': 'production/publications', // TODO remove commmented code 
+    // 'production/platform': 'production/plateforme',
+    'publications': 'publications',
+    'platform': 'plateforme',
+    // 'demo-center': 'centre-demo',
+    // 'resources': 'ressources',
+    'use-cases': 'cas-d-utilisation',
     'news': 'actualites',
     'join-us': 'nous-rejoindre',
-    'contact': 'contact', // Both use same href but different lang
+    'contact-us': 'nous-contacter', // Both use same href but different lang
     'about': 'a-propos'
 };
 

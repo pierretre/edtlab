@@ -8,6 +8,8 @@
  * - Validation utilities for data validation
  * - Layout utilities for responsive design handling
  * - Page utilities for page-specific logic
+ * - Filtering utilities for content filtering and search
+ * - Filter configurations for pre-configured content type filters
  */
 
 export * from './date';
@@ -16,3 +18,5 @@ export * from './translation';
 export * from './validation';
 export * from './layout';
 export * from './pages';
+export * from './filtering';
+export * from './filter-configs';

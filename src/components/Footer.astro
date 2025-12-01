@@ -1,15 +1,15 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
 ---
 
-<div class="bg-[#e5e5e5] text-gray-800 w-full">
+<div class="bg-[#e5e5e5] text-gray-800 w-full mt-16">
     <div class="max-w-5xl mx-auto p-6 gap-6">
         <div class="flex gap-6 flex-wrap lg:mb-6">
             <img
-                src="/FR2030_Endossement_RVB_H.svg"
+                src="/FR2030_Endossement_NOBG.png"
                 alt="République Française France 2030 - Logo officiel du programme de financement"
                 class="max-w-72 h-auto"
             />

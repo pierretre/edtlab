@@ -1,6 +1,7 @@
 ---
 title: "Postdoctoral Researcher - Digital Twin Modeling"
-project: "PC1"
+tags:
+  - "PC1"
 type: "postdoc"
 location: "Paris, France"
 deadline: 2024-12-31

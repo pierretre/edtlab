@@ -1,6 +1,19 @@
 import { defineConfig } from 'vitest/config';
+import path from 'path';
 
 export default defineConfig({
+    resolve: {
+        alias: {
+            '@components': path.resolve(__dirname, './src/components'),
+            '@layouts': path.resolve(__dirname, './src/layouts'),
+            '@content': path.resolve(__dirname, './src/content'),
+            '@utils': path.resolve(__dirname, './src/utils'),
+            '@models': path.resolve(__dirname, './src/models'),
+            '@i18n': path.resolve(__dirname, './src/i18n'),
+            '@assets': path.resolve(__dirname, './src/assets'),
+            '~': path.resolve(__dirname, './src'),
+        },
+    },
     test: {
         globals: true,
         environment: 'jsdom',

@@ -1,0 +1,13 @@
+[mysqld]
+# Performance settings
+innodb_buffer_pool_size = 256M
+innodb_log_file_size = 64M
+max_allowed_packet = 64M
+
+# Log rotation settings
+expire_logs_days = 7
+max_binlog_size = 100M
+
+# Character set
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci

@@ -2,70 +2,128 @@
 title: "PC4: Couplage Numérique et Passerelle"
 href: "projets-cibles/pc4"
 lang: "fr"
-description: "Couplage Numérique et Passerelle - Projet Ciblé 4 (PC4) du programme de recherche EDT"
+description: "Traitement des flux de données bidirectionnels entre jumeaux physiques et numériques avec focus sur la fiabilité, la sécurité et la synchronisation en temps réel pour un couplage numérique efficace"
 toc: true
 color: "hit-pink"
-template: "project"
+template: "project-page"
 illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC4.png"
 projectId: "PC4"
 ---
 
-## Aperçu du Projet
+import PartnersGrid from '@components/PartnersGrid.astro';
+import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
+import avatar from '@assets/images/investigators/avatar.png';
 
-PC4 aborde le processus critique des flux de données bidirectionnels entre jumeaux physiques et numériques, se concentrant sur les attributs de performance non fonctionnels tels que la fiabilité, la maintenabilité, la sécurité et la connectivité. Le projet explore les théories, méthodes et technologies pour un couplage numérique efficace.
+## Aperçu
 
-## Sujets Scientifiques
+Le projet 4 aborde le processus qui soutient les flux de données bidirectionnels entre jumeaux physiques et numériques, en examinant les performances non fonctionnelles des JN. L'objectif principal est d'explorer les théories, méthodes et technologies pour le processus de couplage numérique.
 
-1. **Stratégies de Collecte de Données Intelligentes**: Collecte de données, stockage, placement optimal de capteurs, gestion de l'incertitude, modèles de métadonnées
-2. **Synchronisation Modèles et Données du Monde Réel**: Conditions de synchronisation, détection de déviations, surveillance de sécurité, vérification à l'exécution
-3. **Adaptation et Contrôle du Jumeau Numérique**: Assimilation de données, mise à jour de modèles, enrichissement piloté par IA, traitement d'événements complexes
-4. **Reconfiguration/Optimisation Réseau**: Co-optimisation des jumeaux numériques et systèmes réseau, gestion de l'évolutivité
+Bien qu'une attention significative ait été accordée à la construction de modèles qui représentent avec précision le comportement d'un système, il existe un besoin d'études se concentrant sur les attributs de performance non fonctionnels des jumeaux numériques (JN), tels que la fiabilité, la maintenabilité, la sécurité et la connectivité.
 
-## Objectifs Principaux
+L'établissement d'un processus en boucle fermée entre un système physique et son jumeau numérique suppose généralement une observation ou une mesure continue de l'état complet du système. Cependant, cette hypothèse devient moins fiable lorsque des réseaux ou bus de communication sont impliqués, qu'ils relient les capteurs au jumeau ou le jumeau aux actionneurs. Le principal défi est de définir et de vérifier les conditions nécessaires, telles que la fraîcheur des données, la disponibilité, la fiabilité et la sécurité, qui garantissent l'exécution précise des modèles de jumeaux numériques et la synchronisation en temps réel avec le monde physique. Une synchronisation efficace met également en avant des questions critiques sur les technologies émergentes comme l'IoT, les réseaux 6G et le continuum Cloud-Edge—en particulier comment elles peuvent répondre à des contraintes telles que la latence, la précision et l'efficacité (par exemple, par la compression de données).
 
-- Développer des cadres complets pour la collecte, le traitement et l'utilisation intelligente de données efficaces et fiables
-- Établir des méthodes pour la synchronisation en temps réel garantie entre modèles numériques et contreparties physiques
-- Créer des mécanismes de contrôle adaptatif basés sur l'intégration de données du monde réel
-- Implémenter l'optimisation réseau pour un déploiement évolutif de jumeaux numériques
+La conception d'une stratégie de collecte de données pour les jumeaux numériques (données intelligentes) présente un défi significatif et implique plusieurs dimensions : équilibrer la collecte de données avec les exigences du jumeau, déterminer le placement optimal des capteurs, minimiser la consommation d'énergie et assurer une collecte de données de haute qualité. Bien que les données soient importantes, maintenir le lien entre les données et leur contexte est crucial. L'identification des modèles de métadonnées requis par les jumeaux numériques et la manière dont les métadonnées peuvent être produites et utilisées pour aider à gérer les modèles sont des questions ouvertes.
 
-## Méthodologie
+Maintenir la synchronisation entre le jumeau numérique et sa contrepartie physique, en particulier dans des environnements dynamiques où les conditions changent fréquemment, nécessite soit l'intégration cohérente et précise des données du monde réel dans le modèle numérique (assimilation de données), soit l'ajustement de l'état du jumeau numérique à des intervalles spécifiques en retardant, déclenchant ou annulant les effets d'événements dans le modèle (traitement d'événements complexes). Cependant, la mise en œuvre de ceci est très difficile en raison de la complexité des phénomènes non linéaires, multi-échelles et multiphysiques impliqués dans les systèmes complexes, qui sont souvent liés à des simulations intensives en calcul. Réaliser une assimilation de données séquentielle efficace et un contrôle par des méthodes d'intelligence artificielle (IA)—telles que l'apprentissage profond—qui combinent à la fois des modèles physiques et des algorithmes pilotés par les données reste un défi ouvert.
 
-Le projet est organisé en quatre packages de travail complémentaires :
+Le projet se concentre sur la collecte de données intelligentes, la synchronisation, l'adaptation et le contrôle, et l'optimisation réseau avec des objectifs clairs : développer des cadres complets pour une utilisation efficace des données, établir des méthodes de synchronisation en temps réel, créer des mécanismes de contrôle adaptatif et implémenter la co-optimisation réseau pour un déploiement évolutif.
 
-### WP4.1: Stratégies de Collecte de Données Intelligentes
-- Placement optimal de capteurs et optimisation de collecte de données
-- Gestion de l'incertitude des données et assurance qualité
-- Théorie et modèles de métadonnées pour la gestion contextuelle des données
-- Processus de collecte durables et économes en énergie
+## Cas d'Usage Associés
 
-### WP4.2: Synchronisation Modèles et Données du Monde Réel
-- Identification et vérification des conditions de synchronisation (convergence, fraîcheur des données)
-- Techniques de vérification temporelle et spatiale
-- Détection d'attaques de sécurité et vérification de sûreté
-- Preuve automatique des propriétés non fonctionnelles attendues
+Les cas d'usage dans **PC4** nécessitent des **systèmes complexes** ou des systèmes opérant dans des **conditions environnementales et opérationnelles fluctuantes**, nécessitant une **surveillance en temps réel** et des **ajustements dynamiques**. L'intégration sécurisée et sûre dans un environnement de calcul en continuum est également critique.
 
-### WP4.3: Adaptation et Contrôle du Jumeau Numérique
-- Techniques avancées d'assimilation de données pour la mise à jour de modèles
-- Enrichissement de modèles piloté par IA et adaptation dynamique
-- Approches de simulation pilotée par données dynamiques
-- Traitement d'événements complexes pour l'ajustement d'état de modèle en temps réel
+## Investigateur et Partenaires du Projet
 
-### WP4.4: Reconfiguration/Optimisation Réseau
-- Co-optimisation des jumeaux numériques et de l'infrastructure réseau
-- Équilibrage de la qualité JN avec les contraintes de contrôle
-- Jumeaux numériques de réseau pour la reconfiguration d'infrastructure
-- Gestion réseau évolutive pour les déploiements à grande échelle
+### Investigatrice Principale :
 
-## Résultats Attendus
+<PrincipalInvestigator
+name="Hind Bril El Haouzi"
+headline="Professeure des Universités à l'Université de Lorraine"
+picture={avatar}
+>
+Hind Bril El Haouzi est Professeure des Universités à l'Université de Lorraine où elle enseigne et mène des recherches dans les domaines de l'ingénierie informatique et du contrôle de gestion de production. Depuis 2018, elle co-dirige le groupe de recherche en ingénierie des systèmes industriels durables au laboratoire (CRAN,CNRS). Elle a obtenu son doctorat en informatique, automatique et génie de la production en 2008. Elle possède une riche expérience industrielle, ayant travaillé pendant de nombreuses années en tant que chef de projet de numérisation avant de rejoindre l'Université de Lorraine. Elle coordonne actuellement plusieurs projets collaboratifs avec le secteur industriel qui se concentrent sur les défis de la transformation numérique et de la transition sociétale de l'industrie (ANR PRCE, ADEME, CPER, CIFRE...). Ses intérêts de recherche incluent la modélisation et le contrôle des systèmes de production cyber-physiques, avec un accent sur la simulation numérique et le contrôle de fabrication distribué. Elle a publié plus de 100 articles dans des conférences et revues internationales.
+</PrincipalInvestigator>
 
-- Cadre complet de collecte et traitement de données intelligentes
-- Méthodes de synchronisation en temps réel avec garanties de sécurité et sûreté
-- Systèmes de contrôle adaptatif pour la mise à jour dynamique des jumeaux numériques
-- Solutions d'optimisation réseau pour un couplage numérique évolutif
-- Approches validées à travers des cas d'usage de systèmes complexes
+### Partenaires Participants :
 
-## Équipe et Collaborateurs
+<PartnersGrid partners={['CNRS', 'Inria', 'CEA']} ></PartnersGrid>
 
-**Investigatrice Principale**: Hind Bril El Haouzi, Université de Lorraine
+## Mise en Œuvre du Projet
 
-**Partenaires Participants**: CNRS (Icube, LS2N, CRAN, LMPS), CEA (LIST), Inria (MARACAS, MEDISIM, Kopernick), UGA, Université Le Havre Normandie, IMT, Université Toulouse 3 (Aniti), Université Lyon 2 (DISP)
+Le projet est organisé en **quatre packages de travail complémentaires**, abordant la collecte de données, la synchronisation, l'adaptation et l'optimisation réseau.
+
+<details>
+<summary><h3>Workpackage1 : Stratégies de Collecte de Données Intelligentes</h3></summary>
+
+**Responsable :** CRAN (CNRS)  
+**Partenaires :** Maracas (Inria), P4S (IMT)
+
+**Objectifs :**
+- Développer un cadre complet pour la **collecte de données efficace et fiable** et l'utilisation intelligente
+- Équilibrer la collecte de données avec les exigences du jumeau
+- Assurer des **données de haute qualité** avec gestion de l'incertitude
+
+**Tâches Clés :**
+1. Placement optimal de capteurs et optimisation de collecte de données
+2. Gestion de l'incertitude des données et assurance qualité
+3. Théorie et modèles de métadonnées pour la gestion contextuelle des données
+4. Processus de collecte durables et économes en énergie
+
+</details>
+
+<details>
+<summary><h3>Workpackage2 : Synchronisation Modèles et Données du Monde Réel</h3></summary>
+
+**Responsable :** Kopernic (Inria)  
+**Partenaires :** UGA, GREAH (Univ. Le Havre Normandie), CRAN (CNRS), DISP (Univ Lumière Lyon 2)
+
+**Objectifs :**
+- Établir des méthodes pour la **synchronisation en temps réel garantie** entre modèles numériques et contreparties physiques
+- Identifier et vérifier les **conditions de synchronisation** (convergence, fraîcheur des données)
+- Implémenter la **détection d'attaques de sécurité** et la vérification de sûreté
+
+**Tâches Clés :**
+1. Définir les conditions de synchronisation et critères de convergence
+2. Développer des techniques de vérification temporelle et spatiale
+3. Implémenter la surveillance de sécurité et la vérification à l'exécution
+4. Créer des mécanismes de preuve automatique pour les propriétés non fonctionnelles
+
+</details>
+
+<details>
+<summary><h3>Workpackage3 : Adaptation et Contrôle du Jumeau Numérique</h3></summary>
+
+**Responsable :** LMPS (CNRS)  
+**Partenaires :** MEDISIM (Inria), LS2N (CNRS), Aniti (Univ. Toulouse 3), CRAN (CNRS), CEA
+
+**Objectifs :**
+- Créer des **mécanismes de contrôle adaptatif** basés sur l'intégration de données du monde réel
+- Implémenter des techniques avancées d'**assimilation de données**
+- Développer l'**enrichissement de modèles piloté par IA** et l'adaptation dynamique
+
+**Tâches Clés :**
+1. Développer des techniques d'assimilation de données pour la mise à jour de modèles
+2. Implémenter l'enrichissement et l'adaptation de modèles pilotés par IA
+3. Créer des approches de simulation pilotée par données dynamiques
+4. Concevoir le traitement d'événements complexes pour l'ajustement d'état en temps réel
+
+</details>
+
+<details>
+<summary><h3>Workpackage4 : Reconfiguration/Optimisation Réseau</h3></summary>
+
+**Responsable :** ICube (CNRS)  
+**Partenaires :** LIST (CEA), MARACAS (Inria)
+
+**Objectifs :**
+- Implémenter la **co-optimisation réseau** pour un déploiement évolutif de jumeaux numériques
+- Équilibrer la qualité JN avec les contraintes de contrôle
+- Assurer l'**évolutivité réseau** pour les déploiements à grande échelle
+
+**Tâches Clés :**
+1. Développer des méthodes de co-optimisation pour les JN et systèmes réseau
+2. Créer des jumeaux numériques de réseau pour la reconfiguration d'infrastructure
+3. Implémenter des solutions de gestion réseau évolutives
+4. Équilibrer la qualité de service avec les contraintes de ressources
+
+</details>

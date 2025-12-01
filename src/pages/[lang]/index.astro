@@ -1,6 +1,6 @@
 ---
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import HomeLayout from "../../layouts/HomeLayout.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import HomeLayout from "@layouts/HomeLayout.astro";
 
 export function getStaticPaths() {
     return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];

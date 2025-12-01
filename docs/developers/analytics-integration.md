@@ -64,28 +64,13 @@ MATOMO_HEARTBEAT_TIMER=15            # Default: 15 seconds
 ```bash
 # Development Environment Configuration
 
-# Database Configuration
-MYSQL_ROOT_PASSWORD=dev_root_password
-MYSQL_DATABASE=matomo_dev
-MYSQL_USER=matomo_dev
-MYSQL_PASSWORD=dev_matomo_password
-
-# Matomo Configuration
-MATOMO_PORT=8080
-
 # Matomo Analytics Settings
 MATOMO_URL=http://localhost:8080
 MATOMO_SITE_ID=3
-
-# Analytics Configuration
 MATOMO_ENABLE_COOKIES=false
 MATOMO_RESPECT_DNT=true
 MATOMO_ENABLE_HEARTBEAT=true
 MATOMO_HEARTBEAT_TIMER=15
-
-# Site Configuration
-SITE_URL=http://localhost:4321
-SITE_NAME="EDT Research Program Dev"
 ```
 
 **Production (`.env.production`):**
@@ -94,18 +79,12 @@ SITE_NAME="EDT Research Program Dev"
 # Production Environment Configuration
 
 # Matomo Analytics Settings
-MATOMO_URL=https://analytics.yourdomain.com
+MATOMO_URL=https://edtlab.fr
 MATOMO_SITE_ID=1
-
-# Analytics Configuration
 MATOMO_ENABLE_COOKIES=false
 MATOMO_RESPECT_DNT=true
 MATOMO_ENABLE_HEARTBEAT=true
 MATOMO_HEARTBEAT_TIMER=15
-
-# Site Configuration
-SITE_URL=https://yourdomain.com
-SITE_NAME="EDT Research Program"
 ```
 
 ## Privacy & GDPR Compliance

@@ -1,6 +1,7 @@
 ---
 title: "PhD Student - Machine Learning for Digital Twins"
-project: "PC2"
+tags:
+  - "PC2"
 type: "phd"
 location: "Lyon, France"
 deadline: 2025-03-15

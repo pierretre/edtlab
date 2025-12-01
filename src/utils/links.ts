@@ -224,7 +224,7 @@ export async function generateRelatedLinks(
         // Get pages from the same section
         const currentSection = currentPath.split('/')[0];
         const sectionPages = currentPagePages.filter(page =>
-            page.data.href.startsWith(currentSection) &&
+            page.slug.startsWith(currentSection) &&
             page.data.href !== currentPath
         );
 
@@ -240,8 +240,8 @@ export async function generateRelatedLinks(
         // Fill remaining slots with other pages
         if (relatedLinks.length < maxLinks) {
             const otherPages = currentPagePages.filter(page =>
-                !page.data.href.startsWith(currentSection) &&
-                !relatedLinks.some(link => link.href.includes(page.data.href))
+                !page.slug.startsWith(currentSection) &&
+                !relatedLinks.some(link => link.href.includes(page.slug))
             );
 
             otherPages.slice(0, maxLinks - relatedLinks.length).forEach(page => {

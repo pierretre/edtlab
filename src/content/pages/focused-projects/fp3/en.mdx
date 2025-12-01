@@ -5,85 +5,130 @@ lang: "en"
 description: "Developing specialized methodologies, development life cycles, and domain-specific languages for engineering digital twins with AI integration and collaborative approaches"
 toc: true
 color: "blue-bell"
-template: "project"
+template: "project-page"
 illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC3.png"
 projectId: "PC3"
 ---
 
-# PC3: Methodology, Development Life Cycle, and Languages
+import PartnersGrid from '@components/PartnersGrid.astro';
+import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
+import avatar from '@assets/images/investigators/avatar.png';
 
-## Project Overview
+## Overview
 
-PC3 develops specialized methodologies, development life cycles, and domain-specific languages for engineering digital twins. The project addresses the multidisciplinary nature of DT development, integrating AI, MBSE practices, and collaborative engineering approaches.
+Current digital twins (DTs) utilize cutting-edge technologies such as IoT, 5G, Cloud, AI, and 3D modeling. However, DT development entails high costs and lengthy implementation times, underscoring the need for a new specialized methodology.
 
-## Scientific Topics
+Engineering digital twins (EDT) involves multiple disciplines and relies on various technologies and research areas. This multidisciplinarity necessitates the definition of domain-specific languages (DSL) and specific viewpoints to be integrated into a coherent global architecture framework as defined in ISO42010.
 
-1. **Methodology and Life Cycle**: Model, view & viewpoint, architecture framework, reverse engineering, and domain-specific languages
-2. **Continuous Engineering, Co-evolution, and Quality**: Co-evolution, live-modeling, continuous integration, requirement engineering, VVUQ methods
-3. **Collaborative Engineering and Augmented IDE**: Space-time collaboration, concurrent engineering, AI & GenAI integration, human-bot inclusion
-4. **Deployment and Sustainability**: Continuous deployment, edge/cloud deployment, sustainability assessment, SustainableDevOps
+Any complex system development must begin with good specification, and DT development is no exception. The project investigates the specificities of DT development to support their formal specification (e.g., how do you specify the expected level of precision of a digital twin?).
 
-## Main Objectives
+Conformity assessment of digital twins according to existing standards and regulations is essential to build user confidence in real-world DT deployment. This project explores the integration of AI and Model-Based Systems Engineering (MBSE) practices to automate conformity assessment activities.
 
-- Develop a domain-specific modeling language for engineering digital twins throughout their lifecycle
-- Define stakeholders, concerns, and viewpoints needed for comprehensive DT engineering coverage
-- Specify and design a sustainable collaborative IDE integrating all viewpoints and enabling co-engineering
-- Integrate analysis tools early in design phases with "analysis-in-the-loop" capabilities
+DTs are complex systems, and their engineering field requires new tools that support tightening collaborative engineering to reduce costs and delays and improve quality. Concurrent and agile engineering and better knowledge sharing are necessary. The project also addresses integrating AI into engineering methodologies for DT and their Integrated Development Environment (Augmented-IDE), investigating human-bot inclusion and ensuring the Augmented IDE adapts to all users, regardless of their cognitive, economic, social, or cultural levels.
 
-## Methodology
+Integrating analysis tools and techniques early in the design phase, especially when using MBSE approaches, is crucial. This early analysis can improve decision-making, and "analysis-in-the-loop" can help assess the impacts of design choices on key performance indicators.
 
-The project is structured into four interconnected work packages:
+The growing importance of AI models integrated into DT requires intensive testing procedures. Testing machines using or "embedding" DTs is a critical question. New methods for verifying, validating, and qualifying uncertainties (VVUQ) will be proposed and integrated into a common methodology, supporting continuous integration and deployment.
 
-### WP3.1: Methodology and Life Cycle
-- Domain-specific language development (SysML V2 extension)
-- Architecture framework definition following ISO42010
-- Reverse engineering methodologies for existing systems
+The environmental impact of digital systems is a reality. DT design and operations need to be optimized to minimize their ecological footprint. The project develops frameworks to evaluate environmental footprint based on ADEME's PCR for digital services, guiding eco-design decisions during the engineering phase.
 
-### WP3.2: Continuous Engineering, Co-evolution, and Quality
-- Co-evolution management between physical and digital twins
-- Live-modeling and programming approaches
-- Continuous integration and VVUQ (Verification, Validation, Uncertainty Quantification) methods
-- Conformity assessment automation using AI and MBSE
+## Associated Use Cases
 
-### WP3.3: Collaborative Engineering and Augmented IDE
-- Collaborative development environments for multidisciplinary teams
-- AI-augmented IDE with human-bot inclusion capabilities
-- Concurrent and agile engineering methodologies
+Use cases in **PC3** focus on **industrial applications** where DT technology is crucial, involving **multiple stakeholders** and considering **co-evolution** of physical and digital twins, especially where **safety is a concern**. Connections with use cases where **sustainability** is key are also prioritized.
 
-### WP3.4: Deployment and Sustainability
-- Continuous deployment strategies for edge and cloud environments
-- Environmental impact assessment frameworks
-- Sustainable development operations (SustainableDevOps)
-- Analysis-in-the-loop integration for real-time decision support
+## Investigator & Project Partners
 
-## Expected Outcomes
+### Principal Investigator:
 
-- Domain-specific modeling language for digital twin engineering (Artemis-DSL)
-- Comprehensive architecture framework (Artemis-AF) following ISO42010
-- Collaborative augmented IDE (Artemis-IDE) with AI integration
-- Sustainability assessment framework for digital twin lifecycle
-- Validated methodologies through industrial use cases
+<PrincipalInvestigator
+name="Sébastien Gérard"
+headline="Senior Fellow at CEA leading Digital Collaborative and Cognified Engineering"
+picture={avatar}
+>
+Sébastien Gérard is Senior Fellow at CEA where he leads the flagship program, Digital Collaborative and Cognified Engineering of the CEA LIST institute. His research interests include complex systems, model-based engineering, cognification, knowledge engineering and visual modeling, collaborative tools, digital transformation, and its impact on society. He has represented the CEA at the OMG for over 20 years, initiated and led for more than 15 years the open-source project Papyrus (www.eclipse.org/papyrus), and represents CEA List on the board of directors of the Eclipse foundation.
+</PrincipalInvestigator>
 
-## Team and Collaborators
+### Participating Partners:
 
-## Team and Collaborators
+<PartnersGrid partners={['CEA', 'CNRS', 'Inria', 'INRAE']} ></PartnersGrid>
 
-### Principal Investigator
-**Sébastien Gérard**, CEA  
-Senior Fellow at CEA leading the Digital Collaborative and Cognified Engineering program at CEA LIST. Expert in complex systems, model-based engineering, cognification, and knowledge engineering. Represents CEA at OMG and leads the open-source Papyrus project.
+## Project Implementation
 
-### Steering Body
-- **CEA** - French Alternative Energies and Atomic Energy Commission
-- **CNRS** - French National Centre for Scientific Research
-- **Université Toulouse Jean Jaurès**
-- **Inria** - French National Institute for Research in Digital Science and Technology
+The project is structured into **four interconnected work packages**, addressing methodology, continuous engineering, collaborative tools, and sustainability.
 
-### Participating Partners
-- **Universities**: DISP (Université Lumière Lyon 2), IRIT/SM@RT (Université Toulouse Jean Jaurès)
-- **Inria Teams**: Diverse, Spirals
-- **Research Institutes**: LaBRI (CNRS), LIST (CEA), P4S (IMT), TSCF (INRAE)
+<details>
+<summary><h3>Workpackage1: Methodology and Life Cycle</h3></summary>
 
-### Resources
-- **1 postdoc** for 2 years (WP3.1 - methodology integration)
-- **6 PhD students** (3 for WP3.2, 1 for WP3.3, 2 for WP3.4)
-- **5 FTE engineers** for implementation (2 years each for WP3.2 and WP3.4, 4 years for Artemis-IDE)
+**Leader:** IRIT/SM@RT (Univ. Toulouse Jean Jaurès)  
+**Partners:** Diverse (Inria), P4S (IMT)
+
+**Objectives:**
+- Develop **domain-specific language** for DT engineering (SysML V2 extension)
+- Define **architecture framework** following ISO42010
+- Establish **reverse engineering** methodologies for existing systems
+
+**Key Tasks:**
+1. Create domain-specific modeling language (Artemis-DSL)
+2. Define stakeholders, concerns, and viewpoints for comprehensive DT coverage
+3. Develop reverse engineering approaches for legacy system integration
+
+</details>
+
+<details>
+<summary><h3>Workpackage2: Continuous Engineering, Co-evolution, and Quality</h3></summary>
+
+**Leader:** LaBRI (CNRS)  
+**Partners:** DISP (Univ Lumière Lyon 2), Diverse (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), List (CEA), Spirals (Inria), IGN, TSCF (INRAE)
+
+**Objectives:**
+- Manage **co-evolution** between physical and digital twins
+- Implement **live-modeling and programming** approaches
+- Develop **VVUQ methods** (Verification, Validation, Uncertainty Quantification)
+- Automate **conformity assessment** using AI and MBSE
+
+**Key Tasks:**
+1. Develop co-evolution management frameworks
+2. Create continuous integration methodologies for DT
+3. Implement VVUQ methods integrated into development lifecycle
+4. Automate conformity assessment with AI-driven tools
+
+</details>
+
+<details>
+<summary><h3>Workpackage3: Collaborative Engineering and Augmented IDE</h3></summary>
+
+**Leader:** List (CEA)  
+**Partners:** Diverse (Inria), P4S (IMT)
+
+**Objectives:**
+- Create **collaborative development environments** for multidisciplinary teams
+- Develop **AI-augmented IDE** with human-bot inclusion
+- Implement **concurrent and agile** engineering methodologies
+
+**Key Tasks:**
+1. Design sustainable collaborative IDE (Artemis-IDE)
+2. Integrate AI and GenAI capabilities for development assistance
+3. Ensure human-bot inclusion and accessibility for all users
+4. Enable space-time collaboration for distributed teams
+
+</details>
+
+<details>
+<summary><h3>Workpackage4: Deployment and Sustainability</h3></summary>
+
+**Leader:** Diverse (Inria)  
+**Partners:** LaBRI (CNRS), List (CEA), Spirals (Inria)
+
+**Objectives:**
+- Develop **continuous deployment** strategies for edge and cloud
+- Create **environmental impact assessment** frameworks
+- Implement **SustainableDevOps** practices
+- Integrate **analysis-in-the-loop** for real-time decision support
+
+**Key Tasks:**
+1. Establish continuous deployment methodologies for DT
+2. Develop sustainability assessment framework based on ADEME's PCR
+3. Implement eco-design guidelines for DT lifecycle
+4. Create analysis-in-the-loop integration for performance optimization
+
+</details>

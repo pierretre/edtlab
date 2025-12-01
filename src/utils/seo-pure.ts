@@ -97,7 +97,7 @@ export function generatePublicationStructuredData(
     title: string,
     authors: string[],
     datePublished: string,
-    project: 'PC1' | 'PC2' | 'PC3' | 'PC4' | 'PC5',
+    tags: string[],
     url?: string,
     doi?: string,
     venue?: string,
@@ -128,11 +128,11 @@ export function generatePublicationStructuredData(
             name: 'Digital Twins',
             description: 'Engineering Digital Twins Research'
         },
-        isPartOf: {
+        isPartOf: tags.length > 0 ? {
             '@type': 'Project',
-            name: project
-        },
-        keywords: []
+            name: tags.join(', ')
+        } : undefined,
+        keywords: tags
     });
 }
 

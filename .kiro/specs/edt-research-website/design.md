@@ -390,6 +390,545 @@ The design ensures AA-level compliance with French accessibility guidelines:
 - **Accessibility Violations**: Automated accessibility testing in CI/CD
 - **Performance Issues**: Build-time performance budgets and warnings
 
+## Content Filtering System
+
+### Overview
+
+The filtering system provides a reusable, type-safe solution for filtering and searching content across job offers, news, and publications. The design emphasizes declarative configuration, performance, and accessibility while eliminating code duplication.
+
+### Architecture
+
+```mermaid
+graph TB
+    A[Filter Configuration] --> B[Filter Manager]
+    B --> C[Filter UI Component]
+    B --> D[Filter Logic Engine]
+    
+    E[Content Items] --> D
+    D --> F[Filtered Results]
+    
+    G[URL Parameters] --> B
+    B --> H[URL State Manager]
+    
+    C --> I[User Interactions]
+    I --> B
+    
+    subgraph "Configuration Layer"
+        A
+        J[Type Definitions]
+        K[Filter Schemas]
+    end
+    
+    subgraph "Presentation Layer"
+        C
+        L[Select Filters]
+        M[Search Input]
+        N[Clear Button]
+    end
+    
+    subgraph "Logic Layer"
+        D
+        O[Filter Predicates]
+        P[Debounce Handler]
+        Q[Results Counter]
+    end
+```
+
+### Components and Interfaces
+
+#### Filter Configuration Interface
+
+```typescript
+// Core filter configuration types
+type FilterType = 'select' | 'search' | 'custom';
+
+interface FilterOption {
+  value: string;
+  label: string;
+  translationKey?: string;
+}
+
+interface FilterConfig<T = any> {
+  id: string;
+  type: FilterType;
+  label: string;
+  translationKey: string;
+  options?: FilterOption[];
+  predicate: (item: T, value: string) => boolean;
+  defaultValue?: string;
+  urlParam?: string;
+  debounce?: number; // For search filters
+}
+
+interface FilterSystemConfig<T = any> {
+  filters: FilterConfig<T>[];
+  itemSelector: string;
+  containerSelector: string;
+  noResultsSelector: string;
+  resultsCountSelector: string;
+  clearButtonSelector: string;
+}
+```
+
+#### Filter Manager Interface
+
+```typescript
+interface FilterManager<T = any> {
+  // Core filtering operations
+  applyFilters(): void;
+  clearFilters(): void;
+  
+  // State management
+  getFilterState(filterId: string): string | undefined;
+  setFilterState(filterId: string, value: string): void;
+  
+  // URL synchronization
+  loadFromURL(): void;
+  updateURL(): void;
+  
+  // Lifecycle
+  initialize(): void;
+  destroy(): void;
+}
+```
+
+The FilterManager is responsible for:
+- **State Management**: Maintaining current filter values
+- **URL Synchronization**: Bidirectional sync between filter state and URL parameters
+- **Event Handling**: Responding to user interactions with filter controls
+- **DOM Updates**: Showing/hiding items based on filter predicates
+- **Results Tracking**: Counting and displaying the number of matching items
+
+#### Filter Sidebar Component
+
+The FilterSidebar component is a reusable Astro component that renders filter controls based on configuration:
+
+**Props Interface:**
+```typescript
+interface FilterSidebarProps {
+  filters: FilterConfig[];
+  lang: 'en' | 'fr';
+  clearButtonText: string;
+}
+```
+
+**Responsibilities:**
+- Render filter controls based on filter type (select, search, custom)
+- Apply proper ARIA labels and accessibility attributes
+- Support internationalization for labels and options
+- Provide consistent styling using Flowbite components
+- Render clear filters button
+
+**Component Structure:**
+- Sidebar container with sticky positioning
+- Individual filter controls with labels
+- Clear button for resetting all filters
+- Proper semantic HTML (select, input, button elements)
+
+### Data Models
+
+#### Job Offers Filter Configuration
+
+```typescript
+const jobOffersFilterConfig: FilterSystemConfig = {
+  filters: [
+    {
+      id: 'project-filter',
+      type: 'select',
+      label: 'Project',
+      translationKey: 'job-offers.filter.project',
+      options: [
+        { value: '', label: 'All Projects', translationKey: 'job-offers.filter.all-projects' },
+        { value: 'PC1', label: 'PC1' },
+        { value: 'PC2', label: 'PC2' },
+        { value: 'PC3', label: 'PC3' },
+        { value: 'PC4', label: 'PC4' },
+        { value: 'PC5', label: 'PC5' }
+      ],
+      predicate: (data, value) => !value || data.project === value,
+      urlParam: 'project'
+    },
+    {
+      id: 'type-filter',
+      type: 'select',
+      label: 'Type',
+      translationKey: 'job-offers.filter.type',
+      options: [
+        { value: '', label: 'All Types', translationKey: 'job-offers.filter.all-types' },
+        { value: 'postdoc', label: 'Postdoc', translationKey: 'job-offers.type.postdoc' },
+        { value: 'phd', label: 'PhD', translationKey: 'job-offers.type.phd' },
+        { value: 'engineer', label: 'Engineer', translationKey: 'job-offers.type.engineer' },
+        { value: 'intern', label: 'Intern', translationKey: 'job-offers.type.intern' }
+      ],
+      predicate: (data, value) => !value || data.type === value,
+      urlParam: 'type'
+    },
+    {
+      id: 'status-filter',
+      type: 'select',
+      label: 'Status',
+      translationKey: 'job-offers.filter.status',
+      options: [
+        { value: '', label: 'All Status', translationKey: 'job-offers.filter.all-status' },
+        { value: 'active', label: 'Active', translationKey: 'job-offers.filter.active' },
+        { value: 'expired', label: 'Expired', translationKey: 'job-offers.filter.expired' }
+      ],
+      predicate: (data, value) => !value || data.status === value,
+      urlParam: 'status'
+    },
+    {
+      id: 'search-filter',
+      type: 'search',
+      label: 'Search',
+      translationKey: 'job-offers.filter.search',
+      predicate: (data, value) => {
+        if (!value) return true;
+        const searchText = (data.searchText || '').toLowerCase();
+        return searchText.includes(value.toLowerCase());
+      },
+      urlParam: 'search',
+      debounce: 200
+    }
+  ],
+  itemSelector: '.job-offer-item',
+  containerSelector: '#job-offers-grid',
+  noResultsSelector: '#no-results',
+  resultsCountSelector: '#results-count',
+  clearButtonSelector: '#clear-filters'
+};
+```
+
+#### Publications Filter Configuration
+
+```typescript
+const publicationsFilterConfig: FilterSystemConfig = {
+  filters: [
+    {
+      id: 'project-filter',
+      type: 'select',
+      label: 'Project',
+      translationKey: 'publications.filter.project',
+      options: [
+        { value: '', label: 'All Projects' },
+        { value: 'PC1', label: 'PC1' },
+        { value: 'PC2', label: 'PC2' },
+        { value: 'PC3', label: 'PC3' },
+        { value: 'PC4', label: 'PC4' },
+        { value: 'PC5', label: 'PC5' }
+      ],
+      predicate: (data, value) => !value || data.project === value,
+      urlParam: 'project'
+    },
+    {
+      id: 'type-filter',
+      type: 'select',
+      label: 'Type',
+      translationKey: 'publications.filter.type',
+      options: [
+        { value: '', label: 'All Types' },
+        { value: 'journal', label: 'Journal' },
+        { value: 'conference', label: 'Conference' },
+        { value: 'book', label: 'Book' },
+        { value: 'report', label: 'Report' }
+      ],
+      predicate: (data, value) => !value || data.type === value,
+      urlParam: 'type'
+    },
+    {
+      id: 'year-filter',
+      type: 'select',
+      label: 'Year',
+      translationKey: 'publications.filter.year',
+      options: [], // Dynamically populated
+      predicate: (data, value) => !value || data.year === value,
+      urlParam: 'year'
+    },
+    {
+      id: 'search-filter',
+      type: 'search',
+      label: 'Search',
+      translationKey: 'publications.filter.search',
+      predicate: (data, value) => {
+        if (!value) return true;
+        const searchText = (data.searchText || '').toLowerCase();
+        return searchText.includes(value.toLowerCase());
+      },
+      urlParam: 'search',
+      debounce: 200
+    }
+  ],
+  itemSelector: '.publication-item',
+  containerSelector: '#publications-list',
+  noResultsSelector: '#no-results',
+  resultsCountSelector: '#results-count',
+  clearButtonSelector: '#clear-filters'
+};
+```
+
+#### News Filter Configuration
+
+```typescript
+const newsFilterConfig: FilterSystemConfig = {
+  filters: [
+    {
+      id: 'project-filter',
+      type: 'select',
+      label: 'Project',
+      translationKey: 'news.filter.project',
+      options: [
+        { value: '', label: 'All Projects' },
+        { value: 'PC1', label: 'PC1' },
+        { value: 'PC2', label: 'PC2' },
+        { value: 'PC3', label: 'PC3' },
+        { value: 'PC4', label: 'PC4' },
+        { value: 'PC5', label: 'PC5' }
+      ],
+      predicate: (data, value) => {
+        if (!value) return true;
+        const tags = (data.tags || '').toLowerCase();
+        return tags.includes(value.toLowerCase());
+      },
+      urlParam: 'project'
+    },
+    {
+      id: 'category-filter',
+      type: 'select',
+      label: 'Category',
+      translationKey: 'news.filter.category',
+      options: [
+        { value: '', label: 'All Categories' },
+        { value: 'press-release', label: 'Press Release' },
+        { value: 'event', label: 'Event' }
+      ],
+      predicate: (data, value) => !value || data.category === value,
+      urlParam: 'category'
+    },
+    {
+      id: 'sort-filter',
+      type: 'select',
+      label: 'Sort',
+      translationKey: 'news.filter.sort',
+      options: [
+        { value: 'date-desc', label: 'Newest First' },
+        { value: 'date-asc', label: 'Oldest First' },
+        { value: 'title-asc', label: 'Title A-Z' },
+        { value: 'title-desc', label: 'Title Z-A' }
+      ],
+      predicate: () => true, // Sorting handled separately
+      urlParam: 'sort',
+      defaultValue: 'date-desc'
+    },
+    {
+      id: 'search-filter',
+      type: 'search',
+      label: 'Search',
+      translationKey: 'news.filter.search',
+      predicate: (data, value) => {
+        if (!value) return true;
+        const searchText = (data.searchText || '').toLowerCase();
+        return searchText.includes(value.toLowerCase());
+      },
+      urlParam: 'search',
+      debounce: 200
+    }
+  ],
+  itemSelector: '.news-item',
+  containerSelector: '#unified-list',
+  noResultsSelector: '#no-results',
+  resultsCountSelector: '#results-count',
+  clearButtonSelector: '#clear-filters'
+};
+```
+
+### Performance Optimizations
+
+#### Debouncing Strategy
+- **Search Input**: 200ms debounce to reduce filtering operations during typing
+- **Select Changes**: Immediate filtering for instant feedback
+- **DOM Caching**: Cache item elements on initialization to avoid repeated queries
+- **Predicate Optimization**: Simple boolean checks for fast filtering
+
+#### Memory Management
+- **Event Listener Cleanup**: Proper cleanup on component unmount to prevent memory leaks
+- **Efficient Data Structures**: Use appropriate data structures for filter state management
+- **Lazy Initialization**: Initialize filter manager only when DOM is ready
+
+### Accessibility Features
+
+#### ARIA Labels
+All filter controls must include proper ARIA labels for screen reader compatibility:
+- `aria-label` or associated `<label>` elements for all inputs
+- `aria-describedby` for additional context where needed
+- `aria-labelledby` for complex filter groups
+
+#### Screen Reader Announcements
+- Results count element uses `aria-live="polite"` to announce changes
+- `aria-atomic="true"` ensures complete message is read
+- Filter state changes announced appropriately
+
+#### Keyboard Navigation
+- **Tab Order**: Logical tab order through all filter controls
+- **Enter Key**: Submit search or apply filter on Enter
+- **Escape Key**: Clear filters on Escape key press
+- **Arrow Keys**: Navigate through select options
+- **Focus Management**: Maintain or restore focus appropriately after filter operations
+
+### Error Handling
+
+#### Invalid Filter Values
+The system must validate filter values before applying them:
+- Select filters: Verify value exists in options list
+- Search filters: Sanitize input to prevent XSS
+- URL parameters: Validate against expected format
+
+#### Missing DOM Elements
+Graceful degradation when expected elements are not found:
+- Log warnings for missing elements
+- Continue operation with available elements
+- Provide fallback behavior
+
+#### URL Parameter Validation
+When loading filter state from URL:
+- Validate parameter names against configuration
+- Verify parameter values are valid for their filter type
+- Ignore invalid parameters rather than failing
+
+### Usage Pattern
+
+#### Component Integration
+
+The filtering system integrates with list components through:
+
+1. **Data Attributes**: Content items expose filterable data via `data-*` attributes
+2. **Filter Configuration**: Declarative configuration defines available filters
+3. **FilterSidebar Component**: Renders filter UI based on configuration
+4. **FilterManager**: Client-side script manages filter state and DOM updates
+
+#### Data Attribute Pattern
+
+Content items must include relevant data attributes:
+```html
+<div 
+  class="content-item"
+  data-project="PC1"
+  data-type="phd"
+  data-status="active"
+  data-search-text="searchable content"
+>
+  <!-- Item content -->
+</div>
+```
+
+#### Configuration Pattern
+
+Each content type defines its filter configuration:
+- Filter definitions with type, options, and predicates
+- DOM selectors for items, container, and UI elements
+- URL parameter mappings for state persistence
+
+### Migration Strategy
+
+#### Phase 1: Create Core Utilities
+1. Implement FilterManager class
+2. Create filter configuration types
+3. Build FilterSidebar component
+
+#### Phase 2: Migrate Job Offers
+1. Create job offers filter configuration
+2. Update JobOfferList component
+3. Test filtering functionality
+4. Verify URL persistence
+
+#### Phase 3: Migrate Publications
+1. Create publications filter configuration
+2. Update PublicationList component
+3. Test filtering functionality
+4. Verify accessibility
+
+#### Phase 4: Migrate News
+1. Create news filter configuration
+2. Update NewsList component
+3. Add sorting functionality
+4. Test pagination integration
+
+#### Phase 5: Cleanup
+1. Remove duplicate filtering code
+2. Update documentation
+3. Add unit tests
+4. Performance testing
+
+### Correctness Properties
+
+*A property is a characteristic or behavior that should hold true across all valid executions of a system—essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+
+#### Property 1: Filter configuration generates correct UI elements
+*For any* valid filter configuration, the system should generate UI elements that match the configuration's type, options, and attributes
+**Validates: Requirements 36.1**
+
+#### Property 2: Filter system extensibility
+*For any* new filter type added to a configuration, the core filtering logic should remain unchanged and the new filter should integrate seamlessly
+**Validates: Requirements 36.2**
+
+#### Property 3: Filter option consistency
+*For any* modification to filter options, all components using that filter should reflect the updated options consistently
+**Validates: Requirements 36.3**
+
+#### Property 4: Internationalization support
+*For any* filter configuration with translation keys, the resolved labels should match the current language setting
+**Validates: Requirements 37.3**
+
+#### Property 5: Custom predicate execution
+*For any* custom filter predicate, the predicate should be invoked for each item and its boolean result should determine item visibility
+**Validates: Requirements 37.5**
+
+#### Property 6: AND logic for multiple filters
+*For any* combination of active filters, an item should be visible only if it matches all filter conditions (AND logic)
+**Validates: Requirements 38.1**
+
+#### Property 7: Immediate filter updates
+*For any* filter value change, the displayed results should update within the next render cycle
+**Validates: Requirements 38.2**
+
+#### Property 8: Search debouncing
+*For any* rapid sequence of search inputs within the debounce period, only one filter operation should execute after the delay
+**Validates: Requirements 38.3, 42.2**
+
+#### Property 9: Results count accuracy
+*For any* filter state, the displayed count should equal the number of visible items
+**Validates: Requirements 38.5**
+
+#### Property 10: URL state synchronization
+*For any* filter state, the URL query parameters should accurately represent all active filters, and loading that URL should restore the same filter state
+**Validates: Requirements 39.1, 39.2, 39.3**
+
+#### Property 11: Clear filters reset
+*For any* filter state, clicking the clear button should reset all filters to their default values and display all items
+**Validates: Requirements 40.1, 40.2, 40.3**
+
+#### Property 12: Content type agnostic filtering
+*For any* content type with required data attributes, the filtering system should work without modification to core logic
+**Validates: Requirements 41.1, 41.2**
+
+#### Property 13: Filter performance
+*For any* dataset up to 1000 items, changing a filter should update results within 100 milliseconds
+**Validates: Requirements 42.1**
+
+#### Property 14: ARIA label presence
+*For any* filter control element, it should have appropriate ARIA labels or aria-label attributes
+**Validates: Requirements 43.1**
+
+#### Property 15: Keyboard accessibility
+*For any* filter control, it should be fully operable using only keyboard inputs (Tab, Enter, Escape, Arrow keys)
+**Validates: Requirements 43.3**
+
+#### Property 16: Focus management
+*For any* filter application, keyboard focus should be maintained appropriately or moved to a logical location
+**Validates: Requirements 43.4**
+
+#### Property 17: Semantic HTML usage
+*For any* filter control, it should use appropriate semantic HTML elements (select for dropdowns, input for search, button for actions)
+**Validates: Requirements 43.5**
+
 ## Testing Strategy
 
 ### Automated Testing
@@ -521,3 +1060,175 @@ FROM nginx:alpine AS production
 - **Content Freshness**: Automated checks for outdated content
 
 This design provides a comprehensive foundation for building a high-performance, accessible, and maintainable bilingual research website that meets all specified requirements while providing excellent user and developer experiences.
+
+
+## Image Optimization Strategy
+
+### Astro Picture Component Integration
+
+The website uses Astro's built-in Picture component for automatic image optimization:
+
+#### Implementation Approach
+- **Asset Location**: All images stored in `src/assets/images/` for Astro's automatic optimization
+- **Component Usage**: Astro's Picture component replaces custom image optimization components
+- **Format Generation**: Automatic generation of WebP and AVIF formats with fallbacks
+- **Responsive Images**: Multiple breakpoints generated automatically based on sizes attribute
+- **Performance**: Build-time optimization reduces runtime overhead
+
+#### Benefits
+- **Automatic Optimization**: No manual image processing required
+- **Modern Formats**: Automatic WebP/AVIF generation with PNG/JPEG fallbacks
+- **Responsive**: Automatic srcset generation for different screen sizes
+- **Accessibility**: Maintains alt text and ARIA attributes
+- **Performance**: Optimized images reduce page load times
+
+#### Migration from Public Assets
+- **Consolidation**: Images moved from `public/` to `src/assets/images/`
+- **Deduplication**: Duplicate images between public and assets removed
+- **Reference Updates**: All image references updated to use asset imports
+- **Component Removal**: Custom ResponsiveImage and OptimizedImage components removed
+
+### Image Organization
+
+```
+src/assets/images/
+├── logo.png                    # Site logo
+├── logo.svg                    # SVG logo variant
+├── investigators/              # Team member photos
+│   └── avatar.png
+├── news-covers/                # News article cover images
+│   └── Digital-Twins-Cover-image.jpg
+├── partners/                   # Partner organization logos
+│   ├── CNRS.png
+│   ├── INRAE.png
+│   ├── Inria.png
+│   └── UPPA.png
+└── INRIA_EDT_CBLOT_*.{jpg,png} # Project illustrations and diagrams
+```
+
+## Updated Deployment and Infrastructure
+
+### Build and Deployment
+
+- **Static Site Generation**: Pre-rendered HTML, CSS, and JavaScript using Astro build process
+- **Docker Containerization**: Multi-stage Docker build with Nginx serving static files
+- **Automated Deployment**: CI/CD pipeline with GitHub Actions for testing and deployment
+- **Environment Management**: Separate development and production Docker configurations
+- **Container Orchestration**: Docker Compose for multi-container local development
+
+### Production Infrastructure
+
+#### Docker Multi-Stage Build
+```dockerfile
+# Stage 1: Build the static site
+FROM node:18 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production --ignore-scripts
+COPY . .
+RUN npm run build
+
+# Stage 2: Serve with Nginx
+FROM nginx:alpine AS production
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/default.conf
+RUN chown -R nginx:nginx /usr/share/nginx/html
+EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+#### VPS Deployment
+- **Web Server**: Nginx serving static files with optimized caching configuration
+- **Domain**: www.edtlab.fr with DNS configuration
+- **SSL/TLS**: Let's Encrypt certificates with automatic renewal
+- **Container Management**: Docker with health checks and automatic restart policies
+- **Backup Strategy**: Git-based version control with container image versioning
+
+### Development Environment
+
+#### Docker Compose Configuration
+```yaml
+services:
+  astro:
+    # Development server with hot-reload and file watching
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4321:4321"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    command: npm run dev -- --host --watch
+
+  matomo-db:
+    # MariaDB database for Matomo analytics
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: matomo
+      MYSQL_USER: matomo
+      MYSQL_PASSWORD: matomo
+    command: --max-allowed-packet=64MB
+    volumes:
+      - matomo-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  matomo:
+    # Matomo analytics platform
+    image: matomo:latest
+    depends_on:
+      matomo-db:
+        condition: service_healthy
+    environment:
+      MATOMO_DATABASE_HOST: matomo-db
+      MATOMO_DATABASE_ADAPTER: mysql
+      MATOMO_DATABASE_DBNAME: matomo
+      MATOMO_DATABASE_TABLES_PREFIX: matomo_
+      MATOMO_DATABASE_USER: matomo
+      MATOMO_DATABASE_PASSWORD: matomo
+    volumes:
+      - matomo-data:/var/www/html
+    ports:
+      - "8080:80"
+
+volumes:
+  matomo-db-data:
+  matomo-data:
+```
+
+### Analytics Integration
+
+#### Matomo Self-Hosted Analytics
+- **Privacy-Focused**: GDPR-compliant analytics without third-party tracking
+- **Multi-Container Setup**: Separate containers for Matomo application and MariaDB database
+- **Data Ownership**: All analytics data stored in self-hosted database
+- **Integration**: Matomo tracking script integrated in BaseLayout component
+- **Access**: Matomo dashboard accessible at port 8080 in development
+
+#### Tracking Implementation
+- **Script Integration**: Matomo tracking code in BaseLayout with Partytown for performance
+- **Event Tracking**: Custom events for user interactions and content engagement
+- **Privacy Controls**: Cookie consent and data anonymization options
+- **Performance**: Partytown integration moves analytics to web worker
+
+### Monitoring and Maintenance
+
+- **Container Health**: Docker health checks with automatic restart on failure
+- **Uptime Monitoring**: Continuous availability monitoring with alerting
+- **Performance Monitoring**: Core Web Vitals tracking and optimization
+- **Security Updates**: Regular dependency and container image updates
+- **Log Management**: Centralized logging for all containers
+- **Database Backups**: Automated MariaDB backups for Matomo data
+- **Content Versioning**: Git-based version control for all content changes
+
+This design provides a comprehensive foundation for a production-ready, performant, and maintainable bilingual research website with self-hosted analytics.

@@ -6,11 +6,15 @@ import {
     isSoon,
     isDeadlineApproaching,
     isDeadlinePassed,
-    isRecent,
+    isRecent
+} from '@utils/date';
+import {
     getEventTypeTranslation,
     getPublicationTypeTranslation,
     getJobTypeTranslation,
-    getPressTypeTranslation,
+    getPressTypeTranslation
+} from '@utils/translation';
+import {
     isValidLanguage,
     isValidEventType,
     isValidPublicationType,
@@ -19,7 +23,7 @@ import {
     isValidPressType,
     isValidContentFileName,
     hasValidLanguagePrefix
-} from '../../utils';
+} from '@utils/validation';
 
 describe('Date Utilities', () => {
     const testDate = new Date('2024-06-15');

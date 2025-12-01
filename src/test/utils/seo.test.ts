@@ -9,7 +9,7 @@ import {
     generateEventStructuredData,
     generateJobPostingStructuredData,
     generateBreadcrumbStructuredData
-} from '../../utils/seo-pure';
+} from '@utils/seo-pure';
 
 describe('SEO Utilities', () => {
     describe('optimizePageTitle', () => {
@@ -92,7 +92,7 @@ describe('SEO Utilities', () => {
                 'Test Article',
                 ['John Doe', 'Jane Smith'],
                 '2023-01-01',
-                'PC1',
+                ['PC1'],
                 'https://example.com/article',
                 '10.1000/test',
                 'Test Journal',
@@ -131,7 +131,7 @@ describe('SEO Utilities', () => {
     describe('generateJobPostingStructuredData', () => {
         it('should generate valid job posting structured data', () => {
             const result = generateJobPostingStructuredData(
-                'Research Engineer',
+                'Software Engineer',
                 'Join our research team',
                 'Paris, France',
                 '2023-01-01',
@@ -142,7 +142,7 @@ describe('SEO Utilities', () => {
 
             expect(result['@context']).toBe('https://schema.org');
             expect(result['@type']).toBe('JobPosting');
-            expect(result.title).toBe('Research Engineer');
+            expect(result.title).toBe('Software Engineer');
             expect(result.description).toBe('Join our research team');
             expect(result.employmentType).toBe('FULL_TIME');
             expect(result.jobLocation).toEqual({

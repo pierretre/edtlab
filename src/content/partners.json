@@ -48,7 +48,7 @@
     },
     "Télécom Paris": {
         "fullname": "Télécom Paris – Institut Polytechnique de Paris",
-        "logo": null,
+        "logo": "/src/assets/images/partners/TelecomParis.png",
         "children": [
             "LabSoc",
             "ACES"
@@ -56,12 +56,12 @@
     },
     "ENPC": {
         "fullname": "École des Ponts ParisTech",
-        "logo": null,
+        "logo": "/src/assets/images/partners/ENPC.jpg",
         "children": []
     },
     "Université de Bourgogne": {
         "fullname": "Université Bourgogne-Europe",
-        "logo": null,
+        "logo": "/src/assets/images/partners/UnivBourgogne.png",
         "children": [
             "CIAD (Université de Bourgogne)",
             "LIB (Université Bourgogne)"
@@ -69,7 +69,7 @@
     },
     "CEA": {
         "fullname": "Commissariat à l'énergie atomique et aux énergies alternatives",
-        "logo": null,
+        "logo": "/src/assets/images/partners/CEA.png",
         "children": [
             "LITEN",
             "LIST",
@@ -78,19 +78,19 @@
     },
     "Université Toulouse 3 (Aniti)": {
         "fullname": "Université Toulouse III – Paul Sabatier (ANITI)",
-        "logo": null,
+        "logo": "/src/assets/images/partners/UnivToulousePaulSabatier.jpg",
         "children": []
     },
     "Université Toulouse Jean Jaurès": {
         "fullname": "Université Toulouse Jean-Jaurès",
-        "logo": null,
+        "logo": "/src/assets/images/partners/UnivToulouseJeanJaurès.png",
         "children": [
             "IRIT/SM@RT"
         ]
     },
-    "IMT (Institut Mines-Télécom)": {
+    "IMT": {
         "fullname": "Institut Mines-Télécom",
-        "logo": null,
+        "logo": "/src/assets/images/partners/IMT.png",
         "children": [
             "P4S",
             "INUIT"
