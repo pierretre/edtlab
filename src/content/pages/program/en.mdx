@@ -5,7 +5,7 @@ toc: true
 ---
 
 import OptimizedFigure from '@components/OptimizedFigure.astro';
-import physicalDigitalImage from '/src/assets/images/INRIA_EDT_CBLOT_PHYSICAL_DIGITAL.png';
+import mainArchitectureImage from '/src/assets/images/INRIA_EDT_CBLOT_main_3.jpg';
 import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.png';
 
 # EDT Research Program
@@ -15,10 +15,11 @@ import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.pn
 The Engineering Digital Twins (EDT) research program aims to advance the field of digital twin technology for engineering applications, creating a multidisciplinary community with international leadership in digital twin engineering.
 
 <OptimizedFigure
-  src={physicalDigitalImage}
-  alt="Physical-Digital Twin relationship diagram showing the bidirectional coupling and data flows between physical and digital systems"
-  caption="Physical-Digital Twin Relationship: Conceptual framework showing the bidirectional coupling, data flows, and synchronization between physical and digital twin systems"
+  src={mainArchitectureImage}
+  alt="EDT Research Program Architecture Overview the five focused projects and their interconnections"
+  caption="EDT Research Program Architecture: Overview of the five focused projects (PC1-PC5)"
   loading="eager"
+  maxWidth={900}
 />
 
 ## Vision
@@ -50,13 +51,14 @@ The program is organized into five tightly connected focused projects (PC1-PC5) 
 - **AT1**: Animation and Community Building
 - **AT2**: Use Cases and End-to-end Demonstrators
 - **AT3**: Platform Integration
-- **AT5**: Ethics and Sustainability
-- **AT4**: Dissemination and Exploitation
+- **AT4**: Ethics and Sustainability
+- **AT5**: Dissemination and Exploitation
 
 <OptimizedFigure
   src={crossCuttingActionsImage}
   alt="EDT Cross-cutting Actions (AT) diagram showing the seven transverse actions that coordinate and integrate the focused projects"
   caption="EDT Cross-cutting Actions Framework: Seven transverse actions (AT1-AT7) that ensure coordination, integration, and community building across the research program"
+  maxWidth={700}
 />
 
 ## Expected Outcomes
