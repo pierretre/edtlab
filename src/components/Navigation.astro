@@ -98,31 +98,41 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                                 class="text-sm text-gray-700 m-0 p-0"
                                                 role="none"
                                             >
-                                                {section.items.map((sub) => (
-                                                    <li
-                                                        class="m-0 p-0"
-                                                        role="none"
-                                                    >
-                                                        <a
-                                                            href={`/${lang}/${sub.href}`}
-                                                            class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
-                                                                currentPath ===
-                                                                `/${lang}/${sub.href}`
-                                                                    ? "text-primary-600 font-medium"
-                                                                    : ""
-                                                            }`}
-                                                            role="menuitem"
-                                                            aria-current={
-                                                                currentPath ===
-                                                                `/${lang}/${sub.href}`
-                                                                    ? "page"
-                                                                    : undefined
-                                                            }
-                                                        >
-                                                            {sub.name}
-                                                        </a>
-                                                    </li>
-                                                ))}
+                                                {section.items.map(
+                                                    (sub, index) => {
+                                                        // Hide first item (Overview) on desktop if it's the same as parent href
+                                                        const isOverviewLink =
+                                                            sub.href ===
+                                                                section.href &&
+                                                            index === 0;
+
+                                                        return (
+                                                            <li
+                                                                class={`m-0 p-0 ${isOverviewLink ? "hidden" : ""}`}
+                                                                role="none"
+                                                            >
+                                                                <a
+                                                                    href={`/${lang}/${sub.href}`}
+                                                                    class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
+                                                                        currentPath ===
+                                                                        `/${lang}/${sub.href}`
+                                                                            ? "text-primary-600 font-medium"
+                                                                            : ""
+                                                                    }`}
+                                                                    role="menuitem"
+                                                                    aria-current={
+                                                                        currentPath ===
+                                                                        `/${lang}/${sub.href}`
+                                                                            ? "page"
+                                                                            : undefined
+                                                                    }
+                                                                >
+                                                                    {sub.name}
+                                                                </a>
+                                                            </li>
+                                                        );
+                                                    },
+                                                )}
                                             </ul>
                                         </div>
                                     </>
