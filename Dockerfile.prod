@@ -13,8 +13,11 @@ RUN npm ci --only=production --ignore-scripts
 # Copy source code
 COPY . .
 
-# Build the static site
-RUN npm run build
+# Copy environment file
+COPY .env.production .env.production
+
+# Build the static site with production environment
+RUN npm run build:prod
 
 # Production stage with minimal nginx
 FROM nginx:alpine
