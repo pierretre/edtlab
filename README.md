@@ -120,6 +120,14 @@ The website supports bilingual content (English/French) with:
 - Translation strings in `src/i18n/ui.ts`
 - Menu configuration in `src/content/menu/`
 
+### Translation Management
+
+- **Content pages** (`.md`/`.mdx` files): Create separate files for each language (e.g., `en.md`, `fr.md`)
+- **UI elements** (navigation, buttons, labels): Edit translations in `src/i18n/ui.ts`
+- **Menu structure**: Configure in `src/content/menu/en.json` and `src/content/menu/fr.json`
+
+**Note**: For non-markdown page elements like navigation bars, footers, buttons, and other UI components, all translations must be added to `src/i18n/ui.ts`.
+
 ## 🔧 Technology Stack
 
 - **Framework**: Astro.js 5.x with TypeScript
