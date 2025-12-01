@@ -5,6 +5,7 @@ toc: true
 ---
 
 import OptimizedFigure from '@components/OptimizedFigure.astro';
+import OutlinedCard from '@components/OutlinedCard.astro';
 import mainArchitectureImage from '/src/assets/images/INRIA_EDT_CBLOT_main_3.jpg';
 import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.png';
 
@@ -29,10 +30,28 @@ L'ingénierie des jumeaux numériques nécessite un effort multidisciplinaire au
 
 EDT vise à atteindre quatre objectifs principaux :
 
-1. **Objectif 1** : Créer une communauté nationale scientifique, technologique et utilisateur avec un leadership international sur l'Ingénierie des Jumeaux Numériques
-2. **Objectif 2** : Développer les fondations requises de la science et ingénierie des jumeaux numériques
-3. **Objectif 3** : Livrer Artemis, une plateforme logicielle collaborative et web pour l'ingénierie des jumeaux numériques
-4. **Objectif 4** : Développer des Démonstrateurs EDT de bout en bout pour expérimenter et valider la plateforme Artemis
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+  <OutlinedCard 
+    label="1"
+    title="Leadership International"
+    description="Créer une communauté nationale scientifique, technologique et utilisateur avec un leadership international sur l'Ingénierie des Jumeaux Numériques"
+  />
+  <OutlinedCard 
+    label="2"
+    title="Fondations Scientifiques"
+    description="Développer les fondations requises de la science et ingénierie des jumeaux numériques"
+  />
+  <OutlinedCard 
+    label="3"
+    title="Plateforme Artemis"
+    description="Livrer Artemis, une plateforme logicielle collaborative et web pour l'ingénierie des jumeaux numériques"
+  />
+  <OutlinedCard 
+    label="4"
+    title="Démonstrateurs de Bout en Bout"
+    description="Développer des Démonstrateurs EDT de bout en bout pour expérimenter et valider la plateforme Artemis"
+  />
+</div>
 
 ## Structure du Programme
 
@@ -71,9 +90,35 @@ Le programme est organisé en cinq projets ciblés étroitement connectés (PC1-
 
 EDT aborde six défis scientifiques majeurs :
 
-- **C1** : Méthodes et abstractions pour combiner modèles physiques et basés sur les données
-- **C2** : Composer différents JN pour refléter des Systèmes de Systèmes (SoS)
-- **C3** : Fondations logicielles et architecture des jumeaux numériques
-- **C4** : Flux bidirectionnels entre jumeaux physiques et numériques
-- **C5** : Interaction humain-machine et fusion de données multimodales
-- **C6** : Considérations de responsabilité éthique et environnementale
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
+  <OutlinedCard 
+    label="C1"
+    title="Hybridation des Modèles"
+    description="Méthodes et abstractions pour combiner modèles physiques et basés sur les données"
+  />
+  <OutlinedCard 
+    label="C2"
+    title="Composition de Systèmes"
+    description="Composer différents JN pour refléter des Systèmes de Systèmes (SoS)"
+  />
+  <OutlinedCard 
+    label="C3"
+    title="Fondations Logicielles"
+    description="Fondations logicielles et architecture des jumeaux numériques"
+  />
+  <OutlinedCard 
+    label="C4"
+    title="Couplage Numérique"
+    description="Flux bidirectionnels entre jumeaux physiques et numériques"
+  />
+  <OutlinedCard 
+    label="C5"
+    title="Interaction Humaine"
+    description="Interaction humain-machine et fusion de données multimodales"
+  />
+  <OutlinedCard 
+    label="C6"
+    title="Éthique & Durabilité"
+    description="Considérations de responsabilité éthique et environnementale"
+  />
+</div>
