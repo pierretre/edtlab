@@ -102,8 +102,7 @@ jobs:
         path: ~/.cache/ms-playwright
         key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
         
-    - name: Install Playwright browsers
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
+    - name: Install Playwright browsers and dependencies
       run: npx playwright install --with-deps
 
   e2e-tests:
@@ -146,6 +145,9 @@ jobs:
       with:
         path: ~/.cache/ms-playwright
         key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+        
+    - name: Install Playwright system dependencies
+      run: npx playwright install-deps
         
     - name: Run ${{ matrix.test-suite.name }} tests
       run: |
