@@ -14,38 +14,49 @@ services:
     command: npm run dev -- --host --watch
 
   matomo-db:
-    image: mariadb:10.5
+    image: mariadb:10.11
+    container_name: matomo-db
+    restart: unless-stopped
+    network_mode: bridge
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: ${MATOMO_DB_ROOT_PASSWORD}
       MYSQL_DATABASE: matomo
       MYSQL_USER: matomo
-      MYSQL_PASSWORD: matomo
-    command: --max-allowed-packet=64MB
+      MYSQL_PASSWORD: ${MATOMO_DB_PASSWORD}
     volumes:
-      - matomo-db-data:/var/lib/mysql
+      - /var/www/matomo/db:/var/lib/mysql
+    ports:
+      - "0.0.0.0:4003:3306"
+    command: --max-allowed-packet=64MB
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 5s
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MATOMO_DB_ROOT_PASSWORD}"]
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
+      start_period: 30s
 
   matomo:
     image: matomo:latest
+    container_name: matomo
+    restart: unless-stopped
+    network_mode: bridge
+    links:
+      - matomo-db
     depends_on:
       matomo-db:
         condition: service_healthy
     environment:
       MATOMO_DATABASE_HOST: matomo-db
       MATOMO_DATABASE_ADAPTER: mysql
-      MATOMO_DATABASE_DBNAME: matomo
       MATOMO_DATABASE_TABLES_PREFIX: matomo_
-      MATOMO_DATABASE_USER: matomo
-      MATOMO_DATABASE_PASSWORD: matomo
+      MATOMO_DATABASE_USERNAME: matomo
+      MATOMO_DATABASE_PASSWORD: ${MATOMO_DB_PASSWORD}
+      MATOMO_DATABASE_DBNAME: matomo
+      PHP_MEMORY_LIMIT: 512M
     volumes:
-      - matomo-data:/var/www/html
+      - /var/www/edtlabfr/matomo/data:/var/www/html
+      - /var/www/edtlabfr/matomo/config:/var/www/html/config
+      - /var/www/edtlabfr/matomo/logs:/var/www/html/tmp
+      - ./matomo-apache-config.conf:/etc/apache2/conf-enabled/matomo.conf:ro
     ports:
-      - "8080:80"
-
-volumes:
-  matomo-db-data:
-  matomo-data:
+      - "0.0.0.0:4002:80"
