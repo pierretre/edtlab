@@ -5,6 +5,7 @@ toc: true
 ---
 
 import OptimizedFigure from '@components/OptimizedFigure.astro';
+import OutlinedCard from '@components/OutlinedCard.astro';
 import mainArchitectureImage from '/src/assets/images/INRIA_EDT_CBLOT_main_3.jpg';
 import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.png';
 
@@ -30,10 +31,28 @@ The engineering of digital twins requires a multi-disciplinary effort at the cro
 
 EDT aims to achieve four main goals:
 
-1. **Goal 1**: Create a national scientific, technological and user community with international leadership on Engineering Digital Twins
-2. **Goal 2**: Develop the required foundations of the science and engineering of digital twins
-3. **Goal 3**: Deliver Artemis, a collaborative and web-based software platform to engineer digital twins
-4. **Goal 4**: Develop end-to-end EDT Demonstrators to experiment and validate the Artemis platform
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+  <OutlinedCard 
+    label="1"
+    title="International Leadership"
+    description="Create a national scientific, technological and user community with international leadership on Engineering Digital Twins"
+  />
+  <OutlinedCard 
+    label="2"
+    title="Scientific Foundations"
+    description="Develop the required foundations of the science and engineering of digital twins"
+  />
+  <OutlinedCard 
+    label="3"
+    title="Artemis Platform"
+    description="Deliver Artemis, a collaborative and web-based software platform to engineer digital twins"
+  />
+  <OutlinedCard 
+    label="4"
+    title="End-to-End Demonstrators"
+    description="Develop end-to-end EDT Demonstrators to experiment and validate the Artemis platform"
+  />
+</div>
 
 ## Program Structure
 
@@ -72,9 +91,35 @@ The program is organized into five tightly connected focused projects (PC1-PC5) 
 
 EDT addresses six major scientific challenges:
 
-- **C1**: Methods and abstractions for combining physical and data-based models
-- **C2**: Composing different DTs to reflect Systems of Systems (SoS)
-- **C3**: Digital twin software foundations and architecture
-- **C4**: Bidirectional flows between physical and digital twins
-- **C5**: Human-computer interaction and multimodal data fusion
-- **C6**: Ethical and environmental responsibility considerations
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
+  <OutlinedCard 
+    label="C1"
+    title="Model Hybridization"
+    description="Methods and abstractions for combining physical and data-based models"
+  />
+  <OutlinedCard 
+    label="C2"
+    title="System Composition"
+    description="Composing different DTs to reflect Systems of Systems (SoS)"
+  />
+  <OutlinedCard 
+    label="C3"
+    title="Software Foundations"
+    description="Digital twin software foundations and architecture"
+  />
+  <OutlinedCard 
+    label="C4"
+    title="Digital Coupling"
+    description="Bidirectional flows between physical and digital twins"
+  />
+  <OutlinedCard 
+    label="C5"
+    title="Human Interaction"
+    description="Human-computer interaction and multimodal data fusion"
+  />
+  <OutlinedCard 
+    label="C6"
+    title="Ethics & Sustainability"
+    description="Ethical and environmental responsibility considerations"
+  />
+</div>
