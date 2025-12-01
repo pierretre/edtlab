@@ -313,3 +313,124 @@
   - Add proper ARIA labels and error announcements
   - Implement form success and error states with user feedback
   - _Requirements: 3.8, 28.1, 28.2, 31.1, 31.2_
+
+## Content Filtering System Refactoring
+
+- [x] 36. Create core filtering utilities and types
+  - Create TypeScript type definitions for filter system
+  - Define FilterConfig, FilterSystemConfig, and FilterManager interfaces
+  - Create filter configuration validation utilities
+  - _Requirements: 36.1, 36.4, 37.1, 37.4_
+
+- [x] 37. Implement FilterManager class
+  - Create FilterManager class implementing the interface
+  - Implement filter state management (Map-based storage)
+  - Implement URL synchronization (loadFromURL, updateURL methods)
+  - Implement filter application logic with AND logic for multiple filters
+  - Implement debouncing for search inputs
+  - Implement event listener attachment and cleanup
+  - _Requirements: 36.2, 37.5, 38.1, 38.2, 38.3, 39.1, 39.2, 42.2_
+
+- [x] 38. Create FilterSidebar Astro component
+  - Create reusable FilterSidebar.astro component
+  - Implement rendering logic for select filters
+  - Implement rendering logic for search filters
+  - Add proper ARIA labels and accessibility attributes
+  - Support internationalization for labels and options
+  - Add clear filters button
+  - _Requirements: 36.1, 37.3, 43.1, 43.5_
+
+- [x] 39. Create filter configurations for each content type
+  - Create job offers filter configuration (project, type, status, search)
+  - Create publications filter configuration (project, type, year, search)
+  - Create news filter configuration (project, category, sort, search)
+  - Define filter predicates for each filter type
+  - Map URL parameters for each filter
+  - _Requirements: 41.1, 41.3, 41.4, 41.5_
+
+- [x] 40. Refactor all list components with new filtering system
+  - Replace inline filtering logic with FilterManager in JobOfferList
+  - Replace inline filtering logic with FilterManager in PublicationList
+  - Replace inline filtering logic with FilterManager in NewsList
+  - Integrate FilterSidebar component in all three lists
+  - Update data attributes on all content items
+  - Implement sorting functionality for NewsList
+  - Integrate with existing pagination in NewsList
+  - Remove all duplicate filtering code
+  - Test filtering functionality across all lists
+  - Verify URL persistence works correctly
+  - Verify accessibility compliance
+  - _Requirements: 36.3, 38.4, 38.5, 40.1, 40.2, 40.3, 41.2, 43.3, 43.4_
+
+- [ ] 41. Write comprehensive property tests for filtering system
+- [ ] 41.1 Write property test for filter configuration validation
+  - **Property 1: Filter configuration generates correct UI elements**
+  - **Validates: Requirements 36.1**
+- [ ] 41.2 Write property test for AND logic
+  - **Property 6: AND logic for multiple filters**
+  - **Validates: Requirements 38.1**
+- [ ] 41.3 Write property test for URL synchronization
+  - **Property 10: URL state synchronization**
+  - **Validates: Requirements 39.1, 39.2, 39.3**
+- [ ] 41.4 Write property test for debouncing
+  - **Property 8: Search debouncing**
+  - **Validates: Requirements 38.3, 42.2**
+- [ ] 41.5 Write property test for results count accuracy
+  - **Property 9: Results count accuracy**
+  - **Validates: Requirements 38.5**
+- [ ] 41.6 Write property test for clear filters
+  - **Property 11: Clear filters reset**
+  - **Validates: Requirements 40.1, 40.2, 40.3**
+- [ ] 41.7 Write property test for keyboard accessibility
+  - **Property 15: Keyboard accessibility**
+  - **Validates: Requirements 43.3**
+- [ ] 41.8 Write property test for focus management
+  - **Property 16: Focus management**
+  - **Validates: Requirements 43.4**
+- [ ] 41.9 Write property test for immediate updates
+  - **Property 7: Immediate filter updates**
+  - **Validates: Requirements 38.2**
+- [ ] 41.10 Write property test for filter performance
+  - **Property 13: Filter performance**
+  - **Validates: Requirements 42.1**
+- [ ] 41.11 Write property test for ARIA labels
+  - **Property 14: ARIA label presence**
+  - **Validates: Requirements 43.1**
+- [ ] 41.12 Write property test for semantic HTML
+  - **Property 17: Semantic HTML usage**
+  - **Validates: Requirements 43.5**
+
+- [ ] 42. Performance optimization and error handling
+  - Implement DOM element caching
+  - Optimize filter predicate execution
+  - Add performance monitoring for filter operations
+  - Test with datasets up to 1000 items
+  - Verify 100ms performance target
+  - Implement validation for invalid filter values
+  - Handle missing DOM elements gracefully
+  - Validate URL parameters before applying
+  - Add error logging and user feedback
+  - Test with malformed URLs and invalid inputs
+  - _Requirements: 42.1, 42.3, 39.5_
+
+- [ ] 44. Documentation and cleanup for filtering system
+  - Document filter configuration format
+  - Create usage examples for each content type
+  - Add JSDoc comments to FilterManager
+  - Update component documentation
+  - Remove old filtering code from all components
+  - _Requirements: 36.1, 37.1_
+
+- [ ] 45. Final checkpoint - Ensure all filtering tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+## Internationalization Optimization
+
+- [x] 46. Optimize i18n translation files
+  - Analyze all translation key usage across the codebase
+  - Remove unused translation keys from ui.ts
+  - Consolidate duplicate or similar translation keys
+  - Refactor translation structure for better maintainability
+  - Update TypeScript types to reflect changes
+  - Verify no broken translations after optimization
+  - _Requirements: 24.1, 24.2, 24.3, 5.3, 5.4_

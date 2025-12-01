@@ -1,8 +1,22 @@
 {
     "sections": [
         {
-            "name": "Program",
-            "href": "program"
+            "name": "The EDT Program",
+            "href": "program",
+            "items": [
+                {
+                    "name": "Program Overview",
+                    "href": "program"
+                },
+                {
+                    "name": "Governance and Committees",
+                    "href": "program/governance-and-committees"
+                },
+                {
+                    "name": "Partners and Collaborators",
+                    "href": "program/partners-and-collaborators"
+                }
+            ]
         },
         {
             "name": "Projects",
@@ -35,30 +49,16 @@
             ]
         },
         {
-            "name": "Production",
-            "href": "production",
-            "items": [
-                {
-                    "name": "Overview",
-                    "href": "production"
-                },
-                {
-                    "name": "Publications",
-                    "href": "production/publications"
-                },
-                {
-                    "name": "Platform",
-                    "href": "production/platform"
-                }
-            ]
+            "name": "Publications",
+            "href": "publications"
         },
         {
-            "name": "Demo Center",
-            "href": "demo-center"
+            "name": "Platform",
+            "href": "platform"
         },
         {
-            "name": "Resources",
-            "href": "resources"
+            "name": "Use Cases",
+            "href": "use-cases"
         },
         {
             "name": "News",
@@ -70,7 +70,7 @@
         },
         {
             "name": "Contact",
-            "href": "contact"
+            "href": "contact-us"
         }
     ]
 }

@@ -2,84 +2,151 @@
 title: "PC5: Interactions Humain-Jumeau Numérique"
 href: "projets-cibles/pc5"
 lang: "fr"
-description: "Interactions Humain-Jumeau Numérique - Projet Ciblé 5 (PC5) du programme de recherche EDT"
+description: "Développement de systèmes interactifs pour l'interaction humain-jumeau numérique via VR, AR, environnements collaboratifs et technologies de visualisation immersive"
 toc: true
 color: "marzipan"
-template: "project"
+template: "project-page"
 illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC5.png"
 projectId: "PC5"
 ---
 
-## Aperçu du Projet
+import PartnersGrid from '@components/PartnersGrid.astro';
+import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
+import avatar from '@assets/images/investigators/avatar.png';
 
-PC5 se concentre sur les aspects d'interaction humain-machine des jumeaux numériques, développant des systèmes interactifs qui permettent aux utilisateurs de visualiser et d'interagir avec les jumeaux physiques et numériques à travers diverses modalités incluant VR, AR, interfaces 2D et environnements collaboratifs.
+## Aperçu
 
-## Sujets Scientifiques
+Par sa nature même, un jumeau numérique s'appuie fortement sur la visualisation de données et les interactions utilisateur. En effet, un JN intègre généralement des systèmes interactifs qui permettent aux utilisateurs de visualiser et d'interagir avec les jumeaux physiques et numériques et leur grande quantité de données associées.
 
-1. **Reconstruction 3D**: Techniques semi-automatiques pour la représentation visuelle des jumeaux numériques
-2. **Visualisation de Données**: Métaphores et approches pour améliorer la compréhension des JN
-3. **Ingénierie d'Interaction**: Approches pour décrire et générer les interactions utilisateur
-4. **Navigation Spatio-temporelle IHM**: Transitions entre différentes vues et échelles
-5. **Validation et Vérification JN**: Évaluation d'utilisabilité du point de vue utilisateur
+Ces systèmes interactifs peuvent prendre plusieurs formes, des systèmes immersifs VR entièrement numériques aux systèmes AR hybrides, mais aussi des interfaces graphiques utilisateur 2D et des systèmes impliquant des dispositifs d'entrée physiques. Ils proposent souvent des situations interactives collaboratives asymétriques (AV/VR/2D), ce qui peut également être un défi.
 
-## Objectifs Principaux
+Construire de tels systèmes interactifs à partir de zéro ou sans automatisation prend du temps et peut empêcher la généralisation des JN en tant qu'outils industriels. Premièrement, de nouvelles approches sont nécessaires pour construire la représentation visuelle du JN, qui peut être des modèles 3D (à construire, par exemple, en combinant des modèles CAO, des scans 3D, des images et d'autres sources médias) ou diverses sortes d'informations 2D. Les utilisateurs peuvent ensuite finaliser interactivement certaines parties du JN. Des outils de visualisation supplémentaires peuvent également aider à réduire le biais de la reconstruction automatique.
 
-- Développer des techniques semi-automatiques pour la construction 2D/3D des vues de jumeaux numériques
-- Créer des métaphores de visualisation pour améliorer la compréhension du contenu des JN
-- Concevoir des approches pour décrire et générer les interactions utilisateur avec les JN
-- Implémenter des transitions spatio-temporelles entre différentes vues de JN
-- Établir des méthodes d'évaluation d'utilisabilité pour les interfaces de jumeaux numériques
+Ensuite, les JN viennent avec des usages qui soulèvent des questions de recherche concernant, du point de vue IHM, comment aider les utilisateurs à visualiser les données et à interagir avec elles, en particulier lorsque nous utilisons la 3D. La visualisation concerne non seulement le modèle "brut" du jumeau physique mais aussi toutes les données qui peuvent être utilisées pour enrichir le modèle (informations supplémentaires sur comment l'utiliser). Cela soulève de nouveaux défis sur comment afficher de grands ensembles de données d'informations et comment et quand interagir avec eux.
 
-## Méthodologie
+Enfin, tous ces points nécessitent des validations, à différentes échelles. Pour réduire le coût de développement des facettes IHM des JN, le projet doit proposer de nouvelles techniques qui se concentrent sur leur ingénierie.
 
-Le projet est structuré en cinq packages de travail complémentaires :
+Le projet se concentre sur la reconstruction 3D, la visualisation de données, l'ingénierie d'interaction, la navigation spatio-temporelle et la validation avec des objectifs clairs : développer des techniques de construction semi-automatiques, créer des métaphores de visualisation, concevoir des approches d'interaction, implémenter des transitions fluides et établir des méthodes d'évaluation d'utilisabilité.
 
-### WP5.1: Représentation/Reconstruction et Conception Numérique JN
-- Reconstruction 3D incluant le calcul de points de vue AR
-- Reconstruction 2D avec visualisation multi-vues et fusion de données
-- Correction d'erreurs et intégration de données multi-sources
-- Reconstruction JN de la Terre et visualisation (avec collaboration CNES)
+## Cas d'Usage Associés
 
-### WP5.2: Augmentations de Visualisation JN
-- Visualisation enrichie de grands ensembles de données en 2D/3D, AR et VR
-- Amélioration de la collaboration incluant les systèmes d'avatars
-- Modèles de corps humain pour la préparation et évaluation d'interventions chirurgicales
-- Analytique immersive pour l'exploration de données complexes
+Les cas d'usage dans **PC5** couvrent plusieurs échelles :
 
-### WP5.3: Conception et Ingénierie d'Interaction JN
-- Ingénierie d'interaction incluant les interfaces utilisateur tangibles
-- Co-ingénierie entre multiples parties prenantes
-- Gestion de la narration et évolution d'interaction
-- Conception d'interaction multi-modale
+- **Échelle Territoriale** : Reconstruire le JN d'une ville ou d'une zone et le peupler d'humains virtuels pour mieux comprendre les limitations actuelles et comment le JN peut l'améliorer
+- **Échelle Bâtiment/Usine** : Reconstruire le JN d'une chaîne d'assemblage reconfigurable, fournir une augmentation AR pour les ouvriers et une visualisation VR pour les experts qui peuvent aider à distance
+- **Échelle Objet Technique** : Reconstruire le JN d'un système complexe (voiture, satellite) pour former les gens aux tâches de maintenance en utilisant des interactions VR, puis utiliser des augmentations AR lorsqu'ils sont physiquement devant le jumeau physique
 
-### WP5.4: Ingénierie des Transitions JN
-- Transitions d'espace de solution pour différentes configurations JN
-- Transitions spatiales (3D) pour navigation et exploration
-- Transitions média (AR vers VR vers 2D) pour une expérience utilisateur fluide
-- Continuité d'interaction inter-plateformes
+## Investigateur et Partenaires du Projet
 
-### WP5.5: Validation et Vérification Interactive JN
-- Évaluation ergonomique et d'utilisabilité pour utilisateurs individuels
-- Validation à l'échelle de groupe pour environnements collaboratifs
-- Tests de front-end VR pour interfaces JN utiles et utilisables
-- Optimisation de l'expérience utilisateur
+### Investigateur Principal :
 
-## Résultats Attendus
+<PrincipalInvestigator
+name="Thierry Duval"
+headline="Professeur des Universités et Responsable du Département Informatique à IMT Atlantique"
+picture={avatar}
+>
+Thierry Duval est Professeur des Universités et responsable du Département Informatique à IMT Atlantique à Brest. Depuis 2021, il est également responsable de l'équipe INUIT au Lab-STICC. Il a obtenu un doctorat en informatique de Centrale Nantes et de l'Université de Nantes en 1993, et une Habilitation à Diriger des Recherches de l'Université de Rennes 1 en 2012. Ses intérêts de recherche incluent la Réalité Virtuelle, Augmentée, eXtendue et Mixte, l'Analytique Immersive, les Environnements Virtuels Collaboratifs, ainsi que l'Ingénierie Logicielle pour les systèmes interactifs. Il est actuellement impliqué dans plusieurs projets collaboratifs (5G Metaverse, Reclassif, eNSEMBLE) où il mène des recherches AR/VR/XR/MR/CVE principalement appliquées à l'Industrie du Futur où les jumeaux numériques d'usines sont des éléments centraux des projets. Il a publié plus de 100 communications dans des conférences et revues internationales.
+</PrincipalInvestigator>
 
-- Outils de reconstruction semi-automatique pour représentations visuelles de jumeaux numériques
-- Cadres de visualisation complets pour interaction JN multi-modale
-- Méthodologies d'ingénierie d'interaction pour systèmes JN complexes
-- Systèmes de transition fluides entre différentes modalités d'interaction
-- Cadres d'évaluation d'utilisabilité validés pour interfaces JN
+### Partenaires Participants :
 
-## Cas d'Usage
+<PartnersGrid partners={['IMT', 'CEA', 'Inria']} ></PartnersGrid>
 
-- **Échelle Territoriale**: Reconstruction JN de ville/zone avec populations humaines virtuelles
-- **Échelle Bâtiment/Usine**: JN de chaîne d'assemblage reconfigurable avec augmentation AR pour ouvriers et surveillance VR pour experts
-- **Échelle Objet Technique**: JN de système complexe (voitures, satellites) pour formation maintenance VR et opérations physiques assistées AR
+## Mise en Œuvre du Projet
 
-## Équipe et Collaborateurs
+Le projet est structuré en **cinq packages de travail complémentaires**, abordant la reconstruction, la visualisation, l'interaction, les transitions et la validation.
 
-**Investigateur Principal**: Thierry Duval, IMT
+<details>
+<summary><h3>Workpackage1 : Représentation/Reconstruction et Conception Numérique JN</h3></summary>
 
-**Partenaires Participants**: INUIT (IMT), DiverSE (Université Rennes), Hybrid (Inria), Aviz (Inria), ILDA (Inria), VirtUs (Inria), Elipse (Université Toulouse 3), ICS (Université Toulouse Capitole), G-SCOP (UGA-INP), LIB (Université Bourgogne), LIST (CEA), CEA Tech Occitanie (CEA), CRTD (CNAM), UMMISCO (IRD), LAMIH (UPHF), Sorbonne University
+**Responsable :** Univ. Bourgogne  
+**Partenaires :** LIST (CEA), ILDA (Inria), Aviz (Inria), INUIT (IMT)
+
+**Objectifs :**
+- Développer des **techniques semi-automatiques** pour la construction 2D/3D des vues de jumeaux numériques
+- Gérer la **reconstruction 3D** incluant le calcul de points de vue AR
+- Gérer la **reconstruction 2D** avec visualisation multi-vues et fusion de données
+
+**Tâches Clés :**
+1. Reconstruction 3D incluant le calcul de points de vue AR
+2. Reconstruction 2D avec visualisation multi-vues et correction d'erreurs
+3. Intégration et fusion de données multi-sources
+4. Reconstruction JN de la Terre et visualisation (avec collaboration CNES)
+
+</details>
+
+<details>
+<summary><h3>Workpackage2 : Augmentations de Visualisation JN</h3></summary>
+
+**Responsable :** Aviz (Inria)  
+**Partenaires :** ILDA (Inria), Hybrid (Inria), INUIT (IMT), ELIPSE (Univ. Toulouse 3), G-SCOP (UGA-INP), Sorbonne University
+
+**Objectifs :**
+- Créer des **métaphores de visualisation** pour améliorer la compréhension du contenu des JN
+- Fournir une visualisation enrichie de **grands ensembles de données** en 2D/3D, AR et VR
+- Améliorer la **collaboration** incluant les systèmes d'avatars
+
+**Tâches Clés :**
+1. Développer une visualisation enrichie pour de grands ensembles de données
+2. Implémenter l'amélioration de la collaboration incluant les avatars
+3. Créer des modèles de corps humain pour la préparation d'interventions chirurgicales
+4. Concevoir l'analytique immersive pour l'exploration de données complexes
+
+</details>
+
+<details>
+<summary><h3>Workpackage3 : Conception et Ingénierie d'Interaction JN</h3></summary>
+
+**Responsable :** ILDA (Inria)  
+**Partenaires :** ICS (Univ. Toulouse Capitole), ELIPSE (Univ. Toulouse 3), CRTD (CNAM), UMMISCO (IRD), LAMIH (UPHF)
+
+**Objectifs :**
+- Concevoir des **approches** pour décrire et générer les interactions utilisateur avec les JN
+- Implémenter l'**ingénierie d'interaction** incluant les interfaces utilisateur tangibles
+- Permettre la **co-ingénierie** entre plusieurs parties prenantes
+
+**Tâches Clés :**
+1. Développer des cadres d'ingénierie d'interaction incluant les interfaces tangibles
+2. Créer des méthodologies de co-ingénierie pour plusieurs parties prenantes
+3. Implémenter la gestion de la narration et de l'évolution d'interaction
+4. Concevoir des systèmes d'interaction multi-modaux
+
+</details>
+
+<details>
+<summary><h3>Workpackage4 : Ingénierie des Transitions JN</h3></summary>
+
+**Responsable :** DiverSE (Univ. Rennes/Inria)  
+**Partenaires :** INUIT (IMT), ILDA (Inria), Hybrid (Inria), ELIPSE (Univ. Toulouse 3), CEA Tech Occitanie, LIST (CEA)
+
+**Objectifs :**
+- Implémenter des **transitions spatio-temporelles** entre différentes vues de JN
+- Permettre des **transitions d'espace de solution** pour différentes configurations
+- Créer des **transitions média** (AR vers VR vers 2D) pour une expérience fluide
+
+**Tâches Clés :**
+1. Développer des transitions d'espace de solution pour les configurations JN
+2. Implémenter des transitions spatiales (3D) pour la navigation et l'exploration
+3. Créer des transitions média pour une expérience utilisateur fluide
+4. Assurer la continuité d'interaction inter-plateformes
+
+</details>
+
+<details>
+<summary><h3>Workpackage5 : Validation et Vérification Interactive JN</h3></summary>
+
+**Responsable :** LIST (CEA)  
+**Partenaires :** VirtUs (Inria), Hybrid (Inria), UMMISCO (IRD)
+
+**Objectifs :**
+- Établir des méthodes d'**évaluation d'utilisabilité** pour les interfaces de jumeaux numériques
+- Conduire une évaluation **ergonomique** pour les utilisateurs individuels
+- Effectuer une **validation à l'échelle de groupe** pour les environnements collaboratifs
+
+**Tâches Clés :**
+1. Développer l'évaluation d'utilisabilité à l'échelle de l'utilisateur individuel
+2. Créer une validation à l'échelle de groupe pour les environnements collaboratifs
+3. Implémenter des tests de front-end VR pour des interfaces JN utiles et utilisables
+4. Optimiser l'expérience utilisateur à travers différentes modalités d'interaction
+
+</details>

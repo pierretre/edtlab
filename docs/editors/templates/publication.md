@@ -3,7 +3,8 @@ title: "Full Title of the Publication"
 authors: ["First Author", "Second Author", "Third Author"]
 type: "journal"  # Options: "journal", "conference", "book", "report"
 year: 2024
-project: "PC1"  # Options: "PC1", "PC2", "PC3", "PC4", "PC5"
+tags:
+  - "PC1"  # Options: "PC1", "PC2", "PC3", "PC4", "PC5"
 venue: "Name of Journal, Conference, or Publisher"  # Optional but recommended
 doi: "10.1000/182"  # Optional: Digital Object Identifier
 url: "https://example.com/publication"  # Optional: Direct link to publication

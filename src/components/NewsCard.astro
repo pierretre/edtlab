@@ -1,44 +1,40 @@
 ---
-import { formatDate } from "../utils";
-import { linkHelpers } from "../i18n/links";
-import type { Event } from "../models/Event.model";
-import type { PressRelease } from "../models/PressRelease.model";
-import Badge from "./Badge.astro";
-import { NewsCategory } from "../models/NewsCategory.model";
+import { formatDate } from "@utils/./";
+import { linkHelpers } from "@i18n/links";
+import Badge from "@components/Badge.astro";
 import { Picture } from "astro:assets";
+import type { NewsItem } from "@models/NewsItem.model";
 
 export interface Props {
-    item: Event | PressRelease;
+    item: NewsItem;
     lang: "en" | "fr";
-    category: NewsCategory;
     coverImage: ImageMetadata;
     t: any;
     slug: string;
 }
 
-const { item, lang, category, coverImage, t, slug } = Astro.props;
+const { item, lang, coverImage, t, slug } = Astro.props;
 ---
 
 <div
-    class="news-item card hover:shadow-lg relative p-0 bg-white border border-gray-200 rounded-lg shadow"
-    data-category={category}
+    class="news-item card hover:shadow-lg relative p-0 bg-white border border-gray-200 rounded-lg shadow max-w-sm w-full mx-auto h-full flex flex-col"
     data-date={item.date.getTime()}
-    data-project={item.project ?? ""}
+    data-tags={item.tags?.join(",")}
+    data-category={item.newsType}
     data-search-text={`${JSON.stringify(item)}`.toLowerCase()}
 >
     <!-- Badges -->
-    <div class="absolute top-2 left-2 z-10">
-        {(<Badge key={category} t={t} />)}
+    <div class="absolute top-2 left-2 z-10 gap-2 flex flex-wrap">
+        <Badge key={item.newsType} t={t} />
         <!-- Tag badges -->
         {item.tags?.map((tag) => <Badge key={tag} t={t} />)}
-        {item.project && <Badge key={item.project} t={t} />}
     </div>
 
     <a
-        href={category === NewsCategory.PressRelease
+        href={item.newsType === "press-release"
             ? linkHelpers.press(lang, slug)
             : linkHelpers.event(lang, slug)}
-        class="relative block h-48 overflow-hidden group rounded-t-lg"
+        class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0"
     >
         <Picture
             class="h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-105"
@@ -50,19 +46,19 @@ const { item, lang, category, coverImage, t, slug } = Astro.props;
         >
         </div>
     </a>
-    <div class="p-3">
-        <div class="flex justify-between">
+    <div class="p-3 flex-grow flex flex-col">
+        <div class="flex justify-between mb-2">
             <p class="text-sm">
                 {formatDate(item.date, lang)}
             </p>
             <p class="text-sm">
-                {category === "event" ? (item as any).location : ""}
+                {item.newsType === "event" ? (item as any).location : ""}
             </p>
         </div>
 
-        <h4 class="text-base">
+        <h4 class="text-base line-clamp-3">
             <a
-                href={category === NewsCategory.PressRelease
+                href={item.newsType === "press-release"
                     ? linkHelpers.press(lang, slug)
                     : linkHelpers.event(lang, slug)}
                 class="hover:text-primary-600 text-gray-800 transition-colors duration-200"

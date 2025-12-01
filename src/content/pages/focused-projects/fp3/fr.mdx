@@ -2,68 +2,133 @@
 title: "PC3: Méthodologie, Cycle de Développement et Langages"
 href: "projets-cibles/pc3"
 lang: "fr"
-description: "Méthodologie, Cycle de Développement et Langages - Projet Ciblé 3 (PC3) du programme de recherche EDT"
+description: "Développement de méthodologies spécialisées, cycles de développement et langages spécifiques au domaine pour l'ingénierie des jumeaux numériques avec intégration IA et approches collaboratives"
 toc: true
 color: "blue-bell"
-template: "project"
+template: "project-page"
 illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC3.png"
 projectId: "PC3"
 ---
 
-## Aperçu du Projet
+import PartnersGrid from '@components/PartnersGrid.astro';
+import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
+import avatar from '@assets/images/investigators/avatar.png';
 
-PC3 développe des méthodologies spécialisées, des cycles de développement et des langages spécifiques au domaine pour l'ingénierie des jumeaux numériques. Le projet aborde la nature multidisciplinaire du développement des JN, intégrant l'IA, les pratiques MBSE et les approches d'ingénierie collaborative.
+## Aperçu
 
-## Sujets Scientifiques
+Les jumeaux numériques (JN) actuels utilisent des technologies de pointe telles que l'IoT, la 5G, le Cloud, l'IA et la modélisation 3D. Cependant, le développement des JN entraîne des coûts élevés et des délais de mise en œuvre longs, soulignant le besoin d'une nouvelle méthodologie spécialisée.
 
-1. **Méthodologie et Cycle de Vie**: Modèle, vue et point de vue, cadre d'architecture, rétro-ingénierie, et langages spécifiques au domaine
-2. **Ingénierie Continue, Co-évolution et Qualité**: Co-évolution, modélisation et programmation en direct, intégration continue, ingénierie des exigences, méthodes VVUQ
-3. **Ingénierie Collaborative et IDE Augmenté**: Collaboration spatio-temporelle, ingénierie concurrente, intégration IA & GenAI, inclusion humain-bot
-4. **Déploiement et Durabilité**: Déploiement continu, déploiement edge/cloud, évaluation de durabilité, SustainableDevOps
+L'ingénierie des jumeaux numériques (EDT) implique plusieurs disciplines et s'appuie sur diverses technologies et domaines de recherche. Cette multidisciplinarité nécessite la définition de langages spécifiques au domaine (DSL) et de points de vue spécifiques à intégrer dans un cadre d'architecture global cohérent tel que défini dans ISO42010.
 
-## Objectifs Principaux
+Tout développement de système complexe doit commencer par une bonne spécification, et le développement des JN ne fait pas exception. Le projet étudie les spécificités du développement des JN pour soutenir leur spécification formelle (par exemple, comment spécifier le niveau de précision attendu d'un jumeau numérique ?).
 
-- Développer un langage de modélisation spécifique au domaine pour l'ingénierie des jumeaux numériques tout au long de leur cycle de vie
-- Définir les parties prenantes, préoccupations et points de vue nécessaires pour une couverture complète de l'ingénierie des JN
-- Spécifier et concevoir un IDE collaboratif durable intégrant tous les points de vue et permettant la co-ingénierie
-- Intégrer les outils d'analyse tôt dans les phases de conception avec des capacités "analyse-en-boucle"
+L'évaluation de conformité des jumeaux numériques selon les normes et réglementations existantes est essentielle pour établir la confiance des utilisateurs dans le déploiement réel des JN. Ce projet explore l'intégration de l'IA et des pratiques d'ingénierie des systèmes basée sur les modèles (MBSE) pour automatiser les activités d'évaluation de conformité.
 
-## Méthodologie
+Les JN sont des systèmes complexes, et leur domaine d'ingénierie nécessite de nouveaux outils qui soutiennent le resserrement de l'ingénierie collaborative pour réduire les coûts et les délais et améliorer la qualité. L'ingénierie concurrente et agile et un meilleur partage des connaissances sont nécessaires. Le projet aborde également l'intégration de l'IA dans les méthodologies d'ingénierie pour les JN et leur environnement de développement intégré (IDE augmenté), en étudiant l'inclusion humain-bot et en garantissant que l'IDE augmenté s'adapte à tous les utilisateurs, quels que soient leurs niveaux cognitifs, économiques, sociaux ou culturels.
 
-Le projet est structuré en quatre packages de travail interconnectés :
+L'intégration d'outils et de techniques d'analyse tôt dans la phase de conception, en particulier lors de l'utilisation d'approches MBSE, est cruciale. Cette analyse précoce peut améliorer la prise de décision, et "l'analyse-en-boucle" peut aider à évaluer les impacts des choix de conception sur les indicateurs de performance clés.
 
-### WP3.1: Méthodologie et Cycle de Vie
-- Développement de langage spécifique au domaine (extension SysML V2)
-- Définition de cadre d'architecture suivant ISO42010
-- Méthodologies de rétro-ingénierie pour les systèmes existants
+L'importance croissante des modèles d'IA intégrés dans les JN nécessite des procédures de test intensives. Tester des machines utilisant ou "intégrant" des JN est une question critique. De nouvelles méthodes de vérification, validation et qualification des incertitudes (VVUQ) seront proposées et intégrées dans une méthodologie commune, soutenant l'intégration et le déploiement continus.
 
-### WP3.2: Ingénierie Continue, Co-évolution et Qualité
-- Gestion de la co-évolution entre jumeaux physiques et numériques
-- Approches de modélisation et programmation en direct
-- Méthodes d'intégration continue et VVUQ (Vérification, Validation, Quantification d'Incertitude)
-- Automatisation de l'évaluation de conformité utilisant IA et MBSE
+L'impact environnemental des systèmes numériques est une réalité. La conception et les opérations des JN doivent être optimisées pour minimiser leur empreinte écologique. Le projet développe des cadres pour évaluer l'empreinte environnementale basée sur le PCR de l'ADEME pour les services numériques, guidant les décisions d'éco-conception pendant la phase d'ingénierie.
 
-### WP3.3: Ingénierie Collaborative et IDE Augmenté
-- Environnements de développement collaboratif pour équipes multidisciplinaires
-- IDE augmenté par IA avec capacités d'inclusion humain-bot
-- Méthodologies d'ingénierie concurrente et agile
+## Cas d'Usage Associés
 
-### WP3.4: Déploiement et Durabilité
-- Stratégies de déploiement continu pour environnements edge et cloud
-- Cadres d'évaluation d'impact environnemental
-- Opérations de développement durable (SustainableDevOps)
-- Intégration analyse-en-boucle pour support de décision en temps réel
+Les cas d'usage dans **PC3** se concentrent sur les **applications industrielles** où la technologie JN est cruciale, impliquant **plusieurs parties prenantes** et considérant la **co-évolution** des jumeaux physiques et numériques, en particulier lorsque la **sécurité est une préoccupation**. Les connexions avec les cas d'usage où la **durabilité** est clé sont également prioritaires.
 
-## Résultats Attendus
+## Investigateur et Partenaires du Projet
 
-- Langage de modélisation spécifique au domaine pour l'ingénierie des jumeaux numériques (Artemis-DSL)
-- Cadre d'architecture complet (Artemis-AF) suivant ISO42010
-- IDE collaboratif augmenté (Artemis-IDE) avec intégration IA
-- Cadre d'évaluation de durabilité pour le cycle de vie des jumeaux numériques
-- Méthodologies validées à travers des cas d'usage industriels
+### Investigateur Principal :
 
-## Équipe et Collaborateurs
+<PrincipalInvestigator
+name="Sébastien Gérard"
+headline="Senior Fellow au CEA dirigeant l'Ingénierie Collaborative et Cognifiée Numérique"
+picture={avatar}
+>
+Sébastien Gérard est Senior Fellow au CEA où il dirige le programme phare, Ingénierie Collaborative et Cognifiée Numérique de l'institut CEA LIST. Ses intérêts de recherche incluent les systèmes complexes, l'ingénierie basée sur les modèles, la cognification, l'ingénierie des connaissances et la modélisation visuelle, les outils collaboratifs, la transformation numérique et son impact sur la société. Il représente le CEA à l'OMG depuis plus de 20 ans, a initié et dirigé pendant plus de 15 ans le projet open-source Papyrus (www.eclipse.org/papyrus), et représente le CEA List au conseil d'administration de la fondation Eclipse.
+</PrincipalInvestigator>
 
-**Investigateur Principal**: Sébastien Gérard, CEA
+### Partenaires Participants :
 
-**Partenaires Participants**: DISP (Université Lumière Lyon 2), Diverse (Inria), IRIT/SM@RT (Université Toulouse Jean Jaurès), LaBRI (CNRS), LIST (CEA), P4S (IMT), Spirals (Inria), TSCF (INRAE)
+<PartnersGrid partners={['CEA', 'CNRS', 'Inria', 'INRAE']} ></PartnersGrid>
+
+## Mise en Œuvre du Projet
+
+Le projet est structuré en **quatre packages de travail interconnectés**, abordant la méthodologie, l'ingénierie continue, les outils collaboratifs et la durabilité.
+
+<details>
+<summary><h3>Workpackage1 : Méthodologie et Cycle de Vie</h3></summary>
+
+**Responsable :** IRIT/SM@RT (Univ. Toulouse Jean Jaurès)  
+**Partenaires :** Diverse (Inria), P4S (IMT)
+
+**Objectifs :**
+- Développer un **langage spécifique au domaine** pour l'ingénierie des JN (extension SysML V2)
+- Définir un **cadre d'architecture** suivant ISO42010
+- Établir des méthodologies de **rétro-ingénierie** pour les systèmes existants
+
+**Tâches Clés :**
+1. Créer un langage de modélisation spécifique au domaine (Artemis-DSL)
+2. Définir les parties prenantes, préoccupations et points de vue pour une couverture complète des JN
+3. Développer des approches de rétro-ingénierie pour l'intégration de systèmes existants
+
+</details>
+
+<details>
+<summary><h3>Workpackage2 : Ingénierie Continue, Co-évolution et Qualité</h3></summary>
+
+**Responsable :** LaBRI (CNRS)  
+**Partenaires :** DISP (Univ Lumière Lyon 2), Diverse (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), List (CEA), Spirals (Inria), IGN, TSCF (INRAE)
+
+**Objectifs :**
+- Gérer la **co-évolution** entre jumeaux physiques et numériques
+- Implémenter des approches de **modélisation et programmation en direct**
+- Développer des **méthodes VVUQ** (Vérification, Validation, Quantification d'Incertitude)
+- Automatiser l'**évaluation de conformité** utilisant IA et MBSE
+
+**Tâches Clés :**
+1. Développer des cadres de gestion de co-évolution
+2. Créer des méthodologies d'intégration continue pour les JN
+3. Implémenter des méthodes VVUQ intégrées dans le cycle de développement
+4. Automatiser l'évaluation de conformité avec des outils pilotés par IA
+
+</details>
+
+<details>
+<summary><h3>Workpackage3 : Ingénierie Collaborative et IDE Augmenté</h3></summary>
+
+**Responsable :** List (CEA)  
+**Partenaires :** Diverse (Inria), P4S (IMT)
+
+**Objectifs :**
+- Créer des **environnements de développement collaboratif** pour équipes multidisciplinaires
+- Développer un **IDE augmenté par IA** avec inclusion humain-bot
+- Implémenter des méthodologies d'**ingénierie concurrente et agile**
+
+**Tâches Clés :**
+1. Concevoir un IDE collaboratif durable (Artemis-IDE)
+2. Intégrer des capacités IA et GenAI pour l'assistance au développement
+3. Assurer l'inclusion humain-bot et l'accessibilité pour tous les utilisateurs
+4. Permettre la collaboration spatio-temporelle pour les équipes distribuées
+
+</details>
+
+<details>
+<summary><h3>Workpackage4 : Déploiement et Durabilité</h3></summary>
+
+**Responsable :** Diverse (Inria)  
+**Partenaires :** LaBRI (CNRS), List (CEA), Spirals (Inria)
+
+**Objectifs :**
+- Développer des stratégies de **déploiement continu** pour edge et cloud
+- Créer des cadres d'**évaluation d'impact environnemental**
+- Implémenter des pratiques **SustainableDevOps**
+- Intégrer l'**analyse-en-boucle** pour le support de décision en temps réel
+
+**Tâches Clés :**
+1. Établir des méthodologies de déploiement continu pour les JN
+2. Développer un cadre d'évaluation de durabilité basé sur le PCR de l'ADEME
+3. Implémenter des lignes directrices d'éco-conception pour le cycle de vie des JN
+4. Créer une intégration analyse-en-boucle pour l'optimisation des performances
+
+</details>

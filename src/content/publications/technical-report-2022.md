@@ -5,5 +5,6 @@ type: "report"
 year: 2022
 venue: "EDT Technical Report Series"
 url: "http://edtlab.fr/"
-project: "PC2"
+tags:
+  - "PC2"
 ---

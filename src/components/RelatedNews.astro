@@ -1,9 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import NewsCard from "./NewsCard.astro";
-import { linkHelpers } from "../i18n/links";
-import { NewsCategory } from "../models/NewsCategory.model";
+import { linkHelpers } from "@i18n/links";
 
 export interface Props {
   project?: string;
@@ -19,25 +18,11 @@ if (project) {
     const covers = import.meta.glob<{ default: ImageMetadata }>(
       "/src/assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
     );
-    const pressReleases = (
-      await getCollection(
-        "press-releases",
-        (item) => item.data.lang === lang && item.data.project === project,
-      )
-    ).map((e) => ({ ...e, category: NewsCategory.PressRelease }));
-
-    const events = (
-      await getCollection(
-        "events",
-        (item) => item.data.lang === lang && item.data.project === project,
-      )
-    ).map((e) => ({ ...e, category: NewsCategory.Event }));
-
-    const feed = [...pressReleases, ...events];
+    const news = await getCollection("news", (item) => item.data.lang === lang);
 
     // Add cover images to feed items
     relatedItems = await Promise.all(
-      feed
+      news
         .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
         .slice(0, 3)
         .map(async (item) => {
@@ -57,7 +42,7 @@ if (project) {
 }
 ---
 
-<!-- Related News & Events Section -->{
+<!-- Related News Section -->{
   relatedItems.length > 0 && (
     <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
       <h2 id="related-news-events" class="font-semibold text-gray-900 mb-4">
@@ -69,7 +54,6 @@ if (project) {
           <NewsCard
             item={item.data}
             lang={lang}
-            category={item.category}
             coverImage={item.coverImage}
             t={t}
             slug={item.slug}

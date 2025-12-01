@@ -1,13 +1,13 @@
 import { getCollection, type CollectionEntry } from "astro:content";
-import { getContentLink } from "../i18n/links";
+import { getContentLink } from "@i18n/links";
+import { enToFrMapping } from "@i18n/page-mapping";
 
 export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const baseEntries = await generateBasePagesStaticPaths();
-    const eventEntries = await generateTypePagesStaticPaths("events");
-    const pressReleaseEntries = await generateTypePagesStaticPaths("press-releases");
+    const newsEntries = await generateTypePagesStaticPaths("news");
     const jobOfferEntries = await generateTypePagesStaticPaths("job-offers");
 
-    return [...baseEntries, ...eventEntries, ...pressReleaseEntries, ...jobOfferEntries];
+    return [...baseEntries, ...newsEntries, ...jobOfferEntries];
 }
 
 /**
@@ -19,11 +19,12 @@ async function generateBasePagesStaticPaths() {
 
     return allPages.map((page: CollectionEntry<"pages">) => {
         const { lang, href, template } = page.data;
+        const { resolvedLang, resolvedSlug } = getLangAndSlugFromPageData(page.slug, lang, href);
 
         return {
             params: {
-                lang: lang,
-                slug: href,
+                lang: resolvedLang,
+                slug: resolvedSlug,
             },
             props: {
                 page,
@@ -38,7 +39,7 @@ async function generateBasePagesStaticPaths() {
  * @param collection - The content collection name
  * @returns Array of static path entries
  */
-async function generateTypePagesStaticPaths(collection: "press-releases" | "events" | "job-offers"): Promise<any[]> {
+async function generateTypePagesStaticPaths(collection: "news" | "job-offers"): Promise<any[]> {
     const allEntries = await getCollection(collection);
 
     return allEntries.map(
@@ -64,6 +65,33 @@ async function generateTypePagesStaticPaths(collection: "press-releases" | "even
                     template,
                 },
             };
-        },
-    );
+        });
+}
+
+function getLangAndSlugFromPageData(
+    slug: string,
+    lang?: 'en' | 'fr',
+    href?: string
+): { resolvedLang: 'en' | 'fr'; resolvedSlug: string } {
+    // Default resolvedLang and slug from data
+    let resolvedLang = lang as string | undefined;
+    let resolvedSlug = href as string | undefined;
+
+    // If lang not provided, try to extract it from the href suffix (e.g. 'about-en' -> 'about', 'en')
+    if (!resolvedLang || !resolvedSlug) {
+        const m = slug.match(/(.*)\/(en|fr)$/);
+        if (m) {
+            resolvedSlug = m[1];
+            resolvedLang = m[2];
+
+            if (resolvedLang === 'fr') {
+                resolvedSlug = enToFrMapping[resolvedSlug] || resolvedSlug;
+            }
+        }
+    }
+
+    return {
+        resolvedLang: resolvedLang as 'en' | 'fr',
+        resolvedSlug: resolvedSlug || slug,
+    };
 }

@@ -1,4 +1,4 @@
-import { useTranslations } from '../i18n/utils';
+import { useTranslations } from '@i18n/utils';
 
 /**
  * Get default SEO keywords from translations
@@ -29,6 +29,10 @@ export function getKeywords(key: string, lang: 'en' | 'fr'): string[] {
 
     try {
         const keywords = t(`seo.keywords.${key}` as any);
+        // Check if keywords is undefined or empty
+        if (!keywords || typeof keywords !== 'string') {
+            return [];
+        }
         return keywords
             .split(',')
             .map((keyword: string) => keyword.trim())

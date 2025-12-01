@@ -1,11 +1,11 @@
 ---
-import { formatDate } from "../utils/date";
+import { formatDate } from "@utils/date";
 import { isDeadlineApproaching, isDeadlinePassed } from "../utils";
 import PageLayout from "./PageLayout.astro";
-import type { JobOffer } from "../models/JobOffer.model";
-import { useTranslations } from "../i18n/utils";
-import Badge from "../components/Badge.astro";
-import { generateJobPostingStructuredData } from "../utils/seo";
+import type { JobOffer } from "@models/JobOffer.model";
+import { useTranslations } from "@i18n/utils";
+import Badge from "@components/Badge.astro";
+import { generateJobPostingStructuredData } from "@utils/seo";
 
 export interface Props {
     frontmatter: JobOffer;
@@ -65,9 +65,8 @@ const jobStructuredData = generateJobPostingStructuredData(
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <Badge key={frontmatter.project} t={t} />
             <Badge key={`job-offers.type.${frontmatter.type}`} t={t} />
-
+            {(frontmatter.tags ?? []).map((tag) => <Badge key={tag} t={t} />)}
             {
                 isDeadlineApproaching(frontmatter.deadline) && (
                     <Badge key="job-offers.deadline-approaching" t={t} />

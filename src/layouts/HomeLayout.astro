@@ -1,9 +1,10 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import { linkHelpers } from "../i18n/links";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { linkHelpers } from "@i18n/links";
 import { getCollection } from "astro:content";
-import ProjectCard from "../components/ProjectCard.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import Badge from "@components/Badge.astro";
 
 export interface Props {
     title?: string;
@@ -28,11 +29,8 @@ const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
 const t = useTranslations(lang);
 
 // Get dynamic content from collections for enhanced front page
-const allEvents = await getCollection(
-    "events",
-    ({ data }) => data.lang === lang,
-);
-const recentEvents = allEvents
+const news = await getCollection("news", ({ data }) => data.lang === lang);
+const recentEvents = news
     .sort(
         (a, b) =>
             new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
@@ -52,7 +50,7 @@ const activeJobOffers = allJobOffers.slice(0, 3);
 const pages = await getCollection("pages", ({ data }) => data.lang === lang);
 const projects = pages
     .filter((page) => page.filePath?.includes("focused-projects/fp"))
-    .sort((a, b) => a.data.href.localeCompare(b.data.href));
+    .sort((a, b) => a.slug.localeCompare(b.slug));
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
     "/src/assets/images/*.{eg,jpg,png,gif,webp}",
@@ -76,7 +74,7 @@ const tiles = await Promise.all(
 
         return {
             title: project.data.title,
-            slug: linkHelpers.page(lang, project.data.href),
+            slug: linkHelpers.page(lang, project.slug),
             description: project.data.description ?? "",
             color: project.data.color,
             coverImage: projectImage,
@@ -142,30 +140,43 @@ const tiles = await Promise.all(
                     class="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between"
                 >
                     <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >5</span
+                        <a
+                            href={linkHelpers.page(lang, "focused-projects")}
+                            class="text-2xl font-bold text-primary-600">5</a
                         >
                         <p class="text-sm">
                             {t("home.stats.focused-projects")}
                         </p>
                     </div>
                     <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >40+</span
+                        <a
+                            href={linkHelpers.page(lang, "platform")}
+                            class="text-2xl font-bold text-primary-600">1</a
+                        >
+                        <p class="text-sm">{t("home.stats.platform")}</p>
+                    </div>
+                    <div class="mr-5 mb-5 lg:mb-0">
+                        <a
+                            href={linkHelpers.page(lang, "use-cases")}
+                            class="text-2xl font-bold text-primary-600">40+</a
                         >
                         <p class="text-sm">{t("home.stats.use-cases")}</p>
                     </div>
                     <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >{activeJobOffers.length}</span
-                        >
-                        <p class="text-sm">{t("home.stats.open-positions")}</p>
-                    </div>
-                    <div class="mr-5 mb-5 lg:mb-0">
-                        <span class="text-2xl font-bold text-primary-600"
-                            >{recentPublications.length}+</span
+                        <a
+                            href={linkHelpers.page(lang, "publications")}
+                            class="text-2xl font-bold text-primary-600"
+                            >{recentPublications.length}+</a
                         >
                         <p class="text-sm">{t("home.stats.publications")}</p>
+                    </div>
+                    <div class="mr-5 mb-5 lg:mb-0">
+                        <a
+                            href={linkHelpers.page(lang, "join-us")}
+                            class="text-2xl font-bold text-primary-600"
+                            >{activeJobOffers.length}</a
+                        >
+                        <p class="text-sm">{t("home.stats.open-positions")}</p>
                     </div>
                 </div>
             </div>
@@ -187,17 +198,21 @@ const tiles = await Promise.all(
             </div>
 
             <!-- Enhanced Tile Grid with Flowbite Card styling -->
-            <div class="grid gap-6 mb-6 lg:mb-16 md:grid-cols-2 lg:grid-cols-3">
+            <div
+                class="px-6 lg:px-0 flex flex-wrap justify-center gap-6 mb-6 lg:mb-16"
+            >
                 {
                     tiles.map((tile) => (
-                        <ProjectCard
-                            title={tile.title}
-                            description={tile.description}
-                            color={tile.color}
-                            coverImage={tile.coverImage}
-                            t={t}
-                            slug={tile.slug}
-                        />
+                        <div class="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+                            <ProjectCard
+                                title={tile.title}
+                                description={tile.description}
+                                color={tile.color}
+                                coverImage={tile.coverImage}
+                                t={t}
+                                slug={tile.slug}
+                            />
+                        </div>
                     ))
                 }
             </div>
@@ -218,7 +233,10 @@ const tiles = await Promise.all(
                 </p>
             </div>
 
-            <div class="grid gap-8 lg:grid-cols-3">
+            <div
+                class="grid gap-8 lg:grid-cols-3"
+                style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"
+            >
                 <!-- Recent Events -->
                 {
                     recentEvents.length > 0 && (
@@ -338,7 +356,7 @@ const tiles = await Promise.all(
                                 <a
                                     href={linkHelpers.page(
                                         lang,
-                                        "production/publications",
+                                        "publications",
                                     )}
                                     class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
                                 >
@@ -388,13 +406,18 @@ const tiles = await Promise.all(
                                         <h4 class="font-semibold text-gray-900 text-sm">
                                             {job.data.title}
                                         </h4>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-600">
-                                                {job.data.project}
-                                            </span>
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 capitalize">
-                                                {job.data.type}
-                                            </span>
+                                        <div class="flex items-center gap-2 mt-1 flex-wrap">
+                                            {(job.data.tags || [])
+                                                .filter(
+                                                    (tag) => tag && tag.trim(),
+                                                )
+                                                .map((tag) => (
+                                                    <Badge key={tag} t={t} />
+                                                ))}
+                                            <Badge
+                                                key={`job-offers.type.${job.data.type}`}
+                                                t={t}
+                                            />
                                         </div>
                                         <p class="text-xs text-gray-500 mt-1">
                                             {job.data.location} •{" "}

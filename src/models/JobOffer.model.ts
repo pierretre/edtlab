@@ -1,6 +1,5 @@
 export interface JobOffer {
     title: string;
-    project: 'PC1' | 'PC2' | 'PC3' | 'PC4' | 'PC5' | 'General';
     type: 'postdoc' | 'phd' | 'engineer' | 'intern';
     location: string;
     deadline: Date;
@@ -9,4 +8,5 @@ export interface JobOffer {
     requirements: string[];
     lang: 'en' | 'fr';
     template?: string;
+    tags?: string[];
 }

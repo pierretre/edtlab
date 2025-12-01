@@ -1,7 +1,7 @@
 ---
 import json from "../content/partners.json";
 import { Picture } from "astro:assets";
-import type { Partner } from "../models/Partner.model";
+import type { Partner } from "@models/Partner.model";
 
 export interface Props {
     partners: string[];
@@ -35,32 +35,28 @@ const partnersData: (Partner & { image: ImageMetadata })[] = await Promise.all(
 );
 ---
 
-<div class="w-full py-8">
-    <div class="mx-auto max-w-7xl px-4">
-        <div
-            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 place-items-center"
-        >
-            {
-                partnersData.map((p) => (
-                    <div
-                        class="flex flex-col items-center group"
-                        title={p.fullname}
-                    >
-                        <Picture
-                            src={p.image}
-                            alt={p.fullname ?? ""}
-                            class="h-12 w-auto object-contain"
-                            loading="lazy"
-                        />
+<div class="max-w-7xl px-4 py-8">
+    <div class="mx-auto flex flex-row gap-16 justify-items-center flex-wrap">
+        {
+            partnersData.map((p) => (
+                <div
+                    class="flex-1 flex flex-col items-center group w-full"
+                    title={p.fullname}
+                >
+                    <Picture
+                        src={p.image}
+                        alt={p.fullname ?? ""}
+                        class="max-h-12 w-auto max-w-32 h-auto object-contain mx-auto"
+                        loading="lazy"
+                    />
 
-                        {/* {p.children && p.children.length > 0 && (
+                    {/* {p.children && p.children.length > 0 && (
                             <div class="mt-2 hidden group-hover:block text-xs text-gray-500 text-center">
                                 {p.children.join(", ")}
                             </div>
                         )} */}
-                    </div>
-                ))
-            }
-        </div>
+                </div>
+            ))
+        }
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { useTranslations } from '../i18n/utils';
+import { useTranslations } from '@i18n/utils';
 import { getDefaultKeywords, getKeywords } from './seo-keywords';
 
 /**

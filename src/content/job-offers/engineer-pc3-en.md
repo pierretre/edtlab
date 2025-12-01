@@ -1,6 +1,7 @@
 ---
-title: "Research Engineer - Software Development"
-project: "PC3"
+title: "Software Engineer - Software Development"
+tags:
+  - "PC3"
 type: "engineer"
 location: "Toulouse, France"
 deadline: 2025-01-30
@@ -12,7 +13,7 @@ lang: "en"
 
 ## Position Overview
 
-Join our PC3 team as a Research Engineer focusing on software development for our digital twin platform. You'll be responsible for implementing scalable solutions and integrating various system components.
+Join our PC3 team as a Software Engineer focusing on software development for our digital twin platform. You'll be responsible for implementing scalable solutions and integrating various system components.
 
 ## Key Responsibilities
 

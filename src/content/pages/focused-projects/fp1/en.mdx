@@ -5,63 +5,33 @@ lang: "en"
 description: "Developing systematic approaches for combining physical models and data-based models through standardized interfaces and hybridization operators in digital twins"
 toc: true
 color: "blue-bell"
-template: "project"
+template: "project-page"
 illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC1.png"
 projectId: "PC1"
 ---
 
-import PartnersGrid from '../../../../components/PartnersGrid.astro';
-import PrincipalInvestigator from '../../../../components/PrincipalInvestigator.astro';
-import avatar from '/src/assets/images/investigators/avatar.png';
+import PartnersGrid from '@components/PartnersGrid.astro';
+import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
+import avatar from '@assets/images/investigators/avatar.png';
 
-## Context
+## Overview
+A Digital Twin (DT) is a coordinated collection of digital models that mirrors a physical system throughout its lifecycle. Continuously refreshed with real-time data, it relies on reasoning techniques such as simulation and machine learning to support tasks ranging from prediction to real-time decision-making.
 
-A **Digital Twin (DT)** is an organized set of digital models representing a real-world physical object or system throughout its lifecycle. It continuously updates through real-time sensor data and uses reasoning methods such as **simulation** and **machine learning** to support decision-making.  
+Because no single model can capture every aspect of a complex system, a DT brings together diverse disciplines — architecture description, modeling & simulation, and data science — each contributing models with different structures, fidelities, and purposes.
 
-Digital Twins can:
-- Predict behaviors (e.g., failure forecasting or event prediction)  
-- Prescribe real-time actions (e.g., adapting to environmental changes or updating requirements)
+These models can be classified along several dimensions, such as inference method (inductive vs. deductive), modeling approach (empirical vs. mechanistic), concern (behavioral, structural, safety, etc.), purpose (descriptive vs. prescriptive), fidelity, and temporal scope.
 
-Creating a DT involves multiple disciplines — **architecture description**, **modeling & simulation**, and **data science** — each producing intricate models tailored to specific questions.
+Most DTs rely on hybridization, combining complementary models — data-driven, physics-based, or mixed — to improve accuracy, robustness, and adaptability. Techniques such as physically informed neural networks and uncertainty quantification illustrate how heterogeneous models can be fused to exploit their respective strengths.
 
-## Model Classification Dimensions
+Building such hybrid structures requires:
 
-Models in a Digital Twin can be characterized along several non-exhaustive dimensions:
+Consistent interfaces for querying and manipulating models
 
-| **Dimension**         | **Description**                                                                                                                          |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Inference Method**  | How conclusions are drawn. *Inductive* models arise from observed data patterns, while *deductive* models apply theoretical principles.  |
-| **Modeling Approach** | *Empirical* models rely on data observation; *mechanistic* models are grounded in physical or theoretical laws.                          |
-| **Concern**           | The aspect of the system being modeled — e.g., behavioral, safety, structural, or extra-functional (performance, usability).             |
-| **Purpose**           | *Descriptive* models represent what exists; *prescriptive* models define what should be done.                                            |
-| **Fidelity**          | Degree of realism. *Low-fidelity* models are faster but limited; *high-fidelity* models are more accurate but computationally intensive. |
-| **Temporal Aspect**   | *Static* models describe one moment; *dynamic* models evolve over time.                                                                  |
+Operators and workflows to orchestrate combinations
 
-## Model Hybridization
+Proper uncertainty management to ensure reliability
 
-Digital Twins often use multiple models (data-based, mechanistic, etc.), each with strengths and limitations. **Hybridization** seeks to combine these models to leverage their complementary capabilities.
-
-Examples include:
-- **Physically Informed Neural Networks (PINNs):** Combining neural networks trained on real data with mechanistic simulation outputs.
-- **Uncertainty quantification:** Integrating uncertainties from both the Physical Twin (PT) and the DT for improved performance and anomaly detection.
-
-To enable systematic hybridization, the following are needed:
-1. **Homogeneous model interfaces** for querying and manipulating models  
-2. **Operators and workflows** defining hybridization patterns  
-3. **Uncertainty management** and reliability assurance
-
-## Scientific Topics
-
-1. Interface for Hybridization(s)  
-2. Hybridization Operators (for both workflow and model combination)  
-3. Interface and Composition Analysis  
-
-## Main Objectives
-
-1. Provide interfaces to manipulate any model and its usage  
-2. Simplify model hybridization via dedicated operators  
-3. Ensure reliable and consistent hybridization management  
-
+The project focuses on these scientific topics with clear objectives: enabling generic model manipulation, simplifying hybridization through dedicated operators, and providing mechanisms that guarantee reliable and coherent combinations of models.
 ## Associated Use Cases
 
 Use cases in **PC1** will include diverse Digital Twins representing various physical entities.  

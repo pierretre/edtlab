@@ -6,5 +6,7 @@ year: 2023
 venue: "International Conference on Digital Twins"
 doi: "10.1000/183"
 url: "http://edtlab.fr/"
-project: "PC2"
+tags:
+  - "PC2"
+  - "General"
 ---

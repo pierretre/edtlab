@@ -1,6 +1,7 @@
 ---
 title: "Chercheur Postdoctoral - Modélisation de Jumeaux Numériques"
-project: "PC1"
+tags:
+  - "PC1"
 type: "postdoc"
 location: "Paris, France"
 deadline: 2024-12-31
