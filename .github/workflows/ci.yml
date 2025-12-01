@@ -45,8 +45,8 @@ jobs:
         name: codecov-umbrella
         fail_ci_if_error: false
 
-  accessibility-test:
-    name: Accessibility Testing
+  build:
+    name: Build Project
     runs-on: ubuntu-latest
     needs: test
     
@@ -66,32 +66,17 @@ jobs:
     - name: Build project
       run: npm run build
       
-    - name: Install Playwright browsers
-      run: npx playwright install --with-deps
-      
-    - name: Run accessibility tests
-      run: |
-        # Kill any existing processes on port 4321
-        pkill -f "astro preview" || true
-        sleep 2
-        
-        # Start preview server in background
-        npm run preview &
-        PREVIEW_PID=$!
-        
-        # Wait for server to be ready
-        timeout 30 bash -c 'until curl -f http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done'
-        
-        # Run tests
-        npx playwright test src/test/e2e/accessibility.spec.ts --config=playwright.ci.config.ts
-        
-        # Clean up
-        kill $PREVIEW_PID || true
-        
-  link-verification:
-    name: Link Verification Testing
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist/
+        retention-days: 1
+
+  install-browsers:
+    name: Install Playwright Browsers
     runs-on: ubuntu-latest
-    needs: accessibility-test
+    needs: test
     
     steps:
     - name: Checkout code
@@ -106,35 +91,32 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Build project
-      run: npm run build
+    - name: Get Playwright version
+      id: playwright-version
+      run: echo "version=$(npm list @playwright/test --depth=0 --json | jq -r '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
       
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      id: playwright-cache
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+        
     - name: Install Playwright browsers
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps
-      
-    - name: Run link verification tests
-      run: |
-        # Kill any existing processes on port 4321
-        pkill -f "astro preview" || true
-        sleep 2
-        
-        # Start preview server in background
-        npm run preview &
-        PREVIEW_PID=$!
-        
-        # Wait for server to be ready
-        timeout 30 bash -c 'until curl -f http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done'
-        
-        # Run tests
-        npx playwright test src/test/e2e/link-verification.spec.ts --config=playwright.ci.config.ts
-        
-        # Clean up
-        kill $PREVIEW_PID || true
-        
-  route-validation:
-    name: Route Validation
+
+  e2e-tests:
+    name: E2E Tests
     runs-on: ubuntu-latest
-    needs: link-verification
+    needs: [build, install-browsers]
+    
+    strategy:
+      matrix:
+        test-suite:
+          - { name: 'Accessibility', file: 'accessibility.spec.ts' }
+          - { name: 'Link Verification', file: 'link-verification.spec.ts' }
+          - { name: 'Route Validation', file: 'routes.spec.ts' }
     
     steps:
     - name: Checkout code
@@ -149,10 +131,23 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Build project
-      run: npm run build
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: dist
+        path: dist/
+        
+    - name: Get Playwright version
+      id: playwright-version
+      run: echo "version=$(npm list @playwright/test --depth=0 --json | jq -r '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
       
-    - name: Test route accessibility
+    - name: Restore Playwright browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+        
+    - name: Run ${{ matrix.test-suite.name }} tests
       run: |
         # Kill any existing processes on port 4321
         pkill -f "astro preview" || true
@@ -165,8 +160,8 @@ jobs:
         # Wait for server to be ready
         timeout 30 bash -c 'until curl -f http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done'
         
-        # Run route tests using Playwright
-        npx playwright test src/test/e2e/routes.spec.ts --config=playwright.ci.config.ts
+        # Run tests
+        npx playwright test src/test/e2e/${{ matrix.test-suite.file }} --config=playwright.ci.config.ts
         
         # Clean up
         kill $PREVIEW_PID || true
@@ -174,7 +169,7 @@ jobs:
   quality-gates:
     name: Quality Gates
     runs-on: ubuntu-latest
-    needs: [test, accessibility-test, link-verification, route-validation]
+    needs: [test, e2e-tests]
     if: github.event_name == 'pull_request'
     
     steps:
