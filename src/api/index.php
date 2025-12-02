@@ -14,6 +14,39 @@ if ($method !== 'POST') {
     exit;
 }
 
+// Simple rate limiting based on IP address
+$rateLimit = 60; // seconds between submissions
+$rateLimitFile = sys_get_temp_dir() . '/contact_form_rate_limit.json';
+
+// Get client IP
+$clientIp = $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+
+// Load rate limit data
+$rateLimitData = [];
+if (file_exists($rateLimitFile)) {
+    $rateLimitData = json_decode(file_get_contents($rateLimitFile), true) ?? [];
+}
+
+// Clean up old entries (older than 2 hours)
+$currentTime = time();
+$rateLimitData = array_filter($rateLimitData, function($timestamp) use ($currentTime) {
+    return ($currentTime - $timestamp) < 7200; // 2 hours
+});
+
+// Check if IP is rate limited
+if (isset($rateLimitData[$clientIp])) {
+    $timeSinceLastSubmit = $currentTime - $rateLimitData[$clientIp];
+    if ($timeSinceLastSubmit < $rateLimit) {
+        $remainingTime = $rateLimit - $timeSinceLastSubmit;
+        http_response_code(429); // Too Many Requests
+        echo json_encode([
+            'error' => "Please wait {$remainingTime} seconds before submitting again.",
+            'retry_after' => $remainingTime
+        ]);
+        exit;
+    }
+}
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!$data || !isset($data['name'], $data['email'], $data['subject'], $data['message'], $data['privacy'])) {
@@ -156,6 +189,11 @@ $email = new SendSmtpEmail([
 
 try {
     $apiInstance->sendTransacEmail($email);
+    
+    // Update rate limit data after successful send
+    $rateLimitData[$clientIp] = $currentTime;
+    file_put_contents($rateLimitFile, json_encode($rateLimitData));
+    
     echo json_encode(['success' => true]);
 } catch (Exception $e) {
     http_response_code(500);

@@ -383,6 +383,31 @@ const t = useTranslations(lang);
             });
         });
 
+        // Cooldown management
+        const COOLDOWN_KEY = "contact_form_last_submit";
+        const COOLDOWN_DURATION = 60000; // 60 seconds in milliseconds
+
+        const checkCooldown = (): boolean => {
+            const lastSubmit = localStorage.getItem(COOLDOWN_KEY);
+            if (!lastSubmit) return true;
+
+            const timeSinceLastSubmit = Date.now() - parseInt(lastSubmit);
+            return timeSinceLastSubmit >= COOLDOWN_DURATION;
+        };
+
+        const getRemainingCooldown = (): number => {
+            const lastSubmit = localStorage.getItem(COOLDOWN_KEY);
+            if (!lastSubmit) return 0;
+
+            const timeSinceLastSubmit = Date.now() - parseInt(lastSubmit);
+            const remaining = COOLDOWN_DURATION - timeSinceLastSubmit;
+            return remaining > 0 ? Math.ceil(remaining / 1000) : 0;
+        };
+
+        const setCooldown = (): void => {
+            localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+        };
+
         // Form submission
         form.addEventListener("submit", async function (e) {
             e.preventDefault();
@@ -390,6 +415,18 @@ const t = useTranslations(lang);
             // Hide previous messages
             successMessage.classList.add("hidden");
             errorMessage.classList.add("hidden");
+
+            // Check cooldown
+            if (!checkCooldown()) {
+                const remainingSeconds = getRemainingCooldown();
+                errorDetails.textContent = `Please wait ${remainingSeconds} seconds before submitting again.`;
+                errorMessage.classList.remove("hidden");
+                errorMessage.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+                return;
+            }
 
             // Validate all fields
             let isFormValid = true;
@@ -440,6 +477,9 @@ const t = useTranslations(lang);
                 const result = await response.json();
 
                 if (response.ok) {
+                    // Set cooldown after successful submission
+                    setCooldown();
+
                     // Show success message
                     successMessage.classList.remove("hidden");
                     form.reset();
@@ -452,10 +492,14 @@ const t = useTranslations(lang);
                 }
             } catch (error) {
                 // Show error message
-                errorDetails.textContent =
-                    error instanceof Error
-                        ? error.message
-                        : "There was a problem sending your message. Please try again later or contact us directly via email.";
+                let errorText =
+                    "There was a problem sending your message. Please try again later or contact us directly via email.";
+
+                if (error instanceof Error) {
+                    errorText = error.message;
+                }
+
+                errorDetails.textContent = errorText;
                 errorMessage.classList.remove("hidden");
 
                 // Scroll to error message
