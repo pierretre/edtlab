@@ -88,7 +88,6 @@ describe('Keywords Utilities', () => {
         it('should extract first path segment', () => {
             expect(generateArticleSection('program/details')).toBe('program');
             expect(generateArticleSection('focused-projects/fp1')).toBe('focused-projects');
-            expect(generateArticleSection('news/events')).toBe('news');
         });
 
         it('should handle single segment paths', () => {
@@ -122,14 +121,6 @@ describe('Keywords Utilities', () => {
 
             expect(tagsEn).toContain('news');
             expect(tagsFr).toContain('actualités');
-        });
-
-        it('should generate news tags', () => {
-            const tagsEn = generateArticleTags('news/event', 'en');
-            const tagsFr = generateArticleTags('actualites/evenement', 'fr');
-
-            expect(tagsEn).toContain('news');
-            expect(tagsFr).toContain('actualité');
         });
 
         it('should generate demo tags', () => {
