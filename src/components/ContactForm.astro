@@ -426,10 +426,12 @@ const t = useTranslations(lang);
                 privacy: formData.get("privacy") ? true : false,
             };
 
-            console.log("Form submitted with values:", formValues);
-
             try {
-                const response = await fetch("/api", {
+                // Get API URL from environment variable
+                const apiUrl = import.meta.env.PUBLIC_API_URL || "/api";
+
+                console.log(apiUrl);
+                const response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formValues),

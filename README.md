@@ -44,23 +44,26 @@ Any static assets, like images, can be placed in the `public/` directory.
 2. **Start development environment**:
 
    ```bash
-   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+   docker-compose --profile dev up -d
    ```
 
 3. **Access the services**:
    - 🌐 **Website**: <http://localhost:4321> (Astro dev server with hot reload)
-   - 📊 **Matomo Analytics**: <http://localhost:8080>
-   - 🗄️ **MySQL Database**: localhost:3306
+   - 🔌 **API**: <http://localhost:8080> (PHP backend)
+   - 📊 **Matomo Analytics**: <http://localhost:4002>
+   - 🗄️ **MySQL Database**: localhost:4003
 
 ### Production Mode
 
 For production (static files served by Nginx):
 
 ```bash
-docker-compose up -d
+docker-compose --profile prod up -d
 ```
 
 - 🌐 **Website**: <http://localhost:80>
+- 🔌 **API**: <http://localhost:8080>
+- 📊 **Matomo**: <http://localhost:4002>
 
 ### Option 2: Manual Development
 
@@ -102,8 +105,8 @@ This website includes anonymous Matomo analytics integration with comprehensive 
 
 | Command | Description |
 |---------|-------------|
-| `docker-compose up -d` | Start production environment |
-| `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d` | Start development environment |
+| `docker-compose --profile prod up -d` | Start production environment |
+| `docker-compose --profile dev up -d` | Start development environment |
 | `docker-compose ps` | Check service status |
 | `docker-compose logs -f` | View service logs |
 | `docker-compose down` | Stop all services |
@@ -120,6 +123,14 @@ The website supports bilingual content (English/French) with:
 - Translation strings in `src/i18n/ui.ts`
 - Menu configuration in `src/content/menu/`
 
+### Translation Management
+
+- **Content pages** (`.md`/`.mdx` files): Create separate files for each language (e.g., `en.md`, `fr.md`)
+- **UI elements** (navigation, buttons, labels): Edit translations in `src/i18n/ui.ts`
+- **Menu structure**: Configure in `src/content/menu/en.json` and `src/content/menu/fr.json`
+
+**Note**: For non-markdown page elements like navigation bars, footers, buttons, and other UI components, all translations must be added to `src/i18n/ui.ts`.
+
 ## 🔧 Technology Stack
 
 - **Framework**: Astro.js 5.x with TypeScript
@@ -135,10 +146,10 @@ The website can be deployed to production using Docker with integrated Matomo an
 
 ### Docker Services
 
-- **Website**: Astro.js static site with Nginx
-- **Matomo**: Analytics platform with MySQL database  
-- **Nginx Proxy**: Reverse proxy with SSL termination
-- **Certbot**: Automatic SSL certificate management
+- **Website**: Astro.js static site with Nginx (port 80)
+- **API**: PHP backend for contact form and email handling (port 8080)
+- **Matomo**: Analytics platform with MySQL database (port 8081)
+- **Matomo DB**: MariaDB database for Matomo
 
 ### Management Commands
 
