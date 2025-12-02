@@ -118,7 +118,7 @@ export function generateArticleTags(
     }
 
     if (href.includes('news') || href.includes('actualites')) {
-        tags.push(lang === 'fr' ? 'actualité' : 'news');
+        tags.push(lang === 'fr' ? 'actualités' : 'news');
     }
 
     if (href.includes('demo')) {
