@@ -6,6 +6,42 @@ use Brevo\Client\Configuration;
 use Brevo\Client\Api\TransactionalEmailsApi;
 use Brevo\Client\Model\SendSmtpEmail;
 
+// Set CORS headers
+$isDevelopment = getenv('APP_ENV') === 'development' || getenv('APP_ENV') === 'dev';
+
+if ($isDevelopment) {
+    // Development: Allow all origins
+    $origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+    header("Access-Control-Allow-Origin: $origin");
+    header("Access-Control-Allow-Credentials: true");
+} else {
+    // Production: Strict origin whitelist
+    $allowedOrigins = [
+        'http://localhost:4321',
+        'http://localhost:80',
+    ];
+
+    $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+    if (in_array($origin, $allowedOrigins)) {
+        header("Access-Control-Allow-Origin: $origin");
+    } else {
+        // Default to edtlab.fr if origin not in list
+        header("Access-Control-Allow-Origin: https://edtlab.fr");
+    }
+}
+
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Max-Age: 86400"); // 24 hours
+header("Content-Type: application/json");
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method !== 'POST') {

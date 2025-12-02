@@ -3,9 +3,30 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// Prepare translations for client-side
+const clientTranslations = {
+    cooldown: t("contact.form.error-cooldown"),
+    rateLimit: t("contact.form.error-rate-limit"),
+    genericError: t("contact.form.error-generic"),
+    requiredField: t("contact.form.validation-required"),
+    privacyRequired: t("contact.form.validation-privacy"),
+    invalidEmail: t("contact.form.validation-email"),
+    messageTooShort: t("contact.form.validation-message-short"),
+    messageTooLong: t("contact.form.validation-message-long"),
+};
+
+// Get API URL from environment
+const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:8080";
 ---
 
-<form id="contact-form" class="space-y-8" novalidate>
+<form
+    id="contact-form"
+    class="space-y-8"
+    novalidate
+    data-translations={JSON.stringify(clientTranslations)}
+    data-api-url={apiUrl}
+>
     <!-- Name Field -->
     <div>
         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">
@@ -265,36 +286,35 @@ const t = useTranslations(lang);
     </div>
 </form>
 
-<script>
+<script is:inline>
     // Form validation and submission handling
     document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("contact-form") as HTMLFormElement;
-        const submitButton = document.getElementById(
-            "submit-button",
-        ) as HTMLButtonElement;
-        const submitText = document.getElementById(
-            "submit-text",
-        ) as HTMLElement;
-        const submitLoading = document.getElementById(
-            "submit-loading",
-        ) as HTMLElement;
-        const successMessage = document.getElementById(
-            "success-message",
-        ) as HTMLElement;
-        const errorMessage = document.getElementById(
-            "error-message",
-        ) as HTMLElement;
-        const errorDetails = document.getElementById(
-            "error-details",
-        ) as HTMLElement;
+        const form = document.getElementById("contact-form");
+        const submitButton = document.getElementById("submit-button");
+        const submitText = document.getElementById("submit-text");
+        const submitLoading = document.getElementById("submit-loading");
+        const successMessage = document.getElementById("success-message");
+        const errorMessage = document.getElementById("error-message");
+        const errorDetails = document.getElementById("error-details");
+
+        // Load translations from data attribute
+        const translations = JSON.parse(
+            form.getAttribute("data-translations") || "{}",
+        );
+
+        const t = (key, params) => {
+            let text = translations[key] || key;
+            if (params) {
+                Object.keys(params).forEach((param) => {
+                    text = text.replace(`{${param}}`, params[param]);
+                });
+            }
+            return text;
+        };
 
         // Form field validation
-        const validateField = (
-            field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
-        ): boolean => {
-            const errorElement = document.getElementById(
-                `${field.name}-error`,
-            ) as HTMLElement;
+        const validateField = (field) => {
+            const errorElement = document.getElementById(`${field.name}-error`);
 
             if (!errorElement) {
                 return true;
@@ -323,8 +343,8 @@ const t = useTranslations(lang);
                 isValid = false;
                 errorText =
                     field.name === "privacy"
-                        ? "You must accept the privacy notice to continue."
-                        : "This field is required.";
+                        ? t("privacyRequired")
+                        : t("requiredField");
             }
 
             // Email validation
@@ -332,7 +352,7 @@ const t = useTranslations(lang);
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(field.value.trim())) {
                     isValid = false;
-                    errorText = "Please enter a valid email address.";
+                    errorText = t("invalidEmail");
                 }
             }
 
@@ -340,10 +360,10 @@ const t = useTranslations(lang);
             if (field.name === "message" && field.value.trim()) {
                 if (field.value.trim().length < 10) {
                     isValid = false;
-                    errorText = "Message must be at least 10 characters long.";
+                    errorText = t("messageTooShort");
                 } else if (field.value.trim().length > 2000) {
                     isValid = false;
-                    errorText = "Message must be less than 2000 characters.";
+                    errorText = t("messageTooLong");
                 }
             }
 
@@ -372,13 +392,11 @@ const t = useTranslations(lang);
         // Real-time validation on blur
         const fields = form.querySelectorAll("input, textarea, select");
         fields.forEach((field) => {
-            field.addEventListener("blur", () =>
-                validateField(field as HTMLInputElement),
-            );
+            field.addEventListener("blur", () => validateField(field));
             field.addEventListener("input", () => {
                 // Clear error state on input
                 if (field.classList.contains("border-red-500")) {
-                    validateField(field as HTMLInputElement);
+                    validateField(field);
                 }
             });
         });
@@ -387,7 +405,7 @@ const t = useTranslations(lang);
         const COOLDOWN_KEY = "contact_form_last_submit";
         const COOLDOWN_DURATION = 60000; // 60 seconds in milliseconds
 
-        const checkCooldown = (): boolean => {
+        const checkCooldown = () => {
             const lastSubmit = localStorage.getItem(COOLDOWN_KEY);
             if (!lastSubmit) return true;
 
@@ -395,7 +413,7 @@ const t = useTranslations(lang);
             return timeSinceLastSubmit >= COOLDOWN_DURATION;
         };
 
-        const getRemainingCooldown = (): number => {
+        const getRemainingCooldown = () => {
             const lastSubmit = localStorage.getItem(COOLDOWN_KEY);
             if (!lastSubmit) return 0;
 
@@ -404,7 +422,7 @@ const t = useTranslations(lang);
             return remaining > 0 ? Math.ceil(remaining / 1000) : 0;
         };
 
-        const setCooldown = (): void => {
+        const setCooldown = () => {
             localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
         };
 
@@ -419,7 +437,9 @@ const t = useTranslations(lang);
             // Check cooldown
             if (!checkCooldown()) {
                 const remainingSeconds = getRemainingCooldown();
-                errorDetails.textContent = `Please wait ${remainingSeconds} seconds before submitting again.`;
+                errorDetails.textContent = t("cooldown", {
+                    seconds: remainingSeconds,
+                });
                 errorMessage.classList.remove("hidden");
                 errorMessage.scrollIntoView({
                     behavior: "smooth",
@@ -431,16 +451,14 @@ const t = useTranslations(lang);
             // Validate all fields
             let isFormValid = true;
             fields.forEach((field) => {
-                if (!validateField(field as HTMLInputElement)) {
+                if (!validateField(field)) {
                     isFormValid = false;
                 }
             });
 
             if (!isFormValid) {
                 // Focus on first error field
-                const firstError = form.querySelector(
-                    ".border-red-500",
-                ) as HTMLElement;
+                const firstError = form.querySelector(".border-red-500");
                 if (firstError) {
                     firstError.focus();
                 }
@@ -464,10 +482,11 @@ const t = useTranslations(lang);
             };
 
             try {
-                // Get API URL from environment variable
-                const apiUrl = import.meta.env.PUBLIC_API_URL || "/api";
+                // Get API URL from data attribute
+                const apiUrl =
+                    form.getAttribute("data-api-url") ||
+                    "http://localhost:8080";
 
-                console.log(apiUrl);
                 const response = await fetch(apiUrl, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -488,12 +507,18 @@ const t = useTranslations(lang);
                         block: "center",
                     });
                 } else {
-                    throw new Error(result.error || "Failed to send message");
+                    // Handle specific error codes
+                    if (response.status === 429) {
+                        // Rate limit error from backend
+                        const retryAfter = result.retry_after || 60;
+                        throw new Error(t("cooldown", { seconds: retryAfter }));
+                    } else {
+                        throw new Error(result.error || t("genericError"));
+                    }
                 }
             } catch (error) {
                 // Show error message
-                let errorText =
-                    "There was a problem sending your message. Please try again later or contact us directly via email.";
+                let errorText = t("genericError");
 
                 if (error instanceof Error) {
                     errorText = error.message;
