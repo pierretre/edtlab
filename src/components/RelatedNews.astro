@@ -18,7 +18,14 @@ if (project) {
     const covers = import.meta.glob<{ default: ImageMetadata }>(
       "/src/assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
     );
-    const news = await getCollection("news", (item) => item.data.lang === lang);
+    const news = await getCollection(
+      "news",
+      (item) =>
+        item.data.lang === lang &&
+        item.data.tags
+          .map((t) => t.toLowerCase())
+          ?.includes(project.toLowerCase()),
+    );
 
     // Add cover images to feed items
     relatedItems = await Promise.all(
