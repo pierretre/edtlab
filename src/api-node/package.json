@@ -1,0 +1,20 @@
+{
+    "name": "edtlab-api",
+    "version": "1.0.0",
+    "description": "EDT Lab Contact Form API - Node.js",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "node --watch index.js"
+    },
+    "dependencies": {
+        "@getbrevo/brevo": "^2.2.0",
+        "express": "^4.21.2",
+        "cors": "^2.8.5",
+        "helmet": "^8.0.0"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

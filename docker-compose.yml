@@ -13,7 +13,7 @@ services:
     build:
       context: ./src/api
       dockerfile: Dockerfile
-    container_name: edtlab_api
+    container_name: edtlab_api_php
     restart: always
     network_mode: bridge
     env_file:
@@ -25,6 +25,32 @@ services:
       - LIST_INBOX=${LIST_INBOX}
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_NAME=${SENDER_NAME}
+    profiles:
+      - php
+
+  api-node:
+    build:
+      context: ./src/api-node
+      dockerfile: Dockerfile
+    container_name: edtlab_api_node
+    restart: always
+    network_mode: bridge
+    env_file:
+      - .env
+    ports:
+      - "0.0.0.0:4004:8080"
+    environment:
+      - BREVO_API_KEY=${BREVO_API_KEY}
+      - LIST_INBOX=${LIST_INBOX}
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - SENDER_NAME=${SENDER_NAME}
+      - APP_ENV=${APP_ENV:-production}
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
 
   matomo-db:
     image: mariadb:10.11
