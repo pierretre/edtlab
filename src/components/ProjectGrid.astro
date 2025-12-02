@@ -1,0 +1,73 @@
+---
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "@i18n/utils";
+import { linkHelpers } from "@i18n/links";
+import ProjectCard from "@components/ProjectCard.astro";
+import { useTranslations } from "@i18n/utils";
+
+export interface Props {
+    lang?: "en" | "fr";
+}
+
+const { lang: propLang } = Astro.props;
+const lang = propLang || (getLangFromUrl(Astro.url) as "en" | "fr");
+
+const t = useTranslations(lang);
+// Get all pages for the current language
+const pages = await getCollection("pages", ({ data }) => data.lang === lang);
+
+// Filter and sort focused projects
+const projects = pages
+    .filter((page) => page.filePath?.includes("focused-projects/fp"))
+    .sort((a, b) => a.slug.localeCompare(b.slug));
+
+// Import images
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/images/*.{jpeg,jpg,png,gif,webp}",
+);
+
+// Prepare tiles with images
+const tiles = await Promise.all(
+    projects.map(async (project) => {
+        let projectImage: ImageMetadata | undefined = undefined;
+        if (project.data.illustration) {
+            try {
+                projectImage = (await images[project.data.illustration]())
+                    .default;
+            } catch (error) {
+                console.error(
+                    `Could not load image: ${project.data.illustration}`,
+                );
+            }
+        }
+
+        // Remove language suffix from slug (e.g., "focused-projects/fp1/en" -> "focused-projects/fp1")
+        const cleanSlug = project.slug.replace(/\/(en|fr)$/, "");
+
+        return {
+            title: project.data.title,
+            slug: linkHelpers.page(lang, cleanSlug),
+            description: project.data.description ?? "",
+            color: project.data.color,
+            coverImage: projectImage,
+        };
+    }),
+);
+---
+
+<div class="px-6 lg:px-0 flex flex-wrap justify-center gap-6 mb-6 lg:mb-16">
+    {
+        tiles.map((tile) => (
+            <div class="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+                <ProjectCard
+                    title={tile.title}
+                    description={tile.description}
+                    color={tile.color}
+                    coverImage={tile.coverImage}
+                    t={t}
+                    slug={tile.slug}
+                />
+            </div>
+        ))
+    }
+</div>
