@@ -27,23 +27,23 @@
                     "href": "projets-cibles"
                 },
                 {
-                    "name": "PC1: Hybridation des Modèles",
+                    "name": "PC1: CATALYST",
                     "href": "projets-cibles/pc1"
                 },
                 {
-                    "name": "PC2: Architecture & Interopérabilité",
+                    "name": "PC2: DTCOMPOSE",
                     "href": "projets-cibles/pc2"
                 },
                 {
-                    "name": "PC3: Méthodologie & Langages",
+                    "name": "PC3: TWINOPS",
                     "href": "projets-cibles/pc3"
                 },
                 {
-                    "name": "PC4: Couplage Numérique",
+                    "name": "PC4: SYNCHRONIC",
                     "href": "projets-cibles/pc4"
                 },
                 {
-                    "name": "PC5: Interactions Humaines",
+                    "name": "PC5: GENUINE",
                     "href": "projets-cibles/pc5"
                 }
             ]
