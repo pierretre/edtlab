@@ -1,42 +1,35 @@
 services:
-  astro:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: astro-dev
+  statics:
+    image: pierretre/edtlab:latest
+    container_name: edtlab_statics
+    restart: always
+    network_mode: bridge
     ports:
-      - "4321:4321"
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - "0.0.0.0:4001:80"
     env_file:
       - .env
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
-      WATCHPACK_POLLING: "true"
-    command: npm run dev -- --host --watch
 
   api:
     build:
       context: ./src/api
       dockerfile: Dockerfile
-    container_name: api-dev
-    restart: unless-stopped
-    ports:
-      - "0.0.0.0:4004:8080"
-    volumes:
-      - ./src/api:/var/www/html
-      - /var/www/html/vendor
+    container_name: edtlab_api
+    restart: always
+    network_mode: bridge
     env_file:
       - .env
+    ports:
+      - "0.0.0.0:4004:8080"
     environment:
       - BREVO_API_KEY=${BREVO_API_KEY}
       - LIST_INBOX=${LIST_INBOX}
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - SENDER_NAME=${SENDER_NAME}
 
   matomo-db:
     image: mariadb:10.11
-    container_name: matomo-db-dev
-    restart: unless-stopped
+    container_name: edtlab_matomo-db
+    restart: always
     network_mode: bridge
     env_file:
       - .env
@@ -59,16 +52,16 @@ services:
 
   matomo:
     image: matomo:latest
-    container_name: matomo-dev
-    restart: unless-stopped
+    container_name: edtlab_matomo
+    restart: always
     network_mode: bridge
+    env_file:
+      - .env
     links:
       - matomo-db
     depends_on:
       matomo-db:
         condition: service_healthy
-    env_file:
-      - .env
     environment:
       MATOMO_DATABASE_HOST: matomo-db
       MATOMO_DATABASE_ADAPTER: mysql
