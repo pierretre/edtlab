@@ -49,7 +49,7 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 3. **Access the services**:
    - 🌐 **Website**: <http://localhost:4321> (Astro dev server with hot reload)
-   - 🔌 **API**: <http://localhost:8080> (PHP backend)
+   - 🔌 **API**: <http://localhost:4004> (Node.js backend)
    - 📊 **Matomo Analytics**: <http://localhost:4002>
    - 🗄️ **MySQL Database**: localhost:4003
 
@@ -146,10 +146,12 @@ The website can be deployed to production using Docker with integrated Matomo an
 
 ### Docker Services
 
-- **Website**: Astro.js static site with Nginx (port 80)
-- **API**: PHP backend for contact form and email handling (port 8080)
-- **Matomo**: Analytics platform with MySQL database (port 8081)
-- **Matomo DB**: MariaDB database for Matomo
+- **Website**: Astro.js static site with Nginx (port 4001)
+- **API**: Node.js backend for contact form and email handling (port 4004)
+- **Matomo**: Analytics platform with MySQL database (port 4002)
+- **Matomo DB**: MariaDB database for Matomo (port 4003)
+
+**Note**: The API has been migrated from PHP to Node.js. See [API Migration Guide](docs/API-MIGRATION.md) for details.
 
 ### Management Commands
 

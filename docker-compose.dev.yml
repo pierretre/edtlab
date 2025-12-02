@@ -20,7 +20,7 @@ services:
     build:
       context: ./src/api
       dockerfile: Dockerfile
-    container_name: api-dev
+    container_name: api-dev-php
     restart: unless-stopped
     ports:
       - "0.0.0.0:4004:8080"
@@ -34,7 +34,36 @@ services:
       - LIST_INBOX=${LIST_INBOX}
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_NAME=${SENDER_NAME}
-      - APP_ENV=$development
+      - APP_ENV=development
+    profiles:
+      - php
+
+  api-node:
+    build:
+      context: ./src/api-node
+      dockerfile: Dockerfile
+    container_name: api-dev-node
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:4004:8080"
+    volumes:
+      - ./src/api-node:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    environment:
+      - BREVO_API_KEY=${BREVO_API_KEY}
+      - LIST_INBOX=${LIST_INBOX}
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - SENDER_NAME=${SENDER_NAME}
+      - APP_ENV=development
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
 
   matomo-db:
     image: mariadb:10.11
