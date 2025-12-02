@@ -262,11 +262,65 @@ EDT Research Team
 
 ## Security Considerations
 
-1. **CORS**: Configure CORS headers in production to restrict API access
-2. **Rate Limiting**: Implement rate limiting to prevent abuse
+1. **CORS**: The API includes CORS headers to allow requests from authorized origins
+   - Allowed origins are configured in `src/api/index.php`
+   - Default allowed origins: `localhost:4321`, `localhost:80`, `edtlab.fr`, `www.edtlab.fr`
+   - Add additional origins as needed for your deployment
+
+2. **Rate Limiting**: Built-in rate limiting to prevent abuse
+   - **Client-side**: 60-second cooldown using localStorage
+   - **Server-side**: 60-second cooldown per IP address
+   - Returns HTTP 429 (Too Many Requests) when rate limit exceeded
+   - Rate limit data stored in temporary file, auto-cleaned after 2 hours
+   - Configurable by changing `$rateLimit` variable in `src/api/index.php`
+
 3. **Input Validation**: All inputs are validated and sanitized
 4. **Environment Variables**: Never commit `.env` files with real API keys
 5. **HTTPS**: Always use HTTPS in production
+
+### CORS Configuration
+
+The API automatically handles CORS by:
+- Checking the `Origin` header against an allowed list
+- Responding to preflight `OPTIONS` requests
+- Setting appropriate `Access-Control-Allow-*` headers
+
+To add more allowed origins, edit `src/api/index.php`:
+
+```php
+$allowedOrigins = [
+    'http://localhost:4321',
+    'http://localhost:80',
+    'https://edtlab.fr',
+    'https://www.edtlab.fr',
+    'https://your-custom-domain.com'  // Add your domain here
+];
+```
+
+### Rate Limiting Configuration
+
+The API implements two layers of rate limiting:
+
+**Client-Side (ContactForm.astro):**
+```javascript
+const COOLDOWN_DURATION = 60000; // 60 seconds in milliseconds
+```
+
+**Server-Side (src/api/index.php):**
+```php
+$rateLimit = 60; // seconds between submissions per IP
+```
+
+**How it works:**
+1. Client checks localStorage before allowing form submission
+2. Server checks IP-based rate limit file
+3. If rate limit exceeded, returns HTTP 429 with remaining time
+4. Rate limit data is automatically cleaned up after 2 hours
+
+**To adjust rate limits:**
+- Change `COOLDOWN_DURATION` in ContactForm.astro for client-side
+- Change `$rateLimit` in src/api/index.php for server-side
+- Recommended: Keep both values synchronized
 
 ---
 
@@ -302,6 +356,21 @@ api:
   ports:
     - "8081:8080"  # Change host port
 ```
+
+### CORS errors in production
+
+If you see CORS errors like "CORS request did not succeed":
+
+1. **Check the API URL**: Ensure `PUBLIC_API_URL` in `.env.production` matches your actual API endpoint
+2. **Verify allowed origins**: Add your production domain (including port if non-standard) to `$allowedOrigins` in `src/api/index.php`
+3. **Check reverse proxy**: If using Nginx/Apache, ensure it's properly forwarding requests to the API
+4. **Test API directly**: Use curl to verify the API is accessible:
+   ```bash
+   curl -X POST https://edtlab.fr:4443/api \
+     -H "Content-Type: application/json" \
+     -d '{"name":"Test","email":"test@example.com","subject":"general","message":"Test","privacy":true}'
+   ```
+5. **Check browser console**: Look for the exact URL being requested and any additional error details
 
 ---
 
@@ -341,17 +410,73 @@ php -S localhost:8080
 4. **Set up monitoring** for API health and email delivery
 5. **Configure backup** email addresses in Brevo dashboard
 
-### Nginx Reverse Proxy Example
+### Nginx Reverse Proxy Configuration
 
+The production setup uses a two-tier Nginx configuration:
+
+**1. Root Nginx (Stream Module)** - Routes traffic based on SNI:
 ```nginx
-location /api/ {
-    proxy_pass http://localhost:8080/;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
+stream {
+  map $ssl_preread_server_name $name {
+    hostnames;
+    # ... other domains ...
+    default 10.0.0.2:4443;  # Routes edtlab.fr to port 4443
+  }
+  server {
+    listen 443;
+    proxy_pass $name;
+    ssl_preread on;
+  }
 }
 ```
+
+**2. Site-Specific Nginx** - Proxies to Docker containers:
+```nginx
+server {
+    server_name edtlab.fr;
+    listen 4443 ssl;  # Receives traffic from root nginx
+    
+    # Main website (Astro static site)
+    location / {
+        proxy_pass http://127.0.0.1:4001;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    
+    # Contact API
+    location /api/ {
+        proxy_pass http://127.0.0.1:4004/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # Note: No auth_basic here to allow public API access
+    }
+    
+    # Matomo Analytics
+    location /matomo/ {
+        proxy_pass http://127.0.0.1:4002/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+
+**Docker Port Mapping:**
+- Website (Astro): Container port 80 → Host port 4001
+- API (PHP): Container port 8080 → Host port 4004
+- Matomo: Container port 80 → Host port 4002
+- Matomo DB: Container port 3306 → Host port 4003
+
+**Important Notes:**
+- The API endpoint is accessible at `https://edtlab.fr:4443/api` (or `https://edtlab.fr/api` depending on client)
+- The `/api/` location does NOT have `auth_basic` to allow public access
+- The trailing slash in `proxy_pass http://127.0.0.1:4004/;` is important - it strips `/api` from the path
+- Set `PUBLIC_API_URL=https://edtlab.fr:4443/api` in `.env.production`
 
 ---
 
