@@ -130,13 +130,18 @@ docker-compose stop matomo-db
 
 ## Port Mapping Summary
 
-**Production (--profile prod):**
-- Website: Host port 80 → Container port 80 (Nginx serving static files)
-- API: Host port 8080 → Container port 8080 (PHP backend)
+**Production (actual deployment):**
+- Website: Host port 4001 → Container port 80 (Nginx serving static files)
+- API: Host port 4004 → Container port 8080 (PHP backend)
 - Matomo: Host port 4002 → Container port 80
 - MySQL: Host port 4003 → Container port 3306
 
-**Development (--profile dev):**
+**Note**: In production, Nginx reverse proxy routes:
+- `https://edtlab.fr/` → `http://127.0.0.1:4001` (website)
+- `https://edtlab.fr/api/` → `http://127.0.0.1:4004/` (API)
+- `https://edtlab.fr/matomo/` → `http://127.0.0.1:4002/` (Matomo)
+
+**Development (local):**
 - Astro: Host port 4321 → Container port 4321 (Astro dev server with hot reload)
 - API: Host port 8080 → Container port 8080 (PHP backend)
 - Matomo: Host port 4002 → Container port 80
