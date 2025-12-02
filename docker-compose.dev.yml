@@ -32,6 +32,9 @@ services:
     environment:
       - BREVO_API_KEY=${BREVO_API_KEY}
       - LIST_INBOX=${LIST_INBOX}
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - SENDER_NAME=${SENDER_NAME}
+      - APP_ENV=$development
 
   matomo-db:
     image: mariadb:10.11
