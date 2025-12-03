@@ -151,7 +151,7 @@ The website can be deployed to production using Docker with integrated Matomo an
 - **Matomo**: Analytics platform with MySQL database (port 4002)
 - **Matomo DB**: MariaDB database for Matomo (port 4003)
 
-**Note**: The API has been migrated from PHP to Node.js. See [API Migration Guide](docs/API-MIGRATION.md) for details.
+**Note**: The API is built with Node.js using Express.js.
 
 ### Management Commands
 

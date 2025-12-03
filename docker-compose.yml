@@ -9,25 +9,6 @@ services:
     env_file:
       - .env
 
-  api:
-    build:
-      context: ./src/api
-      dockerfile: Dockerfile
-    container_name: edtlab_api_php
-    restart: always
-    network_mode: bridge
-    env_file:
-      - .env
-    ports:
-      - "0.0.0.0:4004:8080"
-    environment:
-      - BREVO_API_KEY=${BREVO_API_KEY}
-      - LIST_INBOX=${LIST_INBOX}
-      - SENDER_EMAIL=${SENDER_EMAIL}
-      - SENDER_NAME=${SENDER_NAME}
-    profiles:
-      - php
-
   api-node:
     build:
       context: ./src/api-node
