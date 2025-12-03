@@ -1,4 +1,4 @@
-# Node.js API Quick Reference
+# API Quick Reference
 
 ## Essential Commands
 
@@ -176,26 +176,13 @@ docker logs edtlab_api_node | grep -i error
 ```
 
 ### Rate limiting issues
+Rate limits are stored in memory and automatically expire after 60 seconds. To reset:
 ```bash
-# Check rate limit file
-docker exec edtlab_api_node cat /tmp/contact_form_rate_limit.json
-
-# Reset rate limits
-docker exec edtlab_api_node rm -f /tmp/contact_form_rate_limit.json
+# Restart the container to clear in-memory rate limits
+docker-compose restart api-node
 ```
 
-## Rollback to PHP
 
-```bash
-# Stop Node.js API
-docker-compose stop api-node
-
-# Start PHP API
-docker-compose --profile php up -d api
-
-# Verify
-curl http://localhost:4004/
-```
 
 ## Performance Metrics
 
@@ -244,7 +231,7 @@ docker logs edtlab_api_node | grep -i error | wc -l
 | Dockerfile | `src/api-node/Dockerfile` |
 | Package Config | `src/api-node/package.json` |
 | Test Script | `src/api-node/test-api.sh` |
-| Rate Limit Data | `/tmp/contact_form_rate_limit.json` (in container) |
+| Rate Limit Data | In-memory (automatic cleanup) |
 
 ## Useful One-Liners
 
@@ -270,11 +257,10 @@ for i in {1..3}; do curl -X POST http://localhost:4004/ -H "Content-Type: applic
 
 ## Documentation Links
 
-- [Migration Guide](API-MIGRATION.md)
-- [Comparison](API-COMPARISON.md)
+- [Brevo Email Integration](../developers/brevo-emails.md)
 - [Deployment Checklist](DEPLOYMENT-CHECKLIST.md)
-- [API README](../src/api-node/README.md)
-- [Docker Setup](../DOCKER-SETUP.md)
+- [API README](../../src/api-node/README.md)
+- [Docker Setup](../../DOCKER-SETUP.md)
 
 ## Support
 

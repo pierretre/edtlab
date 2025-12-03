@@ -14,7 +14,7 @@
 - 📊 **Matomo Analytics**: http://localhost:4002  
 - 🗄️ **MySQL Database**: localhost:4003
 
-**Note**: The API has been migrated from PHP to Node.js. The PHP version is still available using the `--profile php` flag. See [API Migration Guide](docs/API-MIGRATION.md) for details.
+**Note**: The API is built with Node.js using Express.js.
 
 ## Docker Commands
 
@@ -32,19 +32,12 @@ docker-compose -f docker-compose.dev.yml up -d
 
 This starts: Astro dev server, API (Node.js), Matomo, and Matomo DB
 
-### API Options
+### API Service
 
-**Use Node.js API (default, recommended):**
+The contact form API is built with Node.js:
 ```bash
 docker-compose up -d api-node
 ```
-
-**Use PHP API (legacy):**
-```bash
-docker-compose --profile php up -d api
-```
-
-See [API Migration Guide](docs/API-MIGRATION.md) for more details.
 
 ### Start Individual Services
 
@@ -136,8 +129,7 @@ docker-compose stop matomo-db
 - **Development**: `docker-compose -f docker-compose.dev.yml up -d`
 - **Website only (prod)**: `docker-compose up -d statics`
 - **Astro dev only**: `docker-compose -f docker-compose.dev.yml up -d astro`
-- **API only (Node.js)**: `docker-compose up -d api-node`
-- **API only (PHP legacy)**: `docker-compose --profile php up -d api`
+- **API only**: `docker-compose up -d api-node`
 - **Matomo only**: `docker-compose up -d matomo matomo-db`
 - **Check status**: `docker-compose ps`
 - **View logs**: `docker-compose logs -f [service-name]`
@@ -163,11 +155,12 @@ docker-compose stop matomo-db
 - Matomo: Host port 4002 → Container port 80
 - MySQL: Host port 4003 → Container port 3306
 
-## API Migration
+## API
 
-The contact form API has been migrated from PHP to Node.js. Both versions are available:
+The contact form API is built with Node.js using Express.js, providing:
 
-- **Node.js** (default, recommended): Modern, performant, with health checks
-- **PHP** (legacy): Original implementation, available with `--profile php`
-
-For detailed migration information, see [API Migration Guide](docs/API-MIGRATION.md).
+- Modern, performant architecture
+- Health check endpoint for monitoring
+- Security headers with Helmet.js
+- Rate limiting and CORS protection
+- Brevo email integration

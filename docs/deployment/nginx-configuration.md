@@ -123,9 +123,9 @@ services:
     ports:
       - "0.0.0.0:4001:80"  # Astro website
   
-  api:
+  api-node:
     ports:
-      - "0.0.0.0:4004:8080"  # PHP API
+      - "0.0.0.0:4004:8080"  # Node.js API
   
   matomo:
     ports:
@@ -166,15 +166,15 @@ Root Nginx (Stream)
 Site Nginx
   ↓ Terminates SSL, proxies to 127.0.0.1:4004
 Docker Container (API)
-  ↓ PHP processes request on port 8080
+  ↓ Node.js processes request on port 8080
 ```
 
 ### Development (Local)
 ```
 Developer Browser
-  ↓ http://localhost:8080
+  ↓ http://localhost:4004
 Docker Container (API)
-  ↓ PHP processes request directly
+  ↓ Node.js processes request directly
 ```
 
 ---
@@ -231,7 +231,7 @@ docker-compose logs api
 ```
 
 ### Issue: CORS errors
-**Solution**: Verify allowed origins in `src/api/index.php` match your domain
+**Solution**: Verify allowed origins in `src/api-node/index.js` match your domain
 
 ### Issue: SSL certificate errors
 **Solution**: Ensure certificates are valid and paths are correct
