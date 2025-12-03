@@ -62,13 +62,11 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                             <li class="relative group flex items-center">
                                 {section.items && section.items.length > 0 ? (
                                     <>
-                                        <a
-                                            href={`/${lang}/${section.href}`}
-                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                                        <span
+                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out cursor-default
                                     before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                                    before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
-                                    hover:before:w-full hover:text-primary-600
-                                    ${isActive ? "text-primary-600 before:w-full" : ""}`}
+                                    before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                                    ${isActive ? "text-primary-600 before:w-full" : "before:w-0"}`}
                                         >
                                             <span>{section.name}</span>
                                             <svg
@@ -86,7 +84,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                                     d="m1 1 4 4 4-4"
                                                 />
                                             </svg>
-                                        </a>
+                                        </span>
 
                                         <div
                                             class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
@@ -98,41 +96,31 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                                 class="text-sm text-gray-700 m-0 p-0"
                                                 role="none"
                                             >
-                                                {section.items.map(
-                                                    (sub, index) => {
-                                                        // Hide first item (Overview) on desktop if it's the same as parent href
-                                                        const isOverviewLink =
-                                                            sub.href ===
-                                                                section.href &&
-                                                            index === 0;
-
-                                                        return (
-                                                            <li
-                                                                class={`m-0 p-0 ${isOverviewLink ? "hidden" : ""}`}
-                                                                role="none"
-                                                            >
-                                                                <a
-                                                                    href={`/${lang}/${sub.href}`}
-                                                                    class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
-                                                                        currentPath ===
-                                                                        `/${lang}/${sub.href}`
-                                                                            ? "text-primary-600 font-medium"
-                                                                            : ""
-                                                                    }`}
-                                                                    role="menuitem"
-                                                                    aria-current={
-                                                                        currentPath ===
-                                                                        `/${lang}/${sub.href}`
-                                                                            ? "page"
-                                                                            : undefined
-                                                                    }
-                                                                >
-                                                                    {sub.name}
-                                                                </a>
-                                                            </li>
-                                                        );
-                                                    },
-                                                )}
+                                                {section.items.map((sub) => (
+                                                    <li
+                                                        class="m-0 p-0"
+                                                        role="none"
+                                                    >
+                                                        <a
+                                                            href={`/${lang}/${sub.href}`}
+                                                            class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
+                                                                currentPath ===
+                                                                `/${lang}/${sub.href}`
+                                                                    ? "text-primary-600 font-medium"
+                                                                    : ""
+                                                            }`}
+                                                            role="menuitem"
+                                                            aria-current={
+                                                                currentPath ===
+                                                                `/${lang}/${sub.href}`
+                                                                    ? "page"
+                                                                    : undefined
+                                                            }
+                                                        >
+                                                            {sub.name}
+                                                        </a>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </div>
                                     </>
