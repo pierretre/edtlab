@@ -1,6 +1,5 @@
 ---
 import { formatDate } from "@utils/date";
-import { isDeadlineApproaching, isDeadlinePassed } from "../utils";
 import PageLayout from "./PageLayout.astro";
 import type { JobOffer } from "@models/JobOffer.model";
 import { useTranslations } from "@i18n/utils";
@@ -20,7 +19,7 @@ const jobStructuredData = generateJobPostingStructuredData(
     frontmatter.description,
     frontmatter.location,
     frontmatter.publishedDate.toISOString().split("T")[0],
-    frontmatter.deadline.toISOString().split("T")[0],
+    frontmatter.expectedStartDate,
     "FULL_TIME",
     frontmatter.requirements,
     undefined,
@@ -68,13 +67,8 @@ const jobStructuredData = generateJobPostingStructuredData(
             <Badge key={`job-offers.type.${frontmatter.type}`} t={t} />
             {(frontmatter.tags ?? []).map((tag) => <Badge key={tag} t={t} />)}
             {
-                isDeadlineApproaching(frontmatter.deadline) && (
-                    <Badge key="job-offers.deadline-approaching" t={t} />
-                )
-            }
-            {
-                isDeadlinePassed(frontmatter.deadline) && (
-                    <Badge key="job-offers.deadline-passed" t={t} />
+                frontmatter.filled && (
+                    <Badge key="job-offers.position-filled" t={t} />
                 )
             }
         </div>
@@ -130,12 +124,12 @@ const jobStructuredData = generateJobPostingStructuredData(
                 </svg>
                 <div>
                     <span class="text-sm font-medium text-gray-500"
-                        >{t("job-offers.deadline")}</span
+                        >{t("job-offers.expected-start")}</span
                     >
                     <p
-                        class={`font-medium ${isDeadlinePassed(frontmatter.deadline) ? "text-red-600" : ""}`}
+                        class={`font-medium ${frontmatter.filled ? "text-gray-500" : "text-green-600"}`}
                     >
-                        {formatDate(frontmatter.deadline, lang)}
+                        {frontmatter.expectedStartDate}
                     </p>
                 </div>
             </div>
@@ -177,38 +171,56 @@ const jobStructuredData = generateJobPostingStructuredData(
     }
 
     <!-- Application CTA -->
-    <section
-        class="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white"
-    >
-        <h2 class="text-xl font-semibold mb-3 text-white">
-            {t("job-offers.ready-to-apply")}
-        </h2>
-        <p class="mb-4 text-primary-100">
-            {t("job-offers.application-instructions")}
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3">
-            <a
-                href={`mailto:careers@edt-program.fr?subject=${encodeURIComponent(`Application: ${frontmatter.title}`)}`}
-                class="inline-flex items-center justify-center px-6 py-3 bg-white text-primary-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
-            >
-                <svg
-                    class="w-5 h-5 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    ></path>
-                </svg>
-                {t("job-offers.apply-now")}
-            </a>
-            <a href={`/${lang}/join-us`} class="btn-primary-light">
-                {t("job-offers.view-all-positions")}
-            </a>
-        </div>
-    </section>
+    {
+        !frontmatter.filled && (
+            <section class="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white">
+                <h2 class="text-xl font-semibold mb-3 text-white">
+                    {t("job-offers.ready-to-apply")}
+                </h2>
+                <p class="mb-4 text-primary-100">
+                    {t("job-offers.application-instructions")}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a
+                        href={`mailto:${frontmatter.contacts?.[0] || "careers@edt-program.fr"}?subject=${encodeURIComponent(`Application: ${frontmatter.title}`)}`}
+                        class="inline-flex items-center justify-center px-6 py-3 bg-white text-primary-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                    >
+                        <svg
+                            class="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                        </svg>
+                        {t("job-offers.apply-now")}
+                    </a>
+                    <a href={`/${lang}/join-us`} class="btn-primary-light">
+                        {t("job-offers.view-all-positions")}
+                    </a>
+                </div>
+            </section>
+        )
+    }
+
+    {
+        frontmatter.filled && (
+            <section class="mt-8 p-6 bg-gray-100 rounded-lg border">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">
+                    {t("job-offers.position-filled")}
+                </h2>
+                <p class="mb-4 text-gray-600">
+                    {t("job-offers.position-filled-message")}
+                </p>
+                <a href={`/${lang}/join-us`} class="btn-primary">
+                    {t("job-offers.view-all-positions")}
+                </a>
+            </section>
+        )
+    }
 </PageLayout>

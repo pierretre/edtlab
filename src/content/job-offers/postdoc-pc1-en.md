@@ -4,10 +4,12 @@ tags:
   - "PC1"
 type: "postdoc"
 location: "Paris, France"
-deadline: 2024-12-31
+expectedStartDate: "Q1 2025"
+filled: false
 publishedDate: 2024-01-15
 description: "Seeking a postdoctoral researcher to work on advanced digital twin modeling techniques"
 requirements: ["PhD in Engineering or Computer Science", "Experience with digital twin technology", "Strong programming skills", "Fluency in English"]
+contacts: ["pc1@edt-program.fr"]
 lang: "en"
 ---
 

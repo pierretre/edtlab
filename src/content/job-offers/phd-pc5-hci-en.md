@@ -4,10 +4,12 @@ tags:
   - "PC5"
 type: "phd"
 location: "Brest, France"
-deadline: 2024-06-30
+expectedStartDate: "October 2025"
+filled: true
 publishedDate: 2024-03-15
 description: "PhD position in Human-Computer Interaction focusing on immersive interfaces for digital twin systems"
 requirements: ["Master's degree in Computer Science, HCI, or related field", "Experience with VR/AR technologies", "Strong programming skills (C++, JavaScript, Python)", "Knowledge of 3D graphics and visualization", "Fluency in English and French"]
+contacts: ["thierry.duval@imt-atlantique.fr", "recrutement@imt-atlantique.fr"]
 lang: "en"
 ---
 

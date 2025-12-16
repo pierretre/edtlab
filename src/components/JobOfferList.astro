@@ -18,41 +18,20 @@ const allJobOffers = await getCollection(
     ({ data }) => data.lang === lang,
 );
 
-// Sort job offers by deadline status, then by publication date (newest first), then by deadline
+// Sort job offers by availability status, then by expected start date (chronological)
 const sortedJobOffers = allJobOffers.sort((a, b) => {
-    // First, sort by deadline status (active deadlines first)
-    const now = new Date();
-    const aActive = a.data.deadline >= now;
-    const bActive = b.data.deadline >= now;
-
-    if (aActive && !bActive) return -1;
-    if (!aActive && bActive) return 1;
-
-    // For active jobs, sort by publication date (newest first)
-    if (aActive && bActive) {
-        if (a.data.publishedDate.getTime() !== b.data.publishedDate.getTime()) {
-            return (
-                b.data.publishedDate.getTime() - a.data.publishedDate.getTime()
-            );
-        }
-    }
-
-    // Then by deadline date (closest first)
-    if (a.data.deadline.getTime() !== b.data.deadline.getTime()) {
-        return a.data.deadline.getTime() - b.data.deadline.getTime();
+    // For positions with same availability, sort by expected start date (chronological)
+    if (a.data.publishedDate.getTime() !== b.data.publishedDate.getTime()) {
+        return b.data.publishedDate.getTime() - a.data.publishedDate.getTime();
     }
 
     // Finally by title
     return a.data.title.localeCompare(b.data.title);
 });
 
-// Count active job offers
-const activeJobOffers = sortedJobOffers.filter(
-    (job) => job.data.deadline >= new Date(),
-);
-const expiredJobOffers = sortedJobOffers.filter(
-    (job) => job.data.deadline < new Date(),
-);
+// Count available and filled job offers
+const availableJobOffers = sortedJobOffers.filter((job) => !job.data.filled);
+const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
 ---
 
 <div class="w-full mb-12">
@@ -67,18 +46,18 @@ const expiredJobOffers = sortedJobOffers.filter(
                 </h2>
                 <p class="text-primary-600 text-sm font-bold mb-0">
                     {
-                        t("job-offers.active-count").replace(
+                        t("job-offers.available-count").replace(
                             "{count}",
-                            activeJobOffers.length.toString(),
+                            availableJobOffers.length.toString(),
                         )
                     }
                     {
-                        expiredJobOffers.length > 0 && (
+                        filledJobOffers.length > 0 && (
                             <span class="ml-2 font-normal">
                                 •{" "}
-                                {t("job-offers.expired-count").replace(
+                                {t("job-offers.filled-count").replace(
                                     "{count}",
-                                    expiredJobOffers.length.toString(),
+                                    filledJobOffers.length.toString(),
                                 )}
                             </span>
                         )

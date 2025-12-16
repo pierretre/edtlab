@@ -55,10 +55,12 @@ const jobOffersCollection = defineCollection({
         title: z.string(),
         type: z.enum(['postdoc', 'phd', 'engineer', 'intern']),
         location: z.string(),
-        deadline: z.date(),
+        expectedStartDate: z.string(),
+        filled: z.boolean().default(false),
         publishedDate: z.date(),
         description: z.string(),
         requirements: z.array(z.string()),
+        contacts: z.array(z.string().email()).optional(),
         lang: z.enum(['en', 'fr']),
         template: z.string().optional(),
         tags: z.array(z.string()).optional().default([])
