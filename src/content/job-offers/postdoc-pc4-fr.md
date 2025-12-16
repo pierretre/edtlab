@@ -4,10 +4,12 @@ tags:
   - "PC4"
 type: "postdoc"
 location: "Paris, France"
-deadline: 2026-03-31
+expectedStartDate: "Printemps 2025"
+filled: false
 publishedDate: 2024-11-28
 description: "Poste postdoctoral axé sur les flux de données bidirectionnels entre jumeaux physiques et numériques, explorant les théories et méthodes des processus de couplage numérique"
 requirements: ["Doctorat en Informatique, Systèmes de Contrôle ou domaine connexe", "Solide expérience en systèmes temps réel", "Expérience avec IoT et edge computing", "Publications dans des conférences/revues pertinentes", "Maîtrise de Python et C++"]
+contacts: ["pc4@edt-program.fr"]
 lang: "fr"
 ---
 

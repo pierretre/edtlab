@@ -11,8 +11,8 @@ const BACKGROUND_COLORS = {
     PC4: "bg-hit-pink-200",
     PC5: "bg-marzipan-200",
     General: "bg-primary-200",
-    'job-offers.deadline-approaching': "bg-yellow-800",
-    'job-offers.deadline-passed': "bg-red-800",
+    'job-offers.available': "bg-green-200",
+    'job-offers.filled': "bg-gray-200",
     default: "bg-gray-100",
 } as const;
 
@@ -23,8 +23,8 @@ const COLORS = {
     PC4: "text-hit-pink-900",
     PC5: "text-marzipan-900",
     General: "text-primary-900",
-    'job-offers.deadline-approaching': "text-yellow-100",
-    'job-offers.deadline-passed': "text-red-100",
+    'job-offers.available': "text-green-800",
+    'job-offers.filled': "text-gray-800",
     default: "text-gray-800"
 } as const;
 

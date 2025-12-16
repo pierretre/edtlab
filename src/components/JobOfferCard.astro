@@ -1,6 +1,6 @@
 ---
 import { linkHelpers } from "@i18n/links";
-import { formatDate, isDeadlineApproaching, isDeadlinePassed } from "@utils/.";
+import { formatDate } from "@utils/.";
 import Badge from "./Badge.astro";
 import type { JobOffer } from "@models/JobOffer.model";
 
@@ -12,7 +12,6 @@ interface Props {
 }
 
 const { item, lang, t, slug } = Astro.props;
-const isExpired = item.deadline < new Date();
 ---
 
 <a
@@ -20,7 +19,7 @@ const isExpired = item.deadline < new Date();
     class="job-offer-item card group hover:shadow-lg h-full flex flex-col"
     data-tags={(item.tags ?? []).join(" ").toLowerCase()}
     data-type={item.type}
-    data-status={isExpired ? "expired" : "active"}
+    data-status={item.filled ? "filled" : "available"}
     data-search-text={`${JSON.stringify(item)}`.toLowerCase()}
 >
     <!-- Header with badges -->
@@ -33,16 +32,7 @@ const isExpired = item.deadline < new Date();
 
         <Badge key={`job-offers.type.${item.type}`} t={t} />
 
-        {
-            isDeadlineApproaching(item.deadline) && (
-                <Badge key="job-offers.deadline-approaching" t={t} />
-            )
-        }
-        {
-            isDeadlinePassed(item.deadline) && (
-                <Badge key="job-offers.deadline-passed" t={t} />
-            )
-        }
+        {item.filled && <Badge key="job-offers.position-filled" t={t} />}
     </div>
 
     <!-- Title -->
@@ -50,7 +40,7 @@ const isExpired = item.deadline < new Date();
         {item.title}
     </h3>
 
-    <!-- Location, Published Date, and Deadline -->
+    <!-- Location, Published Date, and Expected Start Date -->
     <div class="mb-4 flex justify-between flex-wrap gap-3">
         <div class="flex items-center text-sm text-gray-600">
             <svg
@@ -102,20 +92,19 @@ const isExpired = item.deadline < new Date();
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 ></path>
             </svg>
-            <span class={isDeadlinePassed(item.deadline) ? "text-red-600" : ""}>
-                {t("job-offers.deadline")}: {formatDate(item.deadline, lang)}
-            </span>
+            {t("job-offers.expected-start")}: {item.expectedStartDate}
         </div>
     </div>
 
     <!-- Description -->
-    <p class="text-gray-700 text-sm line-clamp-3">
+    <p class="text-gray-700 text-sm line-clamp-3 mb-4">
         {item.description}
     </p>
+
     <!-- Requirements preview -->
     {
         item.requirements.length > 0 && (
-            <div>
+            <div class="mb-4">
                 <div class="text-sm font-semibold text-gray-900 mb-2">
                     {t("job-offers.key-requirements")}
                 </div>

@@ -4,10 +4,12 @@ tags:
   - "PC2"
 type: "phd"
 location: "Lyon, France"
-deadline: 2025-03-15
+expectedStartDate: "Septembre 2025"
+filled: false
 publishedDate: 2024-02-01
 description: "Opportunité de doctorat en applications d'apprentissage automatique pour les systèmes de jumeaux numériques"
 requirements: ["Master en Informatique ou Ingénierie", "Solide formation en apprentissage automatique", "Expérience de programmation en Python", "Expérience de recherche préférée"]
+contacts: ["marie.dubois@edt-program.fr"]
 lang: "fr"
 ---
 

@@ -4,10 +4,12 @@ tags:
   - "General"
 type: "intern"
 location: "Paris, France"
-deadline: 2024-11-30
+expectedStartDate: "January-June 2025"
+filled: false
 publishedDate: 2024-01-10
 description: "6-month internship opportunity in digital twin research and development"
 requirements: ["Currently enrolled in Engineering or Computer Science program", "Strong academic performance", "Programming skills in any language", "Interest in research and innovation"]
+contacts: ["internships@edt-program.fr"]
 lang: "en"
 ---
 

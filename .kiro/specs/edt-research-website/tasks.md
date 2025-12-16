@@ -434,3 +434,146 @@
   - Update TypeScript types to reflect changes
   - Verify no broken translations after optimization
   - _Requirements: 24.1, 24.2, 24.3, 5.3, 5.4_
+
+## Job Offer System Enhancement
+
+- [x] 47. Update job offer data model and schema
+- [x] 47.1 Update JobOffer TypeScript interface
+  - Remove `deadline` field from JobOffer interface
+  - Add `expectedStartDate` string field for flexible date formats
+  - Add `filled` boolean field with default false value
+  - Add optional `contacts` array field for multiple email addresses
+  - Update all type imports throughout the codebase
+  - _Requirements: 44.1, 46.1, 47.1_
+
+- [x] 47.2 Update Zod schema for job offers collection
+  - Remove deadline validation from jobOffersSchema
+  - Add expectedStartDate string validation with flexible format support
+  - Add filled boolean validation with default false
+  - Add contacts array validation with email format checking
+  - Update schema to handle backward compatibility during migration
+  - _Requirements: 44.5, 46.4, 47.2_
+
+- [ ]* 47.3 Write property tests for job offer schema
+  - **Property 22: Flexible date format support** - Validates: Requirements 44.5
+  - **Property 28: Boolean filled field support** - Validates: Requirements 46.1
+  - **Property 31: Boolean field validation** - Validates: Requirements 46.4
+  - **Property 33: Email validation in contacts** - Validates: Requirements 47.2
+
+- [x] 48. Update job offer content files and templates
+- [x] 48.1 Migrate existing job offer markdown files
+  - Update all job offer files in `src/content/job-offers/` to use new schema
+  - Replace `deadline` frontmatter with `expectedStartDate`
+  - Add `filled: false` to all existing job offers
+  - Add `contacts` array with appropriate email addresses for each position
+  - Ensure all files validate against updated schema
+  - _Requirements: 44.1, 46.3, 47.1_
+
+- [x] 48.2 Update job offer templates for editors
+  - Create new job offer template with updated frontmatter fields
+  - Document expectedStartDate format options (specific dates, "Spring 2025", "Q2 2025")
+  - Document filled field usage and boolean values
+  - Document contacts array format and email validation
+  - Update editor documentation with new field explanations
+  - _Requirements: 44.4, 46.5, 47.5_
+
+- [x] 49. Update JobOfferCard component
+  - Replace deadline display with expectedStartDate
+  - Add "Expected Start Date" label to job offer cards
+  - Handle flexible date format display (dates, seasons, quarters)
+  - Ensure proper internationalization for date labels
+  - _Requirements: 44.1, 44.4_
+
+- [x] 49.3 Implement multiple contact email handling
+  - Generate mailto links using all emails from contacts array
+  - Provide fallback contact information when contacts is empty
+  - Validate email format before generating mailto links
+  - Handle single vs. multiple contact display appropriately
+  - _Requirements: 45.4, 45.5, 47.3, 47.4_
+
+- [ ]* 49.4 Write property tests for JobOfferCard component
+  - **Property 23: Filled position UI hiding** - Validates: Requirements 45.1
+  - **Property 24: Position filled indicator display** - Validates: Requirements 45.2
+  - **Property 25: Available position apply button** - Validates: Requirements 45.3
+  - **Property 27: Mailto link generation** - Validates: Requirements 45.5
+
+- [x] 50. Update JobOfferList component with new filtering logic
+- [x] 50.1 Implement availability-based filtering
+  - Add showOnlyAvailable prop to filter by filled status
+  - Add showOnlyFilled prop for filled position displays
+  - Update filtering logic to handle filled field
+  - Ensure backward compatibility during migration
+  - _Requirements: 48.1, 48.4, 49.1_
+
+- [x] 50.2 Implement expected start date sorting
+  - Replace deadline-based sorting with expectedStartDate sorting
+  - Handle flexible date formats in sorting logic
+  - Implement chronological organization by start date
+  - Ensure proper date parsing for different formats
+  - _Requirements: 44.3, 48.3_
+
+- [ ]* 50.3 Write property tests for JobOfferList component
+  - **Property 20: Chronological sorting by start date** - Validates: Requirements 44.3
+  - **Property 36: Project page available filtering** - Validates: Requirements 48.1
+  - **Property 39: Filled position hiding from main listings** - Validates: Requirements 48.4
+
+- [x] 51. Create FilledPhDComponent for project pages
+- [x] 51.1 Build FilledPhDComponent
+  - Create new component to display filled PhD positions
+  - Filter positions by filled=true AND type='phd'
+  - Filter by project association (PC1, PC2, PC3, PC4, PC5)
+  - Exclude non-PhD positions (postdoc, engineer, intern)
+  - Position component at bottom of project pages
+  - Minimal information displayed (Title, description, location, dates)
+  - _Requirements: 49.1, 49.2, 49.3, 49.4_
+
+- [x] 51.2 Integrate FilledPhDComponent with project pages
+  - Add FilledPhDComponent to all project page templates
+  - Pass appropriate project filter to component
+  - Ensure proper styling and layout integration
+  - Add appropriate section heading and context
+  - _Requirements: 49.1, 49.5_
+
+- [ ]* 51.3 Write property tests for FilledPhDComponent
+  - **Property 40: Filled PhD dedicated component display** - Validates: Requirements 49.1
+  - **Property 41: PhD-only filled component filtering** - Validates: Requirements 49.2
+  - **Property 42: Filled PhD project association** - Validates: Requirements 49.3
+  - **Property 43: Non-PhD exclusion from filled component** - Validates: Requirements 49.4
+
+- [ ] 52. Update project pages with new job offer logic
+- [ ] 52.1 Update project page templates
+  - Modify project pages to show only available job offers in main listings
+  - Integrate FilledPhDComponent at bottom of each project page
+  - Update job offer filtering to use project association
+  - Ensure proper separation between available and filled position displays
+  - _Requirements: 48.1, 48.2, 49.1_
+
+- [ ]* 52.2 Write property tests for project page integration
+  - **Property 37: Project association filtering** - Validates: Requirements 48.2
+  - **Property 38: Start date independent availability** - Validates: Requirements 48.3
+
+- [ ] 53. Add availability status filter
+  - Add filled/available filter option to job offer configuration
+  - Implement filter predicate for filled boolean field
+  - Update filter UI to show availability options
+  - Ensure proper internationalization for new filter labels
+  - _Requirements: 45.1, 46.2_
+
+- [ ]* 54. Write comprehensive property tests for job offer system
+  - **Property 18: Expected start date display** - Validates: Requirements 44.1
+  - **Property 19: Open indefinitely behavior** - Validates: Requirements 44.2
+  - **Property 21: Expected start date label presence** - Validates: Requirements 44.4
+  - **Property 26: Multiple contact email support** - Validates: Requirements 45.4
+  - **Property 29: Filled position unavailability marking** - Validates: Requirements 46.2
+  - **Property 30: Default availability behavior** - Validates: Requirements 46.3
+  - **Property 32: Contacts array support** - Validates: Requirements 47.1
+  - **Property 34: Complete contact inclusion in mailto** - Validates: Requirements 47.3
+  - **Property 35: Fallback contact handling** - Validates: Requirements 47.4
+
+- [ ] 55. Update editor documentation
+  - Update content creation guidelines for new job offer fields
+  - Document expectedStartDate format options and examples
+  - Explain filled field usage and impact on display
+  - Document contacts array format and validation
+  - Update job offer template documentation
+  - _Requirements: 9.1, 9.2, 9.3, 9.4_

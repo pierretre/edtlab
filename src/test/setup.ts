@@ -43,10 +43,15 @@ export const createMockJobOffer = (overrides = {}) => ({
     project: 'PC1',
     type: 'postdoc',
     location: 'Test Location',
-    deadline: new Date('2024-12-31'),
+    expectedStartDate: 'Spring 2025',
+    filled: false,
+    publishedDate: new Date('2024-01-15'),
     description: 'Test description',
     requirements: ['Test requirement'],
+    contacts: ['contact@example.com'],
     lang: 'en',
+    template: 'job-offer',
+    tags: ['research'],
     ...overrides
 });
 

@@ -26,7 +26,8 @@ docs/editors/
     ├── content-style-guide.md # Writing and formatting guidelines
     ├── frontmatter-reference.md # Complete frontmatter documentation
     ├── component-usage.md     # MDX component usage guide
-    └── accessibility-guide.md # Accessibility requirements for content
+    ├── accessibility-guide.md # Accessibility requirements for content
+    └── job-offer-migration-guide.md # Migration guide for job offer schema changes
 ```
 
 ## Content Types
@@ -61,6 +62,7 @@ All content must be created in both English and French:
 - **Style Guide**: See [guidelines/content-style-guide.md](guidelines/content-style-guide.md)
 - **Frontmatter Reference**: See [guidelines/frontmatter-reference.md](guidelines/frontmatter-reference.md)
 - **Component Guide**: See [guidelines/component-usage.md](guidelines/component-usage.md)
+- **Job Offer Migration**: See [guidelines/job-offer-migration-guide.md](guidelines/job-offer-migration-guide.md)
 
 ## Validation
 
