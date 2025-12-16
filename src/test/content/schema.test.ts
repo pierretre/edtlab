@@ -26,10 +26,15 @@ describe('Content Schema Validation', () => {
         project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General']),
         type: z.enum(['postdoc', 'phd', 'engineer', 'intern']),
         location: z.string(),
-        deadline: z.date(),
+        expectedStartDate: z.string(),
+        filled: z.boolean().default(false),
+        publishedDate: z.date(),
         description: z.string(),
         requirements: z.array(z.string()),
-        lang: z.enum(['en', 'fr'])
+        contacts: z.array(z.string().email()).optional(),
+        lang: z.enum(['en', 'fr']),
+        template: z.string().optional(),
+        tags: z.array(z.string()).optional()
     });
 
     const eventSchema = z.object({
@@ -86,10 +91,15 @@ describe('Content Schema Validation', () => {
             project: 'PC1' as const,
             type: 'postdoc' as const,
             location: 'Paris, France',
-            deadline: new Date('2024-12-31'),
+            expectedStartDate: 'Spring 2025',
+            filled: false,
+            publishedDate: new Date('2024-01-15'),
             description: 'Test job description',
             requirements: ['PhD in relevant field'],
-            lang: 'en' as const
+            contacts: ['contact@example.com'],
+            lang: 'en' as const,
+            template: 'job-offer',
+            tags: ['research', 'digital-twins']
         };
 
         const result = jobOfferSchema.safeParse(validJobOffer);

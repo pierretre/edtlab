@@ -4,10 +4,12 @@ tags:
   - "PC2"
 type: "phd"
 location: "Lyon, France"
-deadline: 2025-03-15
+expectedStartDate: "September 2025"
+filled: false
 publishedDate: 2024-02-01
 description: "PhD opportunity in machine learning applications for digital twin systems"
 requirements: ["Master's degree in Computer Science or Engineering", "Strong background in machine learning", "Programming experience in Python", "Research experience preferred"]
+contacts: ["marie.dubois@edt-program.fr"]
 lang: "en"
 ---
 

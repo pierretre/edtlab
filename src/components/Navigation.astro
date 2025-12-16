@@ -3,8 +3,7 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { getEntry } from "astro:content";
 import { Picture } from "astro:assets";
 import LanguageToggle from "./LanguageToggle.astro";
-import logoEN from "../../src/assets/images/logo-en.png";
-import logoFR from "../../src/assets/images/logo-fr.png";
+import logoImagePng from "../../src/assets/images/Logo_EDT_CBLOT.png";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
@@ -13,7 +12,6 @@ const t = useTranslations(lang);
 const currentMenu = await getEntry("menu", lang);
 const menuSections = currentMenu?.data.sections || [];
 const currentPath = Astro.url.pathname;
-const logoImagePng = lang === "fr" ? logoFR : logoEN;
 ---
 
 <nav
@@ -23,24 +21,25 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
     <div
         class="max-w-screen-xl min-h-16 lg:min-h-20 mx-auto flex items-center justify-between lg:p-1"
     >
-        <div class="flex-shrink-0 h-full flex items-center">
-            <a href={`/${lang}/`} class="flex items-center no-underline h-full">
-                <Picture
-                    src={logoImagePng}
-                    alt="EDT Logo"
-                    class="h-full w-auto object-contain"
-                    sizes="(max-width: 768px) 120px, 160px"
-                    widths={[120, 160, 240, 320]}
-                    quality={80}
-                    format="webp"
-                    pictureAttributes={{
-                        class: "flex-shrink-0 h-full",
-                    }}
-                    loading={"eager"}
-                    decoding={"sync"}
-                />
-            </a>
-        </div>
+        <a
+            href={`/${lang}/`}
+            class="flex-shrink-0 flex items-center no-underline h-full"
+        >
+            <Picture
+                src={logoImagePng}
+                alt="EDT Logo"
+                class="h-full w-auto object-contain"
+                sizes="(max-width: 768px) 120px, 160px"
+                widths={[120, 160, 240, 320]}
+                quality={80}
+                format="webp"
+                pictureAttributes={{
+                    class: "flex-shrink-0 h-full",
+                }}
+                loading={"eager"}
+                decoding={"sync"}
+            />
+        </a>
 
         <nav
             class="hidden lg:flex justify-center items-center"

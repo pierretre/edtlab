@@ -358,17 +358,6 @@ Used for job postings in `src/content/job-offers/`.
 
 ### Required Fields
 
-#### `project`
-
-- **Type**: Enum (`"PC1"` | `"PC2"` | `"PC3"` | `"PC4"` | `"PC5"` | `"General"`)
-- **Description**: Associated research project
-- **Usage**: Project-based filtering and organization
-
-```yaml
-tags:
-  - "PC1"
-```
-
 #### `type`
 
 - **Type**: Enum (`"postdoc"` | `"phd"` | `"engineer"` | `"intern"`)
@@ -389,14 +378,33 @@ type: "postdoc"
 location: "Paris, France"
 ```
 
-#### `deadline`
+#### `expectedStartDate`
 
-- **Type**: Date (YYYY-MM-DD)
-- **Description**: Application deadline
-- **Usage**: Urgency indicators and automatic filtering
+- **Type**: String
+- **Description**: Expected start date for the position (flexible format)
+- **Usage**: Provides timeline information for applicants
+- **Guidelines**: 
+  - Can use specific dates: `"2025-06-01"`
+  - Can use seasons: `"Spring 2025"`, `"Fall 2024"`
+  - Can use quarters: `"Q2 2025"`, `"Q1 2026"`
+  - Can use ranges: `"January-June 2025"`
 
 ```yaml
-deadline: 2024-12-31
+expectedStartDate: "Spring 2025"
+```
+
+#### `filled`
+
+- **Type**: Boolean
+- **Default**: `false`
+- **Description**: Position availability status
+- **Usage**: Controls display of apply buttons and position availability
+- **Guidelines**:
+  - `false`: Position is available and accepting applications
+  - `true`: Position has been filled and is no longer accepting applications
+
+```yaml
+filled: false
 ```
 
 #### `publishedDate`
@@ -422,6 +430,43 @@ requirements:
   - "Strong programming skills"
   - "Fluency in English"
 ```
+
+### Optional Fields
+
+#### `contacts`
+
+- **Type**: Array of email strings
+- **Description**: Contact email addresses for position inquiries
+- **Usage**: Generates mailto links for applications
+- **Guidelines**: 
+  - Must be valid email addresses
+  - Will be validated for proper email format
+  - If not provided, fallback contact information will be used
+
+```yaml
+contacts: ["hiring.manager@edt-program.fr", "hr@institution.edu"]
+```
+
+#### `tags`
+
+- **Type**: Array of strings
+- **Description**: Project association and additional categorization
+- **Usage**: Project-based filtering and organization
+- **Guidelines**: Use project codes for association with focused projects
+
+```yaml
+tags:
+  - "PC1"
+```
+
+### Position Availability Behavior
+
+The job offer system has been updated to better reflect academic hiring practices:
+
+- **No Application Deadlines**: Positions remain open until filled rather than having artificial deadlines
+- **Expected Start Dates**: Flexible format allows for academic calendar alignment
+- **Availability Status**: Clear indication of whether positions are still accepting applications
+- **Project Integration**: Available positions show in main listings, filled positions are tracked separately on project pages
 
 ## Menu Collection
 

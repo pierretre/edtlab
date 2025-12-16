@@ -179,7 +179,7 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 
 1. THE EDT_Website SHALL allow Editors to add job offers by creating markdown files in `content/job-offers` folder
 2. THE EDT_Website SHALL automatically display job offers in the Join Us section
-3. THE EDT_Website SHALL provide job offer template with required frontmatter fields
+3. THE EDT_Website SHALL provide job offer template with required frontmatter fields including expected start date and position availability status
 4. THE EDT_Website SHALL validate job offer schema before processing
 5. THE EDT_Website SHALL organize job offers by project as specified in requirements
 
@@ -550,7 +550,7 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 
 ### Requirement 43
 
-**User Story:** As a Developer, I want the filtering system to be accessible, so that all users can effectively filter content.
+**User Story:** As a Developer, I want the filtering system to be accessible, so that users with disabilities can effectively use the filtering functionality.
 
 #### Acceptance Criteria
 
@@ -559,3 +559,83 @@ The EDT (Engineering Digital Twins) Research Program Website is a bilingual (Fre
 3. THE EDT_Website SHALL support keyboard navigation for all filter controls
 4. WHEN filters are applied THEN the EDT_Website SHALL maintain focus management appropriately
 5. THE EDT_Website SHALL use semantic HTML elements for filter controls
+
+### Requirement 44
+
+**User Story:** As a Visitor, I want to see job offers with expected start dates instead of deadlines, so that I can understand when positions are expected to begin.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL display expected start date for each job offer instead of application deadline
+2. THE EDT_Website SHALL allow job offers without specific deadlines to remain open indefinitely
+3. THE EDT_Website SHALL organize job offers by expected start date when sorting chronologically
+4. THE EDT_Website SHALL display "Expected Start Date" label clearly in job offer listings
+5. THE EDT_Website SHALL support flexible date formats for expected start dates (e.g., "Spring 2025", "Q2 2025", specific dates)
+
+### Requirement 45
+
+**User Story:** As a Visitor, I want to see only available positions with functional application options, so that I don't waste time on filled positions.
+
+#### Acceptance Criteria
+
+1. WHEN a job offer is marked as filled THEN the EDT_Website SHALL hide the apply button and contact information
+2. WHEN a job offer is marked as filled THEN the EDT_Website SHALL display a "Position Filled" indicator
+3. WHEN a job offer is available THEN the EDT_Website SHALL display apply button with contact emails from the job offer
+4. THE EDT_Website SHALL support multiple contact emails for job applications
+5. THE EDT_Website SHALL generate mailto links using the contact emails specified in each job offer's frontmatter
+
+### Requirement 46
+
+**User Story:** As an Editor, I want to manage job offer availability status, so that I can control which positions show application options.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL support a boolean "filled" field in job offer frontmatter to indicate position availability
+2. WHEN the "filled" field is true THEN the EDT_Website SHALL mark the position as unavailable
+3. WHEN the "filled" field is false or omitted THEN the EDT_Website SHALL treat the position as available
+4. THE EDT_Website SHALL validate the "filled" field as a boolean value during content processing
+5. THE EDT_Website SHALL provide clear documentation for Editors on using the "filled" field
+
+### Requirement 47
+
+**User Story:** As an Editor, I want to specify multiple contact emails for job applications, so that applications can be directed to the appropriate team members.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL support a "contacts" array field in job offer frontmatter for multiple email addresses
+2. THE EDT_Website SHALL validate email addresses in the contacts array during content processing
+3. WHEN generating mailto links THEN the EDT_Website SHALL include all contact emails from the job offer
+4. THE EDT_Website SHALL provide fallback contact information if no contacts are specified in a job offer
+5. THE EDT_Website SHALL display contact information clearly in job offer detailsring system to be accessible, so that all users can effectively filter content.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL provide appropriate ARIA labels for all filter controls
+2. THE EDT_Website SHALL announce result count changes to screen readers
+3. THE EDT_Website SHALL support keyboard navigation for all filter controls
+4. WHEN filters are applied THEN the EDT_Website SHALL maintain focus management appropriately
+5. THE EDT_Website SHALL use semantic HTML elements for filter controls
+
+### Requirement 48
+
+**User Story:** As a Visitor viewing project pages, I want to see only available job offers for that project, so that I can focus on positions I can actually apply for.
+
+#### Acceptance Criteria
+
+1. WHEN displaying job offers on project pages THEN the EDT_Website SHALL show only positions where "filled" is false
+2. THE EDT_Website SHALL filter job offers by project association (PC1, PC2, PC3, PC4, PC5) on respective project pages
+3. THE EDT_Website SHALL display available job offers regardless of expected start date status
+4. THE EDT_Website SHALL hide filled positions from the main job offer listings on project pages
+5. THE EDT_Website SHALL organize available job offers by type (postdoc, PhD, engineer, intern) on project pages
+
+### Requirement 49
+
+**User Story:** As a Visitor viewing project pages, I want to see filled PhD positions in a separate section, so that I can understand the project's research capacity and completed recruitments.
+
+#### Acceptance Criteria
+
+1. THE EDT_Website SHALL display filled PhD positions in a dedicated component at the bottom of each project page
+2. THE EDT_Website SHALL show only PhD positions where "filled" is true in this component
+3. THE EDT_Website SHALL filter filled PhD positions by project association (PC1, PC2, PC3, PC4, PC5)
+4. THE EDT_Website SHALL exclude non-PhD positions (postdoc, engineer, intern) from the filled positions component
+5. THE EDT_Website SHALL label this section clearly as "Filled PhD Positions" or similar descriptive text

@@ -27,7 +27,7 @@ interface DOMItemData {
  * Provides filtering by:
  * - Project (PC1-PC5, General)
  * - Type (postdoc, phd, engineer, intern)
- * - Status (active, expired based on deadline)
+ * - Status (available, filled based on position availability)
  * - Search (title, description, location)
  * 
  * Expected data attributes on job offer items:
@@ -97,19 +97,19 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             translationKey: 'job-offers.filter.status',
             options: [
                 { value: '', label: 'All Status', translationKey: 'job-offers.filter.all-status' },
-                { value: 'active', label: 'Active', translationKey: 'job-offers.filter.active' },
-                { value: 'expired', label: 'Expired', translationKey: 'job-offers.filter.expired' }
+                { value: 'available', label: 'Available', translationKey: 'job-offers.filter.available' },
+                { value: 'filled', label: 'Filled', translationKey: 'job-offers.filter.filled' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
 
-                // Determine if the job offer is active or expired based on deadline
+                // Determine if the job offer is available or filled based on filled status
                 // The status should be set as a data attribute on the DOM element
                 const status = data.status || '';
                 return status === value;
             },
             urlParam: 'status',
-            defaultValue: ''
+            defaultValue: 'available'
         },
         {
             id: 'search-filter',
@@ -423,20 +423,19 @@ export function getAvailableYears(publications: Publication[]): number[] {
 }
 
 /**
- * Helper function to determine if a job offer is active or expired
+ * Helper function to determine if a job offer is available or filled
  * 
- * @param deadline - The job offer deadline date
- * @returns 'active' if deadline is in the future, 'expired' otherwise
+ * @param filled - The job offer filled status
+ * @returns 'available' if position is open, 'filled' if position is filled
  * 
  * @example
  * ```typescript
- * const status = getJobOfferStatus(jobOffer.deadline);
- * console.log(status); // 'active' or 'expired'
+ * const status = getJobOfferStatus(jobOffer.filled);
+ * console.log(status); // 'available' or 'filled'
  * ```
  */
-export function getJobOfferStatus(deadline: Date): 'active' | 'expired' {
-    const now = new Date();
-    return deadline > now ? 'active' : 'expired';
+export function getJobOfferStatus(filled: boolean): 'available' | 'filled' {
+    return filled ? 'filled' : 'available';
 }
 
 /**

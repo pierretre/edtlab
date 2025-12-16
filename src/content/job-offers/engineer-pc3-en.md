@@ -4,10 +4,12 @@ tags:
   - "PC3"
 type: "engineer"
 location: "Toulouse, France"
-deadline: 2025-01-30
+expectedStartDate: "Spring 2025"
+filled: false
 publishedDate: 2024-01-20
 description: "Software development engineer for digital twin platform implementation"
 requirements: ["Bachelor's or Master's in Software Engineering", "5+ years software development experience", "Experience with C++, Java, or Python", "Knowledge of distributed systems"]
+contacts: ["engineering@edt-program.fr"]
 lang: "en"
 ---
 

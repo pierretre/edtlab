@@ -4,10 +4,12 @@ tags:
   - "PC1"
 type: "postdoc"
 location: "Paris, France"
-deadline: 2024-12-31
+expectedStartDate: "T1 2025"
+filled: false
 publishedDate: 2024-01-15
 description: "Recherche d'un chercheur postdoctoral pour travailler sur les techniques avancées de modélisation de jumeaux numériques"
 requirements: ["Doctorat en Ingénierie ou Informatique", "Expérience avec la technologie des jumeaux numériques", "Solides compétences en programmation", "Maîtrise de l'anglais"]
+contacts: ["pc1@edt-program.fr"]
 lang: "fr"
 ---
 
