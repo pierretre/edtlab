@@ -4,10 +4,12 @@ tags:
   - "PC1"  # Options: "PC1", "PC2", "PC3", "PC4", "PC5", "General"
 type: "postdoc"  # Options: "postdoc", "phd", "engineer", "intern"
 location: "City, Country"
-deadline: 2024-12-31  # Application deadline in YYYY-MM-DD format
+expectedStartDate: "Spring 2025"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
+filled: false  # Position availability status: true if position is filled, false if still available
 publishedDate: 2024-01-15  # Date when job offer was published in YYYY-MM-DD format
 description: "Brief description of the position and research focus"
 requirements: ["PhD in relevant field", "Experience with digital twins", "Programming skills", "Language requirements"]
+contacts: ["hiring.manager@edt-program.fr", "hr@institution.edu"]  # Array of contact emails for this position
 lang: "en"  # Language: "en" or "fr"
 ---
 
@@ -146,9 +148,9 @@ Detailed description of the specific focused project (PC1-PC5) and how this posi
 
 ### Application Submission
 
-- **Deadline**: [Application deadline]
 - **Submission Method**: [Email/Online portal]
-- **Contact**: [Application contact information]
+- **Contact**: Use the email addresses listed in the contacts field above
+- **Application Status**: This position remains open until filled
 
 ### Selection Process
 
@@ -160,11 +162,11 @@ Detailed description of the specific focused project (PC1-PC5) and how this posi
 
 ### Timeline
 
-- **Application Deadline**: [Date]
+- **Applications**: Accepted on a rolling basis
 - **Initial Review**: [Date range]
 - **Interviews**: [Date range]
 - **Decision Notification**: [Date]
-- **Expected Start Date**: [Date]
+- **Expected Start Date**: [As specified in expectedStartDate field]
 
 ## Contact Information
 
@@ -205,9 +207,11 @@ Brief description of the host institution, including:
 
 - **Project**: Must match one of the five focused projects (PC1-PC5) or "General"
 - **Type**: Choose the appropriate position level
-- **Deadline**: Use YYYY-MM-DD format for proper sorting
+- **ExpectedStartDate**: Flexible format - can be specific dates ("2025-06-01"), seasons ("Spring 2025"), quarters ("Q2 2025"), or ranges ("January-June 2025")
+- **Filled**: Boolean field indicating position availability (false = available, true = filled)
 - **PublishedDate**: Date when the job offer was first published (YYYY-MM-DD format)
 - **Requirements**: List as array items for proper validation
+- **Contacts**: Array of email addresses for position inquiries (must be valid email format)
 - **Description**: Keep under 200 characters for listings
 
 **Content Guidelines**:

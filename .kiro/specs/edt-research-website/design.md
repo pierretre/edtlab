@@ -156,6 +156,109 @@ This structure separates static page content from dynamic collections, enabling:
 - **ARIA Integration**: Custom ARIA attributes complementing Flowbite's accessibility features
 - **TableOfContents**: Custom component using Flowbite List styling for structured navigation
 
+## Job Offer Management System
+
+### Overview
+
+The job offer system has been redesigned to better reflect the academic hiring process by removing artificial deadlines and focusing on expected start dates and position availability. This approach provides more flexibility for both applicants and hiring managers.
+
+### Key Design Changes
+
+#### Expected Start Date Model
+- **Flexible Format**: Supports various date formats including "Spring 2025", "Q2 2025", and specific dates
+- **No Expiration**: Job offers remain active until explicitly marked as filled
+- **Sorting**: Chronological organization based on expected start dates
+- **Display**: Clear labeling of expected start dates in listings
+
+#### Position Availability System
+- **Boolean Status**: Simple filled/available status using boolean field
+- **Conditional Rendering**: Apply buttons and contact information only shown for available positions
+- **Status Indicators**: Clear visual indicators for filled positions
+- **Project Page Filtering**: Different display logic for main listings vs. filled position tracking
+
+#### Contact Management
+- **Multiple Contacts**: Support for arrays of contact emails per position
+- **Mailto Generation**: Automatic mailto link generation with all specified contacts
+- **Fallback Handling**: Default contact information when none specified
+- **Validation**: Email format validation for all contact addresses
+
+#### Project Page Integration
+- **Available Positions**: Main listings show only available (non-filled) positions
+- **Filled PhD Tracking**: Separate component displays filled PhD positions for capacity tracking
+- **Project Filtering**: Position filtering by project association (PC1-PC5)
+- **Type-Specific Logic**: Different handling for PhD vs. other position types
+
+### Component Architecture
+
+#### JobOfferCard Component
+```typescript
+interface JobOfferCardProps {
+  jobOffer: JobOffer;
+  showApplyButton: boolean;
+  showFilledIndicator: boolean;
+  lang: 'en' | 'fr';
+}
+```
+
+**Responsibilities:**
+- Render job offer information with appropriate status indicators
+- Conditionally display apply button based on filled status
+- Generate mailto links using contacts array
+- Display expected start date with flexible formatting
+
+#### JobOfferList Component
+```typescript
+interface JobOfferListProps {
+  jobOffers: JobOffer[];
+  filterByProject?: string;
+  showOnlyAvailable?: boolean;
+  showOnlyFilled?: boolean;
+  filterByType?: string;
+  lang: 'en' | 'fr';
+}
+```
+
+**Responsibilities:**
+- Filter job offers based on availability, project, and type
+- Sort by expected start date or other criteria
+- Render appropriate job offer cards with correct props
+- Handle empty states for filtered results
+
+#### FilledPhDComponent
+```typescript
+interface FilledPhDComponentProps {
+  project: string;
+  jobOffers: JobOffer[];
+  lang: 'en' | 'fr';
+}
+```
+
+**Responsibilities:**
+- Display only filled PhD positions for specified project
+- Provide context about completed recruitments
+- Show position details without apply functionality
+- Integrate at bottom of project pages
+
+### Data Flow
+
+#### Content Processing
+1. **Schema Validation**: Validate job offer frontmatter against updated schema
+2. **Email Validation**: Verify all contact emails are valid format
+3. **Boolean Validation**: Ensure filled field is proper boolean value
+4. **Date Processing**: Handle flexible expected start date formats
+
+#### Rendering Logic
+1. **Availability Check**: Determine if position should show apply functionality
+2. **Contact Processing**: Generate mailto links from contacts array
+3. **Project Filtering**: Filter positions by project association
+4. **Type Filtering**: Apply type-specific display logic
+
+#### Project Page Logic
+1. **Main Listings**: Show available positions only (filled = false)
+2. **Filled PhD Section**: Show filled PhD positions only (filled = true AND type = 'phd')
+3. **Project Association**: Filter by project tags (PC1, PC2, etc.)
+4. **Fallback Handling**: Provide default behavior for missing data
+
 ### Content Collections Schema
 
 #### Pages Collection
@@ -191,7 +294,9 @@ const jobOffersSchema = z.object({
   project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General']),
   type: z.enum(['postdoc', 'phd', 'engineer', 'intern']),
   location: z.string(),
-  deadline: z.date(),
+  expectedStartDate: z.string(), // Flexible format: "Spring 2025", "Q2 2025", "2025-06-01"
+  filled: z.boolean().default(false), // Position availability status
+  contacts: z.array(z.string().email()).optional(), // Multiple contact emails
   description: z.string(),
   requirements: z.array(z.string()),
   lang: z.enum(['en', 'fr'])
@@ -928,6 +1033,106 @@ Each content type defines its filter configuration:
 #### Property 17: Semantic HTML usage
 *For any* filter control, it should use appropriate semantic HTML elements (select for dropdowns, input for search, button for actions)
 **Validates: Requirements 43.5**
+
+#### Property 18: Expected start date display
+*For any* job offer, the display function should show the expected start date field rather than a deadline field
+**Validates: Requirements 44.1**
+
+#### Property 20: Chronological sorting by start date
+*For any* collection of job offers, sorting chronologically should order them by expected start date
+**Validates: Requirements 44.3**
+
+#### Property 21: Expected start date label presence
+*For any* job offer listing, the rendered output should contain the "Expected Start Date" label text
+**Validates: Requirements 44.4**
+
+#### Property 22: Flexible date format support
+*For any* valid date format input (specific dates, "Spring 2025", "Q2 2025"), the system should handle it correctly
+**Validates: Requirements 44.5**
+
+#### Property 23: Filled position UI hiding
+*For any* job offer where filled is true, apply buttons and contact information should not be rendered
+**Validates: Requirements 45.1**
+
+#### Property 24: Position filled indicator display
+*For any* job offer where filled is true, a "Position Filled" indicator should appear in the rendered output
+**Validates: Requirements 45.2**
+
+#### Property 25: Available position apply button
+*For any* job offer where filled is false, the apply button should appear with correct contact emails
+**Validates: Requirements 45.3**
+
+#### Property 26: Multiple contact email support
+*For any* job offer with multiple contacts, the system should accept and process all email addresses in the array
+**Validates: Requirements 45.4**
+
+#### Property 27: Mailto link generation
+*For any* job offer with contact arrays, the generated mailto links should include all specified emails
+**Validates: Requirements 45.5**
+
+#### Property 28: Boolean filled field support
+*For any* job offer with filled field set to true or false, the system should process it correctly
+**Validates: Requirements 46.1**
+
+#### Property 29: Filled position unavailability marking
+*For any* job offer where filled is true, the position should be marked as unavailable
+**Validates: Requirements 46.2**
+
+#### Property 30: Default availability behavior
+*For any* job offer where filled is false or omitted, the position should be treated as available
+**Validates: Requirements 46.3**
+
+#### Property 31: Boolean field validation
+*For any* invalid value provided for the filled field, the validation should catch and reject it
+**Validates: Requirements 46.4**
+
+#### Property 32: Contacts array support
+*For any* job offer with contacts array, the system should process all email addresses correctly
+**Validates: Requirements 47.1**
+
+#### Property 33: Email validation in contacts
+*For any* invalid email address in the contacts array, the validation should catch and reject it
+**Validates: Requirements 47.2**
+
+#### Property 34: Complete contact inclusion in mailto
+*For any* job offer with multiple contacts, all emails should appear in the generated mailto link
+**Validates: Requirements 47.3**
+
+#### Property 35: Fallback contact handling
+*For any* job offer without contacts specified, fallback contact information should be used
+**Validates: Requirements 47.4**
+
+#### Property 36: Project page available filtering
+*For any* project page, only job offers where filled is false should be displayed in main listings
+**Validates: Requirements 48.1**
+
+#### Property 37: Project association filtering
+*For any* project page, only job offers associated with that specific project should be shown
+**Validates: Requirements 48.2**
+
+#### Property 38: Start date independent availability
+*For any* available job offer, it should be displayed regardless of expected start date status
+**Validates: Requirements 48.3**
+
+#### Property 39: Filled position hiding from main listings
+*For any* filled job offer, it should not appear in main project page listings
+**Validates: Requirements 48.4**
+
+#### Property 40: Filled PhD dedicated component display
+*For any* filled PhD position, it should appear in the dedicated component at the bottom of project pages
+**Validates: Requirements 49.1**
+
+#### Property 41: PhD-only filled component filtering
+*For any* filled position, only PhD positions should appear in the filled positions component
+**Validates: Requirements 49.2**
+
+#### Property 42: Filled PhD project association
+*For any* project page, the filled PhD component should only show PhDs associated with that specific project
+**Validates: Requirements 49.3**
+
+#### Property 43: Non-PhD exclusion from filled component
+*For any* filled position that is not a PhD (postdoc, engineer, intern), it should not appear in the filled positions component
+**Validates: Requirements 49.4**
 
 ## Testing Strategy
 

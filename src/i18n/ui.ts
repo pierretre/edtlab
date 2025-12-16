@@ -85,19 +85,33 @@ export const ui = {
         'publications.no-results-description': 'Try adjusting your filters or search terms.',
         'publications.results-count': 'Showing {count} publications',
 
+        // Publication filters
+        'publications.filter.project': 'Project',
+        'publications.filter.all-projects': 'All Projects',
+        'publications.filter.type': 'Type',
+        'publications.filter.all-types': 'All Types',
+        'publications.filter.year': 'Year',
+        'publications.filter.all-years': 'All Years',
+        'publications.filter.search': 'Search',
+
+        // Publication types
+        'publications.type.journal': 'Journal',
+        'publications.type.conference': 'Conference',
+        'publications.type.book': 'Book',
+        'publications.type.report': 'Report',
+
         // Job offers
         'job-offers.current-opportunities': 'Current Opportunities',
-        'job-offers.active-count': '{count} active positions',
-        'job-offers.expired-count': '{count} expired',
+        'job-offers.available-count': '{count} available positions',
+        'job-offers.filled-count': '{count} filled',
         'job-offers.total-positions': '{count} total positions',
         'job-offers.type.postdoc': 'Postdoc',
         'job-offers.type.phd': 'PhD',
         'job-offers.type.engineer': 'Engineer',
         'job-offers.type.intern': 'Intern',
-        'job-offers.deadline': 'Deadline',
+        'job-offers.expected-start': 'Expected Start',
         'job-offers.published': 'Published',
-        'job-offers.deadline-approaching': 'Deadline Soon',
-        'job-offers.deadline-passed': 'Expired',
+        'job-offers.position-filled': 'Position Filled',
         'job-offers.key-requirements': 'Key Requirements',
         'job-offers.more-requirements': '+{count} more requirements',
         'job-offers.no-results': 'No job offers found',
@@ -110,14 +124,48 @@ export const ui = {
         'job-offers.apply-now': 'Apply Now',
         'job-offers.view-all-positions': 'View All Positions',
         'job-offers.back-to-careers': 'Back to Careers',
+        'job-offers.position-filled-message': 'This position has been filled. Please check our other available opportunities.',
+        'job-offers.filter.available': 'Available',
+        'job-offers.filter.filled': 'Filled',
+        'job-offers.filled-phd-positions': 'PhD Positions',
+        'job-offers.started': 'Started',
+
+        // Job offer filters
+        'job-offers.filter.project': 'Project',
+        'job-offers.filter.all-projects': 'All Projects',
+        'job-offers.filter.type': 'Type',
+        'job-offers.filter.all-types': 'All Types',
+        'job-offers.filter.status': 'Status',
+        'job-offers.filter.all-status': 'All Status',
+        'job-offers.filter.search': 'Search',
 
         // Filters
         'filter.clear': 'Clear All Filters',
+
+        // Badges
+        'badge.general': 'EDT Program',
+        'badge.event': 'Event',
+        'badge.press-release': 'Press Release',
+        'badge.platform-update': 'Platform Update',
 
         // News
         'news.no-results': 'No news items found matching your criteria.',
         'news.no-results-description': 'Try adjusting your filters or search terms.',
         'news.results-count': 'Showing {count} news items',
+
+        // News filters
+        'news.filter.project': 'Project',
+        'news.filter.all-projects': 'All Projects',
+        'news.filter.category': 'Category',
+        'news.filter.all-categories': 'All Categories',
+        'news.filter.sort': 'Sort',
+        'news.filter.search': 'Search',
+
+        // News sorting
+        'news.sort.date-desc': 'Newest First',
+        'news.sort.date-asc': 'Oldest First',
+        'news.sort.title-asc': 'Title A-Z',
+        'news.sort.title-desc': 'Title Z-A',
 
         // News item
         'news-item.back-to-news': 'Back to News',
@@ -274,19 +322,33 @@ export const ui = {
         'publications.no-results-description': 'Essayez d\'ajuster vos filtres ou termes de recherche.',
         'publications.results-count': 'Affichage de {count} publications',
 
+        // Publication filters
+        'publications.filter.project': 'Projet',
+        'publications.filter.all-projects': 'Tous les Projets',
+        'publications.filter.type': 'Type',
+        'publications.filter.all-types': 'Tous les Types',
+        'publications.filter.year': 'Année',
+        'publications.filter.all-years': 'Toutes les Années',
+        'publications.filter.search': 'Rechercher',
+
+        // Publication types
+        'publications.type.journal': 'Journal',
+        'publications.type.conference': 'Conférence',
+        'publications.type.book': 'Livre',
+        'publications.type.report': 'Rapport',
+
         // Job offers
         'job-offers.current-opportunities': 'Opportunités Actuelles',
-        'job-offers.active-count': '{count} postes actifs',
-        'job-offers.expired-count': '{count} expirés',
+        'job-offers.available-count': '{count} postes disponibles',
+        'job-offers.filled-count': '{count} pourvus',
         'job-offers.total-positions': '{count} postes au total',
         'job-offers.type.postdoc': 'Postdoc',
         'job-offers.type.phd': 'Doctorat',
         'job-offers.type.engineer': 'Ingénieur',
         'job-offers.type.intern': 'Stage',
-        'job-offers.deadline': 'Date limite',
+        'job-offers.expected-start': 'Début Prévu',
         'job-offers.published': 'Publié',
-        'job-offers.deadline-approaching': 'Bientôt fermé',
-        'job-offers.deadline-passed': 'Expiré',
+        'job-offers.position-filled': 'Poste Pourvu',
         'job-offers.key-requirements': 'Exigences Clés',
         'job-offers.more-requirements': '+{count} autres exigences',
         'job-offers.no-results': 'Aucune offre d\'emploi trouvée',
@@ -299,14 +361,48 @@ export const ui = {
         'job-offers.apply-now': 'Postuler Maintenant',
         'job-offers.view-all-positions': 'Voir Tous les Postes',
         'job-offers.back-to-careers': 'Retour aux Carrières',
+        'job-offers.position-filled-message': 'Ce poste a été pourvu. Veuillez consulter nos autres opportunités disponibles.',
+        'job-offers.filter.available': 'Disponible',
+        'job-offers.filter.filled': 'Pourvu',
+        'job-offers.filled-phd-positions': 'Doctorats',
+        'job-offers.started': 'Commencé',
+
+        // Job offer filters
+        'job-offers.filter.project': 'Projet',
+        'job-offers.filter.all-projects': 'Tous les Projets',
+        'job-offers.filter.type': 'Type',
+        'job-offers.filter.all-types': 'Tous les Types',
+        'job-offers.filter.status': 'Statut',
+        'job-offers.filter.all-status': 'Tous les Statuts',
+        'job-offers.filter.search': 'Rechercher',
 
         // Filters
         'filter.clear': 'Effacer Tous les Filtres',
+
+        // Badges
+        'badge.general': 'Programme EDT',
+        'badge.event': 'Événement',
+        'badge.press-release': 'Communiqué de Presse',
+        'badge.platform-update': 'Mise à Jour Plateforme',
 
         // News
         'news.no-results': 'Aucune actualité trouvée correspondant à vos critères.',
         'news.no-results-description': 'Essayez d\'ajuster vos filtres ou vos termes de recherche.',
         'news.results-count': 'Affichage de {count} actualités',
+
+        // News filters
+        'news.filter.project': 'Projet',
+        'news.filter.all-projects': 'Tous les Projets',
+        'news.filter.category': 'Catégorie',
+        'news.filter.all-categories': 'Toutes les Catégories',
+        'news.filter.sort': 'Trier',
+        'news.filter.search': 'Rechercher',
+
+        // News sorting
+        'news.sort.date-desc': 'Plus Récent d\'Abord',
+        'news.sort.date-asc': 'Plus Ancien d\'Abord',
+        'news.sort.title-asc': 'Titre A-Z',
+        'news.sort.title-desc': 'Titre Z-A',
 
         // News item
         'news-item.back-to-news': 'Retour aux Actualités',

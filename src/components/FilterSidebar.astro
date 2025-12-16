@@ -82,7 +82,10 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
                             aria-label={getFilterLabel(filter)}
                         >
                             {filter.options.map((option) => (
-                                <option value={option.value}>
+                                <option 
+                                    value={option.value}
+                                    selected={option.value === filter.defaultValue ? "selected" : undefined}
+                                >
                                     {getOptionLabel(option)}
                                 </option>
                             ))}
@@ -104,6 +107,7 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
                             name={filter.id}
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                             placeholder={filter.label}
+                            value={filter.defaultValue || ''}
                             aria-label={getFilterLabel(filter)}
                         />
                     </div>

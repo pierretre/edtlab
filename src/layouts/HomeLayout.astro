@@ -5,6 +5,9 @@ import { linkHelpers } from "@i18n/links";
 import { getCollection } from "astro:content";
 import ProjectGrid from "@components/ProjectGrid.astro";
 import Badge from "@components/Badge.astro";
+import { Picture } from "astro:assets";
+import logoEN from "../../src/assets/images/logo-en.png";
+import logoFR from "../../src/assets/images/logo-fr.png";
 
 export interface Props {
     title?: string;
@@ -43,9 +46,10 @@ const recentPublications = allPublications
     .slice(0, 3);
 
 const allJobOffers = await getCollection("job-offers", ({ data }) => {
-    return data.lang === lang && new Date(data.deadline) > new Date();
+    return data.lang === lang && !data.filled;
 });
 const activeJobOffers = allJobOffers.slice(0, 3);
+const logoImagePng = lang === "fr" ? logoFR : logoEN;
 ---
 
 <BaseLayout
@@ -144,6 +148,23 @@ const activeJobOffers = allJobOffers.slice(0, 3);
                         <p class="text-sm">{t("home.stats.open-positions")}</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="mt-6 mx-auto w-fit">
+                <Picture
+                    src={logoImagePng}
+                    alt="EDT Logo"
+                    class="h-full w-auto object-contain"
+                    sizes="(max-width: 768px), 350px"
+                    widths={[350]}
+                    quality={80}
+                    format="webp"
+                    pictureAttributes={{
+                        class: "flex-shrink-0 h-full",
+                    }}
+                    loading={"eager"}
+                    decoding={"sync"}
+                />
             </div>
         </div>
     </section>
@@ -369,14 +390,8 @@ const activeJobOffers = allJobOffers.slice(0, 3);
                                         </div>
                                         <p class="text-xs text-gray-500 mt-1">
                                             {job.data.location} •{" "}
-                                            {t("job-offers.deadline")}:{" "}
-                                            {new Date(
-                                                job.data.deadline,
-                                            ).toLocaleDateString(
-                                                lang === "en"
-                                                    ? "en-US"
-                                                    : "fr-FR",
-                                            )}
+                                            {t("job-offers.expected-start")}:{" "}
+                                            {job.data.expectedStartDate}
                                         </p>
                                     </div>
                                 ))}
