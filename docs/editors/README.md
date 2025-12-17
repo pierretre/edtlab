@@ -5,10 +5,14 @@ This directory contains comprehensive documentation for creating and managing co
 ## Quick Access
 
 - **🚀 [Quick Reference](quick-reference.md)** - Cheat sheet for common tasks
+- **⚡ [Workflow Guide](workflow-guide.md)** - Simple process from creation to publication
+- **📄 [Pages Guide](how-to/pages-guide.md)** - Complete page creation workflow
 - **📋 [Job Offers Guide](how-to/job-offers-guide.md)** - Complete job posting workflow
 - **📰 [News Guide](how-to/news-guide.md)** - Events and press releases
 - **📚 [Publications Guide](how-to/publications-guide.md)** - Research publication management
+- **🖼️ [Image Management](guidelines/image-management.md)** - Image storage, optimization, and usage
 - **✍️ [Style Guide](guidelines/content-style-guide.md)** - Writing standards
+- **⚙️ [Technical Reference](guidelines/frontmatter-reference.md)** - Frontmatter documentation
 
 ## Quick Start
 
