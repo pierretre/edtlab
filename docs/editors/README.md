@@ -1,20 +1,30 @@
-# Content Templates and Editor Documentation
+# Editor Documentation Hub
 
-This directory contains templates and documentation for creating and managing content on the EDT Research Website.
+This directory contains comprehensive documentation for creating and managing content on the EDT Research Website.
+
+## Quick Access
+
+- **🚀 [Quick Reference](quick-reference.md)** - Cheat sheet for common tasks
+- **📋 [Job Offers Guide](how-to/job-offers-guide.md)** - Complete job posting workflow
+- **📰 [News Guide](how-to/news-guide.md)** - Events and press releases
+- **📚 [Publications Guide](how-to/publications-guide.md)** - Research publication management
+- **✍️ [Style Guide](guidelines/content-style-guide.md)** - Writing standards
 
 ## Quick Start
 
-1. **Choose the appropriate template** from the templates directory based on your content type
-2. **Copy the template** to the appropriate location in `src/content/`
-3. **Fill in the frontmatter** with your content-specific information
-4. **Write your content** using Markdown or MDX syntax
-5. **Follow the style guide** for consistent formatting and structure
+1. **New to content creation?** Start with the [Content Style Guide](guidelines/content-style-guide.md)
+2. **Need specific instructions?** Check the relevant how-to guide above
+3. **Looking for templates?** Browse the templates directory
 
-## Directory Structure
+## Documentation Structure
 
 ```
 docs/editors/
-├── README.md                    # This file - overview and quick start
+├── README.md                    # This file - documentation hub
+├── how-to/                      # Step-by-step content creation guides
+│   ├── job-offers-guide.md     # Complete job offer creation guide
+│   ├── news-guide.md           # Events and press releases guide
+│   └── publications-guide.md   # Research publications guide
 ├── templates/                   # Content templates for different types
 │   ├── page-basic.md           # Basic page template
 │   ├── page-advanced.mdx       # Advanced page with components
@@ -22,48 +32,102 @@ docs/editors/
 │   ├── event.md               # Event entry template
 │   ├── press-release.md       # Press release template
 │   └── job-offer.md           # Job offer template
-└── guidelines/                 # Content creation guidelines
-    ├── content-style-guide.md # Writing and formatting guidelines
+└── guidelines/                 # Technical reference and style guides
+    ├── content-style-guide.md # Writing and formatting standards
     ├── frontmatter-reference.md # Complete frontmatter documentation
     ├── component-usage.md     # MDX component usage guide
-    ├── accessibility-guide.md # Accessibility requirements for content
-    └── job-offer-migration-guide.md # Migration guide for job offer schema changes
+    ├── image-management.md    # Image storage, optimization, and usage
+    └── accessibility-guide.md # Accessibility requirements
 ```
 
-## Content Types
+## Content Creation Guides
 
-The website supports the following content types:
+### 📄 [Pages Guide](how-to/pages-guide.md)
+Complete instructions for creating and modifying static content pages:
+- Basic vs advanced page types
+- File structure and organization
+- Frontmatter configuration
+- Working with MDX components
+- Bilingual content management
+- Quality assurance and best practices
+
+### 📋 [Job Offers Guide](how-to/job-offers-guide.md)
+Complete step-by-step instructions for creating and managing job postings:
+- Position types and requirements
+- File naming and organization
+- Frontmatter configuration
+- Writing effective job descriptions
+- Bilingual content management
+- Status updates and promotion
+
+### 📰 [News Guide](how-to/news-guide.md)
+Comprehensive guide for events and press releases:
+- Event announcements and coverage
+- Press release creation and distribution
+- Image requirements and optimization
+- Content promotion strategies
+- SEO and social media optimization
+
+### 📚 [Publications Guide](how-to/publications-guide.md)
+Detailed instructions for research publication entries:
+- Bibliographic information management
+- Publication types and categorization
+- Project association and tagging
+- Academic linking and DOI handling
+- Integration with project pages
+
+## Content Types Overview
 
 ### Pages (`src/content/pages/`)
-
-- **Basic Pages**: Simple content pages with standard formatting
-- **Advanced Pages**: Pages with interactive components and rich media
-- **Index Pages**: Landing pages that aggregate other content
+Static content pages with standard or advanced formatting, including project descriptions, program information, and resource pages.
 
 ### Collections (`src/content/`)
+Dynamic content collections that power the website's interactive features:
 
-- **Publications**: Research papers, articles, and reports
-- **Events**: Conferences, workshops, seminars
-- **Press Releases**: News announcements and press coverage
-- **Job Offers**: Employment opportunities and positions
-- **Menu**: Navigation structure data
+- **Publications** (`publications/`): Research papers, articles, and reports with filtering and search
+- **News** (`news/`): Events and press releases with chronological organization
+- **Job Offers** (`job-offers/`): Employment opportunities with status tracking
+- **Menu** (`menu/`): Navigation structure data for site organization
 
-## Bilingual Content
+## Key Requirements
 
-All content must be created in both English and French:
+### Bilingual Content
+All content must be available in both English and French:
+- Use consistent file naming: `{identifier}-{lang}.md`
+- Maintain equivalent information across languages
+- Adapt cultural context appropriately
+- Ensure complete translation coverage
 
-- English files: `en.md` or `en.mdx`
-- French files: `fr.md` or `fr.mdx`
-- Consistent slugs and structure across languages
-- Complete translation coverage required
+### Content Validation
+All content is validated against schemas in `src/content/config.ts`:
+- Required fields must be present and correctly formatted
+- Enum values must match specified options
+- URLs and email addresses are validated
+- Date formats must follow YYYY-MM-DD standard
 
-## Getting Help
+## Getting Started
 
-- **Style Guide**: See [guidelines/content-style-guide.md](guidelines/content-style-guide.md)
-- **Frontmatter Reference**: See [guidelines/frontmatter-reference.md](guidelines/frontmatter-reference.md)
-- **Component Guide**: See [guidelines/component-usage.md](guidelines/component-usage.md)
-- **Job Offer Migration**: See [guidelines/job-offer-migration-guide.md](guidelines/job-offer-migration-guide.md)
+### For New Editors
+1. Read the [Content Style Guide](guidelines/content-style-guide.md) for writing standards
+2. Choose the appropriate how-to guide for your content type
+3. Use templates as starting points for new content
 
-## Validation
+### For Experienced Editors
+- Consult how-to guides for specific workflows
+- Reference technical guidelines for advanced features
+- Use templates for consistent formatting
+- Check migration guides for schema updates
 
-All content is automatically validated against schemas defined in `src/content/config.ts`. The file `src/content/config.ts` is the authoritative source for frontmatter fields and types — editors should consult it when in doubt. Common validation errors and solutions are documented in the troubleshooting section of each guideline.
+## Technical Resources
+
+- **Schema Reference**: `src/content/config.ts` - Authoritative source for content structure
+- **Validation**: Automatic validation during build process
+- **Templates**: Pre-configured starting points for each content type
+- **Guidelines**: Detailed technical and style requirements
+
+## Support and Troubleshooting
+
+- **Common Issues**: Check troubleshooting sections in each guide
+- **Validation Errors**: Consult frontmatter reference and schema documentation
+- **Style Questions**: Reference the content style guide
+- **Technical Problems**: Review component usage and accessibility guides
