@@ -35,4 +35,4 @@ playwright-report/
 playwright/.cache/
 
 # Matomo volumes 
-matomo
+matomo*
