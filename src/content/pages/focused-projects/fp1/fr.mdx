@@ -12,7 +12,7 @@ projectId: "PC1"
 
 import PartnersGrid from '@components/PartnersGrid.astro';
 import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
-import avatar from '@assets/images/investigators/avatar.png';
+import avatar from '@assets/images/investigators/julien_deantoni.png';
 
 ## Aperçu
 
@@ -22,17 +22,15 @@ Parce qu'aucun modèle unique ne peut capturer tous les aspects d'un système co
 
 Ces modèles peuvent être classés selon plusieurs dimensions, telles que la méthode d'inférence (inductive vs. déductive), l'approche de modélisation (empirique vs. mécaniste), la préoccupation (comportementale, structurelle, sécurité, etc.), l'objectif (descriptif vs. prescriptif), la fidélité et la portée temporelle.
 
-La plupart des JN s'appuient sur l'hybridation, combinant des modèles complémentaires — pilotés par les données, basés sur la physique ou mixtes — pour améliorer la précision, la robustesse et l'adaptabilité. Des techniques telles que les réseaux de neurones informés par la physique et la quantification de l'incertitude illustrent comment des modèles hétérogènes peuvent être fusionnés pour exploiter leurs forces respectives.
+La plupart des JN s'appuient sur l'hybridation, combinant des modèles complémentaires — pilotés par les données, basés sur la physique ou mixtes — pour améliorer la précision, la robustesse et l'adaptabilité. Des techniques telles que les réseaux de neurones informés par la physique et la quantification de l'incertitude illustrent comment des modèles hétérogènes peuvent être fusionnés pour exploiter leurs forces respectives. De nos jours, cette hybridation est réalisée de manière ad hoc et nécessite par conséquent une approche plus systématique et fondée sur des principes établis.
 
-La construction de telles structures hybrides nécessite :
+Pour répondre à cette problématique, le projet Catalyst se concentre sur trois axes de recherche liés à l’hybridation des modèles :
+ * la définition d’interfaces cohérentes pour l’interrogation et la manipulation des modèles ;
+ * la spécification d’opérateurs de composition permettant d’hybrider et de fédérer les modèles ;
+ * la mise en oeuvre d’outils appropriés de vérification et de validation pour alimenter ces interfaces.
 
-Des interfaces cohérentes pour interroger et manipuler les modèles
+À travers ces axes de recherche, l’objectif de Catalyst est de développer un ensemble de méthodes et d’outils permettant de manipuler de manière homogène des modèles déductifs et inductifs, tout en conservant l’accès à leurs principales caractéristiques afin de les hybrider et de les fédérer de manière fiable.
 
-Des opérateurs et des flux de travail pour orchestrer les combinaisons
-
-Une gestion appropriée de l'incertitude pour assurer la fiabilité
-
-Le projet se concentre sur ces sujets scientifiques avec des objectifs clairs : permettre la manipulation générique de modèles, simplifier l'hybridation grâce à des opérateurs dédiés, et fournir des mécanismes qui garantissent des combinaisons de modèles fiables et cohérentes.
 
 ## Cas d'Usage Associés
 
@@ -41,6 +39,8 @@ Focus spécial : **combiner des modèles basés sur les données et des modèles
 
 ## Investigateur et Partenaires du Projet
 
+À ce jour, les partenaires impliqués sont les suivants: Université Côte d'Azur, I3S, Inria, CETIM, INRAE, Telecom Paris, Aniti, Université de Pau et des Pays de l'Adour, IMT-Atlantique, CEA et IRIT.
+
 ### Investigateur Principal :
 
 <PrincipalInvestigator
@@ -48,14 +48,14 @@ name="Julien Deantoni"
 headline="Professeur des Universités à l'Université Côte d'Azur et Responsable de l'équipe Kairos"
 picture={avatar}
 >
-Julien Deantoni est professeur des universités à l'Université Côte d'Azur et responsable de l'équipe Kairos. Il applique des modélisations et abstractions rigoureuses pour les modèles hétérogènes depuis sa thèse de doctorat en 2007. Il a publié sur l'importance de gérer la globalisation des langages de modélisation il y a plus de 10 ans. Depuis, il a publié divers articles et développé des outils pour faciliter cette globalisation. Il a également publié des articles soulignant la nécessité de considérer la sémantique des différents modèles pour des simulations collaboratives plus précises et efficaces. Plus récemment, il a travaillé sur la notion de multi-fidélité dans les jumeaux numériques et a déjà hybridé des modèles de JN afin d'atténuer l'incertitude et par conséquent fournir un meilleur contrôle dans le JP. Conjointement, il a participé (parfois en tant qu'investigateur principal) à de nombreux projets collaboratifs.
+Julien Deantoni est professeur des universités à l'Université Côte d'Azur et responsable de l'équipe Kairos. Il applique des modélisations et abstractions rigoureuses pour les modèles hétérogènes depuis sa thèse de doctorat en 2007. Il a publié sur l'importance de gérer la globalisation des langages de modélisation il y a plus de 10 ans. Depuis, il a publié divers articles et développé des outils pour faciliter cette globalisation. Il a également publié des articles soulignant la nécessité de considérer la sémantique des différents modèles pour des simulations collaboratives plus précises et efficaces. Plus récemment, il a travaillé sur la notion de multi-fidélité dans les jumeaux numériques et a déjà hybridé des modèles de JN afin d'atténuer l'incertitude et par conséquent fournir un meilleur contrôle dans le JP. Conjointement, il a participé à de nombreux projets collaboratifs.
 </PrincipalInvestigator>
  
 ### Partenaires Participants :
 
 <PartnersGrid partners={['Inria', 'CNRS', 'INRAE']} ></PartnersGrid>
 
-## Mise en Œuvre du Projet
+## Mise en Oeuvre du Projet
 
 Le projet est structuré en **trois packages de travail cohérents**, avec la **multi-fidélité** et l'**incertitude** abordées tout au long.
 
