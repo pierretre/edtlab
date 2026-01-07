@@ -1,15 +1,15 @@
 ---
-title: "PhD Position - Human-Computer Interaction for Digital Twins"
+title: "PhD Position - DT operator tasks modeling to build dedicated interactions"
 tags:
   - "PC5"
 type: "phd"
-location: "Brest, France"
-expectedStartDate: "October 2025"
-filled: true
-publishedDate: 2024-03-15
-description: "PhD position in Human-Computer Interaction focusing on immersive interfaces for digital twin systems"
-requirements: ["Master's degree in Computer Science, HCI, or related field", "Experience with VR/AR technologies", "Strong programming skills (C++, JavaScript, Python)", "Knowledge of 3D graphics and visualization", "Fluency in English and French"]
-contacts: ["thierry.duval@imt-atlantique.fr", "recrutement@imt-atlantique.fr"]
+location: "Rennes, France"
+expectedStartDate: "October 2026"
+filled: false
+publishedDate: 2026-03-15
+description: "PhD position in Human-Computer Interaction and Virtual Reality focusing on immersive interfaces for digital twin systems"
+requirements: ["Master's degree in Computer Science, HCI, VR or related field", "Experience with VR/AR technologies", "Strong programming skills (C#, JavaScript, Python)", "Knowledge of 3D graphics and visualization", "Fluency in English and French"]
+contacts: ["arnaud.blouin@irisa.fr"]
 lang: "en"
 ---
 
@@ -36,7 +36,7 @@ The PhD research will contribute to advancing the state-of-the-art in:
 
 ## Research Environment
 
-The position is based at IMT Atlantique in Brest, within the INUIT team at Lab-STICC. You will work under the supervision of Prof. Thierry Duval and collaborate with researchers across the EDT consortium.
+The position is based at Inria in Rennes, within the Diverse team at IRISA. You will work under the supervision of Ass. Prof. Arnaud Blouin and collaborate with researchers across the EDT consortium. You will be co-supervised by Professor Benoit Combemale from Inria Rennes and by professor Philippe Palanque from Université Toulouse Capitole.
 
 ### Facilities and Resources
 - State-of-the-art VR/AR equipment and immersive environments
@@ -83,18 +83,18 @@ Early applications are encouraged as the position may be filled before the deadl
 
 ## Contact Information
 
-**Supervisor**: Prof. Thierry Duval  
-**Email**: thierry.duval@imt-atlantique.fr  
-**Phone**: +33 2 29 00 15 15
+**Supervisor**: Ass. Prof. Arnaud Blouin  
+**Email**: arnaud.blouin@irisa.fr  
+**Phone**: +33 
 
 **Administrative Contact**: HR Department  
-**Email**: recrutement@imt-atlantique.fr
+**Email**: 
 
-For technical questions about the research, please contact Prof. Duval directly. For administrative questions, contact the HR department.
+For technical questions about the research, please contact Ass. Prof. Blouin directly. For administrative questions, contact the HR department.
 
-## About IMT Atlantique
+## About INRIA Rennes
 
-IMT Atlantique is a leading French engineering school and research institution, part of the Institut Mines-Télécom. The school is recognized for its excellence in digital technologies, energy, and environment, with strong industry partnerships and international collaborations.
+INRIA...
 
 ## About the EDT Program
 
