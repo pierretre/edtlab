@@ -24,16 +24,16 @@
     "@tailwindcss/typography": "^0.5.19",
     "astro": "^5.14.3",
     "flowbite": "^3.1.2",
-    "typescript": "^5.9.3",
-    "sharp": "^0.34.4"
+    "sharp": "^0.34.4",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.49.1",
-    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/coverage-v8": "^4.0.16",
     "jsdom": "^25.0.1",
     "playwright": "^1.49.1",
     "sass-embedded": "^1.93.2",
-    "vitest": "^2.1.8"
+    "vitest": "^4.0.16"
   }
 }
