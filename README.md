@@ -6,7 +6,6 @@ A multilingual research website platform built with Astro.js, featuring anonymou
 
 - 🌍 **Bilingual Support**: English and French content management
 - 📊 **Anonymous Analytics**: Cookieless Matomo integration with GDPR compliance
-- ♿ **Accessibility**: RGAA 4.1 AA compliant with screen reader support
 - 🎨 **Modern Design**: Tailwind CSS with Flowbite components
 - 📱 **Responsive**: Mobile-first design approach
 - 🔍 **SEO Optimized**: Meta tags, structured data, and sitemap generation
