@@ -43,8 +43,7 @@
     },
     "UPPA": {
         "fullname": "Université de Pau et des Pays de l’Adour",
-        "logo": "/src/assets/images/partners/UPPA.png",
-        "children": []
+        "logo": "/src/assets/images/partners/UPPA.png"
     },
     "Télécom Paris": {
         "fullname": "Télécom Paris – Institut Polytechnique de Paris",
@@ -56,8 +55,7 @@
     },
     "ENPC": {
         "fullname": "École des Ponts ParisTech",
-        "logo": "/src/assets/images/partners/ENPC.jpg",
-        "children": []
+        "logo": "/src/assets/images/partners/ENPC.jpg"
     },
     "Université de Bourgogne": {
         "fullname": "Université Bourgogne-Europe",
@@ -78,8 +76,7 @@
     },
     "Université Toulouse 3 (Aniti)": {
         "fullname": "Université Toulouse III – Paul Sabatier (ANITI)",
-        "logo": "/src/assets/images/partners/UnivToulousePaulSabatier.jpg",
-        "children": []
+        "logo": "/src/assets/images/partners/UnivToulousePaulSabatier.jpg"
     },
     "Université Toulouse Jean Jaurès": {
         "fullname": "Université Toulouse Jean-Jaurès",
@@ -99,5 +96,9 @@
     "DISP": {
         "fullname": "Decision and Information Systems for Production systems",
         "logo": "/src/assets/images/partners/ULyon2.png"
+    },
+    "Université de Rennes": {
+        "fullname": "Université de Rennes",
+        "logo": "/src/assets/images/partners/Univ Rennes.png"
     }
 }
