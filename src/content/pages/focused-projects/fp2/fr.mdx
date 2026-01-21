@@ -12,11 +12,11 @@ projectId: "PC2"
 
 import PartnersGrid from '@components/PartnersGrid.astro';
 import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
-import avatar from '@assets/images/investigators/avatar.png';
+import avatar from '@assets/images/investigators/jmj.jpg';
 
 ## Aperçu
 
-Les jumeaux numériques (JN) sont apparus comme un moyen d'interagir avec le monde physique et d'explorer des scénarios hypothétiques à différents niveaux d'abstraction. Cependant, la plupart des JN sont des entités monolithiques conçues de manière ad-hoc pour des jumeaux physiques (JP) spécifiques.
+Les jumeaux numériques (JN) sont apparus comme un moyen d'interagir avec le monde physique et d'explorer des scénarios hypothétiques à différents niveaux d'abstraction. Cependant, la plupart des JN sont des entités monolithiques conçues de manière ad hoc pour des jumeaux physiques (JP) spécifiques.
 
 Pour permettre une mise à l'échelle industrielle de cette technologie, nous devons rendre possible la construction de JN à partir de parties modulaires, de manière similaire à la façon dont Gustave Eiffel a révolutionné le génie civil à la fin du 19ème siècle avec la construction modulaire de la Tour Eiffel.
 
@@ -39,12 +39,12 @@ name="Jean-Marc Jézéquel"
 headline="Professeur d'Ingénierie Logicielle à l'Université de Rennes/Inria"
 picture={avatar}
 >
-Jean-Marc Jézéquel est Professeur d'Ingénierie Logicielle à l'Université de Rennes et membre de l'équipe DiverSE à IRISA/Inria, ainsi que fellow de l'Institut Universitaire de France (IUF). Depuis 2024, il est Président d'Informatics Europe. De 2012 à 2020, il a été Directeur d'IRISA, l'un des plus grands laboratoires publics de recherche en informatique en France. En 2016, il a reçu la Médaille d'Argent du CNRS et en 2020 le prix de carrière IEEE/ACM MODELS. Il a été professeur invité à l'Université McGill en 2022. Ses intérêts incluent l'ingénierie logicielle dirigée par les modèles pour les jumeaux numériques avec des contraintes de qualité de service, incluant sécurité, fiabilité, performance, temporalité, etc. Il est le PI du projet franco-allemand MBDO pour aider à construire des jumeaux numériques pour l'Industrie 5.0 de manière DevOps. Il est l'auteur de 4 livres et de plus de 300 publications dans des revues et conférences internationales.
+Jean-Marc Jézéquel est Professeur d'Ingénierie Logicielle à l'Université de Rennes et membre de l'équipe DiverSE à IRISA/Inria, ainsi que membre de l'Institut Universitaire de France (IUF). Depuis 2024, il est Président d'Informatics Europe. De 2012 à 2020, il a été Directeur d'IRISA, l'un des plus grands laboratoires publics de recherche en informatique en France. En 2016, il a reçu la Médaille d'Argent du CNRS et en 2020 le prix de carrière IEEE/ACM MODELS. Il a été professeur invité à l'Université McGill en 2022. Ses intérêts incluent l'ingénierie logicielle dirigée par les modèles pour les jumeaux numériques avec des contraintes de qualité de service, incluant sécurité, fiabilité, performance, temporalité, etc. Il est le PI du projet franco-allemand MBDO pour aider à construire des jumeaux numériques pour l'Industrie 5.0 de manière DevOps. Il est l'auteur de 4 livres et de plus de 300 publications dans des revues et conférences internationales.
 </PrincipalInvestigator>
 
 ### Partenaires Participants :
 
-<PartnersGrid partners={['Inria', 'IMT', 'CEA', 'CNRS']} ></PartnersGrid>
+<PartnersGrid partners={['Inria', 'IMT Atlantique', 'U Bourgogne', 'U Lumière Lyon 2', 'UPPA', 'U Rennes', 'U Toulouse Jean Jaurès']} ></PartnersGrid>
 
 ## Mise en Œuvre du Projet
 
@@ -53,8 +53,8 @@ Le projet est structuré en **trois packages de travail complémentaires**, abor
 <details>
 <summary><h3>Workpackage1 : Architecture de Référence JN</h3></summary>
 
-**Responsable :** DiverSE (Inria)  
-**Partenaires :** P4S (IMT), List (CEA), CRAN (CNRS), DISP (Univ. Lumière Lyon 2), UPPA
+**Responsable :** DiverSE (Inria/U. Rennes)  
+**Partenaires :** P4S (IMT), DISP (Univ. Lumière Lyon 2), UPPA
 
 **Objectifs :**
 - Développer une théorie unifiée des méta-données pour la gestion de la **variabilité, fidélité et incertitude**
@@ -72,11 +72,11 @@ Le projet est structuré en **trois packages de travail complémentaires**, abor
 <summary><h3>Workpackage2 : Modularisation et Composabilité JN</h3></summary>
 
 **Responsable :** P4S (IMT)  
-**Partenaires :** DiverSE (Inria), DISP (Univ. Lumière Lyon 2), CIAD (U. de Bourgogne)
+**Partenaires :** DiverSE (Inria/U. Rennes), DISP (Univ. Lumière Lyon 2), CIAD (U. de Bourgogne)
 
 **Objectifs :**
 - Permettre la construction de JN à partir de **parties pré-existantes** ou par rétro-ingénierie
-- Supporter la composition au **moment de la conception** (composants logiciels) et au **moment du déploiement** (Systèmes de Systèmes)
+- Supporter la composition au **moment de la conception** (composants logiciels) et au **moment du déploiement** (Systèmes de Systèmes, Fédérations)
 - Gérer l'évolution incluant les systèmes neuromorphiques
 
 **Tâches Clés :**
@@ -90,7 +90,7 @@ Le projet est structuré en **trois packages de travail complémentaires**, abor
 <summary><h3>Workpackage3 : Interopérabilité Sémantique JN</h3></summary>
 
 **Responsable :** Moex (Inria)  
-**Partenaires :** Wimmics (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), IGN
+**Partenaires :** Wimmics (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès)
 
 **Objectifs :**
 - Appliquer les **technologies du web sémantique** pour l'alignement d'ontologies entre JN conçus indépendamment
