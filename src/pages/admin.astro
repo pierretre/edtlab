@@ -1,0 +1,118 @@
+---
+// Page d'administration Decap CMS
+// Cette page charge l'interface du CMS pour éditer le contenu
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex" />
+        <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+        <title>Content Manager - EDT Lab</title>
+        <style>
+            body {
+                margin: 0;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+            }
+
+            #nc-root {
+                min-height: 100vh;
+            }
+
+            .loading-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #665ba7 0%, #4f4783 100%);
+                color: white;
+                z-index: 9999;
+                transition: opacity 0.3s ease-out;
+            }
+
+            .loading-overlay.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .spinner {
+                border: 4px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top: 4px solid white;
+                width: 50px;
+                height: 50px;
+                animation: spin 1s linear infinite;
+                margin-bottom: 1rem;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="loading-overlay" class="loading-overlay">
+            <div style="text-align: center;">
+                <div class="spinner"></div>
+                <h2>Loading Content Manager...</h2>
+            </div>
+        </div>
+
+        <!-- Decap CMS -->
+        <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"
+        ></script>
+
+        <script>
+            // Masquer le loader une fois que Decap CMS est chargé
+            window.addEventListener("load", function () {
+                // Attendre que le DOM de Decap CMS soit prêt
+                setTimeout(function () {
+                    const loader = document.getElementById("loading-overlay");
+                    const ncRoot = document.getElementById("nc-root");
+
+                    // Vérifier si Decap CMS a créé son conteneur
+                    if (
+                        ncRoot ||
+                        document.querySelector("[data-slate-editor]")
+                    ) {
+                        if (loader) {
+                            loader.classList.add("hidden");
+                            setTimeout(function () {
+                                loader.remove();
+                            }, 300);
+                        }
+                    } else {
+                        // Réessayer après un court délai
+                        setTimeout(arguments.callee, 100);
+                    }
+                }, 500);
+            });
+
+            // Fallback : masquer après 3 secondes maximum
+            setTimeout(function () {
+                const loader = document.getElementById("loading-overlay");
+                if (loader) {
+                    loader.classList.add("hidden");
+                    setTimeout(function () {
+                        loader.remove();
+                    }, 300);
+                }
+            }, 3000);
+        </script>
+    </body>
+</html>
