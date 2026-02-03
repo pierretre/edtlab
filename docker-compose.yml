@@ -3,11 +3,14 @@ services:
     image: pierretre/edtlab:latest
     container_name: edtlab_statics
     restart: always
-    network_mode: bridge
+    networks:
+      - edtlab_network
     ports:
       - "0.0.0.0:4001:80"
     env_file:
       - .env
+    depends_on:
+      - api-node
 
   api-node:
     build:
@@ -15,7 +18,8 @@ services:
       dockerfile: Dockerfile
     container_name: edtlab_api_node
     restart: always
-    network_mode: bridge
+    networks:
+      - edtlab_network
     env_file:
       - .env
     ports:
@@ -26,6 +30,8 @@ services:
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_NAME=${SENDER_NAME}
       - APP_ENV=${APP_ENV:-production}
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
@@ -37,7 +43,8 @@ services:
     image: mariadb:10.11
     container_name: edtlab_matomo-db
     restart: always
-    network_mode: bridge
+    networks:
+      - edtlab_network
     env_file:
       - .env
     environment:
@@ -61,7 +68,8 @@ services:
     image: matomo:latest
     container_name: edtlab_matomo
     restart: always
-    network_mode: bridge
+    networks:
+      - edtlab_network
     env_file:
       - .env
     links:
@@ -84,3 +92,7 @@ services:
       - ./matomo-apache-config.conf:/etc/apache2/conf-enabled/matomo.conf:ro
     ports:
       - "0.0.0.0:4002:80"
+
+networks:
+  edtlab_network:
+    driver: bridge

@@ -23,7 +23,8 @@ const corsOptions = {
             const allowedOrigins = [
                 'http://localhost:4321',
                 'http://localhost:80',
-                'https://edtlab.fr'
+                'https://edtlab.fr',
+                'http://localhost:4001' // Docker local
             ];
 
             if (!origin || allowedOrigins.includes(origin)) {
@@ -34,7 +35,7 @@ const corsOptions = {
         }
     },
     credentials: true,
-    methods: ['POST', 'OPTIONS'],
+    methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
     maxAge: 86400 // 24 hours
 };
@@ -113,6 +114,118 @@ const escapeHtml = (text) => {
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', service: 'edtlab-api' });
+});
+
+// OAuth callback endpoint for Decap CMS
+app.get('/auth', async (req, res) => {
+    try {
+        const code = req.query.code;
+
+        if (!code) {
+            return res.status(400).send('Missing authorization code');
+        }
+
+        // Get GitHub OAuth credentials from environment
+        const clientId = process.env.GITHUB_CLIENT_ID;
+        const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+
+        console.error(clientId, clientSecret)
+
+        if (!clientId || !clientSecret) {
+            console.error('Missing GitHub OAuth credentials');
+            return res.status(500).send('Server configuration error');
+        }
+
+        // Exchange code for access token
+        const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                client_id: clientId,
+                client_secret: clientSecret,
+                code,
+            }),
+        });
+
+        const data = await tokenResponse.json();
+
+        if (data.error) {
+            console.error('GitHub OAuth error:', data.error_description);
+            return res.status(400).send(`GitHub OAuth error: ${data.error_description}`);
+        }
+
+        // Return HTML that posts message to opener window (Decap CMS)
+        const html = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Authorization Success</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #665BA7 0%, #4F4783 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h2>Authorization Successful</h2>
+        <p>Redirecting back to CMS...</p>
+    </div>
+    <script>
+        (function() {
+            const data = ${JSON.stringify({ token: data.access_token, provider: 'github' })};
+            const message = 'authorization:github:success:' + JSON.stringify(data);
+            
+            if (window.opener) {
+                window.opener.postMessage(message, window.location.origin);
+                setTimeout(function() {
+                    window.close();
+                }, 1000);
+            } else {
+                document.body.innerHTML = '<div class="container"><h2>Error</h2><p>Unable to communicate with parent window. Please close this window and try again.</p></div>';
+            }
+        })();
+    </script>
+</body>
+</html>
+        `;
+
+        res.setHeader('Content-Type', 'text/html');
+        res.send(html);
+
+    } catch (error) {
+        console.error('OAuth error:', error);
+        res.status(500).send('An error occurred during authentication');
+    }
 });
 
 // Contact form endpoint

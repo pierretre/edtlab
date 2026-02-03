@@ -1,0 +1,131 @@
+backend:
+  name: github
+  repo: pierretre/edtlab
+  branch: main
+  base_url: https://wwww.edtlab.fr
+  auth_endpoint: /auth
+
+# Configuration des médias
+media_folder: "src/assets/images"
+public_folder: "/src/assets/images"
+
+# Collections de contenu
+collections:
+  # Pages principales
+  - name: "pages"
+    label: "Pages"
+    label_singular: "Page"
+    folder: "src/content/pages"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "URL Slug", name: "href", widget: "string", required: true }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Enable Table of Contents", name: "toc", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # Actualités / News
+  - name: "news"
+    label: "News"
+    label_singular: "News Article"
+    folder: "src/content/news"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
+      - { label: "Publication Date", name: "pubDate", widget: "datetime", required: true }
+      - { label: "Description", name: "description", widget: "text", required: true }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Type", name: "type", widget: "select", options: ["news", "event", "press-release"], default: "news", required: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # Offres d'emploi / Job Offers
+  - name: "job-offers"
+    label: "Job Offers"
+    label_singular: "Job Offer"
+    folder: "src/content/job-offers"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
+      - { label: "Publication Date", name: "pubDate", widget: "datetime", required: true }
+      - { label: "Deadline", name: "deadline", widget: "datetime", required: false }
+      - { label: "Type", name: "type", widget: "select", options: ["phd", "postdoc", "engineer", "intern"], required: true }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Project", name: "project", widget: "string", required: false }
+      - { label: "Status", name: "status", widget: "select", options: ["open", "filled", "closed"], default: "open", required: true }
+      - { label: "Description", name: "description", widget: "text", required: true }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # Publications
+  - name: "publications"
+    label: "Publications"
+    label_singular: "Publication"
+    folder: "src/content/publications"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Authors", name: "authors", widget: "list", required: true }
+      - { label: "Publication Date", name: "pubDate", widget: "datetime", required: true }
+      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "workshop", "technical-report", "book-chapter"], required: true }
+      - { label: "Venue", name: "venue", widget: "string", required: false }
+      - { label: "DOI", name: "doi", widget: "string", required: false }
+      - { label: "URL", name: "url", widget: "string", required: false }
+      - { label: "PDF", name: "pdf", widget: "file", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Abstract", name: "description", widget: "text", required: true }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  # Menu de navigation
+  - name: "menu"
+    label: "Navigation Menu"
+    files:
+      - label: "English Menu"
+        name: "en"
+        file: "src/content/menu/en.json"
+        fields:
+          - label: "Menu Items"
+            name: "menu"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+              - label: "Submenu"
+                name: "submenu"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
+      
+      - label: "French Menu"
+        name: "fr"
+        file: "src/content/menu/fr.json"
+        fields:
+          - label: "Menu Items"
+            name: "menu"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+              - label: "Submenu"
+                name: "submenu"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
