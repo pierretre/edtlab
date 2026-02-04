@@ -7,39 +7,38 @@
     <meta name="robots" content="noindex" />
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
     <title>Content Manager - EDT Lab</title>
+    
+    <script>
+        // Listen for OAuth callback messages BEFORE Decap CMS loads
+        window.addEventListener('message', (event) => {
+            console.log('[OAuth] Received message:', event.data);
+            
+            if (typeof event.data === 'string' && event.data.startsWith('authorization:github:success:')) {
+                const jsonPart = event.data.substring('authorization:github:success:'.length);
+                try {
+                    const content = JSON.parse(jsonPart);
+                    console.log('[OAuth] Storing token...');
+                    
+                    // Decap CMS expects this exact format
+                    const authData = {
+                        token: content.token,
+                        provider: 'github'
+                    };
+                    
+                    localStorage.setItem('netlify-cms-user', JSON.stringify(authData));
+                    
+                    console.log('[OAuth] Reloading...');
+                    window.location.reload();
+                } catch (e) {
+                    console.error('[OAuth] Error:', e);
+                }
+            }
+        }, false);
+    </script>
 </head>
 
 <body>
-    <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
-
-    <script>
-        // Handle OAuth callback when redirected back from GitHub
-        (function () {
-            // Check if we have auth data in localStorage (from callback page)
-            const authData = localStorage.getItem('netlify-cms-user') || localStorage.getItem('decap-cms-user');
-
-            if (authData) {
-                console.log('Found auth data in localStorage:', authData);
-
-                // Post message to self to trigger Decap CMS auth
-                try {
-                    const data = JSON.parse(authData);
-                    const message = 'authorization:github:success:' + JSON.stringify(data);
-                    console.log('Posting message to trigger auth:', message);
-                    window.postMessage(message, window.location.origin);
-
-                    // Clean up localStorage after posting message
-                    setTimeout(function () {
-                        localStorage.removeItem('netlify-cms-user');
-                        localStorage.removeItem('decap-cms-user');
-                    }, 1000);
-                } catch (e) {
-                    console.error('Error processing auth data:', e);
-                }
-            }
-        })();
-    </script>
 </body>
 
 </html>

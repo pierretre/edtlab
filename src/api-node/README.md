@@ -1,144 +1,131 @@
-# EDT Lab API - Node.js
+# EDT Lab API - Node.js Backend
 
-Contact form API server for the EDT Lab website, migrated from PHP to Node.js.
+TypeScript-based backend service for EDT Lab website providing:
+- Contact form email handling via Brevo
+- OAuth authentication for Decap CMS (GitHub)
+- Rate limiting and security features
 
-## Features
+## Project Structure
 
-- Contact form email handling via Brevo (formerly Sendinblue)
-- Rate limiting (60 seconds between submissions per IP)
-- CORS configuration for development and production
-- HTML email templates with reply functionality
-- Security headers via Helmet
-- Health check endpoint
-
-## Environment Variables
-
-Required environment variables:
-
-```bash
-BREVO_API_KEY=your_brevo_api_key
-LIST_INBOX=recipient@example.com
-SENDER_EMAIL=contact@edtlab.fr
-SENDER_NAME=EDT Research Program
-APP_ENV=production  # or 'development' for dev mode
+```
+src/api-node/
+├── index.ts                 # Main server entry point
+├── services/
+│   ├── auth.service.ts      # OAuth authentication logic
+│   ├── callback.service.ts  # OAuth callback handling
+│   └── mail.service.ts      # Email sending via Brevo
+├── utils/
+│   └── rate-limit.ts        # Rate limiting utilities
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 ## Development
 
+### Prerequisites
+- Node.js >= 18.0.0
+- npm
+
+### Install Dependencies
 ```bash
-# Install dependencies
 npm install
+```
 
-# Run in development mode (with auto-reload)
+### Environment Variables
+Create a `.env` file with:
+```env
+# Server
+PORT=8080
+APP_ENV=development
+
+# GitHub OAuth (for Decap CMS)
+GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_client_secret
+GITHUB_REPO_PRIVATE=0
+
+# Brevo Email
+BREVO_API_KEY=your_brevo_api_key
+SENDER_EMAIL=contact@edtlab.fr
+SENDER_NAME=EDT Research Program
+LIST_INBOX=recipient@example.com
+```
+
+### Run Development Server
+```bash
 npm run dev
+```
 
-# Run in production mode
+The server will start on `http://localhost:8080` with auto-reload on file changes.
+
+### Run Production Server
+```bash
 npm start
 ```
 
-## Docker
-
+### Type Checking
 ```bash
-# Build image
-docker build -t edtlab-api-node .
+npm run type-check
+```
 
-# Run container
-docker run -p 8080:8080 \
-  -e BREVO_API_KEY=your_key \
-  -e LIST_INBOX=recipient@example.com \
-  -e SENDER_EMAIL=contact@edtlab.fr \
-  -e SENDER_NAME="EDT Research Program" \
-  -e APP_ENV=production \
-  edtlab-api-node
+### Build (optional)
+```bash
+npm run build
 ```
 
 ## API Endpoints
 
-### POST /
+### Health Check
+```
+GET /health
+```
+Returns server status.
 
-Submit contact form
+### OAuth Authentication (Decap CMS)
+```
+GET /auth?provider=github
+```
+Initiates GitHub OAuth flow for Decap CMS.
 
-**Request body:**
-```json
+```
+GET /callback?provider=github&code=...
+```
+Handles OAuth callback and returns token to CMS.
+
+### Contact Form
+```
+POST /
+Content-Type: application/json
+
 {
   "name": "John Doe",
   "email": "john@example.com",
-  "organization": "Example Corp",
   "subject": "general",
-  "message": "Hello, I have a question...",
-  "privacy": true
+  "message": "Hello...",
+  "privacy": true,
+  "organization": "Optional Org"
 }
 ```
 
-**Subject options:**
-- `general` - General Inquiry
-- `collaboration` - Collaboration
-- `research` - Research
-- `technical` - Technical Support
-- `media` - Media
-- `other` - Other
+## Docker
 
-**Response:**
-```json
-{
-  "success": true
-}
+### Development
+```bash
+docker build -f Dockerfile.dev -t edtlab-api:dev .
+docker run -p 8080:8080 --env-file .env edtlab-api:dev
 ```
 
-**Error responses:**
-- `400` - Missing required fields or privacy not accepted
-- `429` - Rate limit exceeded
-- `500` - Server error
-
-### GET /health
-
-Health check endpoint
-
-**Response:**
-```json
-{
-  "status": "ok",
-  "service": "edtlab-api"
-}
+### Production
+```bash
+docker build -f Dockerfile -t edtlab-api:prod .
+docker run -p 8080:8080 --env-file .env edtlab-api:prod
 ```
 
-## Rate Limiting
+## Technologies
 
-- 60 seconds between submissions per IP address
-- Rate limit data stored in temporary file
-- Old entries (>2 hours) automatically cleaned up
-
-## Security
-
-- Helmet.js for security headers
-- CORS with origin whitelist in production
-- Input sanitization (HTML escaping)
-- Non-root user in Docker container
-- Health check for container orchestration
-
-## Migration from PHP
-
-This Node.js implementation is functionally identical to the original PHP version:
-
-- Same API endpoints and request/response format
-- Same rate limiting behavior
-- Same email template and Brevo integration
-- Same CORS and security configuration
-- Compatible with existing frontend code
-
-## Dependencies
-
-- `express` - Web framework
-- `@getbrevo/brevo` - Brevo API client
-- `cors` - CORS middleware
-- `helmet` - Security headers middleware
-
-### Security Note
-
-The Brevo SDK (`@getbrevo/brevo`) has some transitive dependencies with known vulnerabilities (form-data, tough-cookie). These are in the SDK's HTTP client layer and are not directly exploitable in our use case since:
-
-1. We don't accept file uploads (form-data vulnerability)
-2. We don't parse cookies from untrusted sources (tough-cookie vulnerability)
-3. All user input is sanitized before use
-
-The Brevo team is aware of these issues. Monitor for SDK updates and upgrade when available. In the meantime, the API is safe to use as the vulnerabilities don't affect our implementation.
+- **TypeScript** - Type-safe JavaScript
+- **Express** - Web framework
+- **tsx** - TypeScript execution engine
+- **Brevo** - Email service
+- **CORS** - Cross-origin resource sharing
+- **Helmet** - Security headers
