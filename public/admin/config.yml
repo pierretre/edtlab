@@ -2,7 +2,7 @@ backend:
   name: github
   repo: pierretre/edtlab
   branch: main
-  base_url: https://wwww.edtlab.fr
+  base_url: https://edtlab.fr/api
   auth_endpoint: /auth
 
 # Configuration des médias
