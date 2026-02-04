@@ -1,5 +1,6 @@
 ---
 export const prerender = true;
+import "../styles/global.css";
 ---
 
 <html lang="en">
@@ -8,12 +9,23 @@ export const prerender = true;
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content="noindex" />
         <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
-        <title>Content Manager</title>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <title>EDT Content Manager</title>
     </head>
     <body>
         <!-- Dashboard script-->
         <script
             is:inline
             src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script>
+        <!-- CSS in preview panel -->
+        <script is:inline>
+            // @ts-expect-error CMS is defined globally
+            // Register both preview.css and the built global styles
+            CMS.registerPreviewStyle("/preview.css");
+            // The global.css will be bundled by Astro and available in the build
+        </script>
+
+        <!-- Decap CMS customizations for image handling -->
+        <script is:inline src="/decap-utils/decap-customizations.js"></script>
     </body>
 </html>

@@ -1,3 +1,8 @@
+# Backend configuration
+# In development (localhost), uses local proxy server
+# In production, uses GitHub OAuth
+local_backend: true
+
 backend:
   name: github
   repo: pierretre/edtlab
@@ -27,7 +32,7 @@ collections:
     # Show language in the summary
     summary: "{{dirname}}/{{filename}} - {{title}}"
     editor:
-      preview: false
+      preview: true
     # i18n configuration for language variants
     i18n:
       structure: multiple_files
@@ -47,7 +52,7 @@ collections:
     create: true
     slug: "{{slug}}" 
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
@@ -66,7 +71,7 @@ collections:
     create: true
     slug: "{{slug}}"
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
@@ -87,7 +92,7 @@ collections:
     create: true
     slug: "{{slug}}"
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Authors", name: "authors", widget: "list", required: true }
