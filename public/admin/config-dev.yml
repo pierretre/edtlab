@@ -1,0 +1,21 @@
+# Configuration pour le développement local
+backend:
+  name: github
+  repo: pierretre/edtlab
+  branch: main
+  base_url: http://localhost:4004
+  auth_endpoint: /auth
+
+# Configuration des médias
+media_folder: "src/assets/images"
+public_folder: "/src/assets/images"
+
+# Collections de contenu
+collections:
+  - name: "pages"
+    label: "Pages"
+    folder: "src/content/pages"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }

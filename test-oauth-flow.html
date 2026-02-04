@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test OAuth Flow - EDT Lab</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        button {
+            background: #665BA7;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        button:hover {
+            background: #4F4783;
+        }
+
+        #log {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .success {
+            color: #28a745;
+        }
+
+        .error {
+            color: #dc3545;
+        }
+
+        .info {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔐 Test OAuth Flow - EDT Lab</h1>
+
+    <div>
+        <h2>Configuration</h2>
+        <p><strong>Client ID:</strong> Ov23lim1UkjYOPQwW7w0</p>
+        <p><strong>Callback URL:</strong> http://localhost:4004/auth</p>
+        <p><strong>API Health:</strong> <span id="api-status">Checking...</span></p>
+    </div>
+
+    <div>
+        <h2>Tests</h2>
+        <button onclick="testAPIHealth()">1. Test API Health</button>
+        <button onclick="testAuthEndpoint()">2. Test /auth Endpoint</button>
+        <button onclick="testOAuthFlow()">3. Test Full OAuth Flow</button>
+        <button onclick="testDecapCMSConfig()">4. Test Decap CMS Config</button>
+    </div>
+
+    <div id="log"></div>
+
+    <script>
+        const log = document.getElementById('log');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = type;
+            entry.textContent = `[${timestamp}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        async function testAPIHealth() {
+            addLog('Testing API health...', 'info');
+            try {
+                const response = await fetch('http://localhost:4004/health');
+                const data = await response.json();
+                if (data.status === 'ok') {
+                    addLog('✓ API is healthy: ' + JSON.stringify(data), 'success');
+                    document.getElementById('api-status').textContent = '✓ Online';
+                    document.getElementById('api-status').style.color = '#28a745';
+                } else {
+                    addLog('✗ API returned unexpected response', 'error');
+                }
+            } catch (error) {
+                addLog('✗ API is not accessible: ' + error.message, 'error');
+                document.getElementById('api-status').textContent = '✗ Offline';
+                document.getElementById('api-status').style.color = '#dc3545';
+            }
+        }
+
+        async function testAuthEndpoint() {
+            addLog('Testing /auth endpoint (without code)...', 'info');
+            try {
+                const response = await fetch('http://localhost:4004/auth');
+                const text = await response.text();
+                if (text.includes('Missing authorization code')) {
+                    addLog('✓ /auth endpoint responds correctly (expects code)', 'success');
+                } else {
+                    addLog('✗ Unexpected response: ' + text, 'error');
+                }
+            } catch (error) {
+                addLog('✗ Error accessing /auth: ' + error.message, 'error');
+            }
+        }
+
+        function testOAuthFlow() {
+            addLog('Opening GitHub OAuth popup...', 'info');
+
+            const clientId = 'Ov23lim1UkjYOPQwW7w0';
+            const redirectUri = 'http://localhost:4004/auth';
+            const scope = 'repo,user';
+
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}&state=test123`;
+
+            addLog('Auth URL: ' + authUrl, 'info');
+
+            const popup = window.open(authUrl, 'github-oauth', 'width=600,height=800,left=200,top=100');
+
+            if (!popup) {
+                addLog('✗ Popup blocked! Please allow popups for this site.', 'error');
+                return;
+            }
+
+            addLog('✓ Popup opened. Waiting for callback...', 'success');
+
+            // Listen for postMessage from the callback
+            window.addEventListener('message', function handler(event) {
+                addLog('Received message: ' + event.data, 'info');
+
+                if (event.data && typeof event.data === 'string' && event.data.includes('authorization:github:success')) {
+                    addLog('✓ OAuth flow completed successfully!', 'success');
+                    try {
+                        const jsonPart = event.data.split('authorization:github:success:')[1];
+                        const tokenData = JSON.parse(jsonPart);
+                        addLog('✓ Token received: ' + tokenData.token.substring(0, 10) + '...', 'success');
+                    } catch (e) {
+                        addLog('Could not parse token data', 'error');
+                    }
+                }
+
+                window.removeEventListener('message', handler);
+            });
+
+            // Check if popup was closed
+            const checkClosed = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(checkClosed);
+                    addLog('Popup was closed', 'info');
+                }
+            }, 500);
+        }
+
+        async function testDecapCMSConfig() {
+            addLog('Testing Decap CMS config...', 'info');
+            try {
+                const response = await fetch('http://localhost:4321/admin/config.yml');
+                const text = await response.text();
+
+                if (text.includes('base_url: http://localhost:4004')) {
+                    addLog('✓ Config has correct base_url', 'success');
+                } else {
+                    addLog('✗ Config base_url might be incorrect', 'error');
+                }
+
+                if (text.includes('auth_endpoint: /auth')) {
+                    addLog('✓ Config has correct auth_endpoint', 'success');
+                } else {
+                    addLog('✗ Config auth_endpoint might be incorrect', 'error');
+                }
+
+                if (text.includes('repo: pierretre/edtlab')) {
+                    addLog('✓ Config has correct repo', 'success');
+                } else {
+                    addLog('⚠ Config repo might need to be updated', 'error');
+                }
+
+                addLog('Full config loaded successfully', 'success');
+            } catch (error) {
+                addLog('✗ Could not load config: ' + error.message, 'error');
+            }
+        }
+
+        // Auto-test API health on load
+        window.addEventListener('load', () => {
+            addLog('=== EDT Lab OAuth Test Tool ===', 'info');
+            testAPIHealth();
+        });
+    </script>
+</body>
+
+</html>

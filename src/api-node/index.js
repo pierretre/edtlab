@@ -116,25 +116,45 @@ app.get('/health', (req, res) => {
     res.json({ status: 'ok', service: 'edtlab-api' });
 });
 
-// OAuth callback endpoint for Decap CMS
-app.get('/auth', async (req, res) => {
+// OAuth endpoints for Decap CMS
+// Initial auth endpoint - redirects to GitHub
+app.get('/auth', (req, res) => {
+    const clientId = process.env.GITHUB_CLIENT_ID;
+    if (!clientId) {
+        return res.status(500).send('Server configuration error: Missing GITHUB_CLIENT_ID');
+    }
+
+    // Build redirect URI with proper protocol
+    const protocol = process.env.APP_ENV === 'production' ? 'https' : (req.get('x-forwarded-proto') || req.protocol);
+    const host = req.get('host');
+    const redirectUri = `${protocol}://${host}/api/callback`;
+    const scope = 'repo,user';
+
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
+
+    console.log('🔐 OAuth: Redirecting to GitHub');
+    console.log('Redirect URI:', redirectUri);
+
+    res.redirect(authUrl);
+});
+
+// OAuth callback endpoint - receives code from GitHub
+app.get('/callback', async (req, res) => {
+    const code = req.query.code;
+
+    if (!code) {
+        return res.status(400).send('Missing authorization code');
+    }
+
+    const clientId = process.env.GITHUB_CLIENT_ID;
+    const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+        return res.status(500).send('Server configuration error');
+    }
+
     try {
-        const code = req.query.code;
-
-        if (!code) {
-            return res.status(400).send('Missing authorization code');
-        }
-
-        // Get GitHub OAuth credentials from environment
-        const clientId = process.env.GITHUB_CLIENT_ID;
-        const clientSecret = process.env.GITHUB_CLIENT_SECRET;
-
-        console.error(clientId, clientSecret)
-
-        if (!clientId || !clientSecret) {
-            console.error('Missing GitHub OAuth credentials');
-            return res.status(500).send('Server configuration error');
-        }
+        console.log('🔐 OAuth: Exchanging code for token');
 
         // Exchange code for access token
         const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
@@ -153,77 +173,84 @@ app.get('/auth', async (req, res) => {
         const data = await tokenResponse.json();
 
         if (data.error) {
-            console.error('GitHub OAuth error:', data.error_description);
+            console.error('❌ GitHub OAuth error:', data.error_description);
             return res.status(400).send(`GitHub OAuth error: ${data.error_description}`);
         }
 
-        // Return HTML that posts message to opener window (Decap CMS)
-        const html = `
+        console.log('✅ Token received successfully');
+
+        // Generate script that communicates with opener window
+        const content = {
+            token: data.access_token,
+            provider: 'github'
+        };
+
+        const script = `
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Authorization Success</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #665BA7 0%, #4F4783 100%);
-            color: white;
-        }
-        .container {
-            text-align: center;
-            padding: 2rem;
-        }
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid white;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <title>Authorizing...</title>
 </head>
 <body>
-    <div class="container">
-        <div class="spinner"></div>
-        <h2>Authorization Successful</h2>
-        <p>Redirecting back to CMS...</p>
-    </div>
-    <script>
-        (function() {
-            const data = ${JSON.stringify({ token: data.access_token, provider: 'github' })};
-            const message = 'authorization:github:success:' + JSON.stringify(data);
-            
-            if (window.opener) {
-                window.opener.postMessage(message, window.location.origin);
-                setTimeout(function() {
-                    window.close();
-                }, 1000);
-            } else {
-                document.body.innerHTML = '<div class="container"><h2>Error</h2><p>Unable to communicate with parent window. Please close this window and try again.</p></div>';
-            }
-        })();
-    </script>
+<p>Authorization successful. Redirecting...</p>
+<script>
+(function() {
+  console.log("OAuth callback page loaded");
+  console.log("window.opener exists:", !!window.opener);
+  
+  const message = 'authorization:github:success:${JSON.stringify(content)}';
+  
+  // Case 1: Opened in popup (window.opener exists)
+  if (window.opener) {
+    console.log("Sending message to opener:", message);
+    try {
+      window.opener.postMessage(message, '*');
+      console.log("Message sent successfully");
+      setTimeout(function() {
+        window.close();
+      }, 1000);
+    } catch (e) {
+      console.error("Error sending message:", e);
+    }
+  } 
+  // Case 2: Full redirect (no opener) - store token and redirect
+  else {
+    console.log("No opener, storing token in localStorage");
+    try {
+      // Store the token in the format Decap CMS expects
+      const authData = {
+        token: '${data.access_token}',
+        backendName: 'github'
+      };
+      
+      // Try multiple possible keys that Decap CMS might use
+      localStorage.setItem('netlify-cms-user', JSON.stringify(authData));
+      localStorage.setItem('decap-cms-user', JSON.stringify(authData));
+      
+      console.log("Token stored:", authData);
+      console.log("Redirecting to /admin/");
+      
+      // Small delay to ensure storage is complete
+      setTimeout(function() {
+        window.location.href = '/admin/';
+      }, 100);
+    } catch (e) {
+      console.error("Error storing token:", e);
+      document.body.innerHTML = '<p>Error: ' + e.message + '</p><p><a href="/admin/">Return to CMS</a></p>';
+    }
+  }
+})();
+</script>
 </body>
-</html>
-        `;
+</html>`;
 
         res.setHeader('Content-Type', 'text/html');
-        res.send(html);
+        res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-inline'");
+        res.send(script);
 
     } catch (error) {
-        console.error('OAuth error:', error);
+        console.error('❌ OAuth error:', error.message);
         res.status(500).send('An error occurred during authentication');
     }
 });
@@ -401,6 +428,22 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`EDT Lab API server running on port ${PORT}`);
+    console.log('========================================');
+    console.log('🚀 EDT Lab API Server Started');
+    console.log('========================================');
+    console.log(`Port: ${PORT}`);
     console.log(`Environment: ${isDevelopment ? 'development' : 'production'}`);
+    console.log(`Time: ${new Date().toISOString()}`);
+    console.log('');
+    console.log('📋 Configuration:');
+    console.log(`  GITHUB_CLIENT_ID: ${process.env.GITHUB_CLIENT_ID ? '✓ Set' : '❌ Missing'}`);
+    console.log(`  GITHUB_CLIENT_SECRET: ${process.env.GITHUB_CLIENT_SECRET ? '✓ Set' : '❌ Missing'}`);
+    console.log(`  BREVO_API_KEY: ${process.env.BREVO_API_KEY ? '✓ Set' : '❌ Missing'}`);
+    console.log(`  LIST_INBOX: ${process.env.LIST_INBOX || '❌ Missing'}`);
+    console.log('');
+    console.log('🔗 Endpoints:');
+    console.log(`  GET  /health       - Health check`);
+    console.log(`  GET  /auth         - OAuth callback (Decap CMS)`);
+    console.log(`  POST /             - Contact form`);
+    console.log('========================================\n');
 });
