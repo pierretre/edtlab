@@ -2,8 +2,9 @@ backend:
   name: github
   repo: pierretre/edtlab
   branch: main
+  site_domain: edtlab.fr
   base_url: https://edtlab.fr
-  auth_endpoint: api/auth
+  auth_endpoint: auth
 
 # Configuration des médias
 media_folder: "src/assets/images"
@@ -17,13 +18,23 @@ collections:
     label_singular: "Page"
     folder: "src/content/pages"
     create: true
-    slug: "{{slug}}"
+    # Use nested structure to show all pages in subdirectories
+    nested:
+      depth: 10 # Allow deep nesting for all page structures
+    # File extension for new pages
+    extension: "mdx"
+    format: "frontmatter"
+    # Show language in the summary
+    summary: "{{dirname}}/{{filename}} - {{title}}"
     editor:
       preview: false
+    # i18n configuration for language variants
+    i18n:
+      structure: multiple_files
+      locales: [en, fr]
+      default_locale: en
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "URL Slug", name: "href", widget: "string", required: true }
-      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "Enable Table of Contents", name: "toc", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown", required: true }
@@ -34,7 +45,7 @@ collections:
     label_singular: "News Article"
     folder: "src/content/news"
     create: true
-    slug: "{{slug}}"
+    slug: "{{slug}}" 
     editor:
       preview: false
     fields:

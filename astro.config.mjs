@@ -1,18 +1,24 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import node from '@astrojs/node';
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
-import { loadEnv } from 'vite';
-
-const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
 
 // https://astro.build/config
 export default defineConfig({
   // Site URL for SEO and sitemap generation
   site: 'https://www.edtlab.fr',
-  output: 'static',
+
+  // Server mode: allows SSR by default, but pages can opt-in to SSG with prerender
+  output: 'server',
+
+  // Node.js adapter for VPS deployment
+  adapter: node({
+    mode: 'standalone'
+  }),
+
   build: {
     format: 'directory',
     // Performance optimizations
@@ -20,6 +26,7 @@ export default defineConfig({
     assets: '_assets',
     assetsPrefix: '/',
   },
+
   i18n: {
     locales: ['en', 'fr'],
     defaultLocale: 'en',
@@ -27,6 +34,7 @@ export default defineConfig({
       prefixDefaultLocale: true,
     }
   },
+
   vite: {
     server: {
       watch: {
@@ -34,6 +42,7 @@ export default defineConfig({
       }
     }
   },
+
   // Performance and SEO optimizations
   compressHTML: true,
 
@@ -47,6 +56,7 @@ export default defineConfig({
     domains: [],
     remotePatterns: []
   },
+
   integrations: [
     tailwind({
       // Let Tailwind handle base styles properly
@@ -72,8 +82,8 @@ export default defineConfig({
       // Configuration for Partytown
       config: {
         // Forward events to the main thread
-        forward: ['dataLayer.push'],
-        // Debug mode (disable in production)
+        forward: ['dataLayer.push', '_paq.push'],
+        // Debug mode for development
         debug: false
       }
     })
