@@ -23,24 +23,22 @@ collections:
     label_singular: "Page"
     folder: "src/content/pages"
     create: true
-    # Use nested structure to show all pages in subdirectories
     nested:
-      depth: 10 # Allow deep nesting for all page structures
-    # File extension for new pages
+      depth: 10
     extension: "mdx"
     format: "frontmatter"
-    # Show language in the summary
     summary: "{{dirname}}/{{filename}} - {{title}}"
     editor:
       preview: true
-    # i18n configuration for language variants
     i18n:
       structure: multiple_files
       locales: [en, fr]
       default_locale: en
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "URL Slug", name: "href", widget: "string", required: true, hint: "URL path for this page (e.g., 'about', 'contact')" }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "Brief description for SEO and previews" }
       - { label: "Enable Table of Contents", name: "toc", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
@@ -50,17 +48,18 @@ collections:
     label_singular: "News Article"
     folder: "src/content/news"
     create: true
-    slug: "{{slug}}" 
+    slug: "{{slug}}"
     editor:
       preview: true
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
-      - { label: "Publication Date", name: "pubDate", widget: "datetime", required: true }
+      - { label: "Date", name: "date", widget: "datetime", required: true, hint: "Publication or event date" }
+      - { label: "News Type", name: "newsType", widget: "select", options: ["news", "event", "press-release"], default: "news", required: true }
+      - { label: "Location", name: "location", widget: "string", required: false, hint: "For events only" }
       - { label: "Description", name: "description", widget: "text", required: true }
-      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
-      - { label: "Type", name: "type", widget: "select", options: ["news", "event", "press-release"], default: "news", required: true }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Cover image filename" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
   # Offres d'emploi / Job Offers
@@ -69,19 +68,19 @@ collections:
     label_singular: "Job Offer"
     folder: "src/content/job-offers"
     create: true
-    slug: "{{slug}}"
+    slug: "{{type}}-{{slug}}"
     editor:
       preview: true
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
-      - { label: "Publication Date", name: "pubDate", widget: "datetime", required: true }
-      - { label: "Deadline", name: "deadline", widget: "datetime", required: false }
-      - { label: "Type", name: "type", widget: "select", options: ["phd", "postdoc", "engineer", "intern"], required: true }
-      - { label: "Location", name: "location", widget: "string", required: false }
-      - { label: "Project", name: "project", widget: "string", required: false }
-      - { label: "Status", name: "status", widget: "select", options: ["open", "filled", "closed"], default: "open", required: true }
+      - { label: "Type", name: "type", widget: "select", options: ["postdoc", "phd", "engineer", "intern"], required: true }
+      - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country" }
+      - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: true, hint: "e.g., 'Spring 2025', 'September 2024'" }
+      - { label: "Position Filled", name: "filled", widget: "boolean", default: false, required: true }
+      - { label: "Published Date", name: "publishedDate", widget: "datetime", required: true }
       - { label: "Description", name: "description", widget: "text", required: true }
+      - { label: "Requirements", name: "requirements", widget: "list", required: false, hint: "List of requirements" }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
   # Publications
@@ -95,16 +94,14 @@ collections:
       preview: true
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "Authors", name: "authors", widget: "list", required: true }
-      - { label: "Publication Date", name: "pubDate", widget: "datetime", required: true }
-      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "workshop", "technical-report", "book-chapter"], required: true }
-      - { label: "Venue", name: "venue", widget: "string", required: false }
-      - { label: "DOI", name: "doi", widget: "string", required: false }
-      - { label: "URL", name: "url", widget: "string", required: false }
-      - { label: "PDF", name: "pdf", widget: "file", required: false }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Abstract", name: "description", widget: "text", required: true }
-      - { label: "Body", name: "body", widget: "markdown", required: false }
+      - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
+      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "report"], required: true }
+      - { label: "Year", name: "year", widget: "number", required: true, value_type: "int", min: 1900, max: 2100 }
+      - { label: "Venue", name: "venue", widget: "string", required: false, hint: "Journal name, conference name, etc." }
+      - { label: "DOI", name: "doi", widget: "string", required: false, hint: "Digital Object Identifier" }
+      - { label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, hint: "e.g., PC1, PC2, keywords" }
+      - { label: "Body", name: "body", widget: "markdown", required: false, hint: "Optional additional content" }
 
   # Menu de navigation
   - name: "menu"
