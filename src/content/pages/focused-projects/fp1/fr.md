@@ -10,10 +10,6 @@ illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC1.png"
 projectId: "PC1"
 ---
 
-import PartnersGrid from '@components/PartnersGrid.astro';
-import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
-import avatar from '@assets/images/investigators/avatar.png';
-
 ## Aperçu
 
 Un jumeau numérique (JN) est une collection coordonnée de modèles numériques qui reflète un système physique tout au long de son cycle de vie. Continuellement actualisé avec des données en temps réel, il s'appuie sur des techniques de raisonnement telles que la simulation et l'apprentissage automatique pour soutenir des tâches allant de la prédiction à la prise de décision en temps réel.
@@ -43,17 +39,14 @@ Focus spécial : **combiner des modèles basés sur les données et des modèles
 
 ### Investigateur Principal :
 
-<PrincipalInvestigator
-name="Julien Deantoni"
-headline="Professeur des Universités à l'Université Côte d'Azur et Responsable de l'équipe Kairos"
-picture={avatar}
->
+:::PI{name="Julien Deantoni" headline="Professeur des Universités à l'Université Côte d'Azur et Responsable de l'équipe Kairos" picture="/src/assets/images/investigators/avatar.png"}
 Julien Deantoni est professeur des universités à l'Université Côte d'Azur et responsable de l'équipe Kairos. Il applique des modélisations et abstractions rigoureuses pour les modèles hétérogènes depuis sa thèse de doctorat en 2007. Il a publié sur l'importance de gérer la globalisation des langages de modélisation il y a plus de 10 ans. Depuis, il a publié divers articles et développé des outils pour faciliter cette globalisation. Il a également publié des articles soulignant la nécessité de considérer la sémantique des différents modèles pour des simulations collaboratives plus précises et efficaces. Plus récemment, il a travaillé sur la notion de multi-fidélité dans les jumeaux numériques et a déjà hybridé des modèles de JN afin d'atténuer l'incertitude et par conséquent fournir un meilleur contrôle dans le JP. Conjointement, il a participé (parfois en tant qu'investigateur principal) à de nombreux projets collaboratifs.
-</PrincipalInvestigator>
+:::
  
 ### Partenaires Participants :
 
-<PartnersGrid partners={['Inria', 'CNRS', 'INRAE']} ></PartnersGrid>
+:::PartnersGrid{partners="Inria,CNRS,INRAE"}
+:::
 
 ## Mise en Œuvre du Projet
 

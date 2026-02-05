@@ -1,0 +1,14 @@
+---
+import PartnersGrid from "./PartnersGrid.astro";
+
+export interface Props {
+    partners: string;
+}
+
+const { partners } = Astro.props;
+
+// Convert comma-separated string to array
+const partnersArray = partners.split(",").map((p) => p.trim());
+---
+
+<PartnersGrid partners={partnersArray} />

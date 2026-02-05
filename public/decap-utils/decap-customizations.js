@@ -401,12 +401,232 @@ CMS.registerEditorComponent({
         return markdown;
     },
     toPreview: function (obj) {
-        return '<figure class="my-8"><img src="' + obj.src + '" alt="' + obj.alt + '" class="w-full h-auto rounded-lg" />' +
+        return '<figure class="my-8 border-2 border-primary-200 rounded-lg p-2 bg-primary-50/30">' +
+            '<div class="relative">' +
+            '<img src="' + obj.src + '" alt="' + obj.alt + '" class="w-full h-auto rounded-lg" />' +
+            '<span class="absolute top-2 right-2 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg">Custom Image Component</span>' +
+            '</div>' +
             (obj.caption ? '<figcaption class="mt-2 text-sm text-gray-600 italic text-center">' + obj.caption + '</figcaption>' : '') +
             '</figure>';
+    }
+});
+
+/**
+ * Badge Component
+ * Usage in markdown: ::badge{text="New Feature" variant="primary"}
+ */
+CMS.registerEditorComponent({
+    id: 'badge',
+    label: 'Badge',
+    fields: [
+        { name: 'text', label: 'Badge Text', widget: 'string' },
+        {
+            name: 'variant',
+            label: 'Variant',
+            widget: 'select',
+            options: ['primary', 'secondary', 'tertiary', 'success', 'warning', 'error'],
+            default: 'primary'
+        }
+    ],
+    pattern: /::badge\{text="([^"]+)"\s+variant="([^"]+)"\}/,
+    fromBlock: function (match) {
+        return { text: match[1], variant: match[2] };
+    },
+    toBlock: function (obj) {
+        return '::badge{text="' + obj.text + '" variant="' + obj.variant + '"}';
+    },
+    toPreview: function (obj) {
+        var variantClasses = {
+            'primary': 'bg-primary-600 text-white border-primary-700',
+            'secondary': 'bg-secondary-600 text-white border-secondary-700',
+            'tertiary': 'bg-tertiary-600 text-white border-tertiary-700',
+            'success': 'bg-green-600 text-white border-green-700',
+            'warning': 'bg-yellow-600 text-white border-yellow-700',
+            'error': 'bg-red-600 text-white border-red-700'
+        };
+        var classes = variantClasses[obj.variant] || variantClasses.primary;
+
+        return '<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border-2 ' + classes + ' relative">' +
+            obj.text +
+            '<span class="absolute -top-2 -right-2 w-4 h-4 bg-primary-600 rounded-full border-2 border-white" title="Custom Badge Component"></span>' +
+            '</span>';
+    }
+});
+
+/**
+ * Callout/Alert Component
+ * Usage: ::callout{type="info" title="Important"}
+ */
+CMS.registerEditorComponent({
+    id: 'callout',
+    label: 'Callout Box',
+    fields: [
+        {
+            name: 'type',
+            label: 'Type',
+            widget: 'select',
+            options: ['info', 'warning', 'success', 'error'],
+            default: 'info'
+        },
+        { name: 'title', label: 'Title', widget: 'string', required: false },
+        { name: 'content', label: 'Content', widget: 'text' }
+    ],
+    pattern: /::callout\{type="([^"]+)"(?:\s+title="([^"]+)")?\}\n([\s\S]*?)\n::/,
+    fromBlock: function (match) {
+        return { type: match[1], title: match[2], content: match[3] };
+    },
+    toBlock: function (obj) {
+        var block = '::callout{type="' + obj.type + '"';
+        if (obj.title) block += ' title="' + obj.title + '"';
+        block += '}\n' + obj.content + '\n::';
+        return block;
+    },
+    toPreview: function (obj) {
+        var typeConfig = {
+            'info': {
+                bg: 'bg-primary-50',
+                border: 'border-primary-600',
+                text: 'text-primary-700',
+                icon: '&#9432;' // ℹ
+            },
+            'warning': {
+                bg: 'bg-yellow-50',
+                border: 'border-yellow-600',
+                text: 'text-yellow-700',
+                icon: '&#9888;' // ⚠
+            },
+            'success': {
+                bg: 'bg-green-50',
+                border: 'border-green-600',
+                text: 'text-green-700',
+                icon: '&#10004;' // ✓
+            },
+            'error': {
+                bg: 'bg-red-50',
+                border: 'border-red-600',
+                text: 'text-red-700',
+                icon: '&#10006;' // ✗
+            }
+        };
+        var config = typeConfig[obj.type] || typeConfig.info;
+
+        return '<div class="my-6 p-4 rounded-lg border-l-4 ' + config.bg + ' ' + config.border + ' relative">' +
+            '<div class="absolute -top-3 -right-3 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg">Callout Component</div>' +
+            '<div class="flex items-start gap-3">' +
+            '<span class="text-2xl ' + config.text + '">' + config.icon + '</span>' +
+            '<div class="flex-1">' +
+            (obj.title ? '<h4 class="font-semibold mb-2 ' + config.text + '">' + obj.title + '</h4>' : '') +
+            '<div class="' + config.text + '">' + obj.content + '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+    }
+});
+
+/**
+ * Button Component
+ * Usage: ::button{text="Learn More" href="/about" variant="primary"}
+ */
+CMS.registerEditorComponent({
+    id: 'button',
+    label: 'Button',
+    fields: [
+        { name: 'text', label: 'Button Text', widget: 'string' },
+        { name: 'href', label: 'Link URL', widget: 'string' },
+        {
+            name: 'variant',
+            label: 'Variant',
+            widget: 'select',
+            options: ['primary', 'secondary', 'outline'],
+            default: 'primary'
+        }
+    ],
+    pattern: /::button\{text="([^"]+)"\s+href="([^"]+)"\s+variant="([^"]+)"\}/,
+    fromBlock: function (match) {
+        return { text: match[1], href: match[2], variant: match[3] };
+    },
+    toBlock: function (obj) {
+        return '::button{text="' + obj.text + '" href="' + obj.href + '" variant="' + obj.variant + '"}';
+    },
+    toPreview: function (obj) {
+        var variantClasses = {
+            'primary': 'bg-primary-700 text-white hover:bg-primary-800 border-primary-700',
+            'secondary': 'bg-secondary-600 text-white hover:bg-secondary-700 border-secondary-600',
+            'outline': 'bg-transparent text-primary-600 hover:bg-primary-50 border-primary-600'
+        };
+        var classes = variantClasses[obj.variant] || variantClasses.primary;
+
+        return '<div class="my-4 inline-block relative">' +
+            '<a href="' + obj.href + '" class="inline-flex items-center px-6 py-3 rounded-lg font-medium border-2 transition-colors ' + classes + '">' +
+            obj.text +
+            '</a>' +
+            '<span class="absolute -top-2 -right-2 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg">Button Component</span>' +
+            '</div>';
     }
 });
 
 console.log('✅ DecapCMS customizations loaded - Using Tailwind classes');
 console.log('✅ Preview templates: pages, news, job-offers, publications');
 console.log('✅ Styling from preview.css and global.css');
+
+/**
+ * Principal Investigator Component
+ * Usage: ::pi{name="John Doe" headline="Professor at University" picture="/path/to/image.jpg"}
+ * Content goes here
+ * ::
+ */
+CMS.registerEditorComponent({
+    id: 'PrincipalInvestigator',
+    label: 'Principal Investigator',
+    fields: [
+        { name: 'name', label: 'Name', widget: 'string' },
+        { name: 'headline', label: 'Headline/Title', widget: 'string' },
+        { name: 'picture', label: 'Profile Picture', widget: 'image', required: false },
+        { name: 'bio', label: 'Biography', widget: 'text' }
+    ],
+    pattern: /::pi\{name="([^"]+)"\s+headline="([^"]+)"(?:\s+picture="([^"]+)")?\}\n([\s\S]*?)\n::/,
+    fromBlock: function (match) {
+        return {
+            name: match[1],
+            headline: match[2],
+            picture: match[3] || '',
+            bio: match[4]
+        };
+    },
+    toBlock: function (obj) {
+        var block = '::pi{name="' + obj.name + '" headline="' + obj.headline + '"';
+        if (obj.picture) {
+            block += ' picture="' + obj.picture + '"';
+        }
+        block += '}\n' + obj.bio + '\n::';
+        return block;
+    },
+    toPreview: function (obj, getAsset) {
+        var pictureUrl = obj.picture;
+
+        // If picture is provided, try to get the asset URL
+        if (pictureUrl && getAsset) {
+            try {
+                pictureUrl = getAsset(obj.picture).toString();
+            } catch (e) {
+                // Fallback to original URL if getAsset fails
+            }
+        }
+
+        return '<div class="card bg-white shadow-sm border flex flex-col sm:flex-row gap-6 items-start mb-6 relative">' +
+            '<span class="absolute -top-3 -right-3 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg z-10">Principal Investigator</span>' +
+            (pictureUrl ?
+                '<img src="' + pictureUrl + '" alt="' + obj.name + '" class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0 object-cover border-4 border-primary-100" />'
+                :
+                '<div class="w-32 h-32 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex-shrink-0 flex items-center justify-center border-4 border-primary-300">' +
+                '<span class="text-4xl font-bold text-primary-600">' + obj.name.charAt(0) + '</span>' +
+                '</div>'
+            ) +
+            '<div class="flex-1 space-y-3">' +
+            '<h3 class="text-xl font-medium text-gray-800">' + obj.name + '</h3>' +
+            '<p class="text-gray-700 font-medium">' + obj.headline + '</p>' +
+            '<p class="text-gray-600 leading-relaxed">' + obj.bio + '</p>' +
+            '</div>' +
+            '</div>';
+    }
+});

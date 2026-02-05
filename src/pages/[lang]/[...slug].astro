@@ -3,6 +3,8 @@ export const prerender = true;
 import { type CollectionEntry } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import PrincipalInvestigatorWrapper from "@components/PrincipalInvestigatorWrapper.astro";
+import PartnersGridWrapper from "@components/PartnersGridWrapper.astro";
 import {
     getLayoutFromTemplateOrCollection,
     generateAllPagesStaticPaths,
@@ -28,13 +30,19 @@ if (!page) {
 }
 
 // Get the rendered content
-const { Content } = await page.render();
+const { Content, headings } = await page.render();
 const Layout: any = getLayoutFromTemplateOrCollection(
     page.collection,
     template,
 );
 // Triage: cast page.data to unknown->any to avoid type union conflicts during check
 const pageDataAny = page.data as unknown as any;
+
+// Component mappings for custom directives
+const components = {
+    PI: PrincipalInvestigatorWrapper,
+    PartnersGrid: PartnersGridWrapper,
+};
 ---
 
 <BaseLayout
@@ -45,7 +53,7 @@ const pageDataAny = page.data as unknown as any;
     lang={lang as "en" | "fr"}
     showBreadcrumb={true}
 >
-    <Layout frontmatter={page.data}>
-        <Content />
+    <Layout frontmatter={page.data} headings={headings}>
+        <Content components={components} />
     </Layout>
 </BaseLayout>

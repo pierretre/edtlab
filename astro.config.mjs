@@ -5,6 +5,8 @@ import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
+import remarkDirective from 'remark-directive';
+import remarkCustomDirectives from './src/lib/remark-custom-directives.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -57,6 +59,16 @@ export default defineConfig({
     remotePatterns: []
   },
 
+  // Markdown configuration (for .md files)
+  markdown: {
+    remarkPlugins: [
+      remarkDirective,
+      remarkCustomDirectives
+    ],
+    rehypePlugins: [
+    ]
+  },
+
   integrations: [
     tailwind({
       // Let Tailwind handle base styles properly
@@ -66,8 +78,12 @@ export default defineConfig({
     mdx({
       // Optimize MDX processing
       optimize: true,
-      remarkPlugins: [],
-      rehypePlugins: []
+      remarkPlugins: [
+        remarkDirective,
+        remarkCustomDirectives
+      ],
+      rehypePlugins: [
+      ]
     }),
     sitemap({
       i18n: {
