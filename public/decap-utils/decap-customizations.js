@@ -488,7 +488,7 @@ CMS.registerEditorComponent({
         { name: 'title', label: 'Title', widget: 'string' },
         { name: 'description', label: 'Description', widget: 'text' }
     ],
-    pattern: /<OutlinedCard\s+label="([^"]+)"\s+title="([^"]+)"\s+description="([^"]+)"\s*\/?>/,
+    pattern: /<OutlinedCard[\s\n]+label="([^"]+)"[\s\n]+title="([^"]+)"[\s\n]+description="([^"]+)"[\s\n]*\/?>/,
     fromBlock: function (match) {
         return {
             label: match[1],
@@ -512,91 +512,6 @@ CMS.registerEditorComponent({
                 </div>
             </div>
         </div>`;
-    }
-});
-
-/**
- * Grid Container for Cards
- * Usage: Wrap OutlinedCard components in a grid layout
- * <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
- *   <OutlinedCard ... />
- *   <OutlinedCard ... />
- * </div>
- */
-CMS.registerEditorComponent({
-    id: 'CardGrid',
-    label: 'Card Grid Container',
-    fields: [
-        {
-            name: 'columns',
-            label: 'Number of Columns',
-            widget: 'select',
-            options: ['2', '3', '4'],
-            default: '3'
-        },
-        {
-            name: 'cards',
-            label: 'Cards',
-            widget: 'list',
-            fields: [
-                { name: 'label', label: 'Label', widget: 'string' },
-                { name: 'title', label: 'Title', widget: 'string' },
-                { name: 'description', label: 'Description', widget: 'text' }
-            ]
-        }
-    ],
-    pattern: /<div class="grid md:grid-cols-(\d+)(?:\s+lg:grid-cols-\d+)?\s+gap-6 my-8">\s*((?:<OutlinedCard[\s\S]*?\/>\s*)*)<\/div>/,
-    fromBlock: function (match) {
-        var columns = match[1];
-        var cardsHtml = match[2];
-
-        // Parse OutlinedCard components from the HTML
-        var cardPattern = /<OutlinedCard\s+label="([^"]+)"\s+title="([^"]+)"\s+description="([^"]+)"\s*\/?>/g;
-        var cards = [];
-        var cardMatch;
-
-        while ((cardMatch = cardPattern.exec(cardsHtml)) !== null) {
-            cards.push({
-                label: cardMatch[1],
-                title: cardMatch[2],
-                description: cardMatch[3]
-            });
-        }
-
-        return {
-            columns: columns,
-            cards: cards
-        };
-    },
-    toBlock: function (obj) {
-        var gridClass = 'grid md:grid-cols-' + (obj.columns || '3') + ' gap-6 my-8';
-
-        var cardsHtml = (obj.cards || []).map(function (card) {
-            return '  <OutlinedCard\n    label="' + card.label + '"\n    title="' + card.title + '"\n    description="' + card.description + '"\n  />';
-        }).join('\n');
-
-        return '<div class="' + gridClass + '">\n' + cardsHtml + '\n</div>';
-    },
-    toPreview: function (obj) {
-        var columns = obj.columns || '3';
-        var gridClass = 'grid md:grid-cols-' + columns + ' gap-6 my-8';
-
-        var cardsHtml = (obj.cards || []).map(function (card) {
-            return `
-            <div class="h-full card bg-white border-2 border-primary-500 rounded-lg p-4 transition-all hover:border-primary-600">
-                <div class="flex items-start gap-3">
-                    <div class="flex-shrink-0 w-12 h-12 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                        ${escapeHtml(card.label)}
-                    </div>
-                    <div class="card-content flex-1">
-                        <h3 class="text-base font-semibold text-gray-900 mb-2">${escapeHtml(card.title)}</h3>
-                        <p class="text-gray-700 text-sm leading-relaxed">${escapeHtml(card.description)}</p>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-
-        return '<div class="' + gridClass + '">' + cardsHtml + '</div>';
     }
 });
 
@@ -655,13 +570,13 @@ CMS.registerEditorComponent({
             ]
         }
     ],
-    pattern: /<div class="grid md:grid-cols-(\d+)(?:\s+lg:grid-cols-\d+)?\s+gap-6 my-8">\s*((?:<OutlinedCard[\s\S]*?\/>\s*)*)<\/div>/,
+    pattern: /<div class="grid(?:\s+grid-cols-1)?\s+md:grid-cols-(\d+)(?:\s+lg:grid-cols-\d+)?(?:\s+gap-\d+)?(?:\s+my-\d+)?">\s*((?:<OutlinedCard[\s\S]*?\/>\s*)*)<\/div>/,
     fromBlock: function (match) {
         var columns = match[1];
         var cardsHtml = match[2];
 
-        // Parse OutlinedCard components from the HTML
-        var cardPattern = /<OutlinedCard\s+label="([^"]+)"\s+title="([^"]+)"\s+description="([^"]+)"\s*\/?>/g;
+        // Parse OutlinedCard components from the HTML - handle multi-line format
+        var cardPattern = /<OutlinedCard[\s\n]+label="([^"]+)"[\s\n]+title="([^"]+)"[\s\n]+description="([^"]+)"[\s\n]*\/?>/g;
         var cards = [];
         var cardMatch;
 
