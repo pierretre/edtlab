@@ -3,12 +3,11 @@ export const prerender = true;
 import { type CollectionEntry } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import PrincipalInvestigatorWrapper from "@components/PrincipalInvestigatorWrapper.astro";
-import PartnersGridWrapper from "@components/PartnersGridWrapper.astro";
 import {
     getLayoutFromTemplateOrCollection,
     generateAllPagesStaticPaths,
 } from "@utils/.";
+import mdxComponents from "@components/exported-components";
 
 export async function getStaticPaths() {
     return await generateAllPagesStaticPaths();
@@ -37,12 +36,6 @@ const Layout: any = getLayoutFromTemplateOrCollection(
 );
 // Triage: cast page.data to unknown->any to avoid type union conflicts during check
 const pageDataAny = page.data as unknown as any;
-
-// Component mappings for custom directives
-const components = {
-    PI: PrincipalInvestigatorWrapper,
-    PartnersGrid: PartnersGridWrapper,
-};
 ---
 
 <BaseLayout
@@ -54,6 +47,6 @@ const components = {
     showBreadcrumb={true}
 >
     <Layout frontmatter={page.data} headings={headings}>
-        <Content components={components} />
+        <Content components={mdxComponents} />
     </Layout>
 </BaseLayout>

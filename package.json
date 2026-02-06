@@ -28,11 +28,8 @@
     "@tailwindcss/typography": "^0.5.19",
     "astro": "^5.14.3",
     "flowbite": "^3.1.2",
-    "remark-directive": "^4.0.0",
     "sharp": "^0.34.4",
-    "typescript": "^5.9.3",
-    "unified": "^11.0.5",
-    "unist-util-visit": "^5.1.0"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
