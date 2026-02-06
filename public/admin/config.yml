@@ -4,9 +4,9 @@
 local_backend: true
 
 backend:
-  name: github
-  repo: pierretre/edtlab
-  branch: main
+  name: git-gateaway
+  # repo: pierretre/edtlab
+  # branch: main
   site_domain: edtlab.fr
   base_url: https://edtlab.fr
   auth_endpoint: auth
@@ -25,13 +25,19 @@ collections:
     create: true
     nested:
       depth: 10
+      subfolders: false
+      summary: "{{dirname}}/"
+      nested:
+        depth: 10
+        subfolders: false
+        summary: "{{dirname}}/"
     extension: "mdx"
     format: "frontmatter"
-    summary: "{{dirname}}/{{filename}} - {{title}}"
+    summary: "{{title}} [{{lang}}]"
     editor:
       preview: true
     i18n:
-      structure: multiple_files
+      structure: single_file
       locales: [en, fr]
       default_locale: en
     fields:
@@ -48,9 +54,21 @@ collections:
     label_singular: "News Article"
     folder: "src/content/news"
     create: true
-    slug: "{{slug}}"
+    summary: "{{slug}} [{{lang}}]"
     editor:
       preview: true
+    format: "frontmatter"
+    i18n:
+      structure: multiple_files
+      locales: [en, fr]
+      default_locale: en
+    view_filters:
+      - label: "English pages"
+        field: lang
+        pattern: 'en'
+      - label: "French pages"
+        field: lang
+        pattern: 'fr'
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
@@ -68,9 +86,17 @@ collections:
     label_singular: "Job Offer"
     folder: "src/content/job-offers"
     create: true
-    slug: "{{type}}-{{slug}}"
+    summary: "{{title}}-{{type}} [{{lang}}]"
     editor:
       preview: true
+    format: "frontmatter"
+    view_filters:
+      - label: "English pages"
+        field: lang
+        pattern: 'en'
+      - label: "French pages"
+        field: lang
+        pattern: 'fr'
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
@@ -89,9 +115,8 @@ collections:
     label_singular: "Publication"
     folder: "src/content/publications"
     create: true
-    slug: "{{slug}}"
-    editor:
-      preview: true
+    summary: "{{slug}}, {{authors}} - {{year}}"
+    format: "frontmatter"
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
@@ -102,43 +127,3 @@ collections:
       - { label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication" }
       - { label: "Tags", name: "tags", widget: "list", required: false, hint: "e.g., PC1, PC2, keywords" }
       - { label: "Body", name: "body", widget: "markdown", required: false, hint: "Optional additional content" }
-
-  # Menu de navigation
-  - name: "menu"
-    label: "Navigation Menu"
-    files:
-      - label: "English Menu"
-        name: "en"
-        file: "src/content/menu/en.json"
-        fields:
-          - label: "Menu Items"
-            name: "menu"
-            widget: "list"
-            fields:
-              - { label: "Label", name: "label", widget: "string" }
-              - { label: "URL", name: "url", widget: "string" }
-              - label: "Submenu"
-                name: "submenu"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "URL", name: "url", widget: "string" }
-      
-      - label: "French Menu"
-        name: "fr"
-        file: "src/content/menu/fr.json"
-        fields:
-          - label: "Menu Items"
-            name: "menu"
-            widget: "list"
-            fields:
-              - { label: "Label", name: "label", widget: "string" }
-              - { label: "URL", name: "url", widget: "string" }
-              - label: "Submenu"
-                name: "submenu"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Label", name: "label", widget: "string" }
-                  - { label: "URL", name: "url", widget: "string" }

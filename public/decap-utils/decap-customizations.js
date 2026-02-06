@@ -14,6 +14,37 @@ function formatDate(dateString, lang) {
     return date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', options);
 }
 
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+var partnersDataCache = null;
+var partnersDataPromise = null;
+
+function initPartnersData() {
+    if (partnersDataPromise) return;
+    partnersDataPromise = fetch('/src/content/partners.json')
+        .then(function (response) {
+            if (!response.ok) return {};
+            return response.json();
+        })
+        .then(function (data) {
+            partnersDataCache = data || {};
+            return partnersDataCache;
+        })
+        .catch(function () {
+            partnersDataCache = {};
+            return partnersDataCache;
+        });
+}
+
+initPartnersData();
+
 /**
  * Base container matching PageLayout structure
  */
@@ -28,36 +59,6 @@ function createPageContainer(content) {
 }
 
 /**
- * Pages Preview Template
- * Matches PageLayout.astro structure
- */
-var PagesPreview = createClass({
-    render: function () {
-
-        var entry = this.props.entry;
-        var widgetFor = this.props.widgetFor;
-        var data = entry.get('data');
-        console.log(data.title,
-            data.href,
-            data.lang,
-            data.description,
-            data.toc,
-            data.color,
-            data.template,
-            data.illustration,
-            data.projectId)
-
-        var content = [
-            h('h1', { className: 'text-4xl font-bold text-gray-900 mb-6' }, data.title),
-            data.description && h('p', { className: 'text-lg text-gray-700 mb-6' }, data.description),
-            h('div', {}, widgetFor('body'))
-        ];
-
-        return createPageContainer(content);
-    }
-});
-
-/**
  * News Preview Template
  * Matches NewsItemLayout.astro structure
  */
@@ -67,15 +68,6 @@ var NewsPreview = createClass({
         var widgetFor = this.props.widgetFor;
         var getAsset = this.props.getAsset;
         var data = entry.get('data').toJS();
-        console.log(data.title,
-            data.href,
-            data.lang,
-            data.description,
-            data.toc,
-            data.color,
-            data.template,
-            data.illustration,
-            data.projectId)
 
         var coverImage = data.coverImage ? getAsset(data.coverImage) : null;
         var lang = data.lang || 'en';
@@ -296,284 +288,21 @@ var JobOffersPreview = createClass({
 });
 
 /**
- * Publications Preview Template
- * Matches standard PageLayout with publication metadata
- */
-var PublicationsPreview = createClass({
-    render: function () {
-        var entry = this.props.entry;
-        var widgetFor = this.props.widgetFor;
-        var data = entry.get('data').toJS();
-
-        var pubDate = data.pubDate ? new Date(data.pubDate).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long'
-        }) : '';
-
-        var authors = data.authors ? data.authors.join(', ') : '';
-
-        var content = [
-            h('h1', { className: 'text-4xl font-bold text-gray-900 mb-4' }, data.title),
-
-            authors && h('p', { className: 'italic text-secondary-700 mb-2' }, authors),
-
-            h('div', { className: 'flex flex-wrap gap-2 items-center mb-6' },
-                h('span', {
-                    className: 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-600 text-white'
-                }, data.type || 'publication'),
-                data.venue && h('span', { className: 'text-gray-600' }, ' • ' + data.venue),
-                h('span', { className: 'text-gray-600' }, ' • ' + pubDate)
-            ),
-
-            data.description && h('p', { className: 'italic text-gray-700 mb-6 leading-relaxed' }, data.description),
-
-            h('div', { className: 'mb-6 space-y-2' },
-                data.doi && h('p', {},
-                    h('strong', { className: 'font-semibold' }, 'DOI: '),
-                    h('a', {
-                        href: 'https://doi.org/' + data.doi,
-                        target: '_blank',
-                        rel: 'noopener noreferrer',
-                        className: 'text-primary-600 hover:text-primary-800 underline'
-                    }, data.doi)
-                ),
-                data.url && h('p', {},
-                    h('a', {
-                        href: data.url,
-                        target: '_blank',
-                        rel: 'noopener noreferrer',
-                        className: 'text-primary-600 hover:text-primary-800 font-medium'
-                    }, 'View Publication →')
-                ),
-                data.pdf && h('p', {},
-                    h('a', {
-                        href: data.pdf,
-                        target: '_blank',
-                        rel: 'noopener noreferrer',
-                        className: 'text-primary-600 hover:text-primary-800 font-medium'
-                    }, 'Download PDF →')
-                )
-            ),
-
-            data.tags && data.tags.length > 0 && h('div', { className: 'mb-6' },
-                h('strong', { className: 'font-semibold' }, 'Tags: '),
-                data.tags.map(function (tag, i) {
-                    return h('span', {
-                        key: i,
-                        className: 'inline-block px-2 py-1 mr-2 bg-gray-100 text-gray-700 rounded text-sm'
-                    }, tag);
-                })
-            ),
-
-            widgetFor('body') && h('div', { className: 'prose prose-lg max-w-none' }, widgetFor('body'))
-        ];
-
-        return createPageContainer(content);
-    }
-});
-
-/**
  * Register all preview templates
  */
-CMS.registerPreviewTemplate('pages', PagesPreview);
+// CMS.registerPreviewTemplate('pages', PagesPreview);
 CMS.registerPreviewTemplate('news', NewsPreview);
 CMS.registerPreviewTemplate('job-offers', JobOffersPreview);
-CMS.registerPreviewTemplate('publications', PublicationsPreview);
-
-/**
- * Custom image editor component
- */
-CMS.registerEditorComponent({
-    id: 'image',
-    label: 'Image',
-    fields: [
-        { name: 'src', label: 'Image', widget: 'image' },
-        { name: 'alt', label: 'Alt Text', widget: 'string' },
-        { name: 'caption', label: 'Caption', widget: 'string', required: false }
-    ],
-    pattern: /!\[([^\]]*)\]\(([^)]+)\)(?:\n\*([^*]+)\*)?/,
-    fromBlock: function (match) {
-        return { alt: match[1], src: match[2], caption: match[3] };
-    },
-    toBlock: function (obj) {
-        var markdown = '![' + obj.alt + '](' + obj.src + ')';
-        if (obj.caption) markdown += '\n*' + obj.caption + '*';
-        return markdown;
-    },
-    toPreview: function (obj) {
-        return '<figure class="my-8 border-2 border-primary-200 rounded-lg p-2 bg-primary-50/30">' +
-            '<div class="relative">' +
-            '<img src="' + obj.src + '" alt="' + obj.alt + '" class="w-full h-auto rounded-lg" />' +
-            '<span class="absolute top-2 right-2 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg">Custom Image Component</span>' +
-            '</div>' +
-            (obj.caption ? '<figcaption class="mt-2 text-sm text-gray-600 italic text-center">' + obj.caption + '</figcaption>' : '') +
-            '</figure>';
-    }
-});
-
-/**
- * Badge Component
- * Usage in markdown: ::badge{text="New Feature" variant="primary"}
- */
-CMS.registerEditorComponent({
-    id: 'badge',
-    label: 'Badge',
-    fields: [
-        { name: 'text', label: 'Badge Text', widget: 'string' },
-        {
-            name: 'variant',
-            label: 'Variant',
-            widget: 'select',
-            options: ['primary', 'secondary', 'tertiary', 'success', 'warning', 'error'],
-            default: 'primary'
-        }
-    ],
-    pattern: /::badge\{text="([^"]+)"\s+variant="([^"]+)"\}/,
-    fromBlock: function (match) {
-        return { text: match[1], variant: match[2] };
-    },
-    toBlock: function (obj) {
-        return '::badge{text="' + obj.text + '" variant="' + obj.variant + '"}';
-    },
-    toPreview: function (obj) {
-        var variantClasses = {
-            'primary': 'bg-primary-600 text-white border-primary-700',
-            'secondary': 'bg-secondary-600 text-white border-secondary-700',
-            'tertiary': 'bg-tertiary-600 text-white border-tertiary-700',
-            'success': 'bg-green-600 text-white border-green-700',
-            'warning': 'bg-yellow-600 text-white border-yellow-700',
-            'error': 'bg-red-600 text-white border-red-700'
-        };
-        var classes = variantClasses[obj.variant] || variantClasses.primary;
-
-        return '<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border-2 ' + classes + ' relative">' +
-            obj.text +
-            '<span class="absolute -top-2 -right-2 w-4 h-4 bg-primary-600 rounded-full border-2 border-white" title="Custom Badge Component"></span>' +
-            '</span>';
-    }
-});
-
-/**
- * Callout/Alert Component
- * Usage: ::callout{type="info" title="Important"}
- */
-CMS.registerEditorComponent({
-    id: 'callout',
-    label: 'Callout Box',
-    fields: [
-        {
-            name: 'type',
-            label: 'Type',
-            widget: 'select',
-            options: ['info', 'warning', 'success', 'error'],
-            default: 'info'
-        },
-        { name: 'title', label: 'Title', widget: 'string', required: false },
-        { name: 'content', label: 'Content', widget: 'text' }
-    ],
-    pattern: /::callout\{type="([^"]+)"(?:\s+title="([^"]+)")?\}\n([\s\S]*?)\n::/,
-    fromBlock: function (match) {
-        return { type: match[1], title: match[2], content: match[3] };
-    },
-    toBlock: function (obj) {
-        var block = '::callout{type="' + obj.type + '"';
-        if (obj.title) block += ' title="' + obj.title + '"';
-        block += '}\n' + obj.content + '\n::';
-        return block;
-    },
-    toPreview: function (obj) {
-        var typeConfig = {
-            'info': {
-                bg: 'bg-primary-50',
-                border: 'border-primary-600',
-                text: 'text-primary-700',
-                icon: '&#9432;' // ℹ
-            },
-            'warning': {
-                bg: 'bg-yellow-50',
-                border: 'border-yellow-600',
-                text: 'text-yellow-700',
-                icon: '&#9888;' // ⚠
-            },
-            'success': {
-                bg: 'bg-green-50',
-                border: 'border-green-600',
-                text: 'text-green-700',
-                icon: '&#10004;' // ✓
-            },
-            'error': {
-                bg: 'bg-red-50',
-                border: 'border-red-600',
-                text: 'text-red-700',
-                icon: '&#10006;' // ✗
-            }
-        };
-        var config = typeConfig[obj.type] || typeConfig.info;
-
-        return '<div class="my-6 p-4 rounded-lg border-l-4 ' + config.bg + ' ' + config.border + ' relative">' +
-            '<div class="absolute -top-3 -right-3 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg">Callout Component</div>' +
-            '<div class="flex items-start gap-3">' +
-            '<span class="text-2xl ' + config.text + '">' + config.icon + '</span>' +
-            '<div class="flex-1">' +
-            (obj.title ? '<h4 class="font-semibold mb-2 ' + config.text + '">' + obj.title + '</h4>' : '') +
-            '<div class="' + config.text + '">' + obj.content + '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
-    }
-});
-
-/**
- * Button Component
- * Usage: ::button{text="Learn More" href="/about" variant="primary"}
- */
-CMS.registerEditorComponent({
-    id: 'button',
-    label: 'Button',
-    fields: [
-        { name: 'text', label: 'Button Text', widget: 'string' },
-        { name: 'href', label: 'Link URL', widget: 'string' },
-        {
-            name: 'variant',
-            label: 'Variant',
-            widget: 'select',
-            options: ['primary', 'secondary', 'outline'],
-            default: 'primary'
-        }
-    ],
-    pattern: /::button\{text="([^"]+)"\s+href="([^"]+)"\s+variant="([^"]+)"\}/,
-    fromBlock: function (match) {
-        return { text: match[1], href: match[2], variant: match[3] };
-    },
-    toBlock: function (obj) {
-        return '::button{text="' + obj.text + '" href="' + obj.href + '" variant="' + obj.variant + '"}';
-    },
-    toPreview: function (obj) {
-        var variantClasses = {
-            'primary': 'bg-primary-700 text-white hover:bg-primary-800 border-primary-700',
-            'secondary': 'bg-secondary-600 text-white hover:bg-secondary-700 border-secondary-600',
-            'outline': 'bg-transparent text-primary-600 hover:bg-primary-50 border-primary-600'
-        };
-        var classes = variantClasses[obj.variant] || variantClasses.primary;
-
-        return '<div class="my-4 inline-block relative">' +
-            '<a href="' + obj.href + '" class="inline-flex items-center px-6 py-3 rounded-lg font-medium border-2 transition-colors ' + classes + '">' +
-            obj.text +
-            '</a>' +
-            '<span class="absolute -top-2 -right-2 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg">Button Component</span>' +
-            '</div>';
-    }
-});
-
-console.log('✅ DecapCMS customizations loaded - Using Tailwind classes');
-console.log('✅ Preview templates: pages, news, job-offers, publications');
-console.log('✅ Styling from preview.css and global.css');
 
 /**
  * Principal Investigator Component
- * Usage: ::pi{name="John Doe" headline="Professor at University" picture="/path/to/image.jpg"}
+ * Usage:
+ * <PrincipalInvestigator
+ * name="John Doe"
+ * headline="Professor at University"
+ * picture={avatar}>
  * Content goes here
- * ::
+ * </PrincipalInvestigator>
  */
 CMS.registerEditorComponent({
     id: 'PrincipalInvestigator',
@@ -584,27 +313,26 @@ CMS.registerEditorComponent({
         { name: 'picture', label: 'Profile Picture', widget: 'image', required: false },
         { name: 'bio', label: 'Biography', widget: 'text' }
     ],
-    pattern: /::pi\{name="([^"]+)"\s+headline="([^"]+)"(?:\s+picture="([^"]+)")?\}\n([\s\S]*?)\n::/,
+    pattern: /<PrincipalInvestigator\s+name="([^"]+)"\s+headline="([^"]+)"(?:\s+picture=\{([^}]+)\}|\s+picture="([^"]+)")?\s*>\n([\s\S]*?)\n<\/PrincipalInvestigator>/,
     fromBlock: function (match) {
         return {
             name: match[1],
             headline: match[2],
-            picture: match[3] || '',
-            bio: match[4]
+            picture: match[3] || match[4] || '',
+            bio: match[5]
         };
     },
     toBlock: function (obj) {
-        var block = '::pi{name="' + obj.name + '" headline="' + obj.headline + '"';
+        var block = '<PrincipalInvestigator\nname="' + obj.name + '"\nheadline="' + obj.headline + '"';
         if (obj.picture) {
-            block += ' picture="' + obj.picture + '"';
+            var isPath = obj.picture.startsWith('/') || obj.picture.startsWith('./') || obj.picture.startsWith('../');
+            block += isPath ? '\npicture="' + obj.picture + '"' : '\npicture={' + obj.picture + '}';
         }
-        block += '}\n' + obj.bio + '\n::';
+        block += '>\n' + obj.bio + '\n</PrincipalInvestigator>';
         return block;
     },
     toPreview: function (obj, getAsset) {
         var pictureUrl = obj.picture;
-
-        // If picture is provided, try to get the asset URL
         if (pictureUrl && getAsset) {
             try {
                 pictureUrl = getAsset(obj.picture).toString();
@@ -613,20 +341,373 @@ CMS.registerEditorComponent({
             }
         }
 
-        return '<div class="card bg-white shadow-sm border flex flex-col sm:flex-row gap-6 items-start mb-6 relative">' +
-            '<span class="absolute -top-3 -right-3 px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded shadow-lg z-10">Principal Investigator</span>' +
-            (pictureUrl ?
-                '<img src="' + pictureUrl + '" alt="' + obj.name + '" class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0 object-cover border-4 border-primary-100" />'
+        return `<div class="card bg-white shadow-sm border flex flex-col sm:flex-row gap-6 items-start mb-6">
+            ${pictureUrl ?
+                `<img src="${pictureUrl}" alt="${escapeHtml(obj.name)}" class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0 object-cover" />`
                 :
-                '<div class="w-32 h-32 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex-shrink-0 flex items-center justify-center border-4 border-primary-300">' +
-                '<span class="text-4xl font-bold text-primary-600">' + obj.name.charAt(0) + '</span>' +
-                '</div>'
-            ) +
-            '<div class="flex-1 space-y-3">' +
-            '<h3 class="text-xl font-medium text-gray-800">' + obj.name + '</h3>' +
-            '<p class="text-gray-700 font-medium">' + obj.headline + '</p>' +
-            '<p class="text-gray-600 leading-relaxed">' + obj.bio + '</p>' +
-            '</div>' +
+                ''
+            }
+            <div class="flex-1 space-y-3">
+            <h3 class="text-xl font-medium text-gray-800">${escapeHtml(obj.name)}</h3>
+            <p class="text-gray-700">${escapeHtml(obj.headline)}</p>
+            <p class="text-gray-600">${escapeHtml(obj.bio)}</p>
+            </div>
+            </div>`;
+    }
+});
+
+/**
+ * Partners Grid Component
+ * Usage: 
+ */
+CMS.registerEditorComponent({
+    id: 'PartnersGrid',
+    label: 'Partners Grid',
+    fields: [
+        { name: 'partners', label: 'Partners', widget: 'list' }
+    ],
+    pattern: /<PartnersGrid\s+partners=\{\[([\s\S]*?)\]\}\s*><\/PartnersGrid>/,
+    fromBlock: function (match) {
+        return {
+            partners: match[1]
+        };
+    },
+    toBlock: function (obj) {
+        var block = '<PartnersGrid partners={[' + obj.partners + ']} ></PartnersGrid>';
+        return block;
+    },
+    toPreview: function (obj, getAsset) {
+        var partnersValue = obj.partners || [];
+        var partnersKeys = Array.isArray(partnersValue)
+            ? partnersValue
+            : String(partnersValue)
+                .split(',')
+                .map(function (p) { return p.trim().replace(/^['"]|['"]$/g, ''); })
+                .filter(Boolean);
+
+        var partnersData = partnersDataCache || {};
+        var partners = partnersKeys.map(function (key) {
+            var entry = partnersData[key];
+            if (!entry) {
+                return { key: key, fullname: key, logo: null };
+            }
+            return { key: key, fullname: entry.fullname || key, logo: entry.logo || null };
+        });
+
+        var cardsHtml = partners.map(function (partner) {
+            var logoUrl = partner.logo;
+            if (logoUrl && getAsset) {
+                try {
+                    logoUrl = getAsset(logoUrl).toString();
+                } catch (e) {
+                    // Fallback to original URL if getAsset fails
+                }
+            }
+
+            return '<div class="flex-1 flex flex-col items-center group w-full" title="' + escapeHtml(partner.fullname) + '">' +
+                (logoUrl
+                    ? '<img src="' + logoUrl + '" alt="' + escapeHtml(partner.fullname) + '" class="max-h-12 w-auto max-w-32 h-auto object-contain mx-auto" loading="lazy" />'
+                    : '<div class="h-12 w-32 bg-gray-100 border rounded flex items-center justify-center text-xs text-gray-500">' + escapeHtml(partner.key) + '</div>') +
+                '</div>';
+        }).join('');
+
+        if (!partnersDataCache) {
+            initPartnersData();
+        }
+
+        return `
+        <div class="max-w-7xl px-4 py-8">
+            <div class="mx-auto flex flex-row gap-16 justify-items-center flex-wrap">
+                ${cardsHtml}
+            </div>
+        </div>`;
+    }
+});
+
+CMS.registerEditorComponent({
+    id: 'OptimizedFigure',
+    label: 'Optimized Figure',
+    fields: [
+        { name: 'src', label: 'Source', widget: 'image' },
+        { name: 'alt', label: 'Alt Text', widget: 'string' },
+        { name: 'caption', label: 'Caption', widget: 'string', required: false },
+        { name: 'loading', label: 'Loading', widget: 'select', options: ['lazy', 'eager'], default: 'eager' },
+        { name: 'maxWidth', label: 'Max Width (px)', widget: 'number', required: false }
+    ],
+    pattern: /<OptimizedFigure\s+src="([^"]+)"\s+alt="([^"]+)"(?:\s+caption="([^"]+)")?(?:\s+loading="(lazy|eager)")?(?:\s+maxWidth=\{(\d+)\})?\s*\/?>/,
+    fromBlock: function (match) {
+        return {
+            src: match[1],
+            alt: match[2],
+            caption: match[3] || '',
+            loading: match[4] || 'eager',
+            maxWidth: match[5] ? parseInt(match[5], 10) : ''
+        };
+    },
+    toBlock: function (obj) {
+        var block = '<OptimizedFigure\n  src="' + obj.src + '"\n  alt="' + obj.alt + '"';
+        if (obj.caption) {
+            block += '\n  caption="' + obj.caption + '"';
+        }
+        if (obj.loading) {
+            block += '\n  loading="' + obj.loading + '"';
+        }
+        if (obj.maxWidth) {
+            block += '\n  maxWidth={' + obj.maxWidth + '}';
+        }
+        block += '\n/>';
+        return block;
+    },
+    toPreview: function (obj, getAsset) {
+        var imageUrl = obj.src;
+        if (imageUrl && getAsset) {
+            try {
+                imageUrl = getAsset(obj.src).toString();
+            } catch (e) {
+                // Fallback to original URL if getAsset fails
+            }
+        }
+
+        var resolvedMaxWidth = obj.maxWidth ? obj.maxWidth + 'px' : '100%';
+
+        return `
+        <figure class="mb-6" style="max-width: ${resolvedMaxWidth}; margin-left: auto; margin-right: auto;">
+            <img src="${imageUrl}" alt="${escapeHtml(obj.alt)}" loading="${obj.loading || 'eager'}" style="display: block; width: 100%; height: auto;" />
+            ${obj.caption
+                ? `<figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">${escapeHtml(obj.caption)}</figcaption>`
+                : ''}
+        </figure>`;
+    }
+});
+
+CMS.registerEditorComponent({
+    id: 'OutlinedCard',
+    label: 'Outlined Card',
+    fields: [
+        { name: 'label', label: 'Label', widget: 'string' },
+        { name: 'title', label: 'Title', widget: 'string' },
+        { name: 'description', label: 'Description', widget: 'text' }
+    ],
+    pattern: /<OutlinedCard\s+label="([^"]+)"\s+title="([^"]+)"\s+description="([^"]+)"\s*\/?>/,
+    fromBlock: function (match) {
+        return {
+            label: match[1],
+            title: match[2],
+            description: match[3]
+        };
+    },
+    toBlock: function (obj) {
+        var block = '<OutlinedCard\n  label="' + obj.label + '"\n  title="' + obj.title + '"\n  description="' + obj.description + '"\n/>';
+        return block;
+    },
+    toPreview: function (obj) {
+        return `
+        <div class="h-full card bg-white border-2 border-primary-500 rounded-lg p-4 transition-all hover:border-primary-600">
+            <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                    ${escapeHtml(obj.label)}
+                    </div><div class="card-content flex-1">
+                    <h3 class="text-base font-semibold text-gray-900 mb-2"> ${escapeHtml(obj.title)} </h3>
+                    <p class="text-gray-700 text-sm leading-relaxed"> ${escapeHtml(obj.description)} </p>
+                </div>
+            </div>
+        </div>`;
+    }
+});
+
+/**
+ * Grid Container for Cards
+ * Usage: Wrap OutlinedCard components in a grid layout
+ * <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+ *   <OutlinedCard ... />
+ *   <OutlinedCard ... />
+ * </div>
+ */
+CMS.registerEditorComponent({
+    id: 'CardGrid',
+    label: 'Card Grid Container',
+    fields: [
+        {
+            name: 'columns',
+            label: 'Number of Columns',
+            widget: 'select',
+            options: ['2', '3', '4'],
+            default: '3'
+        },
+        {
+            name: 'cards',
+            label: 'Cards',
+            widget: 'list',
+            fields: [
+                { name: 'label', label: 'Label', widget: 'string' },
+                { name: 'title', label: 'Title', widget: 'string' },
+                { name: 'description', label: 'Description', widget: 'text' }
+            ]
+        }
+    ],
+    pattern: /<div class="grid md:grid-cols-(\d+)(?:\s+lg:grid-cols-\d+)?\s+gap-6 my-8">\s*((?:<OutlinedCard[\s\S]*?\/>\s*)*)<\/div>/,
+    fromBlock: function (match) {
+        var columns = match[1];
+        var cardsHtml = match[2];
+
+        // Parse OutlinedCard components from the HTML
+        var cardPattern = /<OutlinedCard\s+label="([^"]+)"\s+title="([^"]+)"\s+description="([^"]+)"\s*\/?>/g;
+        var cards = [];
+        var cardMatch;
+
+        while ((cardMatch = cardPattern.exec(cardsHtml)) !== null) {
+            cards.push({
+                label: cardMatch[1],
+                title: cardMatch[2],
+                description: cardMatch[3]
+            });
+        }
+
+        return {
+            columns: columns,
+            cards: cards
+        };
+    },
+    toBlock: function (obj) {
+        var gridClass = 'grid md:grid-cols-' + (obj.columns || '3') + ' gap-6 my-8';
+
+        var cardsHtml = (obj.cards || []).map(function (card) {
+            return '  <OutlinedCard\n    label="' + card.label + '"\n    title="' + card.title + '"\n    description="' + card.description + '"\n  />';
+        }).join('\n');
+
+        return '<div class="' + gridClass + '">\n' + cardsHtml + '\n</div>';
+    },
+    toPreview: function (obj) {
+        var columns = obj.columns || '3';
+        var gridClass = 'grid md:grid-cols-' + columns + ' gap-6 my-8';
+
+        var cardsHtml = (obj.cards || []).map(function (card) {
+            return `
+            <div class="h-full card bg-white border-2 border-primary-500 rounded-lg p-4 transition-all hover:border-primary-600">
+                <div class="flex items-start gap-3">
+                    <div class="flex-shrink-0 w-12 h-12 bg-primary-500 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                        ${escapeHtml(card.label)}
+                    </div>
+                    <div class="card-content flex-1">
+                        <h3 class="text-base font-semibold text-gray-900 mb-2">${escapeHtml(card.title)}</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">${escapeHtml(card.description)}</p>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+
+        return '<div class="' + gridClass + '">' + cardsHtml + '</div>';
+    }
+});
+
+CMS.registerEditorComponent({
+    id: 'PublicationList',
+    label: 'Publication List',
+    fields: [
+        { name: 'lang', label: 'Language', widget: 'select', options: ['en', 'fr'], default: 'en' }
+    ],
+    pattern: /<PublicationList\s+lang="(en|fr)"\s*\/?>/,
+    fromBlock: function (match) {
+        return {
+            lang: match[1]
+        };
+    },
+    toBlock: function (obj) {
+        var block = '<PublicationList\n  lang="' + obj.lang + '"\n/>';
+        return block;
+    },
+    toPreview: function (obj) {
+        return '<div class="border border-dashed border-gray-300 rounded-lg p-6 text-center text-gray-600">' +
+            '<div class="text-sm uppercase tracking-wide text-gray-400">Publication List</div>' +
+            '<div class="mt-2 font-medium">Language: ' + escapeHtml(obj.lang || 'en') + '</div>' +
             '</div>';
+    }
+});
+
+
+/**
+ * Grid Container for Cards
+ * Usage: Wrap OutlinedCard components in a grid layout
+ * <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+ *   <OutlinedCard ... />
+ *   <OutlinedCard ... />
+ * </div>
+ */
+CMS.registerEditorComponent({
+    id: 'CardGrid',
+    label: 'Card Grid Container',
+    fields: [
+        {
+            name: 'columns',
+            label: 'Number of Columns',
+            widget: 'select',
+            options: ['2', '3', '4'],
+            default: '3'
+        },
+        {
+            name: 'cards',
+            label: 'Cards',
+            widget: 'list',
+            fields: [
+                { name: 'label', label: 'Label', widget: 'string' },
+                { name: 'title', label: 'Title', widget: 'string' },
+                { name: 'description', label: 'Description', widget: 'text' }
+            ]
+        }
+    ],
+    pattern: /<div class="grid md:grid-cols-(\d+)(?:\s+lg:grid-cols-\d+)?\s+gap-6 my-8">\s*((?:<OutlinedCard[\s\S]*?\/>\s*)*)<\/div>/,
+    fromBlock: function (match) {
+        var columns = match[1];
+        var cardsHtml = match[2];
+
+        // Parse OutlinedCard components from the HTML
+        var cardPattern = /<OutlinedCard\s+label="([^"]+)"\s+title="([^"]+)"\s+description="([^"]+)"\s*\/?>/g;
+        var cards = [];
+        var cardMatch;
+
+        while ((cardMatch = cardPattern.exec(cardsHtml)) !== null) {
+            cards.push({
+                label: cardMatch[1],
+                title: cardMatch[2],
+                description: cardMatch[3]
+            });
+        }
+
+        return {
+            columns: columns,
+            cards: cards
+        };
+    },
+    toBlock: function (obj) {
+        var gridClass = 'grid md:grid-cols-' + (obj.columns || '3') + ' gap-6 my-8';
+
+        var cardsHtml = (obj.cards || []).map(function (card) {
+            return '  <OutlinedCard\n    label="' + card.label + '"\n    title="' + card.title + '"\n    description="' + card.description + '"\n  />';
+        }).join('\n');
+
+        return '<div class="' + gridClass + '">\n' + cardsHtml + '\n</div>';
+    },
+    toPreview: function (obj) {
+        var columns = obj.columns || '3';
+
+        // Inline styles for grid to ensure proper rendering in preview
+        var gridStyle = 'display: grid; grid-template-columns: repeat(' + columns + ', 1fr); gap: 1.5rem; margin: 2rem 0;';
+
+        var cardsHtml = (obj.cards || []).map(function (card) {
+            return `
+            <div style="height: 100%; background: white; border: 2px solid #665BA7; border-radius: 0.5rem; padding: 1rem;">
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                    <div style="flex-shrink: 0; width: 3rem; height: 3rem; background: #665BA7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem;">
+                        ${escapeHtml(card.label)}
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 1rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem;">${escapeHtml(card.title)}</h3>
+                        <p style="color: #374151; font-size: 0.875rem; line-height: 1.5;">${escapeHtml(card.description)}</p>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+
+        return '<div style="' + gridStyle + '">' + cardsHtml + '</div>';
     }
 });
