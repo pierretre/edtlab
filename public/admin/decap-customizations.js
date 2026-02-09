@@ -96,7 +96,19 @@ var NewsPreview = createClass({
         var getAsset = this.props.getAsset;
         var data = entry.get('data').toJS();
 
-        var photo = data.photo ? getAsset(data.photo) : null;
+        var photo = data.photo;
+        if (photo && getAsset) {
+            try {
+                var asset = getAsset(data.photo);
+                photo = asset.toString();
+            } catch (e) {
+                // If getAsset fails, try to construct a proper URL
+                if (photo && photo.startsWith('/src/assets/')) {
+                    photo = photo.replace('/src/assets/', '/');
+                }
+            }
+        }
+
         var lang = data.lang || 'en';
         var formattedDate = formatDate(data.date, lang);
         var showRecent = isRecent(data.date);
@@ -504,9 +516,14 @@ CMS.registerEditorComponent({
         var pictureUrl = obj.picture;
         if (pictureUrl && getAsset) {
             try {
-                pictureUrl = getAsset(obj.picture).toString();
+                var asset = getAsset(obj.picture);
+                pictureUrl = asset.toString();
             } catch (e) {
-                // Fallback to original URL if getAsset fails
+                // If getAsset fails, try to construct a proper URL
+                if (pictureUrl && pictureUrl.startsWith('/src/assets/')) {
+                    // Convert internal path to public path
+                    pictureUrl = pictureUrl.replace('/src/assets/', '/');
+                }
             }
         }
 
@@ -535,26 +552,26 @@ CMS.registerEditorComponent({
     fields: [
         {
             name: 'partners',
-            label: 'Partners (comma-separated shortnames)',
-            widget: 'string',
-            hint: 'Enter partner shortnames separated by commas, e.g., Inria, CNRS, CEA'
+            label: 'Partners',
+            widget: 'select',
+            multiple: true,
+            options: ['Inria', 'CNRS', 'INRAE', 'UPPA', 'Télécom Paris', 'ENPC', 'Université de Bourgogne', 'CEA', 'Université Toulouse 3 (Aniti)', 'Université Toulouse Jean Jaurès', 'IMT', 'DISP', 'Université de Rennes'],
+            hint: 'Select partners'
         }
     ],
     pattern: /<PartnersGrid\s+partners=\{\[([^\]]+)\]\}\s*\/>/,
     fromBlock: function (match) {
         // Extract partner names from the array syntax
-        var partnersStr = match[1]
+        var partners = match[1]
             .split(',')
             .map(function (p) { return p.trim().replace(/^['"]|['"]$/g, ''); })
-            .join(', ');
         return {
-            partners: partnersStr
+            partners
         };
     },
     toBlock: function (obj) {
         // Convert comma-separated string to array syntax
         var partnersArray = obj.partners
-            .split(',')
             .map(function (p) { return "'" + p.trim() + "'"; })
             .join(', ');
         return '<PartnersGrid partners={[' + partnersArray + ']} />';
@@ -562,7 +579,6 @@ CMS.registerEditorComponent({
     toPreview: function (obj, getAsset) {
         var partnersValue = obj.partners || '';
         var partnersKeys = partnersValue
-            .split(',')
             .map(function (p) { return p.trim(); })
             .filter(Boolean);
 
@@ -583,9 +599,13 @@ CMS.registerEditorComponent({
             var logoUrl = partner.logo;
             if (logoUrl && getAsset) {
                 try {
-                    logoUrl = getAsset(logoUrl).toString();
+                    var asset = getAsset(logoUrl);
+                    logoUrl = asset.toString();
                 } catch (e) {
-                    // Fallback to original URL if getAsset fails
+                    // If getAsset fails, try to construct a proper URL
+                    if (logoUrl && logoUrl.startsWith('/src/assets/')) {
+                        logoUrl = logoUrl.replace('/src/assets/', '/');
+                    }
                 }
             }
 
@@ -646,9 +666,13 @@ CMS.registerEditorComponent({
         var imageUrl = obj.src;
         if (imageUrl && getAsset) {
             try {
-                imageUrl = getAsset(obj.src).toString();
+                var asset = getAsset(obj.src);
+                imageUrl = asset.toString();
             } catch (e) {
-                // Fallback to original URL if getAsset fails
+                // If getAsset fails, try to construct a proper URL
+                if (imageUrl && imageUrl.startsWith('/src/assets/')) {
+                    imageUrl = imageUrl.replace('/src/assets/', '/');
+                }
             }
         }
 
@@ -961,9 +985,13 @@ CMS.registerEditorComponent({
 
             if (imageUrl && getAsset) {
                 try {
-                    imageUrl = getAsset(imageUrl).toString();
+                    var asset = getAsset(imageUrl);
+                    imageUrl = asset.toString();
                 } catch (e) {
-                    // Keep original URL if getAsset fails
+                    // If getAsset fails, try to construct a proper URL
+                    if (imageUrl && imageUrl.startsWith('/src/assets/')) {
+                        imageUrl = imageUrl.replace('/src/assets/', '/');
+                    }
                 }
             }
 
