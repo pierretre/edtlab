@@ -17,7 +17,7 @@ const t = useTranslations(lang);
 const news = await getCollection("news", (item) => item.data.lang === lang);
 
 const covers = import.meta.glob<{ default: ImageMetadata }>(
-    "@assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
+    "/src/assets/images/uploads/*.{svg,jpg,png,gif,webp}",
 );
 
 // Add cover images to feed items

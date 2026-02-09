@@ -95,6 +95,7 @@ var NewsPreview = createClass({
         var widgetFor = this.props.widgetFor;
         var getAsset = this.props.getAsset;
         var data = entry.get('data').toJS();
+
         var photo = data.photo ? getAsset(data.photo) : null;
         var lang = data.lang || 'en';
         var formattedDate = formatDate(data.date, lang);
