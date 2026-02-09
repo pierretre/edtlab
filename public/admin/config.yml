@@ -1,12 +1,7 @@
-# Backend configuration
-# In development (localhost), uses local proxy server
-# In production, uses GitHub OAuth
-local_backend: true
-
 backend:
-  name: git-gateaway
-  # repo: pierretre/edtlab
-  # branch: main
+  name: github
+  repo: pierretre/edtlab
+  branch: main
   site_domain: edtlab.fr
   base_url: https://edtlab.fr
   auth_endpoint: auth
