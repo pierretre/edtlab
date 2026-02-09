@@ -209,10 +209,11 @@ const generateEmailHtml = (data: ContactFormData): string => {
  * Send contact form email via Brevo
  */
 const sendContactEmail = async (data: ContactFormData): Promise<void> => {
-    const brevoApiKey = import.meta.env.BREVO_API_KEY;
-    const senderEmail = import.meta.env.SENDER_EMAIL || 'contact@edtlab.fr';
-    const senderName = import.meta.env.SENDER_NAME || 'EDT Research Program';
-    const recipientEmail = import.meta.env.LIST_INBOX;
+    // In SSR mode with Node adapter, use process.env for runtime access
+    const brevoApiKey = process.env.BREVO_API_KEY || import.meta.env.BREVO_API_KEY;
+    const senderEmail = process.env.SENDER_EMAIL || import.meta.env.SENDER_EMAIL || 'contact@edtlab.fr';
+    const senderName = process.env.SENDER_NAME || import.meta.env.SENDER_NAME || 'EDT Research Program';
+    const recipientEmail = process.env.LIST_INBOX || import.meta.env.LIST_INBOX;
 
     if (!brevoApiKey || !recipientEmail) {
         throw new Error('Missing required mail configuration');

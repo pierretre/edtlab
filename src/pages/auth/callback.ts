@@ -14,8 +14,9 @@ interface OAuthContent {
 }
 
 export const GET: APIRoute = async ({ url, redirect }) => {
-    const clientId = import.meta.env.GITHUB_CLIENT_ID;
-    const clientSecret = import.meta.env.GITHUB_CLIENT_SECRET;
+    // In SSR mode with Node adapter, use process.env for runtime access
+    const clientId = process.env.GITHUB_CLIENT_ID || import.meta.env.GITHUB_CLIENT_ID;
+    const clientSecret = process.env.GITHUB_CLIENT_SECRET || import.meta.env.GITHUB_CLIENT_SECRET;
 
     // Validate OAuth configuration
     if (!clientId || !clientSecret) {
