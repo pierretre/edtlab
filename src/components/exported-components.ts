@@ -6,6 +6,7 @@ import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
 import PublicationList from '@components/PublicationList.astro';
 import NewsList from '@components/NewsList.astro';
 import JobOfferList from '@components/JobOfferList.astro';
+import ProjectGrid from '@components/ProjectGrid.astro';
 
 const mdxComponents = {
     OutlinedCard,
@@ -15,7 +16,8 @@ const mdxComponents = {
     PrincipalInvestigator,
     PublicationList,
     NewsList,
-    JobOfferList
+    JobOfferList,
+    ProjectGrid
 };
 
 export default mdxComponents;
