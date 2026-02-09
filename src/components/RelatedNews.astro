@@ -16,7 +16,7 @@ let relatedItems: any[] = [];
 if (project) {
   try {
     const covers = import.meta.glob<{ default: ImageMetadata }>(
-      "/src/assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
+      "/src/assets/images/uploads/*.{svg,jpg,png,gif,webp}",
     );
     const news = await getCollection(
       "news",

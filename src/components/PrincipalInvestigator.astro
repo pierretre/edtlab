@@ -11,11 +11,7 @@ let avatar: ImageMetadata | undefined;
 if (picture) {
     try {
         const images = import.meta.glob<{ default: ImageMetadata }>(
-            "/src/assets/images/investigators/*.{eg,jpg,png,gif,webp}",
-        );
-        console.log(
-            "Available images for PrincipalInvestigator:",
-            Object.keys(images),
+            "/src/assets/images/uploads/*.{jpeg,jpg,png,gif,webp}",
         );
         avatar = (await images[picture]()).default;
     } catch (error) {
