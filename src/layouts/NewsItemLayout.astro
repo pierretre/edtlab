@@ -4,6 +4,8 @@ import PageLayout from "./PageLayout.astro";
 import type { NewsItem } from "@models/NewsItem.model";
 import { linkHelpers, useTranslations } from "@i18n/utils";
 import Badge from "@components/Badge.astro";
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 export interface Props {
     frontmatter: NewsItem;
@@ -12,6 +14,19 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const lang = frontmatter.lang as "en" | "fr";
 const t = useTranslations(lang);
+
+// Load cover image if provided
+let coverImage: ImageMetadata | undefined;
+if (frontmatter.photo) {
+    try {
+        const images = import.meta.glob<{ default: ImageMetadata }>(
+            "/src/assets/images/**/*.{jpeg,jpg,png,gif,webp}",
+        );
+        coverImage = (await images[frontmatter.photo]()).default;
+    } catch (error) {
+        console.warn(`Could not load cover image: ${frontmatter.photo}`);
+    }
+}
 ---
 
 <PageLayout
@@ -44,9 +59,9 @@ const t = useTranslations(lang);
     </div>
 
     <!-- newsHeader -->
-    <header class="mb-8">
+    <header class="mb-8 space-y-4">
         <!-- Badges -->
-        <div class="flex flex-wrap gap-2 mb-4">
+        <div class="flex flex-wrap gap-2">
             {frontmatter.tags.map((tag) => <Badge key={tag} t={t} />)}
             {
                 isRecent(frontmatter.date) && (
@@ -58,7 +73,7 @@ const t = useTranslations(lang);
         </div>
 
         <!-- Title -->
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        <h1 class="text-4xl font-bold text-gray-900">
             {frontmatter.title}
         </h1>
 
@@ -88,12 +103,14 @@ const t = useTranslations(lang);
                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                             />
                         </svg>
-                        <span class="text-sm font-medium text-gray-500">
-                            {t("news-item.location")}
-                        </span>
-                        <p class="font-medium">
-                            {(frontmatter as any).location}
-                        </p>
+                        <div>
+                            <span class="text-sm font-medium text-gray-500">
+                                {t("news-item.location")}
+                            </span>
+                            <p class="font-medium">
+                                {(frontmatter as any).location}
+                            </p>
+                        </div>
                     </div>
                 ) : null
             }
@@ -121,6 +138,27 @@ const t = useTranslations(lang);
                 </div>
             </div>
         </div>
+
+        <!-- Cover Image -->
+        {
+            coverImage && (
+                <figure
+                    class="mb-8 w-full overflow-hidden rounded-lg shadow-sm"
+                    style="height: 400px;"
+                >
+                    <Picture
+                        src={coverImage}
+                        formats={["avif", "webp"]}
+                        alt={frontmatter.title}
+                        loading="eager"
+                        quality={80}
+                        widths={[400, 800, 1200]}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1200px"
+                        class="w-full h-full object-cover object-center"
+                    />
+                </figure>
+            )
+        }
     </header>
 
     <!-- News Content -->

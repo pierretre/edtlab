@@ -42,7 +42,7 @@ collections:
       default_locale: en
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "URL Slug", name: "href", widget: "string", required: true, hint: "URL path for this page (e.g., 'about', 'contact')" }
+      - { label: "URL Slug", name: "href", widget: "string", required: false, hint: "URL path for this page (e.g., 'about', 'contact')" }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
       - { label: "Description", name: "description", widget: "text", required: false, hint: "Brief description for SEO and previews" }
       - { label: "Enable Table of Contents", name: "toc", widget: "boolean", default: false, required: false }
@@ -117,6 +117,7 @@ collections:
     create: true
     summary: "{{slug}}, {{authors}} - {{year}}"
     format: "frontmatter"
+    preview: false
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
@@ -126,4 +127,3 @@ collections:
       - { label: "DOI", name: "doi", widget: "string", required: false, hint: "Digital Object Identifier" }
       - { label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication" }
       - { label: "Tags", name: "tags", widget: "list", required: false, hint: "e.g., PC1, PC2, keywords" }
-      - { label: "Body", name: "body", widget: "markdown", required: false, hint: "Optional additional content" }
