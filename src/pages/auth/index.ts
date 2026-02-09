@@ -1,7 +1,8 @@
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = ({ redirect }) => {
-    const clientId = import.meta.env.GITHUB_CLIENT_ID;
+    // In SSR mode with Node adapter, use process.env for runtime access
+    const clientId = process.env.GITHUB_CLIENT_ID || import.meta.env.GITHUB_CLIENT_ID;
 
     // Validate that the client ID is configured
     if (!clientId) {
