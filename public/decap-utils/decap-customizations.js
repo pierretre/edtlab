@@ -231,7 +231,6 @@ var JobOffersPreview = createClass({
         var data = entry.get('data').toJS();
 
         var lang = data.lang || 'en';
-        var formattedPublishedDate = formatDate(data.publishedDate, lang);
 
         // Badge class based on type
         var typeBadgeClass = {
@@ -447,11 +446,7 @@ var JobOffersPreview = createClass({
  */
 var PagesPreview = createClass({
     render: function () {
-        var entry = this.props.entry;
         var widgetFor = this.props.widgetFor;
-        var data = entry.get('data').toJS();
-
-        var lang = data.lang || 'en';
 
         var content = [
             h('div', { className: 'prose prose-lg max-w-none' }, widgetFor('body'))
@@ -1395,13 +1390,13 @@ CMS.registerEditorComponent({
     label: 'Contact Form',
     fields: [],
     pattern: /<ContactForm\s*\/?>/,
-    fromBlock: function (match) {
+    fromBlock: function () {
         return {};
     },
-    toBlock: function (obj) {
+    toBlock: function () {
         return '<ContactForm />';
     },
-    toPreview: function (obj) {
+    toPreview: function () {
         // Get language from current entry
         var lang = 'en';
         try {
