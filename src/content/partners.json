@@ -1,7 +1,7 @@
 {
     "Inria": {
         "fullname": "Institut National de Recherche en Informatique et en Automatique",
-        "logo": "/src/assets/images/partners/Inria.png",
+        "logo": "/src/assets/images/uploads/Inria.png",
         "children": [
             "Hycomes",
             "DiverSE",
@@ -21,7 +21,7 @@
     },
     "CNRS": {
         "fullname": "Centre National de la Recherche Scientifique",
-        "logo": "/src/assets/images/partners/CNRS.png",
+        "logo": "/src/assets/images/uploads/CNRS.png",
         "children": [
             "IRIT/ACADIE",
             "CRAN",
@@ -35,7 +35,7 @@
     },
     "INRAE": {
         "fullname": "Institut National de Recherche pour l'Agriculture, l’Alimentation et l’Environnement",
-        "logo": "/src/assets/images/partners/INRAE.png",
+        "logo": "/src/assets/images/uploads/INRAE.png",
         "children": [
             "P4S (IMT)",
             "TSCF (INRAE)"
@@ -43,11 +43,11 @@
     },
     "UPPA": {
         "fullname": "Université de Pau et des Pays de l’Adour",
-        "logo": "/src/assets/images/partners/UPPA.png"
+        "logo": "/src/assets/images/uploads/UPPA.png"
     },
     "Télécom Paris": {
         "fullname": "Télécom Paris – Institut Polytechnique de Paris",
-        "logo": "/src/assets/images/partners/TelecomParis.png",
+        "logo": "/src/assets/images/uploads/TelecomParis.png",
         "children": [
             "LabSoc",
             "ACES"
@@ -55,11 +55,11 @@
     },
     "ENPC": {
         "fullname": "École des Ponts ParisTech",
-        "logo": "/src/assets/images/partners/ENPC.jpg"
+        "logo": "/src/assets/images/uploads/ENPC.jpg"
     },
     "Université de Bourgogne": {
         "fullname": "Université Bourgogne-Europe",
-        "logo": "/src/assets/images/partners/UnivBourgogne.png",
+        "logo": "/src/assets/images/uploads/UnivBourgogne.png",
         "children": [
             "CIAD (Université de Bourgogne)",
             "LIB (Université Bourgogne)"
@@ -67,7 +67,7 @@
     },
     "CEA": {
         "fullname": "Commissariat à l'énergie atomique et aux énergies alternatives",
-        "logo": "/src/assets/images/partners/CEA.png",
+        "logo": "/src/assets/images/uploads/CEA.png",
         "children": [
             "LITEN",
             "LIST",
@@ -76,18 +76,18 @@
     },
     "Université Toulouse 3 (Aniti)": {
         "fullname": "Université Toulouse III – Paul Sabatier (ANITI)",
-        "logo": "/src/assets/images/partners/UnivToulousePaulSabatier.jpg"
+        "logo": "/src/assets/images/uploads/UnivToulousePaulSabatier.jpg"
     },
     "Université Toulouse Jean Jaurès": {
         "fullname": "Université Toulouse Jean-Jaurès",
-        "logo": "/src/assets/images/partners/UnivToulouseJeanJaurès.png",
+        "logo": "/src/assets/images/uploads/UnivToulouseJeanJaurès.png",
         "children": [
             "IRIT/SM@RT"
         ]
     },
     "IMT": {
         "fullname": "Institut Mines-Télécom",
-        "logo": "/src/assets/images/partners/IMT.png",
+        "logo": "/src/assets/images/uploads/IMT.png",
         "children": [
             "P4S",
             "INUIT"
@@ -95,10 +95,10 @@
     },
     "DISP": {
         "fullname": "Decision and Information Systems for Production systems",
-        "logo": "/src/assets/images/partners/ULyon2.png"
+        "logo": "/src/assets/images/uploads/ULyon2.png"
     },
     "Université de Rennes": {
         "fullname": "Université de Rennes",
-        "logo": "/src/assets/images/partners/Univ Rennes.png"
+        "logo": "/src/assets/images/uploads/Univ Rennes.png"
     }
 }

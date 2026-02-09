@@ -3,7 +3,7 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { getEntry } from "astro:content";
 import { Picture } from "astro:assets";
 import LanguageToggle from "./LanguageToggle.astro";
-import logoImagePng from "../../src/assets/images/Logo_EDT_CBLOT.png";
+import logoImagePng from "@assets/images/Logo_EDT_CBLOT.png";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);

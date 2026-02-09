@@ -32,7 +32,7 @@ const {
 let image: ImageMetadata | undefined;
 try {
     const images = import.meta.glob<{ default: ImageMetadata }>(
-        "/src/assets/images/*.{jpeg,jpg,png,gif,webp}",
+        "/src/assets/images/uploads/*.{jpeg,jpg,png,gif,webp}",
     );
 
     image = (await images[src]()).default;

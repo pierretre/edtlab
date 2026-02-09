@@ -4,7 +4,7 @@ date: 2024-09-20
 newsType: "press-release"
 description: "The EDT program's breakthrough research in real-time digital twin synchronization receives recognition at the European Research Excellence Awards"
 lang: "en"
-photo: "/src/assets/images/news-covers/Digital-Twins-Cover-image.jpg"
+photo: "/src/assets/images/uploads/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Press Release - September 20, 2024

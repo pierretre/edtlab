@@ -9,7 +9,7 @@ export interface Props {
 
 const { partners } = Astro.props;
 const logos = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/images/partners/*.{svg,jpg,png,gif,webp}",
+    "/src/assets/images/uploads/*.{svg,jpg,png,gif,webp}",
 );
 
 // Resolve partner entries and load their logo image metadata.
