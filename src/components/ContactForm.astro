@@ -16,8 +16,8 @@ const clientTranslations = {
     messageTooLong: t("contact.form.validation-message-long"),
 };
 
-// Get API URL from environment
-const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:8080";
+// Get API URL - use Astro API endpoint
+const apiUrl = "/api/contact";
 ---
 
 <form
