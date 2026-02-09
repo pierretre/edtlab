@@ -1,43 +1,30 @@
 services:
-  statics:
+  web:
     image: pierretre/edtlab:latest
-    container_name: edtlab_statics
+    container_name: edtlab_web
     restart: always
     networks:
       - edtlab_network
     ports:
-      - "0.0.0.0:4001:80"
+      - "0.0.0.0:4001:4321"
     env_file:
       - .env
-    depends_on:
-      - api-node
-
-  api-node:
-    build:
-      context: ./src/api-node
-      dockerfile: Dockerfile
-    container_name: edtlab_api_node
-    restart: always
-    networks:
-      - edtlab_network
-    env_file:
-      - .env
-    ports:
-      - "0.0.0.0:4004:8080"
     environment:
+      - HOST=0.0.0.0
+      - PORT=4321
+      - NODE_ENV=production
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
       - BREVO_API_KEY=${BREVO_API_KEY}
       - LIST_INBOX=${LIST_INBOX}
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_NAME=${SENDER_NAME}
-      - APP_ENV=${APP_ENV:-production}
-      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
-      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4321/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
       timeout: 3s
       retries: 3
-      start_period: 5s
+      start_period: 10s
 
   matomo-db:
     image: mariadb:10.11

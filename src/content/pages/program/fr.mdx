@@ -1,13 +1,9 @@
 ---
 title: "Le Programme EDT"
 description: "Aperçu du programme de recherche EDT, objectifs, structure et partenaires"
+lang: "fr"
 toc: true
 ---
-
-import OptimizedFigure from '@components/OptimizedFigure.astro';
-import OutlinedCard from '@components/OutlinedCard.astro';
-import mainArchitectureImage from '/src/assets/images/INRIA_EDT_CBLOT_main_V2.png';
-import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.png';
 
 # Programme de Recherche EDT
 
@@ -15,7 +11,7 @@ import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.pn
 
 Le programme de recherche Engineering Digital Twins (EDT) vise à faire progresser le domaine de la technologie des jumeaux numériques pour les applications d'ingénierie, créant une communauté multidisciplinaire avec un leadership international en ingénierie des jumeaux numériques.
 <OptimizedFigure
-  src={mainArchitectureImage}
+  src="/src/assets/images/INRIA_EDT_CBLOT_main_V2.png"
   alt="Aperçu de l'architecture du programme de recherche EDT montrant les cinq projets ciblés et leurs interconnexions"
   caption="Architecture du programme de recherche EDT : Aperçu des cinq projets ciblés (PC1-PC5)"
   loading="eager"
@@ -73,7 +69,7 @@ Le programme est organisé en cinq projets ciblés étroitement connectés (PC1-
 - **AT5** : Dissémination et Exploitation
 
 <OptimizedFigure
-  src={crossCuttingActionsImage}
+  src="/src/assets/images/INRIA_EDT_CBLOT_AT_2.png"
   alt="Diagramme des Actions Transverses (AT) EDT montrant les sept actions transverses qui coordonnent et intègrent les projets ciblés"
   caption="Cadre des Actions Transverses EDT : Sept actions transverses (AT1-AT7) qui assurent la coordination, l'intégration et la construction de communauté à travers le programme de recherche"
   maxWidth={700}
@@ -92,32 +88,32 @@ EDT aborde six défis scientifiques majeurs :
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
   <OutlinedCard 
-    label="C1"
+    label="1"
     title="Hybridation des Modèles"
     description="Méthodes et abstractions pour combiner modèles physiques et basés sur les données"
   />
   <OutlinedCard 
-    label="C2"
+    label="2"
     title="Composition de Systèmes"
     description="Composer différents JN pour refléter des Systèmes de Systèmes (SoS)"
   />
   <OutlinedCard 
-    label="C3"
+    label="3"
     title="Fondations Logicielles"
     description="Fondations logicielles et architecture des jumeaux numériques"
   />
   <OutlinedCard 
-    label="C4"
+    label="4"
     title="Couplage Numérique"
     description="Flux bidirectionnels entre jumeaux physiques et numériques"
   />
   <OutlinedCard 
-    label="C5"
+    label="5"
     title="Interaction Humaine"
     description="Interaction humain-machine et fusion de données multimodales"
   />
   <OutlinedCard 
-    label="C6"
+    label="6"
     title="Éthique & Durabilité"
     description="Considérations de responsabilité éthique et environnementale"
   />

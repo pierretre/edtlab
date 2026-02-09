@@ -160,10 +160,6 @@ title: "Advanced Page"
 toc: true
 ---
 
-import OptimizedFigure from '@components/OptimizedFigure.astro';
-import OutlinedCard from '@components/OutlinedCard.astro';
-import imageFile from '/src/assets/images/example.png';
-
 # Advanced Page Title
 
 ## Overview with Visual

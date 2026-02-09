@@ -1,54 +1,48 @@
 # Brevo Email API Integration
 
-This guide explains the Node.js Contact API implementation using Brevo (formerly Sendinblue) for handling contact form submissions.
+This guide explains the Astro SSR API implementation using Brevo (formerly Sendinblue) for handling contact form submissions.
 
 ---
 
 ## Overview
 
-The EDT website uses a Node.js API with Express.js to handle contact form submissions via Brevo's transactional email service. The API is containerized with Docker and runs alongside the Astro website.
+The EDT website uses Astro's server-side rendering (SSR) capabilities to handle contact form submissions via Brevo's transactional email service. The API is integrated directly into the Astro application, eliminating the need for a separate Node.js server.
 
 ---
 
-## Project Structure
+## Architecture
+
+The contact form API is now part of the main Astro application:
 
 ```
-src/api-node/
-├── index.js            # Main API server (Express.js)
-├── package.json        # Node.js dependencies
-├── Dockerfile          # Production container
-├── Dockerfile.dev      # Development container
-├── .dockerignore       # Files to exclude from Docker build
-├── test-api.sh         # API testing script
-└── README.md           # API documentation
+src/
+├── pages/
+│   └── api/
+│       └── contact.ts      # SSR API endpoint
+└── components/
+    └── ContactForm.astro   # Contact form component
 ```
+
+**Benefits:**
+- ✅ Simplified architecture (one application instead of two)
+- ✅ No CORS configuration needed
+- ✅ Better performance (no network overhead)
+- ✅ Easier deployment (single container)
+- ✅ Unified codebase
 
 ---
 
 ## API Implementation
 
-### Dependencies
-
-The API uses the official Brevo Node.js SDK:
-
-```json
-{
-  "dependencies": {
-    "@getbrevo/brevo": "^2.2.0",
-    "express": "^4.21.2",
-    "helmet": "^8.0.0",
-    "cors": "^2.8.5"
-  }
-}
-```
-
 ### Endpoint
 
-**URL**: `http://localhost:4004/` (development) or `http://your-domain:4004/` (production)
+**URL**: `/api/contact`
 
 **Method**: `POST`
 
 **Content-Type**: `application/json`
+
+**Rendering**: Server-side only (`export const prerender = false`)
 
 ### Request Body
 
@@ -82,24 +76,25 @@ The API uses the official Brevo Node.js SDK:
 }
 ```
 
-**Error (400/500)**:
+**Rate Limited (429)**:
 ```json
 {
-  "error": "Error message"
+  "error": "Please wait 60 seconds before submitting again.",
+  "retry_after": 60
 }
 ```
 
-### Health Check Endpoint
-
-**URL**: `http://localhost:4004/health`
-
-**Method**: `GET`
-
-**Response**:
+**Validation Error (400)**:
 ```json
 {
-  "status": "ok",
-  "service": "edtlab-api"
+  "error": "Missing required fields"
+}
+```
+
+**Server Error (500)**:
+```json
+{
+  "error": "Error message"
 }
 ```
 
@@ -107,20 +102,14 @@ The API uses the official Brevo Node.js SDK:
 
 ## Environment Configuration
 
-Environment variables are configured in `.env.development` or `.env.production`:
+Environment variables are configured in `.env`:
 
 ```bash
 # Brevo API Configuration
 BREVO_API_KEY=your_brevo_api_key_here
 LIST_INBOX=contact@edtlab.fr
-SENDER_EMAIL=contact@edtlab.fr
+SENDER_EMAIL=noreply@edtlab.fr
 SENDER_NAME=EDT Research Program
-
-# API URL for contact form (used by frontend)
-PUBLIC_API_URL=http://localhost:4004
-
-# Application environment
-APP_ENV=production  # or 'development'
 ```
 
 **Variables:**
@@ -128,64 +117,34 @@ APP_ENV=production  # or 'development'
 - `LIST_INBOX`: Recipient email address (where contact form submissions are sent)
 - `SENDER_EMAIL`: Email address used as the sender (must be verified in Brevo)
 - `SENDER_NAME`: Display name for the sender
-- `PUBLIC_API_URL`: API endpoint URL for the contact form (exposed to frontend)
-- `APP_ENV`: Application environment (production/development)
 
-**Environment-specific URLs:**
-- **Development**: `http://localhost:4004`
-- **Production**: `https://edtlab.fr/api` (or your production API URL)
+**Important**: These variables are now used directly by the Astro application via `import.meta.env`.
 
 ### Getting a Brevo API Key
 
 1. Sign up at [Brevo](https://www.brevo.com/)
 2. Go to **Settings** → **SMTP & API** → **API Keys**
 3. Create a new API key with transactional email permissions
-4. Copy the key to your environment file
+4. Copy the key to your `.env` file
 
 ---
 
-## Docker Configuration
+## Dependencies
 
-### Dockerfile
+The API uses the official Brevo Node.js SDK:
 
-The API uses Node.js 20 Alpine with a non-root user:
-
-```dockerfile
-FROM node:20-alpine
-
-# Create app directory and user
-WORKDIR /app
-RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
-
-# Install dependencies
-COPY package*.json ./
-RUN npm ci --only=production
-
-# Copy application files
-COPY index.js ./
-
-# Set ownership
-RUN chown -R nodejs:nodejs /app
-USER nodejs
-
-EXPOSE 8080
-
-CMD ["node", "index.js"]
+```json
+{
+  "dependencies": {
+    "@getbrevo/brevo": "^2.2.0"
+  }
+}
 ```
 
-### Running with Docker Compose
-
-**Development:**
+Install with:
 ```bash
-docker-compose -f docker-compose.dev.yml up -d api-node
+npm install @getbrevo/brevo
 ```
-
-**Production:**
-```bash
-docker-compose up -d api-node
-```
-
-The API service runs on port 4004 (host) → 8080 (container).
 
 ---
 
@@ -194,7 +153,7 @@ The API service runs on port 4004 (host) → 8080 (container).
 ### Using curl
 
 ```bash
-curl -X POST http://localhost:4004/ \
+curl -X POST http://localhost:4321/api/contact \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",
@@ -206,23 +165,25 @@ curl -X POST http://localhost:4004/ \
   }'
 ```
 
-### Health Check
+### From the Contact Form
 
-```bash
-curl http://localhost:4004/health
-```
-
-### Automated Testing
-
-```bash
-cd src/api-node
-./test-api.sh
-```
+1. Start the dev server: `npm run dev`
+2. Navigate to: `http://localhost:4321/en/contact-us`
+3. Fill out and submit the form
 
 ### Expected Response
 
+**Success**:
 ```json
 {"success":true}
+```
+
+**Rate Limited**:
+```json
+{
+  "error": "Please wait 60 seconds before submitting again.",
+  "retry_after": 60
+}
 ```
 
 ### Common Errors
@@ -239,7 +200,7 @@ cd src/api-node
 
 **Brevo API error (500)**:
 ```json
-{"error":"Brevo error message"}
+{"error":"Missing required mail configuration"}
 ```
 
 ---
@@ -250,7 +211,7 @@ The API sends professionally formatted HTML emails with the following features:
 
 **Subject**: `Contact Form: [Subject Category] - [User Name]`
 
-**From**: `EDT Research Program <contact@edtlab.fr>` (configurable via `SENDER_EMAIL` and `SENDER_NAME`)
+**From**: `EDT Research Program <noreply@edtlab.fr>` (configurable via `SENDER_EMAIL` and `SENDER_NAME`)
 
 **Reply-To**: User's email address (allows direct reply to the sender)
 
@@ -297,40 +258,24 @@ EDT Research Team
 
 ## Security Features
 
-1. **CORS**: Configured with allowed origins
-   - Default allowed origins: `localhost:4321`, `localhost:80`, `edtlab.fr`, `www.edtlab.fr`
-   - Add additional origins in `index.js` as needed
-
-2. **Rate Limiting**: Built-in rate limiting to prevent abuse
+1. **Rate Limiting**: Built-in rate limiting to prevent abuse
    - **Client-side**: 60-second cooldown using localStorage
-   - **Server-side**: 60-second cooldown per IP address
+   - **Server-side**: 60-second cooldown per IP address (in-memory)
    - Returns HTTP 429 (Too Many Requests) when rate limit exceeded
-   - Rate limit data stored in memory with automatic cleanup
+   - Automatic cleanup of expired rate limit entries
 
-3. **Security Headers**: Helmet.js provides:
-   - Content Security Policy
-   - X-Frame-Options
-   - X-Content-Type-Options
-   - Strict-Transport-Security
+2. **Input Validation**: All inputs are validated and sanitized
+   - Required field validation
+   - Email format validation
+   - Privacy acceptance validation
 
-4. **Input Validation**: All inputs are validated and sanitized
-5. **Environment Variables**: Never commit `.env` files with real API keys
-6. **HTTPS**: Always use HTTPS in production
-7. **Non-root User**: Container runs as non-root user for security
+3. **Environment Variables**: Never commit `.env` files with real API keys
 
-### CORS Configuration
+4. **HTTPS**: Always use HTTPS in production
 
-To add more allowed origins, edit `src/api-node/index.js`:
-
-```javascript
-const allowedOrigins = [
-  'http://localhost:4321',
-  'http://localhost:80',
-  'https://edtlab.fr',
-  'https://www.edtlab.fr',
-  'https://your-custom-domain.com'  // Add your domain here
-];
-```
+5. **IP-based Rate Limiting**: Tracks submissions by client IP address
+   - Supports `X-Forwarded-For` header for proxy setups
+   - Supports `X-Real-IP` header
 
 ### Rate Limiting Configuration
 
@@ -339,9 +284,9 @@ const allowedOrigins = [
 const COOLDOWN_DURATION = 60000; // 60 seconds in milliseconds
 ```
 
-**Server-Side (src/api-node/index.js):**
-```javascript
-const RATE_LIMIT_WINDOW = 60000; // 60 seconds in milliseconds
+**Server-Side (src/pages/api/contact.ts):**
+```typescript
+const RATE_LIMIT_SECONDS = 60; // 60 seconds
 ```
 
 **How it works:**
@@ -350,178 +295,182 @@ const RATE_LIMIT_WINDOW = 60000; // 60 seconds in milliseconds
 3. If rate limit exceeded, returns HTTP 429 with remaining time
 4. Rate limit data is automatically cleaned up after expiration
 
+**Important Note**: Rate limit data is stored in memory and will reset when the server restarts. For production deployments with multiple instances, consider implementing Redis-based rate limiting.
+
 **To adjust rate limits:**
 - Change `COOLDOWN_DURATION` in ContactForm.astro for client-side
-- Change `RATE_LIMIT_WINDOW` in src/api-node/index.js for server-side
+- Change `RATE_LIMIT_SECONDS` in src/pages/api/contact.ts for server-side
 - Recommended: Keep both values synchronized
+
+---
+
+## Docker Configuration
+
+The API is now part of the main Astro application container:
+
+```dockerfile
+FROM node:22-alpine
+
+# Build stage
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM node:22-alpine
+WORKDIR /app
+RUN apk add --no-cache dumb-init
+COPY package*.json ./
+RUN npm ci --only=production
+COPY --from=builder /app/dist ./dist
+
+USER nodejs
+EXPOSE 4321
+CMD ["node", "dist/server/entry.mjs"]
+```
+
+### Running with Docker Compose
+
+**Local Testing:**
+```bash
+docker-compose -f docker-compose.local.yml up -d --build
+```
+
+**Production:**
+```bash
+docker-compose up -d
+```
+
+The application runs on port 4321 and includes both the website and API.
 
 ---
 
 ## Troubleshooting
 
-### Container not starting
+### API not responding
 
-Check logs:
+Check if the server is running:
 ```bash
-docker-compose logs -f api-node
-```
+# Check container logs
+docker-compose logs -f web
 
-### Dependencies not installed
-
-Rebuild the container:
-```bash
-docker-compose build api-node
-docker-compose up -d api-node
+# Test the endpoint
+curl http://localhost:4321/api/contact
 ```
 
 ### Brevo API errors
 
-1. Verify your API key is correct
+1. Verify your API key is correct in `.env`
 2. Check your Brevo account status
 3. Ensure you have transactional email credits
 4. Verify the sender email is authorized in Brevo
+5. Check server logs for detailed error messages
 
-### Port conflicts
+### Rate limiting issues
 
-If port 4004 is already in use, modify `docker-compose.yml`:
-```yaml
-api-node:
-  ports:
-    - "4005:8080"  # Change host port
+1. Rate limits are per IP address
+2. Behind a proxy, ensure `X-Forwarded-For` header is set
+3. Rate limit data is in-memory and resets on server restart
+4. Check client IP detection in logs
+
+### Environment variables not loaded
+
+1. Ensure `.env` file exists in the project root
+2. Restart the Docker container after changing `.env`
+3. Check that variables are not prefixed with `PUBLIC_` (they shouldn't be for server-side only)
+
+### Email not sending
+
+Check the logs for detailed error messages:
+```bash
+docker-compose logs -f web | grep "contact form"
 ```
 
-### CORS errors in production
-
-If you see CORS errors like "CORS request did not succeed":
-
-1. **Check the API URL**: Ensure `PUBLIC_API_URL` in `.env.production` matches your actual API endpoint
-2. **Verify allowed origins**: Add your production domain to `allowedOrigins` in `src/api-node/index.js`
-3. **Check reverse proxy**: If using Nginx/Apache, ensure it's properly forwarding requests to the API
-4. **Test API directly**: Use curl to verify the API is accessible:
-   ```bash
-   curl -X POST https://edtlab.fr/api \
-     -H "Content-Type: application/json" \
-     -d '{"name":"Test","email":"test@example.com","subject":"general","message":"Test","privacy":true}'
-   ```
-5. **Check browser console**: Look for the exact URL being requested and any additional error details
+Common issues:
+- Missing `BREVO_API_KEY`
+- Missing `LIST_INBOX`
+- Sender email not verified in Brevo
+- Brevo account suspended or out of credits
 
 ---
 
 ## Development Tips
 
+### Local Development
+
+Start the dev server:
+```bash
+npm run dev
+```
+
+The API will be available at `http://localhost:4321/api/contact`
+
+### Testing Without Email
+
+To test the API without actually sending emails, you can temporarily modify `src/pages/api/contact.ts` to skip the email sending:
+
+```typescript
+// Comment out the email sending
+// await sendContactEmail({ name, email, subject, message, privacy, organization });
+console.log('Would send email:', { name, email, subject, message });
+```
+
 ### Hot Reload
 
-In development mode, the API code is mounted as a volume for hot reload:
-
-```yaml
-volumes:
-  - ./src/api-node:/app
-  - /app/node_modules  # Preserve node_modules
-```
-
-Changes to `index.js` will be reflected immediately with nodemon.
-
-### Testing Locally
-
-You can test the API without Docker:
-
-```bash
-cd src/api-node
-npm install
-export BREVO_API_KEY="your_key"
-export LIST_INBOX="your_email"
-export SENDER_EMAIL="contact@edtlab.fr"
-export SENDER_NAME="EDT Research Program"
-npm start
-```
+In development mode, changes to `src/pages/api/contact.ts` will trigger a rebuild. The dev server will automatically restart.
 
 ---
 
 ## Production Deployment
 
-1. **Set environment variables** in `.env.production`
-2. **Configure reverse proxy** (Nginx/Apache) to forward `/api` requests
-3. **Enable HTTPS** with SSL certificates
-4. **Set up monitoring** for API health and email delivery
-5. **Configure backup** email addresses in Brevo dashboard
+1. **Set environment variables** in `.env`
+2. **Build the application**: `npm run build`
+3. **Configure reverse proxy** (Nginx) to forward requests
+4. **Enable HTTPS** with SSL certificates
+5. **Set up monitoring** for API health and email delivery
 
 ### Nginx Reverse Proxy Configuration
 
-The production setup uses a two-tier Nginx configuration:
-
-**1. Root Nginx (Stream Module)** - Routes traffic based on SNI:
-```nginx
-stream {
-  map $ssl_preread_server_name $name {
-    hostnames;
-    # ... other domains ...
-    default 10.0.0.2:4443;  # Routes edtlab.fr to port 4443
-  }
-  server {
-    listen 443;
-    proxy_pass $name;
-    ssl_preread on;
-  }
-}
-```
-
-**2. Site-Specific Nginx** - Proxies to Docker containers:
 ```nginx
 server {
-    server_name edtlab.fr;
-    listen 4443 ssl;  # Receives traffic from root nginx
+    listen 443 ssl http2;
+    server_name edtlab.fr www.edtlab.fr;
     
-    # Main website (Astro static site)
+    # SSL configuration
+    ssl_certificate /etc/letsencrypt/live/edtlab.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/edtlab.fr/privkey.pem;
+    
+    # Proxy to Astro Node.js server
     location / {
-        proxy_pass http://127.0.0.1:4001;
+        proxy_pass http://localhost:4321;
         proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
-    
-    # Contact API
-    location /api/ {
-        proxy_pass http://127.0.0.1:4004/;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        # Note: No auth_basic here to allow public API access
-    }
-    
-    # Matomo Analytics
-    location /matomo/ {
-        proxy_pass http://127.0.0.1:4002/;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
     }
 }
 ```
 
-**Docker Port Mapping:**
-- Website (Astro): Container port 80 → Host port 4001
-- API (Node.js): Container port 8080 → Host port 4004
-- Matomo: Container port 80 → Host port 4002
-- Matomo DB: Container port 3306 → Host port 4003
-
 **Important Notes:**
-- The API endpoint is accessible at `https://edtlab.fr/api`
-- The `/api/` location does NOT have `auth_basic` to allow public access
-- The trailing slash in `proxy_pass http://127.0.0.1:4004/;` is important - it strips `/api` from the path
-- Set `PUBLIC_API_URL=https://edtlab.fr/api` in `.env.production`
+- The API endpoint is accessible at `https://edtlab.fr/api/contact`
+- No special `/api/` location block needed - it's handled by Astro
+- The `X-Forwarded-For` header is important for rate limiting
 
 ---
 
-## Integration with Astro Frontend
+## Integration with Frontend
 
-The contact form in the Astro frontend should POST to the API endpoint using the `PUBLIC_API_URL` environment variable:
+The contact form automatically uses the relative API endpoint:
 
 ```javascript
-// Access the API URL from environment variables
-const apiUrl = import.meta.env.PUBLIC_API_URL || 'http://localhost:4004';
+// In ContactForm.astro
+const apiUrl = "/api/contact";  // Relative URL - no configuration needed
 
 const response = await fetch(apiUrl, {
   method: 'POST',
@@ -546,27 +495,41 @@ if (result.success) {
 }
 ```
 
-**Note**: Environment variables prefixed with `PUBLIC_` are automatically exposed to the client-side code in Astro. This allows the same code to work in both development and production environments.
+**Benefits:**
+- No CORS issues (same origin)
+- No environment variable configuration needed
+- Works in both development and production
+- Simpler code
 
 ---
 
-## Performance Benefits
+## Performance Considerations
 
-The Node.js API provides significant performance improvements:
+### In-Memory Rate Limiting
 
-| Metric | Node.js |
-|--------|---------|
-| Container Size | 180MB |
-| Memory Usage | 50MB |
-| Startup Time | 1.2s |
-| Request Time | 20ms |
+The current implementation stores rate limit data in memory:
+- ✅ Fast and simple
+- ✅ No external dependencies
+- ❌ Resets on server restart
+- ❌ Not shared across multiple instances
+
+For production with multiple instances, consider:
+- Redis for shared rate limiting
+- Database-backed rate limiting
+- External rate limiting service (e.g., Cloudflare)
+
+### Email Sending
+
+Email sending is synchronous and blocks the request. For high-volume scenarios, consider:
+- Queue-based email sending (e.g., Bull, BullMQ)
+- Background job processing
+- Async email service
 
 ---
 
-## Additional Features
+## Additional Resources
 
-- **Health Check Endpoint**: `/health` for container orchestration
-- **Graceful Shutdown**: Proper cleanup on SIGTERM/SIGINT
-- **Structured Logging**: Clear, informative logs for debugging
-- **Error Handling**: Comprehensive error handling with appropriate status codes
-- **Modern JavaScript**: ES6+ features with async/await
+- [Brevo API Documentation](https://developers.brevo.com/)
+- [Astro SSR Documentation](https://docs.astro.build/en/guides/server-side-rendering/)
+- [Astro API Routes](https://docs.astro.build/en/core-concepts/endpoints/)
+- [Migration Guide](../../MIGRATION-TO-ASTRO-API.md)

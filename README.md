@@ -72,6 +72,8 @@ If you prefer manual setup without Docker:
 | :------------------------ | :----------------------------------------------- |
 | `npm install`             | Installs dependencies                            |
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run dev:cms`         | Starts dev server + CMS proxy for content editing |
+| `npm run proxy`           | Starts CMS proxy server only                     |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
@@ -115,12 +117,28 @@ See [DOCKER-SETUP.md](DOCKER-SETUP.md) for individual service commands.
 
 ## 🌐 Content Management
 
-The website supports bilingual content (English/French) with:
+The website supports bilingual content (English/French) with DecapCMS for easy content editing.
 
-- Markdown/MDX content files in `src/content/`
-- Automatic language routing with `/en/` and `/fr/` prefixes
-- Translation strings in `src/i18n/ui.ts`
-- Menu configuration in `src/content/menu/`
+### DecapCMS Admin Interface
+
+**Local Development:**
+```bash
+npm run dev:cms          # Start Astro + CMS proxy
+```
+
+Then access: `http://localhost:4321/admin/`
+
+**Production:** `https://edtlab.fr/admin/` (requires GitHub authentication)
+
+**📖 Complete CMS Guide**: [DecapCMS Setup Guide](./docs/developers/decap-cms-setup.md)
+
+### Content Structure
+
+- **Pages** (`src/content/pages/`): Nested structure with bilingual support
+- **News** (`src/content/news/`): Articles, events, press releases
+- **Job Offers** (`src/content/job-offers/`): PhD, postdoc, engineer positions
+- **Publications** (`src/content/publications/`): Research papers and articles
+- **Menus** (`src/content/menu/`): Navigation structure (EN/FR)
 
 ### Translation Management
 

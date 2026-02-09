@@ -1,13 +1,9 @@
 ---
 title: "The EDT Program"
 description: "EDT Research Program overview, goals, structure, and partners"
+lang: "en"
 toc: true
 ---
-
-import OptimizedFigure from '@components/OptimizedFigure.astro';
-import OutlinedCard from '@components/OutlinedCard.astro';
-import mainArchitectureImage from '/src/assets/images/INRIA_EDT_CBLOT_main_V2.png';
-import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.png';
 
 # EDT Research Program
 
@@ -16,7 +12,7 @@ import crossCuttingActionsImage from '/src/assets/images/INRIA_EDT_CBLOT_AT_2.pn
 The Engineering Digital Twins (EDT) research program aims to advance the field of digital twin technology for engineering applications, creating a multidisciplinary community with international leadership in digital twin engineering.
 
 <OptimizedFigure
-  src={mainArchitectureImage}
+  src="/src/assets/images/INRIA_EDT_CBLOT_main_V2.png"
   alt="EDT Research Program Architecture Overview the five focused projects and their interconnections"
   caption="EDT Research Program Architecture: Overview of the five focused projects (PC1-PC5)"
   loading="eager"
@@ -24,7 +20,7 @@ The Engineering Digital Twins (EDT) research program aims to advance the field o
 />
 
 ## Vision
-
+EDT envisions a future where digital twins are seamlessly integrated into engineering processes, enabling unprecedented levels of insight, optimization, and innovation across various domains. By addressing fundamental scientific challenges and fostering a collaborative ecosystem, EDT aims to establish the foundations for the next generation of digital twin technologies that are robust, adaptable, and ethically responsible.
 The engineering of digital twins requires a multi-disciplinary effort at the crossroads of software engineering, modeling and simulation, numerical analysis, artificial intelligence, computing systems (HPC, cloud/edge), distributed and embedded systems, HCI, and data management. EDT provides a unique opportunity to foster collaborations between these different scientific communities, creating a multidisciplinary community with international leadership.
 
 ## Goals and Objectives
@@ -74,7 +70,7 @@ The program is organized into five tightly connected focused projects (PC1-PC5) 
 - **AT5**: Dissemination and Exploitation
 
 <OptimizedFigure
-  src={crossCuttingActionsImage}
+  src="/src/assets/images/INRIA_EDT_CBLOT_AT_2.png"
   alt="EDT Cross-cutting Actions (AT) diagram showing the seven transverse actions that coordinate and integrate the focused projects"
   caption="EDT Cross-cutting Actions Framework: Seven transverse actions (AT1-AT7) that ensure coordination, integration, and community building across the research program"
   maxWidth={700}
@@ -93,32 +89,32 @@ EDT addresses six major scientific challenges:
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
   <OutlinedCard 
-    label="C1"
+    label="1"
     title="Model Hybridization"
     description="Methods and abstractions for combining physical and data-based models"
   />
   <OutlinedCard 
-    label="C2"
+    label="2"
     title="System Composition"
     description="Composing different DTs to reflect Systems of Systems (SoS)"
   />
   <OutlinedCard 
-    label="C3"
+    label="3"
     title="Software Foundations"
     description="Digital twin software foundations and architecture"
   />
   <OutlinedCard 
-    label="C4"
+    label="4"
     title="Digital Coupling"
     description="Bidirectional flows between physical and digital twins"
   />
   <OutlinedCard 
-    label="C5"
+    label="5"
     title="Human Interaction"
     description="Human-computer interaction and multimodal data fusion"
   />
   <OutlinedCard 
-    label="C6"
+    label="6"
     title="Ethics & Sustainability"
     description="Ethical and environmental responsibility considerations"
   />
