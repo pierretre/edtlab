@@ -450,10 +450,123 @@ img[loading="lazy"] {
 
     /* Hide non-essential elements */
     .site-navigation,
-    .site-footer {
+    .site-footer,
+    footer[role="contentinfo"],
+    nav:not(#site-header) {
         display: none !important;
     }
 
+    /* Show header with logo only */
+    header[role="banner"],
+    #site-header {
+        display: block !important;
+        position: static !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+
+    /* Show only the logo link in header */
+    #site-header>div {
+        display: flex !important;
+        justify-content: flex-start !important;
+        padding: 0 !important;
+        min-height: auto !important;
+    }
+
+    #site-header a[href*="/"]:first-child {
+        display: block !important;
+        height: 60pt !important;
+    }
+
+    #site-header picture,
+    #site-header img {
+        display: block !important;
+        height: 60pt !important;
+        width: auto !important;
+        max-width: 200pt !important;
+    }
+
+    /* Hide navigation menu and language toggle */
+    #site-header nav,
+    #site-header button,
+    #site-header [class*="LanguageToggle"],
+    #site-header>div>div:last-child {
+        display: none !important;
+    }
+
+    /* Hide breadcrumbs for job offers */
+    nav[aria-label*="readcrumb"],
+    [class*="breadcrumb"] {
+        display: none !important;
+    }
+
+    /* Hide badges and tags */
+    .badge,
+    [class*="badge"],
+    [class*="flex-wrap gap-2"]>* {
+        display: none !important;
+    }
+
+    /* Hide navigation buttons and CTAs */
+    a[href*="join-us"]:not([href*="mailto"]),
+    .btn,
+    .btn-primary,
+    .btn-primary-light,
+    .btn-outline,
+    button,
+    section[class*="bg-gradient"] {
+        display: none !important;
+    }
+
+    /* Show requirements section but remove background styling */
+    section[class*="bg-primary-50"],
+    section[class*="border-primary"] {
+        display: block !important;
+        background: transparent !important;
+        border: 1pt solid black !important;
+        padding: 8pt !important;
+        margin: 12pt 0 !important;
+    }
+
+    /* Show meta information (location, start date) */
+    [class*="grid"] [class*="flex items-center"] {
+        display: block !important;
+        margin-bottom: 8pt !important;
+    }
+
+    /* Show contact information */
+    [class*="font-medium text-gray-500"] {
+        display: inline !important;
+        font-weight: bold !important;
+        margin-right: 4pt !important;
+    }
+
+    [class*="font-medium text-gray-500"]+p,
+    [class*="font-medium text-gray-500"]+* {
+        display: inline !important;
+    }
+
+    /* Hide back navigation links */
+    a[class*="inline-flex items-center"] {
+        display: none !important;
+    }
+
+    /* Hide table of contents */
+    aside,
+    [class*="TableOfContent"] {
+        display: none !important;
+    }
+
+    /* Hide accessibility utilities */
+    [class*="sr-only"],
+    [id*="aria-live"],
+    [class*="BackToTop"] {
+        display: none !important;
+    }
+
+    /* Reset all backgrounds and colors for print */
     * {
         background: transparent !important;
         color: black !important;
@@ -462,25 +575,199 @@ img[loading="lazy"] {
         transition: none !important;
     }
 
+    /* Don't show URLs after links in print */
     a[href]:after {
-        content: " (" attr(href) ")";
+        content: none !important;
     }
 
-    h1,
-    h2,
+    /* Page title styling */
+    h1 {
+        font-size: 24pt !important;
+        font-weight: bold !important;
+        margin-bottom: 12pt !important;
+        page-break-after: avoid !important;
+        border-bottom: 2pt solid black !important;
+        padding-bottom: 6pt !important;
+    }
+
+    h2 {
+        font-size: 18pt !important;
+        font-weight: bold !important;
+        margin-top: 12pt !important;
+        margin-bottom: 8pt !important;
+        page-break-after: avoid !important;
+    }
+
     h3 {
-        page-break-after: avoid;
-        page-break-inside: avoid;
+        font-size: 14pt !important;
+        font-weight: bold !important;
+        margin-top: 10pt !important;
+        margin-bottom: 6pt !important;
+        page-break-after: avoid !important;
     }
 
-    p,
+    h4,
+    h5,
+    h6 {
+        font-size: 12pt !important;
+        font-weight: bold !important;
+        margin-top: 8pt !important;
+        margin-bottom: 4pt !important;
+        page-break-after: avoid !important;
+    }
+
+    /* Paragraph and text styling */
+    p {
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
+        margin-bottom: 8pt !important;
+        page-break-inside: avoid !important;
+        orphans: 3 !important;
+        widows: 3 !important;
+    }
+
+    /* List styling */
+    ul,
+    ol {
+        margin-bottom: 8pt !important;
+        page-break-inside: avoid !important;
+    }
+
     li {
-        page-break-inside: avoid;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
+        margin-bottom: 4pt !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Requirements list - show checkmarks as bullets */
+    section[class*="bg-primary-50"] ul li,
+    section[class*="border-primary"] ul li {
+        list-style-type: disc !important;
+        margin-left: 12pt !important;
+    }
+
+    /* Show requirement text */
+    section[class*="bg-primary-50"] li span,
+    section[class*="border-primary"] li span {
+        display: inline !important;
+    }
+
+    /* Meta information grid - simplify for print */
+    [class*="grid"] {
+        display: block !important;
+    }
+
+    [class*="grid"]>div {
+        margin-bottom: 8pt !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    /* SVG icons - hide in print */
+    svg {
+        display: none !important;
+    }
+
+    /* Content sections */
+    section {
+        page-break-inside: avoid !important;
+        margin-bottom: 12pt !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    /* Article content */
+    article {
+        max-width: 100% !important;
+    }
+
+    /* Main content area */
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Container adjustments */
+    .container,
+    [class*="container"],
+    [class*="max-w"] {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     /* Optimize images for print */
     img {
         max-width: 100% !important;
         height: auto !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Tables */
+    table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+    }
+
+    th,
+    td {
+        border: 1pt solid black !important;
+        padding: 4pt !important;
+        font-size: 10pt !important;
+    }
+
+    /* Code blocks */
+    code,
+    pre {
+        font-size: 9pt !important;
+        border: 1pt solid black !important;
+        padding: 4pt !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Blockquotes */
+    blockquote {
+        border-left: 2pt solid black !important;
+        padding-left: 8pt !important;
+        margin: 8pt 0 !important;
+        font-style: italic !important;
+    }
+
+    /* Page breaks */
+    .page-break-before {
+        page-break-before: always !important;
+    }
+
+    .page-break-after {
+        page-break-after: always !important;
+    }
+
+    /* Ensure proper page margins */
+    @page {
+        margin: 2cm;
+        size: A4;
+    }
+
+    /* Body adjustments - keep Marianne font */
+    body {
+        font-family: 'Marianne', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Maintain site typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    li,
+    span,
+    div {
+        font-family: 'Marianne', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif !important;
     }
 }
