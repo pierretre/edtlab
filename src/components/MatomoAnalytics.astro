@@ -45,7 +45,10 @@ const isDev = import.meta.env.DEV;
       s = d.getElementsByTagName("script")[0];
     g.async = true;
     g.src = u + "matomo.js";
+    // Use Partytown to run analytics in a web worker (only in production)
+    if (!isDev) {
+      g.type = "text/partytown";
+    }
     s.parentNode.insertBefore(g, s);
-    console.log();
   })();
 </script>

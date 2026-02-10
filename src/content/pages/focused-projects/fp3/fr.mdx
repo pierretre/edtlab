@@ -6,13 +6,8 @@ description: "Développement de méthodologies spécialisées, cycles de dévelo
 toc: true
 color: "blue-bell"
 template: "project-page"
-illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC3.png"
 projectId: "PC3"
 ---
-
-import PartnersGrid from '@components/PartnersGrid.astro';
-import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
-import avatar from '@assets/images/investigators/avatar.png';
 
 ## Aperçu
 
@@ -41,20 +36,27 @@ Les cas d'usage dans **PC3** se concentrent sur les **applications industrielles
 ### Investigateur Principal :
 
 <PrincipalInvestigator
-name="Sébastien Gérard"
-headline="Senior Fellow au CEA dirigeant l'Ingénierie Collaborative et Cognifiée Numérique"
-picture={avatar}
+name="Jean-Michel Bruel"
+headline="Professeur des Universités"
+picture="/media/uploads/jmb.png"
 >
-Sébastien Gérard est Senior Fellow au CEA où il dirige le programme phare, Ingénierie Collaborative et Cognifiée Numérique de l'institut CEA LIST. Ses intérêts de recherche incluent les systèmes complexes, l'ingénierie basée sur les modèles, la cognification, l'ingénierie des connaissances et la modélisation visuelle, les outils collaboratifs, la transformation numérique et son impact sur la société. Il représente le CEA à l'OMG depuis plus de 20 ans, a initié et dirigé pendant plus de 15 ans le projet open-source Papyrus (www.eclipse.org/papyrus), et représente le CEA List au conseil d'administration de la fondation Eclipse.
+Jean-Michel Bruel est professeur à l'Université de Toulouse Jean Jaurès. 
+Ses recherches portent sur le développement de systèmes cyber-physiques, ainsi que sur
+l'intégration de méthodes/modèles/langages, avec un focus sur les exigences et l'ingénierie
+des systèmes basée sur les modèles (MBSE). Il a été représentant du laboratoire pour l'Université
+Toulouse Jean Jaurès de 2016 à 2020. Il est membre de la Commission Stratégique de Recherche
+du laboratoire CNRS IRIT depuis 2021. Il est porteur de la Chaire MBSE entre AIRBUS et l'Université Toulouse Jean Jaurès depuis 2022, et a rejoint
+le Laboratoire International de Recherche en IA (IPAL) en 2023. Il co-dirige le GDR CNRS SciLog
+pour les cinq prochaines années.
 </PrincipalInvestigator>
 
 ### Partenaires Participants :
 
-<PartnersGrid partners={['CEA', 'CNRS', 'Inria', 'INRAE']} ></PartnersGrid>
+<PartnersGrid partners={['CEA', 'CNRS', 'Inria', 'INRAE', 'Université Toulouse Jean Jaurès', 'DISP', 'IMT']} />
 
 ## Mise en Œuvre du Projet
 
-Le projet est structuré en **quatre packages de travail interconnectés**, abordant la méthodologie, l'ingénierie continue, les outils collaboratifs et la durabilité.
+Le projet est structuré en **trois packages de travail interconnectés**, abordant la méthodologie, l'ingénierie continue et la durabilité, les outils collaboratifs.
 
 <details>
 <summary><h3>Workpackage1 : Méthodologie et Cycle de Vie</h3></summary>
@@ -78,7 +80,7 @@ Le projet est structuré en **quatre packages de travail interconnectés**, abor
 <summary><h3>Workpackage2 : Ingénierie Continue, Co-évolution et Qualité</h3></summary>
 
 **Responsable :** LaBRI (CNRS)  
-**Partenaires :** DISP (Univ Lumière Lyon 2), Diverse (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), List (CEA), Spirals (Inria), IGN, TSCF (INRAE)
+**Partenaires :** DISP (Univ Lumière Lyon 2), Diverse (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), List (CEA), Spirals (Inria)
 
 **Objectifs :**
 - Gérer la **co-évolution** entre jumeaux physiques et numériques

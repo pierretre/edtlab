@@ -6,7 +6,7 @@ location: "Lyon, France"
 description: "Atelier annuel du programme de recherche EDT rassemblant chercheurs, partenaires industriels et parties prenantes"
 url: "https://edt-workshop.fr/2024"
 lang: "fr"
-photo: "/src/assets/images/news-covers/Digital-Twins-Cover-image.jpg"
+photo: "/media/uploads/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Aperçu de l'Événement

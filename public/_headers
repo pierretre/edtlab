@@ -2,6 +2,10 @@
 
 # <https://docs.netlify.com/routing/headers/>
 
+# YAML files for Decap CMS
+/admin/*.yml
+  Content-Type: text/yaml
+
 # Cache static assets for 1 year
 
 /_assets/*

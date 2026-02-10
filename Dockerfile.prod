@@ -1,5 +1,11 @@
-# Minimal production Docker image for EDT Research Website
-FROM node:18 AS builder
+# Production Docker image for EDT Research Website with Node.js server
+# This Dockerfile builds the Astro application and runs the Node.js server
+# which serves both static files and SSR endpoints
+
+# ============================================
+# Stage 1: Builder - Build the application
+# ============================================
+FROM node:22-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -7,36 +13,64 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (production only)
-RUN npm ci --only=production --ignore-scripts
+# Install ALL dependencies (needed for build)
+RUN npm ci --ignore-scripts
 
 # Copy source code
 COPY . .
 
-# Copy environment file
-COPY .env.production .env.production
+# Build the application
+# This creates dist/client (static files) and dist/server (Node.js server)
+RUN npm run build
 
-# Build the static site with production environment
-RUN npm run build:prod
+# ============================================
+# Stage 2: Production - Minimal runtime
+# ============================================
+FROM node:22-alpine
 
-# Production stage with minimal nginx
-FROM nginx:alpine
+# Set working directory
+WORKDIR /app
 
-# Copy built static files
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Install dumb-init for proper signal handling and nano for debugging
+RUN apk add --no-cache dumb-init nano
 
-# Copy minimal nginx configuration
-COPY default.conf /etc/nginx/conf.d/default.conf
+# Copy package files
+COPY package*.json ./
 
-# Set proper permissions
-RUN chown -R nginx:nginx /usr/share/nginx/html
+# Install only production dependencies
+RUN npm ci --only=production --ignore-scripts
+
+# Copy built files from builder stage
+# The dist folder contains:
+# - dist/client: Static files (prerendered pages, assets)
+# - dist/server: Node.js server (entry.mjs and SSR endpoints)
+COPY --from=builder /app/dist ./dist
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
+
+# Switch to non-root user
+USER nodejs
 
 # Expose port
-EXPOSE 80
+EXPOSE 4321
+
+# Set environment variables
+ENV HOST=0.0.0.0
+ENV PORT=4321
+ENV NODE_ENV=production
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+# The Node.js server serves both static files and SSR endpoints
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:4321/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" || exit 1
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start the Node.js server with dumb-init
+# The server (dist/server/entry.mjs) automatically:
+# - Serves static files from dist/client
+# - Handles SSR endpoints (/api/contact, /auth/*)
+# - Serves prerendered pages
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "dist/server/entry.mjs"]

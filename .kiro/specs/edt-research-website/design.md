@@ -59,6 +59,7 @@ graph TB
 The design leverages Flowbite's comprehensive component library to avoid recreating common UI patterns:
 
 #### Core Flowbite Components Used
+
 - **Navigation**: Navbar, Dropdown, Breadcrumb components
 - **Content Display**: Card, Table, List, Timeline components  
 - **User Interaction**: Button, Form, Search, Select, Toggle components
@@ -67,12 +68,14 @@ The design leverages Flowbite's comprehensive component library to avoid recreat
 - **Data Presentation**: Pagination, Accordion components
 
 #### Customization Approach
+
 - **Tailwind Overrides**: Custom CSS classes to match Marianne font and brand colors
 - **Component Wrapping**: Astro components that wrap Flowbite components with additional functionality
 - **Accessibility Enhancement**: Additional ARIA attributes and keyboard navigation on top of Flowbite's base accessibility
 - **Responsive Behavior**: Leverage Flowbite's responsive utilities with custom breakpoints as needed
 
 #### Benefits
+
 - **Rapid Development**: Pre-built, tested components reduce development time
 - **Consistency**: Unified design language across all UI elements
 - **Accessibility**: Built-in accessibility features as foundation
@@ -117,6 +120,7 @@ src/content/
 ```
 
 This structure separates static page content from dynamic collections, enabling:
+
 - **Static Pages**: Core program information with bilingual pairs
 - **Dynamic Collections**: Publications, events, and job offers that populate list pages
 - **Hierarchical Organization**: Nested content structure matching the 8-section navigation
@@ -127,12 +131,14 @@ This structure separates static page content from dynamic collections, enabling:
 ### Core Components
 
 #### Layout Components
+
 - **BaseLayout**: Master layout with meta tags, analytics, and accessibility features
 - **Header**: Site branding with Flowbite Navbar component for responsive navigation
 - **Footer**: Contact information using Flowbite Footer component with links and legal notices
 - **Navigation**: Flowbite Navbar with Dropdown components for the 8-section menu system
 
 #### Content Components
+
 - **PageLayout**: Content wrapper using Flowbite Breadcrumb and custom TOC components
 - **TileGrid**: Interactive front page using Flowbite Card components with hover effects
 - **PublicationList**: Flowbite Table component with Search and Select filters for type/year filtering
@@ -141,6 +147,7 @@ This structure separates static page content from dynamic collections, enabling:
 - **ResourceCard**: Flowbite Card components with Badge components for type classification
 
 #### Flowbite Integration Components
+
 - **SearchBar**: Flowbite Search component for site-wide content search
 - **FilterDropdowns**: Flowbite Select and Dropdown components for content filtering
 - **LanguageToggle**: Flowbite Toggle component for accessible language switching
@@ -151,6 +158,7 @@ This structure separates static page content from dynamic collections, enabling:
 - **Forms**: Flowbite Form components for contact and search functionality
 
 #### Accessibility Enhancements
+
 - **SkipLinks**: Custom accessible navigation overlays on Flowbite components
 - **FocusManagement**: Enhanced focus indicators building on Flowbite's base styles
 - **ARIA Integration**: Custom ARIA attributes complementing Flowbite's accessibility features
@@ -165,24 +173,28 @@ The job offer system has been redesigned to better reflect the academic hiring p
 ### Key Design Changes
 
 #### Expected Start Date Model
+
 - **Flexible Format**: Supports various date formats including "Spring 2025", "Q2 2025", and specific dates
 - **No Expiration**: Job offers remain active until explicitly marked as filled
 - **Sorting**: Chronological organization based on expected start dates
 - **Display**: Clear labeling of expected start dates in listings
 
 #### Position Availability System
+
 - **Boolean Status**: Simple filled/available status using boolean field
 - **Conditional Rendering**: Apply buttons and contact information only shown for available positions
 - **Status Indicators**: Clear visual indicators for filled positions
 - **Project Page Filtering**: Different display logic for main listings vs. filled position tracking
 
 #### Contact Management
+
 - **Multiple Contacts**: Support for arrays of contact emails per position
 - **Mailto Generation**: Automatic mailto link generation with all specified contacts
 - **Fallback Handling**: Default contact information when none specified
 - **Validation**: Email format validation for all contact addresses
 
 #### Project Page Integration
+
 - **Available Positions**: Main listings show only available (non-filled) positions
 - **Filled PhD Tracking**: Separate component displays filled PhD positions for capacity tracking
 - **Project Filtering**: Position filtering by project association (PC1-PC5)
@@ -191,6 +203,7 @@ The job offer system has been redesigned to better reflect the academic hiring p
 ### Component Architecture
 
 #### JobOfferCard Component
+
 ```typescript
 interface JobOfferCardProps {
   jobOffer: JobOffer;
@@ -201,12 +214,14 @@ interface JobOfferCardProps {
 ```
 
 **Responsibilities:**
+
 - Render job offer information with appropriate status indicators
 - Conditionally display apply button based on filled status
 - Generate mailto links using contacts array
 - Display expected start date with flexible formatting
 
 #### JobOfferList Component
+
 ```typescript
 interface JobOfferListProps {
   jobOffers: JobOffer[];
@@ -219,12 +234,14 @@ interface JobOfferListProps {
 ```
 
 **Responsibilities:**
+
 - Filter job offers based on availability, project, and type
 - Sort by expected start date or other criteria
 - Render appropriate job offer cards with correct props
 - Handle empty states for filtered results
 
 #### FilledPhDComponent
+
 ```typescript
 interface FilledPhDComponentProps {
   project: string;
@@ -234,6 +251,7 @@ interface FilledPhDComponentProps {
 ```
 
 **Responsibilities:**
+
 - Display only filled PhD positions for specified project
 - Provide context about completed recruitments
 - Show position details without apply functionality
@@ -242,18 +260,21 @@ interface FilledPhDComponentProps {
 ### Data Flow
 
 #### Content Processing
+
 1. **Schema Validation**: Validate job offer frontmatter against updated schema
 2. **Email Validation**: Verify all contact emails are valid format
 3. **Boolean Validation**: Ensure filled field is proper boolean value
 4. **Date Processing**: Handle flexible expected start date formats
 
 #### Rendering Logic
+
 1. **Availability Check**: Determine if position should show apply functionality
 2. **Contact Processing**: Generate mailto links from contacts array
 3. **Project Filtering**: Filter positions by project association
 4. **Type Filtering**: Apply type-specific display logic
 
 #### Project Page Logic
+
 1. **Main Listings**: Show available positions only (filled = false)
 2. **Filled PhD Section**: Show filled PhD positions only (filled = true AND type = 'phd')
 3. **Project Association**: Filter by project tags (PC1, PC2, etc.)
@@ -262,6 +283,7 @@ interface FilledPhDComponentProps {
 ### Content Collections Schema
 
 #### Pages Collection
+
 ```typescript
 const pagesSchema = z.object({
   title: z.string(),
@@ -274,6 +296,7 @@ const pagesSchema = z.object({
 ```
 
 #### Publications Collection
+
 ```typescript
 const publicationsSchema = z.object({
   title: z.string(),
@@ -288,6 +311,7 @@ const publicationsSchema = z.object({
 ```
 
 #### Job Offers Collection
+
 ```typescript
 const jobOffersSchema = z.object({
   title: z.string(),
@@ -304,6 +328,7 @@ const jobOffersSchema = z.object({
 ```
 
 #### Events Collection
+
 ```typescript
 const eventsSchema = z.object({
   title: z.string(),
@@ -334,12 +359,14 @@ The site implements an 8-section navigation menu:
 ### Content Organization
 
 #### Bilingual Content Model
+
 - Each content piece has English (`en.md`) and French (`fr.md`) versions
 - Consistent slug structure across languages
 - Language-specific routing with `/en/` and `/fr/` prefixes
 - Fallback mechanisms for missing translations
 
 #### Content Types
+
 - **Static Pages**: Program info, about, contact, resources
 - **Dynamic Collections**: Publications, events, job offers
 - **Project Pages**: Individual PC1-PC5 project documentation
@@ -413,18 +440,21 @@ The front page features an engaging tile-based interface built with Flowbite com
 The design ensures AA-level compliance with French accessibility guidelines:
 
 #### Visual Accessibility
+
 - **Color Contrast**: 4.5:1 ratio for normal text, 3:1 for large text
 - **Text Scaling**: Support up to 200% zoom without horizontal scroll
 - **Font Selection**: Marianne font with clear readability
 - **Focus Indicators**: Visible focus states for all interactive elements
 
 #### Navigation Accessibility
+
 - **Keyboard Navigation**: Complete site navigation via keyboard
 - **Skip Links**: Jump to main content and navigation areas
 - **Logical Tab Order**: Intuitive keyboard navigation flow
 - **Screen Reader Support**: Semantic HTML and ARIA labels
 
 #### Content Accessibility
+
 - **Alternative Text**: Required for all images and visual content
 - **Heading Structure**: Proper H1-H6 hierarchy
 - **Form Labels**: Descriptive labels for all form elements
@@ -442,6 +472,7 @@ The design ensures AA-level compliance with French accessibility guidelines:
 ### Editor Workflow
 
 #### Content Creation Process
+
 1. **Template Selection**: Choose appropriate content template
 2. **Markdown Editing**: Write content using MDX with custom components
 3. **Schema Validation**: Automatic validation against Zod schemas
@@ -460,12 +491,14 @@ The design ensures AA-level compliance with French accessibility guidelines:
 ### Developer Workflow
 
 #### Development Environment
+
 - **Local Development**: Hot-reload with `npm run dev`
 - **Type Checking**: Continuous TypeScript validation
 - **Content Validation**: Real-time schema checking
 - **Build Process**: Production optimization with `npm run build`
 
 #### Deployment Pipeline
+
 1. **Code Commit**: Changes pushed to main branch
 2. **Automated Testing**: Unit tests and accessibility checks
 3. **Build Process**: Static site generation
@@ -598,6 +631,7 @@ interface FilterManager<T = any> {
 ```
 
 The FilterManager is responsible for:
+
 - **State Management**: Maintaining current filter values
 - **URL Synchronization**: Bidirectional sync between filter state and URL parameters
 - **Event Handling**: Responding to user interactions with filter controls
@@ -609,6 +643,7 @@ The FilterManager is responsible for:
 The FilterSidebar component is a reusable Astro component that renders filter controls based on configuration:
 
 **Props Interface:**
+
 ```typescript
 interface FilterSidebarProps {
   filters: FilterConfig[];
@@ -618,6 +653,7 @@ interface FilterSidebarProps {
 ```
 
 **Responsibilities:**
+
 - Render filter controls based on filter type (select, search, custom)
 - Apply proper ARIA labels and accessibility attributes
 - Support internationalization for labels and options
@@ -625,6 +661,7 @@ interface FilterSidebarProps {
 - Render clear filters button
 
 **Component Structure:**
+
 - Sidebar container with sticky positioning
 - Individual filter controls with labels
 - Clear button for resetting all filters
@@ -848,12 +885,14 @@ const newsFilterConfig: FilterSystemConfig = {
 ### Performance Optimizations
 
 #### Debouncing Strategy
+
 - **Search Input**: 200ms debounce to reduce filtering operations during typing
 - **Select Changes**: Immediate filtering for instant feedback
 - **DOM Caching**: Cache item elements on initialization to avoid repeated queries
 - **Predicate Optimization**: Simple boolean checks for fast filtering
 
 #### Memory Management
+
 - **Event Listener Cleanup**: Proper cleanup on component unmount to prevent memory leaks
 - **Efficient Data Structures**: Use appropriate data structures for filter state management
 - **Lazy Initialization**: Initialize filter manager only when DOM is ready
@@ -861,17 +900,21 @@ const newsFilterConfig: FilterSystemConfig = {
 ### Accessibility Features
 
 #### ARIA Labels
+
 All filter controls must include proper ARIA labels for screen reader compatibility:
+
 - `aria-label` or associated `<label>` elements for all inputs
 - `aria-describedby` for additional context where needed
 - `aria-labelledby` for complex filter groups
 
 #### Screen Reader Announcements
+
 - Results count element uses `aria-live="polite"` to announce changes
 - `aria-atomic="true"` ensures complete message is read
 - Filter state changes announced appropriately
 
 #### Keyboard Navigation
+
 - **Tab Order**: Logical tab order through all filter controls
 - **Enter Key**: Submit search or apply filter on Enter
 - **Escape Key**: Clear filters on Escape key press
@@ -881,19 +924,25 @@ All filter controls must include proper ARIA labels for screen reader compatibil
 ### Error Handling
 
 #### Invalid Filter Values
+
 The system must validate filter values before applying them:
+
 - Select filters: Verify value exists in options list
 - Search filters: Sanitize input to prevent XSS
 - URL parameters: Validate against expected format
 
 #### Missing DOM Elements
+
 Graceful degradation when expected elements are not found:
+
 - Log warnings for missing elements
 - Continue operation with available elements
 - Provide fallback behavior
 
 #### URL Parameter Validation
+
 When loading filter state from URL:
+
 - Validate parameter names against configuration
 - Verify parameter values are valid for their filter type
 - Ignore invalid parameters rather than failing
@@ -912,6 +961,7 @@ The filtering system integrates with list components through:
 #### Data Attribute Pattern
 
 Content items must include relevant data attributes:
+
 ```html
 <div 
   class="content-item"
@@ -927,6 +977,7 @@ Content items must include relevant data attributes:
 #### Configuration Pattern
 
 Each content type defines its filter configuration:
+
 - Filter definitions with type, options, and predicates
 - DOM selectors for items, container, and UI elements
 - URL parameter mappings for state persistence
@@ -934,29 +985,34 @@ Each content type defines its filter configuration:
 ### Migration Strategy
 
 #### Phase 1: Create Core Utilities
+
 1. Implement FilterManager class
 2. Create filter configuration types
 3. Build FilterSidebar component
 
 #### Phase 2: Migrate Job Offers
+
 1. Create job offers filter configuration
 2. Update JobOfferList component
 3. Test filtering functionality
 4. Verify URL persistence
 
 #### Phase 3: Migrate Publications
+
 1. Create publications filter configuration
 2. Update PublicationList component
 3. Test filtering functionality
 4. Verify accessibility
 
 #### Phase 4: Migrate News
+
 1. Create news filter configuration
 2. Update NewsList component
 3. Add sorting functionality
 4. Test pagination integration
 
 #### Phase 5: Cleanup
+
 1. Remove duplicate filtering code
 2. Update documentation
 3. Add unit tests
@@ -967,170 +1023,212 @@ Each content type defines its filter configuration:
 *A property is a characteristic or behavior that should hold true across all valid executions of a system—essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
 
 #### Property 1: Filter configuration generates correct UI elements
+
 *For any* valid filter configuration, the system should generate UI elements that match the configuration's type, options, and attributes
 **Validates: Requirements 36.1**
 
 #### Property 2: Filter system extensibility
+
 *For any* new filter type added to a configuration, the core filtering logic should remain unchanged and the new filter should integrate seamlessly
 **Validates: Requirements 36.2**
 
 #### Property 3: Filter option consistency
+
 *For any* modification to filter options, all components using that filter should reflect the updated options consistently
 **Validates: Requirements 36.3**
 
 #### Property 4: Internationalization support
+
 *For any* filter configuration with translation keys, the resolved labels should match the current language setting
 **Validates: Requirements 37.3**
 
 #### Property 5: Custom predicate execution
+
 *For any* custom filter predicate, the predicate should be invoked for each item and its boolean result should determine item visibility
 **Validates: Requirements 37.5**
 
 #### Property 6: AND logic for multiple filters
+
 *For any* combination of active filters, an item should be visible only if it matches all filter conditions (AND logic)
 **Validates: Requirements 38.1**
 
 #### Property 7: Immediate filter updates
+
 *For any* filter value change, the displayed results should update within the next render cycle
 **Validates: Requirements 38.2**
 
 #### Property 8: Search debouncing
+
 *For any* rapid sequence of search inputs within the debounce period, only one filter operation should execute after the delay
 **Validates: Requirements 38.3, 42.2**
 
 #### Property 9: Results count accuracy
+
 *For any* filter state, the displayed count should equal the number of visible items
 **Validates: Requirements 38.5**
 
 #### Property 10: URL state synchronization
+
 *For any* filter state, the URL query parameters should accurately represent all active filters, and loading that URL should restore the same filter state
 **Validates: Requirements 39.1, 39.2, 39.3**
 
 #### Property 11: Clear filters reset
+
 *For any* filter state, clicking the clear button should reset all filters to their default values and display all items
 **Validates: Requirements 40.1, 40.2, 40.3**
 
 #### Property 12: Content type agnostic filtering
+
 *For any* content type with required data attributes, the filtering system should work without modification to core logic
 **Validates: Requirements 41.1, 41.2**
 
 #### Property 13: Filter performance
+
 *For any* dataset up to 1000 items, changing a filter should update results within 100 milliseconds
 **Validates: Requirements 42.1**
 
 #### Property 14: ARIA label presence
+
 *For any* filter control element, it should have appropriate ARIA labels or aria-label attributes
 **Validates: Requirements 43.1**
 
 #### Property 15: Keyboard accessibility
+
 *For any* filter control, it should be fully operable using only keyboard inputs (Tab, Enter, Escape, Arrow keys)
 **Validates: Requirements 43.3**
 
 #### Property 16: Focus management
+
 *For any* filter application, keyboard focus should be maintained appropriately or moved to a logical location
 **Validates: Requirements 43.4**
 
 #### Property 17: Semantic HTML usage
+
 *For any* filter control, it should use appropriate semantic HTML elements (select for dropdowns, input for search, button for actions)
 **Validates: Requirements 43.5**
 
 #### Property 18: Expected start date display
+
 *For any* job offer, the display function should show the expected start date field rather than a deadline field
 **Validates: Requirements 44.1**
 
 #### Property 20: Chronological sorting by start date
+
 *For any* collection of job offers, sorting chronologically should order them by expected start date
 **Validates: Requirements 44.3**
 
 #### Property 21: Expected start date label presence
+
 *For any* job offer listing, the rendered output should contain the "Expected Start Date" label text
 **Validates: Requirements 44.4**
 
 #### Property 22: Flexible date format support
+
 *For any* valid date format input (specific dates, "Spring 2025", "Q2 2025"), the system should handle it correctly
 **Validates: Requirements 44.5**
 
 #### Property 23: Filled position UI hiding
+
 *For any* job offer where filled is true, apply buttons and contact information should not be rendered
 **Validates: Requirements 45.1**
 
 #### Property 24: Position filled indicator display
+
 *For any* job offer where filled is true, a "Position Filled" indicator should appear in the rendered output
 **Validates: Requirements 45.2**
 
 #### Property 25: Available position apply button
+
 *For any* job offer where filled is false, the apply button should appear with correct contact emails
 **Validates: Requirements 45.3**
 
 #### Property 26: Multiple contact email support
+
 *For any* job offer with multiple contacts, the system should accept and process all email addresses in the array
 **Validates: Requirements 45.4**
 
 #### Property 27: Mailto link generation
+
 *For any* job offer with contact arrays, the generated mailto links should include all specified emails
 **Validates: Requirements 45.5**
 
 #### Property 28: Boolean filled field support
+
 *For any* job offer with filled field set to true or false, the system should process it correctly
 **Validates: Requirements 46.1**
 
 #### Property 29: Filled position unavailability marking
+
 *For any* job offer where filled is true, the position should be marked as unavailable
 **Validates: Requirements 46.2**
 
 #### Property 30: Default availability behavior
+
 *For any* job offer where filled is false or omitted, the position should be treated as available
 **Validates: Requirements 46.3**
 
 #### Property 31: Boolean field validation
+
 *For any* invalid value provided for the filled field, the validation should catch and reject it
 **Validates: Requirements 46.4**
 
 #### Property 32: Contacts array support
+
 *For any* job offer with contacts array, the system should process all email addresses correctly
 **Validates: Requirements 47.1**
 
 #### Property 33: Email validation in contacts
+
 *For any* invalid email address in the contacts array, the validation should catch and reject it
 **Validates: Requirements 47.2**
 
 #### Property 34: Complete contact inclusion in mailto
+
 *For any* job offer with multiple contacts, all emails should appear in the generated mailto link
 **Validates: Requirements 47.3**
 
 #### Property 35: Fallback contact handling
+
 *For any* job offer without contacts specified, fallback contact information should be used
 **Validates: Requirements 47.4**
 
 #### Property 36: Project page available filtering
+
 *For any* project page, only job offers where filled is false should be displayed in main listings
 **Validates: Requirements 48.1**
 
 #### Property 37: Project association filtering
+
 *For any* project page, only job offers associated with that specific project should be shown
 **Validates: Requirements 48.2**
 
 #### Property 38: Start date independent availability
+
 *For any* available job offer, it should be displayed regardless of expected start date status
 **Validates: Requirements 48.3**
 
 #### Property 39: Filled position hiding from main listings
+
 *For any* filled job offer, it should not appear in main project page listings
 **Validates: Requirements 48.4**
 
 #### Property 40: Filled PhD dedicated component display
+
 *For any* filled PhD position, it should appear in the dedicated component at the bottom of project pages
 **Validates: Requirements 49.1**
 
 #### Property 41: PhD-only filled component filtering
+
 *For any* filled position, only PhD positions should appear in the filled positions component
 **Validates: Requirements 49.2**
 
 #### Property 42: Filled PhD project association
+
 *For any* project page, the filled PhD component should only show PhDs associated with that specific project
 **Validates: Requirements 49.3**
 
 #### Property 43: Non-PhD exclusion from filled component
+
 *For any* filled position that is not a PhD (postdoc, engineer, intern), it should not appear in the filled positions component
 **Validates: Requirements 49.4**
 
@@ -1139,18 +1237,21 @@ Each content type defines its filter configuration:
 ### Automated Testing
 
 #### Unit Testing
+
 - **Component Testing**: Astro component functionality
 - **Content Validation**: Schema compliance testing
 - **Utility Functions**: Helper function testing
 - **i18n Testing**: Translation completeness validation
 
 #### Integration Testing
+
 - **Route Testing**: All pages accessible and render correctly
 - **Navigation Testing**: Menu functionality across languages
 - **Content Collection Testing**: Dynamic content generation
 - **Build Process Testing**: Successful static site generation
 
 #### Accessibility Testing
+
 - **Automated Scanning**: axe-core integration in CI/CD
 - **Keyboard Navigation**: Automated keyboard navigation testing
 - **Screen Reader Testing**: Automated screen reader compatibility
@@ -1159,12 +1260,14 @@ Each content type defines its filter configuration:
 ### Manual Testing
 
 #### Content Review
+
 - **Editorial Review**: Content quality and accuracy
 - **Translation Review**: Bilingual content consistency
 - **Visual Review**: Design consistency across pages
 - **User Experience Testing**: Navigation and interaction testing
 
 #### Accessibility Review
+
 - **Screen Reader Testing**: Manual testing with assistive technology
 - **Keyboard Navigation**: Manual keyboard-only navigation
 - **Cognitive Load Testing**: Content clarity and navigation simplicity
@@ -1247,7 +1350,7 @@ Each content type defines its filter configuration:
 
 ```dockerfile
 # Multi-stage build example
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 # Build static site
 
 FROM nginx:alpine AS production
@@ -1266,7 +1369,6 @@ FROM nginx:alpine AS production
 
 This design provides a comprehensive foundation for building a high-performance, accessible, and maintainable bilingual research website that meets all specified requirements while providing excellent user and developer experiences.
 
-
 ## Image Optimization Strategy
 
 ### Astro Picture Component Integration
@@ -1274,6 +1376,7 @@ This design provides a comprehensive foundation for building a high-performance,
 The website uses Astro's built-in Picture component for automatic image optimization:
 
 #### Implementation Approach
+
 - **Asset Location**: All images stored in `src/assets/images/` for Astro's automatic optimization
 - **Component Usage**: Astro's Picture component replaces custom image optimization components
 - **Format Generation**: Automatic generation of WebP and AVIF formats with fallbacks
@@ -1281,6 +1384,7 @@ The website uses Astro's built-in Picture component for automatic image optimiza
 - **Performance**: Build-time optimization reduces runtime overhead
 
 #### Benefits
+
 - **Automatic Optimization**: No manual image processing required
 - **Modern Formats**: Automatic WebP/AVIF generation with PNG/JPEG fallbacks
 - **Responsive**: Automatic srcset generation for different screen sizes
@@ -1288,6 +1392,7 @@ The website uses Astro's built-in Picture component for automatic image optimiza
 - **Performance**: Optimized images reduce page load times
 
 #### Migration from Public Assets
+
 - **Consolidation**: Images moved from `public/` to `src/assets/images/`
 - **Deduplication**: Duplicate images between public and assets removed
 - **Reference Updates**: All image references updated to use asset imports
@@ -1324,9 +1429,10 @@ src/assets/images/
 ### Production Infrastructure
 
 #### Docker Multi-Stage Build
+
 ```dockerfile
 # Stage 1: Build the static site
-FROM node:18 AS builder
+FROM node:22 AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production --ignore-scripts
@@ -1345,8 +1451,9 @@ CMD ["nginx", "-g", "daemon off;"]
 ```
 
 #### VPS Deployment
+
 - **Web Server**: Nginx serving static files with optimized caching configuration
-- **Domain**: www.edtlab.fr with DNS configuration
+- **Domain**: <www.edtlab.fr> with DNS configuration
 - **SSL/TLS**: Let's Encrypt certificates with automatic renewal
 - **Container Management**: Docker with health checks and automatic restart policies
 - **Backup Strategy**: Git-based version control with container image versioning
@@ -1354,6 +1461,7 @@ CMD ["nginx", "-g", "daemon off;"]
 ### Development Environment
 
 #### Docker Compose Configuration
+
 ```yaml
 services:
   astro:
@@ -1414,6 +1522,7 @@ volumes:
 ### Analytics Integration
 
 #### Matomo Self-Hosted Analytics
+
 - **Privacy-Focused**: GDPR-compliant analytics without third-party tracking
 - **Multi-Container Setup**: Separate containers for Matomo application and MariaDB database
 - **Data Ownership**: All analytics data stored in self-hosted database
@@ -1421,6 +1530,7 @@ volumes:
 - **Access**: Matomo dashboard accessible at port 8080 in development
 
 #### Tracking Implementation
+
 - **Script Integration**: Matomo tracking code in BaseLayout with Partytown for performance
 - **Event Tracking**: Custom events for user interactions and content engagement
 - **Privacy Controls**: Cookie consent and data anonymization options
