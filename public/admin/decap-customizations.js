@@ -23,27 +23,110 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
-var partnersDataCache = null;
-var partnersDataPromise = null;
-
-function initPartnersData() {
-    if (partnersDataPromise) return;
-    partnersDataPromise = fetch('/src/content/partners.json')
-        .then(function (response) {
-            if (!response.ok) return {};
-            return response.json();
-        })
-        .then(function (data) {
-            partnersDataCache = data || {};
-            return partnersDataCache;
-        })
-        .catch(function () {
-            partnersDataCache = {};
-            return partnersDataCache;
-        });
-}
-
-initPartnersData();
+var partnersData = {
+    "Inria": {
+        "fullname": "Institut National de Recherche en Informatique et en Automatique",
+        "logo": "/media/uploads/Inria.png",
+        "children": [
+            "Hycomes",
+            "DiverSE",
+            "Kairos",
+            "Parkas",
+            "Wimmics",
+            "Moex",
+            "Spirals",
+            "MARACAS",
+            "MEDISIM",
+            "Kopernick",
+            "Hybrid",
+            "Aviz",
+            "ILDA",
+            "VirtUs"
+        ]
+    },
+    "CNRS": {
+        "fullname": "Centre National de la Recherche Scientifique",
+        "logo": "/media/uploads/CNRS.png",
+        "children": [
+            "IRIT/ACADIE",
+            "CRAN",
+            "LaBRI",
+            "ICube",
+            "LS2N",
+            "TSCF (INRAE)",
+            "CRTD (CNAM)",
+            "LMPS"
+        ]
+    },
+    "INRAE": {
+        "fullname": "Institut National de Recherche pour l'Agriculture, l’Alimentation et l’Environnement",
+        "logo": "/media/uploads/INRAE.png",
+        "children": [
+            "P4S (IMT)",
+            "TSCF (INRAE)"
+        ]
+    },
+    "UPPA": {
+        "fullname": "Université de Pau et des Pays de l’Adour",
+        "logo": "/media/uploads/UPPA.png"
+    },
+    "Télécom Paris": {
+        "fullname": "Télécom Paris – Institut Polytechnique de Paris",
+        "logo": "/media/uploads/TelecomParis.png",
+        "children": [
+            "LabSoc",
+            "ACES"
+        ]
+    },
+    "ENPC": {
+        "fullname": "École des Ponts ParisTech",
+        "logo": "/media/uploads/ENPC.jpg"
+    },
+    "Université de Bourgogne": {
+        "fullname": "Université Bourgogne-Europe",
+        "logo": "/media/uploads/UnivBourgogne.png",
+        "children": [
+            "CIAD (Université de Bourgogne)",
+            "LIB (Université Bourgogne)"
+        ]
+    },
+    "CEA": {
+        "fullname": "Commissariat à l'énergie atomique et aux énergies alternatives",
+        "logo": "/media/uploads/CEA.png",
+        "children": [
+            "LITEN",
+            "LIST",
+            "CEA Tech Occitanie"
+        ]
+    },
+    "Université Toulouse 3 (Aniti)": {
+        "fullname": "Université Toulouse III – Paul Sabatier (ANITI)",
+        "logo": "/media/uploads/UnivToulousePaulSabatier.jpg"
+    },
+    "Université Toulouse Jean Jaurès": {
+        "fullname": "Université Toulouse Jean-Jaurès",
+        "logo": "/media/uploads/UnivToulouseJeanJaurès.png",
+        "children": [
+            "IRIT/SM@RT"
+        ]
+    },
+    "IMT": {
+        "fullname": "Institut Mines-Télécom",
+        "logo": "/media/uploads/IMT.png",
+        "children": [
+            "P4S",
+            "INUIT"
+        ]
+    },
+    "DISP": {
+        "fullname": "Decision and Information Systems for Production systems",
+        "logo": "/media/uploads/ULyon2.png"
+    },
+    "Université de Rennes": {
+        "fullname": "Université de Rennes",
+        "logo": "/media/uploads/Univ Rennes.png"
+    }
+};
 
 /**
  * Base container matching PageLayout structure
@@ -102,10 +185,7 @@ var NewsPreview = createClass({
                 var asset = getAsset(data.photo);
                 photo = asset.toString();
             } catch (e) {
-                // If getAsset fails, try to construct a proper URL
-                if (photo && photo.startsWith('/src/assets/')) {
-                    photo = photo.replace('/src/assets/', '/');
-                }
+                console.log('Error getting asset for news photo:', data.photo, e);
             }
         }
 
@@ -519,11 +599,7 @@ CMS.registerEditorComponent({
                 var asset = getAsset(obj.picture);
                 pictureUrl = asset.toString();
             } catch (e) {
-                // If getAsset fails, try to construct a proper URL
-                if (pictureUrl && pictureUrl.startsWith('/src/assets/')) {
-                    // Convert internal path to public path
-                    pictureUrl = pictureUrl.replace('/src/assets/', '/');
-                }
+                console.log('Error getting asset for Principal Investigator picture:', obj.picture, e);
             }
         }
 
@@ -582,7 +658,6 @@ CMS.registerEditorComponent({
             .map(function (p) { return p.trim(); })
             .filter(Boolean);
 
-        var partnersData = partnersDataCache || {};
         var partners = partnersKeys.map(function (key) {
             var entry = partnersData[key];
             if (!entry) {
@@ -602,10 +677,7 @@ CMS.registerEditorComponent({
                     var asset = getAsset(logoUrl);
                     logoUrl = asset.toString();
                 } catch (e) {
-                    // If getAsset fails, try to construct a proper URL
-                    if (logoUrl && logoUrl.startsWith('/src/assets/')) {
-                        logoUrl = logoUrl.replace('/src/assets/', '/');
-                    }
+                    console.log('Error getting asset for partner logo:', logoUrl, e);
                 }
             }
 
@@ -616,15 +688,11 @@ CMS.registerEditorComponent({
                 '</div>';
         }).join('');
 
-        if (!partnersDataCache) {
-            initPartnersData();
-        }
-
-        return '<div class="max-w-7xl px-4 py-8">' +
-            '<div class="mx-auto flex flex-row gap-16 justify-items-center flex-wrap">' +
-            cardsHtml +
-            '</div>' +
-            '</div>';
+        return `<div class="max-w-7xl px-4 py-8">
+            <div class="mx-auto flex flex-row gap-16 justify-items-center flex-wrap">
+            ${cardsHtml}
+            </div>
+            </div>`;
     }
 });
 
@@ -669,10 +737,7 @@ CMS.registerEditorComponent({
                 var asset = getAsset(obj.src);
                 imageUrl = asset.toString();
             } catch (e) {
-                // If getAsset fails, try to construct a proper URL
-                if (imageUrl && imageUrl.startsWith('/src/assets/')) {
-                    imageUrl = imageUrl.replace('/src/assets/', '/');
-                }
+                console.log('Error getting asset for OptimizedFigure:', obj.src, e);
             }
         }
 
@@ -833,22 +898,22 @@ CMS.registerEditorComponent({
                 '</div>';
         }).join('');
 
-        return '<div class="w-full">' +
-            '<!-- Filter info -->' +
-            '<div class="mb-6 p-4 bg-gray-50 rounded-lg border">' +
-            '<p class="text-sm text-gray-600 text-center">' +
-            '<strong>Note:</strong> Filters are available on the live site. This preview shows sample publications.' +
-            '</p>' +
-            '</div>' +
-            '<!-- Results Count -->' +
-            '<div class="mb-6 text-sm text-gray-600 text-center">' +
-            t.resultsCount.replace('{count}', mockPublications.length) +
-            '</div>' +
-            '<!-- Publications List -->' +
-            '<div class="relative overflow-x-auto">' +
-            publicationCardsHtml +
-            '</div>' +
-            '</div>';
+        return `<div class="w-full">
+            <!-- Filter info -->
+            <div class="mb-6 p-4 bg-gray-50 rounded-lg border">
+            <p class="text-sm text-gray-600 text-center">
+            <strong>Note:</strong> Filters are available on the live site. This preview shows sample publications.
+            </p>
+            </div>
+            <!-- Results Count -->
+            <div class="mb-6 text-sm text-gray-600 text-center">
+            ${t.resultsCount.replace('{count}', mockPublications.length)}
+            </div>
+            <!-- Publications List -->
+            <div class="relative overflow-x-auto">
+            ${publicationCardsHtml}
+            </div>
+            </div>`;
     }
 });
 
@@ -978,10 +1043,7 @@ CMS.registerEditorComponent({
                     var asset = getAsset(imageUrl);
                     imageUrl = asset.toString();
                 } catch (e) {
-                    // If getAsset fails, try to construct a proper URL
-                    if (imageUrl && imageUrl.startsWith('/src/assets/')) {
-                        imageUrl = imageUrl.replace('/src/assets/', '/');
-                    }
+                    console.log('Error getting asset for project illustration:', imageUrl, e);
                 }
             }
 

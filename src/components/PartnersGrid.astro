@@ -24,7 +24,7 @@ const partnersData: (Partner & { image: ImageMetadata })[] = await Promise.all(
         }
 
         try {
-            const image = (await logos[meta.logo]()).default;
+            const image = (await logos[`/public${meta.logo}`]()).default;
             return { ...meta, image };
         } catch (err) {
             throw new Error(
@@ -49,12 +49,6 @@ const partnersData: (Partner & { image: ImageMetadata })[] = await Promise.all(
                         class="max-h-12 w-auto max-w-32 h-auto object-contain mx-auto"
                         loading="lazy"
                     />
-
-                    {/* {p.children && p.children.length > 0 && (
-                            <div class="mt-2 hidden group-hover:block text-xs text-gray-500 text-center">
-                                {p.children.join(", ")}
-                            </div>
-                        )} */}
                 </div>
             ))
         }
