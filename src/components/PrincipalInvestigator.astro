@@ -1,10 +1,8 @@
 ---
-import { Picture } from "astro:assets";
-
 export interface Props {
     name: string;
     headline: string;
-    picture?: ImageMetadata;
+    picture?: string;
 }
 const { name, headline, picture } = Astro.props as Props;
 ---
@@ -14,11 +12,12 @@ const { name, headline, picture } = Astro.props as Props;
 >
     {
         picture && (
-            <Picture
-                class="h-full w-full object-cover"
+            <img
                 src={picture}
                 alt={name}
-                class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0"
+                class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0 object-cover"
+                loading="lazy"
+                decoding="async"
             />
         )
     }

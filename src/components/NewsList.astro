@@ -16,24 +16,12 @@ const t = useTranslations(lang);
 // Load content
 const news = await getCollection("news", (item) => item.data.lang === lang);
 
-const covers = import.meta.glob<{ default: ImageMetadata }>(
-    "@assets/images/news-covers/*.{svg,jpg,png,gif,webp}",
-);
-
-// Add cover images to feed items
-const feedWithCovers = await Promise.all(
-    news.map(async (item) => {
-        try {
-            const coverImagePath = item.data.photo;
-            const coverImage = (await covers[coverImagePath]()).default;
-            return { ...item, coverImage: coverImage };
-        } catch (err) {
-            throw new Error(
-                `Could not load cover image for news item "${item.data.title}". Path attempted: ${item.data.photo}. Original error: ${err}`,
-            );
-        }
-    }),
-);
+// CMS images are now in public/media/uploads - no import needed
+// Just pass the photo path directly to the component
+const feedWithCovers = news.map((item) => ({
+    ...item,
+    coverImage: item.data.photo,
+}));
 ---
 
 <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">

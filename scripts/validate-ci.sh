@@ -49,19 +49,19 @@ if [ ! -d "dist" ]; then
     exit 1
 fi
 
-if [ ! -f "dist/index.html" ]; then
+if [ ! -f "dist/client/index.html" ]; then
     echo -e "${RED}❌ Main index.html not found${NC}"
     exit 1
 fi
 
-if [ ! -f "dist/404.html" ]; then
+if [ ! -f "dist/client/404.html" ]; then
     print_warning "404.html not found in build output"
 fi
 
 # Check for essential language files
 essential_files=("en/index.html" "fr/index.html")
 for file in "${essential_files[@]}"; do
-    if [ ! -f "dist/$file" ]; then
+    if [ ! -f "dist/client/$file" ]; then
         print_warning "$file not found in build output"
     else
         echo -e "${GREEN}✅ Found $file${NC}"

@@ -6,7 +6,7 @@ location: "En ligne"
 description: "Séminaire explorant les tendances émergentes et les directions futures de la technologie des jumeaux numériques pour les applications d'ingénierie"
 url: "http://edtlab.fr/"
 lang: "fr"
-photo: "/src/assets/images/news-covers/Digital-Twins-Cover-image.jpg"
+photo: "/media/uploads/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Aperçu du Séminaire

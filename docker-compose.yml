@@ -1,43 +1,37 @@
 services:
-  statics:
+  web:
     image: pierretre/edtlab:latest
-    container_name: edtlab_statics
+    container_name: edtlab_web
     restart: always
-    network_mode: bridge
+    networks:
+      - edtlab_network
     ports:
-      - "0.0.0.0:4001:80"
+      - "127.0.0.1:4001:4321"
     env_file:
       - .env
-
-  api-node:
-    build:
-      context: ./src/api-node
-      dockerfile: Dockerfile
-    container_name: edtlab_api_node
-    restart: always
-    network_mode: bridge
-    env_file:
-      - .env
-    ports:
-      - "0.0.0.0:4004:8080"
     environment:
+      - HOST=0.0.0.0
+      - PORT=4321
+      - NODE_ENV=production
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
       - BREVO_API_KEY=${BREVO_API_KEY}
       - LIST_INBOX=${LIST_INBOX}
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_NAME=${SENDER_NAME}
-      - APP_ENV=${APP_ENV:-production}
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      test: [ "CMD", "node", "-e", "require('http').get('http://localhost:4321/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" ]
       interval: 30s
       timeout: 3s
       retries: 3
-      start_period: 5s
+      start_period: 10s
 
   matomo-db:
     image: mariadb:10.11
     container_name: edtlab_matomo-db
     restart: always
-    network_mode: bridge
+    networks:
+      - edtlab_network
     env_file:
       - .env
     environment:
@@ -48,10 +42,10 @@ services:
     volumes:
       - /var/www/matomo/db:/var/lib/mysql
     ports:
-      - "0.0.0.0:4003:3306"
+      - "127.0.0.1:4003:3306"
     command: --max-allowed-packet=64MB
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MATOMO_DB_ROOT_PASSWORD}"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MATOMO_DB_ROOT_PASSWORD}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -61,7 +55,8 @@ services:
     image: matomo:latest
     container_name: edtlab_matomo
     restart: always
-    network_mode: bridge
+    networks:
+      - edtlab_network
     env_file:
       - .env
     links:
@@ -83,4 +78,8 @@ services:
       - /var/www/edtlabfr/matomo/logs:/var/www/html/tmp
       - ./matomo-apache-config.conf:/etc/apache2/conf-enabled/matomo.conf:ro
     ports:
-      - "0.0.0.0:4002:80"
+      - "127.0.0.1:4002:80"
+
+networks:
+  edtlab_network:
+    driver: bridge

@@ -71,18 +71,6 @@ server {
     }
 
     # Redirect /api to /api/ for consistency
-    location = /api {
-        return 301 $scheme://$host/api/;
-    }
-
-    # Proxy for Contact API under /api/
-    location /api/ {
-        proxy_pass http://127.0.0.1:4004/;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
 
     location /hooks/redeploy-webhook {
         include proxy_params;
@@ -109,8 +97,6 @@ server {
 - Listens on port 4443 (receives traffic from root nginx)
 - Terminates SSL here (not at root nginx)
 - Proxies to Docker containers on localhost
-- `/api/` has NO `auth_basic` for public access
-- Trailing slash in `proxy_pass http://127.0.0.1:4004/;` strips `/api` prefix
 
 ---
 
@@ -119,14 +105,10 @@ server {
 **docker-compose.yml:**
 ```yaml
 services:
-  statics:
+  web:
     ports:
       - "0.0.0.0:4001:80"  # Astro website
-  
-  api-node:
-    ports:
-      - "0.0.0.0:4004:8080"  # Node.js API
-  
+
   matomo:
     ports:
       - "0.0.0.0:4002:80"  # Matomo
@@ -134,23 +116,6 @@ services:
   matomo-db:
     ports:
       - "0.0.0.0:4003:3306"  # MySQL
-```
-
----
-
-## Environment Configuration
-
-**.env.production:**
-```bash
-# Users connect to https://edtlab.fr/api (port 443)
-# Root nginx routes to port 4443 internally
-PUBLIC_API_URL=https://edtlab.fr/api
-```
-
-**.env.development:**
-```bash
-# Direct connection to Docker container
-PUBLIC_API_URL=http://localhost:8080
 ```
 
 ---

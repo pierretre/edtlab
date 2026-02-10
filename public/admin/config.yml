@@ -1,0 +1,127 @@
+backend:
+  name: github
+  repo: pierretre/edtlab
+  branch: main
+  site_domain: edtlab.fr
+  base_url: https://edtlab.fr
+  auth_endpoint: auth
+
+# CMS uploads go to public/ for reliable preview and no build-time hashing
+media_folder: "public/media/uploads"
+public_folder: "/media/uploads"
+
+publish_mode: editorial_workflow
+
+# Content collections
+collections:
+  # Main Pages
+  - name: "pages"
+    label: "Pages"
+    label_singular: "Page"
+    folder: "src/content/pages"
+    nested:
+      depth: 10
+      subfolders: false
+      summary: "{{dirname}}/"
+      nested:
+        depth: 10
+        subfolders: false
+        summary: "{{dirname}}/"
+    create: false
+    delete: false
+    extension: "mdx"
+    format: "frontmatter"
+    summary: "{{title}} [{{lang}}]"
+    editor:
+      preview: true
+    i18n:
+      structure: single_file
+      locales: [en, fr]
+      default_locale: en
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "URL Slug", name: "href", widget: "string", required: false, hint: "URL path for this page (e.g., 'about', 'contact')" }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "Brief description for SEO and previews" }
+      - { label: "Enable Table of Contents", name: "toc", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # News
+  - name: "news"
+    label: "News"
+    label_singular: "News Article"
+    folder: "src/content/news"
+    create: true
+    summary: "{{slug}} [{{lang}}]"
+    editor:
+      preview: true
+    format: "frontmatter"
+    i18n:
+      structure: multiple_files
+      locales: [en, fr]
+      default_locale: en
+    view_filters:
+      - label: "English pages"
+        field: lang
+        pattern: 'en'
+      - label: "French pages"
+        field: lang
+        pattern: 'fr'
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
+      - { label: "Date", name: "date", widget: "datetime", required: true, hint: "Publication or event date" }
+      - { label: "News Type", name: "newsType", widget: "select", options: ["news", "event", "press-release"], default: "news", required: true }
+      - { label: "Location", name: "location", widget: "string", required: false, hint: "For events only" }
+      - { label: "Description", name: "description", widget: "text", required: true }
+      - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Cover image filename" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # Job Offers
+  - name: "job-offers"
+    label: "Job Offers"
+    label_singular: "Job Offer"
+    folder: "src/content/job-offers"
+    create: true
+    summary: "{{title}}-{{type}} [{{lang}}]"
+    editor:
+      preview: true
+    format: "frontmatter"
+    view_filters:
+      - label: "English pages"
+        field: lang
+        pattern: 'en'
+      - label: "French pages"
+        field: lang
+        pattern: 'fr'
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true }
+      - { label: "Type", name: "type", widget: "select", options: ["postdoc", "phd", "engineer", "intern"], required: true }
+      - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country" }
+      - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: true, hint: "e.g., 'Spring 2025', 'September 2024'" }
+      - { label: "Position Filled", name: "filled", widget: "boolean", default: false, required: true }
+      - { label: "Published Date", name: "publishedDate", widget: "datetime", required: true }
+      - { label: "Description", name: "description", widget: "text", required: true }
+      - { label: "Requirements", name: "requirements", widget: "list", required: false, hint: "List of requirements" }
+      - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  # Publications
+  - name: "publications"
+    label: "Publications"
+    label_singular: "Publication"
+    folder: "src/content/publications"
+    create: true
+    summary: "{{slug}}, {{authors}} - {{year}}"
+    format: "frontmatter"
+    preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: true }
+      - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
+      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "report"], required: true }
+      - { label: "Year", name: "year", widget: "number", required: true, value_type: "int", min: 1900, max: 2100 }
+      - { label: "Venue", name: "venue", widget: "string", required: false, hint: "Journal name, conference name, etc." }
+      - { label: "DOI", name: "doi", widget: "string", required: false, hint: "Digital Object Identifier" }
+      - { label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, hint: "e.g., PC1, PC2, keywords" }

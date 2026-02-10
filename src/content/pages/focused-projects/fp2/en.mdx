@@ -1,26 +1,22 @@
 ---
-title: "PC2: DTCOMPOSE"
-href: "focused-projects/fp2"
-lang: "en"
-description: "Developing modular Digital Twin architectures that enable flexible composition, federation, and interoperability through systematic approaches and semantic web technologies"
+color: blue-bell
+href: focused-projects/fp2
+lang: en
 toc: true
-color: "blue-bell"
-template: "project-page"
-illustration: "/src/assets/images/INRIA_EDT_CBLOT_PC2.png"
-projectId: "PC2"
+projectId: PC2
+title: "PC2: DTCOMPOSE"
+template: project-page
+description: Developing modular Digital Twin architectures that enable flexible
+  composition, federation, and interoperability through systematic approaches
+  and semantic web technologies
 ---
-
-import PartnersGrid from '@components/PartnersGrid.astro';
-import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
-import avatar from '@assets/images/investigators/avatar.png';
-
 ## Overview
 
-Digital Twins (DTs) have emerged as a means to interact with the physical world and explore what-if scenarios at different abstraction levels. However, most DTs are monolithic entities crafted in an ad-hoc fashion for specific Physical Twins (PT).
+Digital Twins (DTs) have emerged as a means to interact with the physical world and explore what-if scenarios at different abstraction levels. However, most DTs are monolithic entities crafted in an ad hoc fashion for specific Physical Twins (PT).
 
 To enable industrial scaling of this technology, we must make it possible to build DTs from modular parts, similar to how Gustave Eiffel revolutionized civil engineering in the late 19th century with the modular construction of the Eiffel Tower.
 
-The challenges relate to how DTs can be modularized to allow composition at both design time and deployment time, at both syntactic (concrete form of interfaces) and semantic levels (ontology alignments). This modularization also concerns the services provided by DTs, including data processing and what-if exploration based on machine learning.
+The challenges relate to how DTs can be modularized to allow composition at both design time and deployment time, at both syntactic (concrete form of interfaces) and semantic levels (ontology alignments). This modularization also concerns the services provided by DTs, including data processing and what-if exploration based on eg. machine learning.
 
 Having a DT modeling a PT at a 1:1 scale is both a marketing claim and a scientific oxymoron. A model is always "wrong" with respect to reality, but some models can be helpful if you understand their distance from reality. This spans three dimensions: scale, fidelity, and uncertainty management. Scale and fidelity represent the level of abstraction (the scale of the map), while uncertainty management reflects confidence in DT attribute values (e.g., the river's width is 10m ± 2m). Once identified within a DT, these can be propagated across DT boundaries at the federation level.
 
@@ -37,14 +33,13 @@ Use cases in **PC2** require **interoperability** as a critical feature, along w
 <PrincipalInvestigator
 name="Jean-Marc Jézéquel"
 headline="Professor of Software Engineering at Université de Rennes/Inria"
-picture={avatar}
->
+picture="/media/uploads/jmj.jpg">
 Jean-Marc Jézéquel is a Professor of Software Engineering at the University of Rennes and a member of the DiverSE team at IRISA/Inria, as well as a fellow of the Institut Universitaire de France (IUF). Since 2024 he is President of Informatics Europe. From 2012 to 2020 he was Director of IRISA, one of the largest public research labs in Informatics in France. In 2016 he received the Silver Medal from CNRS and in 2020 the IEEE/ACM MODELS career award. He was an invited professor at McGill University in 2022. His interests include model driven software engineering for digital twins with quality of service constraints, including security, reliability, performance, timeliness etc. He is the PI of the French-German MBDO project to help build Digital Twins for Industry 5.0 in a DevOps way. He is the author of 4 books and of more than 300 publications in international journals and conferences.
 </PrincipalInvestigator>
 
 ### Participating Partners:
 
-<PartnersGrid partners={['Inria', 'IMT', 'CEA', 'CNRS']} ></PartnersGrid>
+<PartnersGrid partners={['Inria', 'IMT', 'Université de Bourgogne', 'DISP', 'UPPA', 'Université de Rennes', 'Université Toulouse Jean Jaurès']} />
 
 ## Project Implementation
 
@@ -53,15 +48,17 @@ The project is structured into **three complementary work packages**, addressing
 <details>
 <summary><h3>Workpackage1: DT Reference Architecture</h3></summary>
 
-**Leader:** DiverSE (Inria)  
-**Partners:** P4S (IMT), List (CEA), CRAN (CNRS), DISP (Univ. Lumière Lyon 2), UPPA
+**Leader:** DiverSE (Inria/U. Rennes)\
+**Partners:** P4S (IMT), DISP (Univ. Lumière Lyon 2), UPPA
 
 **Objectives:**
-- Develop unified meta-data theory for **variability, fidelity, and uncertainty** management
-- Establish reference architecture patterns for modular digital twin systems
-- Create foundation for systematic composition and interoperability
+
+* Develop unified meta-data theory for **variability, fidelity, and uncertainty** management
+* Establish reference architecture patterns for modular digital twin systems
+* Create foundation for systematic composition and interoperability
 
 **Key Tasks:**
+
 1. Define meta-data framework for DT characteristics
 2. Establish architectural patterns for modular DT design
 3. Develop guidelines for variability and uncertainty propagation
@@ -71,15 +68,17 @@ The project is structured into **three complementary work packages**, addressing
 <details>
 <summary><h3>Workpackage2: DT Modularisation and Composability</h3></summary>
 
-**Leader:** P4S (IMT)  
-**Partners:** DiverSE (Inria), DISP (Univ. Lumière Lyon 2), CIAD (U. de Bourgogne)
+**Leader:** P4S (IMT)\
+**Partners:** DiverSE (Inria/U. Rennes), DISP (Univ. Lumière Lyon 2), CIAD (U. de Bourgogne)
 
 **Objectives:**
-- Enable building DTs from **pre-existing parts** or through reverse engineering
-- Support composition at **design time** (software components) and **deployment time** (Systems of Systems)
-- Manage evolution including neuromorphic systems
+
+* Enable building DTs from **pre-existing parts** or through reverse engineering
+* Support composition at **design time** (software components) and **deployment time** (Systems of Systems)
+* Manage evolution including neuromorphic systems
 
 **Key Tasks:**
+
 1. Develop component-based DT construction methodologies
 2. Create runtime composition and orchestration mechanisms
 3. Implement evolution management for adaptive systems
@@ -89,15 +88,17 @@ The project is structured into **three complementary work packages**, addressing
 <details>
 <summary><h3>Workpackage3: DT Semantic Interoperability</h3></summary>
 
-**Leader:** Moex (Inria)  
-**Partners:** Wimmics (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), IGN
+**Leader:** Moex (Inria)\
+**Partners:** Wimmics (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès)
 
 **Objectives:**
-- Apply **semantic web technologies** for ontology alignment between independently designed DTs
-- Improve and validate **Knowledge Graph quality**
-- Maintain semantic tracks of digital twin experiments
+
+* Apply **semantic web technologies** for ontology alignment between independently designed DTs
+* Improve and validate **Knowledge Graph quality**
+* Maintain semantic tracks of digital twin experiments
 
 **Key Tasks:**
+
 1. Develop ontology alignment methods for DT federation
 2. Create Knowledge Graph quality assessment frameworks
 3. Implement semantic tracking for DT interactions and experiments

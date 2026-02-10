@@ -4,7 +4,7 @@ date: 2024-09-20
 newsType: "press-release"
 description: "La recherche révolutionnaire du programme EDT en synchronisation de jumeaux numériques en temps réel reçoit une reconnaissance aux Prix d'Excellence de la Recherche Européenne"
 lang: "fr"
-photo: "/src/assets/images/news-covers/Digital-Twins-Cover-image.jpg"
+photo: "/media/uploads/Digital-Twins-Cover-image.jpg"
 ---
 
 ## Communiqué de Presse - 20 septembre 2024
