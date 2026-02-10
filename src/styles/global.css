@@ -101,6 +101,11 @@
         @apply mb-1 text-gray-700;
     }
 
+    /* Prose list markers (default) */
+    .prose ul {
+        list-style: disc;
+    }
+
     /* Accessible button styles */
     button,
     .btn {

@@ -20,7 +20,7 @@ const news = await getCollection("news", (item) => item.data.lang === lang);
 // Just pass the photo path directly to the component
 const feedWithCovers = news.map((item) => ({
     ...item,
-    coverImage: item.data.photo, // This is now a URL like "/media/uploads/photo.jpg"
+    coverImage: item.data.photo,
 }));
 ---
 
