@@ -6,7 +6,7 @@ newsType: press-release
 description: The EDT program's breakthrough research in real-time digital twin
   synchronization receives recognition at the European Research Excellence
   Awards
-photo: /src/assets/images/uploads/INRAE.png
+photo: /media/uploads/INRAE.png
 ---
 
 ## Press Release - September 20, 2024

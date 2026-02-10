@@ -6,9 +6,9 @@ backend:
   base_url: https://edtlab.fr
   auth_endpoint: auth
 
-# Configuration des médias
-media_folder: "src/assets/images/uploads"
-public_folder: "/src/assets/images"
+# CMS uploads go to public/ for reliable preview and no build-time hashing
+media_folder: "public/media/uploads"
+public_folder: "/media/uploads"
 
 # Collections de contenu
 collections:

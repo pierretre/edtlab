@@ -20,9 +20,9 @@ let coverImage: ImageMetadata | undefined;
 if (frontmatter.photo) {
     try {
         const images = import.meta.glob<{ default: ImageMetadata }>(
-            "/src/assets/images/uploads/*.{jpeg,jpg,png,gif,webp}",
+            "/public/media/uploads/*.{jpeg,jpg,png,gif,webp}",
         );
-        coverImage = (await images[frontmatter.photo]()).default;
+        coverImage = (await images[`/public${frontmatter.photo}`]()).default;
     } catch (error) {
         console.warn(`Could not load cover image: ${frontmatter.photo}`);
     }

@@ -1,23 +1,10 @@
 ---
-import { Picture } from "astro:assets";
-
 export interface Props {
     name: string;
     headline: string;
-    picture?: string;
+    picture?: string; // Now a URL string
 }
 const { name, headline, picture } = Astro.props as Props;
-let avatar: ImageMetadata | undefined;
-if (picture) {
-    try {
-        const images = import.meta.glob<{ default: ImageMetadata }>(
-            "/src/assets/images/uploads/*.{jpeg,jpg,png,gif,webp}",
-        );
-        avatar = (await images[picture]()).default;
-    } catch (error) {
-        console.warn(`Could not load image: ${picture}`);
-    }
-}
 ---
 
 <div
@@ -25,11 +12,12 @@ if (picture) {
 >
     {
         picture && (
-            <Picture
-                class="h-full w-full object-cover"
-                src={avatar!}
+            <img
+                src={picture}
                 alt={name}
-                class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0"
+                class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0 object-cover"
+                loading="lazy"
+                decoding="async"
             />
         )
     }

@@ -868,13 +868,11 @@ function initProjectsData() {
                 title: 'PC1: CATALYST',
                 description: 'Developing systematic approaches for combining physical models and data-based models through standardized interfaces and hybridization operators in digital twins',
                 color: '#665BA7',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC1.png'
             },
             fr: {
                 title: 'PC1: CATALYST',
                 description: 'Développement d\'approches systématiques pour combiner des modèles physiques et des modèles basés sur les données',
                 color: '#665BA7',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC1.png'
             }
         },
         'fp2': {
@@ -882,13 +880,11 @@ function initProjectsData() {
                 title: 'PC2: DTCOMPOSE',
                 description: 'Developing modular Digital Twin architectures that enable flexible composition, federation, and interoperability through systematic approaches and semantic web technologies',
                 color: '#665BA7',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC2.png'
             },
             fr: {
                 title: 'PC2: DTCOMPOSE',
                 description: 'Développement d\'architectures modulaires de jumeaux numériques permettant une composition flexible et l\'interopérabilité',
                 color: '#665BA7',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC2.png'
             }
         },
         'fp3': {
@@ -896,13 +892,11 @@ function initProjectsData() {
                 title: 'PC3: TWINOPS',
                 description: 'Developing specialized methodologies, development life cycles, and domain-specific languages for engineering digital twins with AI integration and collaborative approaches',
                 color: '#665BA7',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC3.png'
             },
             fr: {
                 title: 'PC3: TWINOPS',
                 description: 'Développement de méthodologies spécialisées et de langages dédiés pour l\'ingénierie des jumeaux numériques',
                 color: '#665BA7',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC3.png'
             }
         },
         'fp4': {
@@ -910,13 +904,11 @@ function initProjectsData() {
                 title: 'PC4: SYNCHRONIC',
                 description: 'Addressing bidirectional data flows between physical and digital twins with focus on reliability, security, and real-time synchronization for effective digital coupling',
                 color: '#E91E63',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC4.png'
             },
             fr: {
                 title: 'PC4: SYNCHRONIC',
                 description: 'Gestion des flux de données bidirectionnels entre jumeaux physiques et numériques avec fiabilité et sécurité',
                 color: '#E91E63',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC4.png'
             }
         },
         'fp5': {
@@ -924,13 +916,11 @@ function initProjectsData() {
                 title: 'PC5: GENUINE',
                 description: 'Developing interactive systems for human-digital twin interaction through VR, AR, collaborative environments, and immersive visualization technologies',
                 color: '#FF9800',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC5.png'
             },
             fr: {
                 title: 'PC5: GENUINE',
                 description: 'Développement de systèmes interactifs pour l\'interaction humain-jumeau numérique via VR, AR et visualisation immersive',
                 color: '#FF9800',
-                illustration: '/src/assets/images/uploads/INRIA_EDT_CBLOT_PC5.png'
             }
         }
     };

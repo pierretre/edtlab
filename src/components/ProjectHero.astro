@@ -1,20 +1,37 @@
 ---
 import { Picture } from "astro:assets";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import fp1hero from "@assets/images/INRIA_EDT_CBLOT_PC1.png";
+import fp2hero from "@assets/images/INRIA_EDT_CBLOT_PC2.png";
+import fp3hero from "@assets/images/INRIA_EDT_CBLOT_PC3.png";
+import fp4hero from "@assets/images/INRIA_EDT_CBLOT_PC4.png";
+import fp5hero from "@assets/images/INRIA_EDT_CBLOT_PC5.png";
 
 export interface Props {
     color: string;
-    image?: ImageMetadata;
-    imageAlt: string;
     title: string;
     description: string;
     projectId?: string;
 }
 
-const { color, image, imageAlt, title, description } = Astro.props;
+const { color, title, description, projectId } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
+
+// Map project IDs to their corresponding new logos
+const projectLogos: Record<string, any> = {
+    PC1: fp1hero,
+    FP1: fp1hero,
+    PC2: fp2hero,
+    FP2: fp2hero,
+    PC3: fp3hero,
+    FP3: fp3hero,
+    PC4: fp4hero,
+    FP4: fp4hero,
+    PC5: fp5hero,
+    FP5: fp5hero,
+};
 
 const colorMap: Record<string, string> = {
     "blue-bell": "header-blue-bell",
@@ -66,12 +83,12 @@ const currentColor =
 
         <!-- Image section (right) -->
         {
-            image && (
+            projectId && projectLogos[projectId] && (
                 <div class="flex md:col-span-6 lg:col-span-7 lg:p-0 lg:mt-0 items-center justify-center">
                     <Picture
                         class="w-full h-auto max-w-[800px]"
-                        src={image}
-                        alt={imageAlt}
+                        src={projectLogos[projectId]}
+                        alt={title}
                         loading="eager"
                         quality={80}
                         widths={[400, 600, 800]}

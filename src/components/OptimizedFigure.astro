@@ -1,7 +1,4 @@
 ---
-import { Picture } from "astro:assets";
-import type { ImageMetadata } from "astro";
-
 export interface Props {
     src: string;
     alt: string;
@@ -21,24 +18,9 @@ const {
     caption,
     class: className = "",
     loading = "eager",
-    quality = 60,
-    widths = [400, 800, 1200],
-    sizes = "(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1200px",
     align = "center",
     maxWidth,
 } = Astro.props;
-
-// Handle image import
-let image: ImageMetadata | undefined;
-try {
-    const images = import.meta.glob<{ default: ImageMetadata }>(
-        "/src/assets/images/uploads/*.{jpeg,jpg,png,gif,webp}",
-    );
-
-    image = (await images[src]()).default;
-} catch (error) {
-    console.warn(`Could not load image: ${src}`);
-}
 
 // Convert maxWidth input into usable CSS
 const resolvedMaxWidth = maxWidth ? `${maxWidth}px` : "100%";
@@ -55,14 +37,11 @@ const alignmentStyle =
     class={`mb-6 ${className}`}
     style={`max-width: ${resolvedMaxWidth}; margin-left: ${alignmentStyle};`}
 >
-    <Picture
-        src={image!}
-        formats={["avif", "webp", "jpeg", "png"]}
+    <!-- CMS images from public/ - use plain img tag for reliable preview -->
+    <img
+        src={src}
         alt={alt}
         loading={loading}
-        quality={quality}
-        widths={widths}
-        sizes={sizes}
         decoding="async"
         style="display: block; width: 100%; height: auto;"
     />
