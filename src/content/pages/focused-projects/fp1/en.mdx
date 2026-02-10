@@ -1,49 +1,51 @@
 ---
-title: "PC1: CATALYST"
-href: "focused-projects/fp1"
-lang: "en"
-description: "Developing systematic approaches for combining physical models and data-based models through standardized interfaces and hybridization operators in digital twins"
+color: blue-bell
+href: focused-projects/fp1
+lang: en
 toc: true
-color: "blue-bell"
-template: "project-page"
-projectId: "PC1"
+projectId: PC1
+title: "PC1: CATALYST"
+template: project-page
+description: Developing systematic approaches for combining physical models and
+  data-based models through standardized interfaces and hybridization operators
+  in digital twins
 ---
-
 ## Overview
+
 A Digital Twin (DT) is a coordinated collection of digital models that mirrors a physical system throughout its lifecycle. Continuously refreshed with real-time data, it relies on reasoning techniques such as simulation and machine learning to support tasks ranging from prediction to real-time decision-making.
 
 Because no single model can capture every aspect of a complex system, a DT brings together diverse disciplines — architecture description, modeling & simulation, and data science — each contributing models with different structures, fidelities, and purposes.
 
 These models can be classified along several dimensions, such as inference method (inductive vs. deductive), modeling approach (empirical vs. mechanistic), concern (behavioral, structural, safety, etc.), purpose (descriptive vs. prescriptive), fidelity, and temporal scope.
 
-Most DTs rely on hybridization, combining complementary models — data-driven, physics-based, or mixed — to improve accuracy, robustness, and adaptability. Techniques such as physically informed neural networks and uncertainty quantification illustrate how heterogeneous models can be fused to exploit their respective strengths.
+Most DTs rely on hybridization, combining complementary models — data-driven, physics-based, or mixed — to improve accuracy, robustness, and adaptability. Techniques such as physically informed neural networks and uncertainty quantification illustrate how heterogeneous models can be fused to exploit their respective strengths. Nowadays, this hybridization is realized in an ad-hoc manner, and consequently requires a more systematic and principled approach. 
 
-Building such hybrid structures requires:
+To address this issue, the Catalyst project focuses on three related research axes of model hybridization:
 
-Consistent interfaces for querying and manipulating models
+* the definition of consistent interfaces for querying and manipulating models;
+* the specification of composition operators to hybridize and federate models;
+* the realization of proper verification and validation tools to populate these interfaces.
 
-Operators and workflows to orchestrate combinations
+Through these research axes, the objective of Catalyst is to develop a set of methods and tools to manipulate deductive and inductive models homogeneously, keeping their main characteristics accessible in order to reliably hybridize and federate them.
 
-Proper uncertainty management to ensure reliability
-
-The project focuses on these scientific topics with clear objectives: enabling generic model manipulation, simplifying hybridization through dedicated operators, and providing mechanisms that guarantee reliable and coherent combinations of models.
 ## Associated Use Cases
 
-Use cases in **PC1** will include diverse Digital Twins representing various physical entities.  
+Use cases in **PC1** will include diverse Digital Twins representing various physical entities.\
 Special focus: **combining data-based and mechanistic models** to validate PC1 concepts and tools.
 
 ## Investigator & Project Partners
+
+The project involves nowadays the following partners: Université Côte d'Azur, I3S, Inria, CETIM, INRAE, Telecom Paris, Aniti, Université de Pau et des Pays de l'Adour, IMT-Atlantique, CEA et IRIT.
 
 ### Principal Investigator:
 
 <PrincipalInvestigator
 name="Julien Deantoni"
 headline="Full Professor at Université Côte d'Azur and Head of the Kairos Team"
-picture=""
->
-Julien Deantoni is full professor at Université Côte d'Azur and head of the Kairos team. He applies rigorous modelings and abstractions for heterogeneous models since his PhD thesis in 2007. He published on the importance of handling the globalization of modeling languages more than 10 years ago [8]. Since then, he has published various papers and developed tools to facilitate this globalization [9]. He has also published papers highlighting the need to consider the semantics of the different models for more precise and efficient collaborative simulations [10]. More recently, he worked on the notion of multi-fidelity in Digital Twins and already hybridized DT's models in order to mitigate uncertainty and consequently provide better control in the PT. Conjointly, he participated (sometimes as principal investigator) to numerous collaborative projects
+picture="/media/uploads/julien_deantoni.jpg">
+Julien Deantoni is full professor at Université Côte d'Azur and head of the Kairos team. He applies rigorous modelings and abstractions for heterogeneous models since his PhD thesis in 2007. He published on the importance of handling the globalization of modeling languages more than 10 years ago. Since then, he has published various papers and developed tools to facilitate this globalization. He has also published papers highlighting the need to consider the semantics of the different models for more precise and efficient collaborative simulations. More recently, he worked on the notion of multi-fidelity in Digital Twins and already hybridized DT's models in order to mitigate uncertainty and consequently provide better control in the PT. Conjointly, he participated to numerous collaborative projects
 </PrincipalInvestigator>
- 
+
 ### Participating Partners:
 
 <PartnersGrid partners={['Inria', 'CNRS']} />
@@ -55,14 +57,16 @@ The project is structured into **three cohesive work packages**, with **multi-fi
 <details>
       <summary><h3>Workpackage 1: Interface for Hybridization(s)</h3></summary>
 
-**Leader:** UPPA  
+**Leader:** UPPA\
 **Partners:** Inria (DiverSE, Hycomes, Kairos, Parkas), UniCA, INRAE, Telecom Paris (ACES)
 
 **Objectives:**
-- Standardize the manipulation and characterization of heterogeneous models  
-- Ensure homogeneous and automatic reasoning while preserving model specificity  
+
+* Standardize the manipulation and characterization of heterogeneous models  
+* Ensure homogeneous and automatic reasoning while preserving model specificity  
 
 **Key Tasks:**
+
 1. Create structured metadata for model management  
 2. Provide functional and extra-functional interfaces for hybridization  
 3. Enable model mutation and adaptation capabilities 
@@ -70,16 +74,18 @@ The project is structured into **three cohesive work packages**, with **multi-fi
 </details>
 
 <details>
-<summary><h3>Workpackage 2: Hybridization Operators</h3></summary>
+<summary><h3>Workpackage 2: Hybridization and Federation Operators</h3></summary>
 
-**Leader:** Kairos (Inria)  
+**Leader:** Kairos (Inria)\
 **Partners:** DiverSE (Inria), INRAE, IRIT/ACADIE (CNRS), Telecom Paris (LabSoc), Université de Bourgogne  
 
 **Objectives:**
-- Identify and formalize **structural and behavioral hybridization patterns**  
-- Replace ad-hoc processes with **systematic hybridization operators**  
+
+* Identify and formalize **structural and behavioral hybridization patterns**  
+* Replace ad-hoc processes with **systematic hybridization operators**  
 
 **Key Tasks:**
+
 1. Elicit and formalize operators for **simulation workflows**  
 2. Define operators for **model hybridization**  
 
@@ -88,13 +94,15 @@ The project is structured into **three cohesive work packages**, with **multi-fi
 <details>
 <summary><h3>Workpackage 3: Interface and Composition Analysis</h3></summary>
 
-**Leader:** Telecom Paris (LabSoc)  
+**Leader:** Telecom Paris (LabSoc)\
 **Partners:** Inria (DiverSE, Hycomes, Parkas), CNRS IRIT (ACADIE), ENPC, UPPA, CEA (LITEN), UniCA, Univ. Toulouse 3 (Aniti), Univ. Toulouse Jean Jaurès (IRIT/SM@RT)
 
 **Objectives:**
-- Provide analysis of **models**, **interfaces**, and **hybridization operators**
+
+* Provide analysis of **models**, **interfaces**, and **hybridization operators**
 
 **Key Tasks:**
+
 1. Analyze models to enrich their interfaces  
 2. Identify synergies and hybridization opportunities across interfaces  
 3. Analyze hybridization operators to improve resulting model interfaces  
