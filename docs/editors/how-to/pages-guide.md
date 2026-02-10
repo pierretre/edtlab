@@ -18,12 +18,14 @@ This guide provides step-by-step instructions for creating, updating, and managi
 The website supports two main types of pages:
 
 ### Basic Pages (.md)
+
 - Simple content with standard markdown
 - Text, headings, lists, links, and basic formatting
 - No interactive components
 - Faster loading and simpler maintenance
 
 ### Advanced Pages (.mdx)
+
 - Rich content with interactive components
 - Custom components for figures, cards, and layouts
 - Dynamic content and enhanced functionality
@@ -32,9 +34,11 @@ The website supports two main types of pages:
 ## File Structure and Organization
 
 ### Location
+
 All pages are stored in: `src/content/pages/`
 
 ### Directory Structure
+
 Pages are organized in folders by topic:
 
 ```
@@ -65,6 +69,7 @@ src/content/pages/
 ### Naming Conventions
 
 **Main Pages:** `{lang}.md` or `{lang}.mdx`
+
 ```
 about/en.mdx
 about/fr.mdx
@@ -73,6 +78,7 @@ program/fr.mdx
 ```
 
 **Sub-pages:** `{section}/{subsection}/{lang}.mdx`
+
 ```
 program/governance-and-committees/en.mdx
 focused-projects/fp1/en.mdx
@@ -83,10 +89,12 @@ focused-projects/fp1/en.mdx
 ### Step 1: Plan Your Page
 
 **Determine Page Type:**
+
 - Use `.md` for simple text content
 - Use `.mdx` for pages needing components, figures, or interactive elements
 
 **Plan Content Structure:**
+
 - Outline main sections and headings
 - Identify where components might be needed
 - Consider table of contents requirements
@@ -99,7 +107,8 @@ focused-projects/fp1/en.mdx
 
 ### Step 3: Set Up Frontmatter
 
-#### Basic Page Template:
+#### Basic Page Template
+
 ```yaml
 ---
 title: "Page Title"
@@ -110,7 +119,8 @@ toc: false # true to enable table of contents
 ---
 ```
 
-#### Advanced Page Template:
+#### Advanced Page Template
+
 ```yaml
 ---
 title: "Page Title"
@@ -120,14 +130,14 @@ description: "Brief description for SEO and previews"
 toc: true # Often true for complex pages
 lastModified: 2024-01-15 # Optional: last update date
 color: "#665BA7" # Optional: custom theme color
-illustration: "header-image.jpg" # Optional: header image
 template: "advanced" # Optional: custom template
 ---
 ```
 
 ### Step 4: Write Content
 
-#### Basic Markdown Structure:
+#### Basic Markdown Structure
+
 ```markdown
 # Main Page Title
 
@@ -153,7 +163,8 @@ Content with proper heading hierarchy.
 - [External resource](https://example.com)
 ```
 
-#### Advanced MDX Structure:
+#### Advanced MDX Structure
+
 ```mdx
 ---
 title: "Advanced Page"
@@ -187,14 +198,16 @@ Continue with standard markdown content...
 ### Required Fields
 
 #### `title`
+
 - **Purpose**: Page title displayed in navigation and headers
-- **Guidelines**: 
+- **Guidelines**:
   - Keep under 60 characters for SEO
   - Use title case
   - Be descriptive and specific
 - **Example**: `"The EDT Research Program"`
 
 #### `href`
+
 - **Purpose**: URL slug for the page
 - **Guidelines**:
   - Use kebab-case (lowercase with hyphens)
@@ -204,6 +217,7 @@ Continue with standard markdown content...
 - **Example**: `"focused-projects"`
 
 #### `lang`
+
 - **Options**: `en` or `fr`
 - **Purpose**: Language-specific routing and content organization
 - **Guidelines**: Must match the content language
@@ -211,6 +225,7 @@ Continue with standard markdown content...
 ### Optional Fields
 
 #### `description`
+
 - **Purpose**: Brief summary for SEO, search results, and social media
 - **Guidelines**:
   - Keep between 120-160 characters
@@ -219,28 +234,33 @@ Continue with standard markdown content...
 - **Example**: `"Overview of the EDT research program goals, structure, and focused projects"`
 
 #### `toc`
+
 - **Options**: `true` or `false`
 - **Default**: `false`
 - **Purpose**: Enable/disable automatic table of contents generation
 - **Guidelines**: Use `true` for long pages with multiple sections
 
 #### `lastModified`
+
 - **Format**: YYYY-MM-DD
 - **Purpose**: Content freshness indicators and change tracking
 - **Guidelines**: Update when making significant content changes
 
 #### `color`
+
 - **Format**: Hex color string
 - **Purpose**: Custom theme color for page accents
 - **Guidelines**: Use EDT brand colors when possible
 - **Example**: `"#665BA7"` (EDT primary color)
 
 #### `illustration`
+
 - **Format**: Image filename
 - **Purpose**: Header image for page or social previews
 - **Guidelines**: Store in `src/assets/images/` and use descriptive filename
 
 #### `template`
+
 - **Format**: Template name string
 - **Purpose**: Override default page rendering
 - **Guidelines**: Coordinate with developers for custom templates
@@ -264,6 +284,7 @@ import ColorTable from '@components/ColorTable.astro';
 ### Available Components
 
 #### OptimizedFigure
+
 For displaying images with responsive sizing and accessibility:
 
 ```mdx
@@ -280,6 +301,7 @@ import imageFile from '/src/assets/images/diagram.png';
 ```
 
 **Props:**
+
 - `src` (required): Image file import or path
 - `alt` (required): Descriptive alt text for accessibility
 - `caption` (optional): Caption displayed below image
@@ -287,6 +309,7 @@ import imageFile from '/src/assets/images/diagram.png';
 - `loading` (optional): "eager" or "lazy" loading
 
 #### OutlinedCard
+
 For highlighting important information:
 
 ```mdx
@@ -298,10 +321,12 @@ The EDT program has received additional funding for 2025 research activities.
 ```
 
 **Props:**
+
 - `title` (optional): Card header title
 - Content goes between opening and closing tags
 
 #### ColorTable
+
 For displaying color schemes and brand guidelines:
 
 ```mdx
@@ -311,20 +336,24 @@ import ColorTable from '@components/ColorTable.astro';
 ```
 
 **Props:**
+
 - `lang` (required): "en" or "fr" for language-specific content
 
 ### Image Management
 
 #### Image Location
+
 Store images in: `src/assets/images/`
 
 #### Image Import
+
 ```mdx
 import diagramImage from '/src/assets/images/edt-architecture.png';
 import photoImage from '/src/assets/images/team-photo.jpg';
 ```
 
 #### Image Optimization
+
 - Use appropriate formats (JPG for photos, PNG for diagrams)
 - Optimize file sizes (aim for under 500KB)
 - Use descriptive filenames
@@ -335,6 +364,7 @@ import photoImage from '/src/assets/images/team-photo.jpg';
 ### Structure and Organization
 
 #### Heading Hierarchy
+
 ```markdown
 # Page Title (H1) - Only one per page
 ## Main Section (H2)
@@ -343,6 +373,7 @@ import photoImage from '/src/assets/images/team-photo.jpg';
 ```
 
 #### Content Flow
+
 1. **Introduction**: Brief overview of page purpose
 2. **Main Content**: Organized in logical sections
 3. **Key Information**: Highlighted using components or formatting
@@ -352,18 +383,21 @@ import photoImage from '/src/assets/images/team-photo.jpg';
 ### Writing Style
 
 #### Tone and Voice
+
 - Professional but accessible
 - Clear and concise
 - Consistent with EDT program messaging
 - Appropriate for academic and industry audiences
 
 #### Technical Content
+
 - Define technical terms on first use
 - Provide context for specialized concepts
 - Use examples and analogies when helpful
 - Link to detailed technical resources
 
 #### Accessibility
+
 - Use descriptive link text
 - Provide alt text for all images
 - Use proper heading hierarchy
@@ -374,12 +408,14 @@ import photoImage from '/src/assets/images/team-photo.jpg';
 ### Translation Guidelines
 
 #### Content Equivalence
+
 - Ensure both versions convey the same information
 - Adapt cultural references appropriately
 - Maintain consistent messaging and tone
 - Include equivalent examples and resources
 
 #### Technical Considerations
+
 - Use consistent technical terminology
 - Adapt URLs and links for language-specific content
 - Consider different text lengths in layouts
@@ -388,12 +424,14 @@ import photoImage from '/src/assets/images/team-photo.jpg';
 ### Common Translation Patterns
 
 #### Academic Terms
+
 - Digital Twin → Jumeau Numérique
 - Research Program → Programme de Recherche
 - Focused Project → Projet Ciblé
 - Cross-cutting Action → Action Transverse
 
 #### Navigation and UI
+
 - About → À Propos
 - Contact → Contact
 - Resources → Ressources
@@ -461,18 +499,21 @@ import photoImage from '/src/assets/images/team-photo.jpg';
 ### Build Errors
 
 **Component Import Issues**
+
 ```
 Error: Cannot resolve component import
 Solution: Check import path and component name spelling
 ```
 
 **Image Path Problems**
+
 ```
 Error: Image not found
 Solution: Verify image exists in src/assets/images/ and path is correct
 ```
 
 **Frontmatter Validation**
+
 ```
 Error: Invalid frontmatter field
 Solution: Check field names and data types against schema
@@ -481,16 +522,19 @@ Solution: Check field names and data types against schema
 ### Content Issues
 
 **Broken Internal Links**
+
 - Use relative paths for internal links
 - Check that target pages exist
 - Update links when page URLs change
 
 **Missing Translations**
+
 - Ensure both language versions exist
 - Check that content is equivalent
 - Verify language-specific frontmatter is correct
 
 **Component Rendering Issues**
+
 - Verify component imports are correct
 - Check that required props are provided
 - Ensure components are used within MDX files
@@ -565,6 +609,7 @@ import FilterableList from '@components/FilterableList.astro';
 ### Page Templates
 
 **Basic Page Template:**
+
 ```markdown
 ---
 title: "Page Title"
@@ -591,6 +636,7 @@ Your main content here.
 ```
 
 **Advanced Page Template:**
+
 ```mdx
 ---
 title: "Advanced Page"

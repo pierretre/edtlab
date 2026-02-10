@@ -229,7 +229,6 @@ photo: "event-models2024-conference.jpg"  # Filename only
 ```yaml
 ---
 title: "PhD Position"
-illustration: "phd-research-environment.jpg"  # Optional
 ---
 ```
 
