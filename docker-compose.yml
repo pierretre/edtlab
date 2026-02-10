@@ -6,7 +6,7 @@ services:
     networks:
       - edtlab_network
     ports:
-      - "0.0.0.0:4001:4321"
+      - "127.0.0.1:4001:4321"
     env_file:
       - .env
     environment:
@@ -20,7 +20,7 @@ services:
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_NAME=${SENDER_NAME}
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4321/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      test: [ "CMD", "node", "-e", "require('http').get('http://localhost:4321/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" ]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -42,10 +42,10 @@ services:
     volumes:
       - /var/www/matomo/db:/var/lib/mysql
     ports:
-      - "0.0.0.0:4003:3306"
+      - "127.0.0.1:4003:3306"
     command: --max-allowed-packet=64MB
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MATOMO_DB_ROOT_PASSWORD}"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MATOMO_DB_ROOT_PASSWORD}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -78,7 +78,7 @@ services:
       - /var/www/edtlabfr/matomo/logs:/var/www/html/tmp
       - ./matomo-apache-config.conf:/etc/apache2/conf-enabled/matomo.conf:ro
     ports:
-      - "0.0.0.0:4002:80"
+      - "127.0.0.1:4002:80"
 
 networks:
   edtlab_network:

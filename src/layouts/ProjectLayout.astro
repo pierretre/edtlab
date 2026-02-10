@@ -17,21 +17,8 @@ export interface Props {
 const { frontmatter, headings } = Astro.props as Props;
 
 const color = frontmatter?.color || "primary";
-const illustration = frontmatter?.illustration || "";
 const showToc = frontmatter?.toc;
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
-
-// Handle image import
-let projectImage: ImageMetadata | undefined;
-try {
-    const images = import.meta.glob<{ default: ImageMetadata }>(
-        "/src/assets/images/uploads/*.{jpeg,jpg,png,gif,webp}",
-    );
-
-    projectImage = (await images[illustration]()).default;
-} catch (error) {
-    console.warn(`Could not load image: ${illustration}`);
-}
 
 // Extract project ID from title (e.g., "PC1: Model Hybridization" -> "PC1")
 const projectId =
@@ -41,8 +28,6 @@ const projectId =
 <div class="min-h-screen mb-16">
     <ProjectHero
         color={color}
-        image={projectImage}
-        imageAlt={frontmatter?.title || "Project Illustration"}
         title={frontmatter?.title || "Project"}
         description={frontmatter?.description || ""}
         projectId={projectId}
