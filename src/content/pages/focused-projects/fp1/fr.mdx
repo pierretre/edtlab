@@ -1,14 +1,15 @@
 ---
-title: "PC1: CATALYST"
-href: "projets-cibles/pc1"
-lang: "fr"
-description: "Développement d'approches systématiques pour combiner modèles physiques et modèles basés sur les données via des interfaces standardisées et des opérateurs d'hybridation dans les jumeaux numériques"
+color: blue-bell
+href: projets-cibles/pc1
+lang: fr
 toc: true
-color: "blue-bell"
-template: "project-page"
-projectId: "PC1"
+projectId: PC1
+title: "PC1: CATALYST"
+template: project-page
+description: Développement d'approches systématiques pour combiner modèles
+  physiques et modèles basés sur les données via des interfaces standardisées et
+  des opérateurs d'hybridation dans les jumeaux numériques
 ---
-
 ## Aperçu
 
 Un jumeau numérique (JN) est une collection coordonnée de modèles numériques qui reflète un système physique tout au long de son cycle de vie. Continuellement actualisé avec des données en temps réel, il s'appuie sur des techniques de raisonnement telles que la simulation et l'apprentissage automatique pour soutenir des tâches allant de la prédiction à la prise de décision en temps réel.
@@ -20,16 +21,16 @@ Ces modèles peuvent être classés selon plusieurs dimensions, telles que la m�
 La plupart des JN s'appuient sur l'hybridation, combinant des modèles complémentaires — pilotés par les données, basés sur la physique ou mixtes — pour améliorer la précision, la robustesse et l'adaptabilité. Des techniques telles que les réseaux de neurones informés par la physique et la quantification de l'incertitude illustrent comment des modèles hétérogènes peuvent être fusionnés pour exploiter leurs forces respectives. De nos jours, cette hybridation est réalisée de manière ad hoc et nécessite par conséquent une approche plus systématique et fondée sur des principes établis.
 
 Pour répondre à cette problématique, le projet Catalyst se concentre sur trois axes de recherche liés à l’hybridation des modèles :
- * la définition d’interfaces cohérentes pour l’interrogation et la manipulation des modèles ;
- * la spécification d’opérateurs de composition permettant d’hybrider et de fédérer les modèles ;
- * la mise en oeuvre d’outils appropriés de vérification et de validation pour alimenter ces interfaces.
+
+* la définition d’interfaces cohérentes pour l’interrogation et la manipulation des modèles ;
+* la spécification d’opérateurs de composition permettant d’hybrider et de fédérer les modèles ;
+* la mise en oeuvre d’outils appropriés de vérification et de validation pour alimenter ces interfaces.
 
 À travers ces axes de recherche, l’objectif de Catalyst est de développer un ensemble de méthodes et d’outils permettant de manipuler de manière homogène des modèles déductifs et inductifs, tout en conservant l’accès à leurs principales caractéristiques afin de les hybrider et de les fédérer de manière fiable.
 
-
 ## Cas d'Usage Associés
 
-Les cas d'usage dans **PC1** incluront divers jumeaux numériques représentant diverses entités physiques.  
+Les cas d'usage dans **PC1** incluront divers jumeaux numériques représentant diverses entités physiques.\
 Focus spécial : **combiner des modèles basés sur les données et des modèles mécanistes** pour valider les concepts et outils de PC1.
 
 ## Investigateur et Partenaires du Projet
@@ -41,14 +42,13 @@ Focus spécial : **combiner des modèles basés sur les données et des modèles
 <PrincipalInvestigator
 name="Julien Deantoni"
 headline="Professeur des Universités à l'Université Côte d'Azur et Responsable de l'équipe Kairos"
-picture=""
->
+picture="/media/uploads/julien_deantoni.jpg">
 Julien Deantoni est professeur des universités à l'Université Côte d'Azur et responsable de l'équipe Kairos. Il applique des modélisations et abstractions rigoureuses pour les modèles hétérogènes depuis sa thèse de doctorat en 2007. Il a publié sur l'importance de gérer la globalisation des langages de modélisation il y a plus de 10 ans. Depuis, il a publié divers articles et développé des outils pour faciliter cette globalisation. Il a également publié des articles soulignant la nécessité de considérer la sémantique des différents modèles pour des simulations collaboratives plus précises et efficaces. Plus récemment, il a travaillé sur la notion de multi-fidélité dans les jumeaux numériques et a déjà hybridé des modèles de JN afin d'atténuer l'incertitude et par conséquent fournir un meilleur contrôle dans le JP. Conjointement, il a participé à de nombreux projets collaboratifs.
 </PrincipalInvestigator>
- 
+
 ### Partenaires Participants :
 
-<PartnersGrid partners={['Inria', 'CNRS', 'INRAE']} />
+<PartnersGrid partners={['Inria', 'CNRS']} />
 
 ## Mise en Oeuvre du Projet
 
@@ -57,14 +57,16 @@ Le projet est structuré en **trois packages de travail cohérents**, avec la **
 <details>
 <summary><h3>Workpackage 1 : Interface pour l'Hybridation(s)</h3></summary>
 
-**Responsable :** UPPA  
+**Responsable :** UPPA\
 **Partenaires :** Inria (DiverSE, Hycomes, Kairos, Parkas), UniCA, INRAE, Telecom Paris (ACES)
 
 **Objectifs :**
-- Standardiser la manipulation et la caractérisation des modèles hétérogènes  
-- Assurer un raisonnement homogène et automatique tout en préservant la spécificité des modèles  
+
+* Standardiser la manipulation et la caractérisation des modèles hétérogènes  
+* Assurer un raisonnement homogène et automatique tout en préservant la spécificité des modèles  
 
 **Tâches Clés :**
+
 1. Créer des métadonnées structurées pour la gestion des modèles  
 2. Fournir des interfaces fonctionnelles et extra-fonctionnelles pour l'hybridation  
 3. Activer les capacités de mutation et d'adaptation des modèles 
@@ -74,14 +76,16 @@ Le projet est structuré en **trois packages de travail cohérents**, avec la **
 <details>
 <summary><h3>Workpackage 2 : Opérateurs d'Hybridation</h3></summary>
 
-**Responsable :** Kairos (Inria)  
+**Responsable :** Kairos (Inria)\
 **Partenaires :** DiverSE (Inria), INRAE, IRIT/ACADIE (CNRS), Telecom Paris (LabSoc), Université de Bourgogne  
 
 **Objectifs :**
-- Identifier et formaliser les **motifs structurels et comportementaux d'hybridation**  
-- Remplacer les processus ad-hoc par des **opérateurs d'hybridation systématiques**  
+
+* Identifier et formaliser les **motifs structurels et comportementaux d'hybridation**  
+* Remplacer les processus ad-hoc par des **opérateurs d'hybridation systématiques**  
 
 **Tâches Clés :**
+
 1. Éliciter et formaliser les opérateurs pour les **flux de travail de simulation**  
 2. Définir les opérateurs pour l'**hybridation de modèles**  
 
@@ -90,13 +94,15 @@ Le projet est structuré en **trois packages de travail cohérents**, avec la **
 <details>
 <summary><h3>Workpackage 3 : Analyse d'Interface et de Composition</h3></summary>
 
-**Responsable :** Telecom Paris (LabSoc)  
+**Responsable :** Telecom Paris (LabSoc)\
 **Partenaires :** Inria (DiverSE, Hycomes, Parkas), CNRS IRIT (ACADIE), ENPC, UPPA, CEA (LITEN), UniCA, Univ. Toulouse 3 (Aniti), Univ. Toulouse Jean Jaurès (IRIT/SM@RT)
 
 **Objectifs :**
-- Fournir une analyse des **modèles**, **interfaces** et **opérateurs d'hybridation**
+
+* Fournir une analyse des **modèles**, **interfaces** et **opérateurs d'hybridation**
 
 **Tâches Clés :**
+
 1. Analyser les modèles pour enrichir leurs interfaces  
 2. Identifier les synergies et opportunités d'hybridation à travers les interfaces  
 3. Analyser les opérateurs d'hybridation pour améliorer les interfaces de modèles résultantes  
