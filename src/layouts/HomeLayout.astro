@@ -64,15 +64,25 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
     showBreadcrumb={false}
 >
     <!-- Enhanced Hero Section with Layered Digital Twin Visualization -->
-    <section class="relative bg-primary-700 overflow-hidden">
+    <section class="relative bg-[#313565] overflow-hidden">
         <!-- Background Pattern -->
-        <div class="absolute inset-0 opacity-30">
+        <div
+            class="absolute inset-y-0 right-0 w-2/3 opacity-70
+        max-sm:inset-x-0
+        max-sm:top-auto
+        max-sm:bottom-0
+        max-sm:w-full
+        max-sm:h-1/2"
+        >
             <Picture
                 src={heroBackground}
                 alt=""
-                class="w-full h-full object-cover"
+                class="w-full h-full max-sm:rotate-90 max-sm:scale-[2] max-sm:origin-center"
+                imgAttributes={{
+                    class: "w-full h-full object-cover",
+                }}
                 widths={[1920, 1280, 768]}
-                sizes="100vw"
+                sizes="(max-width: 640px) 100vw, 50vw"
                 quality={80}
                 format="webp"
                 loading="eager"
@@ -80,130 +90,107 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
             />
         </div>
 
-        <!-- Geometric Pattern Overlay -->
-        <div class="absolute inset-0 opacity-20">
-            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern
-                        id="grid"
-                        width="40"
-                        height="40"
-                        patternUnits="userSpaceOnUse"
-                    >
-                        <path
-                            d="M 40 0 L 0 0 0 40"
-                            fill="none"
-                            stroke="rgba(255,255,255,0.3)"
-                            stroke-width="1"></path>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)"></rect>
-            </svg>
-        </div>
-
-        <div class="relative mx-auto max-w-[1400px] lg:px-12">
-            <div class="grid lg:grid-cols-5 gap-8 items-center">
-                <div class="text-white z-10 lg:col-span-3">
-                    <h1
-                        class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl"
-                    >
-                        {t("site.title")}
-                    </h1>
-                    <p
-                        class="mb-8 text-lg font-normal text-gray-100 lg:text-xl"
-                    >
-                        {t("home.hero.subtitle")}
-                    </p>
-
-                    <!-- Hero Action Button -->
-                    <div
-                        class="flex flex-col mb-8 space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4"
-                    >
-                        <a
-                            href={linkHelpers.page(lang, "program")}
-                            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-primary-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors"
-                        >
-                            {t("home.hero.learn-more")}
-                            <svg
-                                class="ml-2 -mr-1 w-5 h-5"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div
-                    class="relative z-10 flex items-center justify-center lg:justify-end lg:col-span-2"
+        <div
+            class="relative mx-auto max-w-[1600px] grid lg:grid-cols-5 gap-4 items-center min-h-[400px] lg:min-h-[500px]"
+        >
+            <div
+                class="text-white z-10 lg:col-span-3 py-8 text-center lg:text-left p-4"
+            >
+                <h1
+                    class="mb-6 text-5xl font-extrabold tracking-tight leading-none md:text-6xl lg:text-7xl text-white"
                 >
-                    <Picture
-                        src={heroIllustration}
-                        alt="Digital Twin Concept - Physical and Digital Layers"
-                        class="w-full max-w-2xl h-auto object-contain drop-shadow-2xl"
-                        widths={[800, 600, 400]}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px"
-                        quality={90}
-                        format="webp"
-                        loading="eager"
-                        decoding="sync"
-                    />
+                    {t("site.title")}
+                </h1>
+                <p class="mb-10 text-xl font-normal text-gray-100 lg:text-2xl">
+                    {t("home.hero.subtitle")}
+                </p>
+
+                <!-- Hero Action Button -->
+                <div class="flex justify-center lg:justify-start mb-8">
+                    <a
+                        href={linkHelpers.page(lang, "program")}
+                        class="inline-flex justify-center items-center py-4 px-6 text-lg font-medium text-center text-primary-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors"
+                    >
+                        {t("home.hero.learn-more")}
+                        <svg
+                            class="ml-2 -mr-1 w-5 h-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
                 </div>
+            </div>
+
+            <div
+                class="relative z-10 flex items-center justify-center lg:justify-end lg:col-span-2 h-full"
+            >
+                <Picture
+                    src={heroIllustration}
+                    alt="Digital Twin Concept - Physical and Digital Layers"
+                    class="h-full w-full"
+                    imgAttributes={{
+                        class: "h-full w-full object-contain",
+                    }}
+                    widths={[1200, 1000, 800]}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 70vw, 1200px"
+                    quality={90}
+                    format="webp"
+                    loading="eager"
+                    decoding="sync"
+                />
             </div>
         </div>
     </section>
-    <section>
+
+    <section class="bg-gray-50">
         <!-- Hero Statistics -->
         <div
-            class="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36"
+            class="pt-12 px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36 flex flex-wrap justify-center items-center text-gray-500 sm:justify-between"
         >
-            <div
-                class="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between"
-            >
-                <div class="mr-5 mb-5 lg:mb-0">
-                    <a
-                        href={linkHelpers.page(lang, "focused-projects")}
-                        class="text-2xl font-bold text-primary-600">5</a
-                    >
-                    <p class="text-sm">
-                        {t("home.stats.focused-projects")}
-                    </p>
-                </div>
-                <div class="mr-5 mb-5 lg:mb-0">
-                    <a
-                        href={linkHelpers.page(lang, "platform")}
-                        class="text-2xl font-bold text-primary-600">1</a
-                    >
-                    <p class="text-sm">{t("home.stats.platform")}</p>
-                </div>
-                <div class="mr-5 mb-5 lg:mb-0">
-                    <a
-                        href={linkHelpers.page(lang, "use-cases")}
-                        class="text-2xl font-bold text-primary-600">40+</a
-                    >
-                    <p class="text-sm">{t("home.stats.use-cases")}</p>
-                </div>
-                <div class="mr-5 mb-5 lg:mb-0">
-                    <a
-                        href={linkHelpers.page(lang, "publications")}
-                        class="text-2xl font-bold text-primary-600"
-                        >{recentPublications.length}+</a
-                    >
-                    <p class="text-sm">{t("home.stats.publications")}</p>
-                </div>
-                <div class="mr-5 mb-5 lg:mb-0">
-                    <a
-                        href={linkHelpers.page(lang, "join-us")}
-                        class="text-2xl font-bold text-primary-600"
-                        >{activeJobOffers.length}</a
-                    >
-                    <p class="text-sm">{t("home.stats.open-positions")}</p>
-                </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "focused-projects")}
+                    class="text-2xl font-bold text-primary-600">5</a
+                >
+                <p class="text-sm">
+                    {t("home.stats.focused-projects")}
+                </p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "platform")}
+                    class="text-2xl font-bold text-primary-600">1</a
+                >
+                <p class="text-sm">{t("home.stats.platform")}</p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "use-cases")}
+                    class="text-2xl font-bold text-primary-600">40+</a
+                >
+                <p class="text-sm">{t("home.stats.use-cases")}</p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "publications")}
+                    class="text-2xl font-bold text-primary-600"
+                    >{recentPublications.length}+</a
+                >
+                <p class="text-sm">{t("home.stats.publications")}</p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "join-us")}
+                    class="text-2xl font-bold text-primary-600"
+                    >{activeJobOffers.length}</a
+                >
+                <p class="text-sm">{t("home.stats.open-positions")}</p>
             </div>
         </div>
 
@@ -223,10 +210,8 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                 decoding={"sync"}
             />
         </div>
-    </section>
 
-    <!-- Enhanced Navigation Tiles Section with Flowbite Cards -->
-    <section class="bg-gray-50">
+        <!-- Enhanced Navigation Tiles Section with Flowbite Cards -->
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
                 <h2
@@ -242,10 +227,8 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
             <!-- Enhanced Tile Grid with Flowbite Card styling -->
             <ProjectGrid lang={lang} />
         </div>
-    </section>
 
-    <!-- Dynamic Content Showcase Section -->
-    <section class="bg-white">
+        <!-- Dynamic Content Showcase Section -->
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
                 <h2
