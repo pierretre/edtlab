@@ -10,14 +10,15 @@ backend:
 media_folder: "public/media/uploads"
 public_folder: "/media/uploads"
 
-# Collections de contenu
+publish_mode: editorial_workflow
+
+# Content collections
 collections:
-  # Pages principales
+  # Main Pages
   - name: "pages"
     label: "Pages"
     label_singular: "Page"
     folder: "src/content/pages"
-    create: true
     nested:
       depth: 10
       subfolders: false
@@ -26,6 +27,8 @@ collections:
         depth: 10
         subfolders: false
         summary: "{{dirname}}/"
+    create: false
+    delete: false
     extension: "mdx"
     format: "frontmatter"
     summary: "{{title}} [{{lang}}]"
@@ -43,7 +46,7 @@ collections:
       - { label: "Enable Table of Contents", name: "toc", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
-  # Actualités / News
+  # News
   - name: "news"
     label: "News"
     label_singular: "News Article"
@@ -75,7 +78,7 @@ collections:
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
-  # Offres d'emploi / Job Offers
+  # Job Offers
   - name: "job-offers"
     label: "Job Offers"
     label_singular: "Job Offer"
