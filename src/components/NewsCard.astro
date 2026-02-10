@@ -2,13 +2,12 @@
 import { formatDate } from "@utils/./";
 import { linkHelpers } from "@i18n/links";
 import Badge from "@components/Badge.astro";
-import { Picture } from "astro:assets";
 import type { NewsItem } from "@models/NewsItem.model";
 
 export interface Props {
     item: NewsItem;
     lang: "en" | "fr";
-    coverImage: ImageMetadata;
+    coverImage: string; // Now a URL string, not ImageMetadata
     t: any;
     slug: string;
 }
@@ -36,10 +35,12 @@ const { item, lang, coverImage, t, slug } = Astro.props;
             : linkHelpers.event(lang, slug)}
         class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0"
     >
-        <Picture
+        <img
             class="h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-105"
             src={coverImage}
             alt={item.title}
+            loading="lazy"
+            decoding="async"
         />
         <div
             class="absolute inset-0 bg-black bg-opacity-0 transition duration-200 group-hover:bg-opacity-30"

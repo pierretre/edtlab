@@ -5,6 +5,5 @@ export interface Project {
     description: string;
     toc: boolean;
     color: string;
-    illustration: string;
     projectId?: string | undefined;
 }

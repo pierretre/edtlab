@@ -15,9 +15,6 @@ let relatedItems: any[] = [];
 
 if (project) {
   try {
-    const covers = import.meta.glob<{ default: ImageMetadata }>(
-      "/src/assets/images/uploads/*.{svg,jpg,png,gif,webp}",
-    );
     const news = await getCollection(
       "news",
       (item) =>
@@ -27,22 +24,14 @@ if (project) {
           ?.includes(project.toLowerCase()),
     );
 
-    // Add cover images to feed items
-    relatedItems = await Promise.all(
-      news
-        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-        .slice(0, 3)
-        .map(async (item) => {
-          try {
-            const coverImage = (await covers[item.data.photo]()).default;
-            return { ...item, coverImage: coverImage };
-          } catch (err) {
-            console.error(
-              `Could not load cover image for news item "${item.data.title}". Path attempted: ${item.data.photo}. Original error: ${err}`,
-            );
-          }
-        }),
-    );
+    // CMS images are now in public/media/uploads - no import needed
+    relatedItems = news
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+      .slice(0, 3)
+      .map((item) => ({
+        ...item,
+        coverImage: item.data.photo, // URL like "/media/uploads/photo.jpg"
+      }));
   } catch (error) {
     console.warn(`Could not load news/events: ${error}`);
   }
