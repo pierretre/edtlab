@@ -8,6 +8,8 @@ import Badge from "@components/Badge.astro";
 import { Picture } from "astro:assets";
 import logoEN from "@assets/images/logo-en.png";
 import logoFR from "@assets/images/logo-fr.png";
+import heroBackground from "@assets/images/INRIA_EDT_CBLOT_fond_herosection.jpg";
+import heroIllustration from "@assets/images/INRIA_EDT_CBLOT_Illu_Herosection.png";
 
 export interface Props {
     title?: string;
@@ -61,116 +63,155 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
     lang={lang}
     showBreadcrumb={false}
 >
-    <!-- Enhanced Hero Section with Flowbite Hero styling -->
-    <section class="bg-white">
+    <!-- Enhanced Hero Section with Layered Digital Twin Visualization -->
+    <section class="relative bg-[#313565] overflow-hidden">
+        <!-- Background Pattern -->
         <div
-            class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12"
+            class="absolute inset-y-0 right-0 w-2/3 opacity-70
+        max-sm:inset-x-0
+        max-sm:top-auto
+        max-sm:bottom-0
+        max-sm:w-full
+        max-sm:h-1/2"
         >
-            <!-- Main Hero Content -->
-            <h1
-                class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl"
-            >
-                {t("site.title")}
-            </h1>
-            <p
-                class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48"
-            >
-                {t("home.hero.subtitle")}
-            </p>
+            <Picture
+                src={heroBackground}
+                alt=""
+                class="w-full h-full max-sm:rotate-90 max-sm:scale-[2] max-sm:origin-center"
+                pictureAttributes={{
+                    class: "w-full h-full object-cover",
+                }}
+                widths={[1920, 1280, 768]}
+                sizes="(max-width: 640px) 100vw, 50vw"
+                quality={80}
+                format="webp"
+                loading="eager"
+                decoding="sync"
+            />
+        </div>
 
-            <!-- Hero Action Buttons -->
+        <div
+            class="relative mx-auto max-w-[1600px] grid lg:grid-cols-5 gap-4 items-center min-h-[350px] lg:min-h-[400px]"
+        >
             <div
-                class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
+                class="text-white z-10 lg:col-span-3 py-8 text-center lg:text-left p-4"
             >
-                <a
-                    href={linkHelpers.page(lang, "program")}
-                    class="inline-flex justify-center btn-primary text-base font-medium rounded-lg"
+                <h1
+                    class="mb-6 text-5xl font-extrabold tracking-tight leading-none md:text-6xl lg:text-6xl text-white"
                 >
-                    {t("home.hero.learn-more")}
-                    <svg
-                        class="ml-2 -mr-1 w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
+                    {t("site.title")}
+                </h1>
+                <p class="mb-10 text-xl font-normal text-gray-100 lg:text-2xl">
+                    {t("home.hero.subtitle")}
+                </p>
+
+                <!-- Hero Action Button -->
+                <div class="flex justify-center lg:justify-start">
+                    <a
+                        href={linkHelpers.page(lang, "program")}
+                        class="inline-flex justify-center items-center py-3 px-4 text-lg font-medium text-center hover:text-[#313565] text-primary-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors"
                     >
-                        <path
-                            fill-rule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-            </div>
-
-            <!-- Hero Statistics -->
-            <div
-                class="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36"
-            >
-                <div
-                    class="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between"
-                >
-                    <div class="mr-5 mb-5 lg:mb-0">
-                        <a
-                            href={linkHelpers.page(lang, "focused-projects")}
-                            class="text-2xl font-bold text-primary-600">5</a
+                        {t("home.hero.learn-more")}
+                        <svg
+                            class="ml-2 -mr-1 w-5 h-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
                         >
-                        <p class="text-sm">
-                            {t("home.stats.focused-projects")}
-                        </p>
-                    </div>
-                    <div class="mr-5 mb-5 lg:mb-0">
-                        <a
-                            href={linkHelpers.page(lang, "platform")}
-                            class="text-2xl font-bold text-primary-600">1</a
-                        >
-                        <p class="text-sm">{t("home.stats.platform")}</p>
-                    </div>
-                    <div class="mr-5 mb-5 lg:mb-0">
-                        <a
-                            href={linkHelpers.page(lang, "use-cases")}
-                            class="text-2xl font-bold text-primary-600">40+</a
-                        >
-                        <p class="text-sm">{t("home.stats.use-cases")}</p>
-                    </div>
-                    <div class="mr-5 mb-5 lg:mb-0">
-                        <a
-                            href={linkHelpers.page(lang, "publications")}
-                            class="text-2xl font-bold text-primary-600"
-                            >{recentPublications.length}+</a
-                        >
-                        <p class="text-sm">{t("home.stats.publications")}</p>
-                    </div>
-                    <div class="mr-5 mb-5 lg:mb-0">
-                        <a
-                            href={linkHelpers.page(lang, "join-us")}
-                            class="text-2xl font-bold text-primary-600"
-                            >{activeJobOffers.length}</a
-                        >
-                        <p class="text-sm">{t("home.stats.open-positions")}</p>
-                    </div>
+                            <path
+                                fill-rule="evenodd"
+                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
-            <div class="mt-6 mx-auto w-fit">
+            <div
+                class="relative z-10 flex items-center justify-center lg:justify-end lg:col-span-2 h-full"
+            >
                 <Picture
-                    src={logoImagePng}
-                    alt="EDT Logo"
-                    class="h-full w-auto object-contain"
-                    sizes="(max-width: 768px), 350px"
-                    widths={[350]}
-                    quality={80}
-                    format="webp"
+                    src={heroIllustration}
+                    alt="Digital Twin Concept - Physical and Digital Layers"
+                    class="h-full w-full"
                     pictureAttributes={{
-                        class: "flex-shrink-0 h-full",
+                        class: "h-full w-full object-contain",
                     }}
-                    loading={"eager"}
-                    decoding={"sync"}
+                    widths={[1200, 1000, 800]}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 70vw, 1200px"
+                    quality={90}
+                    format="webp"
+                    loading="eager"
+                    decoding="sync"
                 />
             </div>
         </div>
     </section>
 
-    <!-- Enhanced Navigation Tiles Section with Flowbite Cards -->
     <section class="bg-gray-50">
+        <!-- Hero Statistics -->
+        <div
+            class="pt-12 px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36 flex flex-wrap justify-center items-center text-gray-500 sm:justify-between"
+        >
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "focused-projects")}
+                    class="text-2xl font-bold text-primary-600">5</a
+                >
+                <p class="text-sm">
+                    {t("home.stats.focused-projects")}
+                </p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "platform")}
+                    class="text-2xl font-bold text-primary-600">1</a
+                >
+                <p class="text-sm">{t("home.stats.platform")}</p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "use-cases")}
+                    class="text-2xl font-bold text-primary-600">40+</a
+                >
+                <p class="text-sm">{t("home.stats.use-cases")}</p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "publications")}
+                    class="text-2xl font-bold text-primary-600"
+                    >{recentPublications.length}+</a
+                >
+                <p class="text-sm">{t("home.stats.publications")}</p>
+            </div>
+            <div class="mr-5 mb-5 lg:mb-0">
+                <a
+                    href={linkHelpers.page(lang, "join-us")}
+                    class="text-2xl font-bold text-primary-600"
+                    >{activeJobOffers.length}</a
+                >
+                <p class="text-sm">{t("home.stats.open-positions")}</p>
+            </div>
+        </div>
+
+        <div class="mt-6 mx-auto w-fit">
+            <Picture
+                src={logoImagePng}
+                alt="EDT Logo"
+                class="h-full w-auto object-contain"
+                widths={[350, 700, 1000, 1400]}
+                sizes="(max-width: 768px) 60vw, 350px"
+                quality={95}
+                format="webp"
+                pictureAttributes={{
+                    class: "flex-shrink-0 h-full",
+                }}
+                loading="eager"
+                decoding="async"
+            />
+        </div>
+
+        <!-- Enhanced Navigation Tiles Section with Flowbite Cards -->
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
                 <h2
@@ -186,10 +227,8 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
             <!-- Enhanced Tile Grid with Flowbite Card styling -->
             <ProjectGrid lang={lang} />
         </div>
-    </section>
 
-    <!-- Dynamic Content Showcase Section -->
-    <section class="bg-white">
+        <!-- Dynamic Content Showcase Section -->
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
                 <h2

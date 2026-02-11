@@ -1,5 +1,4 @@
 backend:
-  name: github
   repo: pierretre/edtlab
   branch: main
   site_domain: edtlab.fr
@@ -52,7 +51,7 @@ collections:
     label_singular: "News Article"
     folder: "src/content/news"
     create: true
-    summary: "{{slug}} [{{lang}}]"
+    summary: "{{fields.title}}-{{fields.type}} ({{fields.tags}}) [{{fields.lang}}]"
     editor:
       preview: true
     format: "frontmatter"
@@ -67,6 +66,7 @@ collections:
       - label: "French pages"
         field: lang
         pattern: 'fr'
+    slug: "{{fields.newsType}}-{{fields.date}}-{{fields.title}} [{{fields.lang}}]"
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true, default: "en" }
@@ -84,7 +84,7 @@ collections:
     label_singular: "Job Offer"
     folder: "src/content/job-offers"
     create: true
-    summary: "{{title}}-{{type}} [{{lang}}]"
+    summary: "{{fields.title}}-{{fields.type}} ({{fields.tags}}) [{{fields.lang}}]"
     editor:
       preview: true
     format: "frontmatter"
