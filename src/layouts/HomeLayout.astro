@@ -47,9 +47,10 @@ const recentPublications = allPublications
     .sort((a, b) => b.data.year - a.data.year)
     .slice(0, 3);
 
-const allJobOffers = await getCollection("job-offers", ({ data }) => {
-    return data.lang === lang && !data.filled;
-});
+const allJobOffers = await getCollection(
+    "job-offers",
+    ({ data }) => !data.filled,
+);
 const activeJobOffers = allJobOffers.slice(0, 3);
 const logoImagePng = lang === "fr" ? logoFR : logoEN;
 ---
