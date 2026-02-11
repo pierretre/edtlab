@@ -13,10 +13,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 // Get all job offers for the current language
-const allJobOffers = await getCollection(
-    "job-offers",
-    ({ data }) => data.lang === lang,
-);
+const allJobOffers = await getCollection("job-offers");
 
 // Sort job offers by availability status, then by expected start date (chronological)
 const sortedJobOffers = allJobOffers.sort((a, b) => {

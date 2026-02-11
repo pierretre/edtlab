@@ -84,21 +84,13 @@ collections:
     label_singular: "Job Offer"
     folder: "src/content/job-offers"
     create: true
-    summary: "{{fields.title}}-{{fields.type}} ({{fields.tags}}) [{{fields.lang}}]"
+    summary: "{{fields.title}}-{{fields.type}} ({{fields.tags}})"
     editor:
       preview: true
     format: "frontmatter"
-    view_filters:
-      - label: "English pages"
-        field: lang
-        pattern: 'en'
-      - label: "French pages"
-        field: lang
-        pattern: 'fr'
     slug: "{{fields.type}}-{{fields.tags}}-{{fields.title}}"
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: true, default: "en" }
       - { label: "Type", name: "type", widget: "select", options: ["postdoc", "phd", "engineer", "intern"], required: true }
       - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country" }
       - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: true, hint: "e.g., 'Spring 2025', 'September 2024'" }

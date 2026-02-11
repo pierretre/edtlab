@@ -98,7 +98,6 @@ describe('Content Schema Validation', () => {
             requirements: ['PhD in relevant field'],
             contacts: ['contact@example.com'],
             lang: 'en' as const,
-            template: 'job-offer',
             tags: ['research', 'digital-twins']
         };
 

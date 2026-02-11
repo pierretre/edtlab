@@ -15,12 +15,15 @@ This guide provides step-by-step instructions for creating, updating, and managi
 ## File Structure and Naming
 
 ### Location
+
 All job offers are stored in: `src/content/job-offers/`
 
 ### Naming Convention
-Use this pattern: `{type}-{project}-{identifier}-{lang}.md`
+
+Use this pattern: `{type}-{project}-{identifier}.md`
 
 **Examples:**
+
 ```
 postdoc-pc1-hybridization-en.md
 postdoc-pc1-hybridization-fr.md
@@ -33,10 +36,10 @@ intern-general-summer2025-fr.md
 ```
 
 **Guidelines:**
+
 - Use lowercase with hyphens
 - Include project code (pc1, pc2, etc.) or "general"
 - Add descriptive identifier for multiple positions of same type
-- Always create both language versions
 
 ## Step-by-Step Creation Process
 
@@ -66,7 +69,6 @@ requirements:
 contacts:
   - "supervisor@institution.edu"
   - "hr@edt-program.fr"
-lang: "en" # en | fr
 tags:
   - "PC1" # Optional: associate with focused project
 ---
@@ -118,8 +120,9 @@ Brief description of the associated focused project (if applicable) and how this
 ### Required Fields
 
 #### `title`
+
 - **Purpose**: Position title displayed in listings and page headers
-- **Guidelines**: 
+- **Guidelines**:
   - Be specific and descriptive
   - Include level (PhD, Postdoc, etc.)
   - Mention key research area if space allows
@@ -129,19 +132,22 @@ Brief description of the associated focused project (if applicable) and how this
   - "Software Engineer - Platform Development"
 
 #### `type`
+
 - **Options**: `postdoc`, `phd`, `engineer`, `intern`
 - **Purpose**: Categorization and filtering
 - **Guidelines**: Choose the option that best matches the position level
 
 #### `location`
+
 - **Format**: "City, Country" or "City, Region, Country"
-- **Examples**: 
+- **Examples**:
   - "Paris, France"
   - "Rennes, Brittany, France"
   - "Remote (France-based)"
 - **Guidelines**: Be specific enough for applicants to understand logistics
 
 #### `expectedStartDate`
+
 - **Format**: Flexible - can use dates, seasons, quarters, or ranges
 - **Examples**:
   - "2025-06-01" (specific date)
@@ -151,19 +157,22 @@ Brief description of the associated focused project (if applicable) and how this
 - **Guidelines**: Align with academic calendars when relevant
 
 #### `filled`
+
 - **Options**: `true` or `false`
 - **Purpose**: Controls whether position appears in active listings
-- **Guidelines**: 
+- **Guidelines**:
   - Set to `false` for new positions
   - Update to `true` when position is no longer accepting applications
   - Filled positions remain visible on project pages for reference
 
 #### `publishedDate`
+
 - **Format**: YYYY-MM-DD
 - **Purpose**: Chronological sorting and freshness indicators
 - **Guidelines**: Use the date when the position was first published
 
 #### `description`
+
 - **Purpose**: Brief summary for listings, search results, and SEO
 - **Guidelines**:
   - Keep to 120-160 characters
@@ -171,6 +180,7 @@ Brief description of the associated focused project (if applicable) and how this
   - Make it compelling for potential applicants
 
 #### `requirements`
+
 - **Format**: Array of strings
 - **Purpose**: Clear qualification criteria
 - **Guidelines**:
@@ -179,14 +189,10 @@ Brief description of the associated focused project (if applicable) and how this
   - Use inclusive language
   - Include language requirements if applicable
 
-#### `lang`
-- **Options**: `en` or `fr`
-- **Purpose**: Language-specific routing and content organization
-- **Guidelines**: Must match the content language
-
 ### Optional Fields
 
 #### `contacts`
+
 - **Format**: Array of email addresses
 - **Purpose**: Direct contact for position inquiries
 - **Guidelines**:
@@ -195,6 +201,7 @@ Brief description of the associated focused project (if applicable) and how this
   - Use institutional email addresses when possible
 
 #### `tags`
+
 - **Format**: Array of strings
 - **Purpose**: Project association and additional categorization
 - **Common Values**: `PC1`, `PC2`, `PC3`, `PC4`, `PC5`, `General`
@@ -294,26 +301,31 @@ Brief description of the associated focused project (if applicable) and how this
 ### Validation Errors
 
 **Missing Required Fields**
+
 - Check that all required frontmatter fields are present
 - Verify date formats (YYYY-MM-DD for publishedDate)
 - Ensure email addresses in contacts array are valid
 
 **Invalid Enum Values**
-- Use only specified values for `type` and `lang` fields
+
+- Use only specified values for `type` field
 - Check spelling of project codes in tags
 
 **Array Format Issues**
+
 - Ensure requirements and contacts use proper YAML array syntax
 - Use quotes around strings containing special characters
 
 ### Content Issues
 
 **Inconsistent Information**
+
 - Verify that English and French versions match
 - Check that project associations are correct
 - Ensure contact information is current
 
 **SEO and Discoverability**
+
 - Include relevant keywords in title and description
 - Use descriptive file names
 - Ensure proper internal linking from project pages
@@ -348,6 +360,7 @@ Brief description of the associated focused project (if applicable) and how this
 ### Email Templates
 
 **Application Acknowledgment**
+
 ```
 Subject: Application Received - [Position Title]
 
@@ -364,6 +377,7 @@ Best regards,
 ```
 
 **Position Filled Notification**
+
 ```
 Subject: Position Update - [Position Title]
 

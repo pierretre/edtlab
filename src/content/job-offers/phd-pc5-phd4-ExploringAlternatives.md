@@ -10,7 +10,6 @@ publishedDate: 2026-03-15
 description: "PhD position in Human-Computer Interaction and Virtual Reality focusing on immersive interfaces for digital twin systems"
 requirements: ["Master's degree in Computer Science, HCI, VR or related field", "Experience with VR/AR technologies", "Strong programming skills (C#, JavaScript, Python)", "Knowledge of 3D graphics and visualization", "Fluency in English and French"]
 contacts: ["thierry.duval@imt-atlantique.fr"]
-lang: "en"
 ---
 
 ## Position Overview
@@ -20,6 +19,7 @@ We are seeking a motivated PhD candidate to join the PC5 team working on Human-D
 ## Research Focus
 
 The PhD research will contribute to advancing the state-of-the-art in:
+
 - **Immersive Visualization**: Developing VR/AR interfaces for complex digital twin data
 - **Interaction Design**: Creating intuitive interaction methods for 3D digital twin environments
 - **Collaborative Systems**: Enabling multi-user collaborative interaction with digital twins
@@ -39,6 +39,7 @@ The PhD research will contribute to advancing the state-of-the-art in:
 The position is based at IMT Atlantique in Brest, within the INUIT team at Lab-STICC. You will work under the supervision of Prof. Thierry Duval and collaborate with researchers across the EDT consortium. You will be co-supervised by Professor David Baudry from CESI LINEACT Rouen.
 
 ### Facilities and Resources
+
 - State-of-the-art VR/AR equipment and immersive environments
 - High-performance computing resources
 - Access to industrial partners and real-world use cases
@@ -47,6 +48,7 @@ The position is based at IMT Atlantique in Brest, within the INUIT team at Lab-S
 ## Qualifications
 
 ### Required
+
 - Master's degree in Computer Science, Human-Computer Interaction, or related field
 - Strong background in 3D graphics, visualization, or VR/AR technologies
 - Proficiency in programming languages (C++, JavaScript, Python)
@@ -54,6 +56,7 @@ The position is based at IMT Atlantique in Brest, within the INUIT team at Lab-S
 - Strong analytical and problem-solving abilities
 
 ### Preferred
+
 - Experience with game engines (Unity, Unreal Engine) or 3D frameworks
 - Knowledge of user experience design and evaluation methods
 - Familiarity with web technologies and real-time systems
@@ -62,6 +65,7 @@ The position is based at IMT Atlantique in Brest, within the INUIT team at Lab-S
 ## Application Process
 
 Please submit your application including:
+
 1. **Cover Letter**: Explaining your motivation and research interests
 2. **Curriculum Vitae**: Including academic background and relevant experience
 3. **Academic Transcripts**: Master's degree and relevant coursework
@@ -84,11 +88,11 @@ Early applications are encouraged as the position may be filled before the deadl
 ## Contact Information
 
 **Supervisor**: Prof. Thierry Duval  
-**Email**: thierry.duval@imt-atlantique.fr  
+**Email**: <thierry.duval@imt-atlantique.fr>  
 **Phone**: +33 2 29 00 14 67
 
 **Administrative Contact**: HR Department  
-**Email**: 
+**Email**:
 
 For technical questions about the research, please contact Prof. Duval directly. For administrative questions, contact the HR department.
 

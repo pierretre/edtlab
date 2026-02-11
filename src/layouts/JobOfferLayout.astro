@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const { frontmatter } = Astro.props;
-const lang = frontmatter.lang as "en" | "fr";
+const lang = Astro.currentLocale as "en" | "fr";
 const t = useTranslations(lang);
 
 const jobStructuredData = generateJobPostingStructuredData(
@@ -28,7 +28,7 @@ const jobStructuredData = generateJobPostingStructuredData(
 <PageLayout
     title={frontmatter.title}
     description={frontmatter.description || t("site.description")}
-    lang={lang as "en" | "fr"}
+    lang={lang}
     showBreadcrumb={true}
     showToc={true}
 >
