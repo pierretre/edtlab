@@ -78,7 +78,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                 src={heroBackground}
                 alt=""
                 class="w-full h-full max-sm:rotate-90 max-sm:scale-[2] max-sm:origin-center"
-                imgAttributes={{
+                pictureAttributes={{
                     class: "w-full h-full object-cover",
                 }}
                 widths={[1920, 1280, 768]}
@@ -91,13 +91,13 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
         </div>
 
         <div
-            class="relative mx-auto max-w-[1600px] grid lg:grid-cols-5 gap-4 items-center min-h-[400px] lg:min-h-[500px]"
+            class="relative mx-auto max-w-[1600px] grid lg:grid-cols-5 gap-4 items-center min-h-[350px] lg:min-h-[400px]"
         >
             <div
                 class="text-white z-10 lg:col-span-3 py-8 text-center lg:text-left p-4"
             >
                 <h1
-                    class="mb-6 text-5xl font-extrabold tracking-tight leading-none md:text-6xl lg:text-7xl text-white"
+                    class="mb-6 text-5xl font-extrabold tracking-tight leading-none md:text-6xl lg:text-6xl text-white"
                 >
                     {t("site.title")}
                 </h1>
@@ -106,10 +106,10 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                 </p>
 
                 <!-- Hero Action Button -->
-                <div class="flex justify-center lg:justify-start mb-8">
+                <div class="flex justify-center lg:justify-start">
                     <a
                         href={linkHelpers.page(lang, "program")}
-                        class="inline-flex justify-center items-center py-4 px-6 text-lg font-medium text-center text-primary-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors"
+                        class="inline-flex justify-center items-center py-3 px-4 text-lg font-medium text-center hover:text-[#313565] text-primary-700 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 transition-colors"
                     >
                         {t("home.hero.learn-more")}
                         <svg
@@ -134,7 +134,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                     src={heroIllustration}
                     alt="Digital Twin Concept - Physical and Digital Layers"
                     class="h-full w-full"
-                    imgAttributes={{
+                    pictureAttributes={{
                         class: "h-full w-full object-contain",
                     }}
                     widths={[1200, 1000, 800]}
@@ -199,15 +199,15 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                 src={logoImagePng}
                 alt="EDT Logo"
                 class="h-full w-auto object-contain"
-                sizes="(max-width: 768px), 350px"
-                widths={[350]}
-                quality={80}
+                widths={[350, 700, 1000, 1400]}
+                sizes="(max-width: 768px) 60vw, 350px"
+                quality={95}
                 format="webp"
                 pictureAttributes={{
                     class: "flex-shrink-0 h-full",
                 }}
-                loading={"eager"}
-                decoding={"sync"}
+                loading="eager"
+                decoding="async"
             />
         </div>
 
