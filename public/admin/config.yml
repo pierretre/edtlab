@@ -1,4 +1,5 @@
 backend:
+  name: gihtub
   repo: pierretre/edtlab
   branch: main
   site_domain: edtlab.fr
