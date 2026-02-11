@@ -1,5 +1,7 @@
 ---
+import { Picture } from "astro:assets";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import france2030Logo from "@assets/images/FR2030_Endossement_NOBG.png";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
@@ -8,10 +10,17 @@ const t = useTranslations(lang);
 <div class="bg-[#e5e5e5] text-gray-800 w-full">
     <div class="max-w-5xl mx-auto p-6 gap-6">
         <div class="flex gap-6 flex-wrap lg:mb-6">
-            <img
-                src="/FR2030_Endossement_NOBG.png"
+            <Picture
+                src={france2030Logo}
                 alt="République Française France 2030 - Logo officiel du programme de financement"
                 class="max-w-72 h-auto"
+                widths={[288, 576, 864]}
+                sizes="288px"
+                format="webp"
+                quality={95}
+                pictureAttributes={{
+                    class: "h-full w-auto object-contain",
+                }}
             />
             <div class="my-auto">
                 <h5>Engineering Digital Twins</h5>

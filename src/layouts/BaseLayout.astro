@@ -309,14 +309,13 @@ if (showBreadcrumb) {
 
             <!-- Main content area -->
             <main role="main" class="site-content">
-                <div class="mx-auto p-4 max-w-6xl">
-                    <!-- Breadcrumb Navigation -->
-                    {
-                        showBreadcrumb && (
+                {
+                    showBreadcrumb && (
+                        <div class="mx-auto p-4 max-w-6xl">
                             <Breadcrumb items={finalBreadcrumbItems} />
-                        )
-                    }
-                </div>
+                        </div>
+                    )
+                }
                 <slot />
             </main>
         </div>
