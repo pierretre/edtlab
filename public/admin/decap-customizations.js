@@ -24,107 +24,81 @@ function escapeHtml(value) {
 }
 
 var partnersData = {
-    "Inria": {
-        "fullname": "Institut National de Recherche en Informatique et en Automatique",
-        "logo": "/media/uploads/Inria.png",
-        "children": [
-            "Hycomes",
-            "DiverSE",
-            "Kairos",
-            "Parkas",
-            "Wimmics",
-            "Moex",
-            "Spirals",
-            "MARACAS",
-            "MEDISIM",
-            "Kopernick",
-            "Hybrid",
-            "Aviz",
-            "ILDA",
-            "VirtUs"
-        ]
-    },
-    "CNRS": {
-        "fullname": "Centre National de la Recherche Scientifique",
-        "logo": "/media/uploads/CNRS.png",
-        "children": [
-            "IRIT/ACADIE",
-            "CRAN",
-            "LaBRI",
-            "ICube",
-            "LS2N",
-            "TSCF (INRAE)",
-            "CRTD (CNAM)",
-            "LMPS"
-        ]
-    },
-    "INRAE": {
-        "fullname": "Institut National de Recherche pour l'Agriculture, l’Alimentation et l’Environnement",
-        "logo": "/media/uploads/INRAE.png",
-        "children": [
-            "P4S (IMT)",
-            "TSCF (INRAE)"
-        ]
-    },
-    "UPPA": {
-        "fullname": "Université de Pau et des Pays de l’Adour",
-        "logo": "/media/uploads/UPPA.png"
-    },
-    "Télécom Paris": {
-        "fullname": "Télécom Paris – Institut Polytechnique de Paris",
-        "logo": "/media/uploads/TelecomParis.png",
-        "children": [
-            "LabSoc",
-            "ACES"
-        ]
-    },
-    "ENPC": {
-        "fullname": "École des Ponts ParisTech",
-        "logo": "/media/uploads/ENPC.jpg"
-    },
-    "Université de Bourgogne": {
-        "fullname": "Université Bourgogne-Europe",
-        "logo": "/media/uploads/UnivBourgogne.png",
-        "children": [
-            "CIAD (Université de Bourgogne)",
-            "LIB (Université Bourgogne)"
-        ]
-    },
     "CEA": {
         "fullname": "Commissariat à l'énergie atomique et aux énergies alternatives",
-        "logo": "/media/uploads/CEA.png",
-        "children": [
-            "LITEN",
-            "LIST",
-            "CEA Tech Occitanie"
-        ]
+        "logo": "/media/uploads/CEA.png"
     },
-    "Université Toulouse 3 (Aniti)": {
-        "fullname": "Université Toulouse III – Paul Sabatier (ANITI)",
-        "logo": "/media/uploads/UnivToulousePaulSabatier.jpg"
+    "École Polytechnique": {
+        "fullname": "École Polytechnique",
+        "logo": "/media/uploads/Ecole_Polytechnique.png"
     },
-    "Université Toulouse Jean Jaurès": {
-        "fullname": "Université Toulouse Jean-Jaurès",
-        "logo": "/media/uploads/UnivToulouseJeanJaurès.png",
-        "children": [
-            "IRIT/SM@RT"
-        ]
+    "ENS Paris-Saclay": {
+        "fullname": "École Normale Supérieure Paris-Saclay",
+        "logo": "/media/uploads/ENS_Paris_Saclay.png"
     },
-    "IMT": {
-        "fullname": "Institut Mines-Télécom",
-        "logo": "/media/uploads/IMT.png",
-        "children": [
-            "P4S",
-            "INUIT"
-        ]
+    "IMT Atlantique": {
+        "fullname": "IMT Atlantique",
+        "logo": "/media/uploads/IMT_Atlantique.png"
     },
-    "DISP": {
-        "fullname": "Decision and Information Systems for Production systems",
-        "logo": "/media/uploads/ULyon2.png"
+    "INRAE": {
+        "fullname": "Institut National de Recherche pour l'Agriculture, l'Alimentation et l'Environnement",
+        "logo": "/media/uploads/INRAE.png"
+    },
+    "Inria": {
+        "fullname": "Institut National de Recherche en Informatique et en Automatique",
+        "logo": "/media/uploads/Inria.png"
+    },
+    "INSA Rennes": {
+        "fullname": "Institut National des Sciences Appliquées de Rennes",
+        "logo": "/media/uploads/INSA_Rennes.png"
+    },
+    "Télécom Paris": {
+        "fullname": "Télécom Paris",
+        "logo": "/media/uploads/TelecomParis.png"
+    },
+    "Université Bourgogne Europe": {
+        "fullname": "Université Bourgogne Europe",
+        "logo": "/media/uploads/UBE.png"
+    },
+    "Université Grenoble Alpes": {
+        "fullname": "Université Grenoble Alpes",
+        "logo": "/media/uploads/UGA.png"
+    },
+    "Université Côte d'Azur": {
+        "fullname": "Université Côte d'Azur",
+        "logo": "/media/uploads/UniCA.png"
+    },
+    "Université de Strasbourg": {
+        "fullname": "Université de Strasbourg",
+        "logo": "/media/uploads/UniStra.png"
+    },
+    "Université de Lille": {
+        "fullname": "Université de Lille",
+        "logo": "/media/uploads/Universite_de_Lille.png"
+    },
+    "Université de Lorraine": {
+        "fullname": "Université de Lorraine",
+        "logo": "/media/uploads/Universite_de_Lorraine.png"
+    },
+    "Université de Nantes": {
+        "fullname": "Université de Nantes",
+        "logo": "/media/uploads/Universite_de_Nantes.png"
     },
     "Université de Rennes": {
         "fullname": "Université de Rennes",
-        "logo": "/media/uploads/Univ Rennes.png"
+        "logo": "/media/uploads/Universite_de_Rennes.png"
+    },
+    "Université de Toulouse": {
+        "fullname": "Université de Toulouse",
+        "logo": "/media/uploads/Universite_de_Toulouse.png"
+    },
+    "UPPA": {
+        "fullname": "Université de Pau et des Pays de l'Adour",
+        "logo": "/media/uploads/UPPA.png"
+    },
+    "Université Toulouse Jean Jaurès": {
+        "fullname": "Université Toulouse Jean Jaurès",
+        "logo": "/media/uploads/UT2J.png"
     }
 };
 
@@ -620,7 +594,7 @@ CMS.registerEditorComponent({
 
 /**
  * Partners Grid Component
- * Usage: <PartnersGrid partners={['Inria', 'CNRS']} />
+ * Usage: <PartnersGrid partners={['Inria']} />
  */
 CMS.registerEditorComponent({
     id: 'PartnersGrid',
@@ -631,7 +605,25 @@ CMS.registerEditorComponent({
             label: 'Partners',
             widget: 'select',
             multiple: true,
-            options: ['Inria', 'CNRS', 'INRAE', 'UPPA', 'Télécom Paris', 'ENPC', 'Université de Bourgogne', 'CEA', 'Université Toulouse 3 (Aniti)', 'Université Toulouse Jean Jaurès', 'IMT', 'DISP', 'Université de Rennes'],
+            options: ["CEA",
+                "École Polytechnique",
+                "ENS Paris-Saclay",
+                "IMT Atlantique",
+                "INRAE",
+                "Inria",
+                "INSA Rennes",
+                "Télécom Paris",
+                "Université Bourgogne Europe",
+                "Université Grenoble Alpes",
+                "Université Côte d'Azur",
+                "Université de Strasbourg",
+                "Université de Lille",
+                "Université de Lorraine",
+                "Université de Nantes",
+                "Université de Rennes",
+                "Université de Toulouse",
+                "UPPA",
+                "Université Toulouse Jean Jaurès"],
             hint: 'Select partners'
         }
     ],
