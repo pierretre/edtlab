@@ -15,7 +15,6 @@ const t = useTranslations(lang);
 const filledPhDPositions = await getCollection(
     "job-offers",
     ({ data }) =>
-        data.lang === lang &&
         data.filled === true &&
         data.type === "phd" &&
         data.tags?.includes(project!),

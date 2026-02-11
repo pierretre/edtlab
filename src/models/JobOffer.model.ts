@@ -8,7 +8,6 @@ export interface JobOffer {
     description: string;
     requirements: string[];
     contacts?: string[];
-    lang: 'en' | 'fr';
     template?: string;
     tags?: string[];
 }

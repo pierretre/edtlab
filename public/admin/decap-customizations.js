@@ -296,8 +296,6 @@ var JobOffersPreview = createClass({
         var widgetFor = this.props.widgetFor;
         var data = entry.get('data').toJS();
 
-        var lang = data.lang || 'en';
-
         // Badge class based on type
         var typeBadgeClass = {
             'phd': 'bg-blue-bell-200 text-blue-bell-900 border',
@@ -306,10 +304,10 @@ var JobOffersPreview = createClass({
             'intern': 'bg-gray-200 text-gray-800 border'
         };
         var typeBadgeLabel = {
-            'phd': lang === 'fr' ? 'Doctorat' : 'PhD',
+            'phd': 'PhD',
             'postdoc': 'Post-doc',
-            'engineer': lang === 'fr' ? 'Ingénieur' : 'Engineer',
-            'intern': lang === 'fr' ? 'Stage' : 'Internship'
+            'engineer': 'Engineer',
+            'intern': 'Internship'
         };
         var badgeClass = typeBadgeClass[data.type] || typeBadgeClass.phd;
         var badgeLabel = typeBadgeLabel[data.type] || data.type;
@@ -334,7 +332,7 @@ var JobOffersPreview = createClass({
                             d: 'M15 19l-7-7 7-7'
                         })
                     ),
-                    lang === 'fr' ? 'Retour aux offres' : 'Back to Careers'
+                    'Back to Careers'
                 )
             ),
 
@@ -356,7 +354,7 @@ var JobOffersPreview = createClass({
                     // Filled badge
                     data.filled && h('span', {
                         className: 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-200 text-gray-800 border'
-                    }, lang === 'fr' ? 'Poste pourvu' : 'Position Filled')
+                    }, 'Position Filled')
                 ),
 
                 // Title
@@ -387,7 +385,7 @@ var JobOffersPreview = createClass({
                         ),
                         h('div', {},
                             h('span', { className: 'text-sm font-medium text-gray-500' },
-                                lang === 'fr' ? 'Lieu' : 'Location'
+                                'Location'
                             ),
                             h('p', { className: 'font-medium' }, data.location)
                         )
@@ -409,7 +407,7 @@ var JobOffersPreview = createClass({
                         ),
                         h('div', {},
                             h('span', { className: 'text-sm font-medium text-gray-500' },
-                                lang === 'fr' ? 'Début prévu' : 'Expected Start'
+                                'Expected Start'
                             ),
                             h('p', {
                                 className: 'font-medium ' + (data.filled ? 'text-gray-500' : 'text-green-600')
@@ -425,7 +423,7 @@ var JobOffersPreview = createClass({
             // Requirements Section
             data.requirements && data.requirements.length > 0 && h('section', { className: 'mt-8 p-6 bg-primary-50 rounded-lg border border-primary-200' },
                 h('h2', { className: 'text-xl font-semibold text-primary-800 mb-4' },
-                    lang === 'fr' ? 'Exigences' : 'Requirements'
+                    'Requirements'
                 ),
                 h('ul', { className: 'space-y-2' },
                     data.requirements.map(function (req, i) {
@@ -450,12 +448,10 @@ var JobOffersPreview = createClass({
             // Application CTA or Filled Message
             !data.filled ? h('section', { className: 'mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white' },
                 h('h2', { className: 'text-xl font-semibold mb-3 text-white' },
-                    lang === 'fr' ? 'Prêt à postuler ?' : 'Ready to Apply?'
+                    'Ready to Apply?'
                 ),
                 h('p', { className: 'mb-4 text-primary-100' },
-                    lang === 'fr'
-                        ? 'Envoyez votre candidature avec votre CV et lettre de motivation.'
-                        : 'Send your application with your CV and cover letter.'
+                    'Send your application with your CV and cover letter.'
                 ),
                 h('div', { className: 'flex flex-col sm:flex-row gap-3' },
                     h('a', {
@@ -475,29 +471,27 @@ var JobOffersPreview = createClass({
                                 d: 'M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
                             })
                         ),
-                        lang === 'fr' ? 'Postuler maintenant' : 'Apply Now'
+                        'Apply Now'
                     ),
                     h('a', {
                         href: '#',
                         className: 'inline-flex items-center justify-center px-6 py-3 bg-primary-500 text-white font-medium rounded-lg hover:bg-primary-600 transition-colors duration-200'
                     },
-                        lang === 'fr' ? 'Voir toutes les offres' : 'View All Positions'
+                        'View All Positions'
                     )
                 )
             ) : h('section', { className: 'mt-8 p-6 bg-gray-100 rounded-lg border' },
                 h('h2', { className: 'text-xl font-semibold mb-3 text-gray-700' },
-                    lang === 'fr' ? 'Poste pourvu' : 'Position Filled'
+                    'Position Filled'
                 ),
                 h('p', { className: 'mb-4 text-gray-600' },
-                    lang === 'fr'
-                        ? 'Ce poste a été pourvu. Consultez nos autres opportunités.'
-                        : 'This position has been filled. Check out our other opportunities.'
+                    'This position has been filled. Check out our other opportunities.'
                 ),
                 h('a', {
                     href: '#',
                     className: 'inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200'
                 },
-                    lang === 'fr' ? 'Voir toutes les offres' : 'View All Positions'
+                    'View All Positions'
                 )
             )
         ];

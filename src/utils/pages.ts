@@ -4,8 +4,8 @@ import { enToFrMapping } from "@i18n/page-mapping";
 
 export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const baseEntries = await generateBasePagesStaticPaths();
-    const newsEntries = await generateTypePagesStaticPaths("news");
-    const jobOfferEntries = await generateTypePagesStaticPaths("job-offers");
+    const newsEntries = await generateNewsPagesStaticPaths();
+    const jobOfferEntries = await generateJobOffersStaticPaths();
 
     return [...baseEntries, ...newsEntries, ...jobOfferEntries];
 }
@@ -35,19 +35,18 @@ async function generateBasePagesStaticPaths() {
 }
 
 /**
- * Generate static paths for content types like events, press releases, job offers
- * @param collection - The content collection name
+ * Generate static paths for news pages
  * @returns Array of static path entries
  */
-async function generateTypePagesStaticPaths(collection: "news" | "job-offers"): Promise<any[]> {
-    const allEntries = await getCollection(collection);
+async function generateNewsPagesStaticPaths(): Promise<any[]> {
+    const allEntries = await getCollection("news");
 
     return allEntries.map(
-        (entry: CollectionEntry<typeof collection>) => {
-            const { lang, template } = entry.data;
+        (entry: CollectionEntry<"news">) => {
+            const { lang } = entry.data;
             const link = getContentLink(
                 lang,
-                collection,
+                "news",
                 entry.slug,
                 true,
             );
@@ -61,11 +60,45 @@ async function generateTypePagesStaticPaths(collection: "news" | "job-offers"): 
                     slug: cleanSlug,
                 },
                 props: {
-                    page: entry,
-                    template,
+                    page: entry
                 },
             };
         });
+}
+
+/**
+ * Generate static paths for job offer pages
+ * @returns Array of static path entries
+ */
+async function generateJobOffersStaticPaths(): Promise<any[]> {
+    const allEntries = await getCollection("job-offers");
+
+    let pages: any[] = [];
+    allEntries.forEach(
+        (entry: CollectionEntry<"job-offers">) => {
+            const linkEN = getContentLink("en", "job-offers", entry.slug, true);
+            pages.push({
+                params: {
+                    lang: "en",
+                    slug: linkEN,
+                },
+                props: {
+                    page: entry
+                },
+            });
+
+            const linkFR = getContentLink("fr", "job-offers", entry.slug, true);
+            pages.push({
+                params: {
+                    lang: "fr",
+                    slug: linkFR,
+                },
+                props: {
+                    page: entry
+                },
+            });
+        });
+    return pages;
 }
 
 function getLangAndSlugFromPageData(

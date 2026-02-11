@@ -10,7 +10,6 @@ publishedDate: 2026-03-15
 description: "PhD position in Human-Computer Interaction and Virtual Reality focusing on immersive interfaces for digital twin systems"
 requirements: ["Master's degree in Computer Science, HCI, VR or related field", "Experience with VR/AR technologies", "Strong programming skills (C#, JavaScript, Python)", "Knowledge of 3D graphics and visualization", "Fluency in English and French"]
 contacts: ["tobias.isenberg@inria.fr"]
-lang: "en"
 ---
 
 ## Position Overview
@@ -20,6 +19,7 @@ We are seeking a motivated PhD candidate to join the PC5 team working on Human-D
 ## Research Focus
 
 The PhD research will contribute to advancing the state-of-the-art in:
+
 - **Immersive Visualization**: Developing VR/AR interfaces for complex digital twin data
 - **Interaction Design**: Creating intuitive interaction methods for 3D digital twin environments
 - **Collaborative Systems**: Enabling multi-user collaborative interaction with digital twins
@@ -39,6 +39,7 @@ The PhD research will contribute to advancing the state-of-the-art in:
 The position is based at Inria Paris Saclay, within the Aviz team. You will work under the supervision of Prof. Tobias Isenberg and collaborate with researchers across the EDT consortium. You will be co-supervised by Senior Researcher Ferran Arguelaget from Seamless team of Inria Rennes.
 
 ### Facilities and Resources
+
 - State-of-the-art VR/AR equipment and immersive environments
 - High-performance computing resources
 - Access to industrial partners and real-world use cases
@@ -47,6 +48,7 @@ The position is based at Inria Paris Saclay, within the Aviz team. You will work
 ## Qualifications
 
 ### Required
+
 - Master's degree in Computer Science, Human-Computer Interaction, or related field
 - Strong background in 3D graphics, visualization, or VR/AR technologies
 - Proficiency in programming languages (C++, JavaScript, Python)
@@ -54,6 +56,7 @@ The position is based at Inria Paris Saclay, within the Aviz team. You will work
 - Strong analytical and problem-solving abilities
 
 ### Preferred
+
 - Experience with game engines (Unity, Unreal Engine) or 3D frameworks
 - Knowledge of user experience design and evaluation methods
 - Familiarity with web technologies and real-time systems
@@ -62,6 +65,7 @@ The position is based at Inria Paris Saclay, within the Aviz team. You will work
 ## Application Process
 
 Please submit your application including:
+
 1. **Cover Letter**: Explaining your motivation and research interests
 2. **Curriculum Vitae**: Including academic background and relevant experience
 3. **Academic Transcripts**: Master's degree and relevant coursework
@@ -84,11 +88,11 @@ Early applications are encouraged as the position may be filled before the deadl
 ## Contact Information
 
 **Supervisor**: Prof. Tobias Isenberg  
-**Email**: tobias.isenberg@inria.fr 
+**Email**: <tobias.isenberg@inria.fr>
 **Phone**: +33 1 69 15 64 33
 
 **Administrative Contact**: HR Department  
-**Email**: 
+**Email**:
 
 For technical questions about the research, please contact Senior Researcher isenberg directly. For administrative questions, contact the HR department.
 

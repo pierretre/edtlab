@@ -43,8 +43,7 @@ const newsCollection = defineCollection({
         url: z.string().url().optional(),
         lang: z.enum(['en', 'fr']),
         photo: z.string(),
-        tags: z.array(z.string()).optional().default([]),
-        template: z.string().optional(),
+        tags: z.array(z.string()).optional().default([])
     })
 });
 
@@ -61,8 +60,7 @@ const jobOffersCollection = defineCollection({
         description: z.string(),
         requirements: z.array(z.string()),
         contacts: z.array(z.string().email()).optional(),
-        lang: z.enum(['en', 'fr']),
-        template: z.string().optional(),
+        lang: z.enum(['en', 'fr']).optional(),
         tags: z.array(z.string()).optional().default([])
     })
 });
