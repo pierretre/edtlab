@@ -97,8 +97,8 @@ collections:
       - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: true, hint: "e.g., 'Spring 2025', 'September 2024'" }
       - { label: "Published Date", name: "publishedDate", widget: "datetime", required: true }
       - { label: "Position Filled", name: "filled", widget: "boolean", default: false, required: true }
-      - { label: "Description", name: "description", widget: "text", required: true }
-      - { label: "Requirements", name: "requirements", widget: "list", required: false, hint: "List of requirements" }
+      - { label: "Summary", name: "description", widget: "text", required: true, hint: "Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below." }
+      - { label: "Requirements", name: "requirements", widget: "list", required: true, hint: "List of key requirements for the position" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
       - label: "Body"
         name: "body"
