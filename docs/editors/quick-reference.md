@@ -3,6 +3,7 @@
 ## Content Creation Cheat Sheet
 
 ### File Locations
+
 ```
 src/content/
 ├── job-offers/     # Employment opportunities
@@ -26,30 +27,35 @@ public/             # Direct access images
 ### Naming Conventions
 
 **Pages:** `{section}/{lang}.mdx` or `{section}/{subsection}/{lang}.mdx`
+
 ```
 about/en.mdx
 program/governance-and-committees/fr.mdx
 ```
 
 **Job Offers:** `{type}-{project}-{identifier}-{lang}.md`
+
 ```
 postdoc-pc1-hybridization-en.md
 phd-pc2-architecture-fr.md
 ```
 
 **News:** `{type}-{identifier}-{lang}.md`
+
 ```
 event-models2024-conference-en.md
 press-funding-announcement-fr.md
 ```
 
 **Publications:** `{year}-{author}-{short-title}.md`
+
 ```
 2024-combemale-digital-twin-engineering.md
 2024-jezequel-modular-architecture.md
 ```
 
 **Images:** `{type}-{identifier}-{context}.{ext}`
+
 ```
 event-models2024-conference.jpg
 press-funding-announcement-2024.jpg
@@ -60,6 +66,7 @@ diagram-architecture-overview.png
 ### Required Frontmatter
 
 #### Pages
+
 ```yaml
 ---
 title: "Page Title"
@@ -71,10 +78,11 @@ toc: false # true for table of contents
 ```
 
 #### Job Offers
+
 ```yaml
 ---
 title: "Position Title"
-type: "postdoc" # postdoc|phd|engineer|intern
+type: "PostDoc" # PostDoc|PhD|Engineer|Intern
 location: "City, Country"
 expectedStartDate: "Spring 2025"
 filled: false
@@ -86,6 +94,7 @@ lang: "en" # en|fr
 ```
 
 #### News (Events)
+
 ```yaml
 ---
 title: "Event Title"
@@ -99,6 +108,7 @@ photo: "event-photo.jpg"
 ```
 
 #### News (Press Releases)
+
 ```yaml
 ---
 title: "Press Release Title"
@@ -111,6 +121,7 @@ photo: "press-photo.jpg"
 ```
 
 #### Publications
+
 ```yaml
 ---
 title: "Publication Title"
@@ -129,6 +140,7 @@ tags: ["PC1", "keyword"]
 **Project Codes:** `PC1`, `PC2`, `PC3`, `PC4`, `PC5`, `General`
 
 **Research Areas:**
+
 - `model-hybridization`
 - `architecture`
 - `interoperability`
@@ -144,6 +156,7 @@ tags: ["PC1", "keyword"]
 **Alternative:** `public/` (direct access, no optimization)
 
 **Specifications:**
+
 - **Format**: JPG (photos), PNG (graphics), SVG (logos)
 - **Size**: Min 800px wide, max 2MB file size
 - **Social**: 1200x630px for optimal sharing
@@ -152,6 +165,7 @@ tags: ["PC1", "keyword"]
 - **Naming**: Descriptive, kebab-case
 
 **Usage in Content:**
+
 ```mdx
 # MDX Pages (advanced)
 import OptimizedFigure from '@components/OptimizedFigure.astro';
@@ -190,24 +204,28 @@ photo: "filename.jpg"  # filename only
 ### Common Validation Errors
 
 **Missing Required Fields**
+
 ```
 Error: Required field 'publishedDate' is missing
 Fix: Add publishedDate: 2024-01-15
 ```
 
 **Invalid Enum Value**
+
 ```
 Error: Invalid type 'researcher'
-Fix: Use: postdoc|phd|engineer|intern
+Fix: Use: PostDoc|PhD|Engineer|Intern
 ```
 
 **Invalid Date Format**
+
 ```
 Error: Invalid date '01/15/2024'
 Fix: Use: 2024-01-15
 ```
 
 **Invalid Email**
+
 ```
 Error: Invalid email format
 Fix: Use: user@domain.com
@@ -216,16 +234,19 @@ Fix: Use: user@domain.com
 ### Useful Commands
 
 **Check content validation:**
+
 ```bash
 npm run check
 ```
 
 **Start development server:**
+
 ```bash
 npm run dev
 ```
 
 **Build for production:**
+
 ```bash
 npm run build
 ```
