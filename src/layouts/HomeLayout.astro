@@ -68,29 +68,25 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
     <section class="relative bg-[#313565] overflow-hidden">
         <!-- Background Pattern -->
         <div
-            class="absolute inset-y-0 right-0 w-2/3 opacity-70
-        max-sm:inset-x-0
-        max-sm:top-auto
-        max-sm:bottom-0
-        max-sm:w-full
-        max-sm:h-1/2"
+            class="absolute lg:inset-y-0 lg:right-0 lg:w-2/3 opacity-90
+        max-lg:inset-x-0
+        max-lg:top-1/2
+        max-lg:bottom-0
+        max-lg:w-full
+        max-lg:h-1/2"
         >
             <Picture
                 src={heroBackground}
                 alt=""
-                class="w-full h-full max-sm:rotate-90 max-sm:scale-[2] max-sm:origin-center"
-                pictureAttributes={{
-                    class: "w-full h-full object-cover",
-                }}
-                widths={[1920, 1280, 768]}
-                sizes="(max-width: 640px) 100vw, 50vw"
-                quality={80}
+                class="h-full object-cover object-center max-lg:rotate-90 max-lg:scale-[2]"
+                widths={[2400, 1920, 1280, 768]}
+                sizes="(max-width: 2400px) 100vw, 100vw"
+                quality={95}
                 format="webp"
                 loading="eager"
                 decoding="sync"
             />
         </div>
-
         <div
             class="relative mx-auto max-w-[1600px] grid lg:grid-cols-5 gap-4 items-center min-h-[350px] lg:min-h-[400px]"
         >
