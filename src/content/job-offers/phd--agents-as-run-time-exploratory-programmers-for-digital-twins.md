@@ -10,6 +10,8 @@ description: This PhD investigates how LLM-enabled autonomous agents can act as
   scenario exploration without manual implementation of complex language support
   or state migration, by directly interacting with executing systems through
   existing interfaces and continuous feedback.
+requirements:
+  - TEST
 tags:
   - PC3
 ---
