@@ -2,7 +2,7 @@
 title: "PhD Position - Navigating through the temporal aspects of the digital twin"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Rennes, France"
 expectedStartDate: "October 2026"
 filled: false

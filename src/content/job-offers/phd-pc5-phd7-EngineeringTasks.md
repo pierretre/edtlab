@@ -2,7 +2,7 @@
 title: "PhD Position - DT operator tasks modeling to build dedicated interactions"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Rennes, France"
 expectedStartDate: "October 2026"
 filled: false

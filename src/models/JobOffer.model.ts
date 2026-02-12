@@ -1,6 +1,6 @@
 export interface JobOffer {
     title: string;
-    type: 'postdoc' | 'phd' | 'engineer' | 'intern';
+    type: 'PostDoc' | 'PhD' | 'Engineer' | 'Intern';
     location: string;
     expectedStartDate: string;
     filled: boolean;

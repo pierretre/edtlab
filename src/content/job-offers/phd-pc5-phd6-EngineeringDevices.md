@@ -2,7 +2,7 @@
 title: "PhD Position - Engineering Digital Twins Dedicated to 2D and 3D Input and Output Technologies of Interactive Systems"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Toulouse, France"
 expectedStartDate: "October 2026"
 filled: false

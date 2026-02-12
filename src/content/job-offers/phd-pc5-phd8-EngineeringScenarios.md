@@ -2,7 +2,7 @@
 title: "PhD Position - Designing tools for modelling interaction scenarios for DT"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Brest, France"
 expectedStartDate: "October 2026"
 filled: false
