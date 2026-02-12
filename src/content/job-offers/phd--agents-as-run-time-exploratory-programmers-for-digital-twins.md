@@ -5,10 +5,13 @@ location: Inria (Rennes) or CNRS/LABRI (Bordeaux)
 expectedStartDate: Spring 2026
 publishedDate: 2026-01-01T10:36:00.000+01:00
 filled: true
-description: blabla
+description: This PhD investigates how LLM-enabled autonomous agents can act as
+  run-time exploratory programmers for digital twins, enabling live what-if
+  scenario exploration without manual implementation of complex language support
+  or state migration, by directly interacting with executing systems through
+  existing interfaces and continuous feedback.
 tags:
   - PC3
-  - Inria
 ---
 ## Context
 A digital twin is a virtual representation of an intended or actual real-world product, system, or process that serves as a digital counterpart of it for purposes such as simulation, integration, testing, monitoring, and maintenance. A key promise of digital twins is to enable stakeholders to explore what-if scenarios: evaluating alternative configurations, behaviors, or interventions while the system is running, so as to improve performance, reliability, and adaptability. However, enabling such exploratory interactions remains challenging in practice.
