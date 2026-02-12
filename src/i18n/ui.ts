@@ -129,6 +129,9 @@ export const ui = {
         'job-offers.filter.filled': 'Filled',
         'job-offers.filled-phd-positions': 'PhD Positions',
         'job-offers.started': 'Started',
+        'job-offers.funding-funded-by': 'is funded by',
+        'job-offers.funding-edt': 'EDT (Engineering of Digital Twins) project',
+        'job-offers.funding-france2030': 'France 2030',
 
         // Job offer filters
         'job-offers.filter.project': 'Project',
@@ -366,6 +369,9 @@ export const ui = {
         'job-offers.filter.filled': 'Pourvu',
         'job-offers.filled-phd-positions': 'Doctorats',
         'job-offers.started': 'Commencé',
+        'job-offers.funding-funded-by': 'est financé par',
+        'job-offers.funding-edt': 'projet EDT (Engineering of Digital Twins)',
+        'job-offers.funding-france2030': 'France 2030',
 
         // Job offer filters
         'job-offers.filter.project': 'Projet',
