@@ -697,10 +697,10 @@ const jobOffersFilterConfig: FilterSystemConfig = {
       translationKey: 'job-offers.filter.type',
       options: [
         { value: '', label: 'All Types', translationKey: 'job-offers.filter.all-types' },
-        { value: 'postdoc', label: 'Postdoc', translationKey: 'job-offers.type.postdoc' },
-        { value: 'phd', label: 'PhD', translationKey: 'job-offers.type.phd' },
-        { value: 'engineer', label: 'Engineer', translationKey: 'job-offers.type.engineer' },
-        { value: 'intern', label: 'Intern', translationKey: 'job-offers.type.intern' }
+        { value: 'postdoc', label: 'Postdoc', translationKey: 'job-offers.type.PostDoc' },
+        { value: 'phd', label: 'PhD', translationKey: 'job-offers.type.PhD' },
+        { value: 'engineer', label: 'Engineer', translationKey: 'job-offers.type.Engineer' },
+        { value: 'intern', label: 'Intern', translationKey: 'job-offers.type.Intern' }
       ],
       predicate: (data, value) => !value || data.type === value,
       urlParam: 'type'

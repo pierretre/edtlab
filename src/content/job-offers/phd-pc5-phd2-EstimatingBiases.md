@@ -2,7 +2,7 @@
 title: "PhD Position - Visualization of the Plausibility and Bias for Data Resources used in a Geographic Digital Twin"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Saclay, France"
 expectedStartDate: "October 2026"
 filled: false

@@ -2,7 +2,7 @@
 title: "PhD Position - Automatic 3D Reconstruction of the DT of a real scene"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Dijon, France"
 expectedStartDate: "October 2026"
 filled: false

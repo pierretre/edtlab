@@ -2,7 +2,7 @@
 title: "PhD Position - Exploring Alternative Evolutions of Digital Twins"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Brest, France"
 expectedStartDate: "October 2026"
 filled: false

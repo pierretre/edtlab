@@ -2,7 +2,7 @@
 title: "PhD Position - Exploring AR/VR transitions for Digital Twins"
 tags:
   - "PC5"
-type: "phd"
+type: "PhD"
 location: "Toulouse, France"
 expectedStartDate: "October 2026"
 filled: false
