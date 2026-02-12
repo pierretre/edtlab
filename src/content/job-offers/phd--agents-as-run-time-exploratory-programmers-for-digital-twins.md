@@ -1,6 +1,6 @@
 ---
 title: Agents as Run-time Exploratory Programmers for Digital Twins
-type: PhD
+type: PostDoc
 location: Inria (Rennes) or CNRS/LABRI (Bordeaux)
 expectedStartDate: Spring 2026
 publishedDate: 2026-01-01T10:36:00.000+01:00
