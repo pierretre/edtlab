@@ -1,11 +1,11 @@
 {
     "sections": [
         {
-            "name": "The EDT Program",
+            "name": "The Program",
             "href": "program",
             "items": [
                 {
-                    "name": "Program Overview",
+                    "name": "Overview",
                     "href": "program"
                 },
                 {
