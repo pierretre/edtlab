@@ -53,7 +53,7 @@ lang: "en" # or "fr"
 title: "Position Title"
 tags:
   - "PC1" # PC1|PC2|PC3|PC4|PC5|General
-type: "postdoc" # postdoc|phd|engineer|intern
+type: "postdoc" # PostDoc|PhD|Engineer|Intern
 location: "City, Country"
 deadline: 2024-12-31
 publishedDate: 2024-01-15
