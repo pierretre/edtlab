@@ -1,5 +1,5 @@
 backend:
-  name: gihtub
+  name: github
   repo: pierretre/edtlab
   branch: main
   site_domain: edtlab.fr
@@ -95,11 +95,11 @@ collections:
       - { label: "Type", name: "type", widget: "select", options: ["PhD", "PostDoc", "Engineer", "Intern"], required: true }
       - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country" }
       - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: true, hint: "e.g., 'Spring 2025', 'September 2024'" }
-      - { label: "Published Date", name: "publishedDate", widget: "datetime", required: true }
+      - { label: "Published Date", name: "publishedDate", widget: "datetime",   default: "{{now}}", date_format: "DD.MM.YYYY", required: true }
       - { label: "Position Filled", name: "filled", widget: "boolean", default: false, required: true }
       - { label: "Summary", name: "description", widget: "text", required: true, hint: "Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below." }
-      - { label: "Requirements", name: "requirements", widget: "list", required: true, hint: "List of key requirements for the position" }
-      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - { label: "Requirements", name: "requirements", widget: "list", required: true, min: 1, default: ["Fluency in English and French"], hint: "List of key requirements for the position (separated by comma)", allow_add: true }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [], hint: "List of tags (e.g. PC1) (separated by comma)", allow_add: true }
       - label: "Body"
         name: "body"
         widget: "markdown"
