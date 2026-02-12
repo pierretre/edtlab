@@ -1,11 +1,11 @@
 {
     "sections": [
         {
-            "name": "Le Programme EDT",
+            "name": "Le Programme",
             "href": "programme",
             "items": [
                 {
-                    "name": "Aperçu du Programme",
+                    "name": "Vue d’ensemble",
                     "href": "programme"
                 },
                 {
@@ -23,7 +23,7 @@
             "href": "projets-cibles",
             "items": [
                 {
-                    "name": "Aperçu",
+                    "name": "Vue d’ensemble",
                     "href": "projets-cibles"
                 },
                 {
