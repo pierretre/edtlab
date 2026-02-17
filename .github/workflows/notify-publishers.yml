@@ -1,4 +1,4 @@
-name: Notify reviewers by label
+name: Notify publishers by label
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ jobs:
         with:
           script: |
             const labelToUsers = {
-              "decap-cms/ready": ["pierretre"]
+              "decap-cms/pending_publish": ["pierretre"]
             };
 
             const pr = context.payload.pull_request;
@@ -32,6 +32,6 @@ jobs:
               await github.rest.issues.createComment({
                 ...context.repo,
                 issue_number: pr.number,
-                body: `${mentions} — this change is ready for publishing.`
+                body: `${mentions} — new changes are ready for publishing. Merge the current PR or go to https://edtlab.fr/admin#/workflow to publish these changes.`
               });
             }
