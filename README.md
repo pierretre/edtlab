@@ -31,7 +31,7 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 ## 🚀 Quick Start
 
-### Option 1: Docker Development (Recommended)
+### Option 1: Docker Development
 
 1. **Clone the repository**:
 
@@ -48,21 +48,8 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 3. **Access the services**:
    - 🌐 **Website**: <http://localhost:4321> (Astro dev server with hot reload)
-   - 🔌 **API**: <http://localhost:4004> (Node.js backend)
    - 📊 **Matomo Analytics**: <http://localhost:4002>
    - 🗄️ **MySQL Database**: localhost:4003
-
-### Production Mode
-
-For production (static files served by Nginx):
-
-```bash
-docker-compose --profile prod up -d
-```
-
-- 🌐 **Website**: <http://localhost:80>
-- 🔌 **API**: <http://localhost:8080>
-- 📊 **Matomo**: <http://localhost:4002>
 
 ### Option 2: Manual Development
 
@@ -75,7 +62,6 @@ If you prefer manual setup without Docker:
 | `npm run dev:cms`         | Starts dev server + CMS proxy for content editing |
 | `npm run proxy`           | Starts CMS proxy server only                     |
 | `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
@@ -85,36 +71,6 @@ This website includes anonymous Matomo analytics integration with comprehensive 
 
 **📖 Complete Setup Guide**: [Analytics Integration Guide](./docs/analytics-integration.md)
 
-### Key Features
-
-- ✅ **Environment-configurable** - Easy deployment across environments
-- ✅ **Cookieless tracking** - No cookie consent required
-- ✅ **IP anonymization** - Full privacy protection  
-- ✅ **GDPR compliant** - Anonymous data collection only
-- ✅ **Do Not Track respect** - Honors browser privacy settings
-- ✅ **Publication tracking** - Automatic research interaction analytics
-
-## 📚 Documentation
-
-- [Analytics Integration Guide](./docs/analytics-integration.md) - Complete Matomo setup and configuration
-- [Local Testing Guide](./docs/local-testing-guide.md) - Set up and test locally with Docker
-- [Matomo Setup Guide](./docs/matomo-setup.md) - Production analytics deployment
-- [Project Structure](./docs/structure.md) - Content organization and conventions
-- [Technology Stack](./docs/tech.md) - Framework and tools overview
-
-## 🛠️ Docker Commands
-
-| Command | Description |
-|---------|-------------|
-| `docker-compose --profile prod up -d` | Start production environment |
-| `docker-compose --profile dev up -d` | Start development environment |
-| `docker-compose ps` | Check service status |
-| `docker-compose logs -f` | View service logs |
-| `docker-compose down` | Stop all services |
-| `docker-compose down -v` | Stop and remove all data |
-
-See [DOCKER-SETUP.md](DOCKER-SETUP.md) for individual service commands.
-
 ## 🌐 Content Management
 
 The website supports bilingual content (English/French) with DecapCMS for easy content editing.
@@ -122,6 +78,7 @@ The website supports bilingual content (English/French) with DecapCMS for easy c
 ### DecapCMS Admin Interface
 
 **Local Development:**
+
 ```bash
 npm run dev:cms          # Start Astro + CMS proxy
 ```
@@ -164,11 +121,8 @@ The website can be deployed to production using Docker with integrated Matomo an
 ### Docker Services
 
 - **Website**: Astro.js static site with Nginx (port 4001)
-- **API**: Node.js backend for contact form and email handling (port 4004)
 - **Matomo**: Analytics platform with MySQL database (port 4002)
 - **Matomo DB**: MariaDB database for Matomo (port 4003)
-
-**Note**: The API is built with Node.js using Express.js.
 
 ### Management Commands
 
