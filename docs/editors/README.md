@@ -4,7 +4,6 @@ This directory contains comprehensive documentation for creating and managing co
 
 ## Quick Access
 
-- **🚀 [Quick Reference](quick-reference.md)** - Cheat sheet for common tasks
 - **⚡ [Workflow Guide](workflow-guide.md)** - Simple process from creation to publication
 - **📄 [Pages Guide](how-to/pages-guide.md)** - Complete page creation workflow
 - **📋 [Job Offers Guide](how-to/job-offers-guide.md)** - Complete job posting workflow
@@ -47,7 +46,9 @@ docs/editors/
 ## Content Creation Guides
 
 ### 📄 [Pages Guide](how-to/pages-guide.md)
+
 Complete instructions for creating and modifying static content pages:
+
 - Basic vs advanced page types
 - File structure and organization
 - Frontmatter configuration
@@ -56,7 +57,9 @@ Complete instructions for creating and modifying static content pages:
 - Quality assurance and best practices
 
 ### 📋 [Job Offers Guide](how-to/job-offers-guide.md)
+
 Complete step-by-step instructions for creating and managing job postings:
+
 - Position types and requirements
 - File naming and organization
 - Frontmatter configuration
@@ -65,7 +68,9 @@ Complete step-by-step instructions for creating and managing job postings:
 - Status updates and promotion
 
 ### 📰 [News Guide](how-to/news-guide.md)
+
 Comprehensive guide for events and press releases:
+
 - Event announcements and coverage
 - Press release creation and distribution
 - Image requirements and optimization
@@ -73,7 +78,9 @@ Comprehensive guide for events and press releases:
 - SEO and social media optimization
 
 ### 📚 [Publications Guide](how-to/publications-guide.md)
+
 Detailed instructions for research publication entries:
+
 - Bibliographic information management
 - Publication types and categorization
 - Project association and tagging
@@ -83,9 +90,11 @@ Detailed instructions for research publication entries:
 ## Content Types Overview
 
 ### Pages (`src/content/pages/`)
+
 Static content pages with standard or advanced formatting, including project descriptions, program information, and resource pages.
 
 ### Collections (`src/content/`)
+
 Dynamic content collections that power the website's interactive features:
 
 - **Publications** (`publications/`): Research papers, articles, and reports with filtering and search
@@ -96,14 +105,18 @@ Dynamic content collections that power the website's interactive features:
 ## Key Requirements
 
 ### Bilingual Content
+
 All content must be available in both English and French:
+
 - Use consistent file naming: `{identifier}-{lang}.md`
 - Maintain equivalent information across languages
 - Adapt cultural context appropriately
 - Ensure complete translation coverage
 
 ### Content Validation
+
 All content is validated against schemas in `src/content/config.ts`:
+
 - Required fields must be present and correctly formatted
 - Enum values must match specified options
 - URLs and email addresses are validated
@@ -112,11 +125,13 @@ All content is validated against schemas in `src/content/config.ts`:
 ## Getting Started
 
 ### For New Editors
+
 1. Read the [Content Style Guide](guidelines/content-style-guide.md) for writing standards
 2. Choose the appropriate how-to guide for your content type
 3. Use templates as starting points for new content
 
 ### For Experienced Editors
+
 - Consult how-to guides for specific workflows
 - Reference technical guidelines for advanced features
 - Use templates for consistent formatting
