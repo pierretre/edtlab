@@ -11,20 +11,19 @@ Root Nginx (Stream Module) - SNI-based routing
     ↓
 Site Nginx (Port 4443) - HTTP/HTTPS proxy
     ↓
-Docker Containers (Ports 4001, 4004, 4002)
+Docker Containers (Ports 4001, 4002)
 ```
 
 ## Why This Setup?
 
 This architecture allows:
+
 - **Multiple sites** on one server with different backends
 - **SNI-based routing** at the TCP level (before SSL termination)
 - **Seamless URLs** - users always connect to port 443
 - **Flexible backend** - each site can have its own Nginx config
 
 ---
-
-
 
 ## Site-Specific Nginx Configuration
 
@@ -70,8 +69,6 @@ server {
         auth_basic_user_file /home/atmosphere/.htpasswd;
     }
 
-    # Redirect /api to /api/ for consistency
-
     location /hooks/redeploy-webhook {
         include proxy_params;
         proxy_pass http://127.0.0.1:9000/hooks/redeploy-edtlab-webhook;
@@ -94,6 +91,7 @@ server {
 ```
 
 **Key Points:**
+
 - Listens on port 4443 (receives traffic from root nginx)
 - Terminates SSL here (not at root nginx)
 - Proxies to Docker containers on localhost
@@ -103,6 +101,7 @@ server {
 ## Docker Port Mapping
 
 **docker-compose.yml:**
+
 ```yaml
 services:
   web:
@@ -123,30 +122,22 @@ services:
 ## Traffic Flow
 
 ### Production (External Access)
+
 ```
 User Browser
   ↓ https://edtlab.fr/api (port 443)
 Root Nginx (Stream)
   ↓ Routes to 10.0.0.2:4443 based on SNI
 Site Nginx
-  ↓ Terminates SSL, proxies to 127.0.0.1:4004
+  ↓ Terminates SSL
 Docker Container (API)
   ↓ Node.js processes request on port 8080
 ```
 
-### Development (Local)
-```
-Developer Browser
-  ↓ http://localhost:4004
-Docker Container (API)
-  ↓ Node.js processes request directly
-```
-
----
-
 ## Testing the Configuration
 
 ### 1. Test Root Nginx
+
 ```bash
 # Check if root nginx is listening on 443
 sudo netstat -tlnp | grep :443
@@ -156,6 +147,7 @@ openssl s_client -connect edtlab.fr:443 -servername edtlab.fr
 ```
 
 ### 2. Test Site Nginx
+
 ```bash
 # Check if site nginx is listening on 4443
 sudo netstat -tlnp | grep :4443
@@ -165,6 +157,7 @@ curl -I https://edtlab.fr
 ```
 
 ### 3. Test API Endpoint
+
 ```bash
 # Test from external
 curl -X POST https://edtlab.fr/api \
@@ -172,7 +165,7 @@ curl -X POST https://edtlab.fr/api \
   -d '{"name":"Test","email":"test@example.com","subject":"general","message":"Test message","privacy":true}'
 
 # Test from server
-curl -X POST http://127.0.0.1:4004 \
+curl -X POST http://127.0.0.1:4001 \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","subject":"general","message":"Test message","privacy":true}'
 ```
@@ -182,24 +175,18 @@ curl -X POST http://127.0.0.1:4004 \
 ## Troubleshooting
 
 ### Issue: "Connection refused" on port 443
+
 **Solution**: Check if root nginx is running and listening on port 443
+
 ```bash
 sudo systemctl status nginx
 sudo nginx -t  # Test configuration
 ```
 
-### Issue: "502 Bad Gateway"
-**Solution**: Check if Docker containers are running
-```bash
-docker-compose ps
-docker-compose logs api
-```
-
-### Issue: CORS errors
-**Solution**: Verify allowed origins in `src/api-node/index.js` match your domain
-
 ### Issue: SSL certificate errors
+
 **Solution**: Ensure certificates are valid and paths are correct
+
 ```bash
 sudo certbot certificates
 sudo nginx -t
@@ -211,7 +198,7 @@ sudo nginx -t
 
 1. **Remove auth_basic** from production (currently protecting development site)
 2. **Rate limiting** on `/api/` to prevent abuse
-3. **Firewall rules** to restrict access to Docker ports (4001-4004)
+3. **Firewall rules** to restrict access to Docker ports (4001-4003)
 4. **SSL certificates** should be renewed automatically (certbot)
 5. **HSTS** is enabled with 1-year max-age
 
@@ -220,6 +207,7 @@ sudo nginx -t
 ## Maintenance
 
 ### Reload Nginx Configuration
+
 ```bash
 # Test configuration
 sudo nginx -t
@@ -229,6 +217,7 @@ sudo systemctl reload nginx
 ```
 
 ### Update SSL Certificates
+
 ```bash
 # Renew certificates
 sudo certbot renew
@@ -238,13 +227,11 @@ sudo systemctl reload nginx
 ```
 
 ### View Logs
+
 ```bash
 # Nginx access logs
 sudo tail -f /var/log/nginx/access.log
 
 # Nginx error logs
 sudo tail -f /var/log/nginx/error.log
-
-# Docker API logs
-docker-compose logs -f api
 ```

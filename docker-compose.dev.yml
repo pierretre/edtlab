@@ -1,0 +1,69 @@
+services:
+  astro:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: astro-dev
+    ports:
+      - "4321:4321"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    command: npm run dev -- --host --watch
+
+  matomo-db:
+    image: mariadb:10.11
+    container_name: matomo-db-dev
+    restart: unless-stopped
+    network_mode: bridge
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MATOMO_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: matomo
+      MYSQL_USER: matomo
+      MYSQL_PASSWORD: ${MATOMO_DB_PASSWORD}
+    volumes:
+      - /var/www/matomo/db:/var/lib/mysql
+    ports:
+      - "0.0.0.0:4003:3306"
+    command: --max-allowed-packet=64MB
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MATOMO_DB_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  matomo:
+    image: matomo:latest
+    container_name: matomo-dev
+    restart: unless-stopped
+    network_mode: bridge
+    links:
+      - matomo-db
+    depends_on:
+      matomo-db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      MATOMO_DATABASE_HOST: matomo-db
+      MATOMO_DATABASE_ADAPTER: mysql
+      MATOMO_DATABASE_TABLES_PREFIX: matomo_
+      MATOMO_DATABASE_USERNAME: matomo
+      MATOMO_DATABASE_PASSWORD: ${MATOMO_DB_PASSWORD}
+      MATOMO_DATABASE_DBNAME: matomo
+      PHP_MEMORY_LIMIT: 512M
+    volumes:
+      - /var/www/edtlabfr/matomo/data:/var/www/html
+      - /var/www/edtlabfr/matomo/config:/var/www/html/config
+      - /var/www/edtlabfr/matomo/logs:/var/www/html/tmp
+      - ./matomo-apache-config.conf:/etc/apache2/conf-enabled/matomo.conf:ro
+    ports:
+      - "0.0.0.0:4002:80"

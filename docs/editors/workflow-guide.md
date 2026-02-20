@@ -5,7 +5,7 @@ A simple step-by-step process for creating content, testing locally, and publish
 ## Quick Workflow Overview
 
 1. **Create** → Edit content online (GitHub web editor)
-2. **Test** → Preview changes locally 
+2. **Test** → Preview changes locally
 3. **Merge** → Integrate with main branch
 4. **Release** → Publish to live website
 
@@ -34,6 +34,7 @@ A simple step-by-step process for creating content, testing locally, and publish
    - Branch name: `content/your-content-name`
 
 ### Example Branch Names
+
 ```
 content/job-offer-pc1-postdoc
 content/news-models2024-conference  
@@ -44,6 +45,7 @@ content/page-about-update
 ## Step 2: Test Locally
 
 ### Prerequisites
+
 - Node.js installed on your computer
 - Git repository cloned locally
 - Basic terminal/command line knowledge
@@ -51,17 +53,20 @@ content/page-about-update
 ### Local Testing Process
 
 1. **Switch to Your Branch**
+
    ```bash
    git checkout content/your-content-name
    git pull origin content/your-content-name
    ```
 
 2. **Install Dependencies** (first time only)
+
    ```bash
    npm install
    ```
 
 3. **Start Development Server**
+
    ```bash
    npm run dev
    ```
@@ -78,9 +83,11 @@ content/page-about-update
    - Test again until satisfied
 
 6. **Validate Content**
+
    ```bash
    npm run astro check
    ```
+
    - Fix any validation errors
    - Ensure no build errors
 
@@ -89,6 +96,7 @@ content/page-about-update
 ### Create Pull Request
 
 1. **Push Final Changes**
+
    ```bash
    git add .
    git commit -m "Add: [description of your content]"
@@ -99,6 +107,7 @@ content/page-about-update
    - Go to GitHub repository
    - Click "Compare & pull request"
    - Fill in description:
+
      ```
      ## Content Added
      - [x] English version
@@ -124,16 +133,19 @@ content/page-about-update
 ### Prepare Release
 
 1. **Verify Main Branch**
+
    ```bash
    git checkout main
    git pull origin main
    ```
 
 2. **Final Build Test**
+
    ```bash
    npm run build
    npm run preview
    ```
+
    - Ensure production build works
    - Test your content in production mode
 
@@ -151,6 +163,7 @@ content/page-about-update
      - Patch: Bug fixes/small updates
 
 3. **Release Notes**
+
    ```markdown
    ## Content Updates
    
@@ -174,12 +187,14 @@ content/page-about-update
 ## Deployment Process
 
 ### Automatic Deployment
+
 - Release triggers GitHub Actions
 - Website builds automatically
 - Deploys to production server
 - Usually takes 2-3 minutes
 
 ### Verify Deployment
+
 1. **Check Live Website**
    - Visit the live EDT website
    - Navigate to your new content
@@ -196,6 +211,7 @@ content/page-about-update
 ### Common Issues
 
 **Build Fails**
+
 ```bash
 # Check for errors
 npm run astro check
@@ -207,6 +223,7 @@ npm run astro check
 ```
 
 **Content Not Showing**
+
 ```bash
 # Clear cache and rebuild
 rm -rf dist/
@@ -214,6 +231,7 @@ npm run build
 ```
 
 **Images Not Loading**
+
 - Check image exists in `src/assets/images/`
 - Verify filename spelling in frontmatter
 - Ensure image format is supported (JPG, PNG, SVG)
@@ -221,12 +239,14 @@ npm run build
 ### Getting Help
 
 **Before Asking for Help:**
+
 1. Check validation errors: `npm run astro check`
 2. Review your frontmatter against templates
 3. Verify file naming conventions
 4. Test locally first
 
 **When to Ask for Help:**
+
 - Build errors you can't resolve
 - Complex content requiring custom components
 - Issues with deployment or releases
@@ -235,18 +255,21 @@ npm run build
 ## Best Practices
 
 ### Content Creation
+
 - **Start Small**: Create simple content first
 - **Test Early**: Preview locally before requesting review
 - **Follow Conventions**: Use established patterns and naming
 - **Both Languages**: Always create English and French versions
 
 ### Version Control
+
 - **Descriptive Commits**: Clear commit messages
 - **Small Changes**: One content piece per branch
 - **Clean History**: Squash commits if needed
 - **Delete Branches**: Clean up after merging
 
 ### Quality Assurance
+
 - **Spell Check**: Review content before committing
 - **Link Testing**: Verify all links work
 - **Image Optimization**: Compress images before adding
@@ -255,12 +278,14 @@ npm run build
 ## Workflow Checklist
 
 ### Before Starting
+
 - [ ] Know what content you're creating
 - [ ] Have necessary images and information
 - [ ] Understand the target audience
 - [ ] Check existing similar content for patterns
 
 ### During Creation
+
 - [ ] Follow naming conventions
 - [ ] Create both language versions
 - [ ] Use proper frontmatter
@@ -268,6 +293,7 @@ npm run build
 - [ ] Write descriptive commit messages
 
 ### Before Merging
+
 - [ ] Test locally with `npm run dev`
 - [ ] Validate with `npm run astro check`
 - [ ] Check both English and French versions
@@ -275,6 +301,7 @@ npm run build
 - [ ] Review content for accuracy
 
 ### After Release
+
 - [ ] Verify content appears on live site
 - [ ] Test functionality in production
 - [ ] Monitor for any issues
