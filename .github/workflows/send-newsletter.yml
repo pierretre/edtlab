@@ -1,0 +1,39 @@
+name: Send Newsletter
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  send_newsletter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Detect added newsletter files
+        id: changes
+        run: |
+          ADDED_FILES=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.sha }} | grep '^src/content/newsletter/.*\.md$' || true)
+          echo "added=$ADDED_FILES" >> $GITHUB_OUTPUT
+
+      - name: Stop if no new newsletter
+        if: steps.changes.outputs.added == ''
+        run: |
+          echo "No new newsletter file added."
+          exit 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Send newsletter
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          LIST_EMAIL: ${{ secrets.LIST_EMAIL }}
+          NEWSLETTER_FILE: ${{ steps.changes.outputs.added }}
+        run: node scripts/send-newsletter.js

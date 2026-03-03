@@ -156,3 +156,14 @@ collections:
       - { label: "DOI", name: "doi", widget: "string", required: false, hint: "Digital Object Identifier" }
       - { label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication" }
       - { label: "Tags", name: "tags", widget: "list", required: false, hint: "e.g., PC1, PC2, keywords" }
+
+  - name: "newsletter"
+    label: "Newsletter"
+    folder: "src/content/newsletter"
+    create: true
+    slug: "{{year}}-{{month}}-{{title}}-{{recipients}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Recipients", name: "recipients", widget: "select", options: ["Internal", "External"], required: true, default: "Internal" }
+      - { label: "Body", name: "body", widget: "markdown" }
