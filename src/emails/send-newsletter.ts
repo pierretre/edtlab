@@ -45,8 +45,6 @@ apiInstance.setApiKey(
     process.env.BREVO_API_KEY
 );
 
-console.error(process.env.BREVO_API_KEY);
-
 if (!process.env.BREVO_EXTERNAL_LIST_ID || !process.env.BREVO_INTERNAL_LIST_ID) {
     console.error("No Brevo list IDs provided.");
     process.exit(0);
@@ -57,21 +55,52 @@ if (!process.env.SENDER_EMAIL) {
     console.error("No sender email provided.");
     process.exit(0);
 }
-// Create Campaign
-const campaign = await apiInstance.createEmailCampaign({
-    name: data.title,
-    subject: data.title,
-    sender: {
-        name: process.env.SENDER_NAME,
-        email: process.env.SENDER_EMAIL
-    },
-    htmlContent: modifiedEmailHtml,
-    recipients: {
-        listIds: [Number(listId)]
-    }
-});
-const { body } = campaign;
-// Send Campaign Immediately
+try {
+    const campaign = await apiInstance.createEmailCampaign({
+        name: data.title,
+        subject: data.title,
+        sender: {
+            name: process.env.SENDER_NAME,
+            email: process.env.SENDER_EMAIL
+        },
+        htmlContent: modifiedEmailHtml,
+        recipients: {
+            listIds: [Number(listId)]
+        }
+    });
 
-// @ts-ignore: Argument of type 'string' is not assignable to parameter of type 'number'.
-await apiInstance.sendEmailCampaignNow(`${body.id}`);
+    console.log("==== Campaign Created ====");
+    console.log(JSON.stringify(campaign.body, null, 2));
+
+    const campaignId = campaign.body.id;
+    console.log("Sending campaign ID:", campaignId);
+
+    await apiInstance.sendEmailCampaignNow(campaignId);
+
+    console.log("==== Campaign Sent Successfully ====");
+
+} catch (error: any) {
+    console.log("==== BREVO ERROR ====");
+
+    // Status code
+    if (error?.response?.status) {
+        console.log("Status:", error.response.status);
+    }
+
+    // Headers
+    if (error?.response?.headers) {
+        console.log("Headers:", error.response.headers);
+    }
+
+    // Body (THIS IS THE IMPORTANT PART)
+    if (error?.response?.body) {
+        console.log("Response body:");
+        console.log(JSON.stringify(error.response.body, null, 2));
+    }
+
+    // Fallback
+    console.log("Full error object:");
+    console.dir(error, { depth: null });
+
+    process.exit(1);
+}
