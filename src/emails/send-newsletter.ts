@@ -8,22 +8,17 @@ import * as brevo from "@getbrevo/brevo";
 import NewsletterEmail from "./NewsletterEmail.jsx";
 
 const filePath = process.env.NEWSLETTER_FILE;
-
-console.log("Starting newsletter campaign...", filePath);
-
 if (!filePath) {
-    console.log("No newsletter file provided.");
+    console.error("No newsletter file provided.");
     process.exit(0);
 }
 
 // Read markdown
 const raw = fs.readFileSync(filePath, "utf8");
 const { data, content } = matter(raw);
-console.log("Markdown loaded:", data.title);
 
 // Convert markdown → HTML
 const htmlContent = String(await remark().use(html).process(content));
-console.log("Markdown converted to HTML.");
 
 // Render React Email template
 const emailHtml = await render(

@@ -146,7 +146,8 @@ collections:
     create: true
     summary: "{{slug}}, {{authors}} - {{year}}"
     format: "frontmatter"
-    preview: false
+    editor:
+      preview: false
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
@@ -162,6 +163,10 @@ collections:
     folder: "src/content/newsletter"
     create: true
     slug: "{{year}}-{{month}}-{{title}}-{{recipients}}"
+    summary: "{{slug}}, {{authors}} - {{year}}"
+    format: "frontmatter"
+    editor:
+      preview: true
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
