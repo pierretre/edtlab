@@ -45,6 +45,8 @@ apiInstance.setApiKey(
     process.env.BREVO_API_KEY
 );
 
+console.error(process.env.BREVO_API_KEY);
+
 if (!process.env.BREVO_EXTERNAL_LIST_ID || !process.env.BREVO_INTERNAL_LIST_ID) {
     console.error("No Brevo list IDs provided.");
     process.exit(0);
