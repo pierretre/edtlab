@@ -144,14 +144,28 @@ export default function NewsletterEmail({ title, content }: Props) {
       </Head>
       <Body>
         <Container style={{ fontFamily: "'Marianne', Arial, sans-serif", lineHeight: 1.6, backgroundColor: "#fafafa", margin: "0 auto", textAlign: "center" }}>
-          <img
-            src="https://edtlab.fr/_assets/Logo_EDT_CBLOT.BFMY5V0T_WwoJy.webp"
-            alt="Engineering Digital Twin"
-            style={{ maxWidth: "200px", marginBottom: "24px", margin: "0 auto 24px" }}
-          />
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-        </Container>
+          <div>
+            <img
+              src="https://edtlab.fr/Logo_EDT_CBLOT.png"
+              alt="Engineering Digital Twin"
+              style={{ maxWidth: "200px", marginBottom: "24px", margin: "0 auto 24px" }}
+            />
+            <img
+              src="https://edtlab.fr/logo-fr.png"
+              alt="Engineering Digital Twin"
+              style={{ maxWidth: "200px", marginBottom: "24px", margin: "0 auto 24px" }}
+            />
+          </div>
 
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+
+          <div style={{ marginTop: "24px", fontSize: "12px", color: "#737373" }}>
+            <a href="https://edtlab.fr">https://edtlab.fr</a>
+            <div>
+              Newsletter à diffusion interne au Programme EDT, ne pas diffuser à l'extérieur du programme.
+            </div>
+          </div>
+        </Container>
       </Body>
     </Html>
   );
