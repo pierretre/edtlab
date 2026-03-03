@@ -52,7 +52,7 @@ Ce rendez-vous a réuni la communauté EDT pour partager la vision globale et di
 - Présentation à la Journée Jumeaux Numériques du GDR GPL (Lyon, déc. 2025).
 - Meetup IA : participation de Pascale.
 
-# Le mois prochain (Février 2026)
+## Le mois prochain (Février 2026)
 
 - **Les Transnumériques** – Rennes – 3 au 5 février  
   [Lien inscription](https://inria.invityou.com/trans-numeriques2026)

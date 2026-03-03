@@ -517,11 +517,75 @@ var PagesPreview = createClass({
 });
 
 /**
+ * Newsletter Preview Template
+ */
+var NewsletterPreview = createClass({
+    render: function () {
+        const widgetFor = this.props.widgetFor;
+        const content = [
+            h(
+                'table',
+                {
+                    align: 'center',
+                    width: '100%',
+                    border: 0,
+                    cellpadding: 0,
+                    cellspacing: 0,
+                    role: 'presentation',
+                    style: {
+                        maxWidth: '37.5em',
+                        fontFamily: "'Marianne', Arial, sans-serif",
+                        lineHeight: 1.6,
+                        backgroundColor: '#fafafa',
+                        margin: '0 auto',
+                    },
+                },
+                h(
+                    'tbody',
+                    null,
+                    h(
+                        'tr',
+                        { style: { width: '100%' } },
+                        h(
+                            'td',
+                            null,
+                            [
+                                // Header image
+                                h('img', {
+                                    src: 'https://edtlab.fr/_assets/Logo_EDT_CBLOT.BFMY5V0T_WwoJy.webp',
+                                    alt: 'Engineering Digital Twin',
+                                    style: { maxWidth: '200px', margin: '0 auto 24px', display: 'block' },
+                                }),
+
+                                // Body content container
+                                h(
+                                    'div',
+                                    { className: 'container mx-auto px-8 lg:px-4 max-w-6xl mb-16' },
+                                    h(
+                                        'article',
+                                        { className: 'prose prose-lg max-w-none' },
+                                        h('div', { className: 'prose prose-lg max-w-none' }, widgetFor('body'))
+                                    )
+                                ),
+                            ]
+                        )
+                    )
+                )
+            ),
+        ];
+
+        return content;
+
+    },
+});
+
+/**
  * Register all preview templates
  */
 CMS.registerPreviewTemplate('pages', PagesPreview);
 CMS.registerPreviewTemplate('news', NewsPreview);
 CMS.registerPreviewTemplate('job-offers', JobOffersPreview);
+CMS.registerPreviewTemplate('newsletter', NewsletterPreview);
 
 /**
  * Principal Investigator Component
