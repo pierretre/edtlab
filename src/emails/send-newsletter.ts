@@ -7,7 +7,7 @@ import html from "remark-html";
 import * as brevo from "@getbrevo/brevo";
 import NewsletterEmail from "./NewsletterEmail.jsx";
 
-const filePath = process.env.NEWSLETTER_FILE;
+const filePath = process.argv[2];
 if (!filePath) {
     console.error("No newsletter file provided.");
     process.exit(0);
