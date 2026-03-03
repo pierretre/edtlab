@@ -10,7 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository (full history required)
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # important for correct diff
 
       - name: Set up Node
         uses: actions/setup-node@v3
@@ -20,45 +23,65 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Detect added or modified newsletter files
+      - name: Detect NEW newsletter files (added only)
         id: changes
         shell: bash
         run: |
-          # Get all added or modified newsletter files in the push compared to main
-          # using ... for multi-commit merge-safe diff
-          ADDED_FILES=$(git diff --name-only --diff-filter=AM origin/main...HEAD \
+          echo "==== DEBUG: Git context ===="
+          echo "Before SHA: ${{ github.event.before }}"
+          echo "Current SHA: ${{ github.sha }}"
+          echo "============================"
+
+          # Detect only ADDED files compared to previous main state
+          ADDED_FILES=$(git diff --name-only --diff-filter=A \
+            ${{ github.event.before }} ${{ github.sha }} \
             | grep '^src/content/newsletter/.*\.md$' || true)
 
-          # fallback: first push or no diff
+          echo ""
+          echo "==== DEBUG: Raw detected files ===="
+          echo "$ADDED_FILES"
+          echo "==================================="
+
           if [ -z "$ADDED_FILES" ]; then
-            ADDED_FILES=$(git ls-files 'src/content/newsletter/*.md' || true)
+            echo "No new newsletter markdown files detected."
+          else
+            echo ""
+            echo "==== DEBUG: File content preview ===="
+            while IFS= read -r FILE; do
+              echo ""
+              echo "----- $FILE -----"
+              echo ""
+              head -n 40 "$FILE" || echo "Could not read file."
+              echo ""
+            done <<< "$ADDED_FILES"
+            echo "====================================="
           fi
 
-          # Normalize filenames: replace fancy dashes with simple ones
-          SAFE_FILES=$(echo "$ADDED_FILES" | tr '–—' '--')
-
-          # Save safe file list to GitHub output, safely handling special chars
+          # Safely pass output to next step (multi-line safe)
           echo "added<<EOF" >> $GITHUB_OUTPUT
-          echo "$SAFE_FILES" >> $GITHUB_OUTPUT
+          echo "$ADDED_FILES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Stop if no new newsletter
         if: steps.changes.outputs.added == ''
         run: |
-          echo "No new newsletter file added."
+          echo "Stopping workflow — no new newsletter to send."
           exit 0
 
-      - name: Send newsletter
+      - name: Send newsletter(s)
         env:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           SENDER_NAME: ${{ secrets.SENDER_NAME }}
           BREVO_EXTERNAL_LIST_ID: ${{ secrets.BREVO_EXTERNAL_LIST_ID }}
           BREVO_INTERNAL_LIST_ID: ${{ secrets.BREVO_INTERNAL_LIST_ID }}
-          NEWSLETTER_FILE: ${{ steps.changes.outputs.added }}
         run: |
-          # if multiple files, send them one by one
-          for FILE in $NEWSLETTER_FILE; do
-            echo "Sending newsletter: $FILE"
+          echo ""
+          echo "==== Sending newsletters ===="
+
+          while IFS= read -r FILE; do
+            echo "Sending newsletter for file: $FILE"
             npx tsx src/emails/send-newsletter.ts "$FILE"
-          done
+          done <<< "${{ steps.changes.outputs.added }}"
+
+          echo "==== Done ===="
