@@ -22,8 +22,11 @@ jobs:
           if [ -z "$ADDED_FILES" ]; then
             ADDED_FILES=$(git ls-files 'src/content/newsletter/*.md' || true)
           fi
-
-          echo "added=$ADDED_FILES" >> $GITHUB_OUTPUT
+      
+          # Set GitHub output safely
+          echo "added<<EOF" >> $GITHUB_OUTPUT
+          echo "$ADDED_FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Stop if no new newsletter
         if: steps.changes.outputs.added == ''
