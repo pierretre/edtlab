@@ -12,20 +12,34 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Detect added newsletter files
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Detect added or modified newsletter files
         id: changes
+        shell: bash
         run: |
-          # Get all added or modified newsletter files in the push
-          ADDED_FILES=$(git diff --name-only --diff-filter=AM origin/main...HEAD | grep '^src/content/newsletter/.*\.md$' || true)
-          
-          # fallback if no diff found (e.g., first push)
+          # Get all added or modified newsletter files in the push compared to main
+          # using ... for multi-commit merge-safe diff
+          ADDED_FILES=$(git diff --name-only --diff-filter=AM origin/main...HEAD \
+            | grep '^src/content/newsletter/.*\.md$' || true)
+
+          # fallback: first push or no diff
           if [ -z "$ADDED_FILES" ]; then
             ADDED_FILES=$(git ls-files 'src/content/newsletter/*.md' || true)
           fi
-      
-          # Set GitHub output safely
+
+          # Normalize filenames: replace fancy dashes with simple ones
+          SAFE_FILES=$(echo "$ADDED_FILES" | tr '–—' '--')
+
+          # Save safe file list to GitHub output, safely handling special chars
           echo "added<<EOF" >> $GITHUB_OUTPUT
-          echo "$ADDED_FILES" >> $GITHUB_OUTPUT
+          echo "$SAFE_FILES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Stop if no new newsletter
@@ -33,12 +47,6 @@ jobs:
         run: |
           echo "No new newsletter file added."
           exit 0
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - run: npm ci
 
       - name: Send newsletter
         env:
@@ -48,4 +56,9 @@ jobs:
           BREVO_EXTERNAL_LIST_ID: ${{ secrets.BREVO_EXTERNAL_LIST_ID }}
           BREVO_INTERNAL_LIST_ID: ${{ secrets.BREVO_INTERNAL_LIST_ID }}
           NEWSLETTER_FILE: ${{ steps.changes.outputs.added }}
-        run: npx tsx src/emails/send-newsletter.ts
+        run: |
+          # if multiple files, send them one by one
+          for FILE in $NEWSLETTER_FILE; do
+            echo "Sending newsletter: $FILE"
+            npx tsx src/emails/send-newsletter.ts "$FILE"
+          done
