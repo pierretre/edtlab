@@ -40,6 +40,3 @@ Rédaction d'un article collectif de présentation des défis scientifiques de E
 * 19 au 21 Mai 2026 – Rennes | Séminaire scientifique EDT : Réunion de la communauté académique.
 * 24 Juin 2026 – Paris | Réunion de lancement EDT : Lancement officiel (Partenaires académiques, industriels et institutionnels).
 * 17-18 Novembre 2026 - Participation à NAFEMS France
-
-Newsletter à diffusion interne au Programme EDT.
-Ne pas rediffuser.
