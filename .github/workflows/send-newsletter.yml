@@ -15,7 +15,14 @@ jobs:
       - name: Detect added newsletter files
         id: changes
         run: |
-          ADDED_FILES=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.sha }} | grep '^src/content/newsletter/.*\.md$' || true)
+          # Get all added or modified newsletter files in the push
+          ADDED_FILES=$(git diff --name-only --diff-filter=AM origin/main...HEAD | grep '^src/content/newsletter/.*\.md$' || true)
+          
+          # fallback if no diff found (e.g., first push)
+          if [ -z "$ADDED_FILES" ]; then
+            ADDED_FILES=$(git ls-files 'src/content/newsletter/*.md' || true)
+          fi
+
           echo "added=$ADDED_FILES" >> $GITHUB_OUTPUT
 
       - name: Stop if no new newsletter
