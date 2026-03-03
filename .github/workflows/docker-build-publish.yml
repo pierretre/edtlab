@@ -1,8 +1,9 @@
 name: "Docker: Build and Publish"
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
 
 jobs:
   build_publish:
@@ -20,21 +21,20 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Extract tag name
+      - name: Extract commit SHA
         id: vars
         run: |
-          # GITHUB_REF_NAME is e.g. 'v1.0.0'
-          echo "TAG_NAME=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          echo "COMMIT_SHA=$SHORT_SHA" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |
           docker build . \
             --file Dockerfile.prod \
             --tag ${{ secrets.DOCKER_HUB_USERNAME }}/edtlab:latest \
-            --tag ${{ secrets.DOCKER_HUB_USERNAME }}/edtlab:${{ env.TAG_NAME }}
+            --tag ${{ secrets.DOCKER_HUB_USERNAME }}/edtlab:${{ env.COMMIT_SHA }}
 
       - name: Push Docker image
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/edtlab:latest
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/edtlab:${{ env.TAG_NAME }}
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/edtlab:${{ env.COMMIT_SHA }}
