@@ -68,9 +68,9 @@ const campaign = await apiInstance.createEmailCampaign({
         listIds: [Number(listId)]
     }
 });
-const { body } = campaign;
-// Send Campaign Immediately
 
+// Send Campaign Immediately
+const { body } = campaign;
 // @ts-ignore: Argument of type 'string' is not assignable to parameter of type 'number'.
 await apiInstance.sendEmailCampaignNow(`${body.id}`);
 

@@ -3,7 +3,7 @@ import { Html, Head, Body, Container } from "@react-email/components";
 
 interface Props {
   title: string;
-  content: string; // already HTML
+  content: string;
 }
 
 export default function NewsletterEmail({ title, content }: Props) {
@@ -12,57 +12,27 @@ export default function NewsletterEmail({ title, content }: Props) {
       <Head>
         <style type="text/css">
           {`
-            /* Font */
             @import url("../assets/fonts/marianne.css");
 
-            /* Base */
             body {
               font-family: 'Marianne', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
               font-size: 16px;
               line-height: 1.6;
-              letter-spacing: 0.01em;
               color: #262626;
               margin: 0;
               padding: 0;
-              background-color: #ffffff;
+              background-color: #fafafa;
             }
 
-            /* Headings */
-            h1 {
-              font-size: 32px;
-              font-weight: 700;
+            h1, h2, h3, h4 {
               color: #262626;
-              margin: 0 0 24px;
-            }
-
-            h2 {
-              font-size: 24px;
-              font-weight: 600;
-              color: #262626;
-              margin: 24px 0 16px;
-            }
-
-            h3 {
-              font-size: 20px;
-              font-weight: 600;
-              color: #404040;
-              margin: 16px 0 12px;
-            }
-
-            h4 {
-              font-size: 18px;
-              font-weight: 500;
-              color: #404040;
-              margin: 12px 0 8px;
-            }
-
-            /* Paragraphs */
-            p {
               margin: 0 0 16px;
+            }
+
+            p, li {
               color: #525252;
             }
 
-            /* Links */
             a {
               color: #323464;
               text-decoration: none;
@@ -72,100 +42,57 @@ export default function NewsletterEmail({ title, content }: Props) {
               color: #1f2a8f;
             }
 
-            /* Lists */
-            ul, ol {
-              margin: 0 0 16px;
-              padding-left: 24px;
-            }
-
-            li {
-              margin-bottom: 6px;
-              color: #525252;
-            }
-
-            /* Tables */
-            table {
-              width: 100%;
-              border-collapse: collapse;
-              margin-bottom: 16px;
-            }
-
-            th, td {
-              padding: 12px;
+            .card {
+              background-color: #ffffff;
+              border-radius: 8px;
+              padding: 24px;
+              margin: 0 auto;
+              max-width: 600px;
               text-align: left;
             }
 
-            th {
-              background-color: #f5f5f5;
-              font-weight: 600;
-              color: #262626;
-            }
-
-            /* Card */
-            .card {
-              background-color: #ffffff;
-              border: 1px solid #e5e5e5;
-              border-radius: 8px;
-              padding: 16px;
-            }
-
-            /* Headers with gradients (may not work in Outlook) */
-            .header-blue-bell {
-              background: #3b82f6;
-              background: linear-gradient(135deg, #3b82f6, #1e40af);
+            .header-footer {
+              background-color: #313565;
               color: #ffffff;
-              padding: 16px;
+              padding: 24px 16px;
+              text-align: center;
             }
 
-            .header-hit-pink {
-              background: #f472b6;
-              background: linear-gradient(135deg, #f472b6, #be185d);
+            .footer a {
               color: #ffffff;
-              padding: 16px;
+              text-decoration: underline;
             }
 
-            /* Blockquote */
-            blockquote {
-              border-left: 4px solid #6366f1;
-              padding-left: 16px;
-              margin: 16px 0;
-              font-style: italic;
-              color: #737373;
-            }
-
-            /* Divider */
-            hr {
-              border: 0;
-              border-top: 1px solid #e5e5e5;
-              margin: 24px 0;
+            img {
+              max-width: 200px;
+              margin: 0 auto 24px;
+              display: block;
             }
           `}
         </style>
       </Head>
-      <Body>
-        <Container style={{ fontFamily: "'Marianne', Arial, sans-serif", lineHeight: 1.6, backgroundColor: "#fafafa", margin: "0 auto", textAlign: "center" }}>
-          <div>
-            <img
-              src="https://edtlab.fr/Logo_EDT_CBLOT.png"
-              alt="Engineering Digital Twin"
-              style={{ maxWidth: "200px", marginBottom: "24px", margin: "0 auto 24px" }}
-            />
-            <img
-              src="https://edtlab.fr/logo-fr.png"
-              alt="Engineering Digital Twin"
-              style={{ maxWidth: "200px", marginBottom: "24px", margin: "0 auto 24px" }}
-            />
-          </div>
+      <Body style={{ margin: 0, padding: 0, backgroundColor: "#fafafa" }}>
+        {/* Header */}
+        <div className="header-footer">
+          <img src="https://edtlab.fr/Logo_EDT_CBLOT.png" alt="Engineering Digital Twin" />
+          <img src="https://edtlab.fr/logo-fr-white.png" alt="Engineering Digital Twin" />
+          <h1 style={{ color: "white" }}>{title}</h1>
+        </div>
 
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-
-          <div style={{ marginTop: "24px", fontSize: "12px", color: "#737373" }}>
-            <a href="https://edtlab.fr">https://edtlab.fr</a>
-            <div>
-              Newsletter à diffusion interne au Programme EDT, ne pas diffuser à l'extérieur du programme.
-            </div>
-          </div>
+        {/* Main content */}
+        <Container style={{ padding: "24px 16px" }}>
+          <div className="card" dangerouslySetInnerHTML={{ __html: content }} />
         </Container>
+
+        {/* Footer */}
+        <div className="header-footer footer">
+          <div style={{ fontSize: "12px", marginBottom: "8px" }}>
+            <a href="https://edtlab.fr">https://edtlab.fr</a>
+          </div>
+          <div style={{ fontSize: "12px" }}>
+            Newsletter à diffusion interne au Programme EDT, ne pas diffuser à l'extérieur du programme.
+          </div>
+        </div>
       </Body>
     </Html>
   );
