@@ -74,8 +74,10 @@ export default function NewsletterEmail({ title, content }: Props) {
       <Body style={{ margin: 0, padding: 0, backgroundColor: "#fafafa" }}>
         {/* Header */}
         <div className="header-footer">
-          <img src="https://edtlab.fr/Logo_EDT_CBLOT.png" alt="Engineering Digital Twin" />
-          <img src="https://edtlab.fr/logo-fr-white.png" alt="Engineering Digital Twin" />
+          <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center", marginBottom: "24px", flexWrap: "wrap", gap: "16px" }}>
+            <img src="https://edtlab.fr/Logo_EDT_CBLOT.png" alt="Engineering Digital Twin" style={{ maxWidth: "200px", margin: 0 }} />
+            <img src="https://edtlab.fr/logo-fr-white.png" alt="Engineering Digital Twin" style={{ maxWidth: "200px", margin: 0 }} />
+          </div>
           <h1 style={{ color: "white" }}>{title}</h1>
         </div>
 
@@ -86,10 +88,10 @@ export default function NewsletterEmail({ title, content }: Props) {
 
         {/* Footer */}
         <div className="header-footer footer">
-          <div style={{ fontSize: "12px", marginBottom: "8px" }}>
+          <div style={{ fontSize: "14px", marginBottom: "8px" }}>
             <a href="https://edtlab.fr">https://edtlab.fr</a>
           </div>
-          <div style={{ fontSize: "12px" }}>
+          <div style={{ fontSize: "14px" }}>
             Newsletter à diffusion interne au Programme EDT, ne pas diffuser à l'extérieur du programme.
           </div>
         </div>
