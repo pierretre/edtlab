@@ -36,7 +36,8 @@ Rédaction d'un article collectif de présentation des défis scientifiques de E
 
 ## Événements à venir
 
-* 17 avril - Paris - Workshop scientifique PC2 DT Compose
-* 19 au 21 Mai 2026 – Rennes | Séminaire scientifique EDT : Réunion de la communauté académique.
-* 24 Juin 2026 – Paris | Réunion de lancement EDT : Lancement officiel (Partenaires académiques, industriels et institutionnels).
-* 17-18 Novembre 2026 - Participation à NAFEMS France
+* 10 mars 2026 : présentation du programme EDT par Benoit Combemale au [réseau RED](https://devs-network.org/)
+* 17 avril 2026 (Paris) : Workshop scientifique PC2 DT Compose (partages sur les outils des partenaires du PC2)
+* 19 au 21 Mai 2026 (Rennes) | Séminaire scientifique EDT : Réunion de la communauté académique (A CONFIRMER)
+* 24 Juin 2026 (Paris, Centre Inria) : Réunion de lancement EDT ("kickoff") pour le lancement officiel (partenaires académiques, industriels et institutionnels).
+* 17-18 Novembre 2026 : Participation de Guy De spiegeleer (COO EDT) à NAFEMS France
