@@ -522,60 +522,183 @@ var PagesPreview = createClass({
 var NewsletterPreview = createClass({
     render: function () {
         const widgetFor = this.props.widgetFor;
-        const content = [
-            h(
-                'table',
-                {
-                    align: 'center',
-                    width: '100%',
-                    border: 0,
-                    cellpadding: 0,
-                    cellspacing: 0,
-                    role: 'presentation',
-                    style: {
-                        maxWidth: '37.5em',
-                        fontFamily: "'Marianne', Arial, sans-serif",
-                        lineHeight: 1.6,
-                        backgroundColor: '#fafafa',
-                        margin: '0 auto',
-                    },
-                },
-                h(
-                    'tbody',
-                    null,
-                    h(
-                        'tr',
-                        { style: { width: '100%' } },
-                        h(
-                            'td',
-                            null,
-                            [
-                                // Header image
-                                h('img', {
-                                    src: 'https://edtlab.fr/_assets/Logo_EDT_CBLOT.BFMY5V0T_WwoJy.webp',
-                                    alt: 'Engineering Digital Twin',
-                                    style: { maxWidth: '200px', margin: '0 auto 24px', display: 'block' },
-                                }),
+        const entry = this.props.entry;
+        const title = entry.getIn(['data', 'title']) || 'Newsletter Title';
 
-                                // Body content container
-                                h(
-                                    'div',
-                                    { className: 'container mx-auto px-8 lg:px-4 max-w-6xl mb-16' },
-                                    h(
-                                        'article',
-                                        { className: 'prose prose-lg max-w-none' },
-                                        h('div', { className: 'prose prose-lg max-w-none' }, widgetFor('body'))
-                                    )
-                                ),
-                            ]
+        const content = [
+            // Email styles
+            h('style', { type: 'text/css' }, `
+                @import url("../assets/fonts/marianne.css");
+
+                body {
+                    font-family: 'Marianne', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    color: #262626;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #fafafa;
+                }
+
+                h1, h2, h3, h4 {
+                    color: #262626;
+                    margin: 0 0 16px;
+                }
+
+                p, li {
+                    color: #525252;
+                }
+
+                a {
+                    color: #323464;
+                    text-decoration: none;
+                }
+
+                a:hover {
+                    color: #1f2a8f;
+                }
+
+                .card {
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    padding: 24px;
+                    margin: 0 auto;
+                    max-width: 600px;
+                    text-align: left;
+                }
+
+                .header-footer {
+                    background-color: #313565;
+                    color: #ffffff;
+                    padding: 24px 16px;
+                    text-align: center;
+                }
+
+                .footer a {
+                    color: #ffffff;
+                    text-decoration: underline;
+                }
+
+                img {
+                    max-width: 200px;
+                    margin: 0 auto 24px;
+                    display: block;
+                }
+            `),
+
+            // Email body container
+            h(
+                'div',
+                {
+                    style: {
+                        margin: 0,
+                        padding: 0,
+                        backgroundColor: '#fafafa'
+                    }
+                },
+                [
+                    // Header with logos and title
+                    h(
+                        'div',
+                        {
+                            className: 'header-footer',
+                            style: {
+                                backgroundColor: '#313565',
+                                color: '#ffffff',
+                                padding: '24px 16px',
+                                textAlign: 'center'
+                            }
+                        },
+                        [
+                            h(
+                                'div',
+                                {
+                                    style: {
+                                        display: 'flex',
+                                        justifyContent: 'space-around',
+                                        alignItems: 'center',
+                                        marginBottom: '24px',
+                                        flexWrap: 'wrap',
+                                        gap: '16px'
+                                    }
+                                },
+                                [
+                                    h('img', {
+                                        src: 'https://edtlab.fr/Logo_EDT_CBLOT.png',
+                                        alt: 'Engineering Digital Twin',
+                                        style: {
+                                            maxWidth: '200px',
+                                            margin: 0
+                                        }
+                                    }),
+                                    h('img', {
+                                        src: 'https://edtlab.fr/logo-fr-white.png',
+                                        alt: 'Engineering Digital Twin',
+                                        style: {
+                                            maxWidth: '200px',
+                                            margin: 0
+                                        }
+                                    })
+                                ]
+                            ),
+                            h('h1', { style: { color: 'white', margin: 0 } }, title)
+                        ]
+                    ),
+
+                    // Main content with white card
+                    h(
+                        'div',
+                        { style: { padding: '24px 16px' } },
+                        h(
+                            'div',
+                            {
+                                className: 'card',
+                                style: {
+                                    backgroundColor: '#ffffff',
+                                    borderRadius: '8px',
+                                    padding: '24px',
+                                    margin: '0 auto',
+                                    maxWidth: '600px',
+                                    textAlign: 'left'
+                                }
+                            },
+                            widgetFor('body')
                         )
+                    ),
+
+                    // Footer
+                    h(
+                        'div',
+                        {
+                            className: 'header-footer footer',
+                            style: {
+                                backgroundColor: '#313565',
+                                color: '#ffffff',
+                                padding: '24px 16px',
+                                textAlign: 'center'
+                            }
+                        },
+                        [
+                            h(
+                                'div',
+                                { style: { fontSize: '14px', marginBottom: '8px' } },
+                                h('a', {
+                                    href: 'https://edtlab.fr',
+                                    style: { color: '#ffffff', textDecoration: 'underline' }
+                                }, 'https://edtlab.fr')
+                            ),
+                            h(
+                                'div',
+                                { style: { fontSize: '14px' } },
+                                'Newsletter à diffusion interne au Programme EDT, ne pas diffuser à l\'extérieur du programme.'
+                            )
+                        ]
                     )
-                )
-            ),
+                ]
+            )
         ];
 
         return content;
-
     },
 });
 
