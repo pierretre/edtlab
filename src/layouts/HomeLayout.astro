@@ -35,23 +35,20 @@ const t = useTranslations(lang);
 
 // Get dynamic content from collections for enhanced front page
 const news = await getCollection("news", ({ data }) => data.lang === lang);
-const recentEvents = news
-    .sort(
-        (a, b) =>
-            new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-    )
-    .slice(0, 3);
+const recentEvents = news.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
 
 const allPublications = await getCollection("publications");
-const recentPublications = allPublications
-    .sort((a, b) => b.data.year - a.data.year)
-    .slice(0, 3);
+const recentPublications = allPublications.sort(
+    (a, b) => b.data.year - a.data.year,
+);
 
 const allJobOffers = await getCollection(
     "job-offers",
     ({ data }) => !data.filled,
 );
-const activeJobOffers = allJobOffers.slice(0, 3);
+const activeJobOffers = allJobOffers;
 const logoImagePng = lang === "fr" ? logoFR : logoEN;
 ---
 
@@ -265,7 +262,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                 </h3>
                             </div>
                             <div class="space-y-4">
-                                {recentEvents.map((event) => (
+                                {recentEvents.slice(0, 3).map((event) => (
                                     <div class="border-l-4 border-primary-500 pl-4">
                                         <h4 class="font-semibold text-gray-900 text-sm">
                                             {event.data.title}
@@ -336,26 +333,29 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                 </h3>
                             </div>
                             <div class="space-y-4">
-                                {recentPublications.map((publication) => (
-                                    <div class="border-l-4 border-green-500 pl-4">
-                                        <h4 class="font-semibold text-gray-900 text-sm">
-                                            {publication.data.title}
-                                        </h4>
-                                        <p class="text-xs text-gray-500 mt-1">
-                                            {publication.data.authors
-                                                .slice(0, 2)
-                                                .join(", ")}
-                                            {publication.data.authors.length >
-                                                2 && ` et al.`}{" "}
-                                            • {publication.data.year}
-                                        </p>
-                                        <p class="text-xs text-primary-600 mt-1 capitalize">
-                                            {publication.data.type}
-                                            {publication.data.venue &&
-                                                ` • ${publication.data.venue}`}
-                                        </p>
-                                    </div>
-                                ))}
+                                {recentPublications
+                                    .slice(0, 3)
+                                    .map((publication) => (
+                                        <div class="border-l-4 border-green-500 pl-4">
+                                            <h4 class="font-semibold text-gray-900 text-sm">
+                                                {publication.data.title}
+                                            </h4>
+                                            <p class="text-xs text-gray-500 mt-1">
+                                                {publication.data.authors
+                                                    .slice(0, 2)
+                                                    .join(", ")}
+                                                {publication.data.authors
+                                                    .length > 2 &&
+                                                    ` et al.`}{" "}
+                                                • {publication.data.year}
+                                            </p>
+                                            <p class="text-xs text-primary-600 mt-1 capitalize">
+                                                {publication.data.type}
+                                                {publication.data.venue &&
+                                                    ` • ${publication.data.venue}`}
+                                            </p>
+                                        </div>
+                                    ))}
                             </div>
                             <div class="mt-6">
                                 <a
@@ -406,7 +406,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                 </h3>
                             </div>
                             <div class="space-y-4">
-                                {activeJobOffers.map((job) => (
+                                {activeJobOffers.slice(0, 3).map((job) => (
                                     <div class="border-l-4 border-purple-500 pl-4">
                                         <h4 class="font-semibold text-gray-900 text-sm">
                                             {job.data.title}
