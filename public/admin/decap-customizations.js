@@ -624,10 +624,10 @@ var NewsletterPreview = createClass({
                                 },
                                 [
                                     h('img', {
-                                        src: 'https://edtlab.fr/Logo_EDT_CBLOT.png',
+                                        src: 'https://edtlab.fr/Logo_EDT_CBLOT-white.png',
                                         alt: 'Engineering Digital Twin',
                                         style: {
-                                            maxWidth: '200px',
+                                            maxWidth: '300px',
                                             margin: 0
                                         }
                                     }),
@@ -635,7 +635,7 @@ var NewsletterPreview = createClass({
                                         src: 'https://edtlab.fr/logo-fr-white.png',
                                         alt: 'Engineering Digital Twin',
                                         style: {
-                                            maxWidth: '200px',
+                                            maxWidth: '300px',
                                             margin: 0
                                         }
                                     })
