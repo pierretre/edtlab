@@ -1,235 +1,51 @@
 ---
-title: "Position Title - Specific Area/Project"
-tags:
-  - "PC1"  # Options: "PC1", "PC2", "PC3", "PC4", "PC5", "General"
-type: "postdoc"  # Options: "postdoc", "phd", "engineer", "intern"
+title: "Position Title - Specific Area/Project" # Avoid accents in title
+type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
 location: "City, Country"
 expectedStartDate: "Spring 2025"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
-filled: false  # Position availability status: true if position is filled, false if still available
 publishedDate: 2024-01-15  # Date when job offer was published in YYYY-MM-DD format
-description: "Brief description of the position and research focus"
-requirements: ["PhD in relevant field", "Experience with digital twins", "Programming skills", "Language requirements"]
+filled: false  # Position availability status: true if position is filled, false if still available
+description: "Brief summary of the position and research focus" # Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below.
+requirements: ["Master degree in relevant field", "Experience with digital twins", "Programming skills", "Language requirements"] # Some requirements in a list
+tags:
+  - "PC1"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ...
 contacts: ["hiring.manager@edt-program.fr", "hr@institution.edu"]  # Array of contact emails for this position
-lang: "en"  # Language: "en" or "fr"
 ---
 
-# Position Title - Specific Area/Project
+## Context
 
-## Position Overview
+Digital twins are virtual representations of real-world products, systems, or processes, enabling simulation, integration, testing, monitoring, and maintenance. They play a pivotal role in optimizing>
+The Engineering Digital Twin [EDT program](https://edtlab.fr/en/), funded by the France 2030 investment plan, is a national initiative aimed at advancing the scientific and technical foundations of d>
 
-Provide a compelling overview of the position, including its significance within the EDT research program and the specific project (PC1-PC5) it supports.
+[add PhD context description]
 
-### Research Focus
+## Thesis Objectives
 
-- Primary research area or theme
-- Specific technologies or methodologies
-- Expected contributions to the project
+This PhD project aims to [concise summary of the main objective in one or two sentences]. Key scientific challenges include:
 
-## Responsibilities
+- [Challenge 1, e.g., "Designing autonomous agents for real-time interaction with digital twins."]
+- [Challenge 2, e.g., "Integrating heterogeneous models and managing uncertainties."]
+- [Challenge 3, e.g., "Optimizing human-digital twin interactions."]
 
-### Primary Duties
+The results of this thesis will directly contribute to the Artemis platform, an open-source framework set to become a benchmark in the field.
 
-- Conduct original research in [specific area]
-- Develop and implement [specific technologies/methods]
-- Collaborate with interdisciplinary research teams
-- Publish research findings in high-impact venues
-- Present work at international conferences
+## Work Environment
 
-### Collaborative Activities
+The PhD candidate will be co-supervised by [Supervisor’s Name, Institution] and [Co-supervisor’s Name, Institution] within [Team/Lab Name](link to Team/Lab). The candidate will benefit from a stimula>
 
-- Participate in project meetings and workshops
-- Contribute to deliverables and milestones
-- Mentor junior researchers (if applicable)
-- Engage with industrial partners
+## What You Will Gain from This PhD
 
-### Additional Opportunities
+This PhD offers the opportunity to:
 
-- Teaching opportunities (if applicable)
-- Professional development programs
-- International collaboration possibilities
-- Technology transfer activities
+- Develop highly sought-after skills in system modeling, real-time data processing, and collaborative innovation.
+- Collaborate with leading partners (Inria, CEA, CNRS, etc.) and validate your research on real-world industrial use cases.
+- Join a network of PhD candidates within the EDT program, fostering collaboration, peer support, and interdisciplinary exchanges.
+- Contribute to an open-source platform (Artemis) and publish in international conferences and journals.
+- Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
-## Required Qualifications
+Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
 
-### Education
+## References
 
-- PhD in [specific field] or related discipline
-- Strong academic record with relevant coursework
-- Thesis work related to [relevant area]
-
-### Technical Skills
-
-- Programming languages: [Python, C++, JavaScript, etc.]
-- Software tools: [specific tools relevant to the position]
-- Methodologies: [relevant research methods]
-- Domain knowledge: [specific technical areas]
-
-### Experience
-
-- [X] years of experience in [relevant area]
-- Demonstrated research experience through publications
-- Experience with [specific technologies or methods]
-- Previous work in collaborative research environments
-
-### Language Requirements
-
-- Fluency in English (written and spoken)
-- French language skills (preferred/required)
-- Ability to present research in international settings
-
-## Preferred Qualifications
-
-### Additional Skills
-
-- Experience with digital twin technologies
-- Knowledge of [specific domain applications]
-- Familiarity with [relevant software platforms]
-- Previous industry collaboration experience
-
-### Research Background
-
-- Publications in [relevant journals/conferences]
-- Experience with [specific research methods]
-- Knowledge of [complementary research areas]
-
-## Position Details
-
-### Contract Information
-
-- **Position Type**: [Full-time/Part-time]
-- **Duration**: [Contract length]
-- **Start Date**: [Expected start date]
-- **Renewal**: [Renewal possibilities]
-
-### Compensation
-
-- Competitive salary commensurate with experience
-- Comprehensive benefits package
-- Research and travel funding
-- Professional development support
-
-### Work Environment
-
-- Modern research facilities
-- Access to high-performance computing resources
-- Collaborative, international research environment
-- Flexible working arrangements
-
-## Research Environment
-
-### Project Context
-
-Detailed description of the specific focused project (PC1-PC5) and how this position contributes to its objectives.
-
-### Team and Collaborations
-
-- Research team composition
-- Key collaborators and partners
-- International connections
-- Industrial partnerships
-
-### Resources and Facilities
-
-- Laboratory facilities
-- Computing resources
-- Software licenses
-- Research equipment
-
-## Application Process
-
-### Required Documents
-
-1. **Curriculum Vitae** - Complete academic and professional history
-2. **Cover Letter** - Motivation and research interests (max 2 pages)
-3. **Research Statement** - Research experience and future plans (max 3 pages)
-4. **References** - Contact information for 3 professional references
-5. **Transcripts** - Academic transcripts (unofficial acceptable initially)
-6. **Publications** - List of publications and selected papers
-
-### Application Submission
-
-- **Submission Method**: [Email/Online portal]
-- **Contact**: Use the email addresses listed in the contacts field above
-- **Application Status**: This position remains open until filled
-
-### Selection Process
-
-1. Initial screening of applications
-2. Technical interview (video conference)
-3. Research presentation
-4. Reference checks
-5. Final decision notification
-
-### Timeline
-
-- **Applications**: Accepted on a rolling basis
-- **Initial Review**: [Date range]
-- **Interviews**: [Date range]
-- **Decision Notification**: [Date]
-- **Expected Start Date**: [As specified in expectedStartDate field]
-
-## Contact Information
-
-### Primary Contact
-
-**Name**: [Hiring Manager Name]  
-**Title**: [Title]  
-**Email**: [contact@institution.edu]  
-**Phone**: [+XX XXX XXX XXXX]
-
-### Administrative Contact
-
-**Name**: [HR Contact Name]  
-**Email**: [hr@institution.edu]
-
-### Project Information
-
-For questions about the specific research project:
-**Name**: [Project Leader Name]  
-**Email**: [project@institution.edu]
-
-## About the Institution
-
-Brief description of the host institution, including:
-
-- Research excellence and reputation
-- Facilities and resources
-- Location and environment
-- Career development opportunities
-
-## Equal Opportunity
-
-[Institution name] is an equal opportunity employer committed to diversity and inclusion. We encourage applications from all qualified candidates regardless of race, gender, age, religion, sexual orientation, or disability status.
-
----
-
-**Template Notes**:
-
-- **Project**: Must match one of the five focused projects (PC1-PC5) or "General"
-- **Type**: Choose the appropriate position level
-- **ExpectedStartDate**: Flexible format - can be specific dates ("2025-06-01"), seasons ("Spring 2025"), quarters ("Q2 2025"), or ranges ("January-June 2025")
-- **Filled**: Boolean field indicating position availability (false = available, true = filled)
-- **PublishedDate**: Date when the job offer was first published (YYYY-MM-DD format)
-- **Requirements**: List as array items for proper validation
-- **Contacts**: Array of email addresses for position inquiries (must be valid email format)
-- **Description**: Keep under 200 characters for listings
-
-**Content Guidelines**:
-
-- Be specific about research focus and expectations
-- Include both required and preferred qualifications
-- Provide clear application instructions and timeline
-- Highlight unique opportunities and resources
-- Ensure compliance with institutional hiring policies
-
-**File Naming**:
-
-- English: `position-type-project-year-en.md` in `src/content/job-offers/`
-- French: `position-type-project-year-fr.md` in `src/content/job-offers/`
-
-**Legal Considerations**:
-
-- Review with HR before publishing
-- Ensure compliance with employment laws
-- Include equal opportunity statements
-- Verify visa/work authorization requirements
+- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on E>
+- [Additional references]

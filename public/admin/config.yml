@@ -100,6 +100,7 @@ collections:
       - { label: "Summary", name: "description", widget: "text", required: true, hint: "Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below." }
       - { label: "Requirements", name: "requirements", widget: "list", required: true, min: 1, default: ["Fluency in English and French"], hint: "List of key requirements for the position (separated by comma)", allow_add: true }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [], hint: "List of tags (e.g. PC1) (separated by comma)", allow_add: true }
+      - { label: "Contacts", name: "contact", widget: "list", required: false, default: [], hint: "List of contact emails (separated by comma)", allow_add: true }
       - label: "Body"
         name: "body"
         widget: "markdown"
