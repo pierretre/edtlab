@@ -1,6 +1,6 @@
 ---
 title: "Position Title - Specific Area/Project" # Avoid accents in title
-type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
+type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern", "Others"
 location: "City, Country"
 expectedStartDate: "Spring 2025"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
 publishedDate: 2024-01-15  # Date when job offer was published in YYYY-MM-DD format

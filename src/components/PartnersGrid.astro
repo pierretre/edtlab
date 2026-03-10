@@ -5,9 +5,10 @@ import type { Partner } from "@models/Partner.model";
 
 export interface Props {
     partners: string[];
+    largeLogos?: boolean;
 }
 
-const { partners } = Astro.props;
+const { partners, largeLogos = false } = Astro.props;
 const logos = import.meta.glob<{ default: ImageMetadata }>(
     "/public/media/uploads/*.{svg,jpg,png,gif,webp}",
 );
@@ -46,7 +47,7 @@ const partnersData: (Partner & { image: ImageMetadata })[] = await Promise.all(
                     <Picture
                         src={p.image}
                         alt={p.fullname ?? ""}
-                        class="max-h-12 w-auto max-w-32 h-auto object-contain mx-auto"
+                        class={`w-auto h-auto object-contain mx-auto ${largeLogos ? "max-w-48 max-h-20" : "max-w-36 max-h-16"}`}
                         loading="lazy"
                     />
                 </div>

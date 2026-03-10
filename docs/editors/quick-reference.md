@@ -82,7 +82,7 @@ toc: false # true for table of contents
 ```yaml
 ---
 title: "Position Title"
-type: "PostDoc" # PostDoc|PhD|Engineer|Intern
+type: "PostDoc" # PostDoc|PhD|Engineer|Intern|Others
 location: "City, Country"
 expectedStartDate: "Spring 2025"
 filled: false
@@ -214,7 +214,7 @@ Fix: Add publishedDate: 2024-01-15
 
 ```
 Error: Invalid type 'researcher'
-Fix: Use: PostDoc|PhD|Engineer|Intern
+Fix: Use: PostDoc|PhD|Engineer|Intern|Others
 ```
 
 **Invalid Date Format**

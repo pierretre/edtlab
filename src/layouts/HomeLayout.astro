@@ -8,6 +8,7 @@ import Badge from "@components/Badge.astro";
 import { Picture } from "astro:assets";
 import logoEN from "@assets/images/logo-en.png";
 import logoFR from "@assets/images/logo-fr.png";
+import logoInria from "../../public/media/uploads/Inria.png";
 import heroBackground from "@assets/images/INRIA_EDT_CBLOT_fond_herosection.jpg";
 import heroIllustration from "@assets/images/INRIA_EDT_CBLOT_Illu_Herosection.png";
 
@@ -93,7 +94,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                 <h1
                     class="mb-6 text-5xl font-extrabold tracking-tight leading-none md:text-6xl lg:text-6xl text-white"
                 >
-                    {t("site.title")}
+                    {t("home.hero.title")}
                 </h1>
                 <p class="mb-10 text-xl font-normal text-gray-100 lg:text-2xl">
                     {t("home.hero.subtitle")}
@@ -188,17 +189,38 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
             </div>
         </div>
 
-        <div class="mt-6 mx-auto w-fit">
+        <div
+            class="mt-6 mx-auto w-fit flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-8"
+        >
             <Picture
                 src={logoImagePng}
                 alt="EDT Logo"
                 class="h-full w-auto object-contain"
-                widths={[350, 700, 1000, 1400]}
-                sizes="(max-width: 768px) 60vw, 350px"
+                widths={[280, 560, 800, 1120]}
+                sizes="(max-width: 768px) 45vw, 280px"
                 quality={95}
                 format="webp"
                 pictureAttributes={{
                     class: "flex-shrink-0 h-full",
+                }}
+                loading="eager"
+                decoding="async"
+            />
+
+            <p class="text-center font-light text-gray-500 text-xl lg:text-2xl">
+                {t("home.piloted-by")}
+            </p>
+
+            <Picture
+                src={logoInria}
+                alt="Inria Logo"
+                class="h-16 w-auto object-contain"
+                widths={[160, 320, 480]}
+                sizes="(max-width: 400px) 40vw, 160px"
+                quality={95}
+                format="webp"
+                pictureAttributes={{
+                    class: "flex-shrink-0 h-16",
                 }}
                 loading="eager"
                 decoding="async"
@@ -245,7 +267,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                         <div class="bg-gray-50 rounded-lg p-6">
                             <div class="flex items-center mb-4">
                                 <svg
-                                    class="w-6 h-6 text-primary-600 mr-2"
+                                    class="w-6 h-6 text-[#434672] mr-2"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -263,7 +285,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                             </div>
                             <div class="space-y-4">
                                 {recentEvents.slice(0, 3).map((event) => (
-                                    <div class="border-l-4 border-primary-500 pl-4">
+                                    <div class="border-l-4 border-[#434672] pl-4">
                                         <h4 class="font-semibold text-gray-900 text-sm">
                                             {event.data.title}
                                         </h4>
@@ -290,7 +312,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                             <div class="mt-6">
                                 <a
                                     href={linkHelpers.newsIndex(lang)}
-                                    class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors"
+                                    class="inline-flex items-center text-[#434672] hover:text-[#434672] font-medium text-sm transition-colors"
                                 >
                                     {t("home.updates.view-all-events")}
                                     <svg
@@ -316,7 +338,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                         <div class="bg-gray-50 rounded-lg p-6">
                             <div class="flex items-center mb-4">
                                 <svg
-                                    class="w-6 h-6 text-green-600 mr-2"
+                                    class="w-6 h-6 text-[#434672] mr-2"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -336,7 +358,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                 {recentPublications
                                     .slice(0, 3)
                                     .map((publication) => (
-                                        <div class="border-l-4 border-green-500 pl-4">
+                                        <div class="border-l-4 border-[#434672] pl-4">
                                             <h4 class="font-semibold text-gray-900 text-sm">
                                                 {publication.data.title}
                                             </h4>
@@ -349,7 +371,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                                     ` et al.`}{" "}
                                                 • {publication.data.year}
                                             </p>
-                                            <p class="text-xs text-primary-600 mt-1 capitalize">
+                                            <p class="text-xs text-[#434672] mt-1 capitalize">
                                                 {publication.data.type}
                                                 {publication.data.venue &&
                                                     ` • ${publication.data.venue}`}
@@ -363,7 +385,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                                         lang,
                                         "publications",
                                     )}
-                                    class="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
+                                    class="inline-flex items-center text-[#434672] hover:text-[#434672] font-medium text-sm transition-colors"
                                 >
                                     {t("home.updates.view-all-publications")}
                                     <svg
@@ -389,7 +411,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                         <div class="bg-gray-50 rounded-lg p-6">
                             <div class="flex items-center mb-4">
                                 <svg
-                                    class="w-6 h-6 text-purple-600 mr-2"
+                                    class="w-6 h-6 text-[#434672] mr-2"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -407,7 +429,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                             </div>
                             <div class="space-y-4">
                                 {activeJobOffers.slice(0, 3).map((job) => (
-                                    <div class="border-l-4 border-purple-500 pl-4">
+                                    <div class="border-l-4 border-[#434672] pl-4">
                                         <h4 class="font-semibold text-gray-900 text-sm">
                                             {job.data.title}
                                         </h4>
@@ -435,7 +457,7 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
                             <div class="mt-6">
                                 <a
                                     href={linkHelpers.careers(lang)}
-                                    class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium text-sm transition-colors"
+                                    class="inline-flex items-center text-[#434672] hover:text-[#434672] font-medium text-sm transition-colors"
                                 >
                                     {t("home.updates.view-all-positions")}
                                     <svg
