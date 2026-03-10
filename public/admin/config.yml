@@ -92,7 +92,7 @@ collections:
     slug: "{{fields.type}}-{{fields.tags}}-{{fields.title}}"
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "Type", name: "type", widget: "select", options: ["PhD", "PostDoc", "Engineer", "Intern"], required: true }
+      - { label: "Type", name: "type", widget: "select", options: ["PhD", "PostDoc", "Engineer", "Intern", "Others"], required: true }
       - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country" }
       - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: true, hint: "e.g., 'Spring 2025', 'September 2024'" }
       - { label: "Published Date", name: "publishedDate", widget: "datetime",   default: "{{now}}", date_format: "DD.MM.YYYY", required: true }

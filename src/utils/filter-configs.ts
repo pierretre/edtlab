@@ -78,14 +78,15 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             translationKey: 'job-offers.filter.type',
             options: [
                 { value: '', label: 'All Types', translationKey: 'job-offers.filter.all-types' },
-                { value: 'postdoc', label: 'Postdoc', translationKey: 'job-offers.type.postdoc' },
-                { value: 'phd', label: 'PhD', translationKey: 'job-offers.type.phd' },
-                { value: 'engineer', label: 'Engineer', translationKey: 'job-offers.type.engineer' },
-                { value: 'intern', label: 'Intern', translationKey: 'job-offers.type.intern' }
+                { value: 'postdoc', label: 'Postdoc', translationKey: 'job-offers.type.PostDoc' },
+                { value: 'phd', label: 'PhD', translationKey: 'job-offers.type.PhD' },
+                { value: 'engineer', label: 'Engineer', translationKey: 'job-offers.type.Engineer' },
+                { value: 'intern', label: 'Intern', translationKey: 'job-offers.type.Intern' },
+                { value: 'others', label: 'Others', translationKey: 'job-offers.type.Others' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
-                return data.type === value;
+                return (data.type || '').toLowerCase() === value.toLowerCase();
             },
             urlParam: 'type',
             defaultValue: ''

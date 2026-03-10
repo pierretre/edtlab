@@ -46,13 +46,15 @@ export const JOB_TYPE_TRANSLATIONS = {
         postdoc: "Postdoc",
         phd: "PhD Position",
         engineer: "Engineer",
-        intern: "Internship"
+        intern: "Internship",
+        others: "Others"
     },
     fr: {
         postdoc: "Post-doctorat",
         phd: "Thèse de doctorat",
         engineer: "Ingénieur",
-        intern: "Stage"
+        intern: "Stage",
+        others: "Autres"
     }
 } as const;
 

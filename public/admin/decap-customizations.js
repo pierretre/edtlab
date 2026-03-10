@@ -301,16 +301,19 @@ var JobOffersPreview = createClass({
             'phd': 'bg-blue-bell-200 text-blue-bell-900 border',
             'postdoc': 'bg-blue-bell-200 text-blue-bell-900 border',
             'engineer': 'bg-tertiary-200 text-tertiary-900 border',
-            'intern': 'bg-gray-200 text-gray-800 border'
+            'intern': 'bg-gray-200 text-gray-800 border',
+            'others': 'bg-gray-200 text-gray-800 border'
         };
         var typeBadgeLabel = {
             'phd': 'PhD',
             'postdoc': 'Post-doc',
             'engineer': 'Engineer',
-            'intern': 'Internship'
+            'intern': 'Internship',
+            'others': 'Others'
         };
-        var badgeClass = typeBadgeClass[data.type] || typeBadgeClass.phd;
-        var badgeLabel = typeBadgeLabel[data.type] || data.type;
+        var typeKey = ((data.type || '') + '').toLowerCase();
+        var badgeClass = typeBadgeClass[typeKey] || typeBadgeClass.phd;
+        var badgeLabel = typeBadgeLabel[typeKey] || data.type;
 
         var content = [
             // Back link
@@ -1435,14 +1438,16 @@ CMS.registerEditorComponent({
             'phd': 'bg-blue-bell-200 text-blue-bell-900',
             'postdoc': 'bg-blue-bell-200 text-blue-bell-900',
             'engineer': 'bg-tertiary-200 text-tertiary-900',
-            'intern': 'bg-gray-200 text-gray-800'
+            'intern': 'bg-gray-200 text-gray-800',
+            'others': 'bg-gray-200 text-gray-800'
         };
 
         var typeBadgeLabel = {
             'phd': lang === 'fr' ? 'Doctorat' : 'PhD',
             'postdoc': 'Post-doc',
             'engineer': lang === 'fr' ? 'Ingénieur' : 'Engineer',
-            'intern': lang === 'fr' ? 'Stage' : 'Internship'
+            'intern': lang === 'fr' ? 'Stage' : 'Internship',
+            'others': lang === 'fr' ? 'Autres' : 'Others'
         };
 
         var jobCardsHtml = mockJobOffers.map(function (job) {
