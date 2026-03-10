@@ -52,7 +52,7 @@ const jobOffersCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
-        type: z.enum(['PostDoc', 'PhD', 'Engineer', 'Intern']),
+        type: z.enum(['PostDoc', 'PhD', 'Engineer', 'Intern', 'Others']),
         location: z.string(),
         expectedStartDate: z.string(),
         filled: z.boolean().default(false),

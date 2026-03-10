@@ -207,6 +207,7 @@ describe('Validation Utilities', () => {
         it('should validate job types', () => {
             expect(isValidJobType('postdoc')).toBe(true);
             expect(isValidJobType('phd')).toBe(true);
+            expect(isValidJobType('others')).toBe(true);
             expect(isValidJobType('invalid')).toBe(false);
         });
     });
