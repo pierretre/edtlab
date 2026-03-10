@@ -37,12 +37,12 @@ const newsCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         date: z.date(),
-        newsType: z.enum(['event', 'press-release']),
-        location: z.string().optional(),
-        description: z.string(),
-        url: z.string().url().optional(),
         lang: z.enum(['en', 'fr']),
         photo: z.string(),
+        description: z.string(),
+        newsType: z.enum(['event', 'press-release']),
+        location: z.string().optional(),
+        url: z.string().url().optional(),
         tags: z.array(z.string()).optional().default([])
     })
 });
