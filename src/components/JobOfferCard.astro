@@ -104,8 +104,8 @@ const { item, lang, t, slug } = Astro.props;
     <!-- Requirements preview -->
     {
         item.requirements.length > 0 && (
-            <div class="mb-4">
-                <div class="text-sm font-semibold text-gray-900 mb-2">
+            <div>
+                <div class="text-sm font-semibold text-gray-900">
                     {t("job-offers.key-requirements")}
                 </div>
                 <ul class="text-sm text-gray-600 space-y-1">
