@@ -57,6 +57,7 @@ export const ui = {
         // Home page
         'home.hero.learn-more': 'Learn about our program',
         'home.hero.subtitle': 'Advancing the science and engineering of digital twins through multidisciplinary research, innovative methodologies, and collaborative platforms.',
+        'home.piloted-by': 'Operated by Inria',
         'home.tiles.title': 'Explore Our Projects',
         'home.tiles.subtitle': 'Navigate through our comprehensive research program and discover our contributions to engineering digital twins.',
         'home.tiles.explore': 'Explore',
@@ -297,6 +298,7 @@ export const ui = {
         // Home page
         'home.hero.learn-more': 'En savoir plus sur notre programme',
         'home.hero.subtitle': 'Faire progresser la science et l\'ingénierie des jumeaux numériques grâce à la recherche multidisciplinaire, des méthodologies innovantes et des plateformes collaboratives.',
+        'home.piloted-by': 'Piloté par Inria',
         'home.tiles.title': 'Explorez Nos Projets',
         'home.tiles.subtitle': 'Naviguez dans notre programme de recherche complet et découvrez nos contributions aux jumeaux numériques d\'ingénierie.',
         'home.tiles.explore': 'Explorer',

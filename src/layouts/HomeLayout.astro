@@ -8,6 +8,7 @@ import Badge from "@components/Badge.astro";
 import { Picture } from "astro:assets";
 import logoEN from "@assets/images/logo-en.png";
 import logoFR from "@assets/images/logo-fr.png";
+import logoInria from "../../public/media/uploads/Inria.png";
 import heroBackground from "@assets/images/INRIA_EDT_CBLOT_fond_herosection.jpg";
 import heroIllustration from "@assets/images/INRIA_EDT_CBLOT_Illu_Herosection.png";
 
@@ -188,17 +189,38 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
             </div>
         </div>
 
-        <div class="mt-6 mx-auto w-fit">
+        <div
+            class="mt-6 mx-auto w-fit flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-8"
+        >
             <Picture
                 src={logoImagePng}
                 alt="EDT Logo"
                 class="h-full w-auto object-contain"
-                widths={[350, 700, 1000, 1400]}
-                sizes="(max-width: 768px) 60vw, 350px"
+                widths={[280, 560, 800, 1120]}
+                sizes="(max-width: 768px) 45vw, 280px"
                 quality={95}
                 format="webp"
                 pictureAttributes={{
                     class: "flex-shrink-0 h-full",
+                }}
+                loading="eager"
+                decoding="async"
+            />
+
+            <p class="text-center font-light text-gray-500 text-xl lg:text-2xl">
+                {t("home.piloted-by")}
+            </p>
+
+            <Picture
+                src={logoInria}
+                alt="Inria Logo"
+                class="h-16 w-auto object-contain"
+                widths={[160, 320, 480]}
+                sizes="(max-width: 400px) 40vw, 160px"
+                quality={95}
+                format="webp"
+                pictureAttributes={{
+                    class: "flex-shrink-0 h-16",
                 }}
                 loading="eager"
                 decoding="async"
