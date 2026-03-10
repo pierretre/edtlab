@@ -15,15 +15,15 @@ const { name, headline, picture } = Astro.props as Props;
             <img
                 src={picture}
                 alt={name}
-                class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0 object-cover"
+                class="w-48 h-48 bg-gray-200 rounded-full flex-shrink-0 object-cover"
                 loading="lazy"
                 decoding="async"
             />
         )
     }
     <div class="flex-1 space-y-3">
-        <h3 class="text-xl font-medium text-gray-800">{name}</h3>
-        <p class="text-gray-700">
+        <h3 class="text-2xl font-bold text-gray-800">{name}</h3>
+        <p class="text-primary-700 font-bold text-xl">
             {headline}
         </p>
         <p class="text-gray-600">

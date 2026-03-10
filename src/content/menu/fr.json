@@ -2,21 +2,7 @@
     "sections": [
         {
             "name": "Le Programme",
-            "href": "programme",
-            "items": [
-                {
-                    "name": "Vue d’ensemble",
-                    "href": "programme"
-                },
-                {
-                    "name": "Gouvernance et Comités",
-                    "href": "programme/gouvernance-et-comites"
-                },
-                {
-                    "name": "Partenaires et Collaborateurs",
-                    "href": "programme/partenaires-et-collaborateurs"
-                }
-            ]
+            "href": "programme"
         },
         {
             "name": "Projets",
