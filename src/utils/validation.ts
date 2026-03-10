@@ -20,7 +20,7 @@ export const PUBLICATION_TYPES = ['journal', 'conference', 'book', 'report'] as 
 /**
  * Supported job offer types
  */
-export const JOB_TYPES = ['postdoc', 'phd', 'engineer', 'intern'] as const;
+export const JOB_TYPES = ['postdoc', 'phd', 'engineer', 'intern', 'others'] as const;
 
 /**
  * Supported project identifiers
