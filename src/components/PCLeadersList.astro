@@ -1,0 +1,85 @@
+---
+// @ts-nocheck
+import Badge from "@components/Badge.astro";
+import { useTranslations } from "@i18n/utils";
+
+const { leaders = [], lang = "en" } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="flex flex-col gap-4 my-6">
+    {
+        leaders.map((leader) => (
+            <article class="card bg-white border shadow-sm p-4 relative">
+                <div class="absolute top-4 right-4">
+                    <Badge key={leader.project || "General"} t={t} />
+                </div>
+
+                <div class="flex items-stretch gap-3 pr-24">
+                    {leader.picture ? (
+                        <img
+                            src={leader.picture}
+                            alt={`Portrait of ${leader.name}`}
+                            class="w-16 h-16 object-cover rounded-full flex-shrink-0"
+                            loading="lazy"
+                        />
+                    ) : (
+                        <div class="w-16 h-16 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-semibold flex-shrink-0">
+                            {leader.name
+                                .split(" ")
+                                .filter(Boolean)
+                                .slice(0, 2)
+                                .map((part) => part[0])
+                                .join("")}
+                        </div>
+                    )}
+
+                    <div class="min-w-0 flex-1">
+                        <div class="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                            <h4 class="text-lg font-semibold text-gray-900 leading-tight">
+                                {leader.name}
+                            </h4>
+                            <span class="text-sm text-gray-600">
+                                {leader.affiliation || "TBC"}
+                            </span>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 text-sm">
+                            {leader.website ? (
+                                <a
+                                    href={leader.website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-1 text-sm text-primary-700 hover:text-primary-800 underline"
+                                >
+                                    {t("pc-leaders.website")}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-4 h-4 flex-shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M13.5 6H18m0 0v4.5M18 6l-7.5 7.5"
+                                        />
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M8.25 7.5h-1.5A2.25 2.25 0 004.5 9.75v7.5A2.25 2.25 0 006.75 19.5h7.5a2.25 2.25 0 002.25-2.25v-1.5"
+                                        />
+                                    </svg>
+                                </a>
+                            ) : null}
+                        </div>
+                    </div>
+                </div>
+            </article>
+        ))
+    }
+</div>

@@ -56,10 +56,11 @@ export const ui = {
 
         // Home page
         'home.hero.learn-more': 'Learn about our program',
-        'home.hero.subtitle': 'Advancing the science and engineering of digital twins through multidisciplinary research, innovative methodologies, and collaborative platforms.',
+        'home.hero.title': 'Engineering Digital Twins (EDT)',
+        'home.hero.subtitle': 'A French nationwide research program advancing the science and engineering of digital twins.',
         'home.piloted-by': 'Operated by Inria',
-        'home.tiles.title': 'Explore Our Projects',
-        'home.tiles.subtitle': 'Navigate through our comprehensive research program and discover our contributions to engineering digital twins.',
+        'home.tiles.title': 'Explore Our Focused Projects',
+        'home.tiles.subtitle': 'Discover our focused projects and the contributions to the engineering of digital twins.',
         'home.tiles.explore': 'Explore',
         'home.tiles.navigate-to': 'Navigate to',
         'home.stats.focused-projects': 'Focused Projects',
@@ -247,6 +248,9 @@ export const ui = {
         'projects.related-job-offers.view-all': 'View all positions',
         'projects.related-news-events.title': 'Related news',
         'projects.related-news-events.view-all': 'View all news',
+
+        // PC leaders
+        'pc-leaders.website': 'Website',
     },
     fr: {
         // Navigation
@@ -298,10 +302,11 @@ export const ui = {
 
         // Home page
         'home.hero.learn-more': 'En savoir plus sur notre programme',
-        'home.hero.subtitle': 'Faire progresser la science et l\'ingénierie des jumeaux numériques grâce à la recherche multidisciplinaire, des méthodologies innovantes et des plateformes collaboratives.',
+        'home.hero.title': 'La Fabrique des Jumeaux Numériques (EDT)',
+        'home.hero.subtitle': 'Un programme de recherche national français qui fait avancer la science et l\'ingénierie des jumeaux numériques.',
         'home.piloted-by': 'Piloté par Inria',
-        'home.tiles.title': 'Explorez Nos Projets',
-        'home.tiles.subtitle': 'Naviguez dans notre programme de recherche complet et découvrez nos contributions aux jumeaux numériques d\'ingénierie.',
+        'home.tiles.title': 'Explorez Nos Projets Ciblés',
+        'home.tiles.subtitle': 'Découvrez nos projets ciblés et les contributions à l\'ingénierie des jumeaux numériques.',
         'home.tiles.explore': 'Explorer',
         'home.tiles.navigate-to': 'Naviguer vers',
         'home.stats.focused-projects': 'Projets Ciblés',
@@ -489,6 +494,9 @@ export const ui = {
         'projects.related-job-offers.view-all': 'Voir tous les postes',
         'projects.related-news-events.title': 'Actualités',
         'projects.related-news-events.view-all': 'Voir toutes les actualités',
+
+        // PC leaders
+        'pc-leaders.website': 'Site web',
     },
 } as const;
 

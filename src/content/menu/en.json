@@ -2,21 +2,7 @@
     "sections": [
         {
             "name": "The Program",
-            "href": "program",
-            "items": [
-                {
-                    "name": "Overview",
-                    "href": "program"
-                },
-                {
-                    "name": "Governance and Committees",
-                    "href": "program/governance-and-committees"
-                },
-                {
-                    "name": "Partners and Collaborators",
-                    "href": "program/partners-and-collaborators"
-                }
-            ]
+            "href": "program"
         },
         {
             "name": "Projects",

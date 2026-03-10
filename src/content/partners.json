@@ -74,5 +74,13 @@
     "Université Toulouse Jean Jaurès": {
         "fullname": "Université Toulouse Jean Jaurès",
         "logo": "/media/uploads/UT2J.png"
+    },
+    "ANR": {
+        "fullname": "Agence Nationale de la Recherche",
+        "logo": "/media/uploads/ANR.jpg"
+    },
+    "France2030": {
+        "fullname": "France 2030",
+        "logo": "/media/uploads/France 2030.png"
     }
 }
