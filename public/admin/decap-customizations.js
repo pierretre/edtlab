@@ -23,6 +23,30 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
+function resolveImageUrl(imagePath, getAsset) {
+    if (!imagePath) return '';
+    if (!getAsset) return imagePath;
+
+    try {
+        var asset = getAsset(imagePath);
+        return asset ? asset.toString() : imagePath;
+    } catch (e) {
+        console.log('Error getting image asset:', imagePath, e);
+        return imagePath;
+    }
+}
+
+function toSingleQuotedValue(value) {
+    return String(value || '')
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'");
+}
+
+function getBadgeLabel(tag, lang) {
+    if (tag === 'General') return lang === 'fr' ? 'Programme EDT' : 'EDT Program';
+    return tag || '';
+}
+
 var partnersData = {
     "CEA": {
         "fullname": "Commissariat à l'énergie atomique et aux énergies alternatives",
@@ -727,17 +751,18 @@ CMS.registerEditorComponent({
     id: 'PrincipalInvestigator',
     label: 'Principal Investigator',
     fields: [
-        { name: 'name', label: 'Name', widget: 'string' },
-        { name: 'headline', label: 'Headline/Title', widget: 'string' },
-        { name: 'picture', label: 'Profile Picture', widget: 'image', required: false },
-        { name: 'bio', label: 'Biography', widget: 'text' }
+        { name: 'name', label: 'Name', widget: 'string', required: true },
+        { name: 'headline', label: 'Headline/Title', widget: 'string', },
+        { name: 'picture', label: 'Profile Picture', widget: 'image', required: true },
+        { name: 'bio', label: 'Biography', widget: 'text', required: true }
     ],
     pattern: /<PrincipalInvestigator\s+name="([^"]+)"\s+headline="([^"]+)"(?:\s+picture=\{([^}]+)\}|\s+picture="([^"]+)?")?\s*>\n([\s\S]*?)\n<\/PrincipalInvestigator>/,
     fromBlock: function (match) {
+        var picture = match[3] || match[4] || '';
         return {
             name: match[1],
             headline: match[2],
-            picture: match[3] || match[4] || '',
+            picture: picture,
             bio: match[5]
         };
     },
@@ -745,34 +770,162 @@ CMS.registerEditorComponent({
         var block = '<PrincipalInvestigator\nname="' + obj.name + '"\nheadline="' + obj.headline + '"';
         if (obj.picture) {
             var isPath = obj.picture.startsWith('/') || obj.picture.startsWith('./') || obj.picture.startsWith('../');
-            block += isPath ? '\npicture="' + obj.picture + '"' : '\npicture={' + obj.picture + '}';
+            if (isPath) {
+                block += '\npicture="' + obj.picture + '"';
+            } else if (!isPath) {
+                block += '\npicture={' + obj.picture + '}';
+            }
         }
         block += '>\n' + obj.bio + '\n</PrincipalInvestigator>';
         return block;
     },
     toPreview: function (obj, getAsset) {
-        var pictureUrl = obj.picture;
-        if (pictureUrl && getAsset) {
-            try {
-                var asset = getAsset(obj.picture);
-                pictureUrl = asset.toString();
-            } catch (e) {
-                console.log('Error getting asset for Principal Investigator picture:', obj.picture, e);
-            }
-        }
+        var pictureUrl = resolveImageUrl(obj.picture, getAsset);
 
         return `<div class="card bg-white shadow-sm border flex flex-col sm:flex-row gap-6 items-start mb-6">
             ${pictureUrl ?
-                `<img src="${pictureUrl}" alt="${escapeHtml(obj.name)}" class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0 object-cover" />`
+                `<img src="${pictureUrl}" alt="${escapeHtml(obj.name)}" class="w-48 h-48 bg-gray-200 rounded-full flex-shrink-0 object-cover" loading="lazy" decoding="async" />`
                 :
                 ''
             }
             <div class="flex-1 space-y-3">
-            <h3 class="text-xl font-medium text-gray-800">${escapeHtml(obj.name)}</h3>
-            <p class="text-gray-700">${escapeHtml(obj.headline)}</p>
+            <h3 class="text-2xl font-bold text-gray-800">${escapeHtml(obj.name)}</h3>
+            <p class="text-primary-700 font-bold text-xl">${escapeHtml(obj.headline)}</p>
             <p class="text-gray-600">${escapeHtml(obj.bio)}</p>
             </div>
             </div>`;
+    }
+});
+
+/**
+ * PC Leaders List Component
+ * Usage: <PCLeadersList lang="en" leaders={[{...}]} />
+ */
+CMS.registerEditorComponent({
+    id: 'PCLeadersList',
+    label: 'PC Leaders List',
+    fields: [
+        { name: 'name', label: 'Name', widget: 'string' },
+        { name: 'affiliation', label: 'Affiliation', widget: 'string', required: false },
+        { name: 'project', label: 'Project', widget: 'select', options: ['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General'], default: 'General' },
+        { name: 'picture', label: 'Picture', widget: 'image', required: false },
+        { name: 'website', label: 'Website', widget: 'string', required: false }
+    ],
+    pattern: /<PCLeadersList\s+lang="(en|fr)"\s+leaders=\{\[([\s\S]*?)\]\}\s*\/?>/,
+    fromBlock: function (match) {
+        var leadersRaw = match[2] || '';
+        var leaderBlocks = leadersRaw.match(/\{[\s\S]*?\}/g) || [];
+
+        var leaders = leaderBlocks.map(function (leaderBlock) {
+            function extractField(fieldName) {
+                var fieldPattern = new RegExp(fieldName + "\\s*:\\s*(['\"])([\\s\\S]*?)\\1");
+                var fieldMatch = leaderBlock.match(fieldPattern);
+                return fieldMatch ? fieldMatch[2].trim() : '';
+            }
+
+            return {
+                name: extractField('name'),
+                affiliation: extractField('affiliation'),
+                project: extractField('project') || 'General',
+                picture: extractField('picture'),
+                website: extractField('website')
+            };
+        }).filter(function (leader) {
+            return leader.name;
+        });
+
+        return {
+            lang: match[1] || 'en',
+            leaders: leaders
+        };
+    },
+    toBlock: function (obj) {
+        var lang = obj.lang || 'en';
+        var leaders = Array.isArray(obj.leaders) ? obj.leaders : [];
+
+        var leadersString = leaders.map(function (leader) {
+            var fields = [
+                "name: '" + toSingleQuotedValue(leader.name) + "'",
+                "affiliation: '" + toSingleQuotedValue(leader.affiliation) + "'",
+                "project: '" + toSingleQuotedValue(leader.project || 'General') + "'"
+            ];
+
+            if (leader.picture) {
+                fields.push("picture: '" + toSingleQuotedValue(leader.picture) + "'");
+            }
+
+            if (leader.website) {
+                fields.push("website: '" + toSingleQuotedValue(leader.website) + "'");
+            }
+
+            return '    { ' + fields.join(', ') + ' }';
+        }).join(',\n');
+
+        return '<PCLeadersList\n' +
+            '  lang="' + lang + '"\n' +
+            '  leaders={[\n' +
+            leadersString + '\n' +
+            '  ]}\n' +
+            '/>';
+    },
+    toPreview: function (obj, getAsset) {
+        var lang = obj.lang || 'en';
+        var websiteText = lang === 'fr' ? 'Site web' : 'Website';
+        var leaders = Array.isArray(obj.leaders) ? obj.leaders : [];
+
+        var leadersHtml = leaders.map(function (leader) {
+            var project = leader.project || 'General';
+            var badgeClasses = getBadgeClasses(project);
+            var badgeLabel = getBadgeLabel(project, lang);
+            var name = escapeHtml(leader.name || '');
+            var affiliation = escapeHtml(leader.affiliation || 'TBC');
+            var website = leader.website ? escapeHtml(leader.website) : '';
+            var pictureUrl = resolveImageUrl(leader.picture, getAsset);
+
+            var initials = (leader.name || '')
+                .split(' ')
+                .filter(Boolean)
+                .slice(0, 2)
+                .map(function (part) { return part.charAt(0); })
+                .join('');
+
+            var imageOrFallback = pictureUrl
+                ? `<img src="${pictureUrl}" alt="Portrait of ${name}" class="w-16 h-16 object-cover rounded-full flex-shrink-0" loading="lazy" />`
+                : `<div class="w-16 h-16 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-semibold flex-shrink-0">${escapeHtml(initials)}</div>`;
+
+            var websiteHtml = website
+                ? `<a href="${website}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-primary-700 hover:text-primary-800 underline">
+                        ${websiteText}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H18m0 0v4.5M18 6l-7.5 7.5" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 7.5h-1.5A2.25 2.25 0 004.5 9.75v7.5A2.25 2.25 0 006.75 19.5h7.5a2.25 2.25 0 002.25-2.25v-1.5" />
+                        </svg>
+                    </a>`
+                : '';
+
+            return `<article class="card bg-white border shadow-sm p-4 relative">
+                <div class="absolute top-4 right-4">
+                    <span class="badge ${badgeClasses}">${escapeHtml(badgeLabel)}</span>
+                </div>
+
+                <div class="flex items-stretch gap-3 pr-24">
+                    ${imageOrFallback}
+
+                    <div class="min-w-0 flex-1">
+                        <div class="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                            <h4 class="text-lg font-semibold text-gray-900 leading-tight">${name}</h4>
+                            <span class="text-sm text-gray-600">${affiliation}</span>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 text-sm">
+                            ${websiteHtml}
+                        </div>
+                    </div>
+                </div>
+            </article>`;
+        }).join('');
+
+        return `<div class="flex flex-col gap-4 my-6">${leadersHtml}</div>`;
     }
 });
 
@@ -785,13 +938,22 @@ CMS.registerEditorComponent({
     label: 'Partners Grid',
     fields: [
         {
+            name: 'largeLogos',
+            label: 'Large logos',
+            widget: 'boolean',
+            required: false,
+            default: false
+        },
+        {
             name: 'partners',
             label: 'Partners',
             widget: 'select',
             multiple: true,
-            options: ["CEA",
+            options: ["ANR",
+                "CEA",
                 "École Polytechnique",
                 "ENS Paris-Saclay",
+                "France2030",
                 "IMT Atlantique",
                 "INRAE",
                 "Inria",
@@ -811,28 +973,40 @@ CMS.registerEditorComponent({
             hint: 'Select partners'
         }
     ],
-    pattern: /<PartnersGrid\s+partners=\{\[([^\]]+)\]\}\s*\/>/,
+    pattern: /<PartnersGrid\s+([^>]*?)\/>/,
     fromBlock: function (match) {
-        // Extract partner names from the array syntax
-        var partners = match[1]
+        var attributes = match[1] || '';
+        var partnersMatch = attributes.match(/partners=\{\[([^\]]+)\]\}/);
+        var largeLogosMatch = attributes.match(/largeLogos="(true|false)"/);
+
+        var partners = (partnersMatch ? partnersMatch[1] : '')
             .split(',')
             .map(function (p) { return p.trim().replace(/^['"]|['"]$/g, ''); })
+            .filter(Boolean);
+
         return {
+            largeLogos: largeLogosMatch ? largeLogosMatch[1] === 'true' : false,
             partners
         };
     },
     toBlock: function (obj) {
-        // Convert comma-separated string to array syntax
-        var partnersArray = obj.partners
+        var partnersArray = (obj.partners || [])
             .map(function (p) { return "'" + p.trim() + "'"; })
             .join(', ');
-        return '<PartnersGrid partners={[' + partnersArray + ']} />';
+
+        var block = '<PartnersGrid';
+        if (obj.largeLogos) {
+            block += ' largeLogos="true"';
+        }
+        block += ' partners={[' + partnersArray + ']} />';
+        return block;
     },
     toPreview: function (obj, getAsset) {
-        var partnersValue = obj.partners || '';
+        var partnersValue = Array.isArray(obj.partners) ? obj.partners : [];
         var partnersKeys = partnersValue
             .map(function (p) { return p.trim(); })
             .filter(Boolean);
+        var logoClass = obj.largeLogos ? 'w-auto h-auto object-contain mx-auto max-w-48 max-h-20' : 'w-auto h-auto object-contain mx-auto max-w-36 max-h-16';
 
         var partners = partnersKeys.map(function (key) {
             var entry = partnersData[key];
@@ -847,19 +1021,11 @@ CMS.registerEditorComponent({
         });
 
         var cardsHtml = partners.map(function (partner) {
-            var logoUrl = partner.logo;
-            if (logoUrl && getAsset) {
-                try {
-                    var asset = getAsset(logoUrl);
-                    logoUrl = asset.toString();
-                } catch (e) {
-                    console.log('Error getting asset for partner logo:', logoUrl, e);
-                }
-            }
+            var logoUrl = resolveImageUrl(partner.logo, getAsset);
 
             return '<div class="flex-1 flex flex-col items-center group w-full" title="' + escapeHtml(partner.fullname) + '">' +
                 (logoUrl
-                    ? '<img src="' + logoUrl + '" alt="' + escapeHtml(partner.fullname) + '" class="max-h-12 w-auto max-w-32 h-auto object-contain mx-auto" loading="lazy" />'
+                    ? '<img src="' + logoUrl + '" alt="' + escapeHtml(partner.fullname) + '" class="' + logoClass + '" loading="lazy" />'
                     : '<div class="h-12 w-32 bg-gray-100 border rounded flex items-center justify-center text-xs text-gray-500">' + escapeHtml(partner.key) + '</div>') +
                 '</div>';
         }).join('');
