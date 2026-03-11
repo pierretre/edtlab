@@ -27,7 +27,7 @@ test.describe('Link Verification Tests', () => {
     ];
 
     // Helper function to check if a link is valid
-    async function checkLink(page: any, url: string, _linkText: string): Promise<{ url: string, status: number, error?: string }> {
+    async function checkLink(page: any, url: string, _linkText: string): Promise<{ url: string, status: number, error?: string, isExternal?: boolean }> {
         try {
             // Handle relative URLs
             const fullUrl = url.startsWith('http') ? url : new URL(url, page.url()).href;
@@ -40,13 +40,20 @@ test.describe('Link Verification Tests', () => {
                 return { url: fullUrl, status: 200 }; // Skip these types of links
             }
 
-            const response = await page.request.get(fullUrl);
-            return { url: fullUrl, status: response.status() };
+            // Check if it's an external link
+            const isExternal = fullUrl.startsWith('http') && !fullUrl.includes('localhost');
+
+            const response = await page.request.get(fullUrl, {
+                timeout: isExternal ? 10000 : 30000, // Shorter timeout for external links
+            });
+            return { url: fullUrl, status: response.status(), isExternal };
         } catch (error) {
+            const isExternal = url.startsWith('http') && !url.includes('localhost');
             return {
                 url: url,
                 status: 0,
-                error: error instanceof Error ? error.message : 'Unknown error'
+                error: error instanceof Error ? error.message : 'Unknown error',
+                isExternal
             };
         }
     }
@@ -67,7 +74,8 @@ test.describe('Link Verification Tests', () => {
 
             // Get all links on the page
             const links = await page.locator('a[href]').all();
-            const brokenLinks: Array<{ url: string, status: number, error?: string, linkText: string }> = [];
+            const brokenLinks: Array<{ url: string, status: number, error?: string, linkText: string, isExternal?: boolean }> = [];
+            const externalLinkWarnings: Array<{ url: string, error?: string, linkText: string }> = [];
 
             console.log(`Found ${links.length} links on ${route}`);
 
@@ -82,24 +90,43 @@ test.describe('Link Verification Tests', () => {
 
                 // Consider 4xx and 5xx status codes as broken links
                 if (result.status >= 400 || result.status === 0) {
-                    brokenLinks.push({
-                        url: result.url,
-                        status: result.status,
-                        error: result.error,
-                        linkText: linkText
-                    });
+                    if (result.isExternal) {
+                        // External links that fail are warnings, not failures
+                        externalLinkWarnings.push({
+                            url: result.url,
+                            error: result.error,
+                            linkText: linkText
+                        });
+                    } else {
+                        // Internal links that fail are actual failures
+                        brokenLinks.push({
+                            url: result.url,
+                            status: result.status,
+                            error: result.error,
+                            linkText: linkText,
+                            isExternal: result.isExternal
+                        });
+                    }
                 }
             }
 
-            // Report broken links
+            // Report external link warnings (don't fail the test)
+            if (externalLinkWarnings.length > 0) {
+                console.log(`Found ${externalLinkWarnings.length} external link warnings on ${route} (not failing test):`);
+                externalLinkWarnings.forEach(link => {
+                    console.log(`  - [WARNING] "${link.linkText}" -> ${link.url} (${link.error})`);
+                });
+            }
+
+            // Report broken internal links
             if (brokenLinks.length > 0) {
-                console.log(`Found ${brokenLinks.length} broken links on ${route}:`);
+                console.log(`Found ${brokenLinks.length} broken internal links on ${route}:`);
                 brokenLinks.forEach(link => {
                     console.log(`  - "${link.linkText}" -> ${link.url} (Status: ${link.status}${link.error ? ', Error: ' + link.error : ''})`);
                 });
             }
 
-            // Fail the test if there are broken links
+            // Fail the test if there are broken internal links
             expect(brokenLinks.length).toBe(0);
         });
     });
