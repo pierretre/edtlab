@@ -10,7 +10,7 @@ export interface Props {
 
 const { partners, largeLogos = false } = Astro.props;
 const logos = import.meta.glob<{ default: ImageMetadata }>(
-    "/public/media/uploads/*.{svg,jpg,png,gif,webp}",
+    "/public/media/uploads/*.{svg,jpg,jpeg,png,gif,webp}",
 );
 
 // Resolve partner entries and load their logo image metadata.
@@ -25,11 +25,18 @@ const partnersData: (Partner & { image: ImageMetadata })[] = await Promise.all(
         }
 
         try {
-            const image = (await logos[`/public${meta.logo}`]()).default;
+            const logoPath = `/public${meta.logo}`;
+            const loadLogo = logos[logoPath];
+
+            if (!loadLogo) {
+                throw new Error(`No image module found for path: ${logoPath}`);
+            }
+
+            const image = (await loadLogo()).default;
             return { ...meta, image };
         } catch (err) {
             throw new Error(
-                `Could not load logo for partner "${meta.shortname}". Path attempted: ${meta.logo}. Original error: ${err}`,
+                `Could not load logo for partner "${meta.shortname ?? shortname}". Path attempted: ${meta.logo}. Original error: ${err}`,
             );
         }
     }),
