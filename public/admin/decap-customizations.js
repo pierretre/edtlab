@@ -123,6 +123,50 @@ var partnersData = {
     "Université Toulouse Jean Jaurès": {
         "fullname": "Université Toulouse Jean Jaurès",
         "logo": "/media/uploads/UT2J.png"
+    },
+    "ANR": {
+        "fullname": "Agence Nationale de la Recherche",
+        "logo": "/media/uploads/ANR.jpg"
+    },
+    "France2030": {
+        "fullname": "France 2030",
+        "logo": "/media/uploads/France 2030.png"
+    },
+    "ENSEEIHT": {
+        "fullname": "ENSEEIHT",
+        "logo": "/media/uploads/enseeiht.png"
+    },
+    "Université Lumière Lyon 2": {
+        "fullname": "Université Lumière Lyon 2",
+        "logo": "/media/uploads/Universite-lumiere-lyon-2.png"
+    },
+    "IGN": {
+        "fullname": "Institut national de l'information géographique et forestière",
+        "logo": "/media/uploads/IGN.png"
+    },
+    "CNRS": {
+        "fullname": "Centre national de la recherche scientifique",
+        "logo": "/media/uploads/CNRS.png"
+    },
+    "Université Le Havre Normandie": {
+        "fullname": "Université Le Havre Normandie",
+        "logo": "/media/uploads/Universite-Le-Havre-Normandie.png"
+    },
+    "UGA-INP": {
+        "fullname": "UGA-INP",
+        "logo": "/media/uploads/UGA-INP.png"
+    },
+    "CESI Rouen": {
+        "fullname": "CESI Rouen",
+        "logo": "/media/uploads/CESI_Rouen.png"
+    },
+    "ENIB": {
+        "fullname": "École Nationale d'Ingénieurs de Brest",
+        "logo": "/media/uploads/ENIB.jpeg"
+    },
+    "CNAM": {
+        "fullname": "Conservatoire national des arts et métiers",
+        "logo": "/media/uploads/CNAM.png"
     }
 };
 
@@ -951,9 +995,15 @@ CMS.registerEditorComponent({
             multiple: true,
             options: ["ANR",
                 "CEA",
+                "CESI Rouen",
+                "CNAM",
+                "CNRS",
                 "École Polytechnique",
+                "ENIB",
+                "ENSEEIHT",
                 "ENS Paris-Saclay",
                 "France2030",
+                "IGN",
                 "IMT Atlantique",
                 "INRAE",
                 "Inria",
@@ -962,12 +1012,15 @@ CMS.registerEditorComponent({
                 "Université Bourgogne Europe",
                 "Université Grenoble Alpes",
                 "Université Côte d'Azur",
+                "Université Le Havre Normandie",
                 "Université de Strasbourg",
                 "Université de Lille",
+                "Université Lumière Lyon 2",
                 "Université de Lorraine",
                 "Université de Nantes",
                 "Université de Rennes",
                 "Université de Toulouse",
+                "UGA-INP",
                 "UPPA",
                 "Université Toulouse Jean Jaurès"],
             hint: 'Select partners'
