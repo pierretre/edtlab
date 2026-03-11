@@ -79,9 +79,9 @@ test.describe('Performance Tests', () => {
         const images = await page.locator('img').all();
 
         for (const image of images) {
-            // Check that images have alt text
+            // Check that images have alt attribute (can be empty for decorative images)
             const alt = await image.getAttribute('alt');
-            expect(alt).toBeTruthy();
+            expect(alt).not.toBeNull(); // Alt attribute must exist, but can be empty string for decorative images
 
             // Check that images have proper loading attribute
             const loading = await image.getAttribute('loading');
