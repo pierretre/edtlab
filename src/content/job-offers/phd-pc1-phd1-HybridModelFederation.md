@@ -2,7 +2,7 @@
 title: "PhD Position - Explainable and Traceable Hybrid Model Management for Digital Twins"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "Paris, France"
 expectedStartDate: "April 2026"
 filled: true

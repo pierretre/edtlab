@@ -2,7 +2,7 @@
 title: "PhD Position - Interpretable and Robust Machine Learning for Physics-Based Numerical Simulations"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "France"
 expectedStartDate: "October 2026"
 filled: false

@@ -2,7 +2,7 @@
 title: "PhD Position – Hybridization of Simulation and Learning Models in Digital Twins for Mechanical Systems"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "Rennes or Sophia Antipolis, France"
 expectedStartDate: "January 2026"
 publishedDate: 2025-11-01

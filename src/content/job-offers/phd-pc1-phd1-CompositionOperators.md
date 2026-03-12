@@ -2,7 +2,7 @@
 title: "PhD Position - Compositional Hybrid Digital Twins for Fermented Microbial Ecosystems"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "France"
 expectedStartDate: "October 2026"
 filled: false
