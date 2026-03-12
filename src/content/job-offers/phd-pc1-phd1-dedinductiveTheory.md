@@ -8,9 +8,11 @@ expectedStartDate: "January 2026"
 publishedDate: 2025-11-01
 filled: true
 description: "PhD position on hybrid modeling approaches combining simulation and machine learning for digital twins in mechanical engineering."
+requirements: ["Master's degree in Computer Science, Artificial Intelligence, or related field", "Strong background in AI or reasoning systems", "Programming skills", "Interest in cyber-physical systems and digital twins", "Fluency in English"]
 contacts: ["benoit.combemale@inria.fr", "julien.deantoni@univ-cotedazur.fr"]
 lang: "en"
 ---
+
 
 ## Position Overview
 
