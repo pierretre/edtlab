@@ -2,7 +2,7 @@
 title: "PhD Position - Formal Engineering Methods for Digital Twin Development"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "Toulouse, France"
 expectedStartDate: "October 2026"
 filled: false

@@ -2,7 +2,7 @@
 title: "PhD Position - Distributed Abductive Reasoning for Self-Explaining Digital Twins"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "Nice, France"
 expectedStartDate: "October 2026"
 filled: false

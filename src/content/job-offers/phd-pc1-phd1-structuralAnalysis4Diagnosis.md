@@ -2,7 +2,7 @@
 title: "PhD Position - Structural Methods for Mixed Model/Data Digital Twin Engineering"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "Rennes, France"
 expectedStartDate: "October 2026"
 filled: false

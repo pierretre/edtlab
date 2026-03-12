@@ -2,7 +2,7 @@
 title: "PhD Position - Smart Scenario Exploration for Digital Twins through Validity Envelopes"
 tags:
   - "PC1"
-type: "phd"
+type: "PhD"
 location: "Pau, France"
 expectedStartDate: "October 2026"
 filled: false
