@@ -4,8 +4,8 @@ tags:
   - "PC1"
 type: "phd"
 location: "Paris, France"
-expectedStartDate: "October 2026"
-filled: false
+expectedStartDate: "April 2026"
+filled: true
 publishedDate: 2026-03-15
 description: "PhD position on explainable and traceable management of hybrid physics-based and machine learning models in digital twins"
 requirements: ["Master's degree in Computer Science, Software Engineering, or related field", "Strong background in Model-Based Systems Engineering or Model-Driven Engineering", "Knowledge of simulation, machine learning, or cyber-physical systems", "Programming skills", "Fluency in English"]

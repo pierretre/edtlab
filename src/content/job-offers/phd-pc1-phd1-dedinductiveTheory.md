@@ -4,8 +4,8 @@ tags:
   - "PC1"
 type: "phd"
 location: "Rennes or Sophia Antipolis, France"
-expectedStartDate: "October 2026"
-publishedDate: 2026-03-15
+expectedStartDate: "January 2026"
+publishedDate: 2025-11-01
 filled: true
 description: "PhD position on hybrid modeling approaches combining simulation and machine learning for digital twins in mechanical engineering."
 contacts: ["benoit.combemale@inria.fr", "julien.deantoni@univ-cotedazur.fr"]
