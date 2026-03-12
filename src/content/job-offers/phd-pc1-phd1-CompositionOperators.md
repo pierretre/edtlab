@@ -32,7 +32,7 @@ This research will investigate how such hybrid models can be constructed through
 The PhD will explore the following research directions:
 
 - **Hybridization Operators for Microbial Digital Twins**  
-  Designing operators that combine mechanistic ecological models with data-driven components in a consistent simulation framework.
+  Designing operators that combine mechanistic ecological models with data-driven components in a consistent simulation framework, for example by learning corrections to partially specified dynamics or by inferring latent processes from incomplete observations.
 
 - **Reusable Hybrid Modeling Patterns**  
   Defining compositional patterns that allow recurring hybridization strategies (e.g., surrogate replacement, model augmentation, residual learning, multi-fidelity switching).
@@ -43,25 +43,29 @@ The PhD will explore the following research directions:
 - **Metadata and Interface Standardization**  
   Developing standardized interfaces and metadata structures enabling consistent composition of heterogeneous models within digital twin workflows.
 
-These approaches aim to enable **flexible digital twin architectures** where hybrid models can be composed, replaced, or extended using well-defined hybridization operators.
+These approaches aim to enable **flexible digital twin architectures** capable of handling incomplete observations and evolving biological knowledge, where hybrid models can be composed, replaced, or extended using well-defined hybridization operators.
 
 ## Data and Experimental Context
 
-The proposed framework will be instantiated using a large-scale experimental dataset derived from **more than 900 fermentation samples** collected across multiple studies.
+The proposed framework will be instantiated using **experimental datasets** from vegetable fermentation studies, including data generated within the FermenTwin project as well as datasets available in the fermentation literature.
 
-These datasets include fermentations performed on five vegetable substrates: cucumber, carrot, cabbage, pepper, radish.  
+These datasets include fermentation experiments performed on various vegetable substrates, allowing the study of microbial ecosystem dynamics under diverse ecological conditions.
+Fermentation time series typically contain longitudinal observations of microbial community composition and metabolite dynamics across different stages of fermentation, providing insight into microbial interactions and ecosystem evolution.
+<!-- These datasets include fermentations performed on five vegetable substrates: cucumber, carrot, cabbage, pepper, radish.   -->
+<!-- Substrates may be used individually or in combination. Fermentation time series contain between **2 and 12 time points**, spanning from early fermentation stages (day 0) to long-term evolution (up to **720 days**). These observations include microbial composition and metabolite dynamics. -->
+Additional datasets reported in the literature on vegetable fermentation microbial ecology (*e.g.*, Wuyts et al., 2018) may also be used to benchmark and validate the proposed models.
 
-Substrates may be used individually or in combination. Fermentation time series contain between **2 and 12 time points**, spanning from early fermentation stages (day 0) to long-term evolution (up to **720 days**). These observations include microbial composition and metabolite dynamics.
-
-This rich dataset provides an ideal basis for **calibrating, validating, and stress-testing hybrid digital twin models** across diverse ecological conditions.
+Together, these datasets provide a ideal basis for **calibrating, validating, and stress-testing hybrid digital twin models** of microbial fermentation ecosystems across heterogeneous experimental conditions.
 
 ## Key Responsibilities
 
-- Conduct research on compositional hybrid modeling frameworks for digital twins
+- Conduct research on compositional hybrid modeling frameworks for digital twins applied to microbial ecosystem modeling
 - Design hybridization operators integrating mechanistic and data-driven models
 - Develop reusable hybrid modeling patterns for microbial ecosystem simulation
+- Develop and implement mechanistic models of microbial fermentation dynamics (*e.g.*, consumer–resource models)
 - Implement prototype digital twin architectures for fermentation systems
-- Evaluate models using large-scale fermentation datasets
+- Develop methods for parameter inference and model calibration from fermentation time-series data
+- Evaluate models using experimental fermentation datasets
 - Publish research findings in leading conferences and journals
 - Participate in interdisciplinary collaboration within the EDT program
 
@@ -72,13 +76,14 @@ The PhD will be conducted within the **Engineering Digital Twins (EDT)** researc
 The project will combine expertise in:
 
 - microbial ecology and fermentation science  
+- ecological and dynamical systems modeling of microbial ecosystems
 - digital twin architectures  
 - hybrid modeling and simulation  
 - machine learning for scientific systems  
 
 ### Facilities and Resources
 
-- Access to large-scale fermentation datasets
+- Access to experimental fermentation datasets
 - High-performance computing resources
 - Collaboration with interdisciplinary researchers in biology, modeling, and digital twin engineering
 - Opportunities for international collaborations
@@ -88,18 +93,18 @@ The project will combine expertise in:
 ### Required
 
 - Master's degree in Computer Science, Computational Biology, Applied Mathematics, or related field
-- Strong interest in modeling complex systems
-- Programming skills
-- Background in machine learning or dynamical systems
+- Strong interest in modeling and analyzing complex biological or dynamical systems
+- Programming skills in scientific computing environments (e.g., Python, Julia, or similar)
+- Background in machine learning and dynamical systems (ODE-based models))
 - Strong analytical and problem-solving abilities
 - Good communication skills in English
+- Interest in interdisciplinary research at the interface of biology, modeling, and artificial intelligence
 
 ### Preferred
-
 - Knowledge of ecological or biological system modeling
 - Experience with hybrid modeling or scientific machine learning
 - Familiarity with digital twin concepts
-- Experience with large-scale datasets
+- Experience with experimental datasets
 
 ## Application Process
 
