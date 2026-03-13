@@ -48,6 +48,10 @@ function getBadgeLabel(tag, lang) {
 }
 
 var partnersData = {
+    "CETIM": {
+        "fullname": "Centre Technique des Industries Mécaniques",
+        "logo": "/media/uploads/CETIM.png"
+    },
     "CEA": {
         "fullname": "Commissariat à l'énergie atomique et aux énergies alternatives",
         "logo": "/media/uploads/CEA.png"
@@ -63,6 +67,46 @@ var partnersData = {
     "IMT Atlantique": {
         "fullname": "IMT Atlantique",
         "logo": "/media/uploads/IMT_Atlantique.png"
+    },
+    "IFPEN": {
+        "fullname": "IFP Energies nouvelles",
+        "logo": "/media/uploads/IFPEN.png"
+    },
+    "CNES": {
+        "fullname": "Centre National d'Études Spatiales",
+        "logo": "/media/uploads/CNES.png"
+    },
+    "ONERA": {
+        "fullname": "Office National d'Études et de Recherches Aérospatiales",
+        "logo": "/media/uploads/ONERA.png"
+    },
+    "IRD": {
+        "fullname": "Institut de Recherche pour le Développement",
+        "logo": "/media/uploads/IRD.png"
+    },
+    "CIRAD": {
+        "fullname": "Centre de coopération internationale en recherche agronomique pour le développement",
+        "logo": "/media/uploads/CIRAD.png"
+    },
+    "ORANGE": {
+        "fullname": "ORANGE",
+        "logo": "/media/uploads/ORANGE.png"
+    },
+    "UGE": {
+        "fullname": "Université Gustave Eiffel",
+        "logo": "/media/uploads/UGE.png"
+    },
+    "ENPC": {
+        "fullname": "École des Ponts ParisTech",
+        "logo": "/media/uploads/ENPC.png"
+    },
+    "ONIRIS": {
+        "fullname": "ONIRIS",
+        "logo": "/media/uploads/ONIRIS.png"
+    },
+    "Vectura System": {
+        "fullname": "Vectura System",
+        "logo": "/media/uploads/Vectura_System.png"
     },
     "INRAE": {
         "fullname": "Institut National de Recherche pour l'Agriculture, l'Alimentation et l'Environnement",
@@ -159,6 +203,14 @@ var partnersData = {
     "CESI Rouen": {
         "fullname": "CESI Rouen",
         "logo": "/media/uploads/CESI_Rouen.png"
+    },
+    "IRT SystemX": {
+        "fullname": "IRT SystemX",
+        "logo": "/media/uploads/irt_systemx.png"
+    },
+    "IRT Jules Vernes": {
+        "fullname": "IRT Jules Vernes",
+        "logo": "/media/uploads/irt_jules_vernes.png"
     },
     "ENIB": {
         "fullname": "École Nationale d'Ingénieurs de Brest",
@@ -994,6 +1046,7 @@ CMS.registerEditorComponent({
             widget: 'select',
             multiple: true,
             options: ["ANR",
+                "CETIM",
                 "CEA",
                 "CESI Rouen",
                 "CNAM",
@@ -1008,6 +1061,20 @@ CMS.registerEditorComponent({
                 "INRAE",
                 "Inria",
                 "INSA Rennes",
+                "IRT SystemX",
+                "IRT Jules Vernes",
+                "IFPEN",
+                "CNES",
+                "ONERA",
+                "IRD",
+                "CIRAD",
+                "ORANGE",
+                "URCA",
+                "UPHF",
+                "UGE",
+                "ENPC",
+                "ONIRIS",
+                "Vectura System",
                 "Télécom Paris",
                 "Université Bourgogne Europe",
                 "Université Grenoble Alpes",
