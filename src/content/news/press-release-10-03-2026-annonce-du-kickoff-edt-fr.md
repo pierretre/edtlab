@@ -1,7 +1,7 @@
 ---
-title: Annonce du Kickoff EDT
+title: Annonce du kickoff EDT
 lang: fr
-date: 10.03.2026
+date: 2026-03-10
 newsType: press-release
 description: TODO
 tags: []
