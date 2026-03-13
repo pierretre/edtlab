@@ -115,6 +115,18 @@
         "fullname": "UGA-INP",
         "logo": "/media/uploads/UGA-INP.png"
     },
+    "CETIM": {
+        "fullname": "Centre Technique des Industries Mécaniques",
+        "logo": "/media/uploads/CETIM.png"
+    },
+    "IRT SystemX": {
+        "fullname": "IRT SystemX",
+        "logo": "/media/uploads/irt_systemx.png"
+    },
+    "IRT Jules Vernes": {
+        "fullname": "IRT Jules Vernes",
+        "logo": "/media/uploads/irt_jules_vernes.png"
+    },
     "CESI Rouen": {
         "fullname": "CESI Rouen",
         "logo": "/media/uploads/CESI_Rouen.png"
@@ -126,5 +138,57 @@
     "CNAM": {
         "fullname": "Conservatoire national des arts et métiers",
         "logo": "/media/uploads/CNAM.png"
+    },
+    "IFPEN": {
+        "fullname": "IFP Energies nouvelles",
+        "logo": "/media/uploads/IFPEN.png"
+    },
+    "CNES": {
+        "fullname": "Centre National d'Études Spatiales",
+        "logo": "/media/uploads/CNES.png"
+    },
+    "ONERA": {
+        "fullname": "Office National d'Études et de Recherches Aérospatiales",
+        "logo": "/media/uploads/ONERA.png"
+    },  
+    "IRD": {
+        "fullname": "Institut de Recherche pour le Développement",
+        "logo": "/media/uploads/IRD.png"
+    },
+    "CIRAD": {
+        "fullname": "Centre de coopération internationale en recherche agronomique pour le développement",
+        "logo": "/media/uploads/CIRAD.png"
+    },
+    "ORANGE": {
+        "fullname": "ORANGE",
+        "logo": "/media/uploads/ORANGE.png"
+    },
+    "CECI": {
+        "fullname": "CECI",
+        "logo": "/media/uploads/CECI.png"
+    },
+    "URCA": {
+        "fullname": "Université de Reims Champagne-Ardenne",
+        "logo": "/media/uploads/URCA.png"
+    },  
+    "UPHF": {
+        "fullname": "Université Polytechnique Hauts-de-France",
+        "logo": "/media/uploads/UPHF.png"
+    },
+    "UGE": {
+        "fullname": "Université Gustave Eiffel",
+        "logo": "/media/uploads/UGE.png"
+    },
+    "ENPC": {
+        "fullname": "École Nationale des Ponts et Chaussées",
+        "logo": "/media/uploads/ENPC.png"
+    },
+    "ONIRIS": {
+        "fullname": "ONIRIS",
+        "logo": "/media/uploads/ONIRIS.png"
+    },
+    "Vectura System": {
+        "fullname": "Vectura System",
+        "logo": "/media/uploads/Vectura_System.png"
     }
 }
