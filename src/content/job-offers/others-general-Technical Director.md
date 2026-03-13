@@ -18,7 +18,7 @@ We are seeking a Technical Lead for a 5-year national research project to drive 
 
 ## Key Responsibilities
 
-* Technical Strategy, Architecture & Development: define the overall architecture for a scalable, cloud-native web platform supporting the overall lifecycle of digital twins. In charge of the delivery of the platform in collabroation with the partners of the project, to comply with the use cases.
+* Technical Strategy, Architecture & Development: define the overall architecture for a scalable, cloud-native web platform supporting the overall lifecycle of digital twins. In charge of the delivery of the platform in collaboration with the partners of the project, to comply with the use cases.
 * Platform Development Leadership: guide and mentor development teams through all phases—design, implementation, testing, and deployment.
 * Integration & Collaboration:
   * Coordinate with research partners to integrate components such as, among others, simulation engines, IoT data sources, analytics modules, visualization components...

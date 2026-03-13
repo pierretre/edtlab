@@ -36,7 +36,7 @@ The PhD research will contribute to advancing the state-of-the-art in:
 
 ## Research Environment
 
-The position is based at Bretagne INP Énib in Brest, within the INUIT team at Lab-STICC. You will work under the supervision of Prof. Ronan Querrec and collaborate with researchers across the EDT consortium. You will be co-supervised by Professor Valérie Gouranton from Inria Rennes and by professor David Baudry fron CESI LINEACT Rouen.
+The position is based at Bretagne INP Énib in Brest, within the INUIT team at Lab-STICC. You will work under the supervision of Prof. Ronan Querrec and collaborate with researchers across the EDT consortium. You will be co-supervised by Professor Valérie Gouranton from Inria Rennes and by professor David Baudry from CESI LINEACT Rouen.
 
 ### Facilities and Resources
 
