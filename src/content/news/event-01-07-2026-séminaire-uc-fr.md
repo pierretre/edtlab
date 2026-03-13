@@ -1,7 +1,7 @@
 ---
 title: Séminaire UC
 lang: fr
-date: 01.07.2026
+date: 2026-01-07
 newsType: event
 location: Lyon, ENS
 description: "Premier séminaire d'échange entre fournisseurs de UC (Use Cases)
