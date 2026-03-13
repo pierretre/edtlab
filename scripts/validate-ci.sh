@@ -36,7 +36,7 @@ npm run check
 print_status $? "TypeScript check passed"
 
 echo "🧪 Running unit tests..."
-npm run test
+npm run test:ci
 print_status $? "Unit tests passed"
 
 echo "🏗️  Building project..."
@@ -69,7 +69,7 @@ for file in "${essential_files[@]}"; do
 done
 
 echo "📊 Generating test coverage report..."
-npm run test:coverage
+npm run test:coverage:ci
 print_status $? "Coverage report generated"
 
 echo "🎉 All CI/CD validation checks passed!"
