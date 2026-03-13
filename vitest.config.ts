@@ -1,7 +1,20 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig, type Plugin } from 'vitest/config';
 import path from 'path';
 
+// Vitest plugin to stub modules unavailable outside Astro's SSR context
+const astroStubPlugin: Plugin = {
+    name: 'astro-stub',
+    resolveId(id) {
+        if (id.endsWith('.astro') || id === 'astro:content') return `\0${id}`;
+    },
+    load(id) {
+        if (id === '\0astro:content') return 'export const getCollection = async () => [];';
+        if (id.endsWith('.astro')) return 'export default {}';
+    },
+};
+
 export default defineConfig({
+    plugins: [astroStubPlugin],
     resolve: {
         alias: {
             '@components': path.resolve(__dirname, './src/components'),
@@ -40,10 +53,10 @@ export default defineConfig({
             ],
             thresholds: {
                 global: {
-                    branches: 50,
-                    functions: 50,
-                    lines: 50,
-                    statements: 50
+                    branches: 70,
+                    functions: 70,
+                    lines: 70,
+                    statements: 70
                 }
             }
         },
