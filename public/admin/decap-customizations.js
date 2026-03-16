@@ -1111,7 +1111,7 @@ CMS.registerEditorComponent({
     },
     toBlock: function (obj) {
         var partnersArray = (obj.partners || [])
-            .map(function (p) { return "'" + p.trim() + "'"; })
+            .map(function (p) { return "\"" + p.trim() + "\""; })
             .join(', ');
 
         var block = '<PartnersGrid';
