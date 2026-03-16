@@ -219,10 +219,6 @@ var partnersData = {
     "CNAM": {
         "fullname": "Conservatoire national des arts et métiers",
         "logo": "/media/uploads/CNAM.png"
-    },
-    "CETIM": {
-        "fullname": "Centre technique des industries mécaniques",
-        "logo": "/media/uploads/CETIM.png"
     }
 };
 
