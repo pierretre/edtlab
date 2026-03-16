@@ -9,6 +9,7 @@ import { Picture } from "astro:assets";
 import logoEN from "@assets/images/logo-en.png";
 import logoFR from "@assets/images/logo-fr.png";
 import logoInria from "../../public/media/uploads/Inria.png";
+import logoFrance2030 from "../../public/media/uploads/France 2030.png";
 import heroBackground from "@assets/images/INRIA_EDT_CBLOT_fond_herosection.jpg";
 import heroIllustration from "@assets/images/INRIA_EDT_CBLOT_Illu_Herosection.png";
 
@@ -190,41 +191,57 @@ const logoImagePng = lang === "fr" ? logoFR : logoEN;
         </div>
 
         <div
-            class="mt-6 mx-auto w-fit flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-8"
+            class="mt-8 mx-auto max-w-screen-md flex flex-col sm:flex-row items-stretch justify-center gap-8 sm:gap-16"
         >
-            <Picture
-                src={logoImagePng}
-                alt="EDT Logo"
-                class="h-full w-auto object-contain"
-                widths={[280, 560, 800, 1120]}
-                sizes="(max-width: 768px) 45vw, 280px"
-                quality={95}
-                format="webp"
-                pictureAttributes={{
-                    class: "flex-shrink-0 h-full",
-                }}
-                loading="eager"
-                decoding="async"
-            />
+            <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-0.5 bg-[#434672]"></span>
+                    <p class="font-semibold text-gray-700 text-lg">
+                        {t("home.funded-by")}
+                    </p>
+                </div>
+                <div class="flex-1 flex items-center justify-center mt-3">
+                    <Picture
+                        src={logoFrance2030}
+                        alt="France 2030 Logo"
+                        class="h-[6.25rem] w-auto object-contain"
+                        widths={[200, 400, 600]}
+                        sizes="(max-width: 400px) 50vw, 200px"
+                        quality={95}
+                        format="webp"
+                        pictureAttributes={{
+                            class: "flex-shrink-0 h-[6.25rem]",
+                        }}
+                        loading="eager"
+                        decoding="async"
+                    />
+                </div>
+            </div>
 
-            <p class="text-center font-light text-gray-500 text-xl lg:text-2xl">
-                {t("home.piloted-by")}
-            </p>
-
-            <Picture
-                src={logoInria}
-                alt="Inria Logo"
-                class="h-16 w-auto object-contain"
-                widths={[160, 320, 480]}
-                sizes="(max-width: 400px) 40vw, 160px"
-                quality={95}
-                format="webp"
-                pictureAttributes={{
-                    class: "flex-shrink-0 h-16",
-                }}
-                loading="eager"
-                decoding="async"
-            />
+            <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-0.5 bg-[#434672]"></span>
+                    <p class="font-semibold text-gray-700 text-lg">
+                        {t("home.operated-by")}
+                    </p>
+                </div>
+                <div class="flex-1 flex items-center justify-center mt-3">
+                    <Picture
+                        src={logoInria}
+                        alt="Inria Logo"
+                        class="h-16 w-auto object-contain"
+                        widths={[160, 320, 480]}
+                        sizes="(max-width: 400px) 40vw, 160px"
+                        quality={95}
+                        format="webp"
+                        pictureAttributes={{
+                            class: "flex-shrink-0 h-16",
+                        }}
+                        loading="eager"
+                        decoding="async"
+                    />
+                </div>
+            </div>
         </div>
 
         <!-- Enhanced Navigation Tiles Section with Flowbite Cards -->
