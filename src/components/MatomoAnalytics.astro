@@ -1,8 +1,8 @@
 ---
 // Get Matomo configuration from environment variables
-const matomoUrl = import.meta.env.MATOMO_URL || "http://localhost:8080";
+const matomoUrl = import.meta.env.MATOMO_URL || "https://edtlab.fr/matomo/";
 const matomoSiteId = import.meta.env.MATOMO_SITE_ID || "1";
-const enableCookies = import.meta.env.MATOMO_ENABLE_COOKIES === "true";
+const enableCookies = import.meta.env.MATOMO_ENABLE_COOKIES === "false";
 const respectDNT = import.meta.env.MATOMO_RESPECT_DNT !== "false"; // Default to true
 const enableHeartbeat = import.meta.env.MATOMO_ENABLE_HEARTBEAT === "true";
 const heartbeatTimer = parseInt(import.meta.env.MATOMO_HEARTBEAT_TIMER || "15");
