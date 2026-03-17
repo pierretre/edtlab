@@ -2,11 +2,6 @@
 // Get Matomo configuration from environment variables
 const matomoUrl = import.meta.env.MATOMO_URL || "https://edtlab.fr/matomo/";
 const matomoSiteId = import.meta.env.MATOMO_SITE_ID || "1";
-const enableCookies = import.meta.env.MATOMO_ENABLE_COOKIES === "false";
-const respectDNT = import.meta.env.MATOMO_RESPECT_DNT !== "false"; // Default to true
-const enableHeartbeat = import.meta.env.MATOMO_ENABLE_HEARTBEAT === "true";
-const heartbeatTimer = parseInt(import.meta.env.MATOMO_HEARTBEAT_TIMER || "15");
-const isDev = import.meta.env.DEV;
 ---
 
 <!-- Initialize _paq on main thread for immediate tracking -->
@@ -15,11 +10,6 @@ const isDev = import.meta.env.DEV;
   define:vars={{
     matomoUrl,
     matomoSiteId,
-    enableCookies,
-    respectDNT,
-    enableHeartbeat,
-    heartbeatTimer,
-    isDev,
   }}
 >
   var _paq = (window._paq = window._paq || []);
@@ -27,15 +17,11 @@ const isDev = import.meta.env.DEV;
   _paq.push(["trackPageView"]);
   _paq.push(["enableLinkTracking"]);
   // Configure privacy settings
-  _paq.push(["setDoNotTrack", respectDNT]);
+  _paq.push(["setDoNotTrack", "false"]);
   // Cookie settings for GDPR compliance
-  if (!enableCookies) {
-    _paq.push(["disableCookies"]);
-  }
+  _paq.push(["disableCookies"]);
   // Enable heartbeat timer if configured
-  if (enableHeartbeat) {
-    _paq.push(["enableHeartBeatTimer", heartbeatTimer]);
-  }
+  _paq.push(["enableHeartBeatTimer", "15"]);
   (function () {
     var u = matomoUrl;
     _paq.push(["setTrackerUrl", u + "matomo.php"]);
@@ -45,10 +31,6 @@ const isDev = import.meta.env.DEV;
       s = d.getElementsByTagName("script")[0];
     g.async = true;
     g.src = u + "matomo.js";
-    // Use Partytown to run analytics in a web worker (only in production)
-    if (!isDev) {
-      g.type = "text/partytown";
-    }
     s.parentNode.insertBefore(g, s);
   })();
 </script>
