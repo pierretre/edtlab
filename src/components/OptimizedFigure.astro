@@ -1,13 +1,12 @@
 ---
+import { Picture } from "astro:assets";
+
 export interface Props {
     src: string;
     alt: string;
     caption?: string;
     class?: string;
     loading?: "lazy" | "eager";
-    quality?: number;
-    widths?: number[];
-    sizes?: string;
     align?: "left" | "center" | "right";
     maxWidth?: number;
 }
@@ -21,6 +20,24 @@ const {
     align = "center",
     maxWidth,
 } = Astro.props;
+
+const uploadImages = import.meta.glob<{ default: ImageMetadata }>([
+    "/public/media/uploads/*.{svg,jpg,jpeg,png,gif,webp}",
+    "/src/assets/images/*.{svg,jpg,jpeg,png,gif,webp}",
+]);
+
+let uploadImage: ImageMetadata | undefined;
+
+if (src.startsWith("/media/uploads/")) {
+    const modulePath = `/public${src}`;
+    const loadImage = uploadImages[modulePath];
+
+    if (!loadImage) {
+        throw new Error(`No image module found for path: ${modulePath}`);
+    }
+
+    uploadImage = (await loadImage()).default;
+}
 
 // Convert maxWidth input into usable CSS
 const resolvedMaxWidth = maxWidth ? `${maxWidth}px` : "100%";
@@ -37,14 +54,18 @@ const alignmentStyle =
     class={`mb-6 ${className}`}
     style={`max-width: ${resolvedMaxWidth}; margin-left: ${alignmentStyle};`}
 >
-    <!-- CMS images from public/ - use plain img tag for reliable preview -->
-    <img
-        src={src}
-        alt={alt}
-        loading={loading}
-        decoding="async"
-        style="display: block; width: 100%; height: auto;"
-    />
+    {
+        uploadImage && (
+            <Picture
+                src={uploadImage}
+                alt={alt}
+                loading={loading}
+                format="webp"
+                quality={80}
+                style="display: block; width: 100%; height: auto;"
+            />
+        )
+    }
     {
         caption && (
             <figcaption class="mt-2 text-sm text-gray-700 dark:text-gray-300 text-center italic">
