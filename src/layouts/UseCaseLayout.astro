@@ -156,7 +156,16 @@ for (const c of (frontmatter.contacts || [])) {
                                         <span class="font-medium text-gray-900">{c.name}</span>
                                         {c.role && c.role !== 'contributor' && <span class="text-gray-400 text-xs ml-1">({c.role})</span>}
                                         {c.email && (
-                                            <a href={`mailto:${c.email}`} class="block text-primary-600 hover:underline text-xs mt-0.5">{c.email}</a>
+                                            <span class="block text-xs mt-0.5">
+                                                <span class="email-obfuscated text-gray-400">{c.email.replace('@', ' [at] ').replace(/\./g, ' [dot] ')}</span>
+                                                <button
+                                                    type="button"
+                                                    class="email-reveal ml-1 text-primary-600 hover:underline cursor-pointer"
+                                                    data-email={btoa(c.email)}
+                                                >
+                                                    {t("use-cases.stats.show-email" as any)}
+                                                </button>
+                                            </span>
                                         )}
                                     </div>
                                 ))}
@@ -222,11 +231,28 @@ for (const c of (frontmatter.contacts || [])) {
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Version selector
         const selector = document.getElementById('version-selector') as HTMLSelectElement;
         if (selector) {
             selector.addEventListener('change', () => {
                 window.location.href = selector.value;
             });
         }
+
+        // Email reveal buttons
+        document.querySelectorAll('.email-reveal').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const email = atob((btn as HTMLElement).dataset.email || '');
+                const obfuscated = btn.previousElementSibling as HTMLElement;
+                if (obfuscated) {
+                    const link = document.createElement('a');
+                    link.href = `mailto:${email}`;
+                    link.textContent = email;
+                    link.className = 'text-primary-600 hover:underline';
+                    obfuscated.replaceWith(link);
+                }
+                btn.remove();
+            });
+        });
     });
 </script>

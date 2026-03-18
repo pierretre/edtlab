@@ -389,6 +389,87 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
 };
 
 /**
+ * Filter configuration for use cases
+ */
+export const useCasesFilterConfig: FilterSystemConfig<DOMItemData> = {
+    filters: [
+        {
+            id: 'domain-filter',
+            type: 'select',
+            label: 'Domain',
+            translationKey: 'use-cases.filter.domain',
+            options: [
+                { value: '', label: 'All Domains', translationKey: 'use-cases.filter.all-domains' },
+                { value: 'energy', label: 'Energy', translationKey: 'use-cases.domain.energy' },
+                { value: 'geospatial', label: 'Geospatial', translationKey: 'use-cases.domain.geospatial' },
+                { value: 'industrial-engineering', label: 'Industrial Engineering', translationKey: 'use-cases.domain.industrial-engineering' },
+                { value: 'maritime', label: 'Maritime', translationKey: 'use-cases.domain.maritime' },
+                { value: 'telecommunications', label: 'Telecommunications', translationKey: 'use-cases.domain.telecommunications' },
+            ],
+            predicate: (data, value) => {
+                if (!value) return true;
+                return (data.domain || '') === value;
+            },
+            urlParam: 'domain',
+            defaultValue: ''
+        },
+        {
+            id: 'maturity-filter',
+            type: 'select',
+            label: 'Maturity',
+            translationKey: 'use-cases.filter.maturity',
+            options: [
+                { value: '', label: 'All Maturities', translationKey: 'use-cases.filter.all-maturities' },
+                { value: 'concept', label: 'Concept', translationKey: 'use-cases.maturity.concept' },
+                { value: 'poc', label: 'Proof of Concept', translationKey: 'use-cases.maturity.poc' },
+                { value: 'prototype', label: 'Prototype', translationKey: 'use-cases.maturity.prototype' },
+                { value: 'operational', label: 'Operational', translationKey: 'use-cases.maturity.operational' },
+            ],
+            predicate: (data, value) => {
+                if (!value) return true;
+                return (data.maturity || '') === value;
+            },
+            urlParam: 'maturity',
+            defaultValue: ''
+        },
+        {
+            id: 'sort-filter',
+            type: 'select',
+            label: 'Sort',
+            translationKey: 'use-cases.filter.sort',
+            options: [
+                { value: 'date-desc', label: 'Newest First', translationKey: 'use-cases.sort.date-desc' },
+                { value: 'date-asc', label: 'Oldest First', translationKey: 'use-cases.sort.date-asc' },
+                { value: 'title-asc', label: 'Title A-Z', translationKey: 'use-cases.sort.title-asc' },
+                { value: 'title-desc', label: 'Title Z-A', translationKey: 'use-cases.sort.title-desc' },
+            ],
+            predicate: () => true,
+            urlParam: 'sort',
+            defaultValue: 'date-desc'
+        },
+        {
+            id: 'search-filter',
+            type: 'search',
+            label: 'Search',
+            translationKey: 'use-cases.filter.search',
+            predicate: (data, value) => {
+                if (!value) return true;
+                const searchText = (data.searchText || '').toLowerCase();
+                return searchText.includes(value.toLowerCase());
+            },
+            urlParam: 'search',
+            debounce: 200,
+            defaultValue: ''
+        }
+    ],
+    itemSelector: '.use-case-item',
+    containerSelector: '#use-cases-grid',
+    noResultsSelector: '#no-results',
+    resultsCountSelector: '#results-count',
+    clearButtonSelector: '#clear-filters'
+};
+
+/**
  * Helper function to extract unique years from publications
  * Useful for dynamically populating the year filter options
  * 
