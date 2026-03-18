@@ -12,16 +12,27 @@ interface Props {
 const { lang } = Astro.props as Props;
 const t = useTranslations(lang);
 
-const allUseCases = (await getCollection("use-cases", (item) =>
-    item.data.lang === lang && item.data.status === "published"
+const allPublished = (await getCollection("use-cases", (item) =>
+    item.data.status === "published"
 )).sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime());
 
-// Group by id, keep only the latest version per UC
-const latestByUc = new Map<string, typeof allUseCases[0]>();
-for (const uc of allUseCases) {
+// Group by id, keep latest version, prefer current lang, fallback to other lang
+const latestByUc = new Map<string, typeof allPublished[0]>();
+for (const uc of allPublished) {
     const existing = latestByUc.get(uc.data.id);
-    if (!existing || (uc.data.version || '0') > (existing.data.version || '0')) {
+    if (!existing) {
         latestByUc.set(uc.data.id, uc);
+    } else {
+        const existingIsPreferred = existing.data.lang === lang;
+        const newIsPreferred = uc.data.lang === lang;
+        // Prefer current lang over fallback
+        if (newIsPreferred && !existingIsPreferred) {
+            latestByUc.set(uc.data.id, uc);
+        }
+        // Same lang preference: keep latest version
+        else if (newIsPreferred === existingIsPreferred && (uc.data.version || '0') > (existing.data.version || '0')) {
+            latestByUc.set(uc.data.id, uc);
+        }
     }
 }
 const useCases = [...latestByUc.values()].sort((a, b) =>

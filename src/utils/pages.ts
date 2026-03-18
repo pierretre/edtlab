@@ -107,30 +107,26 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
  */
 async function generateUseCasesStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("use-cases");
+    const published = allEntries.filter((entry: CollectionEntry<"use-cases">) => entry.data.status === 'published');
 
-    return allEntries
-        .filter((entry: CollectionEntry<"use-cases">) => entry.data.status === 'published')
-        .map((entry: CollectionEntry<"use-cases">) => {
-            const { lang } = entry.data;
-            const link = getContentLink(
-                lang,
-                "use-cases",
-                entry.slug,
-                true,
-            );
-
+    // Generate routes for both languages (content shown in its original lang, accessible from both)
+    let pages: any[] = [];
+    published.forEach((entry: CollectionEntry<"use-cases">) => {
+        for (const targetLang of ['en', 'fr'] as const) {
+            const link = getContentLink(targetLang, "use-cases", entry.slug, true);
             const cleanSlug = link ? link.replace(/-(en|fr)$/, '') : undefined;
-
-            return {
+            pages.push({
                 params: {
-                    lang: lang,
+                    lang: targetLang,
                     slug: cleanSlug,
                 },
                 props: {
                     page: entry
                 },
-            };
-        });
+            });
+        }
+    });
+    return pages;
 }
 
 function getLangAndSlugFromPageData(
