@@ -266,9 +266,9 @@ CV of the PI Sébastien Gérard is Senior Fellow at CEA where he leads the flags
 Project Implementation
 Workpackages
 - WP3.1 – Methodology and life cycle: Lead IRIT/SM@RT (Univ. Toulouse Jean Jaurès), with Diverse (Inria), and P4S (IMT).
-- WP3.2 – Continuous engineering, co-evolution, and quality: Lead LaBRI (CNRS), with DISP (Univ Lumière Lyon 2), Diverse (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), List (CEA), Spirals (Inria), IGN, and TSCF (INRAE).
-- WP3.3 – Collaborative engineering and augmented development tools: Lead List (CEA), with Diverse (Inria), P4S (IMT).
-- WP3.4 – Deployment and sustainability: Lead Diverse (Inria), with LaBRI (CNRS), List
+- WP3.2 – Continuous engineering, co-evolution, sustainability, and quality: Lead LaBRI (CNRS), with DISP (Univ Lumière Lyon 2), Diverse (Inria), IRIT/SM@RT (Univ. Toulouse Jean Jaurès), List (CEA), Spirals (Inria), IGN, and TSCF (INRAE).
+- WP3.3 – Collaborative engineering and augmented development tools: Lead List (CEA), with IRIT/SM@RT (Inria), P4S (IMT).
+- WP3.4 – Deployment and : Lead Diverse (Inria), with LaBRI (CNRS), List
 (CEA), and Spirals (Inria).
 
 Critical capabilities and expertise already in place The different teams gathered for the project cover the different expertises required to handle the list of scientific topics listed above for the project and meet its main objectives.
