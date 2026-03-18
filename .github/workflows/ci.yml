@@ -184,7 +184,7 @@ jobs:
       run: npm ci
       
     - name: Generate test coverage report
-      run: npm run test:coverage
+      run: npm run test:coverage:ci
       
     - name: Check coverage thresholds
       run: |
