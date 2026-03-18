@@ -54,6 +54,8 @@ const partnersData: (Partner & { image: ImageMetadata })[] = await Promise.all(
                     <Picture
                         src={p.image}
                         alt={p.fullname ?? ""}
+                        format="webp"
+                        quality={80}
                         class={`w-auto h-auto object-contain mx-auto ${largeLogos ? "max-w-48 max-h-20" : "max-w-36 max-h-16"}`}
                         loading="lazy"
                     />
