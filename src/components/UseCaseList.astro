@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import { useTranslations } from "@i18n/utils";
+import UseCaseCard from "./UseCaseCard.astro";
+
+interface Props {
+    lang: "en" | "fr";
+}
+
+const { lang } = Astro.props as Props;
+const t = useTranslations(lang);
+
+const allUseCases = (await getCollection("use-cases", (item) =>
+    item.data.lang === lang && item.data.status === "published"
+)).sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime());
+
+// Group by id, keep only the latest version per UC
+const latestByUc = new Map<string, typeof allUseCases[0]>();
+for (const uc of allUseCases) {
+    const existing = latestByUc.get(uc.data.id);
+    if (!existing || (uc.data.version || '0') > (existing.data.version || '0')) {
+        latestByUc.set(uc.data.id, uc);
+    }
+}
+const useCases = [...latestByUc.values()].sort((a, b) => a.data.id.localeCompare(b.data.id));
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+    {
+        useCases.map((uc) => (
+            <UseCaseCard
+                item={uc.data}
+                lang={lang}
+                t={t}
+                slug={uc.slug}
+            />
+        ))
+    }
+</div>
+
+{useCases.length === 0 && (
+    <p class="text-center text-gray-500 py-12">
+        {lang === "fr" ? "Aucun cas d'utilisation disponible pour le moment." : "No use cases available yet."}
+    </p>
+)}

@@ -8,6 +8,7 @@ import NewsList from '@components/NewsList.astro';
 import JobOfferList from '@components/JobOfferList.astro';
 import ProjectGrid from '@components/ProjectGrid.astro';
 import PCLeadersList from '@components/PCLeadersList.astro';
+import UseCaseList from '@components/UseCaseList.astro';
 
 const mdxComponents = {
     OutlinedCard,
@@ -19,7 +20,8 @@ const mdxComponents = {
     NewsList,
     JobOfferList,
     ProjectGrid,
-    PCLeadersList
+    PCLeadersList,
+    UseCaseList
 };
 
 export default mdxComponents;

@@ -23,7 +23,7 @@
 import { enToFrMapping, getCorrespondingPage } from './page-mapping';
 
 export type Lang = 'en' | 'fr';
-export type ContentType = 'news' | 'press-releases' | 'job-offers' | 'events';
+export type ContentType = 'news' | 'press-releases' | 'job-offers' | 'events' | 'use-cases';
 
 /**
  * Content type to route mappings
@@ -44,6 +44,10 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
     events: {
         en: 'news',
         fr: 'actualites'
+    },
+    'use-cases': {
+        en: 'use-cases',
+        fr: 'cas-d-utilisation'
     }
 };
 

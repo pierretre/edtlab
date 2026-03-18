@@ -6,8 +6,9 @@ export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const baseEntries = await generateBasePagesStaticPaths();
     const newsEntries = await generateNewsPagesStaticPaths();
     const jobOfferEntries = await generateJobOffersStaticPaths();
+    const useCaseEntries = await generateUseCasesStaticPaths();
 
-    return [...baseEntries, ...newsEntries, ...jobOfferEntries];
+    return [...baseEntries, ...newsEntries, ...jobOfferEntries, ...useCaseEntries];
 }
 
 /**
@@ -99,6 +100,37 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
             });
         });
     return pages;
+}
+
+/**
+ * Generate static paths for use case pages
+ */
+async function generateUseCasesStaticPaths(): Promise<any[]> {
+    const allEntries = await getCollection("use-cases");
+
+    return allEntries
+        .filter((entry: CollectionEntry<"use-cases">) => entry.data.status === 'published')
+        .map((entry: CollectionEntry<"use-cases">) => {
+            const { lang } = entry.data;
+            const link = getContentLink(
+                lang,
+                "use-cases",
+                entry.slug,
+                true,
+            );
+
+            const cleanSlug = link ? link.replace(/-(en|fr)$/, '') : undefined;
+
+            return {
+                params: {
+                    lang: lang,
+                    slug: cleanSlug,
+                },
+                props: {
+                    page: entry
+                },
+            };
+        });
 }
 
 function getLangAndSlugFromPageData(

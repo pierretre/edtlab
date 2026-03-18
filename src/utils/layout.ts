@@ -1,5 +1,6 @@
 import NewsItemLayout from "@layouts/NewsItemLayout.astro";
 import JobOfferLayout from "@layouts/JobOfferLayout.astro";
+import UseCaseLayout from "@layouts/UseCaseLayout.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
 
@@ -40,6 +41,8 @@ function getLayoutFromCollection(collection: string) {
             return JobOfferLayout;
         case 'news':
             return NewsItemLayout;
+        case 'use-cases':
+            return UseCaseLayout;
         default:
             return PageLayout;
     }

@@ -1,0 +1,232 @@
+---
+import { getCollection } from "astro:content";
+import { formatDate } from "@utils/date";
+import { getContentLink } from "@i18n/links";
+import PageLayout from "./PageLayout.astro";
+import { linkHelpers, useTranslations } from "@i18n/utils";
+import Badge from "@components/Badge.astro";
+
+export interface Props {
+    frontmatter: any;
+}
+
+const { frontmatter } = Astro.props;
+const lang = frontmatter.lang as "en" | "fr";
+const t = useTranslations(lang);
+const coverSrc = frontmatter.photo || '/media/use-cases/uc-default.svg';
+
+// Find all versions of this UC (same id, same lang), sorted by version ascending
+const allVersions = (await getCollection("use-cases", (item) =>
+    item.data.id === frontmatter.id && item.data.lang === lang && item.data.status === "published"
+)).sort((a, b) => (a.data.version || '0').localeCompare(b.data.version || '0'));
+
+const maturityLabels: Record<string, Record<string, string>> = {
+    concept: { fr: "Concept", en: "Concept" },
+    poc: { fr: "Preuve de concept", en: "Proof of Concept" },
+    prototype: { fr: "Prototype", en: "Prototype" },
+    operational: { fr: "Opérationnel", en: "Operational" },
+};
+
+// Group contacts by org
+const contactsByOrg = new Map<string, any[]>();
+for (const c of (frontmatter.contacts || [])) {
+    const key = c.org || '';
+    if (!contactsByOrg.has(key)) contactsByOrg.set(key, []);
+    contactsByOrg.get(key)!.push(c);
+}
+---
+
+<PageLayout
+    title={frontmatter.title}
+    description={frontmatter.summary}
+    lang={lang}
+    showBreadcrumb={true}
+    showToc={true}
+>
+    <!-- Back to Use Cases link -->
+    <div class="mb-6">
+        <a
+            href={linkHelpers.page(lang, "use-cases")}
+            class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
+        >
+            <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"></path>
+            </svg>
+            {lang === "fr" ? "Retour aux cas d'utilisation" : "Back to Use Cases"}
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="mb-8 space-y-4">
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 items-center">
+            {frontmatter.tags.map((tag: string) => <Badge key={tag} t={t} />)}
+        </div>
+
+        <!-- ID + Title -->
+        <div>
+            <span class="text-sm font-medium text-primary-600 uppercase">{frontmatter.id}</span>
+            <h1 class="text-4xl font-bold text-gray-900 mt-1">
+                {frontmatter.title}
+            </h1>
+        </div>
+
+        <!-- Summary -->
+        <p class="text-lg text-gray-600 leading-relaxed">
+            {frontmatter.summary}
+        </p>
+
+        <!-- Meta bar: date, version dropdown, maturity label, license -->
+        <div class="flex flex-wrap items-center gap-6 text-sm text-gray-500">
+            <div class="flex items-center">
+                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {formatDate(frontmatter.publishedDate, lang)}
+            </div>
+
+            <!-- Version selector + maturity label -->
+            <div class="flex items-center gap-2">
+                {allVersions.length > 1 ? (
+                    <select
+                        id="version-selector"
+                        class="text-sm border border-gray-300 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer"
+                    >
+                        {allVersions.map((v) => {
+                            const vLink = `/${lang}${getContentLink(lang, "use-cases", v.slug, true)}`;
+                            const isCurrent = v.data.version === frontmatter.version;
+                            return (
+                                <option
+                                    value={vLink}
+                                    selected={isCurrent}
+                                >
+                                    r{v.data.version}
+                                </option>
+                            );
+                        })}
+                    </select>
+                ) : (
+                    frontmatter.version && <span>r{frontmatter.version}</span>
+                )}
+                {frontmatter.maturity && (
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                        {maturityLabels[frontmatter.maturity]?.[lang] || frontmatter.maturity}
+                    </span>
+                )}
+            </div>
+
+            {frontmatter.license && (
+                <span>{frontmatter.license}</span>
+            )}
+        </div>
+
+        <!-- Cover Image -->
+        <figure class="mt-6 w-full overflow-hidden rounded-lg shadow-sm">
+            <img
+                src={coverSrc}
+                alt={frontmatter.title}
+                class="w-full h-auto object-contain"
+                loading="eager"
+            />
+        </figure>
+
+        <!-- Contacts (grouped by org) -->
+        {frontmatter.contacts?.length > 0 && (
+            <div class="p-4 bg-gray-50 rounded-lg border">
+                <h3 class="text-sm font-semibold text-gray-700 mb-2">
+                    {lang === "fr" ? "Contacts" : "Contacts"}
+                </h3>
+                <div class="space-y-3">
+                    {[...contactsByOrg.entries()].map(([org, contacts]) => (
+                        <div>
+                            {org && <p class="text-sm font-medium text-gray-500 mb-1">{org}</p>}
+                            <div class="flex flex-wrap gap-4">
+                                {contacts.map((c: any) => (
+                                    <div class="text-sm">
+                                        <span class="font-medium text-gray-900">{c.name}</span>
+                                        {c.role && c.role !== 'contributor' && <span class="text-gray-400 text-xs ml-1">({c.role})</span>}
+                                        {c.email && (
+                                            <a href={`mailto:${c.email}`} class="block text-primary-600 hover:underline text-xs mt-0.5">{c.email}</a>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )}
+
+        <!-- References -->
+        {frontmatter.references?.length > 0 && (
+            <div class="p-4 bg-gray-50 rounded-lg border">
+                <h3 class="text-sm font-semibold text-gray-700 mb-2">
+                    {lang === "fr" ? "Références" : "References"}
+                </h3>
+                <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                    {frontmatter.references.map((ref: any) => (
+                        <li>
+                            {ref.url ? (
+                                <a href={ref.url} target="_blank" rel="noopener" class="text-primary-600 hover:underline">{ref.title}</a>
+                            ) : (
+                                <span>{ref.title}</span>
+                            )}
+                            {ref.venue && <span class="text-gray-400"> — {ref.venue}</span>}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )}
+
+        <!-- Resources / Data -->
+        {frontmatter.resources?.length > 0 && (
+            <div class="p-4 bg-gray-50 rounded-lg border">
+                <h3 class="text-sm font-semibold text-gray-700 mb-2">
+                    {lang === "fr" ? "Ressources & Données" : "Resources & Data"}
+                </h3>
+                <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                    {frontmatter.resources.map((res: any) => (
+                        <li>
+                            {typeof res === 'string' ? (
+                                <span>{res}</span>
+                            ) : res.url ? (
+                                <a href={res.url} target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                                    {res.label}
+                                </a>
+                            ) : (
+                                <span>{res.label}</span>
+                            )}
+                            {typeof res !== 'string' && res.type && (
+                                <span class="ml-1 text-xs text-gray-400">({res.type})</span>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )}
+    </header>
+
+    <!-- Use Case Content (markdown body) -->
+    <slot class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline" />
+</PageLayout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selector = document.getElementById('version-selector') as HTMLSelectElement;
+        if (selector) {
+            selector.addEventListener('change', () => {
+                window.location.href = selector.value;
+            });
+        }
+    });
+</script>
