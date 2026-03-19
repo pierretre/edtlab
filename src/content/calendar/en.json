@@ -1,0 +1,24 @@
+{
+    "items": [
+        {
+            "date": "2026-01-01",
+            "title": "T0 — Program start",
+            "isMilestone": true
+        },
+        {
+            "date": "2026-06-24",
+            "title": "Kick Off Meeting",
+            "isMilestone": true
+        },
+        {
+            "date": "2026-05-11",
+            "title": "PC1-Catalyst Kick Off Meeting",
+            "isMilestone": true
+        },
+        {
+            "date": "2031-12-31",
+            "title": "End of program",
+            "isMilestone": true
+        }
+    ]
+}

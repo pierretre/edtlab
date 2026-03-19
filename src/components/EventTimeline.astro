@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { linkHelpers } from "@i18n/links";
 
 interface Props {
@@ -20,15 +20,13 @@ const allEvents = await getCollection("news", (item) =>
     item.data.newsType === "event" && item.data.lang === lang
 );
 
-const milestones: TimelineItem[] = lang === "fr" ? [
-    { date: new Date("2026-01-01"), title: "T0 — Démarrage du programme", isMilestone: true },
-    { date: new Date("2026-06-24"), title: "Réunion de lancement", isMilestone: true },
-    { date: new Date("2031-12-31"), title: "Fin du programme", isMilestone: true },
-] : [
-    { date: new Date("2026-01-01"), title: "T0 — Program start", isMilestone: true },
-    { date: new Date("2026-06-24"), title: "Kick Off Meeting", isMilestone: true },
-    { date: new Date("2031-12-31"), title: "End of program", isMilestone: true },
-];
+const calendarEntry = await getEntry("calendar", lang);
+const milestones: TimelineItem[] = (calendarEntry?.data.items ?? []).map(item => ({
+    date: new Date(item.date),
+    title: item.title,
+    location: item.location,
+    isMilestone: item.isMilestone,
+}));
 
 const eventItems: TimelineItem[] = allEvents.map(e => ({
     date: e.data.date,
