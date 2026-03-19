@@ -1,0 +1,19 @@
+{
+    "items": [
+        {
+            "date": "2026-01-01",
+            "title": "T0 — Démarrage du programme",
+            "isMilestone": true
+        },
+        {
+            "date": "2026-06-24",
+            "title": "Réunion de lancement",
+            "isMilestone": true
+        },
+        {
+            "date": "2031-12-31",
+            "title": "Fin du programme",
+            "isMilestone": true
+        }
+    ]
+}
