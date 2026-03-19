@@ -8,20 +8,22 @@ const { name, headline, picture } = Astro.props as Props;
 ---
 
 <div
-    class="card bg-white shadow-sm border flex flex-col sm:flex-row gap-6 items-start mb-6"
+    class="card bg-white shadow-sm border flex flex-col sm:flex-row gap-6 sm:items-start items-center mb-6"
 >
-    {
-        picture && (
-            <img
-                src={picture}
-                alt={name}
-                class="w-48 h-48 bg-gray-200 rounded-full flex-shrink-0 object-cover"
-                loading="lazy"
-                decoding="async"
-            />
-        )
-    }
-    <div class="flex-1 space-y-3">
+    <div class="flex flex-col items-center flex-shrink-0">
+        {
+            picture && (
+                <img
+                    src={picture}
+                    alt={name}
+                    class="w-48 h-48 bg-gray-200 rounded-full flex-shrink-0 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                />
+            )
+        }
+    </div>
+    <div class="flex-1 space-y-3 text-center sm:text-left">
         <h3 class="text-2xl font-bold text-gray-800">{name}</h3>
         <p class="text-primary-700 font-bold text-xl">
             {headline}

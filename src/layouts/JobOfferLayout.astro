@@ -1,7 +1,7 @@
 ---
 import PageLayout from "./PageLayout.astro";
 import type { JobOffer } from "@models/JobOffer.model";
-import { useTranslations } from "@i18n/utils";
+import { linkHelpers, useTranslations } from "@i18n/utils";
 import Badge from "@components/Badge.astro";
 import { generateJobPostingStructuredData } from "@utils/seo";
 
@@ -59,7 +59,7 @@ const jobStructuredData = generateJobPostingStructuredData(
     <!-- Back to Join Us link -->
     <div class="mb-6">
         <a
-            href={`/${lang}/join-us`}
+            href={linkHelpers.page(lang, "join-us")}
             class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
         >
             <svg
@@ -235,7 +235,7 @@ const jobStructuredData = generateJobPostingStructuredData(
                 <p class="mb-4 text-gray-600">
                     {t("job-offers.position-filled-message")}
                 </p>
-                <a href={`/${lang}/join-us`} class="btn-primary">
+                <a href={linkHelpers.page(lang, "join-us")} class="btn-primary">
                     {t("job-offers.view-all-positions")}
                 </a>
             </section>
