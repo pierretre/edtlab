@@ -1,17 +1,18 @@
 ---
-title: "PC4: SYNCHRONIC"
-href: "focused-projects/fp4"
-lang: "en"
-description: "Addressing bidirectional data flows between physical and digital twins with focus on reliability, security, and real-time synchronization for effective digital coupling"
+color: hit-pink
+href: focused-projects/fp4
+lang: en
 toc: true
-color: "hit-pink"
-template: "project-page"
-projectId: "PC4"
+projectId: PC4
+title: "PC4: SYNCHRONIC"
+template: project-page
+description: Addressing bidirectional data flows between physical and digital
+  twins with focus on reliability, security, and real-time synchronization for
+  effective digital coupling
 ---
-
 ## Overview
 
-Project 4 addresses the process that supports bidirectional data flows between physical and digital twins, examining the non-functional performance of DTs. The primary objective is to explore theories, methods, and technologies for the digital coupling process.
+SYNCRONIC addresses the process that supports bidirectional data flows between physical and digital twins, examining the non-functional performance of DTs. The primary objective is to explore theories, methods, and technologies for the digital coupling process.
 
 While significant attention has been given to constructing models that accurately represent a system's behavior, there is a need for studies focusing on the non-functional performance attributes of digital twins (DTs), such as reliability, maintainability, security, and connectivity.
 
@@ -41,43 +42,43 @@ Hind Bril El Haouzi is a full Professor at the Université de Lorraine where she
 
 ### Participating Partners:
 
-<PartnersGrid partners={['Inria', 'Université de Lorraine', 'Université de Strasbourg', 'Université Grenoble Alpes', 'Université de Toulouse', 'Université de Nantes', 'Université Le Havre Normandie', 'École Polytechnique', 'ENS Paris-Saclay', 'CNRS']} />
+<PartnersGrid partners={["Inria", "Université de Lorraine", "Université de Strasbourg", "Université Grenoble Alpes", "Université de Toulouse", "Université de Nantes", "Université Le Havre Normandie", "École Polytechnique", "ENS Paris-Saclay", "CNRS"]} />
 
 ## Project Implementation
 
-The project is organized into **four complementary work packages**, addressing data collection, synchronization, adaptation, and network optimization.
+The project is structured into **three complementary work packages**, covering the essential dimensions of the coupling between the physical system and its digital twin: frugal data collection and optimal network deployment, spatio-temporal synchronization and verification, as well as adaptation and control based on real-world data. This organization is intended to ensure reliable, secure, high-performance, and resource-efficient exchanges between the physical world and its digital counterpart.
 
 <details>
-<summary><h3>Workpackage1: Smart Data Collection Strategies</h3></summary>
+<summary><h3>Workpackage1: Frugal Data Collection Strategies and Network Infrastructure Configuration
+</h3></summary>
 
-**Leader:** CRAN (CNRS)  
-**Partners:** Maracas (Inria), P4S (IMT)
-
+**Leader:** ICube (Université de Strasbourg, CNRS)
+**Partners:** Maracas (Inria), Agora (Inria), CRAN (UL/CNRS)
 **Objectives:**
-- Develop comprehensive framework for **efficient, reliable data collection** and smart utilization
-- Balance data collection with twin requirements
-- Ensure **high-quality data** with uncertainty management
-
+This workpackage aims to define frugal strategies for data collection, transmission, and processing in order to support reliable and resource-efficient coupling of the digital twin. The challenge is to optimize data flows and network usage in distributed systems while ensuring scalability and sustainability of deployment across the IoT–Edge–Cloud continuum.
 **Key Tasks:**
-1. Optimal sensor placement and data collection optimization
-2. Data uncertainty management and quality assurance
-3. Metadata theory and models for contextual data management
-4. Sustainable and energy-efficient collection processes
+
+1. Optimal sensor selection and placement
+2. Minimization of energy costs and data volumes
+3. Integration of metadata and contextualization of measurements
+4. Development of frugal data collection and transmission strategies
+5. Co-optimization of digital twin requirements and the underlying network infrastructures
 
 </details>
 
 <details>
-<summary><h3>Workpackage2: Models and Real-World Data Synchronization</h3></summary>
+<summary><h3>Workpackage2: Synchronization Conditions and Spatio-Temporal Verificatio
 
-**Leader:** Kopernic (Inria)  
-**Partners:** UGA, GREAH (Univ. Le Havre Normandie), CRAN (CNRS), DISP (Univ Lumière Lyon 2)
+</h3></summary>
+
+**Leader:** Kopernic (Inria)\
+**Partners:**  LIG (Université Grenoble Alpes), GREAH (Univ. Le Havre Normandie), CRAN (Université de Lorraine), Loria (Inria)
 
 **Objectives:**
-- Establish methods for **guaranteed real-time synchronization** between digital models and physical counterparts
-- Identify and verify **synchronization conditions** (convergence, data freshness)
-- Implement **security attack detection** and safety verification
+This work package aims to establish the scientific, methodological, and technological foundations required to ensure reliable synchronization between the physical system and the digital twin. It focuses more specifically on temporal and behavioral validation, multi-level spatio-temporal consistency across models, as well as runtime monitoring.
 
 **Key Tasks:**
+
 1. Define synchronization conditions and convergence criteria
 2. Develop temporal and spatial verification techniques
 3. Implement security monitoring and runtime verification
@@ -88,37 +89,17 @@ The project is organized into **four complementary work packages**, addressing d
 <details>
 <summary><h3>Workpackage3: Digital Twin Adaptation and Control</h3></summary>
 
-**Leader:** LMPS (CNRS)  
-**Partners:** MEDISIM (Inria), LS2N (CNRS), Aniti (Univ. Toulouse 3), CRAN (CNRS), CEA
+**Leader:** ENS Paris-Saclay (LMT))\
+**Partners:** École Polytechnique (ANANKE), LS2N (Université de Nantes), Aniti (Université de Toulouse), CRAN (Université de Lorraine)
 
 **Objectives:**
-- Create **adaptive control mechanisms** based on real-world data integration
-- Implement advanced **data assimilation** techniques
-- Develop **AI-driven model enrichment** and dynamic adaptation
+This work package focuses on the development of adaptive digital twins capable of continuously aligning with data from the real world. It relies on hybrid modeling, data assimilation, and optimal control, combining physics-based approaches with AI-driven methods in order to ensure real-time adaptability and consistency between physical and digital systems.
 
 **Key Tasks:**
+
 1. Develop data assimilation techniques for model updating
 2. Implement AI-driven model enrichment and adaptation
 3. Create dynamic data-driven simulation approaches
 4. Design complex event processing for real-time state adjustment
-
-</details>
-
-<details>
-<summary><h3>Workpackage4: Network Reconfiguration/Optimization</h3></summary>
-
-**Leader:** ICube (CNRS)  
-**Partners:** LIST (CEA), MARACAS (Inria)
-
-**Objectives:**
-- Implement **network co-optimization** for scalable digital twin deployment
-- Balance DT quality with control constraints
-- Ensure **network scalability** for large-scale deployments
-
-**Key Tasks:**
-1. Develop co-optimization methods for DTs and network systems
-2. Create network digital twins for infrastructure reconfiguration
-3. Implement scalable network management solutions
-4. Balance quality of service with resource constraints
 
 </details>
