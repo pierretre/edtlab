@@ -15,27 +15,29 @@ const t = useTranslations(lang);
                     <Badge key={leader.project || "General"} t={t} />
                 </div>
 
-                <div class="flex items-stretch gap-3 pr-24">
-                    {leader.picture ? (
-                        <img
-                            src={leader.picture}
-                            alt={`Portrait of ${leader.name}`}
-                            class="w-16 h-16 object-cover rounded-full flex-shrink-0"
-                            loading="lazy"
-                        />
-                    ) : (
-                        <div class="w-16 h-16 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-semibold flex-shrink-0">
-                            {leader.name
-                                .split(" ")
-                                .filter(Boolean)
-                                .slice(0, 2)
-                                .map((part) => part[0])
-                                .join("")}
-                        </div>
-                    )}
+                <div class="flex flex-col md:flex-row md:items-stretch gap-3 md:pr-24">
+                    <div class="flex flex-col items-center flex-shrink-0">
+                        {leader.picture ? (
+                            <img
+                                src={leader.picture}
+                                alt={`Portrait of ${leader.name}`}
+                                class="w-16 h-16 object-cover rounded-full flex-shrink-0"
+                                loading="lazy"
+                            />
+                        ) : (
+                            <div class="w-16 h-16 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-semibold flex-shrink-0">
+                                {leader.name
+                                    .split(" ")
+                                    .filter(Boolean)
+                                    .slice(0, 2)
+                                    .map((part) => part[0])
+                                    .join("")}
+                            </div>
+                        )}
+                    </div>
 
-                    <div class="min-w-0 flex-1">
-                        <div class="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <div class="min-w-0 flex-1 text-center md:text-left">
+                        <div class="mb-2 flex flex-wrap justify-center md:justify-start items-baseline gap-x-2 gap-y-1">
                             <h4 class="text-lg font-semibold text-gray-900 leading-tight">
                                 {leader.name}
                             </h4>
@@ -44,7 +46,7 @@ const t = useTranslations(lang);
                             </span>
                         </div>
 
-                        <div class="flex flex-wrap gap-2 text-sm">
+                        <div class="flex flex-wrap gap-2 text-sm justify-center md:justify-start">
                             {leader.website ? (
                                 <a
                                     href={leader.website}
