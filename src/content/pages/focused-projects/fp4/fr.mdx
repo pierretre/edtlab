@@ -1,14 +1,15 @@
 ---
-title: "PC4: SYNCHRONIC"
-href: "projets-cibles/pc4"
-lang: "fr"
-description: "Traitement des flux de données bidirectionnels entre jumeaux physiques et numériques avec focus sur la fiabilité, la sécurité et la synchronisation en temps réel pour un couplage numérique efficace"
+color: hit-pink
+href: projets-cibles/pc4
+lang: fr
 toc: true
-color: "hit-pink"
-template: "project-page"
-projectId: "PC4"
+projectId: PC4
+title: "PC4: SYNCHRONIC"
+template: project-page
+description: Traitement des flux de données bidirectionnels entre jumeaux
+  physiques et numériques avec focus sur la fiabilité, la sécurité et la
+  synchronisation en temps réel pour un couplage numérique efficace
 ---
-
 ## Aperçu
 
 Le projet 4 aborde le processus qui soutient les flux de données bidirectionnels entre jumeaux physiques et numériques, en examinant les performances non fonctionnelles des JN. L'objectif principal est d'explorer les théories, méthodes et technologies pour le processus de couplage numérique.
@@ -36,29 +37,26 @@ name="Hind Bril El Haouzi"
 headline="Professeure des Universités à l'Université de Lorraine"
 picture="/media/uploads/hind_bril_el_haouzi.jpg">
 >
-Hind Bril El Haouzi est Professeure des Universités à l'Université de Lorraine où elle enseigne et mène des recherches dans les domaines de l'ingénierie informatique et du contrôle de gestion de production. Depuis 2018, elle co-dirige le groupe de recherche en ingénierie des systèmes industriels durables au laboratoire (CRAN,CNRS). Elle a obtenu son doctorat en informatique, automatique et génie de la production en 2008. Elle possède une riche expérience industrielle, ayant travaillé pendant de nombreuses années en tant que chef de projet de numérisation avant de rejoindre l'Université de Lorraine. Elle coordonne actuellement plusieurs projets collaboratifs avec le secteur industriel qui se concentrent sur les défis de la transformation numérique et de la transition sociétale de l'industrie (ANR PRCE, ADEME, CPER, CIFRE...). Ses intérêts de recherche incluent la modélisation et le contrôle des systèmes de production cyber-physiques, avec un accent sur la simulation numérique et le contrôle de fabrication distribué. Elle a publié plus de 100 articles dans des conférences et revues internationales.
+Hind Bril El Haouzi est Professeure des Universités à l'Université de Lorraine où elle enseigne et mène des recherches dans les domaines du génie informatique et du contrôle des systèmes de production. Depuis 2018, elle co-dirige le groupe de recherche en ingénierie des systèmes industriels durables au laboratoire (CRAN,CNRS). Elle a obtenu son doctorat en informatique, automatique et génie de la production en 2008. Elle possède une riche expérience industrielle, ayant travaillé pendant de nombreuses années en tant que chef de projet de numérisation avant de rejoindre l'Université de Lorraine. Elle coordonne actuellement plusieurs projets collaboratifs avec le secteur industriel qui se concentrent sur les défis de la transformation numérique et de la transition sociétale de l'industrie (ANR PRCE, ADEME, CPER, CIFRE...). Ses intérêts de recherche incluent la modélisation et le contrôle des systèmes de production cyber-physiques, avec un accent sur la simulation numérique et le contrôle de fabrication distribué. Elle a publié plus de 100 articles dans des conférences et revues internationales.
 </PrincipalInvestigator>
 
 ### Partenaires Participants :
 
-<PartnersGrid partners={['Inria', 'Université de Lorraine', 'Université de Strasbourg', 'Université Grenoble Alpes', 'Université de Toulouse', 'Université de Nantes', 'Université Le Havre Normandie', 'École Polytechnique', 'ENS Paris-Saclay', 'CNRS']} />
+<PartnersGrid partners={["Inria", "Université de Lorraine", "Université de Strasbourg", "Université Grenoble Alpes", "Université de Toulouse", "Université de Nantes", "Université Le Havre Normandie", "École Polytechnique", "ENS Paris-Saclay", "CNRS"]} />
 
 ## Mise en Œuvre du Projet
 
-Le projet est organisé en **quatre packages de travail complémentaires**, abordant la collecte de données, la synchronisation, l'adaptation et l'optimisation réseau.
+Le projet est organisé en **trois packages de travail complémentaires**, couvrant les dimensions essentielles du couplage entre le système physique et son jumeau numérique : la collecte frugale des données et le déploiement optimal du réseau, la synchronisation et la vérification spatio-temporelle, ainsi que l’adaptation et le contrôle basés sur les données réelles. Cette organisation vise à garantir des échanges fiables, sûrs, performants et sobres en ressources entre le monde physique et son double numérique.
 
 <details>
-<summary><h3>Workpackage1 : Stratégies de Collecte de Données Intelligentes</h3></summary>
+<summary><h3>Workpackage1 : Stratégies frugales de collecte de données et configuration des infrastructures réseaux</h3></summary>
 
-**Responsable :** CRAN (CNRS)  
-**Partenaires :** Maracas (Inria), P4S (IMT)
-
-**Objectifs :**
-- Développer un cadre complet pour la **collecte de données efficace et fiable** et l'utilisation intelligente
-- Équilibrer la collecte de données avec les exigences du jumeau
-- Assurer des **données de haute qualité** avec gestion de l'incertitude
+**Responsable :** ICube (CNRS)
+**Partenaires :** Maracas (Inria),  Agora (Inria), CRAN (UL/CNRS)
+**Objectifs :**  Ce workpackage vise à définir des stratégies frugales de collecte, de transmission et de traitement des données, afin de soutenir un couplage fiable et économe en ressources du jumeau numérique. L’enjeu est d’optimiser les flux de données et l’utilisation du réseau dans des systèmes distribués, tout en garantissant l’évolutivité et la durabilité du déploiement dans un continuum IoT–Edge–Cloud.
 
 **Tâches Clés :**
+
 1. Placement optimal de capteurs et optimisation de collecte de données
 2. Gestion de l'incertitude des données et assurance qualité
 3. Théorie et modèles de métadonnées pour la gestion contextuelle des données
@@ -69,15 +67,17 @@ Le projet est organisé en **quatre packages de travail complémentaires**, abor
 <details>
 <summary><h3>Workpackage2 : Synchronisation Modèles et Données du Monde Réel</h3></summary>
 
-**Responsable :** Kopernic (Inria)  
+**Responsable :** Kopernic (Inria)\
 **Partenaires :** UGA, GREAH (Univ. Le Havre Normandie), CRAN (CNRS), DISP (Univ Lumière Lyon 2)
 
 **Objectifs :**
-- Établir des méthodes pour la **synchronisation en temps réel garantie** entre modèles numériques et contreparties physiques
-- Identifier et vérifier les **conditions de synchronisation** (convergence, fraîcheur des données)
-- Implémenter la **détection d'attaques de sécurité** et la vérification de sûreté
+
+* Établir des méthodes pour la **synchronisation en temps réel garantie** entre modèles numériques et contreparties physiques
+* Identifier et vérifier les **conditions de synchronisation** (convergence, fraîcheur des données)
+* Implémenter la **détection d'attaques de sécurité** et la vérification de sûreté
 
 **Tâches Clés :**
+
 1. Définir les conditions de synchronisation et critères de convergence
 2. Développer des techniques de vérification temporelle et spatiale
 3. Implémenter la surveillance de sécurité et la vérification à l'exécution
@@ -88,15 +88,17 @@ Le projet est organisé en **quatre packages de travail complémentaires**, abor
 <details>
 <summary><h3>Workpackage3 : Adaptation et Contrôle du Jumeau Numérique</h3></summary>
 
-**Responsable :** LMPS (CNRS)  
+**Responsable :** LMPS (CNRS)\
 **Partenaires :** MEDISIM (Inria), LS2N (CNRS), Aniti (Univ. Toulouse 3), CRAN (CNRS), CEA
 
 **Objectifs :**
-- Créer des **mécanismes de contrôle adaptatif** basés sur l'intégration de données du monde réel
-- Implémenter des techniques avancées d'**assimilation de données**
-- Développer l'**enrichissement de modèles piloté par IA** et l'adaptation dynamique
+
+* Créer des **mécanismes de contrôle adaptatif** basés sur l'intégration de données du monde réel
+* Implémenter des techniques avancées d'**assimilation de données**
+* Développer l'**enrichissement de modèles piloté par IA** et l'adaptation dynamique
 
 **Tâches Clés :**
+
 1. Développer des techniques d'assimilation de données pour la mise à jour de modèles
 2. Implémenter l'enrichissement et l'adaptation de modèles pilotés par IA
 3. Créer des approches de simulation pilotée par données dynamiques
@@ -107,15 +109,17 @@ Le projet est organisé en **quatre packages de travail complémentaires**, abor
 <details>
 <summary><h3>Workpackage4 : Reconfiguration/Optimisation Réseau</h3></summary>
 
-**Responsable :** ICube (CNRS)  
+**Responsable :** ICube (CNRS)\
 **Partenaires :** LIST (CEA), MARACAS (Inria)
 
 **Objectifs :**
-- Implémenter la **co-optimisation réseau** pour un déploiement évolutif de jumeaux numériques
-- Équilibrer la qualité JN avec les contraintes de contrôle
-- Assurer l'**évolutivité réseau** pour les déploiements à grande échelle
+
+* Implémenter la **co-optimisation réseau** pour un déploiement évolutif de jumeaux numériques
+* Équilibrer la qualité JN avec les contraintes de contrôle
+* Assurer l'**évolutivité réseau** pour les déploiements à grande échelle
 
 **Tâches Clés :**
+
 1. Développer des méthodes de co-optimisation pour les JN et systèmes réseau
 2. Créer des jumeaux numériques de réseau pour la reconfiguration d'infrastructure
 3. Implémenter des solutions de gestion réseau évolutives
