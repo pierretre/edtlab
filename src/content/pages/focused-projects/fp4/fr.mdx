@@ -51,30 +51,31 @@ Le projet est organisé en **trois packages de travail complémentaires**, couvr
 <details>
 <summary><h3>Workpackage1 : Stratégies frugales de collecte de données et configuration des infrastructures réseaux</h3></summary>
 
-**Responsable :** ICube (CNRS)
+**Responsable :** ICube (Université de Strasbourg, CNRS)
 **Partenaires :** Maracas (Inria),  Agora (Inria), CRAN (UL/CNRS)
 **Objectifs :**  Ce workpackage vise à définir des stratégies frugales de collecte, de transmission et de traitement des données, afin de soutenir un couplage fiable et économe en ressources du jumeau numérique. L’enjeu est d’optimiser les flux de données et l’utilisation du réseau dans des systèmes distribués, tout en garantissant l’évolutivité et la durabilité du déploiement dans un continuum IoT–Edge–Cloud.
 
 **Tâches Clés :**
 
-1. Placement optimal de capteurs et optimisation de collecte de données
-2. Gestion de l'incertitude des données et assurance qualité
-3. Théorie et modèles de métadonnées pour la gestion contextuelle des données
-4. Processus de collecte durables et économes en énergie
+1. Sélection et placement optimal des capteurs 
+2. Minimisation des coûts énergétiques et des volumes de données 
+3. Intégration de métadonnées et contextualisation des mesures 
+4. Développement de stratégies de collecte et de transmission frugales 
+5. Co-optimisation entre besoins du jumeau numérique et infrastructures réseau sous-jacentes
 
 </details>
 
 <details>
-<summary><h3>Workpackage2 : Synchronisation Modèles et Données du Monde Réel</h3></summary>
+<summary><h3>Workpackage2 : 
+Conditions de synchronisation et vérification spatio-temporelle
+</h3></summary>
 
 **Responsable :** Kopernic (Inria)\
-**Partenaires :** UGA, GREAH (Univ. Le Havre Normandie), CRAN (CNRS), DISP (Univ Lumière Lyon 2)
+**Partenaires :** UGA, GREAH (Univ. Le Havre Normandie), CRAN (Université de Lorraine, CNRS), Loria (Inria)
+
 
 **Objectifs :**
-
-* Établir des méthodes pour la **synchronisation en temps réel garantie** entre modèles numériques et contreparties physiques
-* Identifier et vérifier les **conditions de synchronisation** (convergence, fraîcheur des données)
-* Implémenter la **détection d'attaques de sécurité** et la vérification de sûreté
+Ce workpackage a pour objectif d’établir les fondements scientifiques, méthodologiques et technologiques nécessaires pour assurer une synchronisation fiable entre le système physique et le jumeau numérique. Il traite plus particulièrement de la validation temporelle et comportementale, de la cohérence spatio-temporelle multi-niveaux entre modèles, ainsi que de la surveillance à l’exécution.
 
 **Tâches Clés :**
 
@@ -88,14 +89,12 @@ Le projet est organisé en **trois packages de travail complémentaires**, couvr
 <details>
 <summary><h3>Workpackage3 : Adaptation et Contrôle du Jumeau Numérique</h3></summary>
 
-**Responsable :** LMPS (CNRS)\
-**Partenaires :** MEDISIM (Inria), LS2N (CNRS), Aniti (Univ. Toulouse 3), CRAN (CNRS), CEA
+**Responsable :** ENS Paris-Saclay (LMT)
+**Partenaires :** 
+École polytechnique (ANANKE), LS2N (Université de Nantes ), Aniti (Univ. Toulouse), CRAN (Université de Lorraine)
 
 **Objectifs :**
-
-* Créer des **mécanismes de contrôle adaptatif** basés sur l'intégration de données du monde réel
-* Implémenter des techniques avancées d'**assimilation de données**
-* Développer l'**enrichissement de modèles piloté par IA** et l'adaptation dynamique
+Ce workpackage porte sur le développement de jumeaux numériques adaptatifs capables de s’aligner en continu avec les données issues du monde réel. Il repose sur la modélisation hybride, l’assimilation de données et le contrôle optimal, en combinant approches fondées sur la physique et méthodes pilotées par l’IA, afin de garantir l’adaptabilité en temps réel et la cohérence entre systèmes physiques et numériques
 
 **Tâches Clés :**
 
@@ -103,26 +102,5 @@ Le projet est organisé en **trois packages de travail complémentaires**, couvr
 2. Implémenter l'enrichissement et l'adaptation de modèles pilotés par IA
 3. Créer des approches de simulation pilotée par données dynamiques
 4. Concevoir le traitement d'événements complexes pour l'ajustement d'état en temps réel
-
-</details>
-
-<details>
-<summary><h3>Workpackage4 : Reconfiguration/Optimisation Réseau</h3></summary>
-
-**Responsable :** ICube (CNRS)\
-**Partenaires :** LIST (CEA), MARACAS (Inria)
-
-**Objectifs :**
-
-* Implémenter la **co-optimisation réseau** pour un déploiement évolutif de jumeaux numériques
-* Équilibrer la qualité JN avec les contraintes de contrôle
-* Assurer l'**évolutivité réseau** pour les déploiements à grande échelle
-
-**Tâches Clés :**
-
-1. Développer des méthodes de co-optimisation pour les JN et systèmes réseau
-2. Créer des jumeaux numériques de réseau pour la reconfiguration d'infrastructure
-3. Implémenter des solutions de gestion réseau évolutives
-4. Équilibrer la qualité de service avec les contraintes de ressources
 
 </details>
