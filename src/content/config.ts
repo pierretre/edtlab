@@ -65,6 +65,19 @@ const jobOffersCollection = defineCollection({
     })
 });
 
+// Calendar collection schema for timeline milestones and dates
+const calendarCollection = defineCollection({
+    type: 'data',
+    schema: z.object({
+        items: z.array(z.object({
+            date: z.string(),
+            title: z.string(),
+            isMilestone: z.boolean().default(false),
+            location: z.string().optional(),
+        }))
+    })
+});
+
 // Menu collection schema for navigation data
 const menuCollection = defineCollection({
     type: 'data',
@@ -85,5 +98,6 @@ export const collections = {
     'publications': publicationsCollection,
     'news': newsCollection,
     'job-offers': jobOffersCollection,
+    'calendar': calendarCollection,
     'menu': menuCollection
 };
