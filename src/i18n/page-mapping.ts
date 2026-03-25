@@ -27,6 +27,7 @@ export const enToFrMapping: PageMapping = {
     // 'resources': 'ressources',
     'use-cases': 'cas-d-utilisation',
     'news': 'actualites',
+    'glossary': 'glossaire',
     'join-us': 'nous-rejoindre',
     'contact-us': 'nous-contacter', // Both use same href but different lang
     'about': 'a-propos'
