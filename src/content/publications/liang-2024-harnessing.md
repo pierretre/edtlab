@@ -1,11 +1,16 @@
 ---
 title: "Harnessing Hybrid Digital Twinning for Decision-Support in Smart Infrastructures"
 authors:
-  - "Liang, H., García, B., Seah, E., Weng, A., Baillargeat, D., Joerin, J., ..."
-  - "Chatzi, E"
+  - "Liang, H."
+  - "García, B."
+  - "Seah, E."
+  - "Weng, A."
+  - "Baillargeat, D."
+  - "Joerin, J."
+  - "Chatzi, E."
 type: "preprint"
 year: 2024
-venue: "E. (2024). Harnessing Hybrid Digital Twinning for Decision-Support in Smart Infrastructures. Engineering journal preprints"
+venue: "Engineering journal preprints"
 doi: "10.31224/3838"
 url: "https://doi.org/10.31224/3838"
 tags: []

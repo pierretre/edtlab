@@ -1,16 +1,11 @@
 ---
 title: "Advocating for user-agency in defining uncertainty in visualizations: A case study in geology"
 authors:
-  - "Peña-Araya"
-  - "V."
-  - "Martínez Fontaine"
-  - "C."
-  - "Wei"
-  - "X."
-  - "Delpech"
-  - "G."
-  - "Bezerianos"
-  - "A."
+  - "Peña-Araya, V."
+  - "Martínez Fontaine, C."
+  - "Wei, X."
+  - "Delpech, G."
+  - "Bezerianos, A."
 type: "conference"
 year: 2025
 venue: "CHI"

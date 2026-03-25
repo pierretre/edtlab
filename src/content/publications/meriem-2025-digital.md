@@ -1,13 +1,12 @@
 ---
 title: "Digital Twin System of Systems: A Layered Architecture Proposal"
 authors:
-  - "Meriem Smati"
-  - "Vincent Cheutet"
-  - "Christophe Danjou"
-  - "Jannik Laval"
+  - "Smati, M."
+  - "Cheutet, V."
+  - "Danjou, C."
+  - "Laval, J."
 type: "conference"
 year: 2025
-venue: "chitecture Proposal"
 tags: []
 origin: "edt"
 ---

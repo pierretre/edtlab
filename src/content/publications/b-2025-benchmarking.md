@@ -1,7 +1,8 @@
 ---
 title: "Benchmarking the Modular Structural Analysis Algorithm"
 authors:
-  - "B. Caillaud, A. Benveniste, M. Malandain"
+  - "Caillaud, A."
+  - "Benveniste, M."
 type: "conference"
 year: 2025
 tags: []

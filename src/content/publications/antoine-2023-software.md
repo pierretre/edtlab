@@ -1,7 +1,7 @@
 ---
 title: "A software engineering perspective on digital twin: many candidates, none elected"
 authors:
-  - "Antoine Beugnard"
+  - "Beugnard, A."
 type: "conference"
 year: 2023
 venue: "IEEE Smart World Congress"

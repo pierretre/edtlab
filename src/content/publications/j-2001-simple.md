@@ -1,7 +1,7 @@
 ---
 title: "A Simple Structural Analysis Method for DAEs"
 authors:
-  - "J. D. Pryce"
+  - "Pryce, J. D."
 type: "conference"
 year: 2001
 tags: []

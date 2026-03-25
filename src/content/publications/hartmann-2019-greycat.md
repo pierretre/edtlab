@@ -1,10 +1,13 @@
 ---
 title: "GreyCat: Efficient what-if analytics for data in motion at scale"
 authors:
-  - "Hartmann, T., Fouquet, F., Moawad, A., Rouvoy, R., Le Traon, Y"
+  - "Hartmann, T."
+  - "Fouquet, F."
+  - "Moawad, A."
+  - "Rouvoy, R."
 type: "conference"
 year: 2019
-venue: "GreyCat: Efficient what-if analytics for data in motion at scale. Information Systems"
+venue: ". Information Systems"
 tags: []
 origin: "external"
 ---

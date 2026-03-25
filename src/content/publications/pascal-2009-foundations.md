@@ -1,7 +1,9 @@
 ---
 title: "Foundations of Semantic Web Technologies"
 authors:
-  - "Pascal Hitzler, Markus Krötzsch, Sebastian Rudolph"
+  - "Hitzler, P."
+  - "Krötzsch, M."
+  - "Rudolph, S."
 type: "conference"
 year: 2009
 tags: []

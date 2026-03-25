@@ -1,7 +1,10 @@
 ---
 title: "Making components contract aware"
 authors:
-  - "Antoine Beugnard, Jean-Marc Jézéquel, Noël Plouzeau, Damien Watkins"
+  - "Beugnard, A."
+  - "Jézéquel, J."
+  - "Plouzeau, N."
+  - "Watkins, D."
 type: "conference"
 year: 1999
 tags: []

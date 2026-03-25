@@ -1,10 +1,13 @@
 ---
 title: "Loop Aggregation for Approximate Scientific Computing"
 authors:
-  - "J. Sallou, A. Gauvain, J. Bourcier, B. Combemale, J.R. de Dreuzy"
+  - "Sallou, A."
+  - "Gauvain, J."
+  - "Bourcier, B."
+  - "Combemale, J.R."
 type: "conference"
 year: 2020
-venue: "ICCS)"
+venue: "ICCS"
 tags: []
 origin: "edt"
 ---

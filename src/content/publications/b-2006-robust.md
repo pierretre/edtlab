@@ -1,7 +1,8 @@
 ---
 title: "Robust Initialization of Differential Algebraic Equations"
 authors:
-  - "B. Bachmann, P. Aronsson, P. Fritzson"
+  - "Bachmann, P."
+  - "Aronsson, P."
 type: "conference"
 year: 2006
 tags: []

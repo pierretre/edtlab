@@ -1,7 +1,11 @@
 ---
 title: "Towards Automating the Life Cycle Management of Digital Twins"
 authors:
-  - "Gwendal Beaumont, Antoine Beugnard, Salvador Martínez, Christelle Urtado, Sylvain Vauttier"
+  - "Beaumont, G."
+  - "Beugnard, A."
+  - "Martínez, S."
+  - "Urtado, C."
+  - "Vauttier, S."
 type: "conference"
 year: 2025
 venue: "ER2025 - 44th International Conference on Conceptual Modeling"
