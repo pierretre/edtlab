@@ -250,6 +250,13 @@ export const ui = {
         'projects.related-news-events.title': 'Related news',
         'projects.related-news-events.view-all': 'View all news',
 
+        // Glossary
+        'glossary.title': 'Glossary',
+        'glossary.description': 'Key terms and definitions used in the EDT research program.',
+        'glossary.search-placeholder': 'Search a term...',
+        'glossary.no-results': 'No terms found matching your search.',
+        'glossary.alpha-index-label': 'Alphabetical index',
+
         // PC leaders
         'pc-leaders.website': 'Website',
     },
@@ -496,6 +503,13 @@ export const ui = {
         'projects.related-job-offers.view-all': 'Voir tous les postes',
         'projects.related-news-events.title': 'Actualités',
         'projects.related-news-events.view-all': 'Voir toutes les actualités',
+
+        // Glossary
+        'glossary.title': 'Glossaire',
+        'glossary.description': 'Termes et definitions cles utilises dans le programme de recherche EDT.',
+        'glossary.search-placeholder': 'Rechercher un terme...',
+        'glossary.no-results': 'Aucun terme ne correspond a votre recherche.',
+        'glossary.alpha-index-label': 'Index alphabetique',
 
         // PC leaders
         'pc-leaders.website': 'Site web',
