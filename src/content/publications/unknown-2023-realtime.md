@@ -1,11 +1,14 @@
 ---
 title: "Real-time photorealistic dynamic scene representation and rendering with 4d gaussian splatting"
 authors:
-  - "Unknown"
+  - "Yang, Z."
+  - "Yang, H."
+  - "Pan, Z."
+  - "Zhu, X."
+  - "Zhang, L."
 type: "preprint"
 year: 2023
-doi: "10.1109/cvpr52733.2024.01920" # DOI auto-matched, verify
-url: "https://doi.org/10.1109/cvpr52733.2024.01920" # DOI auto-matched, verify
+url: "https://arxiv.org/abs/2310.10642"
 tags: []
 origin: "external"
 ---
