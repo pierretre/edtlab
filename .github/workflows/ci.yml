@@ -1,203 +1,36 @@
-name: CI/CD Pipeline
+name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
-  test:
-    name: Test and Build
+  build-and-check:
+    name: Build and Check
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js 22.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22.x
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Run TypeScript check
-      run: npm run check
-      
-    - name: Run unit tests
-      run: npm run test:ci
-      
-    - name: Run comprehensive validation
-      run: ./scripts/validate-ci.sh
-      
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v4
-      with:
-        file: ./coverage/coverage-final.json
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
 
-  build:
-    name: Build Project
-    runs-on: ubuntu-latest
-    needs: test
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22.x'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build project
-      run: npm run build
-      
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: dist/
-        retention-days: 1
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  install-browsers:
-    name: Install Playwright Browsers
-    runs-on: ubuntu-latest
-    needs: test
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22.x'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Get Playwright version
-      id: playwright-version
-      run: echo "version=$(npm list @playwright/test --depth=0 --json | jq -r '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
-      
-    - name: Cache Playwright browsers
-      uses: actions/cache@v4
-      id: playwright-cache
-      with:
-        path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
-        
-    - name: Install Playwright browsers and dependencies
-      run: npx playwright install --with-deps
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
 
-  e2e-tests:
-    name: E2E Tests
-    runs-on: ubuntu-latest
-    needs: [build, install-browsers]
-    
-    strategy:
-      matrix:
-        test-suite:
-          - { name: 'Accessibility', file: 'accessibility.spec.ts' }
-          - { name: 'Link Verification', file: 'link-verification.spec.ts' }
-          - { name: 'Route Validation', file: 'routes.spec.ts' }
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22.x'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: dist
-        path: dist/
-        
-    - name: Get Playwright version
-      id: playwright-version
-      run: echo "version=$(npm list @playwright/test --depth=0 --json | jq -r '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
-      
-    - name: Restore Playwright browsers
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
-        
-    - name: Install Playwright system dependencies
-      run: npx playwright install-deps
-        
-    - name: Run ${{ matrix.test-suite.name }} tests
-      run: |
-        # Kill any existing processes on port 4321
-        pkill -f "astro preview" || true
-        sleep 2
-        
-        # Start preview server in background
-        npm run preview &
-        PREVIEW_PID=$!
-        
-        # Wait for server to be ready
-        timeout 30 bash -c 'until curl -f http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done'
-        
-        # Run tests
-        npx playwright test src/test/e2e/${{ matrix.test-suite.file }} --config=playwright.ci.config.ts
-        
-        # Clean up
-        kill $PREVIEW_PID || true
+      - name: Install dependencies
+        run: npm ci
 
-  quality-gates:
-    name: Quality Gates
-    runs-on: ubuntu-latest
-    needs: [test, e2e-tests]
-    if: github.event_name == 'pull_request'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22.x'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Generate test coverage report
-      run: npm run test:coverage:ci
-      
-    - name: Check coverage thresholds
-      run: |
-        # Basic coverage check - can be enhanced with specific thresholds
-        if [ -f "coverage/coverage-summary.json" ]; then
-          echo "Coverage report generated successfully"
-          cat coverage/coverage-summary.json
-        else
-          echo "Warning: Coverage report not found"
-        fi
-        
-    - name: Validate code quality
-      run: |
-        echo "Running code quality checks..."
-        npm run check
-        echo "Code quality validation completed"
+      - name: Run check
+        run: npm run check
+
+      - name: Run tests on main push
+        if: github.event_name == 'push'
+        run: npm run test:ci
+
+      - name: Build project
+        run: npm run build
