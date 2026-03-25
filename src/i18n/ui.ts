@@ -98,10 +98,11 @@ export const ui = {
         'publications.filter.search': 'Search',
 
         // Publication types
-        'publications.type.journal': 'Journal',
-        'publications.type.conference': 'Conference',
+        'publications.type.journal': 'Journal Article',
+        'publications.type.conference': 'Conference Paper',
         'publications.type.book': 'Book',
-        'publications.type.report': 'Report',
+        'publications.type.report': 'Technical Report',
+        'publications.type.white-paper': 'White Paper',
 
         // Job offers
         'job-offers.current-opportunities': 'Current Opportunities',
@@ -345,10 +346,11 @@ export const ui = {
         'publications.filter.search': 'Rechercher',
 
         // Publication types
-        'publications.type.journal': 'Journal',
-        'publications.type.conference': 'Conférence',
+        'publications.type.journal': 'Article de journal',
+        'publications.type.conference': 'Article de conférence',
         'publications.type.book': 'Livre',
-        'publications.type.report': 'Rapport',
+        'publications.type.report': 'Rapport technique',
+        'publications.type.white-paper': 'Livre blanc',
 
         // Job offers
         'job-offers.current-opportunities': 'Opportunités Actuelles',

@@ -7,6 +7,7 @@ venue: "EDTconf 2025 - 2nd International Conference on Engineering Digital Twins
 doi: "xxx"
 url: "https://inria.hal.science/hal-05223776"
 tags:
+  - "General"
   - "PC1"
   - "PC2"
   - "PC3"

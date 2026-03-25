@@ -101,7 +101,7 @@ export function generatePublicationStructuredData(
     url?: string,
     doi?: string,
     venue?: string,
-    type: 'journal' | 'conference' | 'book' | 'report' = 'journal'
+    type: 'journal' | 'conference' | 'book' | 'report' | 'white-paper' = 'journal'
 ): StructuredData {
     const schemaType = type === 'book' ? 'Book' : 'ScholarlyArticle';
     return cleanObject({

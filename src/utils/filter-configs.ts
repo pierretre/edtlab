@@ -144,13 +144,13 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
  * 
  * Provides filtering by:
  * - Project (PC1-PC5)
- * - Type (journal, conference, book, report)
+ * - Type (journal, conference, book, report, white-paper)
  * - Year (dynamically populated from available publications)
  * - Search (title, authors, venue)
  * 
  * Expected data attributes on publication items:
  * - data-tags: Space-separated list of tags (including project codes like PC1-PC5)
- * - data-type: The publication type (journal, conference, book, report)
+ * - data-type: The publication type (journal, conference, book, report, white-paper)
  * - data-year: The publication year
  * - data-search-text: Combined searchable text (title, authors, venue)
  * 
@@ -203,10 +203,11 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
             translationKey: 'publications.filter.type',
             options: [
                 { value: '', label: 'All Types', translationKey: 'publications.filter.all-types' },
-                { value: 'journal', label: 'Journal', translationKey: 'publications.type.journal' },
-                { value: 'conference', label: 'Conference', translationKey: 'publications.type.conference' },
+                { value: 'journal', label: 'Journal Article', translationKey: 'publications.type.journal' },
+                { value: 'conference', label: 'Conference Paper', translationKey: 'publications.type.conference' },
                 { value: 'book', label: 'Book', translationKey: 'publications.type.book' },
-                { value: 'report', label: 'Report', translationKey: 'publications.type.report' }
+                { value: 'report', label: 'Technical Report', translationKey: 'publications.type.report' },
+                { value: 'white-paper', label: 'White Paper', translationKey: 'publications.type.white-paper' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;

@@ -28,13 +28,15 @@ export const PUBLICATION_TYPE_TRANSLATIONS = {
         journal: "Journal Article",
         conference: "Conference Paper",
         book: "Book",
-        report: "Technical Report"
+        report: "Technical Report",
+        'white-paper': "White Paper"
     },
     fr: {
         journal: "Article de journal",
         conference: "Article de conférence",
         book: "Livre",
-        report: "Rapport technique"
+        report: "Rapport technique",
+        'white-paper': "Livre blanc"
     }
 } as const;
 
