@@ -7,5 +7,5 @@ type: "conference"
 year: 2020
 venue: "HSCC 2020 - 23rd ACM International Conference on Hybrid Systems: Computation and Control"
 tags: []
-origin: "edt"
+origin: "external"
 ---

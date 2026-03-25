@@ -167,13 +167,14 @@ const jobStructuredData = generateJobPostingStructuredData(
                 <h2 class="text-2xl font-semibold text-gray-900 mb-4">
                     {t("job-offers.references")}
                 </h2>
-                <ol class="list-decimal list-inside space-y-2">
-                    {frontmatter.references.map((slug: string) => (
-                        <li>
+                <div class="space-y-1">
+                    {frontmatter.references.map((slug: string, i: number) => (
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-sm text-gray-500 font-medium shrink-0">[{i + 1}]</span>
                             <Citation slug={slug} />
-                        </li>
+                        </div>
                     ))}
-                </ol>
+                </div>
             </section>
         )
     }

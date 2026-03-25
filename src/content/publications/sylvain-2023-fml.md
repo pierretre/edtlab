@@ -6,5 +6,5 @@ type: "thesis"
 year: 2023
 url: "https://theses.hal.science/tel-04555528"
 tags: []
-origin: "edt"
+origin: "external"
 ---

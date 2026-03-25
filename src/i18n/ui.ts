@@ -105,6 +105,8 @@ export const ui = {
         'publications.type.preprint': 'Preprint',
         'publications.type.thesis': 'Thesis',
         'publications.type.workshop': 'Workshop',
+        'publications.section.edt': 'EDT Publications',
+        'publications.section.external': 'References',
 
         // Job offers
         'job-offers.current-opportunities': 'Current Opportunities',
@@ -356,6 +358,8 @@ export const ui = {
         'publications.type.preprint': 'Prépublication',
         'publications.type.thesis': 'Thèse',
         'publications.type.workshop': 'Atelier',
+        'publications.section.edt': 'Publications EDT',
+        'publications.section.external': 'Références',
 
         // Job offers
         'job-offers.current-opportunities': 'Opportunités Actuelles',

@@ -11,5 +11,5 @@ type: "conference"
 year: 2023
 venue: "MODELS 2023 - 26th International Conference on Model-Driven Engineering Languages and Systems"
 tags: []
-origin: "edt"
+origin: "external"
 ---

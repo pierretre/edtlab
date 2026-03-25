@@ -7,5 +7,5 @@ authors:
 type: "conference"
 year: 2026
 tags: []
-origin: "edt"
+origin: "external"
 ---

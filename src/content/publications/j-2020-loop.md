@@ -9,5 +9,5 @@ type: "conference"
 year: 2020
 venue: "ICCS"
 tags: []
-origin: "edt"
+origin: "external"
 ---

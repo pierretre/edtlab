@@ -11,5 +11,5 @@ type: "journal"
 year: 2025
 venue: "ACM Transactions on Graphics"
 tags: []
-origin: "edt"
+origin: "external"
 ---

@@ -11,5 +11,5 @@ type: "conference"
 year: 2022
 url: "https://hal.science/hal-03692372"
 tags: []
-origin: "edt"
+origin: "external"
 ---
