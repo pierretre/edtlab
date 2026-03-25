@@ -11,6 +11,16 @@ description: "PhD position on explainable and distributed reasoning mechanisms t
 requirements: ["Master's degree in Computer Science, Artificial Intelligence, or related field", "Strong background in AI, reasoning systems, or distributed systems", "Programming skills", "Interest in cyber-physical systems and digital twins", "Fluency in English"]
 contacts: ["gerald.rocher@univ-cotedazur.fr"]
 lang: "en"
+references:
+  - "liang-2024-harnessing"
+  - "ma-2025-bridging"
+  - "michael-2023-explaining"
+  - "thagard-1997-abductive"
+  - "li-2020-digital"
+  - "rudin-2019-stop"
+  - "sokol-2020-one"
+  - "rasheed-2020-digital"
+  - "fuller-2020-digital"
 ---
 
 ## Position Overview
@@ -119,18 +129,6 @@ Please submit the following documents:
 - **Salary**: Competitive PhD stipend according to French standards
 - **Benefits**: Social security, health coverage, research travel support
 - **Travel**: Support for conference attendance and research collaborations
-
-## Selected References
-
-- Liang, H., García, B., Seah, E., Weng, A., Baillargeat, D., Joerin, J., ... & Chatzi, E. (2024). Harnessing Hybrid Digital Twinning for Decision-Support in Smart Infrastructures. Engineering journal preprints, https://doi. org/10.31224/3838.
-- Ma, S., Flanigan, K. A., & Bergés, M. (2025). Bridging the Reality Gap in Digital Twins with Context-Aware, Physics-Guided Deep Learning. arXiv preprint arXiv:2505.11847.
-- Michael, J., Schwammberger, M., & Wortmann, A. (2023). Explaining cyberphysical system behavior with digital twins. IEEE Software, 41(1), 55-63.
-- Thagard, P., & Shelley, C. (1997). Abductive reasoning: Logic, visual thinking, and coherence. In Logic and Scientific Methods: Volume One of the Tenth International Congress of Logic, Methodology and Philosophy of Science, Florence, August 1995 (pp. 413-427). Dordrecht: Springer Netherlands.
-- Li, B., Nielsen, R. O., Johansen, K. W., Teizer, J., Larsen, P. G., & Schultz, C. (2020, October). Towards digital twins for knowledge-driven construction progress and predictive safety analysis on a construction site. In International Symposium on Leveraging Applications of Formal Methods (pp. 153-174). Cham: Springer International Publishing.
-- Rudin, C. (2019). Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead. Nature machine intelligence, 1(5), 206-215.
-- Sokol, K., & Flach, P. (2020). One explanation does not fit all: The promise of interactive explanations for machine learning transparency. KI-Künstliche Intelligenz, 34(2), 235-250.
-- Rasheed, A., San, O., & Kvamsdal, T. (2020). Digital twin: Values, challenges and enablers from a modeling perspective. IEEE access, 8, 21980-22012.
-- Fuller, A., Fan, Z., Day, C., & Barlow, C. (2020). Digital twin: enabling technologies, challenges and open research. IEEE access, 8, 108952-108971.
 
 ## About the EDT Program
 

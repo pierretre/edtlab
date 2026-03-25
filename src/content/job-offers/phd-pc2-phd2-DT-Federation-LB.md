@@ -11,6 +11,11 @@ requirements: ["Master degree in computer science", "Programming skills", "Model
 tags:
   - "PC2"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ... 
 contacts: ["hiring.manager@edt-program.fr", "Jannik.Laval@univ-lyon2.fr", "Sylvain.Guerin@imt-atlantique.fr"]  # Array of contact emails for this position
+references:
+  - "edt-roadmap"
+  - "russell-1971-system"
+  - "meriem-2025-digital"
+  - "meriem-2023-use"
 ---
 
 ## Context
@@ -63,10 +68,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. *EDTconf 2025 - 2nd International Conference on Engineering Digital Twins*, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. [⟨hal-05223776⟩](https://inria.hal.science/hal-05223776v1)
-- Russell L. Ackoff, Towards a System of Systems Concepts, Management Science, Jul., 1971, Vol. 17, No. 11, Theory Series (Jul., 1971), pp. 661-671, Stable URL: <https://www.jstor.org/stable/2629308>
-- Meriem Smati, Vincent Cheutet, Christophe Danjou, Jannik Laval. Digital Twin System of Systems: A Layered Architecture Proposal. 13th International Conference on Model-Based Software and Systems, Engineering (MODELSWARD 2025), Feb 2025, Porto, Portugal. hal-04990305
-- Meriem Swati, The Use of Cognitive Digital Twins on an IoT System for Edge Resilience and Anomaly Detection, Mémoire de fin d'études, *Ecole Supérieure en Informatique -08 Mai 1945- Sidi Bel Abbes*, 2023
+
