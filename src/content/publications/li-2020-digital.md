@@ -7,6 +7,8 @@ authors:
 type: "conference"
 year: 2020
 venue: "Springer International Publishing"
+doi: "10.1007/978-3-030-83723-5_11"
+url: "https://doi.org/10.1007/978-3-030-83723-5_11"
 tags: []
 origin: "external"
 ---

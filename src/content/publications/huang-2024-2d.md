@@ -9,6 +9,8 @@ authors:
 type: "conference"
 year: 2024
 venue: "ACM SIGGRAPH 2024 conference papers"
+doi: "10.1145/3641519.3657428"
+url: "https://doi.org/10.1145/3641519.3657428"
 tags: []
 origin: "external"
 ---

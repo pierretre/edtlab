@@ -10,6 +10,8 @@ authors:
 type: "conference"
 year: 2024
 venue: "Semantic Web"
+doi: "10.3233/sw-223201"
+url: "https://doi.org/10.3233/sw-223201"
 tags: []
 origin: "external"
 ---

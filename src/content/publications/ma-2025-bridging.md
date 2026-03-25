@@ -6,6 +6,8 @@ authors:
   - "Bergés, M."
 type: "preprint"
 year: 2025
+doi: "10.1061/jccee5.cpeng-7024"
+url: "https://doi.org/10.1061/jccee5.cpeng-7024"
 tags: []
 origin: "external"
 ---

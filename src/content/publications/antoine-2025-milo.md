@@ -10,6 +10,8 @@ authors:
 type: "journal"
 year: 2025
 venue: "ACM Transactions on Graphics"
+doi: "10.1145/3763339"
+url: "https://doi.org/10.1145/3763339"
 tags: []
 origin: "external"
 ---

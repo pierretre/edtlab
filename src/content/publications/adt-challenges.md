@@ -4,7 +4,7 @@ authors: ["Clémence Cunin", "Thierry Duval", "Cédric Fleury"]
 type: "conference"
 year: 2025
 venue: "4th IEEE VR 2025 Workshop on 3D Reconstruction, Digital Twinning, and Simulation for Virtual Experiences"
-doi: "xxx"
+doi: "10.1109/vrw66409.2025.00099"
 url: "https://hal.science/hal-04895024v1"
 tags:
   - "PC5"

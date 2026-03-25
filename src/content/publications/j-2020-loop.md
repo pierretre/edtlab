@@ -8,6 +8,8 @@ authors:
 type: "conference"
 year: 2020
 venue: "ICCS"
+doi: "10.1007/978-3-030-50417-5_11"
+url: "https://doi.org/10.1007/978-3-030-50417-5_11"
 tags: []
 origin: "external"
 ---
