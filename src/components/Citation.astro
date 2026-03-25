@@ -1,0 +1,81 @@
+---
+/**
+ * Citation component — renders a publication reference in APA-like format.
+ * Usage: <Citation slug="combemale-2025-roadmap" /> or pass publication data directly.
+ */
+import { getCollection } from "astro:content";
+
+export interface Props {
+    /** Slug (filename without .md) of the publication to cite */
+    slug?: string;
+    /** Or pass publication data directly */
+    publication?: {
+        title: string;
+        authors: string[];
+        year: number;
+        venue?: string;
+        doi?: string;
+        url?: string;
+    };
+}
+
+const { slug, publication: pubProp } = Astro.props as Props;
+
+let pub = pubProp;
+
+if (!pub && slug) {
+    const allPublications = await getCollection("publications");
+    const found = allPublications.find((p) => p.id.replace(/\.md$/, "") === slug);
+    if (found) {
+        pub = found.data;
+    }
+}
+
+function formatAuthorsAPA(authors: string[]): string {
+    if (!authors || authors.length === 0) return "";
+    if (authors.length === 1) return authors[0];
+    if (authors.length === 2) return `${authors[0]} & ${authors[1]}`;
+    if (authors.length <= 7) {
+        return authors.slice(0, -1).join(", ") + ", & " + authors[authors.length - 1];
+    }
+    // More than 7: first 6 ... last
+    return authors.slice(0, 6).join(", ") + ", ... " + authors[authors.length - 1];
+}
+---
+
+{
+    pub ? (
+        <span class="citation text-sm text-gray-700">
+            {formatAuthorsAPA(pub.authors)}
+            {" "}({pub.year}).{" "}
+            {pub.url ? (
+                <a
+                    href={pub.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="italic text-primary-600 hover:text-primary-800 transition-colors"
+                >
+                    {pub.title}
+                </a>
+            ) : (
+                <em>{pub.title}</em>
+            )}.
+            {pub.venue && <span> {pub.venue}.</span>}
+            {pub.doi && pub.doi !== "xxx" && (
+                <span>
+                    {" "}
+                    <a
+                        href={`https://doi.org/${pub.doi}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary-600 hover:text-primary-800 transition-colors"
+                    >
+                        https://doi.org/{pub.doi}
+                    </a>
+                </span>
+            )}
+        </span>
+    ) : (
+        <span class="citation text-sm text-red-500">[Citation not found: {slug}]</span>
+    )
+}

@@ -8,6 +8,7 @@ doi: "xxx"
 url: "https://hal.science/hal-04895024v1"
 tags:
   - "PC5"
+origin: "edt"
 ---
 
 In this position paper, we present a brief literature overview about the authoring of digital twins in augmented and virtual reality, with a focus on how they can be used by industrial end-users for three common 3D authoring tasks: mesh segmentation, positioning, and behavior creation. This literature overview shows that most tools are lacking some features that are useful and necessary in this context. These features are (i) being cross-platform, (ii) being easy to use by industrial end-users, and (iii) being able to support asynchronous and synchronous collaboration between several users. Last, we detail shortly how our future work will focus on developing a collaborative authoring tool that will enable several industrial end-users to collaborate in an asymmetric way to achieve the three authoring features identified in the literature overview.

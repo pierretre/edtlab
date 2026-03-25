@@ -35,7 +35,14 @@ const { publication, t } = Astro.props as Props;
             )
         }
 
-        <div class="flex gap-1 flex-wrap justify-end">
+        <div class="flex gap-1 flex-wrap justify-end items-center">
+            {
+                publication.origin === "edt" && (
+                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-primary-100 text-primary-800 border border-primary-200">
+                        EDT
+                    </span>
+                )
+            }
             {
                 (publication.tags || [])
                     .filter((tag) => tag && tag.trim())

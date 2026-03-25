@@ -102,6 +102,9 @@ export const ui = {
         'publications.type.conference': 'Conference',
         'publications.type.book': 'Book',
         'publications.type.report': 'Report',
+        'publications.type.preprint': 'Preprint',
+        'publications.type.thesis': 'Thesis',
+        'publications.type.workshop': 'Workshop',
 
         // Job offers
         'job-offers.current-opportunities': 'Current Opportunities',
@@ -349,6 +352,9 @@ export const ui = {
         'publications.type.conference': 'Conférence',
         'publications.type.book': 'Livre',
         'publications.type.report': 'Rapport',
+        'publications.type.preprint': 'Prépublication',
+        'publications.type.thesis': 'Thèse',
+        'publications.type.workshop': 'Atelier',
 
         // Job offers
         'job-offers.current-opportunities': 'Opportunités Actuelles',

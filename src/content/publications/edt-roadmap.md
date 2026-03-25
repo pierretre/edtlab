@@ -12,6 +12,7 @@ tags:
   - "PC3"
   - "PC4"
   - "PC5"
+origin: "edt"
 ---
 
  This paper proposes a research agenda for a structured and principled approach to the engineering of digital twins (EDT), grounded in established software and systems engineering practices.

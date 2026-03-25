@@ -7,6 +7,7 @@ venue: "La Revue de l'électricité et de l'électronique"
 tags:
  - "General"
 url: https://hal.science/hal-05559524v1
+origin: "edt"
 ---
 
 Cette publication présente les verrous scientifiques et technologiques, ainsi que les perspectives du programme EDT autour de la fabrique des jumeaux numériques.
