@@ -150,7 +150,7 @@
     "ONERA": {
         "fullname": "Office National d'Études et de Recherches Aérospatiales",
         "logo": "/media/uploads/ONERA.png"
-    },  
+    },
     "IRD": {
         "fullname": "Institut de Recherche pour le Développement",
         "logo": "/media/uploads/IRD.png"
@@ -170,7 +170,7 @@
     "URCA": {
         "fullname": "Université de Reims Champagne-Ardenne",
         "logo": "/media/uploads/URCA.png"
-    },  
+    },
     "UPHF": {
         "fullname": "Université Polytechnique Hauts-de-France",
         "logo": "/media/uploads/UPHF.png"
@@ -190,5 +190,9 @@
     "Vectura System": {
         "fullname": "Vectura System",
         "logo": "/media/uploads/Vectura_System.png"
+    },
+    "SciLog": {
+        "fullname": "SciLog",
+        "logo": "/media/uploads/scilog.png"
     }
 }
