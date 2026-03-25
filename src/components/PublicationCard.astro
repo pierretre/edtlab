@@ -46,5 +46,8 @@ const { publication, t } = Astro.props as Props;
     <p class="text-xs text-gray-600 mt-1">
         {publication.authors.join(", ")} • {publication.year}
     </p>
-    <p class="text-xs text-gray-500">{publication.venue}</p>
+    <p class="text-xs text-gray-500">
+        <strong>{t(`publications.type.${publication.type}`)}</strong>
+        {publication.venue && ` • ${publication.venue}`}
+    </p>
 </div>
