@@ -1,0 +1,224 @@
+---
+import { getEntry } from "astro:content";
+import { useTranslations } from "@i18n/utils";
+
+export interface Props {
+    lang: "en" | "fr";
+}
+
+const { lang } = Astro.props as Props;
+const t = useTranslations(lang);
+
+// Load glossary terms from JSON data collection
+const glossaryData = await getEntry("glossary", "terms");
+const terms = glossaryData?.data.terms ?? [];
+
+// Accessors by language
+function getTerm(entry: typeof terms[0]) {
+    return lang === "en" ? entry.termEn : entry.termFr;
+}
+function getAltTerm(entry: typeof terms[0]) {
+    return lang === "en" ? entry.termFr : entry.termEn;
+}
+function getDefinition(entry: typeof terms[0]) {
+    return lang === "en" ? entry.definitionEn : entry.definitionFr;
+}
+
+// Sort alphabetically by term in current language
+const sorted = [...terms].sort((a, b) => getTerm(a).localeCompare(getTerm(b)));
+
+// Group by first letter
+const grouped = new Map<string, typeof terms>();
+for (const entry of sorted) {
+    const letter = getTerm(entry).charAt(0).toUpperCase();
+    if (!grouped.has(letter)) grouped.set(letter, []);
+    grouped.get(letter)!.push(entry);
+}
+const letters = Array.from(grouped.keys()).sort();
+---
+
+<!-- Search bar -->
+<div class="mb-6">
+    <label for="glossary-search" class="sr-only">
+        {t("glossary.search-placeholder")}
+    </label>
+    <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+                class="w-4 h-4 text-gray-500"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+            >
+                <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+            </svg>
+        </div>
+        <input
+            type="search"
+            id="glossary-search"
+            class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary-500 focus:border-primary-500"
+            placeholder={t("glossary.search-placeholder")}
+            autocomplete="off"
+        />
+    </div>
+</div>
+
+<!-- Alphabetical index -->
+<nav
+    class="mb-8 flex flex-wrap gap-2"
+    aria-label={t("glossary.alpha-index-label")}
+>
+    {
+        letters.map((letter) => (
+            <a
+                href={`#letter-${letter}`}
+                class="inline-flex items-center justify-center w-9 h-9 text-sm font-semibold rounded-lg border border-gray-300 text-gray-700 hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 glossary-letter-link"
+                data-letter={letter}
+            >
+                {letter}
+            </a>
+        ))
+    }
+</nav>
+
+<!-- No results message -->
+<div
+    id="glossary-no-results"
+    class="hidden text-center py-8 text-gray-500"
+    role="status"
+    aria-live="polite"
+>
+    <p class="text-lg">{t("glossary.no-results")}</p>
+</div>
+
+<!-- Glossary entries grouped by letter -->
+<div id="glossary-entries">
+    {
+        Array.from(grouped.entries()).map(([letter, groupEntries]) => (
+            <section
+                id={`letter-${letter}`}
+                class="mb-8 glossary-letter-section"
+                data-letter={letter}
+            >
+                <h2 class="text-2xl font-bold text-primary-600 border-b-2 border-primary-200 pb-2 mb-4">
+                    {letter}
+                </h2>
+                <dl class="space-y-4">
+                    {groupEntries.map((entry) => {
+                        const term = getTerm(entry);
+                        const altTerm = getAltTerm(entry);
+                        const definition = getDefinition(entry);
+                        return (
+                            <div
+                                class="glossary-entry p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
+                                data-term={term.toLowerCase()}
+                                data-alt-term={altTerm.toLowerCase()}
+                                data-definition={definition.toLowerCase()}
+                            >
+                                <dt class="text-lg font-semibold text-gray-900 mb-1">
+                                    {term}
+                                    <span class="text-sm font-normal text-gray-500 ml-2">
+                                        ({altTerm})
+                                    </span>
+                                </dt>
+                                <dd class="text-gray-700 leading-relaxed">
+                                    {definition}
+                                </dd>
+                            </div>
+                        );
+                    })}
+                </dl>
+            </section>
+        ))
+    }
+</div>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchInput = document.getElementById("glossary-search");
+        var entries = document.querySelectorAll(".glossary-entry");
+        var sections = document.querySelectorAll(".glossary-letter-section");
+        var noResults = document.getElementById("glossary-no-results");
+        var letterLinks = document.querySelectorAll(".glossary-letter-link");
+        var debounceTimer = null;
+
+        if (!searchInput) return;
+
+        searchInput.addEventListener("input", function () {
+            if (debounceTimer) clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function () {
+                filterEntries(searchInput.value.trim().toLowerCase());
+            }, 200);
+        });
+
+        function filterEntries(query) {
+            var visibleCount = 0;
+            var visibleLetters = new Set();
+
+            entries.forEach(function (entry) {
+                var term = entry.getAttribute("data-term") || "";
+                var altTerm = entry.getAttribute("data-alt-term") || "";
+                var definition = entry.getAttribute("data-definition") || "";
+
+                var matches =
+                    !query ||
+                    term.indexOf(query) !== -1 ||
+                    altTerm.indexOf(query) !== -1 ||
+                    definition.indexOf(query) !== -1;
+
+                if (matches) {
+                    entry.classList.remove("hidden");
+                    entry.removeAttribute("aria-hidden");
+                    visibleCount++;
+                } else {
+                    entry.classList.add("hidden");
+                    entry.setAttribute("aria-hidden", "true");
+                }
+            });
+
+            sections.forEach(function (section) {
+                var sectionEntries = section.querySelectorAll(".glossary-entry");
+                var hasVisible = false;
+                sectionEntries.forEach(function (entry) {
+                    if (!entry.classList.contains("hidden")) {
+                        hasVisible = true;
+                    }
+                });
+
+                var letter = section.getAttribute("data-letter");
+                if (hasVisible) {
+                    section.classList.remove("hidden");
+                    section.removeAttribute("aria-hidden");
+                    if (letter) visibleLetters.add(letter);
+                } else {
+                    section.classList.add("hidden");
+                    section.setAttribute("aria-hidden", "true");
+                }
+            });
+
+            letterLinks.forEach(function (link) {
+                var letter = link.getAttribute("data-letter");
+                if (!query || visibleLetters.has(letter)) {
+                    link.classList.remove("opacity-30", "pointer-events-none");
+                } else {
+                    link.classList.add("opacity-30", "pointer-events-none");
+                }
+            });
+
+            if (noResults) {
+                if (visibleCount === 0 && query) {
+                    noResults.classList.remove("hidden");
+                } else {
+                    noResults.classList.add("hidden");
+                }
+            }
+        }
+    });
+</script>

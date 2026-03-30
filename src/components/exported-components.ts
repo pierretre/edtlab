@@ -9,6 +9,7 @@ import JobOfferList from '@components/JobOfferList.astro';
 import ProjectGrid from '@components/ProjectGrid.astro';
 import PCLeadersList from '@components/PCLeadersList.astro';
 import EventTimeline from '@components/EventTimeline.astro';
+import GlossaryList from '@components/GlossaryList.astro';
 
 const mdxComponents = {
     OutlinedCard,
@@ -21,7 +22,8 @@ const mdxComponents = {
     JobOfferList,
     ProjectGrid,
     PCLeadersList,
-    EventTimeline
+    EventTimeline,
+    GlossaryList
 };
 
 export default mdxComponents;

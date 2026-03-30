@@ -78,6 +78,19 @@ const calendarCollection = defineCollection({
     })
 });
 
+// Glossary collection schema for bilingual terms (JSON data)
+const glossaryCollection = defineCollection({
+    type: 'data',
+    schema: z.object({
+        terms: z.array(z.object({
+            termEn: z.string(),
+            termFr: z.string(),
+            definitionEn: z.string(),
+            definitionFr: z.string(),
+        }))
+    })
+});
+
 // Menu collection schema for navigation data
 const menuCollection = defineCollection({
     type: 'data',
@@ -99,5 +112,6 @@ export const collections = {
     'news': newsCollection,
     'job-offers': jobOffersCollection,
     'calendar': calendarCollection,
+    'glossary': glossaryCollection,
     'menu': menuCollection
 };

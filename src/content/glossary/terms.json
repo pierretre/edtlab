@@ -1,0 +1,10 @@
+{
+    "terms": [
+        {
+            "termEn": "Digital Twin",
+            "termFr": "Jumeau Numérique",
+            "definitionEn": "A virtual representation of a physical system or process that is continuously updated with real-time data, enabling simulation, analysis, and optimization throughout its lifecycle.",
+            "definitionFr": "Une représentation virtuelle d'un système ou processus physique, continuellement mise à jour avec des données en temps réel, permettant la simulation, l'analyse et l'optimisation tout au long de son cycle de vie."
+        },
+    ]
+}
