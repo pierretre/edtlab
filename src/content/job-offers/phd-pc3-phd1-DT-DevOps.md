@@ -11,6 +11,11 @@ requirements: ["Master degree in computer science", "Programming skills", "Model
 tags:
  - "PC3"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ...
 contacts: ["hiring.manager@edt-program.fr", "fabien.dagnat@imt-atlantique.fr", "Jannik.Laval@univ-lyon2.fr"]  # Array of contact emails for this position
+references:
+  - "edt-roadmap"
+  - "gwendal-2025-automating"
+  - "antoine-2023-software"
+  - "meriem-2025-digital"
 ---
 
 ## Context
@@ -68,11 +73,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. *EDTconf 2025 - 2nd International Conference on Engineering Digital Twins*, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. [⟨hal-05223776⟩](https://inria.hal.science/hal-05223776v1)
-- Gwendal Beaumont, Antoine Beugnard, Salvador Martínez, Christelle Urtado, Sylvain Vauttier, Towards Automating the Life Cycle Management of Digital Twins ER2025 - 44th International Conference on Conceptual Modeling, Oct 2025, Poitiers, France. pp.412-430, ⟨10.1007/978-3-032-08623-5_22⟩
-- Antoine Beugnard , A software engineering perspective on digital twin: many candidates, none elected, SWC 2023: IEEE Smart World Congress, IEEE Smart World Congress, Aug 2023, Portsmouth, United Kingdom. ⟨10.1109/SWC57546.2023.10448955⟩
-- Tarek Alskaif, Önder Babur, Francis Bordeleau, Loek Cleophas, Benoît Combemale, et al., Evolution at the Core of Digital Twin Engineering EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-6
-- Judith Michael, Loek Cleophas, Steffen Zschaler, Tony Clark, Benoît Combemale, et al., Model‐Driven Engineering for Digital Twins: Opportunities and Challenges,  Systems Engineering, 2025, 28 (5), pp.659-670. ⟨10.1002/sys.21815⟩
+

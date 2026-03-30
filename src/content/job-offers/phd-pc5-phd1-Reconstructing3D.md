@@ -11,6 +11,18 @@ requirements: ["Master degree in relevant field", "Experience with digital twins
 tags:
   - "PC5"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ... 
 contacts: ["hiring.manager@edt-program.fr", "hr@institution.edu", "romain.raffin@ube.fr", "gilles.rougeron@cea.fr", "jeremie.le-garrec@cea.fr"]  # Array of contact emails for this position
+references:
+  - "edt-roadmap"
+  - "b-2020-nerf"
+  - "b-2023-3d"
+  - "unknown-2023-realtime"
+  - "jan-2025-clsplats"
+  - "guedon-2024-sugar"
+  - "huang-2024-2d"
+  - "antoine-2025-milo"
+  - "chen-2025-cadcrafter"
+  - "huang-2025-react3d"
+  - "cao-2025-physx3d"
 ---
 
 ## Context
@@ -53,18 +65,5 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on E>
-- B. Mildenhall, P. P. Srinivasan, M. Tancik, J. T. Barron, R. Ramamoorthi, and R. Ng. Nerf: Representing scenes as neural radiance fields for view synthesis. In European Conference on Computer Vision (ECCV), 2020.
--	B. Kerbl, G. Kopanas, T. Leimkuhler, G. Drettakis (2023). 3d gaussian splatting for real- time radiance field rendering. ACM Transactions on Graphics (ToG), 42(4), 1-14.
--	Z. Yang, H. Yang, Z. Pan, X. Zhu, and L. Zhang. Real-time photorealistic dynamic scene representation and rendering with 4d gaussian splatting. arXiv preprint arXiv 2310.10642, 2023.
--	CL-Splats: Continual Learning of Gaussian Splatting with Local Optimization, Jan Ackermann1,2, Jonas Kulhanek1,3, Shengqu Cai2, Haofei Xu, Marc Pollefeys, Gordon Wetzstein, Leonidas Guibas. ICCV 2025. https://cl-splats.github.io/
-- Guedon, A., & Lepetit, V. (2024). Sugar: Surface-aligned gaussian splatting for efficient 3d mesh reconstruction and high-quality mesh rendering. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 5354-5363).
--	Huang, B., Yu, Z., Chen, A., Geiger, A., & Gao, S. (2024, July). 2d gaussian splatting for geometrically accurate radiance fields. In ACM SIGGRAPH 2024 conference papers (pp. 1-11).
-- MILo: Mesh-In-the-Loop Gaussian Splatting for Detailed and Efficient Surface Reconstruction, Antoine Guedon, Diego Gomez, Nissim Maruani, Bingchen Gong, George Drettakis, Maks Ovsjanikov, ACM Transactions on Graphics, 2025 ttps://inria.hal.science/hal-05327792v1
--	Chen, C., Wei, J., Chen, T., Zhang, C., Yang, X., Zhang, S., ... & Liu, F. (2025). Cadcrafter: Generating computer-aided design models from unconstrained images. In Proceedings of the Computer Vision and Pattern Recognition Conference (pp. 11073-11082).
--	Huang, Z., Sun, B., Delitzas, A., Chen, J., & Pollefeys, M. (2025). REACT3D: Recovering Articulations for Interactive Physical 3D Scenes. arXiv preprint arXiv:2510.11340.
--	PhysX-3D: Physical-Grounded 3D Asset Generation, Cao, Z., Chen, Z., Pan, L., & Liu, Z. (2025). arXiv preprint arXiv:2507.12465. https://physx-3d.github.io/
+
 

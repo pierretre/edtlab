@@ -19,13 +19,23 @@ const t = useTranslations(lang);
 // Get all publications for the current language
 const allPublications = await getCollection("publications");
 
-// Sort publications by year (newest first) and then by title
-const sortedPublications = allPublications.sort((a, b) => {
-    if (b.data.year !== a.data.year) {
-        return b.data.year - a.data.year;
-    }
+type Pub = (typeof allPublications)[number];
+const sortByYearTitle = (a: Pub, b: Pub) => {
+    if (b.data.year !== a.data.year) return b.data.year - a.data.year;
     return a.data.title.localeCompare(b.data.title);
-});
+};
+
+// Separate EDT and external publications
+const edtPublications = allPublications
+    .filter((p: Pub) => p.data.origin === "edt")
+    .sort(sortByYearTitle);
+
+const externalPublications = allPublications
+    .filter((p: Pub) => p.data.origin !== "edt")
+    .sort(sortByYearTitle);
+
+// Combined for filters/structured data
+const sortedPublications = [...edtPublications, ...externalPublications];
 
 // Get unique years for filter options
 const years = getAvailableYears(allPublications.map((p) => p.data));
@@ -94,11 +104,31 @@ const publicationStructuredData = sortedPublications.map((pub) =>
                 role="region"
                 aria-label={t("accessibility.table-caption")}
             >
-                {
-                    sortedPublications.map((publication) => (
-                        <PublicationCard publication={publication.data} t={t} />
-                    ))
-                }
+                {edtPublications.length > 0 && (
+                    <div class="mb-8">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4 border-b border-primary-200 pb-2">
+                            {t("publications.section.edt")}
+                        </h2>
+                        <div class="space-y-2">
+                            {edtPublications.map((publication: Pub) => (
+                                <PublicationCard publication={publication.data} t={t} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {externalPublications.length > 0 && (
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
+                            {t("publications.section.external")}
+                        </h2>
+                        <div class="space-y-2">
+                            {externalPublications.map((publication: Pub) => (
+                                <PublicationCard publication={publication.data} t={t} />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <!-- No Results Message -->

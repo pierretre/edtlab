@@ -22,12 +22,13 @@ const publicationsCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         authors: z.array(z.string()),
-        type: z.enum(['journal', 'conference', 'book', 'report', 'white-paper']),
+        type: z.enum(['journal', 'conference', 'book', 'report', 'white-paper', 'preprint', 'thesis', 'workshop']),
         year: z.number(),
         venue: z.string().optional(),
         doi: z.string().optional(),
         url: z.string().url().optional(),
         tags: z.array(z.string()).optional().default([]),
+        origin: z.enum(['edt', 'external']).optional().default('external'),
     })
 });
 
@@ -61,7 +62,8 @@ const jobOffersCollection = defineCollection({
         requirements: z.array(z.string()),
         contacts: z.array(z.string().email()).optional(),
         lang: z.enum(['en', 'fr']).optional(),
-        tags: z.array(z.string()).optional().default([])
+        tags: z.array(z.string()).optional().default([]),
+        references: z.array(z.string()).optional().default([])
     })
 });
 

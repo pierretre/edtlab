@@ -11,6 +11,12 @@ description: "PhD position on statistical methods to improve interpretability an
 requirements: ["Master's degree in Applied Mathematics, Statistics, Computer Science, or related field", "Strong background in statistics, machine learning, or scientific computing", "Programming skills (Python, R, or similar)", "Interest in physics-based simulations and uncertainty quantification", "Fluency in English"]
 contacts: ["fabrice.gamboa@math.univ-toulouse.fr", "mathieu.vallee@cea.fr", "clement.gauchy@cea.fr"]
 lang: "en"
+references:
+  - "cholaquidis-2023-weighted"
+  - "da-2021-basics"
+  - "hallin-2021-distribution"
+  - "nguyen-2024-combining"
+  - "yahiaoui-2025-reliable"
 ---
 
 ## Position Overview
@@ -121,14 +127,6 @@ For scientific questions regarding the PhD topic, please contact the main superv
 - **Salary**: Competitive PhD stipend according to French standards
 - **Benefits**: Social security, health coverage, research travel support
 - **Travel**: Support for conference attendance and research collaborations
-
-## Selected References
-
-- Cholaquidis et al., *Weighted lens depth: Some applications to supervised classification*, Canadian Journal of Statistics, 2023.  
-- Da Veiga et al., *Basics and Trends in Sensitivity Analysis*, SIAM, 2021.  
-- Hallin et al., *Distribution and quantile functions in dimension d: a measure transportation approach*, Annals of Statistics, 2021.  
-- Nguyen et al., *Combining statistical depth and Fermat distance for uncertainty quantification*, NeurIPS, 2024.  
-- Yahiaoui et al., *Reliable neural network model for accelerating coupled thermodiffusion simulation*, ICAPP, 2025.
 
 ## About the EDT Program
 

@@ -11,6 +11,13 @@ requirements: ["Master degree in computer science or related field", "Interest i
 tags:
   - "PC5"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ... 
 contacts: ["hiring.manager@edt-program.fr", "hr@institution.edu", "tobias.isenberg@inria.fr", "maria-jesus.lobo-gunther@ign.fr"]  # Array of contact emails for this position
+references:
+  - "hullman-2019-pursuit"
+  - "isenberg-2022-you"
+  - "lin-2023-data"
+  - "mc-2019-framework"
+  - "pe-2025-advocating"
+  - "edt-roadmap"
 ---
 
 ## Context
@@ -63,12 +70,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-1. <span id="timjlg-ref1">Hullman, J.; Qiao, X.; Correll, M.; Kale, A.; Kay, M. In pursuit of error: A survey of uncertainty visualization evaluation. IEEE Trans Vis Comput Graph 2019, 25 (1), 903–913, DOI: [10.1109/TVCG.2018.2864889](https://doi.org/10.1109/TVCG.2018.2864889).</span>
-2. <span id="timjlg-ref2">Isenberg, T.; Salazar, Z.; Blanco, R.; Plaisant, C. Do you believe your (social media) data? A personal story on location data biases, errors, and plausibility as well as their visualization. IEEE Trans Vis Comput Graph 2022, 28 (9), 3277–3291, DOI: [10.1109/TVCG.2022.3141605](https://doi.org/10.1109/TVCG.2022.3141605).</span>
-3. <span id="timjlg-ref3">Lin, H.; Akbaba, D.; Meyer, M.; Lex, A. Data hunches: Incorporating personal knowledge into isualizations. IEEE Trans Vis Comput Graph 2023, 29 (1), 504–514, DOI: [10.1109/TVCG.2022.3209451](https://doi.org/10.1109/TVCG.2022.3209451).</span>
-4. <span id="timjlg-ref4">McCurdy, N.; Gerdes, J.; Meyer, M. A framework for externalizing implicit error using visualization. IEEE Trans Vis Comput Graph 2019, 25 (1), 925–935, DOI: [10.1109/TVCG.2018.2864913](https://doi.org/10.1109/TVCG.2018.2864913).</span>
-5. <span id="timjlg-ref5">Peña-Araya, V.; Martínez Fontaine, C.; Wei, X.; Delpech, G.; Bezerianos, A., Uncertainty in science is malleable. Advocating for user-agency in defining uncertainty in visualizations: A case study in geology. In Proc. CHI, ACM: New York, 2025, article 1095, 18 pages, DOI: [10.1145/3706598.3713972](https://doi.org/10.1145/3706598.3713972).</span>
-6. <span id="timjlg-ref6">Combemale, B.; Vicat-Blanc, P.; Blouin, A.; Bril El Haouzi, H.; Bruel, J.-M.; Deantoni, J; Duval, T; Gérard, S.; Jézéquel, J.-M. Engineering digital twins: A research roadmap. In Proc. EDTconf, IEEE Computer Society: Los Alamitos, 2025, pp. 181‒188. DOI: [10.1109/MODELS-C68889.2025.00035](https://doi.org/10.1109/MODELS-C68889.2025.00035).</span>
+

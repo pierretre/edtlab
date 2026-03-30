@@ -25,5 +25,8 @@
             "filename": "**/*.mdx",
             "languageId": "mdx"
         }
+    ],
+    "ignoreRegExpList": [
+        "/\"[a-z][a-z0-9]*(?:-[a-z0-9]+){2,}\"/g"
     ]
 }
