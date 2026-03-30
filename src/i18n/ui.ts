@@ -106,6 +106,9 @@ export const ui = {
         'publications.type.preprint': 'Preprint',
         'publications.type.thesis': 'Thesis',
         'publications.type.workshop': 'Workshop',
+        'publications.type.slidedeck': 'Slide Deck',
+        'publications.tab.publications': 'Publications',
+        'publications.tab.resources': 'Resources',
         'publications.section.edt': 'EDT Publications',
         'publications.section.external': 'References',
 
@@ -157,7 +160,7 @@ export const ui = {
         'filter.clear': 'Clear All Filters',
 
         // Badges
-        'badge.general': 'EDT Program',
+        'badge.general': 'General',
         'badge.event': 'Event',
         'badge.press-release': 'Press Release',
         'badge.platform-update': 'Platform Update',
@@ -360,6 +363,9 @@ export const ui = {
         'publications.type.preprint': 'Prépublication',
         'publications.type.thesis': 'Thèse',
         'publications.type.workshop': 'Atelier',
+        'publications.type.slidedeck': 'Présentation',
+        'publications.tab.publications': 'Publications',
+        'publications.tab.resources': 'Ressources',
         'publications.section.edt': 'Publications EDT',
         'publications.section.external': 'Références',
 
@@ -411,7 +417,7 @@ export const ui = {
         'filter.clear': 'Effacer Tous les Filtres',
 
         // Badges
-        'badge.general': 'Programme EDT',
+        'badge.general': 'Général',
         'badge.event': 'Événement',
         'badge.press-release': 'Communiqué de Presse',
         'badge.platform-update': 'Mise à Jour Plateforme',

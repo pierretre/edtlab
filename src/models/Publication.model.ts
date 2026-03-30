@@ -5,7 +5,7 @@ export interface Publication {
     venue?: string;
     doi?: string;
     url?: string;
-    type: 'journal' | 'conference' | 'book' | 'report' | 'white-paper' | 'preprint' | 'thesis' | 'workshop';
+    type: 'journal' | 'conference' | 'book' | 'report' | 'white-paper' | 'preprint' | 'thesis' | 'workshop' | 'slidedeck';
     tags?: string[];
     origin?: 'edt' | 'external';
 }

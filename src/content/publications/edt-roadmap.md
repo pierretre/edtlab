@@ -8,11 +8,6 @@ doi: "xxx"
 url: "https://inria.hal.science/hal-05223776"
 tags:
   - "General"
-  - "PC1"
-  - "PC2"
-  - "PC3"
-  - "PC4"
-  - "PC5"
 origin: "edt"
 ---
 

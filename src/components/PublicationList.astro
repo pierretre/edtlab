@@ -4,10 +4,7 @@ import { useTranslations } from "@i18n/utils";
 import { generatePublicationStructuredData } from "@utils/seo";
 import PublicationCard from "./PublicationCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
-import {
-    publicationsFilterConfig,
-    getAvailableYears,
-} from "@utils/filter-configs";
+import { publicationsFilterConfig } from "@utils/filter-configs";
 
 export interface Props {
     lang: "en" | "fr";
@@ -34,29 +31,10 @@ const externalPublications = allPublications
     .filter((p: Pub) => p.data.origin !== "edt")
     .sort(sortByYearTitle);
 
-// Combined for filters/structured data
+// Combined for structured data
 const sortedPublications = [...edtPublications, ...externalPublications];
 
-// Get unique years for filter options
-const years = getAvailableYears(allPublications.map((p) => p.data));
 
-// Update year filter options dynamically
-const yearFilter = publicationsFilterConfig.filters.find(
-    (f) => f.id === "year-filter",
-);
-if (yearFilter && yearFilter.options) {
-    yearFilter.options = [
-        {
-            value: "",
-            label: "All Years",
-            translationKey: "publications.filter.all-years",
-        },
-        ...years.map((year) => ({
-            value: year.toString(),
-            label: year.toString(),
-        })),
-    ];
-}
 
 // Generate structured data for publications
 const publicationStructuredData = sortedPublications.map((pub) =>
@@ -74,75 +52,124 @@ const publicationStructuredData = sortedPublications.map((pub) =>
 ---
 
 <div class="w-full">
-    <div class="flex flex-col lg:flex-row gap-10">
-        <!-- Filter Sidebar -->
-        <FilterSidebar
-            filters={publicationsFilterConfig.filters}
-            lang={lang}
-            clearButtonText={t("filter.clear")}
-        />
-
-        <main class="flex-1">
-            <!-- Results Count -->
-            <div class="mb-6 text-sm text-gray-600 text-center">
-                <span
-                    id="results-count"
-                    data-template={t("publications.results-count")}
-                >
-                    {
-                        t("publications.results-count").replace(
-                            "{count}",
-                            sortedPublications.length.toString(),
-                        )
-                    }
-                </span>
-            </div>
-
-            <div
-                id="publications-list"
-                class="relative overflow-x-auto"
-                role="region"
-                aria-label={t("accessibility.table-caption")}
+    <!-- Tabs -->
+    <div class="border-b border-gray-200 mb-6" role="tablist" aria-label="Publications">
+        <div class="flex gap-0 -mb-px">
+            <button
+                id="tab-publications"
+                class="tab-button px-6 py-3 text-sm font-semibold border-b-2 border-primary-600 text-primary-700 bg-white"
+                role="tab"
+                aria-selected="true"
+                aria-controls="panel-publications"
             >
-                {edtPublications.length > 0 && (
-                    <div class="mb-8">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4 border-b border-primary-200 pb-2">
-                            {t("publications.section.edt")}
-                        </h3>
-                        <div class="space-y-2">
-                            {edtPublications.map((publication: Pub) => (
-                                <PublicationCard publication={publication.data} t={t} />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                {(t as any)("publications.tab.publications") || "Publications"}
+                <span class="ml-1 text-xs text-gray-500">({edtPublications.length})</span>
+            </button>
+            <button
+                id="tab-resources"
+                class="tab-button px-6 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                role="tab"
+                aria-selected="false"
+                aria-controls="panel-resources"
+            >
+                {(t as any)("publications.tab.resources") || "Resources"}
+                <span class="ml-1 text-xs text-gray-500">({externalPublications.length})</span>
+            </button>
+        </div>
+    </div>
 
-                {externalPublications.length > 0 && (
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
-                            {t("publications.section.external")}
-                        </h3>
-                        <div class="space-y-2">
-                            {externalPublications.map((publication: Pub) => (
-                                <PublicationCard publication={publication.data} t={t} />
-                            ))}
-                        </div>
-                    </div>
-                )}
-            </div>
+    <!-- Publications Tab Panel -->
+    <div id="panel-publications" role="tabpanel" aria-labelledby="tab-publications">
+        <div class="flex flex-col lg:flex-row gap-10">
+            <FilterSidebar
+                filters={publicationsFilterConfig.filters}
+                lang={lang}
+                clearButtonText={t("filter.clear")}
+                idPrefix="pub"
+            />
 
-            <!-- No Results Message -->
-            <div id="no-results" class="hidden text-center py-32">
-                <div class="max-w-md mx-auto">
-                    <h3 class="mt-4 text-lg font-medium text-gray-900">
-                        {t("publications.no-results")}
-                    </h3>
-                    <p class="mt-2 text-gray-500">
-                        {t("publications.no-results-description")}
-                    </p>
+            <main class="flex-1">
+                <div class="mb-6 text-sm text-gray-600 text-center">
+                    <span
+                        id="results-count-publications"
+                        data-template={t("publications.results-count")}
+                    >
+                        {t("publications.results-count").replace("{count}", edtPublications.length.toString())}
+                    </span>
                 </div>
-            </div>
-        </main>
+
+                <div
+                    id="publications-list"
+                    class="relative overflow-x-auto"
+                    role="region"
+                    aria-label={t("accessibility.table-caption")}
+                >
+                    <div class="space-y-2">
+                        {edtPublications.map((publication: Pub) => (
+                            <PublicationCard publication={publication.data} t={t} />
+                        ))}
+                    </div>
+                </div>
+
+                <div id="no-results-publications" class="hidden text-center py-32">
+                    <div class="max-w-md mx-auto">
+                        <h3 class="mt-4 text-lg font-medium text-gray-900">
+                            {t("publications.no-results")}
+                        </h3>
+                        <p class="mt-2 text-gray-500">
+                            {t("publications.no-results-description")}
+                        </p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Resources Tab Panel -->
+    <div id="panel-resources" role="tabpanel" aria-labelledby="tab-resources" class="hidden">
+        <div class="flex flex-col lg:flex-row gap-10">
+            <FilterSidebar
+                filters={publicationsFilterConfig.filters}
+                lang={lang}
+                clearButtonText={t("filter.clear")}
+                idPrefix="res"
+            />
+
+            <main class="flex-1">
+                <div class="mb-6 text-sm text-gray-600 text-center">
+                    <span
+                        id="results-count-resources"
+                        data-template={t("publications.results-count")}
+                    >
+                        {t("publications.results-count").replace("{count}", externalPublications.length.toString())}
+                    </span>
+                </div>
+
+                <div
+                    id="resources-list"
+                    class="relative overflow-x-auto"
+                    role="region"
+                    aria-label={t("accessibility.table-caption")}
+                >
+                    <div class="space-y-2">
+                        {externalPublications.map((publication: Pub) => (
+                            <PublicationCard publication={publication.data} t={t} />
+                        ))}
+                    </div>
+                </div>
+
+                <div id="no-results-resources" class="hidden text-center py-32">
+                    <div class="max-w-md mx-auto">
+                        <h3 class="mt-4 text-lg font-medium text-gray-900">
+                            {t("publications.no-results")}
+                        </h3>
+                        <p class="mt-2 text-gray-500">
+                            {t("publications.no-results-description")}
+                        </p>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <!-- Structured Data for Publications -->
@@ -160,12 +187,64 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         import { FilterManagerImpl } from "@utils/filtering";
         import { publicationsFilterConfig } from "@utils/filter-configs";
 
-        // Initialize filter manager when DOM is ready
         document.addEventListener("DOMContentLoaded", function () {
-            const filterManager = new FilterManagerImpl(
-                publicationsFilterConfig,
+            // --- Tab switching ---
+            const tabPublications = document.getElementById("tab-publications")!;
+            const tabResources = document.getElementById("tab-resources")!;
+            const panelPublications = document.getElementById("panel-publications")!;
+            const panelResources = document.getElementById("panel-resources")!;
+
+            const activeClasses = ["border-primary-600", "text-primary-700", "bg-white"];
+            const inactiveClasses = ["border-transparent", "text-gray-500", "hover:text-gray-700", "hover:border-gray-300"];
+
+            function activateTab(activeTab: HTMLElement, inactiveTab: HTMLElement, activePanel: HTMLElement, inactivePanel: HTMLElement) {
+                activeTab.classList.remove(...inactiveClasses);
+                activeTab.classList.add(...activeClasses);
+                activeTab.setAttribute("aria-selected", "true");
+
+                inactiveTab.classList.remove(...activeClasses);
+                inactiveTab.classList.add(...inactiveClasses);
+                inactiveTab.setAttribute("aria-selected", "false");
+
+                activePanel.classList.remove("hidden");
+                inactivePanel.classList.add("hidden");
+            }
+
+            tabPublications.addEventListener("click", () => {
+                activateTab(tabPublications, tabResources, panelPublications, panelResources);
+            });
+
+            tabResources.addEventListener("click", () => {
+                activateTab(tabResources, tabPublications, panelResources, panelPublications);
+            });
+
+            // Helper to create a prefixed config
+            function prefixedConfig(prefix: string, containerSelector: string, noResultsSelector: string, resultsCountSelector: string) {
+                return {
+                    ...publicationsFilterConfig,
+                    filters: publicationsFilterConfig.filters.map(f => ({
+                        ...f,
+                        id: `${prefix}-${f.id}`,
+                    })),
+                    itemSelector: '.publication-item',
+                    containerSelector,
+                    noResultsSelector,
+                    resultsCountSelector,
+                    clearButtonSelector: `#${prefix}-clear-filters`,
+                };
+            }
+
+            // --- Filters for Publications tab ---
+            const pubFilterManager = new FilterManagerImpl(
+                prefixedConfig('pub', '#publications-list', '#no-results-publications', '#results-count-publications')
             );
-            filterManager.initialize();
+            pubFilterManager.initialize();
+
+            // --- Filters for Resources tab ---
+            const resFilterManager = new FilterManagerImpl(
+                prefixedConfig('res', '#resources-list', '#no-results-resources', '#results-count-resources')
+            );
+            resFilterManager.initialize();
         });
     </script>
 
