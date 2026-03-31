@@ -10,7 +10,7 @@ description: "The goal is to develop an environment for building and executing d
 requirements: ["Master degree in computer science", "Programming skills", "Modeling skills", "Experience with digital twins is a plus"] # Some requirements in a list
 tags:
  - "PC3"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ...
-contacts: ["hiring.manager@edt-program.fr", "fabien.dagnat@imt-atlantique.fr", "Jannik.Laval@univ-lyon2.fr"]  # Array of contact emails for this position
+contacts: ["fabien.dagnat@imt-atlantique.fr", "Jannik.Laval@univ-lyon2.fr"]  # Array of contact emails for this position
 references:
   - "edt-roadmap"
   - "gwendal-2025-automating"

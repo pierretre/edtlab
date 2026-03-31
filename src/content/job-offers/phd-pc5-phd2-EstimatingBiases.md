@@ -10,7 +10,7 @@ description: "In this PhD research project we will investigate how to automatica
 requirements: ["Master degree in computer science or related field", "Interest in interactive data visualization and analysis", "Excellent programming skills; in particular, with experiences in computer graphics, visualization (e.g., D3, Altair, Plotly, ...)", "Good written and spoken communication in English", "Past experience in data visualization", "Past publications preferred but not required"] # Some requirements in a list
 tags:
   - "PC5"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ... 
-contacts: ["hiring.manager@edt-program.fr", "hr@institution.edu", "tobias.isenberg@inria.fr", "maria-jesus.lobo-gunther@ign.fr"]  # Array of contact emails for this position
+contacts: ["tobias.isenberg@inria.fr", "maria-jesus.lobo-gunther@ign.fr"]  # Array of contact emails for this position
 references:
   - "hullman-2019-pursuit"
   - "isenberg-2022-you"

@@ -10,7 +10,7 @@ description: "Extraction of the geometry, the kinematics, and the mechanical pro
 requirements: ["Master degree in relevant field", "Experience with digital twins", "Programming skills"] # Some requirements in a list
 tags:
   - "PC5"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ... 
-contacts: ["hiring.manager@edt-program.fr", "hr@institution.edu", "romain.raffin@ube.fr", "gilles.rougeron@cea.fr", "jeremie.le-garrec@cea.fr"]  # Array of contact emails for this position
+contacts: ["romain.raffin@ube.fr", "gilles.rougeron@cea.fr", "jeremie.le-garrec@cea.fr"]  # Array of contact emails for this position
 references:
   - "edt-roadmap"
   - "b-2020-nerf"

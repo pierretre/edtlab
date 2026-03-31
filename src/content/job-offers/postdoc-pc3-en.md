@@ -10,7 +10,7 @@ description: "The goal is to define a generic methodology that covers the whole 
 requirements: ["PhD in computer science", "Programming skills", "Modeling skills", "Experience with digital twins development"] # Some requirements in a list
 tags:
  - "PC3"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ...
-contacts: ["hiring.manager@edt-program.fr", "Sophie.Ebersold@univ-tlse2.fr", "marcos.didonetdelfabro@cea.fr"]  # Array of contact emails for this position
+contacts: ["Sophie.Ebersold@univ-tlse2.fr", "marcos.didonetdelfabro@cea.fr"]  # Array of contact emails for this position
 references:
   - "edt-roadmap"
 ---

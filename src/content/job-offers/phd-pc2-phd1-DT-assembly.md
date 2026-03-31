@@ -10,7 +10,7 @@ description: "The digital twin is a repository of knowledge that must be modeled
 requirements: ["Master degree in computer science", "Programming skills", "Modelling skills", "Experience with digital twins is a plus"] # Some requirements in a list
 tags:
   - "PC2"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ... 
-contacts: ["hiring.manager@edt-program.fr", "antoine.beugnard@imt-atlantique.fr", "Jean-Marc.Jezequel@irisa.fr"]  # Array of contact emails for this position
+contacts: ["antoine.beugnard@imt-atlantique.fr", "Jean-Marc.Jezequel@irisa.fr"]  # Array of contact emails for this position
 references:
   - "edt-roadmap"
   - "jean-christophe-nd-10"
