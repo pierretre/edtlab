@@ -4,52 +4,32 @@ import { useTranslations } from "@i18n/utils";
 import { generatePublicationStructuredData } from "@utils/seo";
 import PublicationCard from "./PublicationCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
-import {
-    publicationsFilterConfig,
-    getAvailableYears,
-} from "@utils/filter-configs";
+import { publicationsFilterConfig } from "@utils/filter-configs";
 
 export interface Props {
     lang: "en" | "fr";
+    origin?: "edt" | "external";
 }
 
-const { lang } = Astro.props as Props;
+const { lang, origin } = Astro.props as Props;
 const t = useTranslations(lang);
 
-// Get all publications for the current language
+// Get all publications, optionally filtered by origin
 const allPublications = await getCollection("publications");
 
-// Sort publications by year (newest first) and then by title
-const sortedPublications = allPublications.sort((a, b) => {
-    if (b.data.year !== a.data.year) {
-        return b.data.year - a.data.year;
-    }
+type Pub = (typeof allPublications)[number];
+const sortByYearTitle = (a: Pub, b: Pub) => {
+    if (b.data.year !== a.data.year) return b.data.year - a.data.year;
     return a.data.title.localeCompare(b.data.title);
-});
+};
 
-// Get unique years for filter options
-const years = getAvailableYears(allPublications.map((p) => p.data));
-
-// Update year filter options dynamically
-const yearFilter = publicationsFilterConfig.filters.find(
-    (f) => f.id === "year-filter",
-);
-if (yearFilter && yearFilter.options) {
-    yearFilter.options = [
-        {
-            value: "",
-            label: "All Years",
-            translationKey: "publications.filter.all-years",
-        },
-        ...years.map((year) => ({
-            value: year.toString(),
-            label: year.toString(),
-        })),
-    ];
-}
+const publications = (origin
+    ? allPublications.filter((p: Pub) => origin === "edt" ? p.data.origin === "edt" : p.data.origin !== "edt")
+    : allPublications
+).sort(sortByYearTitle);
 
 // Generate structured data for publications
-const publicationStructuredData = sortedPublications.map((pub) =>
+const publicationStructuredData = publications.map((pub) =>
     generatePublicationStructuredData(
         pub.data.title,
         pub.data.authors,
@@ -65,7 +45,6 @@ const publicationStructuredData = sortedPublications.map((pub) =>
 
 <div class="w-full">
     <div class="flex flex-col lg:flex-row gap-10">
-        <!-- Filter Sidebar -->
         <FilterSidebar
             filters={publicationsFilterConfig.filters}
             lang={lang}
@@ -73,18 +52,12 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         />
 
         <main class="flex-1">
-            <!-- Results Count -->
             <div class="mb-6 text-sm text-gray-600 text-center">
                 <span
                     id="results-count"
                     data-template={t("publications.results-count")}
                 >
-                    {
-                        t("publications.results-count").replace(
-                            "{count}",
-                            sortedPublications.length.toString(),
-                        )
-                    }
+                    {t("publications.results-count").replace("{count}", publications.length.toString())}
                 </span>
             </div>
 
@@ -94,14 +67,13 @@ const publicationStructuredData = sortedPublications.map((pub) =>
                 role="region"
                 aria-label={t("accessibility.table-caption")}
             >
-                {
-                    sortedPublications.map((publication) => (
+                <div class="space-y-2">
+                    {publications.map((publication: Pub) => (
                         <PublicationCard publication={publication.data} t={t} />
-                    ))
-                }
+                    ))}
+                </div>
             </div>
 
-            <!-- No Results Message -->
             <div id="no-results" class="hidden text-center py-32">
                 <div class="max-w-md mx-auto">
                     <h3 class="mt-4 text-lg font-medium text-gray-900">
@@ -130,11 +102,8 @@ const publicationStructuredData = sortedPublications.map((pub) =>
         import { FilterManagerImpl } from "@utils/filtering";
         import { publicationsFilterConfig } from "@utils/filter-configs";
 
-        // Initialize filter manager when DOM is ready
         document.addEventListener("DOMContentLoaded", function () {
-            const filterManager = new FilterManagerImpl(
-                publicationsFilterConfig,
-            );
+            const filterManager = new FilterManagerImpl(publicationsFilterConfig);
             filterManager.initialize();
         });
     </script>

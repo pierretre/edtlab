@@ -103,6 +103,14 @@ export const ui = {
         'publications.type.book': 'Book',
         'publications.type.report': 'Technical Report',
         'publications.type.white-paper': 'White Paper',
+        'publications.type.preprint': 'Preprint',
+        'publications.type.thesis': 'Thesis',
+        'publications.type.workshop': 'Workshop',
+        'publications.type.slidedeck': 'Slide Deck',
+        'publications.tab.publications': 'Publications',
+        'publications.tab.resources': 'Resources',
+        'publications.section.edt': 'EDT Publications',
+        'publications.section.external': 'References',
 
         // Job offers
         'job-offers.current-opportunities': 'Current Opportunities',
@@ -124,6 +132,7 @@ export const ui = {
         'job-offers.results-count': 'Showing {count} job offers',
         'job-offers.location': 'Location',
         'job-offers.requirements': 'Requirements',
+        'job-offers.references': 'References',
         'job-offers.ready-to-apply': 'Ready to Apply?',
         'job-offers.application-instructions': 'Send us your application including CV, cover letter, and relevant documents.',
         'job-offers.apply-now': 'Apply Now',
@@ -151,7 +160,7 @@ export const ui = {
         'filter.clear': 'Clear All Filters',
 
         // Badges
-        'badge.general': 'EDT Program',
+        'badge.general': 'General',
         'badge.event': 'Event',
         'badge.press-release': 'Press Release',
         'badge.platform-update': 'Platform Update',
@@ -351,6 +360,14 @@ export const ui = {
         'publications.type.book': 'Livre',
         'publications.type.report': 'Rapport technique',
         'publications.type.white-paper': 'Livre blanc',
+        'publications.type.preprint': 'Prépublication',
+        'publications.type.thesis': 'Thèse',
+        'publications.type.workshop': 'Atelier',
+        'publications.type.slidedeck': 'Présentation',
+        'publications.tab.publications': 'Publications',
+        'publications.tab.resources': 'Ressources',
+        'publications.section.edt': 'Publications EDT',
+        'publications.section.external': 'Références',
 
         // Job offers
         'job-offers.current-opportunities': 'Opportunités Actuelles',
@@ -372,6 +389,7 @@ export const ui = {
         'job-offers.results-count': 'Affichage de {count} offres d\'emploi',
         'job-offers.location': 'Lieu',
         'job-offers.requirements': 'Exigences',
+        'job-offers.references': 'Références',
         'job-offers.ready-to-apply': 'Prêt à Postuler ?',
         'job-offers.application-instructions': 'Envoyez-nous votre candidature incluant CV, lettre de motivation et documents pertinents.',
         'job-offers.apply-now': 'Postuler Maintenant',
@@ -399,7 +417,7 @@ export const ui = {
         'filter.clear': 'Effacer Tous les Filtres',
 
         // Badges
-        'badge.general': 'Programme EDT',
+        'badge.general': 'Général',
         'badge.event': 'Événement',
         'badge.press-release': 'Communiqué de Presse',
         'badge.platform-update': 'Mise à Jour Plateforme',

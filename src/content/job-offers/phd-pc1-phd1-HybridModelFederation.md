@@ -11,6 +11,17 @@ description: "PhD position on explainable and traceable management of hybrid phy
 requirements: ["Master's degree in Computer Science, Software Engineering, or related field", "Strong background in Model-Based Systems Engineering or Model-Driven Engineering", "Knowledge of simulation, machine learning, or cyber-physical systems", "Programming skills", "Fluency in English"]
 contacts: ["dominique.blouin@telecom-paris.fr", "sylvain.guerin@imt-atlantique.fr", "soumyadipbandyopadhyay002@gmail.com"]
 lang: "en"
+references:
+  - "amrani-2021-multi"
+  - "von-2020-combining"
+  - "rudolph-2023-hybrid"
+  - "thummerer-2025-learnable"
+  - "zendehboudi-2018-applications"
+  - "slater-2022-hybrid"
+  - "syauqi-2024-reducing"
+  - "hallak-2024-model"
+  - "amrani-2024-survey"
+  - "biglari-2025-foundations"
 ---
 
 ## Position Overview
@@ -119,36 +130,6 @@ For scientific questions regarding the PhD topic, please contact the main superv
 - **Salary**: Competitive PhD stipend according to French standards
 - **Benefits**: Social security, health coverage, research travel support
 - **Travel**: Support for conference attendance and research collaborations
-
-## Selected References
-
-- Amrani, M., Blouin, D., Heinrich, R., Rensink, A., Vangheluwe, H., & Wortmann, A. (2021). Multi-
-paradigm modelling for cyber–physical systems: A descriptive framework. Software and
-Systems Modeling, 20(3), 611–639. https://doi.org/10.1007/s10270-021-00876-z
--  Von Rueden, L., Mayer, S., Sifa, R., Bauckhage, C., & Garcke, J. (2020). Combining Machine
-Learning and Simulation to a Hybrid Modelling Approach: Current and Future Directions. In
-M. R. Berthold, A. Feelders, & G. Krempl (Eds.), Advances in Intelligent Data Analysis XVIII (Vol.
-12080, pp. 548–560). Springer International Publishing. https://doi.org/10.1007/978-3-030-44584-
-3_43
-- Rudolph, M., Kurz, S., & Rakitsch, B. (2023). Hybrid Modeling Design Patterns (No.
-arXiv:2401.00033). arXiv. https://doi.org/10.48550/arXiv.2401.00033
-- Thummerer, T., & Mikelsons, L. (2025). Learnable & Interpretable Model Combination in
-Dynamical Systems Modeling (No. arXiv:2406.08093). arXiv. https://doi.org/10.48550/arXiv.2406.08093
-- Zendehboudi, S., Rezaei, N., & Lohi, A. (2018). Applications of hybrid models in chemical,
-petroleum, and energy systems: A systematic review. Applied Energy, 228, 2539–2566. https://doi.org/10.1016/j.apenergy.2018.06.051
-- Slater, L., Arnal, L., Boucher, M.-A., Chang, A. Y.-Y., Moulds, S., Murphy, C., Nearing, G., Shalev, G., Shen, C., Speight, L., Villarini, G., Wilby, R. L., Wood, A., & Zappa, M. (2022). Hybrid forecasting: Using statistics and machine learning to integrate predictions from dynamical
-models. Hydrometeorology/Modelling approaches. https://doi.org/10.5194/hess-2022-334
-- Syauqi, A., Pavian Eldi, G., Andika, R., & Lim, H. (2024). Reducing data requirement for
-accurate photovoltaic power prediction using hybrid machine learning-physical model on
-diverse dataset. Solar Energy, 279, 112814. https://doi.org/10.1016/j.solener.2024.112814
-- Hallak, Y., Blouin, D., Pautet, L., Saab, L., Laborie, B., & Mittal, R. (2024). Model Management at Renault Virtual Simulation Team: State of Practice, Challenges and Research Directions. Proceedings of the ACM/IEEE 27th International Conference on Model Driven Engineering
-Languages and Systems, 1005–1014. https://doi.org/10.1145/3652620.3688223
-- Amrani, M., Mittal, R., Goulão, M., Amaral, V., Guérin, S., Martínez, S., Blouin, D., Bhobe, A., & Hallak, Y. (2024). A Survey of Federative Approaches for Model Management in MBSE.
-Proceedings of the ACM/IEEE 27th International Conference on Model Driven Engineering
-Languages and Systems, 990–999. https://doi.org/10.1145/3652620.3688221
-- Biglari, R. (n.d.). Foundations for Self-Adaptive Abstraction and Approximation in Digital
-Twins with Real-time Requirements. PhD Thesis, University of Antwerp, 2025.
-https://hdl.handle.net/10067/2148220151162165141
 
 ## About the EDT Program
 

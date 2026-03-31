@@ -59,7 +59,7 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -184,7 +184,7 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -207,7 +207,11 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'conference', label: 'Conference Paper', translationKey: 'publications.type.conference' },
                 { value: 'book', label: 'Book', translationKey: 'publications.type.book' },
                 { value: 'report', label: 'Technical Report', translationKey: 'publications.type.report' },
-                { value: 'white-paper', label: 'White Paper', translationKey: 'publications.type.white-paper' }
+                { value: 'white-paper', label: 'White Paper', translationKey: 'publications.type.white-paper' },
+                { value: 'preprint', label: 'Preprint', translationKey: 'publications.type.preprint' },
+                { value: 'thesis', label: 'Thesis', translationKey: 'publications.type.thesis' },
+                { value: 'workshop', label: 'Workshop', translationKey: 'publications.type.workshop' },
+                { value: 'slidedeck', label: 'Slide Deck', translationKey: 'publications.type.slidedeck' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -308,7 +312,7 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;

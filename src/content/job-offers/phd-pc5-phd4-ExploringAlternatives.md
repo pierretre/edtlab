@@ -11,6 +11,8 @@ tags:
   - "PC5"
 contacts: ["thierry.duval@imt-atlantique.fr", "dbaudry@cesi.fr"]
 lang: "en"
+references:
+  - "edt-roadmap"
 ---
 
 ## Context
@@ -105,7 +107,4 @@ CESI engineering school supports engineering students through a customizable fiv
 
 The Engineering and Digital Tools research team of CESI LINEACT develops its research in the fields of modeling, simulation, optimization and control of complex systems, materials, and processes and human-system interactions in cyber-physical systems.
 https://lineact.cesi.fr/en/engineering-and-numerical-tools/presentation/
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. <hal-05223776> 
+ 

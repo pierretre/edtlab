@@ -11,6 +11,17 @@ description: "PhD position on structural analysis methods for data based diagnos
 requirements: ["Master's degree in Computer Science, Applied Mathematics, Control Systems, or related field", "Strong background in mathematical modeling and dynamical systems", "Algorithmic skills", "Interest in modeling languages such as Modelica and scientific computing", "Fluency in English"]
 contacts: ["benoit.caillaud@inria.fr"]
 lang: "en"
+references:
+  - "p-2014-principles"
+  - "a-2014-porthamiltonian"
+  - "b-2006-robust"
+  - "l-2024-data"
+  - "g-2024-sparse"
+  - "j-2023-discovering"
+  - "j-2001-simple"
+  - "m-2008-sensor"
+  - "b-2020-implicit"
+  - "b-2025-benchmarking"
 ---
 
 ## Position Overview
@@ -121,20 +132,6 @@ Please submit the following documents:
 **Supervisor**: Benoit Caillaud  
 **Institution**: Inria, Hycomes  
 **Email**: benoit.caillaud@inria.fr
-
-## Selected References
-
-
-- P. Fritzson, "Principles of Object-Oriented Modeling and Simulation with Modelica 3.3: A Cyber-Physical Approach", Wiley, 2014
-- A. van der Schaft, D. Jeltsema, "Port-Hamiltonian Systems Theory: An Introductory Overview", Foundations and Trends in Systems and Control: Vol. 1: No. 2-3, pp 173-378, 2014.
-- B. Bachmann, P. Aronsson, P. Fritzson, "Robust Initialization of Differential Algebraic Equations", 5th International Modelica Comnference, 2006.
-- L. C. Mesa-Moles, A. Jardin, J.-P. Argaud, "How data assimilation can help in the initialization of Modelica models?", 18th ModProd workshop, 2024.
-- G. F. Machado and M. Jones, "Sparse Identification of Nonlinear Dynamics with Side Information (SINDy-SI)," 2024 American Control Conference (ACC), Toronto, ON, Canada, 2024, pp. 2879-2884, doi: 10.23919/ACC60939.2024.10644812.
-- J Bakarji, K Champion, J Nathan Kutz, SL Brunton, "Discovering governing equations from partial measurements with deep delay autoencoders", Proceedings of the Royal Society A, 2023.
-- J. D. Pryce, "A Simple Structural Analysis Method for DAEs", BIT, Numerical mathematics, 41(2):364-394, 2001.
-- M. Krysander and E. Frisk, "Sensor Placement for Fault Diagnosis," in IEEE Transactions on Systems, Man, and Cybernetics - Part A: Systems and Humans, vol. 38, no. 6, pp. 1398-1410, Nov. 2008.
-- B. Caillaud, M. Malandain, J. Thibault. Implicit structural analysis of multimode DAE systems. HSCC 2020 - 23rd ACM International Conference on Hybrid Systems: Computation and Control, Apr 2020, Sydney, Australia.
-- B. Caillaud, A. Benveniste, M. Malandain. Benchmarking the Modular Structural Analysis Algorithm. 2025 - 16th International Modelica & FMI Conference, Sep 2025, Lucerne, Switzerland.
 
 ## About the EDT Program
 

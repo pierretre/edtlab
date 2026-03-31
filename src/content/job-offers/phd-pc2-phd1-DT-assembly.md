@@ -10,7 +10,18 @@ description: "The digital twin is a repository of knowledge that must be modeled
 requirements: ["Master degree in computer science", "Programming skills", "Modelling skills", "Experience with digital twins is a plus"] # Some requirements in a list
 tags:
   - "PC2"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ... 
-contacts: ["hiring.manager@edt-program.fr", "antoine.beugnard@imt-atlantique.fr", "Jean-Marc.Jezequel@irisa.fr"]  # Array of contact emails for this position
+contacts: ["antoine.beugnard@imt-atlantique.fr", "Jean-Marc.Jezequel@irisa.fr"]  # Array of contact emails for this position
+references:
+  - "edt-roadmap"
+  - "jean-christophe-nd-10"
+  - "sylvain-2023-fml"
+  - "sylvain-2022-multilevel"
+  - "fahad-2018-bridging"
+  - "gwendal-2025-automating"
+  - "antoine-2023-software"
+  - "meriem-2025-digital"
+  - "hartmann-2019-greycat"
+  - "anna-2023-combining"
 ---
 
 ## Context
@@ -68,19 +79,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. *EDTconf 2025 - 2nd International Conference on Engineering Digital Twins*, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. [⟨hal-05223776⟩](https://inria.hal.science/hal-05223776v1)
-- Model Federation 
-  - Jean-Christophe Bach, Antoine Beugnard, Joel Champeau, Fabien Dagnat, Sylvain Guérin, and Salvador Martínez. [__10 Years of Model Federation with OpenFlexo: Challenges and Lessons Learned__](https://hal.science/hal-04617492). In International Conference on Model Driven Engineering Languages and Systems (MoDELS), 2024
-  - Sylvain Guérin [__FML: A Model Federation Language For Semantic Interoperability of Heterogeneous Information Sources__](https://theses.hal.science/tel-04555528). Ph. D. Dissertation, 2023, École Nationale Supérieure de Techniques Avancées de Bretagne.
-  - Sylvain Guérin, Joel Champeau, Jean-Christophe Bach, Antoine Beugnard, Fabien Dagnat, and Salvador Martínez. [__Multi-level modeling with Openflexo/FML : A contribution to the multi-level process challenge__](https://hal.science/hal-03692372). Enterprise Modelling and Information Systems Architectures (EMISAJ), 17 :9–1, 2022.
-  - Fahad Rafique Golra, Fabien Dagnat, Jeanine Souquières, Imen Sayar, and Sylvain Guérin. [__Bridging the gap between informal requirements and formal specifications using model federation__](https://hal.science/hal-01853610). In Einar Broch Johnsen and Ina Schaefer, editors, Software Engineering and Formal Methods, pages 54–69, Cham, 2018. Springer International Publishing.
-- Digital Twin 
-  - Gwendal Beaumont, Antoine Beugnard, Salvador Martínez, Christelle Urtado, Sylvain Vauttier, Towards Automating the Life Cycle Management of Digital Twins  *ER2025 - 44th International Conference on Conceptual Modeling*, Oct 2025, Poitiers, France. pp.412-430, [⟨10.1007/978-3-032-08623-5_22⟩](https://dx.doi.org/10.1007/978-3-032-08623-5_22)
-  - Antoine Beugnard, A software engineering perspective on digital twin: many candidates, none elected, SWC 2023: IEEE Smart World Congress, IEEE Smart World Congress, Aug 2023, Portsmouth, United Kingdom. [⟨10.1109/SWC57546.2023.10448955⟩](https://dx.doi.org/10.1109/SWC57546.2023.10448955)
-  - Judith Michael, Loek Cleophas, Steffen Zschaler, Tony Clark, Benoît Combemale , et al., Model‐Driven Engineering for Digital Twins: Opportunities and Challenges Systems Engineering, 2025, 28 (5), pp.659-670. ⟨10.1002/sys.21815⟩
-- Advanced data representation and manipulation 
-  - Hartmann, T., Fouquet, F., Moawad, A., Rouvoy, R. and Le Traon, Y., 2019. GreyCat: Efficient what-if analytics for data in motion at scale. *Information Systems*, *83*, pp.101-117.
-  - Gu, Z., Corcoglioniti, F., Lanti, D., Mosca, A., Xiao, G., Xiong, J., & Calvanese, D. (2024). A systematic overview of data federation systems. *Semantic Web*, *15*(1), 107-165.
+

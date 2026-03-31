@@ -10,4 +10,5 @@ export interface JobOffer {
     contacts?: string[];
     template?: string;
     tags?: string[];
+    references?: string[];
 }

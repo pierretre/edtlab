@@ -1,0 +1,113 @@
+---
+/**
+ * Citation component — renders a publication reference in APA 7 format.
+ * Matches standard academic citation style (HAL, Google Scholar).
+ *
+ * Usage: <Citation slug="amrani-2021-multi" /> or pass publication data directly.
+ */
+import { getCollection } from "astro:content";
+
+export interface Props {
+    /** Slug (filename without .md) of the publication to cite */
+    slug?: string;
+    /** Or pass publication data directly */
+    publication?: {
+        title: string;
+        authors: string[];
+        year: number;
+        venue?: string;
+        doi?: string;
+        url?: string;
+        type?: string;
+    };
+}
+
+const { slug, publication: pubProp } = Astro.props as Props;
+
+let pub = pubProp;
+
+if (!pub && slug) {
+    const allPublications = await getCollection("publications");
+    const found = allPublications.find((p) => p.id.replace(/\.md$/, "") === slug);
+    if (found) {
+        pub = found.data;
+    }
+}
+
+/**
+ * Format authors in APA 7 style:
+ * - 1-2 authors: Author, A. & Author, B.
+ * - 3-20 authors: Author, A., Author, B., ... & Author, Z.
+ * - 21+ authors: first 19 ... last
+ */
+function formatAuthorsAPA(authors: string[]): string {
+    if (!authors || authors.length === 0) return "";
+    if (authors.length === 1) return authors[0];
+    if (authors.length === 2) return `${authors[0]} & ${authors[1]}`;
+    if (authors.length <= 20) {
+        return authors.slice(0, -1).join(", ") + ", & " + authors[authors.length - 1];
+    }
+    return authors.slice(0, 19).join(", ") + ", \u2026 " + authors[authors.length - 1];
+}
+
+function hasDoi(doi?: string): boolean {
+    return !!doi && doi !== "xxx" && doi.length > 3;
+}
+
+function doiUrl(doi: string): string {
+    if (doi.startsWith("http")) return doi;
+    return `https://doi.org/${doi}`;
+}
+---
+
+{
+    pub ? (
+        <p class="citation text-sm text-gray-800 leading-relaxed pl-8 -indent-8 mb-3">
+            {/* Authors */}
+            {formatAuthorsAPA(pub.authors)}
+
+            {/* Year */}
+            {` (${pub.year}). `}
+
+            {/* Title — roman (not italic) for articles, italic for books */}
+            {pub.type === "book" ? (
+                <em>{pub.title}</em>
+            ) : (
+                <span>{pub.title}</span>
+            )}
+            {pub.title.endsWith("?") || pub.title.endsWith("!") ? " " : ". "}
+
+            {/* Venue — italic */}
+            {pub.venue && (
+                <em>{pub.venue}</em>
+            )}
+            {pub.venue && ". "}
+
+            {/* DOI — clickable link */}
+            {hasDoi(pub.doi) && (
+                <a
+                    href={doiUrl(pub.doi!)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-primary-600 hover:text-primary-800 hover:underline transition-colors break-all"
+                >
+                    {doiUrl(pub.doi!)}
+                </a>
+            )}
+
+            {/* URL fallback if no DOI */}
+            {!hasDoi(pub.doi) && pub.url && (
+                <a
+                    href={pub.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-primary-600 hover:text-primary-800 hover:underline transition-colors break-all"
+                >
+                    {pub.url}
+                </a>
+            )}
+        </p>
+    ) : (
+        <p class="citation text-sm text-red-500">[Citation not found: {slug}]</p>
+    )
+}

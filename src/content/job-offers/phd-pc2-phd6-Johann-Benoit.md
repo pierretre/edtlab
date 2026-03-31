@@ -20,6 +20,10 @@ tags:
   - "Non-Functional Requirements"
   - "EDT"
 contacts: ["johann.bourcier@univ-pau.fr", "benoit.combemale@inria.fr"]
+references:
+  - "edt-roadmap"
+  - "j-2020-loop"
+  - "sven-2013-featureoriented"
 ---
 
 ## Context
@@ -60,11 +64,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. <hal-05223776> 
-
-- J. Sallou, A. Gauvain, J. Bourcier, B. Combemale, J.R. de Dreuzy. Loop Aggregation for Approximate Scientific Computing. International Conference on Computational Science (ICCS), 2020, pp.141–155.
-
-- Sven Apel, Don Batory, Christian Kästner, Gunter Saake. Feature-Oriented Software Product Lines: Concepts and Implementation. Springer, 2013.
+
