@@ -7,6 +7,11 @@ export interface Props {
     t: any;
 }
 const { publication, t } = Astro.props as Props;
+
+const badges = [
+    ...(publication.tags || []).filter((tag) => tag && tag.trim()),
+    ...(publication.origin === "edt" ? ["EDT"] : []),
+];
 ---
 
 <div
@@ -36,18 +41,7 @@ const { publication, t } = Astro.props as Props;
         }
 
         <div class="flex gap-1 flex-wrap justify-end items-center">
-            {
-                publication.origin === "edt" && (
-                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-primary-100 text-primary-800 border border-primary-200">
-                        EDT
-                    </span>
-                )
-            }
-            {
-                (publication.tags || [])
-                    .filter((tag) => tag && tag.trim())
-                    .map((tag) => <Badge key={tag} t={t} />)
-            }
+            {badges.map((badge) => <Badge key={badge} t={t} />)}
         </div>
     </h3>
     <p class="text-xs text-gray-600 mt-1">

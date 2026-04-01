@@ -39,6 +39,10 @@ export interface FilterConfig<T = any> {
     label: string;
     /** Translation key for i18n support */
     translationKey: string;
+    /** Optional placeholder text for input-like filters */
+    placeholder?: string;
+    /** Optional translation key for placeholder text */
+    placeholderTranslationKey?: string;
     /** Available options for select filters */
     options?: FilterOption[];
     /** Predicate function to determine if an item matches the filter value */

@@ -115,8 +115,10 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: 'Search',
+            label: '',
             translationKey: 'job-offers.filter.search',
+            placeholder: 'Search job offers...',
+            placeholderTranslationKey: 'job-offers.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
 
@@ -241,8 +243,10 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: 'Search',
+            label: '',
             translationKey: 'publications.filter.search',
+            placeholder: 'Search publications...',
+            placeholderTranslationKey: 'publications.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
 
@@ -369,8 +373,10 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: 'Search',
+            label: '',
             translationKey: 'news.filter.search',
+            placeholder: 'Search news...',
+            placeholderTranslationKey: 'news.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
 
