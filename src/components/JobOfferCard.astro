@@ -12,6 +12,12 @@ interface Props {
 }
 
 const { item, lang, t, slug } = Astro.props;
+
+const badges = [
+    ...(item.tags || []).filter((tag) => tag && tag.trim()),
+    `job-offers.type.${item.type}`,
+    ...(item.filled ? ["job-offers.position-filled"] : []),
+];
 ---
 
 <a
@@ -24,15 +30,7 @@ const { item, lang, t, slug } = Astro.props;
 >
     <!-- Header with badges -->
     <div class="flex flex-wrap gap-2 mb-3">
-        {
-            (item.tags || [])
-                .filter((tag) => tag && tag.trim())
-                .map((tag) => <Badge key={tag} t={t} />)
-        }
-
-        <Badge key={`job-offers.type.${item.type}`} t={t} />
-
-        {item.filled && <Badge key="job-offers.position-filled" t={t} />}
+        {badges.map((badge) => <Badge key={badge} t={t} />)}
     </div>
 
     <!-- Title -->

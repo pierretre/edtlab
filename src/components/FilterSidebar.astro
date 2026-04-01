@@ -64,12 +64,27 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
     }
     return option.label;
 }
+
+/**
+ * Get translated placeholder text for a filter input
+ * Uses placeholderTranslationKey if available, then placeholder, then label
+ */
+function getFilterPlaceholder(filter: FilterConfig): string {
+    if (filter.placeholderTranslationKey) {
+        const translated = t(filter.placeholderTranslationKey as any);
+        if (translated && translated !== filter.placeholderTranslationKey) {
+            return translated;
+        }
+    }
+
+    return filter.placeholder || getFilterLabel(filter);
+}
 ---
 
 <aside class={`lg:w-64 flex-shrink-0`} role="complementary" aria-label="Filters">
     <div class="grid grid-cols-1 p-2 lg:sticky lg:top-24">
         {filters.map((filter) => (
-            <div class="filter-group">
+            <div class="filter-group mt-2">
                 {filter.type === 'select' && filter.options && (
                     <div>
                         <label
@@ -109,7 +124,7 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
                             id={pfx + filter.id}
                             name={pfx + filter.id}
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                            placeholder={filter.label}
+                            placeholder={getFilterPlaceholder(filter)}
                             value={filter.defaultValue || ''}
                             aria-label={getFilterLabel(filter)}
                         />

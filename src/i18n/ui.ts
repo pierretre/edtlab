@@ -96,6 +96,7 @@ export const ui = {
         'publications.filter.year': 'Year',
         'publications.filter.all-years': 'All Years',
         'publications.filter.search': 'Search',
+        'publications.filter.search-placeholder': 'Search publications...',
 
         // Publication types
         'publications.type.journal': 'Journal Article',
@@ -155,6 +156,7 @@ export const ui = {
         'job-offers.filter.status': 'Status',
         'job-offers.filter.all-status': 'All Status',
         'job-offers.filter.search': 'Search',
+        'job-offers.filter.search-placeholder': 'Search job offers...',
 
         // Filters
         'filter.clear': 'Clear All Filters',
@@ -177,6 +179,7 @@ export const ui = {
         'news.filter.all-categories': 'All Categories',
         'news.filter.sort': 'Sort',
         'news.filter.search': 'Search',
+        'news.filter.search-placeholder': 'Search news...',
 
         // News sorting
         'news.sort.date-desc': 'Newest First',
@@ -353,6 +356,7 @@ export const ui = {
         'publications.filter.year': 'Année',
         'publications.filter.all-years': 'Toutes les Années',
         'publications.filter.search': 'Rechercher',
+        'publications.filter.search-placeholder': 'Chercher dans les publications',
 
         // Publication types
         'publications.type.journal': 'Article de journal',
@@ -412,6 +416,7 @@ export const ui = {
         'job-offers.filter.status': 'Statut',
         'job-offers.filter.all-status': 'Tous les Statuts',
         'job-offers.filter.search': 'Rechercher',
+        'job-offers.filter.search-placeholder': 'Chercher dans les offres',
 
         // Filters
         'filter.clear': 'Effacer Tous les Filtres',
@@ -434,6 +439,7 @@ export const ui = {
         'news.filter.all-categories': 'Toutes les Catégories',
         'news.filter.sort': 'Trier',
         'news.filter.search': 'Rechercher',
+        'news.filter.search-placeholder': 'Chercher dans les actualités',
 
         // News sorting
         'news.sort.date-desc': 'Plus Récent d\'Abord',

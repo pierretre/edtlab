@@ -24,6 +24,12 @@ const jobStructuredData = generateJobPostingStructuredData(
     frontmatter.requirements,
     undefined,
 );
+
+const badges = [
+    ...(frontmatter.tags || []).filter((tag) => tag && tag.trim()),
+    `job-offers.type.${frontmatter.type}`,
+    ...(frontmatter.filled ? ["job-offers.position-filled"] : []),
+];
 ---
 
 <PageLayout
@@ -83,13 +89,7 @@ const jobStructuredData = generateJobPostingStructuredData(
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <Badge key={`job-offers.type.${frontmatter.type}`} t={t} />
-            {(frontmatter.tags ?? []).map((tag) => <Badge key={tag} t={t} />)}
-            {
-                frontmatter.filled && (
-                    <Badge key="job-offers.position-filled" t={t} />
-                )
-            }
+            {badges.map((badge) => <Badge key={badge} t={t} />)}
         </div>
 
         <!-- Title -->
@@ -170,7 +170,9 @@ const jobStructuredData = generateJobPostingStructuredData(
                 <div class="space-y-1">
                     {frontmatter.references.map((slug: string, i: number) => (
                         <div class="flex items-baseline gap-2">
-                            <span class="text-sm text-gray-500 font-medium shrink-0">[{i + 1}]</span>
+                            <span class="text-sm text-gray-500 font-medium shrink-0">
+                                [{i + 1}]
+                            </span>
                             <Citation slug={slug} />
                         </div>
                     ))}
