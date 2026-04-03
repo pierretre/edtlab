@@ -3,10 +3,6 @@ title: Newsletter EDT - Mars 2026
 date: 2026-04-03T16:34:00.000+02:00
 recipients: Internal
 ---
-Voici la newsletter de mars reformatée strictement selon le format de février :
-
----
-
 # Newsletter EDT – Mars 2026
 
 ## Vie du programme
