@@ -21,10 +21,6 @@ Une réflexion est en cours pour structurer la communauté EDT autour de trois g
 
 * **Antoine Beugnard** (IMT Atlantique) rejoint le comité opérationnel du programme en qualité de **co-porteur du PC3 (TwinOps)**, aux côtés de Jean-Michel Bruel.
 
-## Les contrats
-
-*(Rien à signaler ce mois-ci.)*
-
 ## Les rencontres
 
 * **26 mars 2026** : 2ème réunion en visio avec [IFPEN](https://www.ifpenergiesnouvelles.fr/) sur les interactions possibles entre leurs UCs et le PC3. Les intérêts sur les aspects méthodologiques sont confirmés. Les contacts sont toujours [EL FEKI Abir](mailto:abir.el-feki@ifpen.fr), [GERVAIS-COUPLET Veronique](mailto:veronique.gervais@ifpen.fr), [LINCOT Ainhoa](mailto:ainhoa.lincot@ifpen.fr).
