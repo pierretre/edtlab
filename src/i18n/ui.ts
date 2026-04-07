@@ -163,6 +163,7 @@ export const ui = {
 
         // Badges
         'badge.general': 'General',
+        'badge.extern': 'Extern',
         'badge.event': 'Event',
         'badge.press-release': 'Press Release',
         'badge.platform-update': 'Platform Update',
@@ -423,6 +424,7 @@ export const ui = {
 
         // Badges
         'badge.general': 'Général',
+        'badge.extern': 'Externe',
         'badge.event': 'Événement',
         'badge.press-release': 'Communiqué de Presse',
         'badge.platform-update': 'Mise à Jour Plateforme',

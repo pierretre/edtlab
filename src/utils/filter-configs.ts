@@ -59,7 +59,8 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'General', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' },
+                { value: 'Extern', label: 'Extern', translationKey: 'badge.extern' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;

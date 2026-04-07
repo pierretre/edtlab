@@ -14,6 +14,7 @@ contacts:
   - "julia.cohen@cnes.fr"
   - "Dawa.derksen@cnes.fr"
 tags:
+  - "Extern"
   - "Digital Twin"
   - "LLM"
   - "Earth Observation"
