@@ -116,7 +116,7 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: '',
+            label: 'Search',
             translationKey: 'job-offers.filter.search',
             placeholder: 'Search job offers...',
             placeholderTranslationKey: 'job-offers.filter.search-placeholder',
@@ -244,7 +244,7 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: '',
+            label: 'Search',
             translationKey: 'publications.filter.search',
             placeholder: 'Search publications...',
             placeholderTranslationKey: 'publications.filter.search-placeholder',
@@ -374,7 +374,7 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: '',
+            label: 'Search',
             translationKey: 'news.filter.search',
             placeholder: 'Search news...',
             placeholderTranslationKey: 'news.filter.search-placeholder',
