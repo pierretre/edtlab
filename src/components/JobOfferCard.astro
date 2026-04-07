@@ -18,11 +18,15 @@ const badges = [
     `job-offers.type.${item.type}`,
     ...(item.filled ? ["job-offers.position-filled"] : []),
 ];
+
+const cardHref = item.externalUrl ?? linkHelpers.jobOffer(lang, slug);
+const isExternal = !!item.externalUrl;
 ---
 
 <a
-    href={linkHelpers.jobOffer(lang, slug)}
+    href={cardHref}
     class="job-offer-item card group hover:shadow-lg h-full flex flex-col"
+    {...isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}}
     data-tags={(item.tags ?? []).join(" ").toLowerCase()}
     data-type={item.type}
     data-status={item.filled ? "filled" : "available"}
@@ -31,6 +35,11 @@ const badges = [
     <!-- Header with badges -->
     <div class="flex flex-wrap gap-2 mb-3">
         {badges.map((badge) => <Badge key={badge} t={t} />)}
+        {item.partner && (
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+                {item.partner}
+            </span>
+        )}
     </div>
 
     <!-- Title -->

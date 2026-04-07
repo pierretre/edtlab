@@ -11,4 +11,6 @@ export interface JobOffer {
     template?: string;
     tags?: string[];
     references?: string[];
+    partner?: string;
+    externalUrl?: string;
 }
