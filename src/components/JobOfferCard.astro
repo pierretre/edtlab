@@ -16,12 +16,10 @@ const { item, lang, t, slug } = Astro.props;
 const projectTags = new Set(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General', 'Extern']);
 const tags = (item.tags || []).filter((tag) => tag && tag.trim());
 const projectBadges = tags.filter((tag) => projectTags.has(tag));
-const otherBadges = tags.filter((tag) => !projectTags.has(tag));
 
 const badges = [
     `job-offers.type.${item.type}`,
     ...projectBadges,
-    ...otherBadges,
     ...(item.filled ? ["job-offers.position-filled"] : []),
 ];
 
