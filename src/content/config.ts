@@ -63,7 +63,9 @@ const jobOffersCollection = defineCollection({
         contacts: z.array(z.string().email()).optional(),
         lang: z.enum(['en', 'fr']).optional(),
         tags: z.array(z.string()).optional().default([]),
-        references: z.array(z.string()).optional().default([])
+        references: z.array(z.string()).optional().default([]),
+        partner: z.string().optional(),
+        externalUrl: z.string().optional()
     })
 });
 

@@ -126,6 +126,7 @@ export const ui = {
         'job-offers.expected-start': 'Expected Start',
         'job-offers.published': 'Published',
         'job-offers.position-filled': 'Position Filled',
+        'job-offers.keywords': 'Keywords',
         'job-offers.key-requirements': 'Key Requirements',
         'job-offers.more-requirements': '+{count} more requirements',
         'job-offers.no-results': 'No job offers found',
@@ -163,6 +164,7 @@ export const ui = {
 
         // Badges
         'badge.general': 'General',
+        'badge.extern': 'Extern',
         'badge.event': 'Event',
         'badge.press-release': 'Press Release',
         'badge.platform-update': 'Platform Update',
@@ -386,6 +388,7 @@ export const ui = {
         'job-offers.expected-start': 'Début Prévu',
         'job-offers.published': 'Publié',
         'job-offers.position-filled': 'Poste Pourvu',
+        'job-offers.keywords': 'Mots-clés',
         'job-offers.key-requirements': 'Exigences Clés',
         'job-offers.more-requirements': '+{count} autres exigences',
         'job-offers.no-results': 'Aucune offre d\'emploi trouvée',
@@ -423,6 +426,7 @@ export const ui = {
 
         // Badges
         'badge.general': 'Général',
+        'badge.extern': 'Externe',
         'badge.event': 'Événement',
         'badge.press-release': 'Communiqué de Presse',
         'badge.platform-update': 'Mise à Jour Plateforme',

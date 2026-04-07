@@ -59,7 +59,8 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'General', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' },
+                { value: 'Extern', label: 'Extern', translationKey: 'badge.extern' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -115,19 +116,15 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: '',
+            label: 'Search',
             translationKey: 'job-offers.filter.search',
             placeholder: 'Search job offers...',
             placeholderTranslationKey: 'job-offers.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
-
-                // Search in title, description, and location
-                // The searchText should be set as a data attribute on the DOM element
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -243,19 +240,15 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: '',
+            label: 'Search',
             translationKey: 'publications.filter.search',
             placeholder: 'Search publications...',
             placeholderTranslationKey: 'publications.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
-
-                // Search in title, authors, and venue
-                // The searchText should be set as a data attribute on the DOM element
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -373,19 +366,17 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
         {
             id: 'search-filter',
             type: 'search',
-            label: '',
+            label: 'Search',
             translationKey: 'news.filter.search',
             placeholder: 'Search news...',
             placeholderTranslationKey: 'news.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
 
-                // Search in title and description
-                // The searchText should be set as a data attribute on the DOM element
+                if (!value) return true;
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -473,11 +464,12 @@ export function prepareJobOfferTagsString(jobOffer: JobOffer): string {
 
 /**
  * Helper function to prepare search text for a job offer
- * Combines title, description, and location into a single searchable string
- * 
+ * Combines all searchable fields including title, description, location,
+ * requirements, tags, partner, and contacts into a single searchable string
+ *
  * @param jobOffer - The job offer object
  * @returns Lowercase search text
- * 
+ *
  * @example
  * ```typescript
  * const searchText = prepareJobOfferSearchText(jobOffer);
@@ -488,7 +480,11 @@ export function prepareJobOfferSearchText(jobOffer: JobOffer): string {
     const parts = [
         jobOffer.title || '',
         jobOffer.description || '',
-        jobOffer.location || ''
+        jobOffer.location || '',
+        ...(jobOffer.requirements || []),
+        ...(jobOffer.tags || []),
+        jobOffer.partner || '',
+        ...(jobOffer.contacts || []),
     ];
 
     return parts.join(' ').toLowerCase();

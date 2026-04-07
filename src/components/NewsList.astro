@@ -242,7 +242,7 @@ const news = await getCollection("news", (item) => item.data.lang === lang);
         children.forEach((c) => list.appendChild(c));
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    function initNewsFilters() {
         // Initialize filter manager
         filterManager = new FilterManagerImpl(newsFilterConfig);
 
@@ -271,7 +271,13 @@ const news = await getCollection("news", (item) => item.data.lang === lang);
         // Initial display
         applySorting();
         updatePageDisplay();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNewsFilters);
+    } else {
+        initNewsFilters();
+    }
 </script>
 
 <style>
