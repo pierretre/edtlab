@@ -14,8 +14,10 @@ interface Props {
 const { item, lang, t, slug } = Astro.props;
 
 const projectTags = new Set(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General', 'Extern']);
+const referenceTags = new Set(['roadmap']);
 const tags = (item.tags || []).filter((tag) => tag && tag.trim());
 const projectBadges = tags.filter((tag) => projectTags.has(tag));
+const keywords = tags.filter((tag) => !projectTags.has(tag) && !referenceTags.has(tag.toLowerCase()));
 
 const badges = [
     `job-offers.type.${item.type}`,
@@ -106,6 +108,24 @@ const isExternal = !!item.externalUrl;
     <p class="text-gray-700 text-sm line-clamp-3 mb-4">
         {item.description}
     </p>
+
+    <!-- Keywords -->
+    {
+        keywords.length > 0 && (
+            <div class="mb-3">
+                <div class="text-sm font-semibold text-gray-900 mb-1">
+                    {t("job-offers.keywords")}
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                    {keywords.map((kw) => (
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs text-gray-600 bg-gray-100">
+                            {kw}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        )
+    }
 
     <!-- Requirements preview -->
     {
