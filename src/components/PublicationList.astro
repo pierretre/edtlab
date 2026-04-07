@@ -102,10 +102,16 @@ const publicationStructuredData = publications.map((pub) =>
         import { FilterManagerImpl } from "@utils/filtering";
         import { publicationsFilterConfig } from "@utils/filter-configs";
 
-        document.addEventListener("DOMContentLoaded", function () {
+        function initPublicationFilters() {
             const filterManager = new FilterManagerImpl(publicationsFilterConfig);
             filterManager.initialize();
-        });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPublicationFilters);
+        } else {
+            initPublicationFilters();
+        }
     </script>
 
     <style>

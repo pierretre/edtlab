@@ -133,11 +133,17 @@ const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
     import { FilterManagerImpl } from "@utils/filtering";
     import { jobOffersFilterConfig } from "@utils/filter-configs";
 
-    // Initialize filter manager when DOM is ready
-    document.addEventListener("DOMContentLoaded", function () {
+    // Initialize filter manager - handle both cases where DOM might already be ready
+    function initFilters() {
         const filterManager = new FilterManagerImpl(jobOffersFilterConfig);
         filterManager.initialize();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFilters);
+    } else {
+        initFilters();
+    }
 </script>
 
 <style>

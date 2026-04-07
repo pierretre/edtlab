@@ -474,11 +474,12 @@ export function prepareJobOfferTagsString(jobOffer: JobOffer): string {
 
 /**
  * Helper function to prepare search text for a job offer
- * Combines title, description, and location into a single searchable string
- * 
+ * Combines all searchable fields including title, description, location,
+ * requirements, tags, partner, and contacts into a single searchable string
+ *
  * @param jobOffer - The job offer object
  * @returns Lowercase search text
- * 
+ *
  * @example
  * ```typescript
  * const searchText = prepareJobOfferSearchText(jobOffer);
@@ -489,7 +490,11 @@ export function prepareJobOfferSearchText(jobOffer: JobOffer): string {
     const parts = [
         jobOffer.title || '',
         jobOffer.description || '',
-        jobOffer.location || ''
+        jobOffer.location || '',
+        ...(jobOffer.requirements || []),
+        ...(jobOffer.tags || []),
+        jobOffer.partner || '',
+        ...(jobOffer.contacts || []),
     ];
 
     return parts.join(' ').toLowerCase();
