@@ -65,7 +65,7 @@ const jobOffersCollection = defineCollection({
         tags: z.array(z.string()).optional().default([]),
         references: z.array(z.string()).optional().default([]),
         partner: z.string().optional(),
-        externalUrl: z.string().url().optional()
+        externalUrl: z.string().optional()
     })
 });
 

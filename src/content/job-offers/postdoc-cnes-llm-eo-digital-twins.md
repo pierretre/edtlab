@@ -19,7 +19,7 @@ tags:
   - "Earth Observation"
   - "Remote Sensing"
 partner: "CNES"
-externalUrl: "https://recrutement.cnes.fr/fr/annonce/2698873-24-302pd-surrogate-model-devpt-for-thematic-earth-observation-digital-twins-31400-toulouse"
+externalUrl: "/media/job-offers/CNES-PostDoc-LLM-EO-Digital-Twins.pdf"
 ---
 
 <embed src="/media/job-offers/CNES-PostDoc-LLM-EO-Digital-Twins.pdf" type="application/pdf" width="100%" height="800px" />
