@@ -122,13 +122,9 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             placeholderTranslationKey: 'job-offers.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
-
-                // Search in title, description, and location
-                // The searchText should be set as a data attribute on the DOM element
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -250,13 +246,9 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
             placeholderTranslationKey: 'publications.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
-
-                // Search in title, authors, and venue
-                // The searchText should be set as a data attribute on the DOM element
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -381,12 +373,10 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
             predicate: (data, value) => {
                 if (!value) return true;
 
-                // Search in title and description
-                // The searchText should be set as a data attribute on the DOM element
+                if (!value) return true;
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
