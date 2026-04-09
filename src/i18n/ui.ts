@@ -96,12 +96,22 @@ export const ui = {
         'publications.filter.year': 'Year',
         'publications.filter.all-years': 'All Years',
         'publications.filter.search': 'Search',
+        'publications.filter.search-placeholder': 'Search publications...',
 
         // Publication types
-        'publications.type.journal': 'Journal',
-        'publications.type.conference': 'Conference',
+        'publications.type.journal': 'Journal Article',
+        'publications.type.conference': 'Conference Paper',
         'publications.type.book': 'Book',
-        'publications.type.report': 'Report',
+        'publications.type.report': 'Technical Report',
+        'publications.type.white-paper': 'White Paper',
+        'publications.type.preprint': 'Preprint',
+        'publications.type.thesis': 'Thesis',
+        'publications.type.workshop': 'Workshop',
+        'publications.type.slidedeck': 'Slide Deck',
+        'publications.tab.publications': 'Publications',
+        'publications.tab.resources': 'Resources',
+        'publications.section.edt': 'EDT Publications',
+        'publications.section.external': 'References',
 
         // Job offers
         'job-offers.current-opportunities': 'Current Opportunities',
@@ -116,6 +126,7 @@ export const ui = {
         'job-offers.expected-start': 'Expected Start',
         'job-offers.published': 'Published',
         'job-offers.position-filled': 'Position Filled',
+        'job-offers.keywords': 'Keywords',
         'job-offers.key-requirements': 'Key Requirements',
         'job-offers.more-requirements': '+{count} more requirements',
         'job-offers.no-results': 'No job offers found',
@@ -123,6 +134,7 @@ export const ui = {
         'job-offers.results-count': 'Showing {count} job offers',
         'job-offers.location': 'Location',
         'job-offers.requirements': 'Requirements',
+        'job-offers.references': 'References',
         'job-offers.ready-to-apply': 'Ready to Apply?',
         'job-offers.application-instructions': 'Send us your application including CV, cover letter, and relevant documents.',
         'job-offers.apply-now': 'Apply Now',
@@ -145,12 +157,14 @@ export const ui = {
         'job-offers.filter.status': 'Status',
         'job-offers.filter.all-status': 'All Status',
         'job-offers.filter.search': 'Search',
+        'job-offers.filter.search-placeholder': 'Search job offers...',
 
         // Filters
         'filter.clear': 'Clear All Filters',
 
         // Badges
-        'badge.general': 'EDT Program',
+        'badge.general': 'General',
+        'badge.extern': 'Extern',
         'badge.event': 'Event',
         'badge.press-release': 'Press Release',
         'badge.platform-update': 'Platform Update',
@@ -167,6 +181,7 @@ export const ui = {
         'news.filter.all-categories': 'All Categories',
         'news.filter.sort': 'Sort',
         'news.filter.search': 'Search',
+        'news.filter.search-placeholder': 'Search news...',
 
         // News sorting
         'news.sort.date-desc': 'Newest First',
@@ -343,12 +358,22 @@ export const ui = {
         'publications.filter.year': 'Année',
         'publications.filter.all-years': 'Toutes les Années',
         'publications.filter.search': 'Rechercher',
+        'publications.filter.search-placeholder': 'Chercher dans les publications',
 
         // Publication types
-        'publications.type.journal': 'Journal',
-        'publications.type.conference': 'Conférence',
+        'publications.type.journal': 'Article de journal',
+        'publications.type.conference': 'Article de conférence',
         'publications.type.book': 'Livre',
-        'publications.type.report': 'Rapport',
+        'publications.type.report': 'Rapport technique',
+        'publications.type.white-paper': 'Livre blanc',
+        'publications.type.preprint': 'Prépublication',
+        'publications.type.thesis': 'Thèse',
+        'publications.type.workshop': 'Atelier',
+        'publications.type.slidedeck': 'Présentation',
+        'publications.tab.publications': 'Publications',
+        'publications.tab.resources': 'Ressources',
+        'publications.section.edt': 'Publications EDT',
+        'publications.section.external': 'Références',
 
         // Job offers
         'job-offers.current-opportunities': 'Opportunités Actuelles',
@@ -363,6 +388,7 @@ export const ui = {
         'job-offers.expected-start': 'Début Prévu',
         'job-offers.published': 'Publié',
         'job-offers.position-filled': 'Poste Pourvu',
+        'job-offers.keywords': 'Mots-clés',
         'job-offers.key-requirements': 'Exigences Clés',
         'job-offers.more-requirements': '+{count} autres exigences',
         'job-offers.no-results': 'Aucune offre d\'emploi trouvée',
@@ -370,6 +396,7 @@ export const ui = {
         'job-offers.results-count': 'Affichage de {count} offres d\'emploi',
         'job-offers.location': 'Lieu',
         'job-offers.requirements': 'Exigences',
+        'job-offers.references': 'Références',
         'job-offers.ready-to-apply': 'Prêt à Postuler ?',
         'job-offers.application-instructions': 'Envoyez-nous votre candidature incluant CV, lettre de motivation et documents pertinents.',
         'job-offers.apply-now': 'Postuler Maintenant',
@@ -392,12 +419,14 @@ export const ui = {
         'job-offers.filter.status': 'Statut',
         'job-offers.filter.all-status': 'Tous les Statuts',
         'job-offers.filter.search': 'Rechercher',
+        'job-offers.filter.search-placeholder': 'Chercher dans les offres',
 
         // Filters
         'filter.clear': 'Effacer Tous les Filtres',
 
         // Badges
-        'badge.general': 'Programme EDT',
+        'badge.general': 'Général',
+        'badge.extern': 'Externe',
         'badge.event': 'Événement',
         'badge.press-release': 'Communiqué de Presse',
         'badge.platform-update': 'Mise à Jour Plateforme',
@@ -414,6 +443,7 @@ export const ui = {
         'news.filter.all-categories': 'Toutes les Catégories',
         'news.filter.sort': 'Trier',
         'news.filter.search': 'Rechercher',
+        'news.filter.search-placeholder': 'Chercher dans les actualités',
 
         // News sorting
         'news.sort.date-desc': 'Plus Récent d\'Abord',

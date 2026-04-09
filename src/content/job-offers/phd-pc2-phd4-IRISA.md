@@ -10,6 +10,11 @@ requirements: ["Master or Engineering degree in Software Engineering", "Experien
 tags:
   - "PC2"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ...
 contacts: ["jezequel@irisa.fr","benoit.combemale@inria.fr"]  # Array of contact emails for this position
+references:
+  - "edt-roadmap"
+  - "simona-2021-living"
+  - "antoine-1999-making"
+  - "damien-2023-experience"
 ---
 
 ## Context
@@ -59,22 +64,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. <hal-05223776> 
-
-- Simona Bernardi, Michalis Famelis, Jean-Marc Jézéquel, Raffaela Mirandola,
-Diego Perez Palacin, Fiona Polack, and Catia Trubiani. Living with Uncertainty
-in Model-Based Development, pages 159–185. Springer International Publishing,
-July 2021.
-
-- Antoine Beugnard, Jean-Marc Jézéquel, Noël Plouzeau, and Damien
-Watkins. Making components contract aware. Computer, 32(7):38–45, July
-1999.
-
-- Experience in Specializing a Generic Realization Language for SPL
-    Engineering at Airbus Damien Foures, Mathieu Acher, Olivier Barais, Benoit
-    Combemale, Jean-Marc Jézéquel, Jörg Kienzle MODELS 2023 - 26th
-    International Conference on Model-Driven Engineering Languages and
-    Systems, ACM; IEEE, Oct 2023, Västerås, Sweden. pp.1-12
+

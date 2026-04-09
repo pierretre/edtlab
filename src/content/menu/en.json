@@ -1,7 +1,7 @@
 {
     "sections": [
         {
-            "name": "The Program",
+            "name": "Program",
             "href": "program"
         },
         {
@@ -37,6 +37,10 @@
         {
             "name": "Publications",
             "href": "publications"
+        },
+        {
+            "name": "Resources",
+            "href": "resources"
         },
         {
             "name": "Platform",

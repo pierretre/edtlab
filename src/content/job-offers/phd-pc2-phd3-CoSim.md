@@ -10,6 +10,8 @@ requirements: ["Master degree in Software Engineering", "Experience with digital
 tags:
   - "PC2"  
 contacts: ["sophie.ebersold@irit.fr", "jannik.laval@univ-lyon2.fr"]  
+references:
+  - "edt-roadmap"
 ---
 
 ## Context
@@ -56,8 +58,5 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. <hal-05223776> 
+ 
 

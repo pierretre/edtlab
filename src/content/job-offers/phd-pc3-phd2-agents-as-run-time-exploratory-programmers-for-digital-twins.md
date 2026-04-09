@@ -14,6 +14,8 @@ requirements:
   - Fluency in English and French
 tags:
   - PC3
+references:
+  - "edt-roadmap"
 ---
 ## Context
 A digital twin is a virtual representation of an intended or actual real-world product, system, or process that serves as a digital counterpart of it for purposes such as simulation, integration, testing, monitoring, and maintenance. A key promise of digital twins is to enable stakeholders to explore what-if scenarios: evaluating alternative configurations, behaviors, or interventions while the system is running, so as to improve performance, reliability, and adaptability. However, enabling such exploratory interactions remains challenging in practice.
@@ -51,6 +53,4 @@ This PhD offers the opportunity to:
 * Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-[1] Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. [⟨hal-05223776⟩](https://inria.hal.science/hal-05223776)
+

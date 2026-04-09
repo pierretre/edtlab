@@ -24,7 +24,7 @@ export const enToFrMapping: PageMapping = {
     'publications': 'publications',
     'platform': 'plateforme',
     // 'demo-center': 'centre-demo',
-    // 'resources': 'ressources',
+    'resources': 'ressources',
     'use-cases': 'cas-d-utilisation',
     'news': 'actualites',
     'join-us': 'nous-rejoindre',

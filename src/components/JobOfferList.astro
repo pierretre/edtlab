@@ -15,9 +15,17 @@ const t = useTranslations(lang);
 // Get all job offers for the current language
 const allJobOffers = await getCollection("job-offers");
 
-// Sort job offers by availability status, then by expected start date (chronological)
+// Sort job offers: EDT first, then external; within each group by date then title
+const isExtern = (job: typeof allJobOffers[number]) =>
+    (job.data.tags || []).some(t => t.toLowerCase() === 'extern');
+
 const sortedJobOffers = allJobOffers.sort((a, b) => {
-    // For positions with same availability, sort by expected start date (chronological)
+    // External offers go after EDT offers
+    const aExt = isExtern(a) ? 1 : 0;
+    const bExt = isExtern(b) ? 1 : 0;
+    if (aExt !== bExt) return aExt - bExt;
+
+    // Within same group, sort by published date (newest first)
     if (a.data.publishedDate.getTime() !== b.data.publishedDate.getTime()) {
         return b.data.publishedDate.getTime() - a.data.publishedDate.getTime();
     }
@@ -106,6 +114,7 @@ const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
                     sortedJobOffers.map((jobOffer) => (
                         <JobOfferCard
                             item={jobOffer.data}
+                            body={jobOffer.body}
                             lang={lang}
                             t={t}
                             slug={jobOffer.slug}
@@ -133,11 +142,17 @@ const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
     import { FilterManagerImpl } from "@utils/filtering";
     import { jobOffersFilterConfig } from "@utils/filter-configs";
 
-    // Initialize filter manager when DOM is ready
-    document.addEventListener("DOMContentLoaded", function () {
+    // Initialize filter manager - handle both cases where DOM might already be ready
+    function initFilters() {
         const filterManager = new FilterManagerImpl(jobOffersFilterConfig);
         filterManager.initialize();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFilters);
+    } else {
+        initFilters();
+    }
 </script>
 
 <style>

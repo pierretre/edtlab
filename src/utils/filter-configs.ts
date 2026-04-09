@@ -59,7 +59,8 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' },
+                { value: 'Extern', label: 'Extern', translationKey: 'badge.extern' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -117,15 +118,13 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             type: 'search',
             label: 'Search',
             translationKey: 'job-offers.filter.search',
+            placeholder: 'Search job offers...',
+            placeholderTranslationKey: 'job-offers.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
-
-                // Search in title, description, and location
-                // The searchText should be set as a data attribute on the DOM element
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -144,13 +143,13 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
  * 
  * Provides filtering by:
  * - Project (PC1-PC5)
- * - Type (journal, conference, book, report)
+ * - Type (journal, conference, book, report, white-paper)
  * - Year (dynamically populated from available publications)
  * - Search (title, authors, venue)
  * 
  * Expected data attributes on publication items:
  * - data-tags: Space-separated list of tags (including project codes like PC1-PC5)
- * - data-type: The publication type (journal, conference, book, report)
+ * - data-type: The publication type (journal, conference, book, report, white-paper)
  * - data-year: The publication year
  * - data-search-text: Combined searchable text (title, authors, venue)
  * 
@@ -184,7 +183,7 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -203,10 +202,15 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
             translationKey: 'publications.filter.type',
             options: [
                 { value: '', label: 'All Types', translationKey: 'publications.filter.all-types' },
-                { value: 'journal', label: 'Journal', translationKey: 'publications.type.journal' },
-                { value: 'conference', label: 'Conference', translationKey: 'publications.type.conference' },
+                { value: 'journal', label: 'Journal Article', translationKey: 'publications.type.journal' },
+                { value: 'conference', label: 'Conference Paper', translationKey: 'publications.type.conference' },
                 { value: 'book', label: 'Book', translationKey: 'publications.type.book' },
-                { value: 'report', label: 'Report', translationKey: 'publications.type.report' }
+                { value: 'report', label: 'Technical Report', translationKey: 'publications.type.report' },
+                { value: 'white-paper', label: 'White Paper', translationKey: 'publications.type.white-paper' },
+                { value: 'preprint', label: 'Preprint', translationKey: 'publications.type.preprint' },
+                { value: 'thesis', label: 'Thesis', translationKey: 'publications.type.thesis' },
+                { value: 'workshop', label: 'Workshop', translationKey: 'publications.type.workshop' },
+                { value: 'slidedeck', label: 'Slide Deck', translationKey: 'publications.type.slidedeck' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -238,15 +242,13 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
             type: 'search',
             label: 'Search',
             translationKey: 'publications.filter.search',
+            placeholder: 'Search publications...',
+            placeholderTranslationKey: 'publications.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
-
-                // Search in title, authors, and venue
-                // The searchText should be set as a data attribute on the DOM element
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -307,7 +309,7 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'PC3', label: 'PC3' },
                 { value: 'PC4', label: 'PC4' },
                 { value: 'PC5', label: 'PC5' },
-                { value: 'General', label: 'EDT Program', translationKey: 'badge.general' }
+                { value: 'General', label: 'General', translationKey: 'badge.general' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -366,15 +368,15 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
             type: 'search',
             label: 'Search',
             translationKey: 'news.filter.search',
+            placeholder: 'Search news...',
+            placeholderTranslationKey: 'news.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
 
-                // Search in title and description
-                // The searchText should be set as a data attribute on the DOM element
+                if (!value) return true;
                 const searchText = (data.searchText || '').toLowerCase();
-                const searchValue = value.toLowerCase();
-
-                return searchText.includes(searchValue);
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
             },
             urlParam: 'search',
             debounce: 200,
@@ -462,11 +464,12 @@ export function prepareJobOfferTagsString(jobOffer: JobOffer): string {
 
 /**
  * Helper function to prepare search text for a job offer
- * Combines title, description, and location into a single searchable string
- * 
+ * Combines all searchable fields including title, description, location,
+ * requirements, tags, partner, and contacts into a single searchable string
+ *
  * @param jobOffer - The job offer object
  * @returns Lowercase search text
- * 
+ *
  * @example
  * ```typescript
  * const searchText = prepareJobOfferSearchText(jobOffer);
@@ -477,7 +480,11 @@ export function prepareJobOfferSearchText(jobOffer: JobOffer): string {
     const parts = [
         jobOffer.title || '',
         jobOffer.description || '',
-        jobOffer.location || ''
+        jobOffer.location || '',
+        ...(jobOffer.requirements || []),
+        ...(jobOffer.tags || []),
+        jobOffer.partner || '',
+        ...(jobOffer.contacts || []),
     ];
 
     return parts.join(' ').toLowerCase();

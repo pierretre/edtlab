@@ -15,7 +15,7 @@ export const EVENT_TYPES = ['conference', 'workshop', 'seminar', 'press'] as con
 /**
  * Supported publication types
  */
-export const PUBLICATION_TYPES = ['journal', 'conference', 'book', 'report'] as const;
+export const PUBLICATION_TYPES = ['journal', 'conference', 'book', 'report', 'preprint', 'thesis', 'workshop'] as const;
 
 /**
  * Supported job offer types

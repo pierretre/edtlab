@@ -10,6 +10,14 @@ requirements: ["Master degree in Software Engineering", "Experience with digital
 tags:
   - "PC2"  
 contacts: ["jerome.david@inria.fr", "sophie.ebersold@irit.fr"]  
+references:
+  - "anna-2023-combining"
+  - "edt-roadmap"
+  - "pascal-2009-foundations"
+  - "krzysztof-2020-neuralsymbolic"
+  - "chloe-2025-graph"
+  - "guilherme-2025-results"
+  - "guilherme-2026-survey"
 ---
 
 ## Context
@@ -52,13 +60,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- [1] Anna Breit, Laura Waltersdorfer, Fajar J. Ekaputra, Marta Sabou, Andreas Ekelhart, Andreea Iana, Heiko Paulheim, Jan Portisch, Artem Revenko, Annette Ten Teije, and Frank Van Harmelen. 2023. Combining Machine Learning and Semantic Web: A Systematic Mapping Study. ACM Comput. Surv. 55, 14s, Article 313 (December 2023), 41 pages. https://doi.org/10.1145/3586163
-- [2] Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. <hal-05223776>
-- [3] Pascal Hitzler, Markus Krötzsch, and Sebastian Rudolph. 2009. Foundations of Semantic Web Technologies (1st. ed.). Chapman & Hall/CRC.
-- [4] Krzysztof Janowicz, Pascal Hitzler, Federico Bianchi, Monireh Ebrahimi, and Md Kamruzzaman Sarker. 2020. Neural-symbolic integration and the Semantic Web. Semant. web 11, 1 (2020), 3–11. https://doi.org/10.3233/SW-190368
-- [5] Chloé Khadija Jradeh, Ensiyeh Raoufi, Jérôme David, Pierre Larmande, François Scharffe, Konstantin Todorov, and Cassia Trojahn. 2025. Graph Embeddings Meet Link Keys Discovery for Entity Matching. In Proceedings of the ACM on Web Conference 2025 (WWW '25). Association for Computing Machinery, New York, NY, USA, 3344–3353. https://doi.org/10.1145/3696410.3714581
-- [6] Guilherme Sousa, Rinaldo Lima, Cássia Trojahn. 2025. Results of CMatch in OAEI 2025. OM@ISWC 2025: 153-158. https://ceur-ws.org/Vol-4144/om2025-oaei-paper3.pdf
-- [7] Guilherme Sousa, Rinaldo Lima, and Cassia Trojahn. Survey on embedding methods applied to ontology matching. ACM Computing Surveys, 2026 (to appear)
+

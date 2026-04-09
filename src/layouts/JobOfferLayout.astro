@@ -1,8 +1,9 @@
 ---
 import PageLayout from "./PageLayout.astro";
 import type { JobOffer } from "@models/JobOffer.model";
-import { useTranslations } from "@i18n/utils";
+import { linkHelpers, useTranslations } from "@i18n/utils";
 import Badge from "@components/Badge.astro";
+import Citation from "@components/Citation.astro";
 import { generateJobPostingStructuredData } from "@utils/seo";
 
 export interface Props {
@@ -23,6 +24,12 @@ const jobStructuredData = generateJobPostingStructuredData(
     frontmatter.requirements,
     undefined,
 );
+
+const badges = [
+    ...(frontmatter.tags || []).filter((tag) => tag && tag.trim()),
+    `job-offers.type.${frontmatter.type}`,
+    ...(frontmatter.filled ? ["job-offers.position-filled"] : []),
+];
 ---
 
 <PageLayout
@@ -59,7 +66,7 @@ const jobStructuredData = generateJobPostingStructuredData(
     <!-- Back to Join Us link -->
     <div class="mb-6">
         <a
-            href={`/${lang}/join-us`}
+            href={linkHelpers.page(lang, "join-us")}
             class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
         >
             <svg
@@ -82,13 +89,7 @@ const jobStructuredData = generateJobPostingStructuredData(
     <header class="mb-8">
         <!-- Badges -->
         <div class="flex flex-wrap gap-2 mb-4">
-            <Badge key={`job-offers.type.${frontmatter.type}`} t={t} />
-            {(frontmatter.tags ?? []).map((tag) => <Badge key={tag} t={t} />)}
-            {
-                frontmatter.filled && (
-                    <Badge key="job-offers.position-filled" t={t} />
-                )
-            }
+            {badges.map((badge) => <Badge key={badge} t={t} />)}
         </div>
 
         <!-- Title -->
@@ -159,6 +160,27 @@ const jobStructuredData = generateJobPostingStructuredData(
         class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
     />
 
+    <!-- References Section (from centralized publications) -->
+    {
+        frontmatter.references && frontmatter.references.length > 0 && (
+            <section class="mt-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                    {t("job-offers.references")}
+                </h3>
+                <div class="space-y-1">
+                    {frontmatter.references.map((slug: string, i: number) => (
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-sm text-gray-500 font-medium shrink-0">
+                                [{i + 1}]
+                            </span>
+                            <Citation slug={slug} />
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )
+    }
+
     <!-- Requirements Section -->
     {
         frontmatter.requirements && frontmatter.requirements.length > 0 && (
@@ -200,7 +222,7 @@ const jobStructuredData = generateJobPostingStructuredData(
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a
-                        href={`mailto:${frontmatter.contacts?.[0] || "careers@edt-program.fr"}?subject=${encodeURIComponent(`Application: ${frontmatter.title}`)}`}
+                        href={`mailto:${frontmatter.contacts?.[0] || "edt-ops@inria.fr"}?subject=${encodeURIComponent(`Application: ${frontmatter.title}`)}`}
                         class="inline-flex items-center justify-center px-6 py-3 bg-white text-primary-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
                     >
                         <svg
@@ -235,7 +257,7 @@ const jobStructuredData = generateJobPostingStructuredData(
                 <p class="mb-4 text-gray-600">
                     {t("job-offers.position-filled-message")}
                 </p>
-                <a href={`/${lang}/join-us`} class="btn-primary">
+                <a href={linkHelpers.page(lang, "join-us")} class="btn-primary">
                     {t("job-offers.view-all-positions")}
                 </a>
             </section>

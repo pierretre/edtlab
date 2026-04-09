@@ -13,13 +13,15 @@ requirements:
   - "Interest in modeling, optimization, and digital twin technologies"
 tags:
   - "PC2"
-  - "PhD"
   - "Digital Twin"
   - "Software Architecture"
   - "Design Space Exploration"
   - "Non-Functional Requirements"
-  - "EDT"
 contacts: ["johann.bourcier@univ-pau.fr", "benoit.combemale@inria.fr"]
+references:
+  - "edt-roadmap"
+  - "j-2020-loop"
+  - "sven-2013-featureoriented"
 ---
 
 ## Context
@@ -34,7 +36,6 @@ However, there is rarely a single optimal architecture. Depending on the applica
 
 Selecting the most appropriate architecture therefore requires exploring complex **architectural trade-offs** between competing objectives such as performance, energy consumption, and model precision. Similar trade-offs have been studied in areas such as approximate scientific computing, where multiple execution configurations must be explored to balance performance and accuracy (Sallou et al., 2020). This challenge can be seen as navigating a **Digital Twin Architectural Design Space**, where each point corresponds to a possible composition and configuration of the digital twin architecture.
 
-
 ## Thesis Objectives
 
 This PhD project aims to develop methods and tools for composing and configuring digital twin architectures to meet user requirements under multiple non-functional constraints such as energy consumption, system performance, and operational budget. Key scientific challenges include:
@@ -47,7 +48,7 @@ The results of this thesis will directly contribute to the Artemis platform, an 
 
 ## Work Environment
 
-The PhD candidate will be co-supervised by Johann Bourcier (University of Pau and Pays de l’Adour) and Benoît Combemale (Inria) within the GL team in the LIUPPA laboratory (https://liuppa.univ-pau.fr). The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators, and the opportunity to contribute to Artemis, the program's open software platform.
+The PhD candidate will be co-supervised by Johann Bourcier (University of Pau and Pays de l’Adour) and Benoît Combemale (Inria) within the GL team in the LIUPPA laboratory (<https://liuppa.univ-pau.fr>). The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators, and the opportunity to contribute to Artemis, the program's open software platform.
 
 ## What You Will Gain from This PhD
 
@@ -60,11 +61,3 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
-## References
-
-- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. <hal-05223776> 
-
-- J. Sallou, A. Gauvain, J. Bourcier, B. Combemale, J.R. de Dreuzy. Loop Aggregation for Approximate Scientific Computing. International Conference on Computational Science (ICCS), 2020, pp.141–155.
-
-- Sven Apel, Don Batory, Christian Kästner, Gunter Saake. Feature-Oriented Software Product Lines: Concepts and Implementation. Springer, 2013.

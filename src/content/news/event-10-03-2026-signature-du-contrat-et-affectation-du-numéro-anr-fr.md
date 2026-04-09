@@ -1,5 +1,5 @@
 ---
-title: Le programme EDT officiellement contractualisé avec l'ANR
+title: Contrat signé avec l'ANR !
 lang: fr
 date: 2026-03-06
 newsType: event

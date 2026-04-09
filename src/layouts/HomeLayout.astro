@@ -6,6 +6,7 @@ import { getCollection } from "astro:content";
 import ProjectGrid from "@components/ProjectGrid.astro";
 import Badge from "@components/Badge.astro";
 import { Picture } from "astro:assets";
+import { getPublicationTypeTranslation } from "@utils/translation";
 import logoInria from "../../public/media/uploads/Inria.png";
 import logoFrance2030 from "../../public/media/uploads/France 2030.png";
 import heroBackground from "@assets/images/INRIA_EDT_CBLOT_fond_herosection.jpg";
@@ -39,7 +40,7 @@ const recentEvents = news.sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
-const allPublications = await getCollection("publications");
+const allPublications = await getCollection("publications", ({ data }) => data.origin === 'edt');
 const recentPublications = allPublications.sort(
     (a, b) => b.data.year - a.data.year,
 );
@@ -173,7 +174,7 @@ const activeJobOffers = allJobOffers;
                 <a
                     href={linkHelpers.page(lang, "publications")}
                     class="text-2xl font-bold text-primary-600"
-                    >{recentPublications.length}+</a
+                    >{recentPublications.length}</a
                 >
                 <p class="text-sm">{t("home.stats.publications")}</p>
             </div>
@@ -386,7 +387,10 @@ const activeJobOffers = allJobOffers;
                                                 • {publication.data.year}
                                             </p>
                                             <p class="text-xs text-[#434672] mt-1 capitalize">
-                                                {publication.data.type}
+                                                {getPublicationTypeTranslation(
+                                                    publication.data.type,
+                                                    lang,
+                                                )}
                                                 {publication.data.venue &&
                                                     ` • ${publication.data.venue}`}
                                             </p>

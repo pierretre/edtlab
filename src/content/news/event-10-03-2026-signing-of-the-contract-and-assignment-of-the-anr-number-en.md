@@ -1,5 +1,5 @@
 ---
-title: The EDT Programme Officially Launched with ANR and France 2030 Support
+title: Contract signed with ANR !
 lang: en
 date: 2026-03-06
 newsType: event

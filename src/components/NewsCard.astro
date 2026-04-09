@@ -13,6 +13,11 @@ export interface Props {
 }
 
 const { item, lang, coverImage, t, slug } = Astro.props;
+
+const badges = [
+    item.newsType,
+    ...(item.tags || []).filter((tag) => tag && tag.trim()),
+];
 ---
 
 <div
@@ -24,9 +29,7 @@ const { item, lang, coverImage, t, slug } = Astro.props;
 >
     <!-- Badges -->
     <div class="absolute top-2 left-2 z-10 gap-2 flex flex-wrap">
-        <Badge key={item.newsType} t={t} />
-        <!-- Tag badges -->
-        {item.tags?.map((tag) => <Badge key={tag} t={t} />)}
+        {badges.map((badge) => <Badge key={badge} t={t} />)}
     </div>
 
     <a

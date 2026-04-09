@@ -29,9 +29,12 @@ export interface Props {
     clearButtonText: string;
     /** Optional CSS classes for the sidebar container */
     class?: string;
+    /** Optional prefix to make filter element IDs unique when multiple sidebars exist */
+    idPrefix?: string;
 }
 
-const { filters, lang, clearButtonText } = Astro.props;
+const { filters, lang, clearButtonText, idPrefix = '' } = Astro.props;
+const pfx = idPrefix ? `${idPrefix}-` : '';
 const t = useTranslations(lang);
 
 /**
@@ -61,23 +64,38 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
     }
     return option.label;
 }
+
+/**
+ * Get translated placeholder text for a filter input
+ * Uses placeholderTranslationKey if available, then placeholder, then label
+ */
+function getFilterPlaceholder(filter: FilterConfig): string {
+    if (filter.placeholderTranslationKey) {
+        const translated = t(filter.placeholderTranslationKey as any);
+        if (translated && translated !== filter.placeholderTranslationKey) {
+            return translated;
+        }
+    }
+
+    return filter.placeholder || getFilterLabel(filter);
+}
 ---
 
 <aside class={`lg:w-64 flex-shrink-0`} role="complementary" aria-label="Filters">
     <div class="grid grid-cols-1 p-2 lg:sticky lg:top-24">
         {filters.map((filter) => (
-            <div class="filter-group">
+            <div class="filter-group mt-2">
                 {filter.type === 'select' && filter.options && (
                     <div>
                         <label
-                            for={filter.id}
+                            for={pfx + filter.id}
                             class="block mb-2 text-sm font-medium text-gray-900"
                         >
                             {getFilterLabel(filter)}
                         </label>
                         <select
-                            id={filter.id}
-                            name={filter.id}
+                            id={pfx + filter.id}
+                            name={pfx + filter.id}
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                             aria-label={getFilterLabel(filter)}
                         >
@@ -96,17 +114,17 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
                 {filter.type === 'search' && (
                     <div>
                         <label
-                            for={filter.id}
+                            for={pfx + filter.id}
                             class="block mb-2 text-sm font-medium text-gray-900"
                         >
                             {getFilterLabel(filter)}
                         </label>
                         <input
                             type="text"
-                            id={filter.id}
-                            name={filter.id}
+                            id={pfx + filter.id}
+                            name={pfx + filter.id}
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                            placeholder={filter.label}
+                            placeholder={getFilterPlaceholder(filter)}
                             value={filter.defaultValue || ''}
                             aria-label={getFilterLabel(filter)}
                         />
@@ -116,13 +134,13 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
                 {filter.type === 'custom' && (
                     <div>
                         <label
-                            for={filter.id}
+                            for={pfx + filter.id}
                             class="block mb-2 text-sm font-medium text-gray-900"
                         >
                             {getFilterLabel(filter)}
                         </label>
                         <div
-                            id={filter.id}
+                            id={pfx + filter.id}
                             role="group"
                             aria-label={getFilterLabel(filter)}
                         >
@@ -140,7 +158,7 @@ function getOptionLabel(option: { value: string; label: string; translationKey?:
         <!-- Clear Filters Button -->
         <div class="h-full flex flex-col justify-end">
             <button
-                id="clear-filters"
+                id={pfx + "clear-filters"}
                 type="button"
                 class="text-primary-600 hover:text-primary-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded px-2 py-1"
                 aria-label={clearButtonText}

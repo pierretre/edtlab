@@ -7,6 +7,11 @@ export interface Props {
     t: any;
 }
 const { publication, t } = Astro.props as Props;
+
+const badges = [
+    ...(publication.tags || []).filter((tag) => tag && tag.trim()),
+    ...(publication.origin === "edt" ? ["EDT"] : []),
+];
 ---
 
 <div
@@ -35,16 +40,15 @@ const { publication, t } = Astro.props as Props;
             )
         }
 
-        <div class="flex gap-1 flex-wrap justify-end">
-            {
-                (publication.tags || [])
-                    .filter((tag) => tag && tag.trim())
-                    .map((tag) => <Badge key={tag} t={t} />)
-            }
+        <div class="flex gap-1 flex-wrap justify-end items-center">
+            {badges.map((badge) => <Badge key={badge} t={t} />)}
         </div>
     </h3>
     <p class="text-xs text-gray-600 mt-1">
         {publication.authors.join(", ")} • {publication.year}
     </p>
-    <p class="text-xs text-gray-500">{publication.venue}</p>
+    <p class="text-xs text-gray-500">
+        <strong>{t(`publications.type.${publication.type}`)}</strong>
+        {publication.venue && ` • ${publication.venue}`}
+    </p>
 </div>
