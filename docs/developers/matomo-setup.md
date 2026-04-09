@@ -37,10 +37,10 @@ Edit `.env.matomo` with your specific values:
 
 ```env
 # Database Configuration
-MYSQL_ROOT_PASSWORD=REDACTED
+MYSQL_ROOT_PASSWORD=your_secure_root_password
 MYSQL_DATABASE=matomo
 MYSQL_USER=matomo
-MYSQL_PASSWORD=REDACTED
+MYSQL_PASSWORD=your_secure_matomo_password
 
 # Matomo Configuration
 MATOMO_URL=https://analytics.yourdomain.com

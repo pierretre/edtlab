@@ -129,7 +129,7 @@ services:
  matomo-db:
   image: mysql:8.0
   environment:
-   MYSQL_ROOT_PASSWORD: REDACTED
+   MYSQL_ROOT_PASSWORD: rootpassword
    MYSQL_DATABASE: matomo
    MYSQL_USER: matomo
    MYSQL_PASSWORD: matomo

@@ -1483,7 +1483,11 @@ services:
     # MariaDB database for Matomo analytics
     image: mariadb:10.5
     environment:
+<<<<<<< HEAD
+      MYSQL_ROOT_PASSWORD: REDACTED
+=======
       MYSQL_ROOT_PASSWORD: rootpassword
+>>>>>>> main
       MYSQL_DATABASE: matomo
       MYSQL_USER: matomo
       MYSQL_PASSWORD: matomo

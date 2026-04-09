@@ -106,8 +106,8 @@ collation-server = utf8mb4_unicode_ci
 Create `.env.matomo`:
 
 ```bash
-MATOMO_DB_ROOT_PASSWORD=REDACTED_here
-MATOMO_DB_PASSWORD=REDACTED_here
+MATOMO_DB_ROOT_PASSWORD=your_secure_root_password_here
+MATOMO_DB_PASSWORD=your_secure_matomo_password_here
 ```
 
 ### 4. Start Matomo
