@@ -1,26 +1,35 @@
 ---
-title: "PhD Position - Distributed Abductive Reasoning for Self-Explaining Digital Twins"
-tags:
-  - "PC1"
-type: "PhD"
-location: "Nice, France"
-expectedStartDate: "October 2026"
-filled: false
+type: PhD
 publishedDate: 2026-03-15
-description: "PhD position on explainable and distributed reasoning mechanisms to bridge the reality gap in hybrid digital twins"
-requirements: ["Master's degree in Computer Science, Artificial Intelligence, or related field", "Strong background in AI, reasoning systems, or distributed systems", "Programming skills", "Interest in cyber-physical systems and digital twins", "Fluency in English"]
-contacts: ["gerald.rocher@univ-cotedazur.fr"]
-lang: "en"
+filled: false
 references:
-  - "liang-2024-harnessing"
-  - "ma-2025-bridging"
-  - "michael-2023-explaining"
-  - "thagard-1997-abductive"
-  - "li-2020-digital"
-  - "rudin-2019-stop"
-  - "sokol-2020-one"
-  - "rasheed-2020-digital"
-  - "fuller-2020-digital"
+  - liang-2024-harnessing
+  - ma-2025-bridging
+  - michael-2023-explaining
+  - thagard-1997-abductive
+  - li-2020-digital
+  - rudin-2019-stop
+  - sokol-2020-one
+  - rasheed-2020-digital
+  - fuller-2020-digital
+lang: en
+description: PhD position on explainable and distributed reasoning mechanisms to
+  bridge the reality gap in hybrid digital twins
+requirements:
+  - Master's degree in Computer Science, Artificial Intelligence, or related
+    field
+  - Strong background in AI, reasoning systems, or distributed systems
+  - Programming skills
+  - Interest in cyber-physical systems and digital twins
+  - Fluency in English
+contacts:
+  - gerald.rocher@univ-cotedazur.fr
+title: PhD Position - Distributed Abductive Reasoning for Self-Explaining
+  Digital Twins
+location: Nice, France
+expectedStartDate: October 2026
+tags:
+  - PC1
 ---
 
 ## Position Overview
@@ -122,6 +131,18 @@ Please submit the following documents:
 3. **Academic Transcripts**  
 4. **Short Research Statement** (1–2 pages)  
 5. **Contact information for two academic references**
+
+## Contact Information
+
+Main supervisor
+**Supervisor**: Gérald Rocher
+**Institution**: Université Côte d'Azur
+**Email**: gerald.rocher@univ-cotedazur.fr
+
+Co Supervisor
+**Supervisor**: Andrea Tettamanzi 
+**Institution**: Université Côte d'Azur
+**Email**: andrea.tettamanzi@univ-cotedazur.fr
 
 ## Funding and Benefits
 
