@@ -134,12 +134,12 @@ Please submit the following documents:
 
 ## Contact Information
 
-Main supervisor
+Main supervisor:
 **Supervisor**: Gérald Rocher
 **Institution**: Université Côte d'Azur
 **Email**: gerald.rocher@univ-cotedazur.fr
 
-Co Supervisor
+Co Supervisor:
 **Supervisor**: Andrea Tettamanzi 
 **Institution**: Université Côte d'Azur
 **Email**: andrea.tettamanzi@univ-cotedazur.fr
