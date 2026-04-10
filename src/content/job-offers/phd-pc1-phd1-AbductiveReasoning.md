@@ -135,14 +135,16 @@ Please submit the following documents:
 ## Contact Information
 
 Main supervisor:
-**Supervisor**: Gérald Rocher
-**Institution**: Université Côte d'Azur
-**Email**: gerald.rocher@univ-cotedazur.fr
+**Supervisor**: Gérald Rocher  
+**Institution**: Université Côte d'Azur  
+**Email**: gerald.rocher@univ-cotedazur.fr  
 
-Co Supervisor:
-**Supervisor**: Andrea Tettamanzi 
-**Institution**: Université Côte d'Azur
-**Email**: andrea.tettamanzi@univ-cotedazur.fr
+Co-Supervisor:
+**Supervisor**: Andrea Tettamanzi  
+**Institution**: Université Côte d'Azur  
+**Email**: andrea.tettamanzi@univ-cotedazur.fr  
+
+For scientific questions regarding the PhD topic, please contact the main supervisor directly.
 
 ## Funding and Benefits
 
