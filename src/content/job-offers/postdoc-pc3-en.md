@@ -1,18 +1,17 @@
 ---
 # Please respect these sections and template for good integration in the web site
-title: "Methodology for Engineering Digital Twins" # Avoid accents in title
-type: "PostDoc"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
+title: "Methodology for Engineering Digital Twins" 
+type: "PostDoc"  
 location: "Toulouse, France"
-expectedStartDate: "Spring 2026"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
-publishedDate: 2026-03-18  # Date when job offer was published in YYYY-MM-DD format
-filled: false  # Position availability status: true if position is filled, false if still available
-description: "The goal is to define a generic methodology that covers the whole digital twin lifecycle." # Brief summary of the position (2-3 sentences) for list summary printing. The detailed description goes in the Body section below.
-requirements: ["PhD in computer science", "Programming skills", "Modeling skills", "Experience with digital twins development"] # Some requirements in a list
+expectedStartDate: "Spring 2026"
+publishedDate: 2026-03-18  
+filled: false  
+description: "The goal is to define a generic methodology that covers the whole digital twin lifecycle." 
+requirements: ["PhD in computer science", "Programming skills", "Modeling skills", "Experience with digital twins development"] 
 tags:
- - "PC3"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ...
-contacts: ["Sophie.Ebersold@univ-tlse2.fr", "marcos.didonetdelfabro@cea.fr"]  # Array of contact emails for this position
-references:
-  - "edt-roadmap"
+ - "PC3"  #
+contacts: ["hiring.manager@edt-program.fr", "Sophie.Ebersold@univ-tlse2.fr", "marcos.didonetdelfabro@cea.fr"] 
+lang: "en"
 ---
 
 ## Context
@@ -21,10 +20,22 @@ Digital twins are virtual representations of real-world products, systems, or pr
 
 The Engineering Digital Twin [EDT program](https://edtlab.fr/en/), funded by the France 2030 investment plan, is a national initiative aimed at advancing the foundations of digital twin engineering in France and Europe. By bringing together leading academic and industrial partners, EDT seeks to strengthen the bases for the design, use, and deployment of digital twins, addressing key open challenges in model hybridization, composability, development methodologies, digital coupling, and human–twin interaction.
 
+In the long term, digital twins should be able to exist for a period that could exceed that of their reference system (a factory, a product, a territory, etc.). Digital twins must therefore be designed and built to be maintainable, scalable, and interoperable, based on existing information, and to collect all future information.
+
+To this end, we would like to propose an approach to building digital twins based on principles similar to those of DevOps. In other words, principles that enable continuous improvement of the various building blocks that make up the digital twin, while ensuring the interoperability and consistency of the information (data and models) collected.
+
 We are seeking a highly motivated postdoctoral researcher to join our team working on the methodological aspects of digital twin development.
+
+## Objectives
 The mission of the position is to propose innovative methodological approaches for the development, implementation and industrialization of digital twins.
 The task consists of studying what is currently being done in the field and proposing innovative approaches that allow researchers and PhD students in the EDT program to use tried-and-tested methods and tools.
+
+This methodology, will be accompanied by a digital twin development lifecycle model, including traceability, evolution, analysis, and change impact management
+. 
+To this end, case studies relying on existing digital twins (models and data) will be central to the work and cover a wide range of uses.
+
 The position will be closely collaborating with the engineering teams of the AT3.
+
 
 ## Responsibilities
 
@@ -56,4 +67,13 @@ This postdoctoral offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
+
+## References
+
+- Benoît Combemale, Pascale Vicat-Blanc, Arnaud Blouin, Hind Bril El Haouzi, Jean-Michel Bruel, et al.. Engineering Digital Twins: A Research Roadmap. *EDTconf 2025 - 2nd International Conference on Engineering Digital Twins*, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. [⟨hal-05223776⟩](https://inria.hal.science/hal-05223776v1)
+- Gwendal Beaumont, Antoine Beugnard, Salvador Martínez, Christelle Urtado, Sylvain Vauttier, Towards Automating the Life Cycle Management of Digital Twins ER2025 - 44th International Conference on Conceptual Modeling, Oct 2025, Poitiers, France. pp.412-430, ⟨10.1007/978-3-032-08623-5_22⟩
+- Tarek Alskaif, Önder Babur, Francis Bordeleau, Loek Cleophas, Benoît Combemale, et al., Evolution at the Core of Digital Twin Engineering EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-6
+- Judith Michael, Loek Cleophas, Steffen Zschaler, Tony Clark, Benoît Combemale, et al., Model‐Driven Engineering for Digital Twins: Opportunities and Challenges, Systems Engineering, 2025, 28 (5), pp.659-670. ⟨10.1002/sys.21815⟩
+- Meriem Smati, Vincent Cheutet, Christophe Danjou, Jannik Laval, Digital Twin System of Systems: A Layered Architecture Proposal. MODELSWARD 2025: 273-279
+
+
