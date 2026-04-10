@@ -1,16 +1,28 @@
 ---
-title: "PhD Position - Formal Engineering Methods for Digital Twin Development"
-tags:
-  - "PC1"
-type: "PhD"
-location: "Toulouse, France"
-expectedStartDate: "October 2026"
-filled: false
+type: PhD
 publishedDate: 2026-03-15
-description: "PhD position on formal engineering processes and methods for building reliable multi-paradigm digital twins"
-requirements: ["Master's degree in Computer Science, Software Engineering, or related field", "Strong background in formal methods, modeling languages, or system engineering", "Programming skills", "Interest in cyber-physical systems and digital twin technologies", "Fluency in English"]
-contacts: ["Marc.Pantel@toulouse-inp.fr", "Neeraj.Singh@toulouse-inp.fr", "Guillaume.Dupont@toulouse-inp.fr", "Xavier.Cregut@toulouse-inp.fr", "rabea.ameur-boulifa@telecom-paris.fr"]
-lang: "en"
+filled: false
+lang: en
+description: PhD position on formal engineering processes and methods for
+  building reliable multi-paradigm digital twins
+requirements:
+  - Master's degree in Computer Science, Software Engineering, or related field
+  - Strong background in formal methods, modeling languages, or system
+    engineering
+  - Programming skills
+  - Interest in cyber-physical systems and digital twin technologies
+  - Fluency in English
+contacts:
+  - Marc.Pantel@toulouse-inp.fr
+  - Neeraj.Singh@toulouse-inp.fr
+  - Guillaume.Dupont@toulouse-inp.fr
+  - Xavier.Cregut@toulouse-inp.fr
+  - rabea.ameur-boulifa@telecom-paris.fr
+title: PhD Position - Formal Engineering Methods for Digital Twin Development
+location: Toulouse, France
+expectedStartDate: October 2026
+tags:
+  - PC1
 ---
 
 ## Position Overview
@@ -60,9 +72,10 @@ The research will be **use-case driven**. Modeling paradigms will first be combi
 
 ## Research Environment
 
-The PhD will be conducted at **IRIT (Institut de Recherche en Informatique de Toulouse)** within the **Reliable Software & Systems department**.
+The PhD will be conducted at **LabSoC (the Telecom Paris research group in Sophia-Antipolis)** or at **IRIT (Institut de Recherche en Informatique de Toulouse)**.
 
-The candidate will work with several research teams including **ACADIE, ARGOS, ICS, and SM@RT**, which have extensive experience in **formal methods, modeling languages, and dependable systems engineering**.
+
+The candidate will work with several research teams that have extensive experience in **formal methods, modeling languages, and dependable systems engineering**.
 
 The research will benefit from long-standing collaborations with **industrial partners in safety-critical transportation systems**, including aerospace and railway domains.
 
@@ -110,17 +123,18 @@ Please submit the following documents:
 
 ## Contact Information
 
-Main spervisor:
-**Supervisor**: Marc Pantel  
-**Institution**: Université de Toulouse  
-**Email**: Marc.Pantel@toulouse-inp.fr
+Main supervisor:
+**Supervisor**: Rabea Ameur Boulifa  
+**Institution**: Telecom Paris  
+**Email**: rabea.ameur-boulifa@telecom-paris.fr  
+
 
 Co-supervisor:
-**Supervisor**: Rabea Ameur Boulifa
-**Institution**: Telecom Paris  
-**Email**: rabea.ameur-boulifa@telecom-paris.fr
+**Supervisor**: Marc Pantel  
+**Institution**: Université de Toulouse  
+**Email**: Marc.Pantel@toulouse-inp.fr  
 
-For scientific questions regarding the PhD topic, please contact the main supervisor directly.
+For any scientific questions regarding the PhD topic, please contact both supervisors directly.
 
 ## About the EDT Program
 
