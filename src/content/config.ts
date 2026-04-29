@@ -44,6 +44,7 @@ const newsCollection = defineCollection({
         newsType: z.enum(['event', 'press-release']),
         location: z.string().optional(),
         url: z.string().url().optional(),
+        icsPath: z.string().optional(),
         tags: z.array(z.string()).optional().default([])
     })
 });

@@ -12,4 +12,5 @@ export interface NewsItem {
     photo: string,
     template?: string,
     tags: string[],
+    icsPath?: string,
 }
