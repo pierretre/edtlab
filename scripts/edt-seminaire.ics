@@ -9,8 +9,8 @@ DTSTART:20260505T153000Z
 DTEND:20260505T163000Z
 DTSTAMP:20260429T110000Z
 UID:seminaire-edt-2026-05-05@edtlab.fr
-DESCRIPTION:Présentation de la brique Gemseo par Jean-Christophe GIRET.\nLien visio : https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
-LOCATION:Visioconférence
+DESCRIPTION:Presentation de la brique Gemseo par Jean-Christophe GIRET.
+LOCATION:Visioconference
 STATUS:CONFIRMED
 END:VEVENT
 END:VCALENDAR
