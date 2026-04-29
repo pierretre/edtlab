@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -183,6 +185,7 @@ export default {
         },
     },
     plugins: [
+        typography,
         // Note: Flowbite plugin may need to be imported differently for Tailwind v4
         // For now, we'll rely on the CSS import in global.css
     ],
