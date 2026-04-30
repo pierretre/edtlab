@@ -25,6 +25,9 @@ export const POST: APIRoute = async ({ request }) => {
         const filePath = path.join(ucDir, ucFile);
         let fileContent = fs.readFileSync(filePath, 'utf-8');
 
+        // Normalize line endings to LF
+        fileContent = fileContent.replace(/\r\n/g, '\n');
+
         // Verify token from frontmatter
         const tokenMatch = fileContent.match(/previewToken:\s*"([^"]+)"/);
         if (!tokenMatch || tokenMatch[1] !== token) {
@@ -32,9 +35,10 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         // Replace the section content
-        // Sections are formatted as: ### MC{N} — Title\n\nContent\n\n### MC{N+1}
+        // Match: ### MC{N} — Title\n\n...content...\n\n (until next ### or --- or end)
+        // Use [—–-] to match em dash, en dash, or hyphen
         const sectionRegex = new RegExp(
-            `(### ${sectionId} —[^\n]*\n\n)([\\s\\S]*?)(?=\n### MC|\\n---|\$)`,
+            `(### ${sectionId} [—–-][^\\n]*\\n\\n)([\\s\\S]*?)(?=\\n### |\\n---|\$)`,
             'm'
         );
 
@@ -43,9 +47,9 @@ export const POST: APIRoute = async ({ request }) => {
             fs.writeFileSync(filePath, fileContent, 'utf-8');
             return new Response(JSON.stringify({ ok: true }), { status: 200 });
         } else {
-            return new Response(JSON.stringify({ error: 'Section not found' }), { status: 404 });
+            return new Response(JSON.stringify({ error: 'Section not found in file' }), { status: 404 });
         }
-    } catch (err) {
-        return new Response(JSON.stringify({ error: 'Server error' }), { status: 500 });
+    } catch (err: any) {
+        return new Response(JSON.stringify({ error: 'Server error', details: err?.message }), { status: 500 });
     }
 };
