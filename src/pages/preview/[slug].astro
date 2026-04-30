@@ -293,8 +293,9 @@ const t = useTranslations(lang);
         headings.forEach(heading => {
             const text = (heading.textContent || '').trim();
 
-            // Skip non-editable headings
+            // Skip non-editable headings and Références (handled by T004 with custom editor)
             if (SKIP_HEADINGS.some(skip => text.includes(skip))) return;
+            if (text === 'Références') return;
 
             // Determine sectionId
             let sectionId: string;
@@ -758,8 +759,6 @@ const t = useTranslations(lang);
 
             if (refZone) {
                 const zone = refZone as HTMLElement;
-                // Override the double-click handler to show custom references editor
-                zone.removeEventListener('dblclick', () => {});
                 
                 zone.addEventListener('dblclick', async (e) => {
                     e.stopPropagation();
