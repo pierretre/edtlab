@@ -1,48 +1,28 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
-import fs from 'node:fs';
-import path from 'node:path';
+import { findUcFile, readUcFile, writeUcFile, verifyToken, replaceFrontmatterField, errorResponse, successResponse } from '@utils/uc-file-utils';
+
+const ALLOWED_FIELDS = ['domain', 'maturity'];
 
 export const POST: APIRoute = async ({ request }) => {
     try {
-        const body = await request.json();
-        const { slug, token, field, value } = body;
+        const { slug, token, field, value } = await request.json();
 
-        if (!slug || !token || !field || value === undefined) {
-            return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
-        }
+        if (!slug || !token || !field || value === undefined) return errorResponse('Missing fields');
+        if (!ALLOWED_FIELDS.includes(field)) return errorResponse('Field not allowed');
 
-        // Only allow specific fields
-        const allowedFields = ['domain', 'maturity'];
-        if (!allowedFields.includes(field)) {
-            return new Response(JSON.stringify({ error: 'Field not allowed' }), { status: 400 });
-        }
+        const uc = findUcFile(slug);
+        if (!uc) return errorResponse('UC not found', 404);
 
-        const ucDir = path.join(process.cwd(), 'src', 'content', 'use-cases');
-        const files = fs.readdirSync(ucDir);
-        const ucFile = files.find(f => f.includes(slug));
-        if (!ucFile) {
-            return new Response(JSON.stringify({ error: 'UC not found' }), { status: 404 });
-        }
+        let fileContent = readUcFile(uc.filePath);
+        if (!verifyToken(fileContent, token)) return errorResponse('Invalid token', 403);
 
-        const filePath = path.join(ucDir, ucFile);
-        let fileContent = fs.readFileSync(filePath, 'utf-8').replace(/\r\n/g, '\n');
+        fileContent = replaceFrontmatterField(fileContent, field, value);
+        writeUcFile(uc.filePath, fileContent);
 
-        const tokenMatch = fileContent.match(/previewToken:\s*"([^"]+)"/);
-        if (!tokenMatch || tokenMatch[1] !== token) {
-            return new Response(JSON.stringify({ error: 'Invalid token' }), { status: 403 });
-        }
-
-        // Replace field value in frontmatter
-        const fieldRegex = new RegExp(`^${field}:\\s*.*$`, 'm');
-        if (fieldRegex.test(fileContent)) {
-            fileContent = fileContent.replace(fieldRegex, `${field}: ${value}`);
-        }
-
-        fs.writeFileSync(filePath, fileContent, 'utf-8');
-        return new Response(JSON.stringify({ ok: true }), { status: 200 });
+        return successResponse();
     } catch (err: any) {
-        return new Response(JSON.stringify({ error: 'Server error', details: err?.message }), { status: 500 });
+        return errorResponse(`Server error: ${err?.message}`, 500);
     }
 };

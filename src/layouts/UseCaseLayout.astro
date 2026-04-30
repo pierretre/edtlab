@@ -53,6 +53,20 @@ const t = useTranslations(lang);
             {frontmatter.version && <span class="text-sm text-gray-400">v{frontmatter.version}</span>}
         </div>
 
+        <!-- Authors / Contacts — academic style -->
+        {frontmatter.contacts && frontmatter.contacts.length > 0 && (
+            <p class="text-base text-gray-600 mb-1">
+                {frontmatter.contacts.map((c: any, i: number) => (
+                    <span>
+                        <span class="font-medium text-gray-800">{c.name}</span>
+                        {c.org && <span class="text-gray-500"> ({c.org})</span>}
+                        {c.email && <a href={`mailto:${c.email}`} class="text-primary-600 hover:underline text-sm ml-1">{c.email}</a>}
+                        {i < frontmatter.contacts.length - 1 && <span class="text-gray-400 mx-1">·</span>}
+                    </span>
+                ))}
+            </p>
+        )}
+
         <!-- ApprovedBy -->
         {frontmatter.approvedBy && (
             <p class="text-sm text-gray-500 italic mb-4">
@@ -80,29 +94,4 @@ const t = useTranslations(lang);
     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
         <slot />
     </div>
-
-    <!-- Contacts -->
-    {frontmatter.contacts && frontmatter.contacts.length > 0 && (
-        <section class="mt-8 p-6 bg-gray-50 rounded-lg border">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">
-                {lang === 'fr' ? 'Contacts' : 'Contacts'}
-            </h2>
-            <div class="space-y-3">
-                {frontmatter.contacts.map((contact: any) => (
-                    <div class="flex items-center gap-3">
-                        <div>
-                            <p class="font-medium text-gray-900">{contact.name}</p>
-                            {contact.org && <p class="text-sm text-gray-500">{contact.org}</p>}
-                            {contact.role && <p class="text-xs text-gray-400">{contact.role}</p>}
-                            {contact.email && (
-                                <a href={`mailto:${contact.email}`} class="text-sm text-primary-600 hover:underline">
-                                    {contact.email}
-                                </a>
-                            )}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
-    )}
 </PageLayout>

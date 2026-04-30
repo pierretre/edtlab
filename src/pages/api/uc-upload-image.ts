@@ -3,6 +3,7 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import fs from 'node:fs';
 import path from 'node:path';
+import { findUcFile, readUcFile, writeUcFile, verifyToken, errorResponse, successResponse } from '@utils/uc-file-utils';
 
 export const POST: APIRoute = async ({ request }) => {
     try {
@@ -11,42 +12,26 @@ export const POST: APIRoute = async ({ request }) => {
         const slug = formData.get('slug') as string | null;
         const token = formData.get('token') as string | null;
 
-        if (!image || !slug || !token) {
-            return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
-        }
+        if (!image || !slug || !token) return errorResponse('Missing fields');
 
-        // Find UC file and verify token
-        const ucDir = path.join(process.cwd(), 'src', 'content', 'use-cases');
-        const files = fs.readdirSync(ucDir);
-        const ucFile = files.find(f => f.includes(slug));
-        if (!ucFile) {
-            return new Response(JSON.stringify({ error: 'UC not found' }), { status: 404 });
-        }
+        const uc = findUcFile(slug);
+        if (!uc) return errorResponse('UC not found', 404);
 
-        const filePath = path.join(ucDir, ucFile);
-        let fileContent = fs.readFileSync(filePath, 'utf-8');
-        const tokenMatch = fileContent.match(/previewToken:\s*"([^"]+)"/);
-        if (!tokenMatch || tokenMatch[1] !== token) {
-            return new Response(JSON.stringify({ error: 'Invalid token' }), { status: 403 });
-        }
+        let fileContent = readUcFile(uc.filePath);
+        if (!verifyToken(fileContent, token)) return errorResponse('Invalid token', 403);
 
-        // Save image to public/media/use-cases/
         const ext = path.extname(image.name) || '.png';
         const imgName = `${slug}${ext}`;
         const imgDir = path.join(process.cwd(), 'public', 'media', 'use-cases');
         fs.mkdirSync(imgDir, { recursive: true });
-        const imgPath = path.join(imgDir, imgName);
+        fs.writeFileSync(path.join(imgDir, imgName), Buffer.from(await image.arrayBuffer()));
 
-        const buffer = Buffer.from(await image.arrayBuffer());
-        fs.writeFileSync(imgPath, buffer);
-
-        // Update photo in frontmatter
         const newPhoto = `/media/use-cases/${imgName}`;
         fileContent = fileContent.replace(/photo:\s*"[^"]*"/, `photo: "${newPhoto}"`);
-        fs.writeFileSync(filePath, fileContent, 'utf-8');
+        writeUcFile(uc.filePath, fileContent);
 
-        return new Response(JSON.stringify({ ok: true, photo: newPhoto }), { status: 200 });
+        return successResponse({ ok: true, photo: newPhoto });
     } catch (err: any) {
-        return new Response(JSON.stringify({ error: 'Server error', details: err?.message }), { status: 500 });
+        return errorResponse(`Server error: ${err?.message}`, 500);
     }
 };
