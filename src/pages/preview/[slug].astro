@@ -309,13 +309,29 @@ const t = useTranslations(lang);
             });
         });
     });
-        // Image upload
-        const imgSection = document.querySelector('.uc-cover-image');
+        // Image upload — icon overlay on double-click
+        const imgSection = document.querySelector('.uc-cover-image') as HTMLElement;
         if (imgSection) {
-            const uploadBtn = document.createElement('button');
-            uploadBtn.textContent = 'Changer l\'image';
-            uploadBtn.style.cssText = 'display:block; margin:8px auto; padding:6px 16px; font-size:13px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer;';
-            imgSection.after(uploadBtn);
+            imgSection.style.position = 'relative';
+            imgSection.style.cursor = 'pointer';
+
+            // Camera icon overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position:absolute; top:0; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0); transition:background 0.2s; pointer-events:none;';
+            const icon = document.createElement('div');
+            icon.innerHTML = '📷';
+            icon.style.cssText = 'font-size:32px; opacity:0; transition:opacity 0.2s; background:rgba(255,255,255,0.85); border-radius:50%; width:56px; height:56px; display:flex; align-items:center; justify-content:center;';
+            overlay.appendChild(icon);
+            imgSection.appendChild(overlay);
+
+            imgSection.addEventListener('mouseenter', () => {
+                overlay.style.background = 'rgba(0,0,0,0.15)';
+                icon.style.opacity = '1';
+            });
+            imgSection.addEventListener('mouseleave', () => {
+                overlay.style.background = 'rgba(0,0,0,0)';
+                icon.style.opacity = '0';
+            });
 
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
@@ -323,14 +339,13 @@ const t = useTranslations(lang);
             fileInput.style.display = 'none';
             document.body.appendChild(fileInput);
 
-            uploadBtn.addEventListener('click', () => fileInput.click());
+            imgSection.addEventListener('dblclick', () => fileInput.click());
 
             fileInput.addEventListener('change', async () => {
                 const file = fileInput.files?.[0];
                 if (!file) return;
 
-                uploadBtn.textContent = 'Téléchargement...';
-                uploadBtn.disabled = true;
+                icon.innerHTML = '⏳';
 
                 const formData = new FormData();
                 formData.append('image', file);
@@ -340,20 +355,18 @@ const t = useTranslations(lang);
                 try {
                     const res = await fetch('/api/uc-upload-image', { method: 'POST', body: formData });
                     if (res.ok) {
-                        uploadBtn.textContent = '✓ Image mise à jour';
-                        uploadBtn.style.background = '#10b981';
-                        uploadBtn.style.color = 'white';
+                        icon.innerHTML = '✓';
+                        icon.style.background = '#10b981';
+                        icon.style.color = 'white';
                         setTimeout(() => window.location.reload(), 1500);
                     } else {
                         const err = await res.json();
                         alert('Erreur: ' + (err.error || 'Erreur inconnue'));
-                        uploadBtn.textContent = 'Changer l\'image';
-                        uploadBtn.disabled = false;
+                        icon.innerHTML = '📷';
                     }
                 } catch (e) {
                     alert('Erreur réseau');
-                    uploadBtn.textContent = 'Changer l\'image';
-                    uploadBtn.disabled = false;
+                    icon.innerHTML = '📷';
                 }
             });
         }
