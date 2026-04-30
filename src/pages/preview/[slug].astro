@@ -161,6 +161,98 @@ const t = useTranslations(lang);
             'Références': 'Listez les publications scientifiques et rapports liés à ce cas d\'usage spécifiquement.',
         };
 
+        // Intro/résumé — first elements before any h2 or hr
+        const introNodes: Element[] = [];
+        let child = proseDiv.firstElementChild;
+        while (child && child.tagName !== 'H2' && child.tagName !== 'HR') {
+            introNodes.push(child);
+            child = child.nextElementSibling;
+        }
+
+        if (introNodes.length > 0) {
+            // Guide
+            const introGuide = document.createElement('div');
+            introGuide.style.cssText = 'background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 14px; margin:0 0 8px; font-size:13px; color:#1e40af;';
+            introGuide.innerHTML = '<strong>Guide :</strong> Décrivez en 3-5 phrases le cas d\'usage : quel système physique, quel jumeau numérique, quels objectifs.';
+            proseDiv.insertBefore(introGuide, introNodes[0]);
+
+            // Wrap intro in editable zone
+            const introZone = document.createElement('div');
+            introZone.style.cssText = 'cursor:pointer; border:1px dashed transparent; border-radius:6px; padding:4px 8px; margin:4px 0; transition:all 0.15s;';
+            introZone.title = 'Double-cliquez pour modifier le résumé';
+            introZone.addEventListener('mouseenter', () => { introZone.style.borderColor = '#93c5fd'; introZone.style.background = '#f8fafc'; });
+            introZone.addEventListener('mouseleave', () => { introZone.style.borderColor = 'transparent'; introZone.style.background = 'transparent'; });
+
+            proseDiv.insertBefore(introZone, introNodes[0]);
+            introNodes.forEach(n => introZone.appendChild(n));
+
+            introZone.addEventListener('dblclick', async () => {
+                let markdown = '';
+                try {
+                    const res = await fetch(`/api/uc-section?slug=${slug}&token=${token}&sectionId=intro`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        markdown = data.markdown || '';
+                    }
+                } catch (e) {}
+
+                introZone.style.display = 'none';
+
+                const editor = document.createElement('div');
+                editor.style.cssText = 'margin:8px 0;';
+
+                const hint = document.createElement('p');
+                hint.textContent = 'Édition en Markdown';
+                hint.style.cssText = 'font-size:12px; color:#6b7280; margin-bottom:6px;';
+
+                const textarea = document.createElement('textarea');
+                textarea.value = markdown;
+                textarea.style.cssText = 'width:100%; min-height:120px; padding:12px; border:2px solid #3b82f6; border-radius:8px; font-family:ui-monospace,monospace; font-size:14px; line-height:1.6; resize:vertical;';
+
+                const btnContainer = document.createElement('div');
+                btnContainer.style.cssText = 'display:flex; gap:8px; margin-top:8px;';
+
+                const saveBtn = document.createElement('button');
+                saveBtn.textContent = 'Enregistrer';
+                saveBtn.style.cssText = 'padding:8px 20px; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px;';
+
+                const cancelBtn = document.createElement('button');
+                cancelBtn.textContent = 'Annuler';
+                cancelBtn.style.cssText = 'padding:8px 20px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:14px;';
+
+                btnContainer.appendChild(saveBtn);
+                btnContainer.appendChild(cancelBtn);
+                editor.appendChild(hint);
+                editor.appendChild(textarea);
+                editor.appendChild(btnContainer);
+                introZone.after(editor);
+                textarea.focus();
+
+                cancelBtn.addEventListener('click', () => { editor.remove(); introZone.style.display = ''; });
+
+                saveBtn.addEventListener('click', async () => {
+                    saveBtn.textContent = 'Enregistrement...';
+                    saveBtn.disabled = true;
+                    try {
+                        const res = await fetch('/api/uc-edit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ slug, token, sectionId: 'intro', content: textarea.value })
+                        });
+                        if (res.ok) {
+                            saveBtn.textContent = '✓ Enregistré';
+                            saveBtn.style.background = '#10b981';
+                            setTimeout(() => window.location.reload(), 1500);
+                        } else {
+                            const err = await res.json();
+                            alert('Erreur: ' + (err.error || 'Erreur inconnue'));
+                            saveBtn.textContent = 'Enregistrer'; saveBtn.disabled = false;
+                        }
+                    } catch (e) { alert('Erreur réseau'); saveBtn.textContent = 'Enregistrer'; saveBtn.disabled = false; }
+                });
+            });
+        }
+
         // Headings to skip (section titles that are not editable sections)
         const SKIP_HEADINGS = ['Caractérisation du Jumeau Numérique'];
 
