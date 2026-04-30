@@ -4,16 +4,17 @@ import { getContentLink } from "@i18n/links";
 
 export interface Props {
     item: any;
+    body?: string;
     lang: "en" | "fr";
     t: any;
     slug: string;
 }
 
-const { item, lang, t, slug } = Astro.props;
+const { item, body, lang, t, slug } = Astro.props;
 const link = `/${lang}${getContentLink(lang, "use-cases", slug, true)}`;
 const coverSrc = item.photo || '/media/use-cases/uc-default.svg';
 
-// Build search text for client-side filtering
+// Build search text for client-side filtering — includes body markdown
 const searchText = [
     item.title,
     item.summary,
@@ -21,6 +22,7 @@ const searchText = [
     item.domain,
     ...(item.tags || []),
     ...(item.contacts || []).map((c: any) => `${c.name} ${c.org || ''}`),
+    body || '',
 ].join(' ').toLowerCase();
 ---
 
