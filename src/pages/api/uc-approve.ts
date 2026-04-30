@@ -6,8 +6,8 @@ import { findUcFile, readUcFile, writeUcFile, verifyToken, errorResponse, succes
 
 export const POST: APIRoute = async ({ request, url }) => {
     try {
-        const { slug, token, name, title, org } = await request.json();
-        if (!slug || !token || !name || !title || !org) return errorResponse('Missing fields');
+        const { slug, token, name, email, title, org } = await request.json();
+        if (!slug || !token || !name || !email || !title || !org) return errorResponse('Missing fields');
 
         const file = findUcFile(slug);
         if (!file) return errorResponse('UC not found', 404);
@@ -18,17 +18,12 @@ export const POST: APIRoute = async ({ request, url }) => {
         const today = new Date().toISOString().split('T')[0];
         const confirmToken = crypto.randomBytes(16).toString('hex');
 
-        // Add or update approvedBy block in frontmatter
+        // Add or update approvedBy block (now includes email)
+        const approvedByBlock = `approvedBy:\n  name: "${name}"\n  email: "${email}"\n  title: "${title}"\n  org: "${org}"\n  date: ${today}\n`;
         if (content.includes('approvedBy:')) {
-            content = content.replace(
-                /approvedBy:\n(\s+\w+:.*\n)*/m,
-                `approvedBy:\n  name: "${name}"\n  title: "${title}"\n  org: "${org}"\n  date: ${today}\n`
-            );
+            content = content.replace(/approvedBy:\n(\s+\w+:.*\n)*/m, approvedByBlock);
         } else {
-            content = content.replace(
-                /previewToken:/,
-                `approvedBy:\n  name: "${name}"\n  title: "${title}"\n  org: "${org}"\n  date: ${today}\npreviewToken:`
-            );
+            content = content.replace(/previewToken:/, `${approvedByBlock}previewToken:`);
         }
 
         // Add or update confirmToken
@@ -38,31 +33,30 @@ export const POST: APIRoute = async ({ request, url }) => {
             content = content.replace(/previewToken:/, `confirmToken: "${confirmToken}"\npreviewToken:`);
         }
 
-        // Keep status as draft — will be published on confirmation
+        // Keep status as draft — published on email confirmation
         writeUcFile(file.filePath, content);
 
-        // Find contact email from frontmatter
-        const emailMatch = content.match(/contacts:\n[\s\S]*?email:\s*"([^"]+)"/);
-        const contactEmail = emailMatch?.[1];
-
-        // Build confirmation URL
+        // Send confirmation email to the approver's email
         const baseUrl = url.origin || 'https://www.edtlab.fr';
         const confirmUrl = `${baseUrl}/api/uc-confirm?slug=${slug}&confirmToken=${confirmToken}`;
 
-        if (contactEmail) {
-            const htmlContent = `
-                <h2>Confirmation d'approbation — EDT Use Case</h2>
-                <p>Bonjour,</p>
-                <p><strong>${name}</strong> (${title}, ${org}) a approuvé la mise à disposition du cas d'usage suivant sur edtlab.fr.</p>
-                <p>Pour confirmer cette approbation et publier le cas d'usage, veuillez cliquer sur le lien ci-dessous :</p>
-                <p><a href="${confirmUrl}" style="display:inline-block; padding:12px 24px; background:#16a34a; color:white; text-decoration:none; border-radius:8px; font-weight:bold;">Confirmer et publier</a></p>
-                <p>Si vous n'êtes pas à l'origine de cette approbation, veuillez ignorer cet email et contacter l'équipe EDT.</p>
-                <p>Cordialement,<br>L'équipe EDT Lab</p>
-            `;
-            await sendEmail(contactEmail, `[EDT] Confirmation d'approbation — ${slug}`, htmlContent);
+        const htmlContent = `
+            <h2>Confirmation d'approbation — EDT Use Case</h2>
+            <p>Bonjour ${name},</p>
+            <p>Vous avez approuvé la mise à disposition d'un cas d'usage sur edtlab.fr en tant que <strong>${title}</strong> (${org}).</p>
+            <p>Pour confirmer cette approbation et publier le cas d'usage, veuillez cliquer sur le lien ci-dessous :</p>
+            <p><a href="${confirmUrl}" style="display:inline-block; padding:12px 24px; background:#16a34a; color:white; text-decoration:none; border-radius:8px; font-weight:bold;">Confirmer et publier</a></p>
+            <p>Si vous n'êtes pas à l'origine de cette approbation, veuillez ignorer cet email.</p>
+            <p>Cordialement,<br>L'équipe EDT Lab</p>
+        `;
+
+        try {
+            await sendEmail(email, `[EDT] Confirmation d'approbation — ${slug}`, htmlContent);
+        } catch (e) {
+            return errorResponse('Erreur lors de l\'envoi de l\'email de confirmation', 500);
         }
 
-        return successResponse({ ok: true, status: 'pending_confirmation', emailSent: !!contactEmail });
+        return successResponse({ ok: true, status: 'pending_confirmation', emailSentTo: email });
     } catch (err: any) {
         return errorResponse('Server error: ' + err?.message, 500);
     }

@@ -90,6 +90,7 @@ const useCasesCollection = defineCollection({
         })).optional().default([]),
         approvedBy: z.object({
             name: z.string(),
+            email: z.string().email(),
             title: z.string(),
             org: z.string(),
             date: z.date(),
