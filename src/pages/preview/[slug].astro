@@ -2,12 +2,14 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { useTranslations } from "@i18n/utils";
+import { findUcFile, readUcFile } from "@utils/uc-file-utils";
+import matter from "gray-matter";
 
 // SSR — no prerender, token is verified on every request
 const { slug } = Astro.params;
 const token = Astro.url.searchParams.get('token');
 
-// Find the UC by slug (partial match — e.g. slug=uc-05 matches uc-05-r0.1-fr)
+// Find the UC by slug (partial match on filename)
 const allUCs = await getCollection("use-cases");
 const uc = allUCs.find(u => u.slug.includes(slug || ''));
 
@@ -19,6 +21,23 @@ if (!uc || !token || !uc.data.previewToken || token !== uc.data.previewToken) {
 const { Content } = await uc.render();
 const lang = (uc.data.lang || 'fr') as "en" | "fr";
 const t = useTranslations(lang);
+
+// Read frontmatter directly from file to bypass Astro's content collection cache
+let liveReferences: any[] = [];
+let livePhoto: string = uc.data.photo || '';
+let liveTitle: string = uc.data.title || '';
+try {
+    const ucFile = findUcFile(slug || '');
+    if (ucFile) {
+        const fileContent = readUcFile(ucFile.filePath);
+        const { data } = matter(fileContent);
+        liveReferences = Array.isArray(data.references) ? data.references : [];
+        if (data.photo) livePhoto = data.photo;
+        if (data.title) liveTitle = data.title;
+    }
+} catch {
+    liveReferences = uc.data.references || [];
+}
 ---
 
 <BaseLayout
@@ -58,11 +77,11 @@ const t = useTranslations(lang);
 
                 <!-- Header -->
                 <header class="mb-8">
-                    {uc.data.photo && (
+                    {livePhoto && (
                         <div class="uc-cover-image mb-6 rounded-lg overflow-hidden">
                             <img
-                                src={uc.data.photo}
-                                alt={uc.data.title}
+                                src={livePhoto}
+                                alt={liveTitle}
                                 class="w-full h-64 object-cover"
                                 loading="lazy"
                             />
@@ -71,7 +90,7 @@ const t = useTranslations(lang);
 
                     <div class="flex items-baseline justify-between mb-2">
                         <h1 class="text-4xl font-bold text-gray-900">
-                            {uc.data.title}
+                            {liveTitle}
                         </h1>
                         {uc.data.version && <span class="text-sm text-gray-400">v{uc.data.version}</span>}
                     </div>
@@ -111,26 +130,30 @@ const t = useTranslations(lang);
                 <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
                     <Content />
 
-                    <!-- References from frontmatter — displayed after body markdown -->
-                    {uc.data.references && uc.data.references.length > 0 && (
-                        <section id="references-section">
-                            <h2>Références</h2>
-                            <ul data-ref-zone="true" style="cursor: pointer; border: 1px dashed transparent; border-radius: 6px; padding: 4px 8px; margin: 4px 0; transition: all 0.15s;">
-                                {uc.data.references.map((ref: any) => (
-                                    <li>
-                                        <strong>{ref.title}</strong>
-                                        {ref.venue && <span> — {ref.venue}</span>}
-                                        {ref.url && (
-                                            <span>
-                                                {' '}
-                                                <a href={ref.url} target="_blank" rel="noopener noreferrer">lien</a>
-                                            </span>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        </section>
-                    )}
+                    <!-- References from frontmatter — always rendered (preview mode) for editability -->
+                    <section id="references-section" data-skip-generic-edit="true">
+                        <h2>Références</h2>
+                        <div data-ref-zone="true" style="cursor: pointer; border: 1px dashed transparent; border-radius: 6px; padding: 4px 8px; margin: 4px 0; transition: all 0.15s;">
+                            {liveReferences.length > 0 ? (
+                                <ul>
+                                    {liveReferences.map((ref: any) => (
+                                        <li>
+                                            <strong>{ref.title}</strong>
+                                            {ref.venue && <span> — {ref.venue}</span>}
+                                            {ref.url && (
+                                                <span>
+                                                    {' '}
+                                                    <a href={ref.url} target="_blank" rel="noopener noreferrer">lien</a>
+                                                </span>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p style="color: #9ca3af; font-style: italic;">Aucune référence. Double-cliquez ici pour en ajouter.</p>
+                            )}
+                        </div>
+                    </section>
                 </div>
 
                 <!-- Contacts section removed — displayed under title in academic style -->
@@ -317,6 +340,10 @@ const t = useTranslations(lang);
             // Skip non-editable headings
             if (SKIP_HEADINGS.some(skip => text.includes(skip))) return;
 
+            // Skip headings inside a statically-rendered section (e.g. Références)
+            // — those have their own custom editor and must not be wrapped by the generic one
+            if (heading.closest('[data-skip-generic-edit]')) return;
+
             // Determine sectionId
             let sectionId: string;
             if (heading.tagName === 'H3') {
@@ -332,6 +359,7 @@ const t = useTranslations(lang);
             const contentNodes: Element[] = [];
             let sibling = heading.nextElementSibling;
             while (sibling && sibling.tagName !== 'H3' && sibling.tagName !== 'H2' && sibling.tagName !== 'HR') {
+                if ((sibling as HTMLElement).hasAttribute && (sibling as HTMLElement).hasAttribute('data-skip-generic-edit')) break;
                 contentNodes.push(sibling);
                 sibling = sibling.nextElementSibling;
             }

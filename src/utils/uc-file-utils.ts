@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import matter from 'gray-matter';
 
 const UC_DIR = path.join(process.cwd(), 'src', 'content', 'use-cases');
 
@@ -23,8 +24,12 @@ export function writeUcFile(filePath: string, content: string): void {
 
 /** Verify preview token from frontmatter */
 export function verifyToken(fileContent: string, token: string): boolean {
-    const match = fileContent.match(/previewToken:\s*"([^"]+)"/);
-    return !!match && match[1] === token;
+    try {
+        const { data } = matter(fileContent);
+        return data.previewToken === token;
+    } catch {
+        return false;
+    }
 }
 
 /** Find section boundaries in the markdown file */
@@ -67,10 +72,11 @@ function findIntroSection(fileContent: string): { start: number; end: number; co
     return { start: contentStart, end: contentEnd, content: fileContent.substring(contentStart, contentEnd).trim() };
 }
 
-/** Replace a frontmatter field value */
-export function replaceFrontmatterField(fileContent: string, field: string, value: string): string {
-    const regex = new RegExp(`^${field}:\\s*.*$`, 'm');
-    return fileContent.replace(regex, `${field}: ${value}`);
+/** Replace a frontmatter field value (scalar or nested object) */
+export function replaceFrontmatterField(fileContent: string, field: string, value: any): string {
+    const { data, content } = matter(fileContent);
+    data[field] = value;
+    return matter.stringify(content, data);
 }
 
 /** Standard error response */

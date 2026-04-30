@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
+import matter from 'gray-matter';
 import { findUcFile, readUcFile, writeUcFile, sendEmail } from '@utils/uc-file-utils';
 
 export const GET: APIRoute = async ({ url }) => {
@@ -17,24 +18,23 @@ export const GET: APIRoute = async ({ url }) => {
             return new Response('<h1>Cas d\'usage introuvable</h1>', { status: 404, headers: { 'Content-Type': 'text/html' } });
         }
 
-        let content = readUcFile(file.filePath);
+        const fileContent = readUcFile(file.filePath);
+        const { data: frontmatter, content: body } = matter(fileContent);
 
         // Verify confirm token
-        const tokenMatch = content.match(/confirmToken:\s*"([^"]+)"/);
-        if (!tokenMatch || tokenMatch[1] !== confirmToken) {
+        if (frontmatter.confirmToken !== confirmToken) {
             return new Response('<h1>Lien invalide ou expiré</h1><p>Ce lien de confirmation n\'est plus valide.</p>', { status: 403, headers: { 'Content-Type': 'text/html' } });
         }
 
         // Check not already published
-        if (content.match(/^status:\s*published$/m)) {
+        if (frontmatter.status === 'published') {
             return new Response('<h1>Déjà publié</h1><p>Ce cas d\'usage est déjà publié.</p>', { status: 200, headers: { 'Content-Type': 'text/html' } });
         }
 
-        // Publish
-        content = content.replace(/^status:\s*.*$/m, 'status: published');
-        // Remove confirmToken (one-time use)
-        content = content.replace(/^confirmToken:\s*.*\n/m, '');
-        writeUcFile(file.filePath, content);
+        // Publish + remove confirmToken (one-time use)
+        frontmatter.status = 'published';
+        delete frontmatter.confirmToken;
+        writeUcFile(file.filePath, matter.stringify(body, frontmatter));
 
         // Notify Guy
         try {

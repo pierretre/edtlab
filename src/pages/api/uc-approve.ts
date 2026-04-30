@@ -2,6 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import crypto from 'node:crypto';
+import matter from 'gray-matter';
 import { findUcFile, readUcFile, writeUcFile, verifyToken, errorResponse, successResponse, sendEmail } from '@utils/uc-file-utils';
 
 export const POST: APIRoute = async ({ request, url }) => {
@@ -12,28 +13,18 @@ export const POST: APIRoute = async ({ request, url }) => {
         const file = findUcFile(slug);
         if (!file) return errorResponse('UC not found', 404);
 
-        let content = readUcFile(file.filePath);
-        if (!verifyToken(content, token)) return errorResponse('Invalid token', 403);
+        const fileContent = readUcFile(file.filePath);
+        if (!verifyToken(fileContent, token)) return errorResponse('Invalid token', 403);
 
         const today = new Date().toISOString().split('T')[0];
         const confirmToken = crypto.randomBytes(16).toString('hex');
 
-        // Prepare updated content (but don't write yet)
-        const approvedByBlock = `approvedBy:\n  name: "${name}"\n  email: "${email}"\n  title: "${title}"\n  org: "${org}"\n  date: ${today}\n`;
-        if (content.includes('approvedBy:')) {
-            content = content.replace(/approvedBy:\n(\s+\w+:.*\n)*/m, approvedByBlock);
-        } else {
-            content = content.replace(/previewToken:/, `${approvedByBlock}previewToken:`);
-        }
-
-        if (content.includes('confirmToken:')) {
-            content = content.replace(/^confirmToken:\s*.*$/m, `confirmToken: "${confirmToken}"`);
-        } else {
-            content = content.replace(/previewToken:/, `confirmToken: "${confirmToken}"\npreviewToken:`);
-        }
-
-        // Ensure status stays draft
-        content = content.replace(/^status:\s*.*$/m, 'status: draft');
+        // Update frontmatter via gray-matter (robust against YAML quoting differences)
+        const { data: frontmatter, content: body } = matter(fileContent);
+        frontmatter.approvedBy = { name, email, title, org, date: today };
+        frontmatter.confirmToken = confirmToken;
+        frontmatter.status = 'draft';
+        const content = matter.stringify(body, frontmatter);
 
         // Send confirmation email FIRST — only write file if email succeeds
         const baseUrl = url.origin || 'https://www.edtlab.fr';

@@ -3,6 +3,7 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import fs from 'node:fs';
 import path from 'node:path';
+import matter from 'gray-matter';
 import { findUcFile, readUcFile, writeUcFile, verifyToken, errorResponse, successResponse } from '@utils/uc-file-utils';
 
 export const POST: APIRoute = async ({ request }) => {
@@ -27,8 +28,9 @@ export const POST: APIRoute = async ({ request }) => {
         fs.writeFileSync(path.join(imgDir, imgName), Buffer.from(await image.arrayBuffer()));
 
         const newPhoto = `/media/use-cases/${imgName}`;
-        fileContent = fileContent.replace(/photo:\s*"[^"]*"/, `photo: "${newPhoto}"`);
-        writeUcFile(uc.filePath, fileContent);
+        const { data: frontmatter, content: body } = matter(fileContent);
+        frontmatter.photo = newPhoto;
+        writeUcFile(uc.filePath, matter.stringify(body, frontmatter));
 
         return successResponse({ ok: true, photo: newPhoto });
     } catch (err: any) {
