@@ -114,6 +114,59 @@ const t = useTranslations(lang);
 
                 <!-- Contacts section removed — displayed under title in academic style -->
 
+                <!-- Approval / Correction section -->
+                <section class="mt-12 border-t-2 border-gray-200 pt-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Validation</h2>
+
+                    <!-- Approval form -->
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6" id="approval-form">
+                        <h3 class="text-lg font-semibold text-green-800 mb-4">Approuver la mise à disposition</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
+                                <input type="text" id="approve-name" placeholder="Nom Prénom" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Poste / Fonction</label>
+                                <input type="text" id="approve-title" placeholder="Responsable Projet" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Organisation</label>
+                                <input type="text" id="approve-org" placeholder="Cetim" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <input type="checkbox" id="approve-checkbox" class="w-4 h-4" />
+                            <label for="approve-checkbox" class="text-sm text-gray-700">J'autorise la mise à disposition de ce cas d'usage sur le site edtlab.fr</label>
+                        </div>
+                        <button id="approve-btn" disabled style="padding:10px 24px; background:#d1d5db; color:#6b7280; border:none; border-radius:8px; font-weight:600; font-size:15px; cursor:not-allowed;">
+                            Signer et approuver
+                        </button>
+                    </div>
+
+                    <!-- Correction form -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-6" id="correction-form">
+                        <h3 class="text-lg font-semibold text-amber-800 mb-4">Demander des corrections</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Votre nom</label>
+                                <input type="text" id="correction-name" placeholder="Nom Prénom" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Votre email</label>
+                                <input type="email" id="correction-email" placeholder="email@example.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Remarques / Corrections souhaitées</label>
+                            <textarea id="correction-message" rows="4" placeholder="Décrivez les corrections souhaitées..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"></textarea>
+                        </div>
+                        <button id="correction-btn" style="padding:10px 24px; background:#f59e0b; color:white; border:none; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer;">
+                            Envoyer les remarques
+                        </button>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -515,6 +568,103 @@ const t = useTranslations(lang);
                 });
             });
         });
+
+        // Approval checkbox enables button
+        const approveCheckbox = document.getElementById('approve-checkbox') as HTMLInputElement;
+        const approveBtn = document.getElementById('approve-btn') as HTMLButtonElement;
+        if (approveCheckbox && approveBtn) {
+            approveCheckbox.addEventListener('change', () => {
+                if (approveCheckbox.checked) {
+                    approveBtn.disabled = false;
+                    approveBtn.style.cssText = 'padding:10px 24px; background:#16a34a; color:white; border:none; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer;';
+                } else {
+                    approveBtn.disabled = true;
+                    approveBtn.style.cssText = 'padding:10px 24px; background:#d1d5db; color:#6b7280; border:none; border-radius:8px; font-weight:600; font-size:15px; cursor:not-allowed;';
+                }
+            });
+
+            approveBtn.addEventListener('click', async () => {
+                const name = (document.getElementById('approve-name') as HTMLInputElement).value.trim();
+                const title = (document.getElementById('approve-title') as HTMLInputElement).value.trim();
+                const org = (document.getElementById('approve-org') as HTMLInputElement).value.trim();
+
+                if (!name || !title || !org) {
+                    alert('Veuillez remplir tous les champs (nom, poste, organisation).');
+                    return;
+                }
+
+                approveBtn.textContent = 'Signature en cours...';
+                approveBtn.disabled = true;
+
+                try {
+                    const res = await fetch('/api/uc-approve', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ slug, token, name, title, org })
+                    });
+                    if (res.ok) {
+                        approveBtn.textContent = '✓ Approuvé — Publication en cours';
+                        approveBtn.style.background = '#10b981';
+                        // Hide the banner after a delay
+                        const banner = document.getElementById('preview-banner');
+                        if (banner) {
+                            banner.textContent = '✓ DOCUMENT APPROUVÉ — PUBLICATION EN COURS';
+                            banner.style.background = '#10b981';
+                        }
+                        setTimeout(() => window.location.reload(), 2000);
+                    } else {
+                        const err = await res.json();
+                        alert('Erreur: ' + (err.error || 'Erreur inconnue'));
+                        approveBtn.textContent = 'Signer et approuver';
+                        approveBtn.disabled = false;
+                    }
+                } catch (e) {
+                    alert('Erreur réseau');
+                    approveBtn.textContent = 'Signer et approuver';
+                    approveBtn.disabled = false;
+                }
+            });
+        }
+
+        // Correction form
+        const correctionBtn = document.getElementById('correction-btn') as HTMLButtonElement;
+        if (correctionBtn) {
+            correctionBtn.addEventListener('click', async () => {
+                const message = (document.getElementById('correction-message') as HTMLTextAreaElement).value.trim();
+                const senderName = (document.getElementById('correction-name') as HTMLInputElement).value.trim();
+                const senderEmail = (document.getElementById('correction-email') as HTMLInputElement).value.trim();
+
+                if (!message) {
+                    alert('Veuillez décrire les corrections souhaitées.');
+                    return;
+                }
+
+                correctionBtn.textContent = 'Envoi en cours...';
+                correctionBtn.disabled = true;
+
+                try {
+                    const res = await fetch('/api/uc-request-changes', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ slug, token, message, senderName, senderEmail })
+                    });
+                    if (res.ok) {
+                        correctionBtn.textContent = '✓ Remarques envoyées';
+                        correctionBtn.style.background = '#10b981';
+                        (document.getElementById('correction-message') as HTMLTextAreaElement).value = '';
+                    } else {
+                        const err = await res.json();
+                        alert('Erreur: ' + (err.error || 'Erreur inconnue'));
+                        correctionBtn.textContent = 'Envoyer les remarques';
+                        correctionBtn.disabled = false;
+                    }
+                } catch (e) {
+                    alert('Erreur réseau');
+                    correctionBtn.textContent = 'Envoyer les remarques';
+                    correctionBtn.disabled = false;
+                }
+            });
+        }
 
         // Contacts edit — double-click on authors line
         const contactsSection = document.querySelector('.uc-contacts-line');
