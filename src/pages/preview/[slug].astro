@@ -110,6 +110,27 @@ const t = useTranslations(lang);
                 <!-- Body content -->
                 <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
                     <Content />
+
+                    <!-- References from frontmatter — displayed after body markdown -->
+                    {uc.data.references && uc.data.references.length > 0 && (
+                        <section id="references-section">
+                            <h2>Références</h2>
+                            <ul data-ref-zone="true" style="cursor: pointer; border: 1px dashed transparent; border-radius: 6px; padding: 4px 8px; margin: 4px 0; transition: all 0.15s;">
+                                {uc.data.references.map((ref: any) => (
+                                    <li>
+                                        <strong>{ref.title}</strong>
+                                        {ref.venue && <span> — {ref.venue}</span>}
+                                        {ref.url && (
+                                            <span>
+                                                {' '}
+                                                <a href={ref.url} target="_blank" rel="noopener noreferrer">lien</a>
+                                            </span>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
                 </div>
 
                 <!-- Contacts section removed — displayed under title in academic style -->
