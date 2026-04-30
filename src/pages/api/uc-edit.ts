@@ -5,22 +5,30 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 function findSection(fileContent: string, sectionId: string): { headerEnd: number; contentEnd: number; content: string } | null {
-    // Find the section header line: ### MC{N} — ...
-    const headerPattern = new RegExp(`^### ${sectionId} [—–-].*$`, 'm');
+    let headerPattern: RegExp;
+
+    if (sectionId.startsWith('MC')) {
+        // h3 pattern: ### MC{N} — ...
+        headerPattern = new RegExp(`^### ${sectionId} [—–-].*$`, 'm');
+    } else {
+        // h2 pattern: ## Résumé, ## Données, ## Références
+        headerPattern = new RegExp(`^## ${sectionId}$`, 'm');
+    }
+
     const headerMatch = fileContent.match(headerPattern);
     if (!headerMatch || headerMatch.index === undefined) return null;
 
     // Content starts after header + blank line
     const headerLineEnd = headerMatch.index + headerMatch[0].length;
     const afterHeader = fileContent.substring(headerLineEnd);
-    
+
     // Skip the blank line(s) after the header
     const blankMatch = afterHeader.match(/^(\n+)/);
     const contentStart = headerLineEnd + (blankMatch ? blankMatch[1].length : 0);
 
-    // Content ends at the next section header (### ), horizontal rule (---), or end of file
+    // Content ends at the next section header (## or ###), horizontal rule (---), or end of file
     const rest = fileContent.substring(contentStart);
-    const nextSectionMatch = rest.match(/\n(?=### |---)/);
+    const nextSectionMatch = rest.match(/\n(?=## |### |---)/);
     const contentEnd = nextSectionMatch ? contentStart + nextSectionMatch.index! : fileContent.length;
 
     const content = fileContent.substring(contentStart, contentEnd).trim();

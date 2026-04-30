@@ -151,28 +151,80 @@ const t = useTranslations(lang);
         const slug = urlParts[urlParts.length - 1];
         const token = new URLSearchParams(window.location.search).get('token');
 
-        const h3s = proseDiv.querySelectorAll('h3');
+        const sectionHelps: Record<string, string> = {
+            'Résumé': 'Décrivez en 3-5 phrases le cas d\'usage : quel système physique, quel jumeau numérique, quels objectifs.',
+            'MC1': 'Décrivez le système physique étudié (le jumeau physique), son environnement et les agents/opérateurs présents.',
+            'MC2': 'Listez les actionneurs et mécanismes par lesquels le jumeau numérique peut agir sur le système physique.',
+            'MC3': 'Listez les capteurs et mécanismes par lesquels le système physique transmet des données au jumeau numérique.',
+            'MC4': 'Décrivez les données transmises du système physique vers le jumeau numérique : protocoles, fréquences, types de données.',
+            'MC5': 'Décrivez les données transmises du jumeau numérique vers le système physique : commandes, alertes, paramètres.',
+            'MC6': 'Listez les services fournis par le jumeau numérique : simulation, optimisation, détection, visualisation, etc.',
+            'MC7': 'Précisez les échelles de temps : synchronisation temps réel, plus rapide, plus lent que le système physique.',
+            'MC8': 'Le JN est-il composé de sous-jumeaux ? Architecture centralisée ou décentralisée ?',
+            'MC9': 'Quelles phases du cycle de vie sont couvertes ? Conception, fabrication, exploitation, maintenance ?',
+            'MC10': 'Décrivez les modèles utilisés (physiques, données, hybrides) et les données d\'entrée/sortie.',
+            'MC11': 'Listez les outils, frameworks et plateformes utilisés pour réaliser les services du JN.',
+            'MC12': 'Comment les modèles, données, outils et services sont-ils orchestrés ensemble ?',
+            'MC13': 'Décrivez la méthodologie de développement du JN, ses jalons et ses évolutions prévues.',
+            'MC14': 'Quelle est la précision des modèles ? Comment sont-ils validés et calibrés ?',
+            'MC15': 'Quels protocoles réseau et architectures de communication sont utilisés entre le physique et le virtuel ?',
+            'MC16': 'Où est hébergé le JN ? Local, cloud, plateforme dédiée ?',
+            'MC17': 'Quels insights et aides à la décision le JN fournit-il aux opérateurs ?',
+            'MC18': 'Le JN échange-t-il des données avec d\'autres systèmes (SCADA, autres JN, SI) ?',
+            'MC19': 'Y a-t-il des considérations de propriété ou confidentialité des données ?',
+            'MC20': 'Quelles normes sont suivies (FMI, AAS, ISO-23247, etc.) ?',
+            'MC21': 'Y a-t-il des considérations de cybersécurité ou de sûreté de fonctionnement ?',
+            'Données': 'Listez les liens vers les jeux de données, dépôts de code, APIs associés à ce cas d\'usage.',
+            'Références': 'Listez les publications scientifiques et rapports liés à ce cas d\'usage spécifiquement.',
+        };
 
-        h3s.forEach(h3 => {
-            const text = h3.textContent || '';
-            const mcMatch = text.match(/^(MC\d+)/);
-            if (!mcMatch) return;
+        // Headings to skip (section titles that are not editable sections)
+        const SKIP_HEADINGS = ['Caractérisation du Jumeau Numérique'];
 
-            const sectionId = mcMatch[1];
+        // Process h2 and h3 headings in .prose
+        const headings = proseDiv.querySelectorAll('h2, h3');
 
+        headings.forEach(heading => {
+            const text = (heading.textContent || '').trim();
+
+            // Skip non-editable headings
+            if (SKIP_HEADINGS.some(skip => text.includes(skip))) return;
+
+            // Determine sectionId
+            let sectionId: string;
+            if (heading.tagName === 'H3') {
+                const mcMatch = text.match(/^(MC\d+)/);
+                if (!mcMatch) return;
+                sectionId = mcMatch[1];
+            } else {
+                // h2 — use heading text as-is (Résumé, Données, Références)
+                sectionId = text;
+            }
+
+            // Collect content nodes until the next heading or HR
             const contentNodes: Element[] = [];
-            let sibling = h3.nextElementSibling;
+            let sibling = heading.nextElementSibling;
             while (sibling && sibling.tagName !== 'H3' && sibling.tagName !== 'H2' && sibling.tagName !== 'HR') {
                 contentNodes.push(sibling);
                 sibling = sibling.nextElementSibling;
             }
 
+            // Add "Modifier" button
             const editBtn = document.createElement('button');
             editBtn.textContent = 'Modifier';
             editBtn.style.cssText = 'margin-left:12px; padding:4px 12px; font-size:13px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; vertical-align:middle;';
             editBtn.addEventListener('mouseenter', () => { editBtn.style.background = '#d1d5db'; });
             editBtn.addEventListener('mouseleave', () => { editBtn.style.background = '#e5e7eb'; });
-            h3.appendChild(editBtn);
+            heading.appendChild(editBtn);
+
+            // Insert help hint after the heading (before content)
+            const helpText = sectionHelps[sectionId];
+            if (helpText) {
+                const helpDiv = document.createElement('div');
+                helpDiv.style.cssText = 'background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 14px; margin:8px 0 4px; font-size:13px; color:#1e40af;';
+                helpDiv.innerHTML = `<strong>Guide :</strong> ${helpText}`;
+                heading.after(helpDiv);
+            }
 
             editBtn.addEventListener('click', async () => {
                 editBtn.textContent = 'Chargement...';
@@ -181,7 +233,7 @@ const t = useTranslations(lang);
                 // Fetch markdown source from API
                 let markdown = '';
                 try {
-                    const res = await fetch(`/api/uc-section?slug=${slug}&token=${token}&sectionId=${sectionId}`);
+                    const res = await fetch(`/api/uc-section?slug=${slug}&token=${token}&sectionId=${encodeURIComponent(sectionId)}`);
                     if (res.ok) {
                         const data = await res.json();
                         markdown = data.markdown || '';
@@ -222,7 +274,7 @@ const t = useTranslations(lang);
                 editor.appendChild(textarea);
                 editor.appendChild(btnContainer);
 
-                h3.after(editor);
+                heading.after(editor);
 
                 cancelBtn.addEventListener('click', () => {
                     editor.remove();

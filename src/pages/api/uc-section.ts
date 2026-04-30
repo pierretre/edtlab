@@ -30,8 +30,14 @@ export const GET: APIRoute = async ({ url }) => {
             return new Response(JSON.stringify({ error: 'Invalid token' }), { status: 403 });
         }
 
-        // Find section header
-        const headerPattern = new RegExp(`^### ${sectionId} [—–-].*$`, 'm');
+        // Find section header — h3 for MC, h2 for other sections
+        let headerPattern: RegExp;
+        if (sectionId.startsWith('MC')) {
+            headerPattern = new RegExp(`^### ${sectionId} [—–-].*$`, 'm');
+        } else {
+            headerPattern = new RegExp(`^## ${sectionId}$`, 'm');
+        }
+
         const headerMatch = fileContent.match(headerPattern);
         if (!headerMatch || headerMatch.index === undefined) {
             return new Response(JSON.stringify({ error: 'Section not found' }), { status: 404 });
@@ -43,9 +49,9 @@ export const GET: APIRoute = async ({ url }) => {
         const blankMatch = afterHeader.match(/^(\n+)/);
         const contentStart = headerLineEnd + (blankMatch ? blankMatch[1].length : 0);
 
-        // Content ends at next ### or --- or EOF
+        // Content ends at next ## or ### or --- or EOF
         const rest = fileContent.substring(contentStart);
-        const nextMatch = rest.match(/\n(?=### |---)/);
+        const nextMatch = rest.match(/\n(?=## |### |---)/);
         const contentEnd = nextMatch ? contentStart + nextMatch.index! : fileContent.length;
 
         const markdown = fileContent.substring(contentStart, contentEnd).trim();
