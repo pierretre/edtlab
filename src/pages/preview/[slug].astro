@@ -29,13 +29,15 @@ const t = useTranslations(lang);
     showBreadcrumb={false}
     noindex={true}
 >
-    <!-- Draft banner (fixed, top of page) -->
-    <div class="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white text-center py-3 px-4 font-bold text-sm shadow-lg">
+    <!-- Draft banner — fixed above navbar -->
+    <div id="preview-banner" style="position:fixed; top:0; left:0; right:0; z-index:100; background:#f59e0b; color:white; text-align:center; padding:12px 16px; font-weight:bold; font-size:16px; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
         DOCUMENT EN COURS DE VALIDATION — NON PUBLIÉ
     </div>
 
-    <!-- Spacer to avoid content hidden behind fixed banner -->
-    <div class="h-12"></div>
+    <!-- Push content below the banner -->
+    <style>
+        #navigation { margin-top: 48px !important; }
+    </style>
 
     <!-- Content wrapper (mirrors PageLayout structure) -->
     <div class="container mx-auto px-8 lg:px-4 max-w-6xl mb-16">
