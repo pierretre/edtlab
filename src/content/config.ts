@@ -117,6 +117,15 @@ const useCasesCollection = defineCollection({
         status: z.enum(['draft', 'published']).default('draft'),
         previewToken: z.string().optional(),
         confirmToken: z.string().optional(),
+        // Identity card fields (HN-T009-S1)
+        provider: z.string().optional(),
+        originType: z.enum(['natural', 'anthropic', 'engineered', 'infrastructure', 'process']).optional(),
+        users: z.array(z.union([z.string(), z.object({ name: z.string(), role: z.string().optional() })])).optional().default([]),
+        objectives: z.array(z.string()).optional().default([]),
+        usagePhase: z.string().optional(),
+        usageLevel: z.enum(['reduced', 'consortium', 'public']).optional(),
+        since: z.date().optional(),
+        schema: z.string().optional(),
     })
 });
 

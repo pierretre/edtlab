@@ -32,6 +32,17 @@ lastUpdated: 2026-04-15T00:00:00.000Z
 version: '0.1'
 status: draft
 previewToken: inria-gdespieg-temp-2026
+provider: Inria
+originType: engineered
+users:
+  - Développeurs et chercheurs testant des règles d'alerte
+  - Opérateurs supervisant des capteurs physiques
+objectives:
+  - Superviser la température en temps réel via un capteur USB
+  - Détecter et alerter lors du dépassement d'un seuil configurable
+  - Simuler le capteur pour tester le comportement sans matériel réel
+usagePhase: prototype-et-test
+since: 2026-04-15T00:00:00.000Z
 ---
 
 Système de supervision de température basé sur un capteur USB connecté à un PC. Le jumeau numérique complète le dispositif physique en permettant de simuler le capteur, de rejouer des scénarios et de tester les règles d'alerte (notamment le dépassement de seuil) sans matériel réel.
