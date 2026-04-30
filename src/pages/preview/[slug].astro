@@ -76,6 +76,20 @@ const t = useTranslations(lang);
                         {uc.data.version && <span class="text-sm text-gray-400">v{uc.data.version}</span>}
                     </div>
 
+                    <!-- Authors / Contacts — academic style -->
+                    {uc.data.contacts && uc.data.contacts.length > 0 && (
+                        <p class="text-base text-gray-600 mb-1 uc-contacts-line">
+                            {uc.data.contacts.map((c: any, i: number) => (
+                                <span>
+                                    <span class="font-medium text-gray-800">{c.name}</span>
+                                    {c.org && <span class="text-gray-500"> ({c.org})</span>}
+                                    {c.email && <a href={`mailto:${c.email}`} class="text-primary-600 hover:underline text-sm ml-1">{c.email}</a>}
+                                    {i < uc.data.contacts.length - 1 && <span class="text-gray-400 mx-1">·</span>}
+                                </span>
+                            ))}
+                        </p>
+                    )}
+
                     {uc.data.approvedBy && (
                         <p class="text-sm text-gray-500 italic mb-4">
                             Autorisation de mise à disposition accordée par {uc.data.approvedBy.name}, {uc.data.approvedBy.title}, {uc.data.approvedBy.org}, le {uc.data.approvedBy.date instanceof Date ? uc.data.approvedBy.date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB') : uc.data.approvedBy.date}.
@@ -98,28 +112,7 @@ const t = useTranslations(lang);
                     <Content />
                 </div>
 
-                <!-- Contacts -->
-                <section class="mt-8 p-6 bg-gray-50 rounded-lg border uc-contacts-section" title="Double-cliquez pour modifier les contacts">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4">
-                        {lang === 'fr' ? 'Contacts' : 'Contacts'}
-                    </h2>
-                        <div class="space-y-3">
-                            {uc.data.contacts.map((contact: any) => (
-                                <div class="flex items-center gap-3">
-                                    <div>
-                                        <p class="font-medium text-gray-900">{contact.name}</p>
-                                        {contact.org && <p class="text-sm text-gray-500">{contact.org}</p>}
-                                        {contact.role && <p class="text-xs text-gray-400">{contact.role}</p>}
-                                        {contact.email && (
-                                            <a href={`mailto:${contact.email}`} class="text-sm text-primary-600 hover:underline">
-                                                {contact.email}
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+                <!-- Contacts section removed — displayed under title in academic style -->
 
             </main>
         </div>
@@ -523,16 +516,17 @@ const t = useTranslations(lang);
             });
         });
 
-        // Contacts edit — double-click on contacts section
-        const contactsSection = document.querySelector('.uc-contacts-section');
+        // Contacts edit — double-click on authors line
+        const contactsSection = document.querySelector('.uc-contacts-line');
         if (contactsSection) {
+            (contactsSection as HTMLElement).style.cursor = 'pointer';
+            (contactsSection as HTMLElement).title = 'Double-cliquez pour modifier les contacts';
             contactsSection.addEventListener('mouseenter', () => {
-                (contactsSection as HTMLElement).style.borderColor = '#93c5fd';
-                (contactsSection as HTMLElement).style.cursor = 'pointer';
+                (contactsSection as HTMLElement).style.background = '#f8fafc';
+                (contactsSection as HTMLElement).style.borderRadius = '6px';
             });
             contactsSection.addEventListener('mouseleave', () => {
-                (contactsSection as HTMLElement).style.borderColor = '';
-                (contactsSection as HTMLElement).style.cursor = '';
+                (contactsSection as HTMLElement).style.background = '';
             });
 
             contactsSection.addEventListener('dblclick', async () => {
