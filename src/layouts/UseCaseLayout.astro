@@ -45,10 +45,13 @@ const t = useTranslations(lang);
             </div>
         )}
 
-        <!-- Title -->
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">
-            {frontmatter.title}
-        </h1>
+        <!-- Title + Version -->
+        <div class="flex items-baseline justify-between mb-2">
+            <h1 class="text-4xl font-bold text-gray-900">
+                {frontmatter.title}
+            </h1>
+            {frontmatter.version && <span class="text-sm text-gray-400">v{frontmatter.version}</span>}
+        </div>
 
         <!-- ApprovedBy -->
         {frontmatter.approvedBy && (
@@ -59,8 +62,6 @@ const t = useTranslations(lang);
 
         <!-- Meta -->
         <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
-            <span class="font-medium text-primary-600">{frontmatter.id}</span>
-            {frontmatter.version && <span>v{frontmatter.version}</span>}
             {frontmatter.domain && (
                 <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
                     {frontmatter.domain}

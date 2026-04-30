@@ -69,9 +69,12 @@ const t = useTranslations(lang);
                         </div>
                     )}
 
-                    <h1 class="text-4xl font-bold text-gray-900 mb-2">
-                        {uc.data.title}
-                    </h1>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <h1 class="text-4xl font-bold text-gray-900">
+                            {uc.data.title}
+                        </h1>
+                        {uc.data.version && <span class="text-sm text-gray-400">v{uc.data.version}</span>}
+                    </div>
 
                     {uc.data.approvedBy && (
                         <p class="text-sm text-gray-500 italic mb-4">
@@ -80,8 +83,6 @@ const t = useTranslations(lang);
                     )}
 
                     <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
-                        <span class="font-medium text-primary-600">{uc.data.id}</span>
-                        {uc.data.version && <span>v{uc.data.version}</span>}
                         <span class="uc-domain-badge inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700 cursor-pointer" title="Double-cliquez pour changer le domaine" data-field="domain" data-value={uc.data.domain || ''}>
                             {uc.data.domain || 'Domaine ?'}
                         </span>
