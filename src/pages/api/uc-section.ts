@@ -30,17 +30,27 @@ export const GET: APIRoute = async ({ url }) => {
             return new Response(JSON.stringify({ error: 'Invalid token' }), { status: 403 });
         }
 
-        // Extract section markdown
-        const sectionRegex = new RegExp(
-            `### ${sectionId} [—–-][^\\n]*\\n\\n([\\s\\S]*?)(?=\\n### |\\n---|$)`,
-            'm'
-        );
-        const match = fileContent.match(sectionRegex);
-        if (!match) {
+        // Find section header
+        const headerPattern = new RegExp(`^### ${sectionId} [—–-].*$`, 'm');
+        const headerMatch = fileContent.match(headerPattern);
+        if (!headerMatch || headerMatch.index === undefined) {
             return new Response(JSON.stringify({ error: 'Section not found' }), { status: 404 });
         }
 
-        return new Response(JSON.stringify({ markdown: match[1].trim() }), { status: 200 });
+        // Content starts after header + blank line(s)
+        const headerLineEnd = headerMatch.index + headerMatch[0].length;
+        const afterHeader = fileContent.substring(headerLineEnd);
+        const blankMatch = afterHeader.match(/^(\n+)/);
+        const contentStart = headerLineEnd + (blankMatch ? blankMatch[1].length : 0);
+
+        // Content ends at next ### or --- or EOF
+        const rest = fileContent.substring(contentStart);
+        const nextMatch = rest.match(/\n(?=### |---)/);
+        const contentEnd = nextMatch ? contentStart + nextMatch.index! : fileContent.length;
+
+        const markdown = fileContent.substring(contentStart, contentEnd).trim();
+
+        return new Response(JSON.stringify({ markdown }), { status: 200 });
     } catch (err: any) {
         return new Response(JSON.stringify({ error: 'Server error', details: err?.message }), { status: 500 });
     }
