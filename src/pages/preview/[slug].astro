@@ -238,17 +238,10 @@ const t = useTranslations(lang);
                         });
 
                         if (res.ok) {
-                            // Replace content with saved text
-                            editor.remove();
-                            contentNodes.forEach(n => n.remove());
-
-                            const newP = document.createElement('p');
-                            newP.textContent = textarea.value;
-                            newP.style.cssText = 'color:#065f46; background:#ecfdf5; padding:8px 12px; border-radius:6px; border-left:4px solid #10b981;';
-                            h3.after(newP);
-
-                            editBtn.style.display = '';
-                            editBtn.textContent = '✏️ Modifier';
+                            // Show success message then reload to display recompiled content
+                            saveBtn.textContent = '✓ Enregistré';
+                            saveBtn.style.background = '#10b981';
+                            setTimeout(() => window.location.reload(), 1500);
                         } else {
                             const err = await res.json();
                             alert('Erreur: ' + (err.error || 'Erreur inconnue'));
