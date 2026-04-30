@@ -293,6 +293,25 @@ export const ui = {
         'projects.related-news-events.title': 'Related news',
         'projects.related-news-events.view-all': 'View all news',
 
+        // Use Case Identity Card
+        'use-case.identity.title': 'Identity Card',
+        'use-case.field.provider': 'Provider',
+        'use-case.field.originType': 'Type',
+        'use-case.field.usagePhase': 'Usage phase',
+        'use-case.field.usageLevel': 'Usage level',
+        'use-case.field.since': 'In service since',
+        'use-case.field.users': 'Target users',
+        'use-case.field.objectives': 'Objectives',
+        'use-case.field.schema': 'Schema',
+        'use-case.originType.natural': 'Natural',
+        'use-case.originType.anthropic': 'Anthropic',
+        'use-case.originType.engineered': 'Engineered',
+        'use-case.originType.infrastructure': 'Infrastructure',
+        'use-case.originType.process': 'Process',
+        'use-case.usageLevel.reduced': 'Reduced',
+        'use-case.usageLevel.consortium': 'Consortium',
+        'use-case.usageLevel.public': 'Public',
+
         // PC leaders
         'pc-leaders.website': 'Website',
     },
@@ -582,6 +601,25 @@ export const ui = {
         'projects.related-job-offers.view-all': 'Voir tous les postes',
         'projects.related-news-events.title': 'Actualités',
         'projects.related-news-events.view-all': 'Voir toutes les actualités',
+
+        // Use Case Identity Card
+        'use-case.identity.title': "Carte d'identité",
+        'use-case.field.provider': 'Provider',
+        'use-case.field.originType': 'Type',
+        'use-case.field.usagePhase': "Phase d'utilisation",
+        'use-case.field.usageLevel': "Niveau d'usage",
+        'use-case.field.since': 'En service depuis',
+        'use-case.field.users': 'Utilisateurs cibles',
+        'use-case.field.objectives': 'Objectifs',
+        'use-case.field.schema': 'Schéma',
+        'use-case.originType.natural': 'Naturel',
+        'use-case.originType.anthropic': 'Anthropique',
+        'use-case.originType.engineered': 'Ingéniéré',
+        'use-case.originType.infrastructure': 'Infrastructure',
+        'use-case.originType.process': 'Processus',
+        'use-case.usageLevel.reduced': 'Réduit',
+        'use-case.usageLevel.consortium': 'Consortium',
+        'use-case.usageLevel.public': 'Public',
 
         // PC leaders
         'pc-leaders.website': 'Site web',
