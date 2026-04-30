@@ -144,27 +144,7 @@ const t = useTranslations(lang);
                         </button>
                     </div>
 
-                    <!-- Correction form -->
-                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-6" id="correction-form">
-                        <h3 class="text-lg font-semibold text-amber-800 mb-4">Demander des corrections</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Votre nom</label>
-                                <input type="text" id="correction-name" placeholder="Nom Prénom" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Votre email</label>
-                                <input type="email" id="correction-email" placeholder="email@example.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Remarques / Corrections souhaitées</label>
-                            <textarea id="correction-message" rows="4" placeholder="Décrivez les corrections souhaitées..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"></textarea>
-                        </div>
-                        <button id="correction-btn" style="padding:10px 24px; background:#f59e0b; color:white; border:none; border-radius:8px; font-weight:600; font-size:15px; cursor:pointer;">
-                            Envoyer les remarques
-                        </button>
-                    </div>
+
                 </section>
 
             </main>
@@ -622,46 +602,6 @@ const t = useTranslations(lang);
                     alert('Erreur réseau');
                     approveBtn.textContent = 'Signer et approuver';
                     approveBtn.disabled = false;
-                }
-            });
-        }
-
-        // Correction form
-        const correctionBtn = document.getElementById('correction-btn') as HTMLButtonElement;
-        if (correctionBtn) {
-            correctionBtn.addEventListener('click', async () => {
-                const message = (document.getElementById('correction-message') as HTMLTextAreaElement).value.trim();
-                const senderName = (document.getElementById('correction-name') as HTMLInputElement).value.trim();
-                const senderEmail = (document.getElementById('correction-email') as HTMLInputElement).value.trim();
-
-                if (!message) {
-                    alert('Veuillez décrire les corrections souhaitées.');
-                    return;
-                }
-
-                correctionBtn.textContent = 'Envoi en cours...';
-                correctionBtn.disabled = true;
-
-                try {
-                    const res = await fetch('/api/uc-request-changes', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ slug, token, message, senderName, senderEmail })
-                    });
-                    if (res.ok) {
-                        correctionBtn.textContent = '✓ Remarques envoyées';
-                        correctionBtn.style.background = '#10b981';
-                        (document.getElementById('correction-message') as HTMLTextAreaElement).value = '';
-                    } else {
-                        const err = await res.json();
-                        alert('Erreur: ' + (err.error || 'Erreur inconnue'));
-                        correctionBtn.textContent = 'Envoyer les remarques';
-                        correctionBtn.disabled = false;
-                    }
-                } catch (e) {
-                    alert('Erreur réseau');
-                    correctionBtn.textContent = 'Envoyer les remarques';
-                    correctionBtn.disabled = false;
                 }
             });
         }
