@@ -293,9 +293,8 @@ const t = useTranslations(lang);
         headings.forEach(heading => {
             const text = (heading.textContent || '').trim();
 
-            // Skip non-editable headings and Références (handled by T004 with custom editor)
+            // Skip non-editable headings
             if (SKIP_HEADINGS.some(skip => text.includes(skip))) return;
-            if (text === 'Références') return;
 
             // Determine sectionId
             let sectionId: string;
@@ -329,6 +328,12 @@ const t = useTranslations(lang);
             const editZone = document.createElement('div');
             editZone.style.cssText = 'cursor:pointer; border:1px dashed transparent; border-radius:6px; padding:4px 8px; margin:4px 0; transition:all 0.15s;';
             editZone.title = 'Double-cliquez pour modifier';
+            
+            // Mark Références zone with data-attribute for T004 custom handler
+            if (sectionId === 'Références') {
+                editZone.setAttribute('data-ref-zone', 'true');
+            }
+            
             editZone.addEventListener('mouseenter', () => {
                 editZone.style.borderColor = '#93c5fd';
                 editZone.style.background = '#f8fafc';
@@ -741,300 +746,289 @@ const t = useTranslations(lang);
         }
 
         // References edit — double-click on Références section
-        const proseHeadings = proseDiv.querySelectorAll('h2');
-        let referencesSection: HTMLElement | null = null;
-        
-        proseHeadings.forEach((heading: Element) => {
-            if (heading.textContent?.trim() === 'Références') {
-                referencesSection = heading as HTMLElement;
-            }
-        });
+        const refZoneElement = proseDiv.querySelector('[data-ref-zone="true"]') as HTMLElement | null;
 
-        if (referencesSection) {
-            // Find the editable zone for Références
-            let refZone: HTMLElement | null = referencesSection.nextElementSibling as HTMLElement | null;
-            while (refZone && !refZone.classList.contains('cursor-pointer')) {
-                refZone = refZone.nextElementSibling as HTMLElement | null;
-            }
-
-            if (refZone) {
-                const zone = refZone as HTMLElement;
+        if (refZoneElement) {
+            // Clone the zone to remove generic dblclick handler, then replace original
+            const newZone = refZoneElement.cloneNode(true) as HTMLElement;
+            refZoneElement.parentNode?.replaceChild(newZone, refZoneElement);
+            
+            const zone = newZone;
+            
+            zone.addEventListener('dblclick', async (e) => {
+                e.stopPropagation();
                 
-                zone.addEventListener('dblclick', async (e) => {
-                    e.stopPropagation();
-                    
-                    // Fetch current references from frontmatter via API
-                    let references: any[] = [];
-                    try {
-                        const res = await fetch(`/api/uc-references-get?slug=${slug}&token=${token}`);
-                        if (res.ok) {
-                            const data = await res.json();
-                            references = data.references || [];
-                        }
-                    } catch (e) {}
+                // Fetch current references from frontmatter via API
+                let references: any[] = [];
+                try {
+                    const res = await fetch(`/api/uc-references-get?slug=${slug}&token=${token}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        references = data.references || [];
+                    }
+                } catch (e) {}
 
-                    zone.style.display = 'none';
+                zone.style.display = 'none';
 
-                    const editor = document.createElement('div');
-                    editor.style.cssText = 'margin:12px 0;';
+                const editor = document.createElement('div');
+                editor.style.cssText = 'margin:12px 0;';
 
-                    const hint = document.createElement('p');
-                    hint.textContent = 'Ajouter des références : liens URL ou documents PDF.';
-                    hint.style.cssText = 'font-size:13px; color:#6b7280; margin-bottom:12px; font-weight:600;';
-                    editor.appendChild(hint);
+                const hint = document.createElement('p');
+                hint.textContent = 'Ajouter des références : liens URL ou documents PDF.';
+                hint.style.cssText = 'font-size:13px; color:#6b7280; margin-bottom:12px; font-weight:600;';
+                editor.appendChild(hint);
 
-                    // References list
-                    const refList = document.createElement('div');
-                    refList.style.cssText = 'margin-bottom:12px; padding:8px; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb; max-height:300px; overflow-y:auto;';
+                // References list
+                const refList = document.createElement('div');
+                refList.style.cssText = 'margin-bottom:12px; padding:8px; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb; max-height:300px; overflow-y:auto;';
 
-                    function renderReferences() {
-                        refList.innerHTML = '';
-                        if (references.length === 0) {
-                            const empty = document.createElement('p');
-                            empty.textContent = 'Aucune référence';
-                            empty.style.cssText = 'color:#9ca3af; font-size:13px;';
-                            refList.appendChild(empty);
-                            return;
-                        }
-
-                        references.forEach((ref: any, i: number) => {
-                            const refItem = document.createElement('div');
-                            refItem.style.cssText = 'padding:8px; margin-bottom:6px; background:white; border:1px solid #d1d5db; border-radius:4px; display:flex; justify-content:space-between; align-items:center;';
-                            
-                            const refText = document.createElement('div');
-                            refText.style.cssText = 'flex:1; font-size:12px;';
-                            refText.innerHTML = `
-                                <strong>${ref.title || 'Titre manquant'}</strong><br>
-                                ${ref.venue ? `<em>${ref.venue}</em> · ` : ''}
-                                <a href="${ref.url}" target="_blank" rel="noopener" style="color:#3b82f6; text-decoration:underline;">${ref.url}</a>
-                            `;
-                            
-                            const removeBtn = document.createElement('button');
-                            removeBtn.textContent = '✕';
-                            removeBtn.style.cssText = 'padding:2px 6px; background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:3px; cursor:pointer; font-size:12px; margin-left:8px;';
-                            removeBtn.addEventListener('click', () => {
-                                references.splice(i, 1);
-                                renderReferences();
-                            });
-                            
-                            refItem.appendChild(refText);
-                            refItem.appendChild(removeBtn);
-                            refList.appendChild(refItem);
-                        });
+                function renderReferences() {
+                    refList.innerHTML = '';
+                    if (references.length === 0) {
+                        const empty = document.createElement('p');
+                        empty.textContent = 'Aucune référence';
+                        empty.style.cssText = 'color:#9ca3af; font-size:13px;';
+                        refList.appendChild(empty);
+                        return;
                     }
 
-                    renderReferences();
-                    editor.appendChild(refList);
-
-                    // Form to add new reference
-                    const formContainer = document.createElement('div');
-                    formContainer.style.cssText = 'margin:12px 0; padding:12px; border:1px solid #bfdbfe; border-radius:6px; background:#eff6ff;';
-
-                    const formHint = document.createElement('p');
-                    formHint.textContent = 'Ajouter une nouvelle référence:';
-                    formHint.style.cssText = 'font-weight:600; font-size:13px; margin-bottom:8px; color:#1e40af;';
-                    formContainer.appendChild(formHint);
-
-                    // Tabs for URL vs PDF
-                    const tabContainer = document.createElement('div');
-                    tabContainer.style.cssText = 'display:flex; gap:4px; margin-bottom:8px;';
-                    
-                    const urlTab = document.createElement('button');
-                    urlTab.textContent = 'Lien URL';
-                    urlTab.style.cssText = 'padding:4px 12px; border:none; border-radius:4px; background:#3b82f6; color:white; cursor:pointer; font-size:12px; font-weight:600;';
-                    
-                    const pdfTab = document.createElement('button');
-                    pdfTab.textContent = 'Upload PDF';
-                    pdfTab.style.cssText = 'padding:4px 12px; border:none; border-radius:4px; background:#e5e7eb; color:#374151; cursor:pointer; font-size:12px;';
-                    
-                    tabContainer.appendChild(urlTab);
-                    tabContainer.appendChild(pdfTab);
-                    formContainer.appendChild(tabContainer);
-
-                    // URL form
-                    const urlForm = document.createElement('div');
-                    urlForm.style.cssText = 'display:flex; flex-direction:column; gap:6px;';
-                    
-                    const titleInput = document.createElement('input');
-                    titleInput.type = 'text';
-                    titleInput.placeholder = 'Titre de la référence';
-                    titleInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
-                    
-                    const venueInput = document.createElement('input');
-                    venueInput.type = 'text';
-                    venueInput.placeholder = 'Venue (optionnel) — ex: ASME IDETC-CIE 2025';
-                    venueInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
-                    
-                    const urlInput = document.createElement('input');
-                    urlInput.type = 'text';
-                    urlInput.placeholder = 'URL';
-                    urlInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
-                    
-                    const addUrlBtn = document.createElement('button');
-                    addUrlBtn.textContent = 'Ajouter';
-                    addUrlBtn.style.cssText = 'padding:6px 12px; background:#10b981; color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600;';
-                    addUrlBtn.addEventListener('click', () => {
-                        if (!titleInput.value.trim() || !urlInput.value.trim()) {
-                            alert('Titre et URL requis');
-                            return;
-                        }
-                        const ref: any = {
-                            title: titleInput.value.trim(),
-                            url: urlInput.value.trim()
-                        };
-                        if (venueInput.value.trim()) ref.venue = venueInput.value.trim();
-                        references.push(ref);
-                        titleInput.value = '';
-                        venueInput.value = '';
-                        urlInput.value = '';
-                        renderReferences();
+                    references.forEach((ref: any, i: number) => {
+                        const refItem = document.createElement('div');
+                        refItem.style.cssText = 'padding:8px; margin-bottom:6px; background:white; border:1px solid #d1d5db; border-radius:4px; display:flex; justify-content:space-between; align-items:center;';
+                        
+                        const refText = document.createElement('div');
+                        refText.style.cssText = 'flex:1; font-size:12px;';
+                        refText.innerHTML = `
+                            <strong>${ref.title || 'Titre manquant'}</strong><br>
+                            ${ref.venue ? `<em>${ref.venue}</em> · ` : ''}
+                            <a href="${ref.url}" target="_blank" rel="noopener" style="color:#3b82f6; text-decoration:underline;">${ref.url}</a>
+                        `;
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.textContent = '✕';
+                        removeBtn.style.cssText = 'padding:2px 6px; background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:3px; cursor:pointer; font-size:12px; margin-left:8px;';
+                        removeBtn.addEventListener('click', () => {
+                            references.splice(i, 1);
+                            renderReferences();
+                        });
+                        
+                        refItem.appendChild(refText);
+                        refItem.appendChild(removeBtn);
+                        refList.appendChild(refItem);
                     });
-                    
-                    urlForm.appendChild(titleInput);
-                    urlForm.appendChild(venueInput);
-                    urlForm.appendChild(urlInput);
-                    urlForm.appendChild(addUrlBtn);
+                }
 
-                    // PDF form
-                    const pdfForm = document.createElement('div');
-                    pdfForm.style.cssText = 'display:none; flex-direction:column; gap:6px;';
-                    
-                    const pdfTitleInput = document.createElement('input');
-                    pdfTitleInput.type = 'text';
-                    pdfTitleInput.placeholder = 'Titre du document PDF';
-                    pdfTitleInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
-                    
-                    const pdfFileInput = document.createElement('input');
-                    pdfFileInput.type = 'file';
-                    pdfFileInput.accept = '.pdf';
-                    pdfFileInput.style.cssText = 'padding:4px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
-                    
-                    const uploadPdfBtn = document.createElement('button');
-                    uploadPdfBtn.textContent = 'Upload et ajouter';
-                    uploadPdfBtn.style.cssText = 'padding:6px 12px; background:#f59e0b; color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600;';
-                    uploadPdfBtn.addEventListener('click', async () => {
-                        const pdfFile = pdfFileInput.files?.[0];
-                        if (!pdfTitleInput.value.trim() || !pdfFile) {
-                            alert('Titre et fichier PDF requis');
-                            return;
-                        }
+                renderReferences();
+                editor.appendChild(refList);
 
-                        uploadPdfBtn.textContent = 'Upload en cours...';
-                        uploadPdfBtn.disabled = true;
+                // Form to add new reference
+                const formContainer = document.createElement('div');
+                formContainer.style.cssText = 'margin:12px 0; padding:12px; border:1px solid #bfdbfe; border-radius:6px; background:#eff6ff;';
 
-                        const formData = new FormData();
-                        formData.append('file', pdfFile);
-                        formData.append('slug', slug);
-                        formData.append('token', token || '');
+                const formHint = document.createElement('p');
+                formHint.textContent = 'Ajouter une nouvelle référence:';
+                formHint.style.cssText = 'font-weight:600; font-size:13px; margin-bottom:8px; color:#1e40af;';
+                formContainer.appendChild(formHint);
 
-                        try {
-                            const res = await fetch('/api/uc-upload-pdf', { method: 'POST', body: formData });
-                            if (res.ok) {
-                                const data = await res.json();
-                                references.push({
-                                    title: pdfTitleInput.value.trim(),
-                                    url: data.url
-                                });
-                                pdfTitleInput.value = '';
-                                pdfFileInput.value = '';
-                                uploadPdfBtn.textContent = 'Upload et ajouter';
-                                uploadPdfBtn.disabled = false;
-                                renderReferences();
-                            } else {
-                                const err = await res.json();
-                                alert('Erreur upload: ' + (err.error || 'Erreur inconnue'));
-                                uploadPdfBtn.textContent = 'Upload et ajouter';
-                                uploadPdfBtn.disabled = false;
-                            }
-                        } catch (e) {
-                            alert('Erreur réseau');
+                // Tabs for URL vs PDF
+                const tabContainer = document.createElement('div');
+                tabContainer.style.cssText = 'display:flex; gap:4px; margin-bottom:8px;';
+                
+                const urlTab = document.createElement('button');
+                urlTab.textContent = 'Lien URL';
+                urlTab.style.cssText = 'padding:4px 12px; border:none; border-radius:4px; background:#3b82f6; color:white; cursor:pointer; font-size:12px; font-weight:600;';
+                
+                const pdfTab = document.createElement('button');
+                pdfTab.textContent = 'Upload PDF';
+                pdfTab.style.cssText = 'padding:4px 12px; border:none; border-radius:4px; background:#e5e7eb; color:#374151; cursor:pointer; font-size:12px;';
+                
+                tabContainer.appendChild(urlTab);
+                tabContainer.appendChild(pdfTab);
+                formContainer.appendChild(tabContainer);
+
+                // URL form
+                const urlForm = document.createElement('div');
+                urlForm.style.cssText = 'display:flex; flex-direction:column; gap:6px;';
+                
+                const titleInput = document.createElement('input');
+                titleInput.type = 'text';
+                titleInput.placeholder = 'Titre de la référence';
+                titleInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
+                
+                const venueInput = document.createElement('input');
+                venueInput.type = 'text';
+                venueInput.placeholder = 'Venue (optionnel) — ex: ASME IDETC-CIE 2025';
+                venueInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
+                
+                const urlInput = document.createElement('input');
+                urlInput.type = 'text';
+                urlInput.placeholder = 'URL';
+                urlInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
+                
+                const addUrlBtn = document.createElement('button');
+                addUrlBtn.textContent = 'Ajouter';
+                addUrlBtn.style.cssText = 'padding:6px 12px; background:#10b981; color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600;';
+                addUrlBtn.addEventListener('click', () => {
+                    if (!titleInput.value.trim() || !urlInput.value.trim()) {
+                        alert('Titre et URL requis');
+                        return;
+                    }
+                    const ref: any = {
+                        title: titleInput.value.trim(),
+                        url: urlInput.value.trim()
+                    };
+                    if (venueInput.value.trim()) ref.venue = venueInput.value.trim();
+                    references.push(ref);
+                    titleInput.value = '';
+                    venueInput.value = '';
+                    urlInput.value = '';
+                    renderReferences();
+                });
+                
+                urlForm.appendChild(titleInput);
+                urlForm.appendChild(venueInput);
+                urlForm.appendChild(urlInput);
+                urlForm.appendChild(addUrlBtn);
+
+                // PDF form
+                const pdfForm = document.createElement('div');
+                pdfForm.style.cssText = 'display:none; flex-direction:column; gap:6px;';
+                
+                const pdfTitleInput = document.createElement('input');
+                pdfTitleInput.type = 'text';
+                pdfTitleInput.placeholder = 'Titre du document PDF';
+                pdfTitleInput.style.cssText = 'padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
+                
+                const pdfFileInput = document.createElement('input');
+                pdfFileInput.type = 'file';
+                pdfFileInput.accept = '.pdf';
+                pdfFileInput.style.cssText = 'padding:4px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:12px;';
+                
+                const uploadPdfBtn = document.createElement('button');
+                uploadPdfBtn.textContent = 'Upload et ajouter';
+                uploadPdfBtn.style.cssText = 'padding:6px 12px; background:#f59e0b; color:white; border:none; border-radius:4px; cursor:pointer; font-size:12px; font-weight:600;';
+                uploadPdfBtn.addEventListener('click', async () => {
+                    const pdfFile = pdfFileInput.files?.[0];
+                    if (!pdfTitleInput.value.trim() || !pdfFile) {
+                        alert('Titre et fichier PDF requis');
+                        return;
+                    }
+
+                    uploadPdfBtn.textContent = 'Upload en cours...';
+                    uploadPdfBtn.disabled = true;
+
+                    const formData = new FormData();
+                    formData.append('file', pdfFile);
+                    formData.append('slug', slug);
+                    formData.append('token', token || '');
+
+                    try {
+                        const res = await fetch('/api/uc-upload-pdf', { method: 'POST', body: formData });
+                        if (res.ok) {
+                            const data = await res.json();
+                            references.push({
+                                title: pdfTitleInput.value.trim(),
+                                url: data.url
+                            });
+                            pdfTitleInput.value = '';
+                            pdfFileInput.value = '';
+                            uploadPdfBtn.textContent = 'Upload et ajouter';
+                            uploadPdfBtn.disabled = false;
+                            renderReferences();
+                        } else {
+                            const err = await res.json();
+                            alert('Erreur upload: ' + (err.error || 'Erreur inconnue'));
                             uploadPdfBtn.textContent = 'Upload et ajouter';
                             uploadPdfBtn.disabled = false;
                         }
-                    });
-                    
-                    pdfForm.appendChild(pdfTitleInput);
-                    pdfForm.appendChild(pdfFileInput);
-                    pdfForm.appendChild(uploadPdfBtn);
+                    } catch (e) {
+                        alert('Erreur réseau');
+                        uploadPdfBtn.textContent = 'Upload et ajouter';
+                        uploadPdfBtn.disabled = false;
+                    }
+                });
+                
+                pdfForm.appendChild(pdfTitleInput);
+                pdfForm.appendChild(pdfFileInput);
+                pdfForm.appendChild(uploadPdfBtn);
 
-                    // Tab switching
-                    urlTab.addEventListener('click', () => {
-                        urlForm.style.display = 'flex';
-                        pdfForm.style.display = 'none';
-                        urlTab.style.background = '#3b82f6';
-                        urlTab.style.color = 'white';
-                        pdfTab.style.background = '#e5e7eb';
-                        pdfTab.style.color = '#374151';
-                    });
-                    
-                    pdfTab.addEventListener('click', () => {
-                        urlForm.style.display = 'none';
-                        pdfForm.style.display = 'flex';
-                        urlTab.style.background = '#e5e7eb';
-                        urlTab.style.color = '#374151';
-                        pdfTab.style.background = '#3b82f6';
-                        pdfTab.style.color = 'white';
-                    });
+                // Tab switching
+                urlTab.addEventListener('click', () => {
+                    urlForm.style.display = 'flex';
+                    pdfForm.style.display = 'none';
+                    urlTab.style.background = '#3b82f6';
+                    urlTab.style.color = 'white';
+                    pdfTab.style.background = '#e5e7eb';
+                    pdfTab.style.color = '#374151';
+                });
+                
+                pdfTab.addEventListener('click', () => {
+                    urlForm.style.display = 'none';
+                    pdfForm.style.display = 'flex';
+                    urlTab.style.background = '#e5e7eb';
+                    urlTab.style.color = '#374151';
+                    pdfTab.style.background = '#3b82f6';
+                    pdfTab.style.color = 'white';
+                });
 
-                    formContainer.appendChild(urlForm);
-                    formContainer.appendChild(pdfForm);
-                    editor.appendChild(formContainer);
+                formContainer.appendChild(urlForm);
+                formContainer.appendChild(pdfForm);
+                editor.appendChild(formContainer);
 
-                    // Save / Cancel buttons
-                    const btnContainer = document.createElement('div');
-                    btnContainer.style.cssText = 'display:flex; gap:8px; margin-top:8px;';
+                // Save / Cancel buttons
+                const btnContainer = document.createElement('div');
+                btnContainer.style.cssText = 'display:flex; gap:8px; margin-top:8px;';
 
-                    const saveBtn = document.createElement('button');
-                    saveBtn.textContent = 'Enregistrer';
-                    saveBtn.style.cssText = 'padding:8px 20px; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px;';
+                const saveBtn = document.createElement('button');
+                saveBtn.textContent = 'Enregistrer';
+                saveBtn.style.cssText = 'padding:8px 20px; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px;';
 
-                    const cancelBtn = document.createElement('button');
-                    cancelBtn.textContent = 'Annuler';
-                    cancelBtn.style.cssText = 'padding:8px 20px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:14px;';
+                const cancelBtn = document.createElement('button');
+                cancelBtn.textContent = 'Annuler';
+                cancelBtn.style.cssText = 'padding:8px 20px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:14px;';
 
-                    btnContainer.appendChild(saveBtn);
-                    btnContainer.appendChild(cancelBtn);
-                    editor.appendChild(btnContainer);
+                btnContainer.appendChild(saveBtn);
+                btnContainer.appendChild(cancelBtn);
+                editor.appendChild(btnContainer);
 
-                    zone.after(editor);
+                zone.after(editor);
 
-                    cancelBtn.addEventListener('click', () => {
-                        editor.remove();
-                        zone.style.display = '';
-                    });
+                cancelBtn.addEventListener('click', () => {
+                    editor.remove();
+                    zone.style.display = '';
+                });
 
-                    saveBtn.addEventListener('click', async () => {
-                        saveBtn.textContent = 'Enregistrement...';
-                        saveBtn.disabled = true;
-                        try {
-                            const res = await fetch('/api/uc-references', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ 
-                                    slug, 
-                                    token, 
-                                    action: 'bulk-update',
-                                    references 
-                                })
-                            });
-                            if (res.ok) {
-                                saveBtn.textContent = '✓ Enregistré';
-                                saveBtn.style.background = '#10b981';
-                                setTimeout(() => window.location.reload(), 1500);
-                            } else {
-                                const err = await res.json();
-                                alert('Erreur: ' + (err.error || 'Erreur inconnue'));
-                                saveBtn.textContent = 'Enregistrer';
-                                saveBtn.disabled = false;
-                            }
-                        } catch (e) {
-                            alert('Erreur réseau');
+                saveBtn.addEventListener('click', async () => {
+                    saveBtn.textContent = 'Enregistrement...';
+                    saveBtn.disabled = true;
+                    try {
+                        const res = await fetch('/api/uc-references', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                slug, 
+                                token, 
+                                action: 'bulk-update',
+                                references 
+                            })
+                        });
+                        if (res.ok) {
+                            saveBtn.textContent = '✓ Enregistré';
+                            saveBtn.style.background = '#10b981';
+                            setTimeout(() => window.location.reload(), 1500);
+                        } else {
+                            const err = await res.json();
+                            alert('Erreur: ' + (err.error || 'Erreur inconnue'));
                             saveBtn.textContent = 'Enregistrer';
                             saveBtn.disabled = false;
                         }
-                    });
+                    } catch (e) {
+                        alert('Erreur réseau');
+                        saveBtn.textContent = 'Enregistrer';
+                        saveBtn.disabled = false;
+                    }
                 });
-            }
+            });
         }
     });
     </script>
