@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Badge from "@components/Badge.astro";
 import { useTranslations } from "@i18n/utils";
 
 // SSR — no prerender, token is verified on every request
@@ -60,7 +59,7 @@ const t = useTranslations(lang);
                 <!-- Header -->
                 <header class="mb-8">
                     {uc.data.photo && (
-                        <div class="mb-6 rounded-lg overflow-hidden">
+                        <div class="uc-cover-image mb-6 rounded-lg overflow-hidden">
                             <img
                                 src={uc.data.photo}
                                 alt={uc.data.title}
@@ -69,12 +68,6 @@ const t = useTranslations(lang);
                             />
                         </div>
                     )}
-
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        {(uc.data.tags || []).map((tag: string) => (
-                            <Badge key={tag} t={t} />
-                        ))}
-                    </div>
 
                     <h1 class="text-4xl font-bold text-gray-900 mb-2">
                         {uc.data.title}
@@ -312,5 +305,53 @@ const t = useTranslations(lang);
             });
         });
     });
+        // Image upload
+        const imgSection = document.querySelector('.uc-cover-image');
+        if (imgSection) {
+            const uploadBtn = document.createElement('button');
+            uploadBtn.textContent = 'Changer l\'image';
+            uploadBtn.style.cssText = 'display:block; margin:8px auto; padding:6px 16px; font-size:13px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer;';
+            imgSection.after(uploadBtn);
+
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
+            document.body.appendChild(fileInput);
+
+            uploadBtn.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', async () => {
+                const file = fileInput.files?.[0];
+                if (!file) return;
+
+                uploadBtn.textContent = 'Téléchargement...';
+                uploadBtn.disabled = true;
+
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('slug', slug);
+                formData.append('token', token || '');
+
+                try {
+                    const res = await fetch('/api/uc-upload-image', { method: 'POST', body: formData });
+                    if (res.ok) {
+                        uploadBtn.textContent = '✓ Image mise à jour';
+                        uploadBtn.style.background = '#10b981';
+                        uploadBtn.style.color = 'white';
+                        setTimeout(() => window.location.reload(), 1500);
+                    } else {
+                        const err = await res.json();
+                        alert('Erreur: ' + (err.error || 'Erreur inconnue'));
+                        uploadBtn.textContent = 'Changer l\'image';
+                        uploadBtn.disabled = false;
+                    }
+                } catch (e) {
+                    alert('Erreur réseau');
+                    uploadBtn.textContent = 'Changer l\'image';
+                    uploadBtn.disabled = false;
+                }
+            });
+        }
     </script>
 </BaseLayout>

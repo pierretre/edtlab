@@ -1,7 +1,6 @@
 ---
 import { formatDate } from "@utils/./";
 import { getContentLink } from "@i18n/links";
-import Badge from "@components/Badge.astro";
 
 export interface Props {
     item: any;
@@ -34,11 +33,6 @@ const searchText = [
     data-title={item.title}
     data-search-text={searchText}
 >
-    <!-- Tags -->
-    <div class="absolute top-2 left-2 z-10 gap-2 flex flex-wrap">
-        {item.tags?.slice(0, 3).map((tag: string) => <Badge key={tag} t={t} />)}
-    </div>
-
     <a
         href={link}
         class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0"

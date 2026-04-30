@@ -416,26 +416,6 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
 export const useCasesFilterConfig: FilterSystemConfig<DOMItemData> = {
     filters: [
         {
-            id: 'domain-filter',
-            type: 'select',
-            label: 'Domain',
-            translationKey: 'use-cases.filter.domain',
-            options: [
-                { value: '', label: 'All Domains', translationKey: 'use-cases.filter.all-domains' },
-                { value: 'energy', label: 'Energy', translationKey: 'use-cases.domain.energy' },
-                { value: 'geospatial', label: 'Geospatial', translationKey: 'use-cases.domain.geospatial' },
-                { value: 'industrial-engineering', label: 'Industrial Engineering', translationKey: 'use-cases.domain.industrial-engineering' },
-                { value: 'maritime', label: 'Maritime', translationKey: 'use-cases.domain.maritime' },
-                { value: 'telecommunications', label: 'Telecommunications', translationKey: 'use-cases.domain.telecommunications' }
-            ],
-            predicate: (data, value) => {
-                if (!value) return true;
-                return (data.domain || '').toLowerCase() === value.toLowerCase();
-            },
-            urlParam: 'domain',
-            defaultValue: ''
-        },
-        {
             id: 'maturity-filter',
             type: 'select',
             label: 'Maturity',
