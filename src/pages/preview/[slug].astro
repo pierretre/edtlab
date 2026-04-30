@@ -147,7 +147,6 @@ const t = useTranslations(lang);
         const proseDiv = document.querySelector('.prose');
         if (!proseDiv) return;
 
-        // Get slug and token from URL
         const urlParts = window.location.pathname.split('/');
         const slug = urlParts[urlParts.length - 1];
         const token = new URLSearchParams(window.location.search).get('token');
@@ -161,41 +160,50 @@ const t = useTranslations(lang);
 
             const sectionId = mcMatch[1];
 
-            // Collect content nodes between this h3 and the next h3 or hr
-            const contentNodes = [];
+            const contentNodes: Element[] = [];
             let sibling = h3.nextElementSibling;
             while (sibling && sibling.tagName !== 'H3' && sibling.tagName !== 'H2' && sibling.tagName !== 'HR') {
                 contentNodes.push(sibling);
                 sibling = sibling.nextElementSibling;
             }
 
-            // Check if section contains "A compléter" or "A completer"
-            const sectionText = contentNodes.map(n => n.textContent).join(' ');
-            const isIncomplete = sectionText.includes('A compléter') || sectionText.includes('A completer');
-
-            // Create edit button
             const editBtn = document.createElement('button');
-            editBtn.textContent = isIncomplete ? '✏️ Compléter cette section' : '✏️ Modifier';
+            editBtn.textContent = 'Modifier';
             editBtn.style.cssText = 'margin-left:12px; padding:4px 12px; font-size:13px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; vertical-align:middle;';
             editBtn.addEventListener('mouseenter', () => { editBtn.style.background = '#d1d5db'; });
             editBtn.addEventListener('mouseleave', () => { editBtn.style.background = '#e5e7eb'; });
             h3.appendChild(editBtn);
 
-            editBtn.addEventListener('click', () => {
-                // Get current markdown-ish content
-                const currentContent = contentNodes.map(n => n.textContent).join('\n').trim();
+            editBtn.addEventListener('click', async () => {
+                editBtn.textContent = 'Chargement...';
+                editBtn.disabled = true;
 
-                // Hide content nodes
-                contentNodes.forEach(n => n.style.display = 'none');
+                // Fetch markdown source from API
+                let markdown = '';
+                try {
+                    const res = await fetch(`/api/uc-section?slug=${slug}&token=${token}&sectionId=${sectionId}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        markdown = data.markdown || '';
+                    }
+                } catch (e) { /* fallback to empty */ }
+
+                editBtn.textContent = 'Modifier';
+                editBtn.disabled = false;
+
+                contentNodes.forEach(n => (n as HTMLElement).style.display = 'none');
                 editBtn.style.display = 'none';
 
-                // Create editor container
                 const editor = document.createElement('div');
-                editor.style.cssText = 'margin:12px 0; padding:0;';
+                editor.style.cssText = 'margin:12px 0;';
+
+                const hint = document.createElement('p');
+                hint.textContent = 'Édition en Markdown — le gras (**texte**), les listes (- item) et les liens sont supportés.';
+                hint.style.cssText = 'font-size:12px; color:#6b7280; margin-bottom:6px;';
 
                 const textarea = document.createElement('textarea');
-                textarea.value = currentContent;
-                textarea.style.cssText = 'width:100%; min-height:150px; padding:12px; border:2px solid #3b82f6; border-radius:8px; font-family:inherit; font-size:14px; line-height:1.6; resize:vertical;';
+                textarea.value = markdown;
+                textarea.style.cssText = 'width:100%; min-height:180px; padding:12px; border:2px solid #3b82f6; border-radius:8px; font-family:ui-monospace,monospace; font-size:14px; line-height:1.6; resize:vertical;';
 
                 const btnContainer = document.createElement('div');
                 btnContainer.style.cssText = 'display:flex; gap:8px; margin-top:8px;';
@@ -210,6 +218,7 @@ const t = useTranslations(lang);
 
                 btnContainer.appendChild(saveBtn);
                 btnContainer.appendChild(cancelBtn);
+                editor.appendChild(hint);
                 editor.appendChild(textarea);
                 editor.appendChild(btnContainer);
 
@@ -217,7 +226,7 @@ const t = useTranslations(lang);
 
                 cancelBtn.addEventListener('click', () => {
                     editor.remove();
-                    contentNodes.forEach(n => n.style.display = '');
+                    contentNodes.forEach(n => (n as HTMLElement).style.display = '');
                     editBtn.style.display = '';
                 });
 
@@ -229,16 +238,10 @@ const t = useTranslations(lang);
                         const res = await fetch('/api/uc-edit', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                slug,
-                                token,
-                                sectionId,
-                                content: textarea.value
-                            })
+                            body: JSON.stringify({ slug, token, sectionId, content: textarea.value })
                         });
 
                         if (res.ok) {
-                            // Show success message then reload to display recompiled content
                             saveBtn.textContent = '✓ Enregistré';
                             saveBtn.style.background = '#10b981';
                             setTimeout(() => window.location.reload(), 1500);
