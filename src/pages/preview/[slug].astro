@@ -743,15 +743,15 @@ const t = useTranslations(lang);
         const proseHeadings = proseDiv.querySelectorAll('h2');
         let referencesSection: HTMLElement | null = null;
         
-        proseHeadings.forEach(heading => {
+        proseHeadings.forEach((heading: Element) => {
             if (heading.textContent?.trim() === 'Références') {
-                referencesSection = heading;
+                referencesSection = heading as HTMLElement;
             }
         });
 
         if (referencesSection) {
             // Find the editable zone for Références
-            let refZone = referencesSection.nextElementSibling as HTMLElement | null;
+            let refZone: HTMLElement | null = referencesSection.nextElementSibling as HTMLElement | null;
             while (refZone && !refZone.classList.contains('cursor-pointer')) {
                 refZone = refZone.nextElementSibling as HTMLElement | null;
             }
