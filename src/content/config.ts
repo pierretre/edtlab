@@ -114,6 +114,7 @@ const useCasesCollection = defineCollection({
         lastUpdated: z.date().optional(),
         version: z.string().optional(),
         status: z.enum(['draft', 'published']).default('draft'),
+        previewToken: z.string().optional(),
     })
 });
 

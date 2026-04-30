@@ -1,0 +1,142 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Badge from "@components/Badge.astro";
+import { useTranslations } from "@i18n/utils";
+
+// SSR — no prerender, token is verified on every request
+const { slug } = Astro.params;
+const token = Astro.url.searchParams.get('token');
+
+// Find the UC by slug (partial match — e.g. slug=uc-05 matches uc-05-r0.1-fr)
+const allUCs = await getCollection("use-cases");
+const uc = allUCs.find(u => u.slug.includes(slug || ''));
+
+// 404 if not found, no token, or wrong token
+if (!uc || !token || !uc.data.previewToken || token !== uc.data.previewToken) {
+    return new Response(null, { status: 404, statusText: "Not found" });
+}
+
+const { Content } = await uc.render();
+const lang = (uc.data.lang || 'fr') as "en" | "fr";
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+    title={`[PREVIEW] ${uc.data.title}`}
+    description={uc.data.summary}
+    lang={lang}
+    showBreadcrumb={false}
+    noindex={true}
+>
+    <!-- Draft banner (fixed, top of page) -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white text-center py-3 px-4 font-bold text-sm shadow-lg">
+        DOCUMENT EN COURS DE VALIDATION — NON PUBLIÉ
+    </div>
+
+    <!-- Spacer to avoid content hidden behind fixed banner -->
+    <div class="h-12"></div>
+
+    <!-- Content wrapper (mirrors PageLayout structure) -->
+    <div class="container mx-auto px-8 lg:px-4 max-w-6xl mb-16">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <main class="flex-1 min-w-0">
+
+                <!-- Back link -->
+                <div class="mb-6">
+                    <a
+                        href={`/${lang}/use-cases`}
+                        class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
+                    >
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        {lang === 'fr' ? 'Retour aux cas d\'utilisation' : 'Back to Use Cases'}
+                    </a>
+                </div>
+
+                <!-- Header -->
+                <header class="mb-8">
+                    {uc.data.photo && (
+                        <div class="mb-6 rounded-lg overflow-hidden">
+                            <img
+                                src={uc.data.photo}
+                                alt={uc.data.title}
+                                class="w-full h-64 object-cover"
+                                loading="lazy"
+                            />
+                        </div>
+                    )}
+
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {(uc.data.tags || []).map((tag: string) => (
+                            <Badge key={tag} t={t} />
+                        ))}
+                    </div>
+
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2">
+                        {uc.data.title}
+                    </h1>
+
+                    {uc.data.approvedBy && (
+                        <p class="text-sm text-gray-500 italic mb-4">
+                            Autorisation de mise à disposition accordée par {uc.data.approvedBy.name}, {uc.data.approvedBy.title}, {uc.data.approvedBy.org}, le {uc.data.approvedBy.date instanceof Date ? uc.data.approvedBy.date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB') : uc.data.approvedBy.date}.
+                        </p>
+                    )}
+
+                    <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                        <span class="font-medium text-primary-600">{uc.data.id}</span>
+                        {uc.data.version && <span>v{uc.data.version}</span>}
+                        {uc.data.domain && (
+                            <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
+                                {uc.data.domain}
+                            </span>
+                        )}
+                        {uc.data.maturity && (
+                            <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                                {uc.data.maturity}
+                            </span>
+                        )}
+                    </div>
+
+                    {uc.data.summary && (
+                        <p class="text-lg text-gray-600 border-l-4 border-primary-300 pl-4">
+                            {uc.data.summary}
+                        </p>
+                    )}
+                </header>
+
+                <!-- Body content -->
+                <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
+                    <Content />
+                </div>
+
+                <!-- Contacts -->
+                {uc.data.contacts && uc.data.contacts.length > 0 && (
+                    <section class="mt-8 p-6 bg-gray-50 rounded-lg border">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                            {lang === 'fr' ? 'Contacts' : 'Contacts'}
+                        </h2>
+                        <div class="space-y-3">
+                            {uc.data.contacts.map((contact: any) => (
+                                <div class="flex items-center gap-3">
+                                    <div>
+                                        <p class="font-medium text-gray-900">{contact.name}</p>
+                                        {contact.org && <p class="text-sm text-gray-500">{contact.org}</p>}
+                                        {contact.role && <p class="text-xs text-gray-400">{contact.role}</p>}
+                                        {contact.email && (
+                                            <a href={`mailto:${contact.email}`} class="text-sm text-primary-600 hover:underline">
+                                                {contact.email}
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+            </main>
+        </div>
+    </div>
+</BaseLayout>
