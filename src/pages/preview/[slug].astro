@@ -141,4 +141,128 @@ const t = useTranslations(lang);
             </main>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const proseDiv = document.querySelector('.prose');
+        if (!proseDiv) return;
+
+        // Get slug and token from URL
+        const urlParts = window.location.pathname.split('/');
+        const slug = urlParts[urlParts.length - 1];
+        const token = new URLSearchParams(window.location.search).get('token');
+
+        const h3s = proseDiv.querySelectorAll('h3');
+
+        h3s.forEach(h3 => {
+            const text = h3.textContent || '';
+            const mcMatch = text.match(/^(MC\d+)/);
+            if (!mcMatch) return;
+
+            const sectionId = mcMatch[1];
+
+            // Collect content nodes between this h3 and the next h3 or hr
+            const contentNodes = [];
+            let sibling = h3.nextElementSibling;
+            while (sibling && sibling.tagName !== 'H3' && sibling.tagName !== 'H2' && sibling.tagName !== 'HR') {
+                contentNodes.push(sibling);
+                sibling = sibling.nextElementSibling;
+            }
+
+            // Check if section contains "A compléter" or "A completer"
+            const sectionText = contentNodes.map(n => n.textContent).join(' ');
+            const isIncomplete = sectionText.includes('A compléter') || sectionText.includes('A completer');
+
+            // Create edit button
+            const editBtn = document.createElement('button');
+            editBtn.textContent = isIncomplete ? '✏️ Compléter cette section' : '✏️ Modifier';
+            editBtn.style.cssText = 'margin-left:12px; padding:4px 12px; font-size:13px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; vertical-align:middle;';
+            editBtn.addEventListener('mouseenter', () => { editBtn.style.background = '#d1d5db'; });
+            editBtn.addEventListener('mouseleave', () => { editBtn.style.background = '#e5e7eb'; });
+            h3.appendChild(editBtn);
+
+            editBtn.addEventListener('click', () => {
+                // Get current markdown-ish content
+                const currentContent = contentNodes.map(n => n.textContent).join('\n').trim();
+
+                // Hide content nodes
+                contentNodes.forEach(n => n.style.display = 'none');
+                editBtn.style.display = 'none';
+
+                // Create editor container
+                const editor = document.createElement('div');
+                editor.style.cssText = 'margin:12px 0; padding:0;';
+
+                const textarea = document.createElement('textarea');
+                textarea.value = currentContent;
+                textarea.style.cssText = 'width:100%; min-height:150px; padding:12px; border:2px solid #3b82f6; border-radius:8px; font-family:inherit; font-size:14px; line-height:1.6; resize:vertical;';
+
+                const btnContainer = document.createElement('div');
+                btnContainer.style.cssText = 'display:flex; gap:8px; margin-top:8px;';
+
+                const saveBtn = document.createElement('button');
+                saveBtn.textContent = 'Enregistrer';
+                saveBtn.style.cssText = 'padding:8px 20px; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px;';
+
+                const cancelBtn = document.createElement('button');
+                cancelBtn.textContent = 'Annuler';
+                cancelBtn.style.cssText = 'padding:8px 20px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:14px;';
+
+                btnContainer.appendChild(saveBtn);
+                btnContainer.appendChild(cancelBtn);
+                editor.appendChild(textarea);
+                editor.appendChild(btnContainer);
+
+                h3.after(editor);
+
+                cancelBtn.addEventListener('click', () => {
+                    editor.remove();
+                    contentNodes.forEach(n => n.style.display = '');
+                    editBtn.style.display = '';
+                });
+
+                saveBtn.addEventListener('click', async () => {
+                    saveBtn.textContent = 'Enregistrement...';
+                    saveBtn.disabled = true;
+
+                    try {
+                        const res = await fetch('/api/uc-edit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                slug,
+                                token,
+                                sectionId,
+                                content: textarea.value
+                            })
+                        });
+
+                        if (res.ok) {
+                            // Replace content with saved text
+                            editor.remove();
+                            contentNodes.forEach(n => n.remove());
+
+                            const newP = document.createElement('p');
+                            newP.textContent = textarea.value;
+                            newP.style.cssText = 'color:#065f46; background:#ecfdf5; padding:8px 12px; border-radius:6px; border-left:4px solid #10b981;';
+                            h3.after(newP);
+
+                            editBtn.style.display = '';
+                            editBtn.textContent = '✏️ Modifier';
+                        } else {
+                            const err = await res.json();
+                            alert('Erreur: ' + (err.error || 'Erreur inconnue'));
+                            saveBtn.textContent = 'Enregistrer';
+                            saveBtn.disabled = false;
+                        }
+                    } catch (e) {
+                        alert('Erreur réseau');
+                        saveBtn.textContent = 'Enregistrer';
+                        saveBtn.disabled = false;
+                    }
+                });
+            });
+        });
+    });
+    </script>
 </BaseLayout>
