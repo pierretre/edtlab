@@ -82,16 +82,12 @@ const t = useTranslations(lang);
                     <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
                         <span class="font-medium text-primary-600">{uc.data.id}</span>
                         {uc.data.version && <span>v{uc.data.version}</span>}
-                        {uc.data.domain && (
-                            <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
-                                {uc.data.domain}
-                            </span>
-                        )}
-                        {uc.data.maturity && (
-                            <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
-                                {uc.data.maturity}
-                            </span>
-                        )}
+                        <span class="uc-domain-badge inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700 cursor-pointer" title="Double-cliquez pour changer le domaine" data-field="domain" data-value={uc.data.domain || ''}>
+                            {uc.data.domain || 'Domaine ?'}
+                        </span>
+                        <span class="uc-maturity-badge inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800 cursor-pointer" title="Double-cliquez pour changer la maturité" data-field="maturity" data-value={uc.data.maturity || ''}>
+                            {uc.data.maturity || 'Maturité ?'}
+                        </span>
                     </div>
 
                     {uc.data.summary && (
@@ -370,6 +366,74 @@ const t = useTranslations(lang);
                 }
             });
         }
+
+        // Domain & Maturity badges — double-click to select from list
+        const metaOptions: Record<string, {label: string, value: string}[]> = {
+            domain: [
+                { label: 'Energy', value: 'energy' },
+                { label: 'Geospatial', value: 'geospatial' },
+                { label: 'Industrial Engineering', value: 'industrial-engineering' },
+                { label: 'Maritime', value: 'maritime' },
+                { label: 'Telecommunications', value: 'telecommunications' },
+                { label: 'Environment', value: 'environment' },
+                { label: 'Health', value: 'health' },
+                { label: 'Robotics', value: 'robotics' },
+                { label: 'Agriculture', value: 'agriculture' },
+                { label: 'Other', value: 'other' },
+            ],
+            maturity: [
+                { label: 'Concept', value: 'concept' },
+                { label: 'Proof of Concept (PoC)', value: 'poc' },
+                { label: 'Prototype', value: 'prototype' },
+                { label: 'Operational', value: 'operational' },
+            ]
+        };
+
+        document.querySelectorAll('.uc-domain-badge, .uc-maturity-badge').forEach(badge => {
+            badge.addEventListener('dblclick', () => {
+                const field = (badge as HTMLElement).dataset.field || '';
+                const currentValue = (badge as HTMLElement).dataset.value || '';
+                const options = metaOptions[field];
+                if (!options) return;
+
+                const dropdown = document.createElement('select');
+                dropdown.style.cssText = 'padding:4px 8px; border:2px solid #3b82f6; border-radius:6px; font-size:13px; background:white;';
+                options.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.label;
+                    if (opt.value === currentValue) option.selected = true;
+                    dropdown.appendChild(option);
+                });
+
+                badge.replaceWith(dropdown);
+                dropdown.focus();
+
+                const save = async () => {
+                    const newValue = dropdown.value;
+                    try {
+                        const res = await fetch('/api/uc-edit-meta', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ slug, token, field, value: newValue })
+                        });
+                        if (res.ok) {
+                            setTimeout(() => window.location.reload(), 500);
+                        } else {
+                            alert('Erreur lors de la sauvegarde');
+                        }
+                    } catch (e) {
+                        alert('Erreur réseau');
+                    }
+                };
+
+                dropdown.addEventListener('change', save);
+                dropdown.addEventListener('blur', () => {
+                    // If no change, reload to restore badge
+                    setTimeout(() => { if (document.contains(dropdown)) window.location.reload(); }, 200);
+                });
+            });
+        });
 
         // Contacts edit — double-click on contacts section
         const contactsSection = document.querySelector('.uc-contacts-section');
