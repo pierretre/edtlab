@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" fill="none">
+  <rect width="400" height="250" rx="8" fill="#F3F4F6"/>
+  <!-- Crane icon -->
+  <g transform="translate(160, 50)" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Vertical pole -->
+    <line x1="40" y1="30" x2="40" y2="120"/>
+    <!-- Horizontal boom -->
+    <line x1="10" y1="30" x2="80" y2="30"/>
+    <!-- Cable -->
+    <line x1="70" y1="30" x2="70" y2="70"/>
+    <!-- Hook -->
+    <path d="M64 70 h12 l-6 12 z"/>
+    <!-- Base -->
+    <line x1="20" y1="120" x2="60" y2="120"/>
+    <!-- Diagonal support -->
+    <line x1="40" y1="60" x2="20" y2="30"/>
+  </g>
+  <!-- Text -->
+  <text x="200" y="210" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#9CA3AF">En construction</text>
+</svg>
