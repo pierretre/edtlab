@@ -1,0 +1,114 @@
+---
+import PageLayout from "./PageLayout.astro";
+import { linkHelpers, useTranslations } from "@i18n/utils";
+import Badge from "@components/Badge.astro";
+
+export interface Props {
+    frontmatter: any;
+}
+
+const { frontmatter } = Astro.props;
+const lang = Astro.currentLocale as "en" | "fr";
+const t = useTranslations(lang);
+---
+
+<PageLayout
+    title={frontmatter.title}
+    description={frontmatter.summary || t("site.description")}
+    lang={lang}
+    showBreadcrumb={true}
+    showToc={true}
+>
+    <!-- Back link -->
+    <div class="mb-6">
+        <a
+            href={linkHelpers.page(lang, "use-cases")}
+            class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
+        >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            {lang === 'fr' ? 'Retour aux cas d\'utilisation' : 'Back to Use Cases'}
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="mb-8">
+        <!-- Image -->
+        {frontmatter.photo && (
+            <div class="mb-6 rounded-lg overflow-hidden">
+                <img
+                    src={frontmatter.photo}
+                    alt={frontmatter.title}
+                    class="w-full h-64 object-cover"
+                    loading="lazy"
+                />
+            </div>
+        )}
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 mb-4">
+            {(frontmatter.tags || []).map((tag: string) => (
+                <Badge key={tag} t={t} />
+            ))}
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">
+            {frontmatter.title}
+        </h1>
+
+        <!-- Meta -->
+        <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+            <span class="font-medium text-primary-600">{frontmatter.id}</span>
+            {frontmatter.version && <span>v{frontmatter.version}</span>}
+            {frontmatter.domain && (
+                <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
+                    {frontmatter.domain}
+                </span>
+            )}
+            {frontmatter.maturity && (
+                <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                    {frontmatter.maturity}
+                </span>
+            )}
+        </div>
+
+        <!-- Summary -->
+        {frontmatter.summary && (
+            <p class="text-lg text-gray-600 border-l-4 border-primary-300 pl-4">
+                {frontmatter.summary}
+            </p>
+        )}
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
+        <slot />
+    </div>
+
+    <!-- Contacts -->
+    {frontmatter.contacts && frontmatter.contacts.length > 0 && (
+        <section class="mt-8 p-6 bg-gray-50 rounded-lg border">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                {lang === 'fr' ? 'Contacts' : 'Contacts'}
+            </h2>
+            <div class="space-y-3">
+                {frontmatter.contacts.map((contact: any) => (
+                    <div class="flex items-center gap-3">
+                        <div>
+                            <p class="font-medium text-gray-900">{contact.name}</p>
+                            {contact.org && <p class="text-sm text-gray-500">{contact.org}</p>}
+                            {contact.role && <p class="text-xs text-gray-400">{contact.role}</p>}
+                            {contact.email && (
+                                <a href={`mailto:${contact.email}`} class="text-sm text-primary-600 hover:underline">
+                                    {contact.email}
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+    )}
+</PageLayout>

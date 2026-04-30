@@ -2,6 +2,7 @@ import NewsItemLayout from "@layouts/NewsItemLayout.astro";
 import JobOfferLayout from "@layouts/JobOfferLayout.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
+import UseCaseLayout from "@layouts/UseCaseLayout.astro";
 
 /**
  * Get layout component based on template or collection
@@ -38,6 +39,8 @@ function getLayoutFromCollection(collection: string) {
     switch (collection) {
         case 'job-offers':
             return JobOfferLayout;
+        case 'use-cases':
+            return UseCaseLayout;
         case 'news':
             return NewsItemLayout;
         default:
