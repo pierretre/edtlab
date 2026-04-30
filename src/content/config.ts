@@ -70,6 +70,65 @@ const jobOffersCollection = defineCollection({
     })
 });
 
+// Use cases collection schema
+const useCasesCollection = defineCollection({
+    type: 'content',
+    schema: z.object({
+        id: z.string(),
+        title: z.string(),
+        summary: z.string(),
+        domain: z.string().optional(),
+        maturity: z.enum(['concept', 'poc', 'prototype', 'operational']).optional(),
+        lang: z.enum(['en', 'fr']),
+        photo: z.string().default('/media/use-cases/uc-default.svg'),
+        tags: z.array(z.string()).optional().default([]),
+        contacts: z.array(z.object({
+            name: z.string(),
+            org: z.string().optional(),
+            email: z.string().optional(),
+            role: z.string().optional(),
+        })).optional().default([]),
+        approvedBy: z.object({
+            name: z.string(),
+            email: z.string().email(),
+            title: z.string(),
+            org: z.string(),
+            date: z.date(),
+        }).optional(),
+        pepr: z.string().optional(),
+        references: z.array(z.object({
+            title: z.string(),
+            venue: z.string().optional(),
+            url: z.string().optional(),
+        })).optional().default([]),
+        resources: z.array(z.union([
+            z.string(),
+            z.object({
+                label: z.string(),
+                type: z.string().optional(),
+                url: z.string().optional(),
+            })
+        ])).optional().default([]),
+        license: z.string().optional(),
+        publishedDate: z.date(),
+        approvedDate: z.date().optional(),
+        lastUpdated: z.date().optional(),
+        version: z.string().optional(),
+        status: z.enum(['draft', 'published']).default('draft'),
+        previewToken: z.string().optional(),
+        confirmToken: z.string().optional(),
+        // Identity card fields (HN-T009-S1)
+        provider: z.string().optional(),
+        originType: z.enum(['natural', 'anthropic', 'engineered', 'infrastructure', 'process']).optional(),
+        users: z.array(z.union([z.string(), z.object({ name: z.string(), role: z.string().optional() })])).optional().default([]),
+        objectives: z.array(z.string()).optional().default([]),
+        usagePhase: z.string().optional(),
+        usageLevel: z.enum(['reduced', 'consortium', 'public']).optional(),
+        since: z.date().optional(),
+        schema: z.string().optional(),
+    })
+});
+
 // Calendar collection schema for timeline milestones and dates
 const calendarCollection = defineCollection({
     type: 'data',
@@ -104,5 +163,6 @@ export const collections = {
     'news': newsCollection,
     'job-offers': jobOffersCollection,
     'calendar': calendarCollection,
-    'menu': menuCollection
+    'menu': menuCollection,
+    'use-cases': useCasesCollection
 };
