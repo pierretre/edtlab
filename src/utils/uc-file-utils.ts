@@ -95,8 +95,7 @@ import * as brevo from '@getbrevo/brevo';
 export async function sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
     const apiKey = process.env.BREVO_API_KEY;
     if (!apiKey) {
-        console.warn('[UC] BREVO_API_KEY not set — email not sent');
-        return;
+        throw new Error('BREVO_API_KEY not configured — cannot send email');
     }
     const apiInstance = new brevo.TransactionalEmailsApi();
     apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
