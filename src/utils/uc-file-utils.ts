@@ -88,3 +88,22 @@ export function successResponse(data: Record<string, unknown> = { ok: true }): R
         headers: { 'Content-Type': 'application/json' },
     });
 }
+
+/** Send a transactional email via Brevo */
+import * as brevo from '@getbrevo/brevo';
+
+export async function sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
+    const apiKey = process.env.BREVO_API_KEY;
+    if (!apiKey) {
+        console.warn('[UC] BREVO_API_KEY not set — email not sent');
+        return;
+    }
+    const apiInstance = new brevo.TransactionalEmailsApi();
+    apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
+    const email = new brevo.SendSmtpEmail();
+    email.sender = { name: 'EDT Lab', email: 'noreply@edtlab.fr' };
+    email.to = [{ email: to }];
+    email.subject = subject;
+    email.htmlContent = htmlContent;
+    await apiInstance.sendTransacEmail(email);
+}

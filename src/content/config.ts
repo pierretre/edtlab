@@ -115,6 +115,7 @@ const useCasesCollection = defineCollection({
         version: z.string().optional(),
         status: z.enum(['draft', 'published']).default('draft'),
         previewToken: z.string().optional(),
+        confirmToken: z.string().optional(),
     })
 });
 

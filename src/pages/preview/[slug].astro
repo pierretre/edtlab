@@ -583,13 +583,13 @@ const t = useTranslations(lang);
                         body: JSON.stringify({ slug, token, name, title, org })
                     });
                     if (res.ok) {
-                        approveBtn.textContent = '✓ Approuvé — Publication en cours';
+                        approveBtn.textContent = '✓ Signé — Email de confirmation envoyé';
                         approveBtn.style.background = '#10b981';
                         // Hide the banner after a delay
                         const banner = document.getElementById('preview-banner');
                         if (banner) {
-                            banner.textContent = '✓ DOCUMENT APPROUVÉ — PUBLICATION EN COURS';
-                            banner.style.background = '#10b981';
+                            banner.textContent = '✓ DOCUMENT SIGNÉ — EN ATTENTE DE CONFIRMATION PAR EMAIL';
+                            banner.style.background = '#2563eb';
                         }
                         setTimeout(() => window.location.reload(), 2000);
                     } else {
