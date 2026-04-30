@@ -107,11 +107,10 @@ const t = useTranslations(lang);
                 </div>
 
                 <!-- Contacts -->
-                {uc.data.contacts && uc.data.contacts.length > 0 && (
-                    <section class="mt-8 p-6 bg-gray-50 rounded-lg border">
-                        <h2 class="text-xl font-semibold text-gray-900 mb-4">
-                            {lang === 'fr' ? 'Contacts' : 'Contacts'}
-                        </h2>
+                <section class="mt-8 p-6 bg-gray-50 rounded-lg border uc-contacts-section" title="Double-cliquez pour modifier les contacts">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">
+                        {lang === 'fr' ? 'Contacts' : 'Contacts'}
+                    </h2>
                         <div class="space-y-3">
                             {uc.data.contacts.map((contact: any) => (
                                 <div class="flex items-center gap-3">
@@ -129,7 +128,6 @@ const t = useTranslations(lang);
                             ))}
                         </div>
                     </section>
-                )}
 
             </main>
         </div>
@@ -357,6 +355,130 @@ const t = useTranslations(lang);
                     uploadBtn.textContent = 'Changer l\'image';
                     uploadBtn.disabled = false;
                 }
+            });
+        }
+
+        // Contacts edit — double-click on contacts section
+        const contactsSection = document.querySelector('.uc-contacts-section');
+        if (contactsSection) {
+            contactsSection.addEventListener('mouseenter', () => {
+                (contactsSection as HTMLElement).style.borderColor = '#93c5fd';
+                (contactsSection as HTMLElement).style.cursor = 'pointer';
+            });
+            contactsSection.addEventListener('mouseleave', () => {
+                (contactsSection as HTMLElement).style.borderColor = '';
+                (contactsSection as HTMLElement).style.cursor = '';
+            });
+
+            contactsSection.addEventListener('dblclick', async () => {
+                // Fetch current contacts
+                let contacts: any[] = [];
+                try {
+                    const res = await fetch(`/api/uc-edit-contacts?slug=${slug}&token=${token}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        contacts = data.contacts || [];
+                    }
+                } catch (e) {}
+
+                // Ensure at least one empty row
+                if (contacts.length === 0) contacts.push({ name: '', org: '', email: '', role: '' });
+
+                const editor = document.createElement('div');
+                editor.style.cssText = 'margin-top:12px;';
+
+                function renderRows() {
+                    editor.innerHTML = '';
+                    contacts.forEach((c: any, i: number) => {
+                        const row = document.createElement('div');
+                        row.style.cssText = 'display:grid; grid-template-columns:1fr 1fr 1fr 1fr auto; gap:6px; margin-bottom:8px; align-items:center;';
+                        row.innerHTML = `
+                            <input type="text" placeholder="Nom" value="${c.name || ''}" data-field="name" data-idx="${i}" style="padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:13px;">
+                            <input type="text" placeholder="Organisation" value="${c.org || ''}" data-field="org" data-idx="${i}" style="padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:13px;">
+                            <input type="email" placeholder="Email" value="${c.email || ''}" data-field="email" data-idx="${i}" style="padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:13px;">
+                            <input type="text" placeholder="Rôle" value="${c.role || ''}" data-field="role" data-idx="${i}" style="padding:6px 8px; border:1px solid #d1d5db; border-radius:4px; font-size:13px;">
+                            <button data-remove="${i}" style="padding:4px 8px; background:#fee2e2; color:#991b1b; border:1px solid #fecaca; border-radius:4px; cursor:pointer; font-size:12px;">✕</button>
+                        `;
+                        editor.appendChild(row);
+
+                        // Listen for changes
+                        row.querySelectorAll('input').forEach(inp => {
+                            inp.addEventListener('input', (e) => {
+                                const target = e.target as HTMLInputElement;
+                                const idx = parseInt(target.dataset.idx || '0');
+                                const field = target.dataset.field || '';
+                                contacts[idx][field] = target.value;
+                            });
+                        });
+                        row.querySelector(`[data-remove="${i}"]`)?.addEventListener('click', () => {
+                            contacts.splice(i, 1);
+                            if (contacts.length === 0) contacts.push({ name: '', org: '', email: '', role: '' });
+                            renderRows();
+                        });
+                    });
+
+                    // Add row button
+                    const addBtn = document.createElement('button');
+                    addBtn.textContent = '+ Ajouter un contact';
+                    addBtn.style.cssText = 'padding:6px 14px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:13px; margin-bottom:10px;';
+                    addBtn.addEventListener('click', () => {
+                        contacts.push({ name: '', org: '', email: '', role: '' });
+                        renderRows();
+                    });
+                    editor.appendChild(addBtn);
+
+                    // Save / Cancel
+                    const btnContainer = document.createElement('div');
+                    btnContainer.style.cssText = 'display:flex; gap:8px; margin-top:4px;';
+
+                    const saveBtn = document.createElement('button');
+                    saveBtn.textContent = 'Enregistrer';
+                    saveBtn.style.cssText = 'padding:8px 20px; background:#2563eb; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; font-size:14px;';
+
+                    const cancelBtn = document.createElement('button');
+                    cancelBtn.textContent = 'Annuler';
+                    cancelBtn.style.cssText = 'padding:8px 20px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; font-size:14px;';
+
+                    btnContainer.appendChild(saveBtn);
+                    btnContainer.appendChild(cancelBtn);
+                    editor.appendChild(btnContainer);
+
+                    cancelBtn.addEventListener('click', () => {
+                        editor.remove();
+                        contactsSection.querySelectorAll('.space-y-3').forEach(el => (el as HTMLElement).style.display = '');
+                    });
+
+                    saveBtn.addEventListener('click', async () => {
+                        saveBtn.textContent = 'Enregistrement...';
+                        saveBtn.disabled = true;
+                        try {
+                            const res = await fetch('/api/uc-edit-contacts', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ slug, token, contacts: contacts.filter((c: any) => c.name) })
+                            });
+                            if (res.ok) {
+                                saveBtn.textContent = '✓ Enregistré';
+                                saveBtn.style.background = '#10b981';
+                                setTimeout(() => window.location.reload(), 1500);
+                            } else {
+                                const err = await res.json();
+                                alert('Erreur: ' + (err.error || 'Erreur inconnue'));
+                                saveBtn.textContent = 'Enregistrer';
+                                saveBtn.disabled = false;
+                            }
+                        } catch (e) {
+                            alert('Erreur réseau');
+                            saveBtn.textContent = 'Enregistrer';
+                            saveBtn.disabled = false;
+                        }
+                    });
+                }
+
+                // Hide existing display, show editor
+                contactsSection.querySelectorAll('.space-y-3').forEach(el => (el as HTMLElement).style.display = 'none');
+                contactsSection.appendChild(editor);
+                renderRows();
             });
         }
     </script>
