@@ -202,14 +202,6 @@ const t = useTranslations(lang);
                 sibling = sibling.nextElementSibling;
             }
 
-            // Add "Modifier" button
-            const editBtn = document.createElement('button');
-            editBtn.textContent = 'Modifier';
-            editBtn.style.cssText = 'margin-left:12px; padding:4px 12px; font-size:13px; background:#e5e7eb; color:#374151; border:1px solid #d1d5db; border-radius:6px; cursor:pointer; vertical-align:middle;';
-            editBtn.addEventListener('mouseenter', () => { editBtn.style.background = '#d1d5db'; });
-            editBtn.addEventListener('mouseleave', () => { editBtn.style.background = '#e5e7eb'; });
-            heading.appendChild(editBtn);
-
             // Insert help hint after the heading (before content)
             const helpText = sectionHelps[sectionId];
             if (helpText) {
@@ -219,10 +211,28 @@ const t = useTranslations(lang);
                 heading.after(helpDiv);
             }
 
-            editBtn.addEventListener('click', async () => {
-                editBtn.textContent = 'Chargement...';
-                editBtn.disabled = true;
+            // Wrap content nodes in an editable zone with hover effect
+            const editZone = document.createElement('div');
+            editZone.style.cssText = 'cursor:pointer; border:1px dashed transparent; border-radius:6px; padding:4px 8px; margin:4px 0; transition:all 0.15s;';
+            editZone.title = 'Double-cliquez pour modifier';
+            editZone.addEventListener('mouseenter', () => {
+                editZone.style.borderColor = '#93c5fd';
+                editZone.style.background = '#f8fafc';
+            });
+            editZone.addEventListener('mouseleave', () => {
+                editZone.style.borderColor = 'transparent';
+                editZone.style.background = 'transparent';
+            });
 
+            // Move content nodes into the edit zone
+            const parent = contentNodes[0]?.parentNode;
+            if (parent && contentNodes.length > 0) {
+                parent.insertBefore(editZone, contentNodes[0]);
+                contentNodes.forEach(n => editZone.appendChild(n));
+            }
+
+            // Double-click to edit
+            editZone.addEventListener('dblclick', async () => {
                 // Fetch markdown source from API
                 let markdown = '';
                 try {
@@ -233,14 +243,10 @@ const t = useTranslations(lang);
                     }
                 } catch (e) { /* fallback to empty */ }
 
-                editBtn.textContent = 'Modifier';
-                editBtn.disabled = false;
-
-                contentNodes.forEach(n => (n as HTMLElement).style.display = 'none');
-                editBtn.style.display = 'none';
+                editZone.style.display = 'none';
 
                 const editor = document.createElement('div');
-                editor.style.cssText = 'margin:12px 0;';
+                editor.style.cssText = 'margin:8px 0;';
 
                 const hint = document.createElement('p');
                 hint.textContent = 'Édition en Markdown — le gras (**texte**), les listes (- item) et les liens sont supportés.';
@@ -267,12 +273,12 @@ const t = useTranslations(lang);
                 editor.appendChild(textarea);
                 editor.appendChild(btnContainer);
 
-                heading.after(editor);
+                editZone.after(editor);
+                textarea.focus();
 
                 cancelBtn.addEventListener('click', () => {
                     editor.remove();
-                    contentNodes.forEach(n => (n as HTMLElement).style.display = '');
-                    editBtn.style.display = '';
+                    editZone.style.display = '';
                 });
 
                 saveBtn.addEventListener('click', async () => {
