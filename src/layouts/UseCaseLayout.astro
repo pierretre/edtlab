@@ -58,6 +58,13 @@ const t = useTranslations(lang);
             {frontmatter.title}
         </h1>
 
+        <!-- ApprovedBy -->
+        {frontmatter.approvedBy && (
+            <p class="text-sm text-gray-500 italic mb-4">
+                Autorisation de mise à disposition accordée par {frontmatter.approvedBy.name}, {frontmatter.approvedBy.title}, {frontmatter.approvedBy.org}, le {frontmatter.approvedBy.date instanceof Date ? frontmatter.approvedBy.date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB') : frontmatter.approvedBy.date}.
+            </p>
+        )}
+
         <!-- Meta -->
         <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
             <span class="font-medium text-primary-600">{frontmatter.id}</span>
