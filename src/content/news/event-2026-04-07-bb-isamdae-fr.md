@@ -7,7 +7,9 @@ location: Visioconference
 description: Presentation Building Block Isamdae par Benoit CAILLAUD. 7 avril 2026.
 photo: https://team.inria.fr/hycomes/files/2020/07/rldc2-cc1-768x620.png
 tags:
-  - Séminaire, Building Blocks
+  - AT1
+  - Séminaire
+  - Building Blocks
 ---
 
 Le premier seminaire EDT a eu lieu le **7 avril 2026.

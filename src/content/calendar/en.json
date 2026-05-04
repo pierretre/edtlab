@@ -2,18 +2,18 @@
     "items": [
         {
             "date": "2026-01-01",
-            "title": "T0 — Program start",
+            "title": "T0-Program start",
             "isMilestone": true,
             "programMilestone": true
         },
         {
             "date": "2026-04-17",
-            "title": "PC2-DT Compose — Scientific Workshop",
+            "title": "PC2-DT Compose-Scientific Workshop",
             "isMilestone": true
         },
         {
             "date": "2026-04-29",
-            "title": "PC4-Synchronic — Scientific Workshop",
+            "title": "PC4-Synchronic-Scientific Workshop",
             "isMilestone": true
         },
         {

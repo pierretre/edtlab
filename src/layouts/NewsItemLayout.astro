@@ -148,10 +148,7 @@ const badges = [
         <!-- Cover Image -->
         {
             coverImage && (
-                <figure
-                    class="mb-8 w-full overflow-hidden rounded-lg shadow-sm"
-                    style="height: 400px;"
-                >
+                <figure class="mb-8 flex justify-center">
                     <Picture
                         src={coverImage}
                         format="webp"
@@ -160,7 +157,7 @@ const badges = [
                         quality={80}
                         widths={[400, 800, 1200]}
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1200px"
-                        class="w-full h-full object-cover object-center"
+                        class="max-h-[400px] w-auto rounded-lg shadow-sm"
                     />
                 </figure>
             )
