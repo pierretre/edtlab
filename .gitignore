@@ -36,3 +36,6 @@ playwright/.cache/
 
 # Matomo volumes 
 matomo*
+
+# micromamba
+powershell/
