@@ -6,7 +6,8 @@ newsType: event
 description: EDT programme contract signed with ANR on 6 March 2026 under France
   2030 (ANR-25-APJN-0001)
 photo: /media/uploads/logo-en-filled.png
-tags: []
+tags: 
+  - Contract
 ---
 We are delighted to announce the signing, on **6 March 2026**, of the contract for the Engineering Digital Twins (EDT) programme between Inria and the French National Research Agency (ANR).
 
