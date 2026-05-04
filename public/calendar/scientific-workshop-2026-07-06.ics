@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//EDT Lab//Scientific Workshop//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+SUMMARY:1st EDT Scientific Workshop
+DTSTART:20260706T100000Z
+DTEND:20260708T120000Z
+DTSTAMP:20260504T000000Z
+UID:scientific-workshop-2026-07-06@edtlab.fr
+DESCRIPTION:1st Scientific Workshop of the Engineering Digital Twins (EDT) program.\nFrom Monday July 6\, 2026 (noon) to Wednesday July 8\, 2026 (after lunch).\nVenue: Inria Centre Rennes - Campus de Beaulieu.
+LOCATION:Inria Centre Rennes\, Campus de Beaulieu\, 35042 Rennes\, France
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
