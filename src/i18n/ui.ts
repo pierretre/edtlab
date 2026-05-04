@@ -194,6 +194,7 @@ export const ui = {
         'news-item.recent': 'Recent',
         'news-item.date': 'Date',
         'news-item.location': 'Location',
+        'news-item.add-to-calendar': 'Add to my calendar',
 
         // Use Cases
         'use-cases.results-count': 'Showing {count} use cases',
@@ -503,6 +504,7 @@ export const ui = {
         'news-item.recent': 'Récent',
         'news-item.date': 'Date',
         'news-item.location': 'Lieu',
+        'news-item.add-to-calendar': 'Ajouter à mon calendrier',
 
         // Use Cases
         'use-cases.results-count': 'Affichage de {count} cas d\'utilisation',

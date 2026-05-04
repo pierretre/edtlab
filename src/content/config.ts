@@ -137,7 +137,9 @@ const calendarCollection = defineCollection({
             date: z.string(),
             title: z.string(),
             isMilestone: z.boolean().default(false),
+            programMilestone: z.boolean().optional().default(false),
             location: z.string().optional(),
+            timeLabel: z.string().optional(),
         }))
     })
 });
