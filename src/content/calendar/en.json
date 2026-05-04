@@ -3,11 +3,17 @@
         {
             "date": "2026-01-01",
             "title": "T0 — Program start",
+            "isMilestone": true,
+            "programMilestone": true
+        },
+        {
+            "date": "2026-04-17",
+            "title": "PC2-DT Compose — Scientific Workshop",
             "isMilestone": true
         },
         {
-            "date": "2026-06-24",
-            "title": "Kick Off Meeting",
+            "date": "2026-04-29",
+            "title": "PC4-Synchronic — Scientific Workshop",
             "isMilestone": true
         },
         {
@@ -16,9 +22,50 @@
             "isMilestone": true
         },
         {
+            "date": "2026-06-24",
+            "title": "Kick Off Meeting",
+            "isMilestone": true,
+            "programMilestone": true
+        },
+        {
+            "date": "2027-07-15",
+            "title": "Scientific summer school",
+            "programMilestone": true,
+            "timeLabel": "2027/Q3"
+        },
+        {
+            "date": "2028-01-01",
+            "title": "Presentation Platform & Demonstrators (PoC)",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2028/Q1"
+        },
+        {
+            "date": "2030-01-01",
+            "title": "Demonstration Platform & Demonstrators (Prototype)",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2030/Q1"
+        },
+        {
+            "date": "2031-07-01",
+            "title": "Demonstration Platform & Demonstrators (Pilot)",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2031/Q3"
+        },
+        {
+            "date": "2031-12-30",
+            "title": "Final Platform & Demonstrators review",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2031/Q4"
+        },
+        {
             "date": "2031-12-31",
             "title": "End of program",
-            "isMilestone": true
+            "isMilestone": true,
+            "programMilestone": true
         }
     ]
 }

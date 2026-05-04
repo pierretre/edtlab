@@ -2,23 +2,70 @@
     "items": [
         {
             "date": "2026-01-01",
-            "title": "T0 — Démarrage du programme",
+            "title": "T0-Démarrage du programme",
+            "isMilestone": true,
+            "programMilestone": true
+        },
+        {
+            "date": "2026-04-17",
+            "title": "PC2-DT Compose-Workshop scientifique",
+            "isMilestone": true
+        },
+        {
+            "date": "2026-04-29",
+            "title": "PC4-Synchronic-Workshop scientifique",
             "isMilestone": true
         },
         {
             "date": "2026-05-11",
-            "title": "PC1-Catalyst réunion de lancement",
+            "title": "PC1-Catalyst-Réunion de lancement",
             "isMilestone": true
         },
         {
             "date": "2026-06-24",
             "title": "Réunion de lancement",
-            "isMilestone": true
+            "isMilestone": true,
+            "programMilestone": true
+        },
+        {
+            "date": "2027-07-15",
+            "title": "Ecole d'été scientifique",
+            "programMilestone": true,
+            "timeLabel": "2027/T3"
+        },
+        {
+            "date": "2028-01-01",
+            "title": "Présentation Plateforme & Démonstrateurs (PoC)",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2028/T1"
+        },
+        {
+            "date": "2030-01-01",
+            "title": "Démonstration Plateforme & Démonstrateurs (Prototype)",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2030/T1"
+        },
+        {
+            "date": "2031-07-01",
+            "title": "Démonstration Plateforme & Démonstrateurs (Pilote)",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2031/T3"
+        },
+        {
+            "date": "2031-12-30",
+            "title": "Revue finale Plateforme & Démonstrateurs",
+            "isMilestone": true,
+            "programMilestone": true,
+            "timeLabel": "2031/T4"
         },
         {
             "date": "2031-12-31",
             "title": "Fin du programme",
-            "isMilestone": true
+            "isMilestone": true,
+            "programMilestone": true
         }
     ]
 }

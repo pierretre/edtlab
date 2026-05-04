@@ -1,0 +1,257 @@
+---
+import PageLayout from "./PageLayout.astro";
+import { linkHelpers, useTranslations } from "@i18n/utils";
+import { formatDate } from "@utils/./";
+
+export interface Props {
+    frontmatter: any;
+}
+
+const { frontmatter } = Astro.props;
+const lang = Astro.currentLocale as "en" | "fr";
+const t = useTranslations(lang);
+
+// originType label mapping
+const originTypeLabels: Record<string, Record<string, string>> = {
+    en: {
+        natural: 'Natural',
+        anthropic: 'Anthropic',
+        engineered: 'Engineered',
+        infrastructure: 'Infrastructure',
+        process: 'Process',
+    },
+    fr: {
+        natural: 'Naturel',
+        anthropic: 'Anthropique',
+        engineered: 'Ingéniéré',
+        infrastructure: 'Infrastructure',
+        process: 'Processus',
+    },
+};
+
+const usageLevelLabels: Record<string, Record<string, string>> = {
+    en: { reduced: 'Reduced', consortium: 'Consortium', public: 'Public' },
+    fr: { reduced: 'Réduit', consortium: 'Consortium', public: 'Public' },
+};
+
+const originTypeLabel = frontmatter.originType
+    ? (originTypeLabels[lang]?.[frontmatter.originType] ?? frontmatter.originType)
+    : null;
+
+const showUsageLevel = frontmatter.maturity === 'operational' && frontmatter.usageLevel;
+const usageLevelLabel = showUsageLevel
+    ? (usageLevelLabels[lang]?.[frontmatter.usageLevel] ?? frontmatter.usageLevel)
+    : null;
+
+// Check if any identity field is set
+const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontmatter.usagePhase ||
+    showUsageLevel || frontmatter.since ||
+    (frontmatter.users && frontmatter.users.length > 0) ||
+    (frontmatter.objectives && frontmatter.objectives.length > 0) ||
+    frontmatter.schema;
+---
+
+<PageLayout
+    title={frontmatter.title}
+    description={frontmatter.summary || t("site.description")}
+    lang={lang}
+    showBreadcrumb={true}
+    showToc={true}
+>
+    <!-- Back link -->
+    <div class="mb-6">
+        <a
+            href={linkHelpers.page(lang, "use-cases")}
+            class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
+        >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            {lang === 'fr' ? 'Retour aux cas d\'utilisation' : 'Back to Use Cases'}
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="mb-8">
+        <!-- Image -->
+        {frontmatter.photo && (
+            <div class="mb-6 rounded-lg overflow-hidden">
+                <img
+                    src={frontmatter.photo}
+                    alt={frontmatter.title}
+                    class="w-full h-64 object-cover"
+                    loading="lazy"
+                />
+            </div>
+        )}
+
+        <!-- Title + Version -->
+        <div class="flex items-baseline justify-between mb-2">
+            <h1 class="text-4xl font-bold text-gray-900">
+                {frontmatter.title}
+            </h1>
+            {frontmatter.version && <span class="text-sm text-gray-400">v{frontmatter.version}</span>}
+        </div>
+
+        <!-- Authors / Contacts — academic style -->
+        {frontmatter.contacts && frontmatter.contacts.length > 0 && (
+            <p class="text-base text-gray-600 mb-1">
+                {frontmatter.contacts.map((c: any, i: number) => (
+                    <span>
+                        <span class="font-medium text-gray-800">{c.name}</span>
+                        {c.org && <span class="text-gray-500"> ({c.org})</span>}
+                        {c.email && <a href={`mailto:${c.email}`} class="text-primary-600 hover:underline text-sm ml-1">{c.email}</a>}
+                        {i < frontmatter.contacts.length - 1 && <span class="text-gray-400 mx-1">·</span>}
+                    </span>
+                ))}
+            </p>
+        )}
+
+        <!-- ApprovedBy -->
+        {frontmatter.approvedBy && (
+            <p class="text-sm text-gray-500 italic mb-4">
+                Autorisation de mise à disposition accordée par {frontmatter.approvedBy.name}, {frontmatter.approvedBy.title}, {frontmatter.approvedBy.org}, le {frontmatter.approvedBy.date instanceof Date ? frontmatter.approvedBy.date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB') : frontmatter.approvedBy.date}.
+            </p>
+        )}
+
+        <!-- Meta badges -->
+        <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+            {frontmatter.domain && (
+                <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
+                    {frontmatter.domain}
+                </span>
+            )}
+            {frontmatter.maturity && (
+                <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                    {frontmatter.maturity}
+                </span>
+            )}
+        </div>
+
+        <!-- Identity Card section -->
+        {hasIdentityCard && (
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+                <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
+                    {t('use-case.identity.title')}
+                </h2>
+                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+
+                    {frontmatter.provider && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.provider')}</dt>
+                            <dd class="text-gray-800">{frontmatter.provider}</dd>
+                        </>
+                    )}
+
+                    {originTypeLabel && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.originType')}</dt>
+                            <dd class="text-gray-800">{originTypeLabel}</dd>
+                        </>
+                    )}
+
+                    {frontmatter.usagePhase && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.usagePhase')}</dt>
+                            <dd class="text-gray-800">{frontmatter.usagePhase}</dd>
+                        </>
+                    )}
+
+                    {showUsageLevel && usageLevelLabel && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.usageLevel')}</dt>
+                            <dd class="text-gray-800">{usageLevelLabel}</dd>
+                        </>
+                    )}
+
+                    {frontmatter.since && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.since')}</dt>
+                            <dd class="text-gray-800">
+                                {formatDate(frontmatter.since instanceof Date ? frontmatter.since : new Date(frontmatter.since), lang)}
+                            </dd>
+                        </>
+                    )}
+
+                    {frontmatter.users && frontmatter.users.length > 0 && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.users')}</dt>
+                            <dd class="text-gray-800">
+                                <ul class="list-none space-y-0.5">
+                                    {frontmatter.users.map((u: any) => (
+                                        <li>
+                                            {typeof u === 'string'
+                                                ? u
+                                                : (
+                                                    <span>
+                                                        <span class="font-medium">{u.name}</span>
+                                                        {u.role && <span class="text-gray-500"> — {u.role}</span>}
+                                                    </span>
+                                                )
+                                            }
+                                        </li>
+                                    ))}
+                                </ul>
+                            </dd>
+                        </>
+                    )}
+
+                    {frontmatter.objectives && frontmatter.objectives.length > 0 && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.objectives')}</dt>
+                            <dd class="text-gray-800">
+                                <ul class="list-disc list-inside space-y-0.5">
+                                    {frontmatter.objectives.map((obj: string) => (
+                                        <li>{obj}</li>
+                                    ))}
+                                </ul>
+                            </dd>
+                        </>
+                    )}
+
+                    {frontmatter.schema && (
+                        <>
+                            <dt class="text-gray-500 font-medium">{t('use-case.field.schema')}</dt>
+                            <dd class="col-span-full mt-2">
+                                <img
+                                    src={frontmatter.schema}
+                                    alt={`Schema — ${frontmatter.title}`}
+                                    class="max-w-full h-auto rounded border border-gray-200"
+                                    loading="lazy"
+                                />
+                            </dd>
+                        </>
+                    )}
+
+                </dl>
+            </div>
+        )}
+
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
+        <slot />
+
+    <!-- References from frontmatter -->
+    {frontmatter.references && frontmatter.references.length > 0 && (
+        <section class="mt-8">
+            <h2>Références</h2>
+            <ul>
+                {frontmatter.references.map((ref: any) => (
+                    <li>
+                        <strong>{ref.title}</strong>
+                        {ref.venue && <span> — {ref.venue}</span>}
+                        {ref.url && (
+                            <span>
+                                {' '}
+                                <a href={ref.url} target="_blank" rel="noopener noreferrer">lien</a>
+                            </span>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+    </div>
+</PageLayout>

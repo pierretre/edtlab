@@ -1,0 +1,207 @@
+---
+import { getCollection } from "astro:content";
+import { useTranslations } from "@i18n/utils";
+import UseCaseCard from "./UseCaseCard.astro";
+import FilterSidebar from "./FilterSidebar.astro";
+import { useCasesFilterConfig } from "@utils/filter-configs";
+
+interface Props {
+    lang: "en" | "fr";
+}
+
+const { lang } = Astro.props as Props;
+const t = useTranslations(lang);
+
+const allPublished = (await getCollection("use-cases", (item) =>
+    item.data.status === "published"
+)).sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime());
+
+// Group by id, keep latest version, prefer current lang, fallback to other lang
+const latestByUc = new Map<string, typeof allPublished[0]>();
+for (const uc of allPublished) {
+    const existing = latestByUc.get(uc.data.id);
+    if (!existing) {
+        latestByUc.set(uc.data.id, uc);
+    } else {
+        const existingIsPreferred = existing.data.lang === lang;
+        const newIsPreferred = uc.data.lang === lang;
+        // Prefer current lang over fallback
+        if (newIsPreferred && !existingIsPreferred) {
+            latestByUc.set(uc.data.id, uc);
+        }
+        // Same lang preference: keep latest version
+        else if (newIsPreferred === existingIsPreferred && (uc.data.version || '0') > (existing.data.version || '0')) {
+            latestByUc.set(uc.data.id, uc);
+        }
+    }
+}
+const useCases = [...latestByUc.values()].sort((a, b) =>
+    b.data.publishedDate.getTime() - a.data.publishedDate.getTime()
+);
+
+// Stats
+const totalCount = useCases.length;
+const domainCounts = new Map<string, number>();
+const maturityCounts = new Map<string, number>();
+for (const uc of useCases) {
+    const d = uc.data.domain || 'other';
+    domainCounts.set(d, (domainCounts.get(d) || 0) + 1);
+    const m = uc.data.maturity || 'unknown';
+    maturityCounts.set(m, (maturityCounts.get(m) || 0) + 1);
+}
+
+const domainLabels: Record<string, Record<string, string>> = {
+    energy: { en: "Energy", fr: "Énergie" },
+    geospatial: { en: "Geospatial", fr: "Géospatial" },
+    'industrial-engineering': { en: "Industrial Eng.", fr: "Ing. Industrielle" },
+    maritime: { en: "Maritime", fr: "Maritime" },
+    telecommunications: { en: "Telecom", fr: "Télécom" },
+};
+const maturityLabels: Record<string, Record<string, string>> = {
+    concept: { en: "Concept", fr: "Concept" },
+    poc: { en: "PoC", fr: "PoC" },
+    prototype: { en: "Prototype", fr: "Prototype" },
+    operational: { en: "Operational", fr: "Opérationnel" },
+};
+---
+
+<!-- Stats bar -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 mb-6">
+            <div class="bg-white border rounded-lg p-4 text-center">
+                <p class="text-3xl font-bold text-primary-600">{totalCount}</p>
+                <p class="text-sm text-gray-500">{t("use-cases.stats.total" as any)}</p>
+            </div>
+            <div class="bg-white border rounded-lg p-4 text-center">
+                <p class="text-3xl font-bold text-primary-600">{domainCounts.size}</p>
+                <p class="text-sm text-gray-500">{t("use-cases.stats.domains" as any)}</p>
+            </div>
+            <div class="bg-white border rounded-lg p-4 col-span-2">
+                <div class="flex flex-wrap gap-2">
+                    {[...domainCounts.entries()].sort((a, b) => b[1] - a[1]).map(([domain, count]) => (
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700">
+                            {domainLabels[domain]?.[lang] || domain}
+                            <span class="font-semibold">{count}</span>
+                        </span>
+                    ))}
+                </div>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    {[...maturityCounts.entries()].sort((a, b) => {
+                        const order = ['concept', 'poc', 'prototype', 'operational'];
+                        return order.indexOf(a[0]) - order.indexOf(b[0]);
+                    }).map(([maturity, count]) => (
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-50 text-blue-700">
+                            {maturityLabels[maturity]?.[lang] || maturity}
+                            <span class="font-semibold">{count}</span>
+                        </span>
+                    ))}
+                </div>
+            </div>
+    </div>
+</div>
+
+<!-- Filters + Grid -->
+<div class="flex flex-col lg:flex-row gap-6 mt-6">
+        <!-- Sidebar -->
+        <FilterSidebar
+            filters={useCasesFilterConfig.filters}
+            lang={lang}
+            clearButtonText={t("filter.clear")}
+        />
+
+        <!-- Main content -->
+        <main class="flex-1">
+            <!-- Results Count -->
+            <div class="mb-6 text-sm text-gray-600 text-center">
+                <span
+                    id="results-count"
+                    data-template={t("use-cases.results-count" as any)}
+                >
+                    {(t("use-cases.results-count" as any) as string).replace("{count}", useCases.length.toString())}
+                </span>
+            </div>
+
+            <div
+                id="use-cases-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+                {useCases.map((uc) => (
+                    <UseCaseCard
+                        item={uc.data}
+                        body={uc.body}
+                        lang={lang}
+                        t={t}
+                        slug={uc.slug}
+                    />
+                ))}
+            </div>
+
+            <!-- No Results Message -->
+            <div id="no-results" class="hidden text-center py-32">
+                <div class="max-w-md mx-auto">
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">
+                        {t("use-cases.no-results" as any)}
+                    </h3>
+                    <p class="mt-2 text-gray-500">
+                        {t("use-cases.no-results-description" as any)}
+                    </p>
+                </div>
+            </div>
+        </main>
+</div>
+
+<script>
+    import { FilterManagerImpl } from "@utils/filtering";
+    import { useCasesFilterConfig } from "@utils/filter-configs";
+
+    let filterManager: FilterManagerImpl | null = null;
+
+    function applySorting() {
+        const sortEl = document.getElementById("sort-filter") as HTMLSelectElement;
+        if (!sortEl) return;
+
+        const sortVal = sortEl.value;
+        const list = document.querySelector("#use-cases-grid");
+        if (!list) return;
+
+        const children = Array.from(list.querySelectorAll(".use-case-item"));
+        children.sort((a, b) => {
+            const aEl = a as HTMLElement;
+            const bEl = b as HTMLElement;
+            const ad = parseInt(aEl.dataset.date || "0", 10);
+            const bd = parseInt(bEl.dataset.date || "0", 10);
+
+            if (sortVal === "date-desc") return bd - ad;
+            if (sortVal === "date-asc") return ad - bd;
+
+            const at = (aEl.dataset.title || "").toLowerCase();
+            const bt = (bEl.dataset.title || "").toLowerCase();
+            if (sortVal === "title-asc") return at.localeCompare(bt);
+            if (sortVal === "title-desc") return bt.localeCompare(at);
+
+            return bd - ad;
+        });
+
+        children.forEach((c) => list.appendChild(c));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        filterManager = new FilterManagerImpl(useCasesFilterConfig);
+
+        const originalApplyFilters = filterManager.applyFilters.bind(filterManager);
+        filterManager.applyFilters = function () {
+            originalApplyFilters();
+            applySorting();
+        };
+
+        filterManager.initialize();
+
+        const sortFilter = document.getElementById("sort-filter");
+        if (sortFilter) {
+            sortFilter.addEventListener("change", () => {
+                applySorting();
+            });
+        }
+
+        applySorting();
+    });
+</script>

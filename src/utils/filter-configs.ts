@@ -391,6 +391,90 @@ export const newsFilterConfig: FilterSystemConfig<DOMItemData> = {
 };
 
 /**
+ * Filter configuration for use cases
+ * 
+ * Provides filtering by:
+ * - Domain (energy, geospatial, industrial-engineering, maritime, telecommunications)
+ * - Maturity (concept, poc, prototype, operational)
+ * - Sort (date-desc, date-asc, title-asc, title-desc)
+ * - Search (title, description)
+ * 
+ * Expected data attributes on use case items:
+ * - data-domain: The use case domain (energy, geospatial, etc.)
+ * - data-maturity: The use case maturity level (concept, poc, prototype, operational)
+ * - data-search-text: Combined searchable text (title, description)
+ * 
+ * @example
+ * ```typescript
+ * import { useCasesFilterConfig } from './filter-configs';
+ * import { FilterManagerImpl } from './filtering';
+ * 
+ * const filterManager = new FilterManagerImpl(useCasesFilterConfig);
+ * filterManager.initialize();
+ * ```
+ */
+export const useCasesFilterConfig: FilterSystemConfig<DOMItemData> = {
+    filters: [
+        {
+            id: 'maturity-filter',
+            type: 'select',
+            label: 'Maturity',
+            translationKey: 'use-cases.filter.maturity',
+            options: [
+                { value: '', label: 'All Maturities', translationKey: 'use-cases.filter.all-maturities' },
+                { value: 'concept', label: 'Concept', translationKey: 'use-cases.maturity.concept' },
+                { value: 'poc', label: 'Proof of Concept', translationKey: 'use-cases.maturity.poc' },
+                { value: 'prototype', label: 'Prototype', translationKey: 'use-cases.maturity.prototype' },
+                { value: 'operational', label: 'Operational', translationKey: 'use-cases.maturity.operational' }
+            ],
+            predicate: (data, value) => {
+                if (!value) return true;
+                return (data.maturity || '').toLowerCase() === value.toLowerCase();
+            },
+            urlParam: 'maturity',
+            defaultValue: ''
+        },
+        {
+            id: 'sort-filter',
+            type: 'select',
+            label: 'Sort',
+            translationKey: 'use-cases.filter.sort',
+            options: [
+                { value: 'date-desc', label: 'Newest First', translationKey: 'use-cases.sort.date-desc' },
+                { value: 'date-asc', label: 'Oldest First', translationKey: 'use-cases.sort.date-asc' },
+                { value: 'title-asc', label: 'Title A-Z', translationKey: 'use-cases.sort.title-asc' },
+                { value: 'title-desc', label: 'Title Z-A', translationKey: 'use-cases.sort.title-desc' }
+            ],
+            predicate: () => true,
+            urlParam: 'sort',
+            defaultValue: 'date-desc'
+        },
+        {
+            id: 'search-filter',
+            type: 'search',
+            label: 'Search',
+            translationKey: 'use-cases.filter.search',
+            placeholder: 'Search use cases...',
+            placeholderTranslationKey: 'use-cases.filter.search-placeholder',
+            predicate: (data, value) => {
+                if (!value) return true;
+                const searchText = (data.searchText || '').toLowerCase();
+                const words = value.toLowerCase().split(/\s+/).filter(Boolean);
+                return words.every(word => searchText.includes(word));
+            },
+            urlParam: 'search',
+            debounce: 200,
+            defaultValue: ''
+        }
+    ],
+    itemSelector: '.use-case-item',
+    containerSelector: '#use-cases-grid',
+    noResultsSelector: '#no-results',
+    resultsCountSelector: '#results-count',
+    clearButtonSelector: '#clear-filters'
+};
+
+/**
  * Helper function to extract unique years from publications
  * Useful for dynamically populating the year filter options
  * 

@@ -6,8 +6,9 @@ export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const baseEntries = await generateBasePagesStaticPaths();
     const newsEntries = await generateNewsPagesStaticPaths();
     const jobOfferEntries = await generateJobOffersStaticPaths();
+    const useCaseEntries = await generateUseCasesStaticPaths();
 
-    return [...baseEntries, ...newsEntries, ...jobOfferEntries];
+    return [...baseEntries, ...newsEntries, ...jobOfferEntries, ...useCaseEntries];
 }
 
 /**
@@ -88,6 +89,41 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
             });
 
             const linkFR = getContentLink("fr", "job-offers", entry.slug, true);
+            pages.push({
+                params: {
+                    lang: "fr",
+                    slug: linkFR,
+                },
+                props: {
+                    page: entry
+                },
+            });
+        });
+    return pages;
+}
+
+/**
+ * Generate static paths for use case pages
+ * @returns Array of static path entries
+ */
+async function generateUseCasesStaticPaths(): Promise<any[]> {
+    const allEntries = await getCollection("use-cases");
+
+    let pages: any[] = [];
+    allEntries.forEach(
+        (entry: CollectionEntry<"use-cases">) => {
+            const linkEN = getContentLink("en", "use-cases", entry.slug, true);
+            pages.push({
+                params: {
+                    lang: "en",
+                    slug: linkEN,
+                },
+                props: {
+                    page: entry
+                },
+            });
+
+            const linkFR = getContentLink("fr", "use-cases", entry.slug, true);
             pages.push({
                 params: {
                     lang: "fr",

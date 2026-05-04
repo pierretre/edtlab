@@ -140,7 +140,7 @@ const badges = [
         {
             frontmatter.newsType === "event" && (frontmatter as any).icsPath ? (
                 <div class="flex justify-start mt-2">
-                    <AddToCalendarButton icsPath={(frontmatter as any).icsPath} />
+                    <AddToCalendarButton icsPath={(frontmatter as any).icsPath} label={t("news-item.add-to-calendar")} />
                 </div>
             ) : null
         }
