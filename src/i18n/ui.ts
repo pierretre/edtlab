@@ -175,6 +175,10 @@ export const ui = {
         'badge.at3': 'AT3',
         'badge.at4': 'AT4',
         'badge.at5': 'AT5',
+        'badge.concept': 'Concept',
+        'badge.poc': 'PoC',
+        'badge.prototype': 'Prototype',
+        'badge.operational': 'Operational',
 
         // News
         'news.no-results': 'No news items found matching your criteria.',
@@ -492,6 +496,10 @@ export const ui = {
         'badge.at3': 'AT3',
         'badge.at4': 'AT4',
         'badge.at5': 'AT5',
+        'badge.concept': 'Concept',
+        'badge.poc': 'PoC',
+        'badge.prototype': 'Prototype',
+        'badge.operational': 'Opérationnel',
 
         // News
         'news.no-results': 'Aucune actualité trouvée correspondant à vos critères.',

@@ -22,6 +22,10 @@ const BACKGROUND_COLORS = {
     at5: "bg-tertiary-200",
     workshop: "bg-marzipan-50",
     seminar: "bg-blue-bell-50",
+    concept: "bg-blue-bell-50",
+    poc: "bg-blue-bell-50",
+    prototype: "bg-blue-bell-50",
+    operational: "bg-blue-bell-50",
     default: "bg-gray-100",
 } as const;
 
@@ -43,6 +47,10 @@ const COLORS = {
     at5: "text-tertiary-900",
     workshop: "text-marzipan-700",
     seminar: "text-blue-bell-700",
+    concept: "text-blue-bell-700",
+    poc: "text-blue-bell-700",
+    prototype: "text-blue-bell-700",
+    operational: "text-blue-bell-700",
     default: "text-gray-800"
 } as const;
 
