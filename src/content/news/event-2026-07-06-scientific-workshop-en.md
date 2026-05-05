@@ -4,14 +4,14 @@ lang: en
 date: 2026-07-06
 newsType: event
 location: Inria Centre Rennes
+description: 1st EDT Scientific Workshop at Inria Centre Rennes, from July 6
+  (noon) to July 8 (after lunch), 2026.
 photo: /media/uploads/edt.png
-icsPath: /calendar/scientific-workshop-2026-07-06.ics
-description: 1st EDT Scientific Workshop at Inria Centre Rennes, from July 6 (noon) to July 8 (after lunch), 2026.
 tags:
   - AT1
   - workshop
+icsPath: /calendar/scientific-workshop-2026-07-06.ics
 ---
-
 # Workshop Description and Objectives
 
 This EDT scientific workshop aims to bring together all the scientific community involved in the EDT program to collectively share, discuss, and refine the overarching scientific vision of EDT. It will provide a unique opportunity to align perspectives, identify common challenges, and strengthen synergies across projects.
@@ -20,42 +20,63 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 # Logistics
 
-- When: from July 6th, 2026 at noon to July 8th, 2026, after lunch. 
-- Where: Inria, centre de l'Université de Rennes ([how to get there](https://www.inria.fr/en/how-reach-inria-centre-rennes-university)), Centre de conférences
-- Warning: you might need an ID card to enter the center
-- Coffee breaks, lunches and dinners provided
+* When: from July 6th, 2026 at noon to July 8th, 2026, after lunch. 
+* Where: Inria, centre de l'Université de Rennes ([how to get there](https://www.inria.fr/en/how-reach-inria-centre-rennes-university)), Centre de conférences
+* Warning: you might need an ID card to enter the center
+* Coffee breaks, lunches and dinners provided
 
 # Program
 
-## July 6th: 
+## July 6th:
 
 12h30 – 13h30 : Welcome buffet (on campus)
+
 13h30 – 14h00 : Workshop introduction
+
 14h00 – 15h00 : Overview of the focused projects and associated PhD topics
-15h00 – 15h30 : _coffee break_
+
+15h00 – 15h30 : *coffee break*
+
 15h30 – 17h00 : Topics identification, working groups definition, and ellicitation of the expected outcomes
+
 16h00 – 17h00 : Working groups (e.g., refinement of the topic and the expected outcomes)
+
 17h00 – 17h30 : Plenary session (reporting)
+
 19h30 - 22h30 : Dinner (info provided ASAP)
 
-## July 7th: 
+## July 7th:
 
 09h00 - 10h00 : Keynote
+
 10h00 - 10h30 : Overview of the cross-cutting actions and working groups
-10h30 - 11h00 : _coffee break_
+
+10h30 - 11h00 : *coffee break*
+
 11h00 - 12h30 : Working groups
-12h30 – 13h30 : _lunch_ (buffet on campus)
+
+12h30 – 13h30 : *lunch* (buffet on campus)
+
 13h30 – 15h00 : Working groups
-15h00 – 15h30 : _coffee break_
+
+15h00 – 15h30 : *coffee break*
+
 15h30 – 17h00 : Working groups
+
 17h00 – 17h30 : Plenary session (reporting)
+
 19h30 - 22h30 : Dinner (info provided ASAP)
 
-## July 8th: 
+## July 8th:
 
 09h00 - 10h00 : Keynote
+
 10h00 - 10h30 : Plenary session (administrative informations) 
-10h30 - 11h00 : _coffee break_
+
+10h30 - 11h00 : *coffee break*
+
 11h00 - 12h00 : Plenary session (action plan)
+
 12h00 - 12h30 : Plenary session (action plan)
-12h30 – 13h30 : _lunch_ (buffet on campus)
+
+12h30 – 13h30 : *lunch* (buffet on campus)
