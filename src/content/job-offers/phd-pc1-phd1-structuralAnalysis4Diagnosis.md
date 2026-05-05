@@ -113,13 +113,15 @@ The candidate will work in a research environment combining expertise in:
 
 ## Application Process
 
-Please submit the following documents:
+Please [submit](https://recrutement.inria.fr/public/classic/en/offres/2026-10040) the following documents:
 
 1. **Cover Letter** describing your motivation and research interests
 2. **Curriculum Vitae**
 3. **Academic Transcripts**
 4. **Short Research Statement** (1–2 pages)
 5. **Contact information for two academic references**
+
+Applications should be sent using Inria's [job offer](https://recrutement.inria.fr/public/classic/en/offres/2026-10040) portal.
 
 ## Funding and Benefits
 
@@ -130,7 +132,7 @@ Please submit the following documents:
 ## Contact Information
 
 **Supervisor**: Benoit Caillaud  
-**Institution**: Inria, Hycomes  
+**Institution**: Inria, [Hycomes](https://team.inria.fr/hycomes/)  
 **Email**: benoit.caillaud@inria.fr
 
 ## About the EDT Program
