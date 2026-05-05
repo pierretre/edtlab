@@ -8,6 +8,8 @@ authors:
 type: "journal"
 year: 2020
 venue: "IEEE Communications Magazine, 58(7):42–43"
+doi: "10.1109/mcom.2020.9161993"
+url: "https://doi.org/10.1109/mcom.2020.9161993"
 tags: []
 origin: "external"
 ---
