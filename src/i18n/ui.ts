@@ -196,6 +196,17 @@ export const ui = {
         'news-item.location': 'Location',
         'news-item.add-to-calendar': 'Add to my calendar',
 
+        // Badges
+        'badge.event': 'Event',
+        'badge.press-release': 'Press release',
+        'badge.workshop': 'Workshop',
+        'badge.seminar': 'Seminar',
+        'badge.at1': 'AT1',
+        'badge.at2': 'AT2',
+        'badge.at3': 'AT3',
+        'badge.at4': 'AT4',
+        'badge.at5': 'AT5',
+
         // Use Cases
         'use-cases.results-count': 'Showing {count} use cases',
         'use-cases.no-results': 'No use cases found matching your criteria.',
@@ -505,6 +516,17 @@ export const ui = {
         'news-item.date': 'Date',
         'news-item.location': 'Lieu',
         'news-item.add-to-calendar': 'Ajouter à mon calendrier',
+
+        // Badges
+        'badge.event': 'Événement',
+        'badge.press-release': 'Communiqué',
+        'badge.workshop': 'Atelier',
+        'badge.seminar': 'Séminaire',
+        'badge.at1': 'AT1',
+        'badge.at2': 'AT2',
+        'badge.at3': 'AT3',
+        'badge.at4': 'AT4',
+        'badge.at5': 'AT5',
 
         // Use Cases
         'use-cases.results-count': 'Affichage de {count} cas d\'utilisation',

@@ -8,9 +8,9 @@ description: Building Block Gemseo presentation by Jean-Christophe GIRET. May 5,
 photo: https://gemseo.readthedocs.io/en/stable/_images/gemseo_schema.png
 icsPath: /calendar/seminaire-gemseo-2026-05-05.ics
 tags:
-  - AT1
-  - Seminar
-  - Building Blocks
+  - at1
+  - seminar
+  - building-blocks
 ---
 
 The **EDT** seminar will take place on **May 5, 2026, from 3:30 to 4:30 PM (UTC)**, by videoconference.
