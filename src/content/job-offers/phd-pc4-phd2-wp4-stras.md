@@ -3,7 +3,7 @@ title: "Digital Twins for Wireless Networks" # Avoid accents in title
 type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
 location: "Strasbourg, France"
 expectedStartDate: "September - December 2026"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
-publishedDate: 2026-04-02  # Date when job offer was published in YYYY-MM-DD format
+publishedDate: 2026-05-01  # Date when job offer was published in YYYY-MM-DD format
 filled: false  # Position availability status: true if position is filled, false if still available
 description: "This PhD investigates the design of digital twins for wireless networks, aiming to develop frugal data collection and closed-loop control mechanisms that translate predictions into actionable adaptations within low-power wireless systems." # Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below.
 requirements: ["Master degree in Computer Science (CS) or Electrical and Computer Engineering (ECE)", "Excellent programming skills in C, and embedding programming", "Knowledge of at least one scripting language, preferentially Python", "Statistics and measurements", "Wireless networks (protocols and radio propagation)", "Knowlegde of Wi-Fi and LoRa would be an asset", "Machine learning and deep learning algorithms (as a user)", "Good verbal and written English skills. French is not a requirement"] # Some requirements in a list
