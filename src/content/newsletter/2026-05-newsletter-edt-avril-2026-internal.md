@@ -7,17 +7,17 @@ recipients: Internal
 ## Communication
 
 **Ouverture de la chaîne Canal-U EDT**
-Ouverture de [la chaîne EDT sur Canal-U](https://www.canal-u.tv/chaines/edt), et diffusion de la première vidéo du séminaire BB Isamdae.
+Ouverture de [la chaîne EDT sur Canal-U](https://www.canal-u.tv/chaines/edt), et diffusion de la première vidéo du séminaire BB [IsamDAE](https://team.inria.fr/hycomes/software/isamdae/).
 
 ## Ce mois-ci (avril 2026)
 
 * **2 avril 2026 (Paris, Parc des Expositions)** : Digital Twin à BIM World — Village Digital Twin et présentation générale du programme JNFT, avec la présence de nombreuses plateformes (Dassault, Bentley...).
 
-* **7 avril 2026 (visio)** : **Premier séminaire Building Block — Isamdae**. Benoit CAILLAUD (Inria/Hycomes) a présenté [Isamdae](https://team.inria.fr/hycomes/software/isamdae/), un outil d'analyse structurelle des systèmes d'équations algébro-différentielles (DAE) essentiel à la robustesse de la simulation de modèles physiques complexes. [Replay sur Canal-U](https://www.canal-u.tv/chaines/edt/seminar-building-blocks-isamdae). Tous les replays des séminaires EDT sont disponibles sur la [chaîne Canal-U EDT](https://www.canal-u.tv/chaines/edt/).
+* **7 avril 2026 (visio)** : **Premier séminaire Building Block — Isamdae**. Benoit CAILLAUD (Inria/Hycomes) a présenté [Isamdae](https://team.inria.fr/hycomes/software/isamdae/), un outil d'analyse structurelle des systèmes d'équations algébro-différentielles (DAE) essentiel à la robustesse de la simulation de modèles physiques complexes. [Replay sur Canal-U](https://www.canal-u.tv/chaines/edt/seminar-building-blocks-isamdae). Tous les replays des séminaires EDT sont disponibles sur la [chaîne Canal-U EDT](https://www.canal-u.tv/chaines/edt/). [Page événement EDT](https://edtlab.fr/fr/actualites/event-2026-04-07-bb-isamdae-fr).
 
 * **17 avril 2026 (Paris, Inria)** : Workshop scientifique PC2-DT Compose — partages sur les outils des partenaires du PC2.
 
-* **29 avril 2026 (Paris, Inria)** : Workshop scientifique PC4-Synchronic.
+* **29 avril 2026 (Paris, Inria)** : Workshop scientifique PC4/WP1-Synchronic.
 
 ## Le mois prochain (mai 2026)
 
@@ -33,9 +33,9 @@ Ouverture de [la chaîne EDT sur Canal-U](https://www.canal-u.tv/chaines/edt), e
 
 * **6 au 8 juillet 2026 (Rennes, Centre Inria)** : 1er **Workshop scientifique EDT** — Réunion de la communauté académique du programme. Du lundi 6 juillet (à partir de midi) au mercredi 8 juillet (jusqu'après le déjeuner). *Réservé aux membres des PCs.* [Page événement et bouton calendrier](https://edtlab.fr/fr/actualites/event-2026-07-06-scientific-workshop-fr).
 
-* **1er septembre 2026 (visio)** : **Séminaire Building Block — OpenFlexo** par Sylvain GUERIN (IMT Atlantique).
+* **1er septembre 2026 (visio)** : **Séminaire Building Block — [OpenFlexo](https://openflexo.org/)** par Sylvain GUERIN (IMT Atlantique).
 
-* **17–18 novembre 2026** : Participation de Guy DE SPIEGELEER à NAFEMS France.
+* **17–18 novembre 2026** : Participation de Guy DE SPIEGELEER à [NAFEMS France](https://www.nafems.org/events/nafems/2026/nafems-france-conference/?srsltid=AfmBOooxUj7ovnn8zC--UpfnaFSe5iwlyiLyYazL5z7j0nYoVoxuXni9).
 
 ---
 
