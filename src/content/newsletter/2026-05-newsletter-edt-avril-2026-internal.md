@@ -25,6 +25,8 @@ Ouverture de [la chaîne EDT sur Canal-U](https://www.canal-u.tv/chaines/edt), e
 
 * **11 mai 2026** : Kickoff PC1 (Catalyst) — 09h00-12h00, en visio : [visio.numerique.gouv.fr](https://visio.numerique.gouv.fr/gbu-jcho-fil).
 
+* **18 mai 2026 (Palaiseau, CEA)** : Workshop scientifique PC3-TwinOps.
+
 ## Événements à venir
 
 * **24 juin 2026 (Paris, Centre Inria)** : Réunion de lancement EDT (« kickoff ») — lancement officiel du programme (partenaires académiques, industriels et institutionnels).
