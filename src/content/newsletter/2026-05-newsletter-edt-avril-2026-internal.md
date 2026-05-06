@@ -1,6 +1,6 @@
 ---
 title: Newsletter EDT - Avril 2026
-date: 2026-05-05T18:00:00.000+02:00
+date: 2026-05-06T14:00:00.000+02:00
 recipients: Internal
 ---
 
@@ -21,9 +21,9 @@ Ouverture de [la chaîne EDT sur Canal-U](https://www.canal-u.tv/chaines/edt), e
 
 ## Le mois prochain (mai 2026)
 
-* **5 mai 2026 (17h30-18h30, visio)** : **Séminaire Building Block — Gemseo** par Jean-Christophe GIRET (IRT Saint-Exupéry). Présentation de [Gemseo](https://gemseo.readthedocs.io/en/stable/), bibliothèque Python open source dédiée à l'automatisation de processus multidisciplinaires et à l'optimisation de systèmes complexes couplant plusieurs domaines physiques. [Page événement + lien visio](https://edtlab.fr/fr/actualites/event-2026-05-05-bb-gemseo-fr).
+* **5 mai 2026 (17h30-18h30, visio)** : **Séminaire Building Block — Gemseo** par Jean-Christophe GIRET (IRT Saint-Exupéry). Présentation de [Gemseo](https://gemseo.readthedocs.io/en/stable/), bibliothèque Python open source dédiée à l'automatisation de processus multidisciplinaires et à l'optimisation de systèmes complexes couplant plusieurs domaines physiques. [Page événement](https://edtlab.fr/fr/actualites/event-2026-05-05-bb-gemseo).
 
-* **11 mai 2026** : Kickoff PC1 (Catalyst) — 09h00-12h00, en visio : [visio.numerique.gouv.fr](https://visio.numerique.gouv.fr/gbu-jcho-fil).
+* **11 mai 2026** : Kickoff PC1 (Catalyst) — 09h00-12h00, en visio.
 
 * **18 mai 2026 (Palaiseau, CEA)** : Workshop scientifique PC3-TwinOps.
 
@@ -31,7 +31,7 @@ Ouverture de [la chaîne EDT sur Canal-U](https://www.canal-u.tv/chaines/edt), e
 
 * **24 juin 2026 (Paris, Centre Inria)** : Réunion de lancement EDT (« kickoff ») — lancement officiel du programme (partenaires académiques, industriels et institutionnels).
 
-* **6 au 8 juillet 2026 (Rennes, Centre Inria)** : 1er **Workshop scientifique EDT** — Réunion de la communauté académique du programme. Du lundi 6 juillet (à partir de midi) au mercredi 8 juillet (jusqu'après le déjeuner). *Réservé aux membres des PCs.* [Page événement et bouton calendrier](https://edtlab.fr/fr/actualites/event-2026-07-06-scientific-workshop-fr).
+* **6 au 8 juillet 2026 (Rennes, Centre Inria)** : 1er **Workshop scientifique EDT** — Réunion de la communauté académique du programme. Du lundi 6 juillet (à partir de midi) au mercredi 8 juillet (jusqu'après le déjeuner). *Réservé aux membres des PCs.[Page événement](https://edtlab.fr/fr/actualites/event-2026-07-06-scientific-workshop).
 
 * **1er septembre 2026 (visio)** : **Séminaire Building Block — [OpenFlexo](https://openflexo.org/)** par Sylvain GUERIN (IMT Atlantique).
 
