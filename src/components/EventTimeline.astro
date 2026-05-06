@@ -38,11 +38,8 @@ const eventItems: TimelineItem[] = allEvents.map(e => ({
 const allItems = [...calendarItems, ...eventItems].sort((a, b) => a.date.getTime() - b.date.getTime());
 const now = new Date();
 
-const todayLabel = lang === "fr" ? "Aujourd'hui" : "Today";
-
 const COLOR_ITEM = "#665BA7";       // primary brand violet — single color for all items
 const COLOR_PAST = "#737373";
-const COLOR_TODAY = "#ef4444";
 
 // ---- Time-proportional axis ----------------------------------------------
 const INNER_WIDTH = 4800;          // px -- ~80px per month over ~5 years
@@ -136,22 +133,9 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
         </button>
 
         <div id="tl-scroll" class="overflow-x-auto px-12 tl-scrollbar cursor-grab">
-            <div class="relative" style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
+            <div id="tl-inner" class="relative" data-today-x={todayX} style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
 
-                <!-- Today marker line + badge -->
-                <div
-                    id="tl-today-marker"
-                    class="absolute z-10 pointer-events-none"
-                    style={`left: ${todayX}px; top: 0; width: 2px; height: ${TOTAL_HEIGHT}px; background-color: ${COLOR_TODAY};`}
-                ></div>
-                <div
-                    class="absolute z-20 pointer-events-none"
-                    style={`left: ${todayX}px; top: 0; transform: translateX(-50%);`}
-                >
-                    <span class="text-[10px] px-1 rounded text-white" style={`background-color: ${COLOR_TODAY};`}>{todayLabel}</span>
-                </div>
-
-                <!-- Above strip: items at even index (0, 2, 4, ...) -->
+                <!-- Above strip: items at even index (0, 2, 4, ...) — title at bottom (near pivot/dot) -->
                 <div class="absolute left-0 right-0" style={`top: 0; height: ${ABOVE_LANE_HEIGHT}px;`}>
                     {positionedItems.map(({ item, x }, idx) => {
                         if (idx % 2 !== 0) return null;
@@ -159,11 +143,14 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                         const titleColor = past ? COLOR_PAST : COLOR_ITEM;
                         const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
                         return (
-                            <div class="absolute" style={`left: ${x}px; bottom: 12px;`}>
-                                <div class="-rotate-45 origin-bottom-left ml-2 whitespace-nowrap">
+                            <div class="absolute" style={`left: ${x}px; bottom: 6px;`}>
+                                <div class="-rotate-45 origin-bottom-left whitespace-nowrap">
                                     <time class="text-[10px] font-mono block text-gray-500">
                                         {item.timeLabel ?? fmtDate(item.date)}
                                     </time>
+                                    {item.location && (
+                                        <span class="text-[10px] text-gray-500 block">{item.location}</span>
+                                    )}
                                     {href ? (
                                         <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
                                             {item.title}
@@ -172,9 +159,6 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                                         <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
                                             {item.title}
                                         </span>
-                                    )}
-                                    {item.location && (
-                                        <span class="text-[10px] text-gray-500 block mt-0.5">{item.location}</span>
                                     )}
                                 </div>
                             </div>
@@ -217,7 +201,7 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                     })}
                 </div>
 
-                <!-- Below strip: items at odd index (1, 3, 5, ...) -->
+                <!-- Below strip: items at odd index (1, 3, 5, ...) — title at top (near pivot/dot) -->
                 <div class="absolute left-0 right-0" style={`top: ${ABOVE_LANE_HEIGHT + AXIS_HEIGHT}px; height: ${BELOW_LANE_HEIGHT}px;`}>
                     {positionedItems.map(({ item, x }, idx) => {
                         if (idx % 2 !== 1) return null;
@@ -225,11 +209,8 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                         const titleColor = past ? COLOR_PAST : COLOR_ITEM;
                         const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
                         return (
-                            <div class="absolute" style={`left: ${x}px; top: 12px;`}>
-                                <div class="rotate-45 origin-top-left ml-2 whitespace-nowrap">
-                                    <time class="text-[10px] font-mono block text-gray-500">
-                                        {item.timeLabel ?? fmtDate(item.date)}
-                                    </time>
+                            <div class="absolute" style={`left: ${x}px; top: 6px;`}>
+                                <div class="rotate-45 origin-top-left whitespace-nowrap">
                                     {href ? (
                                         <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
                                             {item.title}
@@ -239,8 +220,11 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                                             {item.title}
                                         </span>
                                     )}
+                                    <time class="text-[10px] font-mono block text-gray-500">
+                                        {item.timeLabel ?? fmtDate(item.date)}
+                                    </time>
                                     {item.location && (
-                                        <span class="text-[10px] text-gray-500 block mt-0.5">{item.location}</span>
+                                        <span class="text-[10px] text-gray-500 block">{item.location}</span>
                                     )}
                                 </div>
                             </div>
@@ -282,13 +266,13 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
         c.addEventListener('mouseup', () => { down = false; c.style.cursor = 'grab'; });
         c.addEventListener('mousemove', (e) => { if (!down) return; e.preventDefault(); c.scrollLeft = sl - (e.pageX - sx); });
 
-        // Auto-scroll to center today on load
+        // Auto-scroll to center today on load (uses data-today-x attribute, no DOM marker)
         requestAnimationFrame(() => {
-            const todayMarker = document.getElementById('tl-today-marker');
-            if (todayMarker && c) {
-                const todayLeft = todayMarker.offsetLeft;
+            const inner = document.getElementById('tl-inner');
+            if (inner && c) {
+                const todayX = parseFloat(inner.dataset.todayX || '0');
                 const containerWidth = c.clientWidth;
-                c.scrollLeft = Math.max(0, todayLeft - containerWidth / 2);
+                c.scrollLeft = Math.max(0, todayX - containerWidth / 2);
                 updateBtns();
             }
         });
