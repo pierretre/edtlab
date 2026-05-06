@@ -51,8 +51,8 @@ const COLOR_PAST = "#737373";
 const COLOR_TODAY = "#ef4444";
 
 // ---- Time-proportional axis ----------------------------------------------
-const INNER_WIDTH = 2400;          // px -- fixed inner width (~40px per month over ~5 years)
-const MIN_GAP_PX = 50;             // minimum px between displayed item positions
+const INNER_WIDTH = 3600;          // px -- fixed inner width (~60px per month over ~5 years)
+const MIN_GAP_PX = 130;            // minimum px between displayed item positions (matches rotated label width)
 
 // Time domain: spans min(items, today) to max(items, today + 6 months)
 const sixMonthsAhead = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
@@ -66,7 +66,7 @@ function timeToX(d: Date | number): number {
     return ((t - minMs) / spanMs) * INNER_WIDTH;
 }
 
-// Compute item positions with collision avoidance (>= 50 px between items)
+// Compute item positions with collision avoidance (>= MIN_GAP_PX between items)
 const positionedItems = allItems.map((item) => {
     const baseX = timeToX(item.date);
     return { item, baseX, x: baseX };
@@ -74,8 +74,8 @@ const positionedItems = allItems.map((item) => {
 for (let i = 1; i < positionedItems.length; i++) {
     const prev = positionedItems[i - 1];
     const cur = positionedItems[i];
-    while (cur.x - prev.x < MIN_GAP_PX) {
-        cur.x = cur.x + 5;
+    if (cur.x - prev.x < MIN_GAP_PX) {
+        cur.x = prev.x + MIN_GAP_PX;
     }
 }
 
