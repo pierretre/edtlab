@@ -26,39 +26,6 @@
             "title": "Réunion de lancement",
             "isMilestone": true,
             "programMilestone": true
-        },
-        {
-            "date": "2027-07-15",
-            "title": "Ecole d'été scientifique",
-            "programMilestone": true,
-            "timeLabel": "2027/T3"
-        },
-        {
-            "date": "2028-01-01",
-            "title": "Présentation Publique Plateforme & Démonstrateurs",
-            "isMilestone": true,
-            "programMilestone": true,
-            "timeLabel": "2028/T1"
-        },
-        {
-            "date": "2030-01-01",
-            "title": "Démonstration Publique Plateforme & Démonstrateurs",
-            "isMilestone": true,
-            "programMilestone": true,
-            "timeLabel": "2030/T1"
-        },
-        {
-            "date": "2031-07-01",
-            "title": "Démonstration Publique Plateforme & Démonstrateurs",
-            "isMilestone": true,
-            "programMilestone": true,
-            "timeLabel": "2031/T3"
-        },
-        {
-            "date": "2031-12-31",
-            "title": "Fin du programme",
-            "isMilestone": true,
-            "programMilestone": true
         }
     ]
 }
