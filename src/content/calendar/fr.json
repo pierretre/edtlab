@@ -13,7 +13,7 @@
         },
         {
             "date": "2026-04-29",
-            "title": "PC4-Synchronic-Workshop scientifique",
+            "title": "PC4/WP1-Synchronic-Workshop scientifique",
             "isMilestone": true
         },
         {
@@ -35,31 +35,24 @@
         },
         {
             "date": "2028-01-01",
-            "title": "Présentation Plateforme & Démonstrateurs (PoC)",
+            "title": "Présentation Publique Plateforme & Démonstrateurs",
             "isMilestone": true,
             "programMilestone": true,
             "timeLabel": "2028/T1"
         },
         {
             "date": "2030-01-01",
-            "title": "Démonstration Plateforme & Démonstrateurs (Prototype)",
+            "title": "Démonstration Publique Plateforme & Démonstrateurs",
             "isMilestone": true,
             "programMilestone": true,
             "timeLabel": "2030/T1"
         },
         {
             "date": "2031-07-01",
-            "title": "Démonstration Plateforme & Démonstrateurs (Pilote)",
+            "title": "Démonstration Publique Plateforme & Démonstrateurs",
             "isMilestone": true,
             "programMilestone": true,
             "timeLabel": "2031/T3"
-        },
-        {
-            "date": "2031-12-30",
-            "title": "Revue finale Plateforme & Démonstrateurs",
-            "isMilestone": true,
-            "programMilestone": true,
-            "timeLabel": "2031/T4"
         },
         {
             "date": "2031-12-31",
