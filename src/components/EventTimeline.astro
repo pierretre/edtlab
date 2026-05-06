@@ -98,16 +98,7 @@ for (const m of [3, 6, 9]) {
     }
 }
 
-const quarterStartMonth = (curQuarter - 1) * 3;
-const monthFmt = new Intl.DateTimeFormat(lang === "fr" ? "fr-FR" : "en-US", { month: "short" });
-for (let mOff = 1; mOff < 3; mOff++) {
-    const m = quarterStartMonth + mOff;
-    const d = new Date(curYear, m, 1);
-    const dMs = d.getTime();
-    if (dMs >= minMs && dMs <= maxMs) {
-        ticks.push({ x: timeToX(dMs), label: monthFmt.format(d), level: "month" });
-    }
-}
+// Month ticks intentionally omitted — kept only year + current-year quarter ticks for readability
 
 function fmtDate(date: Date): string {
     return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
@@ -135,7 +126,7 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
         <div id="tl-scroll" class="overflow-x-auto px-12 tl-scrollbar cursor-grab">
             <div id="tl-inner" class="relative" data-today-x={todayX} style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
 
-                <!-- Above strip: items at even index (0, 2, 4, ...) — title at bottom (near pivot/dot) -->
+                <!-- Above strip: items at even index (0, 2, 4, ...) — connector + title at bottom near dot -->
                 <div class="absolute left-0 right-0" style={`top: 0; height: ${ABOVE_LANE_HEIGHT}px;`}>
                     {positionedItems.map(({ item, x }, idx) => {
                         if (idx % 2 !== 0) return null;
@@ -143,25 +134,28 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                         const titleColor = past ? COLOR_PAST : COLOR_ITEM;
                         const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
                         return (
-                            <div class="absolute" style={`left: ${x}px; bottom: 6px;`}>
-                                <div class="-rotate-45 origin-bottom-left whitespace-nowrap">
-                                    <time class="text-[10px] font-mono block text-gray-500">
-                                        {item.timeLabel ?? fmtDate(item.date)}
-                                    </time>
-                                    {item.location && (
-                                        <span class="text-[10px] text-gray-500 block">{item.location}</span>
-                                    )}
-                                    {href ? (
-                                        <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
-                                            {item.title}
-                                        </a>
-                                    ) : (
-                                        <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
-                                            {item.title}
-                                        </span>
-                                    )}
+                            <>
+                                <div class="absolute" style={`left: ${x}px; bottom: 0; width: 1px; height: 12px; background-color: ${titleColor};`}></div>
+                                <div class="absolute" style={`left: ${x}px; bottom: 12px;`}>
+                                    <div class="-rotate-45 origin-bottom-left whitespace-nowrap">
+                                        <time class="text-[10px] font-mono block text-gray-500">
+                                            {item.timeLabel ?? fmtDate(item.date)}
+                                        </time>
+                                        {item.location && (
+                                            <span class="text-[10px] text-gray-500 block">{item.location}</span>
+                                        )}
+                                        {href ? (
+                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
+                                                {item.title}
+                                            </a>
+                                        ) : (
+                                            <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
+                                                {item.title}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                         );
                     })}
                 </div>
@@ -201,7 +195,7 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                     })}
                 </div>
 
-                <!-- Below strip: items at odd index (1, 3, 5, ...) — title at top (near pivot/dot) -->
+                <!-- Below strip: items at odd index (1, 3, 5, ...) — connector + title at top near dot -->
                 <div class="absolute left-0 right-0" style={`top: ${ABOVE_LANE_HEIGHT + AXIS_HEIGHT}px; height: ${BELOW_LANE_HEIGHT}px;`}>
                     {positionedItems.map(({ item, x }, idx) => {
                         if (idx % 2 !== 1) return null;
@@ -209,25 +203,28 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                         const titleColor = past ? COLOR_PAST : COLOR_ITEM;
                         const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
                         return (
-                            <div class="absolute" style={`left: ${x}px; top: 6px;`}>
-                                <div class="rotate-45 origin-top-left whitespace-nowrap">
-                                    {href ? (
-                                        <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
-                                            {item.title}
-                                        </a>
-                                    ) : (
-                                        <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
-                                            {item.title}
-                                        </span>
-                                    )}
-                                    <time class="text-[10px] font-mono block text-gray-500">
-                                        {item.timeLabel ?? fmtDate(item.date)}
-                                    </time>
-                                    {item.location && (
-                                        <span class="text-[10px] text-gray-500 block">{item.location}</span>
-                                    )}
+                            <>
+                                <div class="absolute" style={`left: ${x}px; top: 0; width: 1px; height: 12px; background-color: ${titleColor};`}></div>
+                                <div class="absolute" style={`left: ${x}px; top: 12px;`}>
+                                    <div class="rotate-45 origin-top-left whitespace-nowrap">
+                                        {href ? (
+                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
+                                                {item.title}
+                                            </a>
+                                        ) : (
+                                            <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
+                                                {item.title}
+                                            </span>
+                                        )}
+                                        <time class="text-[10px] font-mono block text-gray-500">
+                                            {item.timeLabel ?? fmtDate(item.date)}
+                                        </time>
+                                        {item.location && (
+                                            <span class="text-[10px] text-gray-500 block">{item.location}</span>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                         );
                     })}
                 </div>
