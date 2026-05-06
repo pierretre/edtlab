@@ -1,6 +1,7 @@
 ---
 import { formatDate } from "@utils/./";
 import { getContentLink } from "@i18n/links";
+import Badge from "@components/Badge.astro";
 
 export interface Props {
     item: any;
@@ -10,7 +11,7 @@ export interface Props {
     slug: string;
 }
 
-const { item, body, lang, slug } = Astro.props;
+const { item, body, lang, t, slug } = Astro.props;
 const link = `/${lang}${getContentLink(lang, "use-cases", slug, true)}`;
 const coverSrc = item.photo || "/media/use-cases/uc-default.svg";
 
@@ -93,13 +94,7 @@ const usageLevelLabel = showUsageLevel
             >
             <div class="flex items-center gap-2 text-xs text-gray-500">
                 {item.version && <span>r{item.version}</span>}
-                {
-                    item.maturity && (
-                        <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-medium">
-                            {item.maturity}
-                        </span>
-                    )
-                }
+                {item.maturity && <Badge key={item.maturity} t={t} />}
             </div>
         </div>
 

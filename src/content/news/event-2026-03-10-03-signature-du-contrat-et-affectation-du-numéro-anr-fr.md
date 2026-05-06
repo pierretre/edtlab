@@ -8,7 +8,7 @@ description: Inria et l'ANR ont signé le contrat du programme EDT
   financée dans le cadre de France 2030.
 photo: /media/uploads/logo-fr-filled.png
 tags:
-  - Contrat
+  - contrat
 ---
 Nous avons le plaisir d'annoncer la signature, le **6 mars 2026**, du contrat du programme Engineering Digital Twins (EDT) entre Inria et l'Agence Nationale de la Recherche (ANR).
 

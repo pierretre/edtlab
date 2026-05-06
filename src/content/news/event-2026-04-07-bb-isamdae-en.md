@@ -7,9 +7,9 @@ location: Videoconference
 description: Building Block Isamdae presentation by Benoit CAILLAUD. April 7, 2026.
 photo: https://team.inria.fr/hycomes/files/2020/07/rldc2-cc1-768x620.png
 tags:
-  - AT1
-  - Seminar
-  - Building Blocks
+  - at1
+  - seminar
+  - building-blocks
 ---
 
 The first EDT seminar took place on **April 7, 2026**.
