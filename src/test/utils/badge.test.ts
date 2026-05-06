@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { getBadge } from '@utils/badge';
 
 // Mock translation function: returns undefined to trigger fallback to upperedValue
-const t = vi.fn((key: string) => undefined);
+const t = vi.fn((_key: string) => undefined);
 
 describe('getBadge', () => {
     describe('project colors (PC1-PC3)', () => {
@@ -58,6 +58,96 @@ describe('getBadge', () => {
             const badge = getBadge('job-offers.filled', t);
             expect(badge.color).toBe('text-gray-800');
             expect(badge.backgroundColor).toBe('bg-gray-200');
+        });
+    });
+
+    describe('news type badges', () => {
+        it('should return primary colors for event', () => {
+            const badge = getBadge('event', t);
+            expect(badge.color).toBe('text-primary-900');
+            expect(badge.backgroundColor).toBe('bg-primary-200');
+        });
+
+        it('should return secondary colors for press-release', () => {
+            const badge = getBadge('press-release', t);
+            expect(badge.color).toBe('text-secondary-900');
+            expect(badge.backgroundColor).toBe('bg-secondary-200');
+        });
+
+        it('should return marzipan-50/700 colors for workshop', () => {
+            const badge = getBadge('workshop', t);
+            expect(badge.color).toBe('text-marzipan-700');
+            expect(badge.backgroundColor).toBe('bg-marzipan-50');
+        });
+
+        it('should return blue-bell-50/700 colors for seminar', () => {
+            const badge = getBadge('seminar', t);
+            expect(badge.color).toBe('text-blue-bell-700');
+            expect(badge.backgroundColor).toBe('bg-blue-bell-50');
+        });
+    });
+
+    describe('AT1-AT5 badges', () => {
+        it('should return tertiary colors for at1', () => {
+            const badge = getBadge('at1', t);
+            expect(badge.color).toBe('text-tertiary-900');
+            expect(badge.backgroundColor).toBe('bg-tertiary-200');
+        });
+
+        it('should return tertiary colors for at2', () => {
+            const badge = getBadge('at2', t);
+            expect(badge.color).toBe('text-tertiary-900');
+            expect(badge.backgroundColor).toBe('bg-tertiary-200');
+        });
+
+        it('should return tertiary colors for at3', () => {
+            const badge = getBadge('at3', t);
+            expect(badge.color).toBe('text-tertiary-900');
+            expect(badge.backgroundColor).toBe('bg-tertiary-200');
+        });
+
+        it('should return tertiary colors for at4', () => {
+            const badge = getBadge('at4', t);
+            expect(badge.color).toBe('text-tertiary-900');
+            expect(badge.backgroundColor).toBe('bg-tertiary-200');
+        });
+
+        it('should return tertiary colors for at5', () => {
+            const badge = getBadge('at5', t);
+            expect(badge.color).toBe('text-tertiary-900');
+            expect(badge.backgroundColor).toBe('bg-tertiary-200');
+        });
+    });
+
+    describe('case-insensitive lookup', () => {
+        it('should return the same colors for AT1 as at1', () => {
+            const lower = getBadge('at1', t);
+            const upper = getBadge('AT1', t);
+            expect(upper.color).toBe(lower.color);
+            expect(upper.backgroundColor).toBe(lower.backgroundColor);
+        });
+
+        it('should return the same colors for At1 as at1', () => {
+            const lower = getBadge('at1', t);
+            const mixed = getBadge('At1', t);
+            expect(mixed.color).toBe(lower.color);
+            expect(mixed.backgroundColor).toBe(lower.backgroundColor);
+        });
+
+        it('should match WORKSHOP to workshop', () => {
+            const lower = getBadge('workshop', t);
+            const upper = getBadge('WORKSHOP', t);
+            expect(upper.color).toBe(lower.color);
+            expect(upper.backgroundColor).toBe(lower.backgroundColor);
+        });
+    });
+
+    describe('building-blocks falls to default', () => {
+        it('should return default colors for building-blocks (intentionally not mapped)', () => {
+            t.mockReturnValue(undefined as any);
+            const badge = getBadge('building-blocks', t);
+            expect(badge.color).toBe('text-gray-800');
+            expect(badge.backgroundColor).toBe('bg-gray-100');
         });
     });
 

@@ -8,7 +8,7 @@ description: 1st EDT Scientific Workshop at Inria Centre Rennes, from July 6
   (noon) to July 8 (after lunch), 2026.
 photo: /media/uploads/edt.png
 tags:
-  - AT1
+  - at1
   - workshop
 icsPath: /calendar/scientific-workshop-2026-07-06.ics
 ---

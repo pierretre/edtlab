@@ -13,6 +13,19 @@ const BACKGROUND_COLORS = {
     General: "bg-primary-200",
     'job-offers.available': "bg-green-200",
     'job-offers.filled': "bg-gray-200",
+    event: "bg-primary-200",
+    'press-release': "bg-secondary-200",
+    at1: "bg-tertiary-200",
+    at2: "bg-tertiary-200",
+    at3: "bg-tertiary-200",
+    at4: "bg-tertiary-200",
+    at5: "bg-tertiary-200",
+    workshop: "bg-marzipan-50",
+    seminar: "bg-blue-bell-50",
+    concept: "bg-blue-bell-50",
+    poc: "bg-blue-bell-50",
+    prototype: "bg-blue-bell-50",
+    operational: "bg-blue-bell-50",
     default: "bg-gray-100",
 } as const;
 
@@ -25,6 +38,19 @@ const COLORS = {
     General: "text-primary-900",
     'job-offers.available': "text-green-800",
     'job-offers.filled': "text-gray-800",
+    event: "text-primary-900",
+    'press-release': "text-secondary-900",
+    at1: "text-tertiary-900",
+    at2: "text-tertiary-900",
+    at3: "text-tertiary-900",
+    at4: "text-tertiary-900",
+    at5: "text-tertiary-900",
+    workshop: "text-marzipan-700",
+    seminar: "text-blue-bell-700",
+    concept: "text-blue-bell-700",
+    poc: "text-blue-bell-700",
+    prototype: "text-blue-bell-700",
+    operational: "text-blue-bell-700",
     default: "text-gray-800"
 } as const;
 
@@ -38,8 +64,11 @@ export function getBadge(value: string, t: any): Badge {
         };
     }
 
-    const color = COLORS[value as keyof typeof COLORS] || COLORS.default;
-    const backgroundColor = BACKGROUND_COLORS[value as keyof typeof BACKGROUND_COLORS] || BACKGROUND_COLORS.default;
+    const lookupKey = (Object.keys(COLORS) as Array<keyof typeof COLORS>).find(
+        k => k.toLowerCase() === value.toLowerCase()
+    );
+    const color = lookupKey ? COLORS[lookupKey] : COLORS.default;
+    const backgroundColor = lookupKey ? BACKGROUND_COLORS[lookupKey] : BACKGROUND_COLORS.default;
     const upperedValue = value.charAt(0).toUpperCase() + value.slice(1);
 
     return {
