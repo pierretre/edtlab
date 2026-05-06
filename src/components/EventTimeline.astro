@@ -43,7 +43,7 @@ const COLOR_PAST = "#737373";
 
 // ---- Time-proportional axis ----------------------------------------------
 const INNER_WIDTH = 4800;          // px -- ~80px per month over ~5 years
-const MIN_GAP_PX = 12;             // minimum px between displayed dots (small -- titles are truncated to fit)
+const MIN_GAP_PX = 4;              // minimum px between displayed dots (very small -- 2-line titles can wrap)
 
 const sixMonthsAhead = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 const itemMs = allItems.map(it => it.date.getTime());
@@ -106,25 +106,18 @@ function fmtDate(date: Date): string {
     });
 }
 
-const ABOVE_LANE_HEIGHT = 110;
+const ABOVE_LANE_HEIGHT = 130;
 const AXIS_HEIGHT = 24;
-const BELOW_LANE_HEIGHT = 110;
+const BELOW_LANE_HEIGHT = 130;
 const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
-const TITLE_MAX_WIDTH = 160;        // px -- title text truncated above this
+const TITLE_MAX_WIDTH = 130;        // px -- title wraps on 2 lines above this
 ---
 
 <div class="timeline-wrapper relative my-8">
 
     <!-- Scrollable timeline content -->
     <div class="relative">
-        <button id="tl-left" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/90 border border-gray-200 rounded-full shadow flex items-center justify-center hover:bg-gray-100" aria-label="Scroll left">
-            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <button id="tl-right" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/90 border border-gray-200 rounded-full shadow flex items-center justify-center hover:bg-gray-100" aria-label="Scroll right">
-            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-        </button>
-
-        <div id="tl-scroll" class="overflow-x-auto px-12 tl-scrollbar cursor-grab">
+        <div id="tl-scroll" class="overflow-x-auto tl-scrollbar cursor-grab">
             <div id="tl-inner" class="relative" data-today-x={todayX} style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
 
                 <!-- Above strip: items at even index (0, 2, 4, ...) — connector + title at bottom near dot -->
@@ -146,11 +139,11 @@ const TITLE_MAX_WIDTH = 160;        // px -- title text truncated above this
                                             <span class="text-[10px] text-gray-500 block">{item.location}</span>
                                         )}
                                         {href ? (
-                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
+                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
                                                 {item.title}
                                             </a>
                                         ) : (
-                                            <span class="text-xs font-semibold leading-tight block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
+                                            <span class="text-xs font-semibold leading-tight block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
                                                 {item.title}
                                             </span>
                                         )}
@@ -209,11 +202,11 @@ const TITLE_MAX_WIDTH = 160;        // px -- title text truncated above this
                                 <div class="absolute" style={`left: ${x}px; top: 12px;`}>
                                     <div class="rotate-45 origin-top-left whitespace-nowrap">
                                         {href ? (
-                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
+                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
                                                 {item.title}
                                             </a>
                                         ) : (
-                                            <span class="text-xs font-semibold leading-tight block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
+                                            <span class="text-xs font-semibold leading-tight block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
                                                 {item.title}
                                             </span>
                                         )}
@@ -244,42 +237,29 @@ const TITLE_MAX_WIDTH = 160;        // px -- title text truncated above this
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const c = document.getElementById('tl-scroll');
-        const l = document.getElementById('tl-left');
-        const r = document.getElementById('tl-right');
-        if (!c || !l || !r) return;
+        if (!c) return;
 
-        l.addEventListener('click', () => c.scrollBy({ left: -320, behavior: 'smooth' }));
-        r.addEventListener('click', () => c.scrollBy({ left: 320, behavior: 'smooth' }));
-
-        const updateBtns = () => {
-            l.style.opacity = c.scrollLeft <= 0 ? '0.3' : '1';
-            r.style.opacity = c.scrollLeft >= c.scrollWidth - c.clientWidth - 10 ? '0.3' : '1';
-        };
-        c.addEventListener('scroll', updateBtns);
-        updateBtns();
-
+        // Drag to scroll horizontally (no scroll buttons, no scrollbar)
         let down = false, sx = 0, sl = 0;
         c.addEventListener('mousedown', (e) => { down = true; c.style.cursor = 'grabbing'; sx = e.pageX; sl = c.scrollLeft; });
         c.addEventListener('mouseleave', () => { down = false; c.style.cursor = 'grab'; });
         c.addEventListener('mouseup', () => { down = false; c.style.cursor = 'grab'; });
         c.addEventListener('mousemove', (e) => { if (!down) return; e.preventDefault(); c.scrollLeft = sl - (e.pageX - sx); });
 
-        // Auto-scroll to center today on load (uses data-today-x attribute, no DOM marker)
+        // Auto-scroll to center today on load (uses data-today-x attribute)
         requestAnimationFrame(() => {
             const inner = document.getElementById('tl-inner');
             if (inner && c) {
                 const todayX = parseFloat(inner.dataset.todayX || '0');
                 const containerWidth = c.clientWidth;
                 c.scrollLeft = Math.max(0, todayX - containerWidth / 2);
-                updateBtns();
             }
         });
     });
 </script>
 
 <style>
-    .tl-scrollbar::-webkit-scrollbar { height: 6px; }
-    .tl-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
-    .tl-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
-    .tl-scrollbar::-webkit-scrollbar-thumb:hover { background: #aaa; }
+    /* Hide horizontal scrollbar -- timeline scrolls via drag */
+    .tl-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+    .tl-scrollbar::-webkit-scrollbar { display: none; }
 </style>
