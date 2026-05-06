@@ -12,7 +12,6 @@ type TimelineItem = {
     date: Date;
     title: string;
     location?: string;
-    programMilestone: boolean;
     slug?: string;
     timeLabel?: string;
 };
@@ -26,7 +25,6 @@ const calendarItems: TimelineItem[] = (calendarEntry?.data.items ?? []).map(item
     date: new Date(item.date),
     title: item.title,
     location: item.location,
-    programMilestone: item.programMilestone === true,
     timeLabel: item.timeLabel,
 }));
 
@@ -34,27 +32,22 @@ const eventItems: TimelineItem[] = allEvents.map(e => ({
     date: e.data.date,
     title: e.data.title,
     location: e.data.location,
-    programMilestone: false,
     slug: e.slug,
 }));
 
 const allItems = [...calendarItems, ...eventItems].sort((a, b) => a.date.getTime() - b.date.getTime());
 const now = new Date();
 
-const milestoneLegend = lang === "fr" ? "Jalons programme" : "Program milestones";
-const eventLegend = lang === "fr" ? "Événements" : "Events";
 const todayLabel = lang === "fr" ? "Aujourd'hui" : "Today";
 
-const COLOR_MILESTONE = "#d86007";
-const COLOR_EVENT = "#665BA7";
+const COLOR_ITEM = "#665BA7";       // primary brand violet — single color for all items
 const COLOR_PAST = "#737373";
 const COLOR_TODAY = "#ef4444";
 
 // ---- Time-proportional axis ----------------------------------------------
-const INNER_WIDTH = 4800;          // px -- fixed inner width (~80px per month over ~5 years)
-const MIN_GAP_PX = 30;             // minimum px between displayed dots (small -- prefer date accuracy over label collisions)
+const INNER_WIDTH = 4800;          // px -- ~80px per month over ~5 years
+const MIN_GAP_PX = 30;             // minimum px between displayed dots
 
-// Time domain: spans min(items, today) to max(items, today + 6 months)
 const sixMonthsAhead = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 const itemMs = allItems.map(it => it.date.getTime());
 const minMs = Math.min(now.getTime(), ...(itemMs.length ? itemMs : [now.getTime()]));
@@ -66,7 +59,6 @@ function timeToX(d: Date | number): number {
     return ((t - minMs) / spanMs) * INNER_WIDTH;
 }
 
-// Compute item positions with collision avoidance (>= MIN_GAP_PX between items)
 const positionedItems = allItems.map((item) => {
     const baseX = timeToX(item.date);
     return { item, baseX, x: baseX };
@@ -88,10 +80,9 @@ const ticks: Tick[] = [];
 const minDate = new Date(minMs);
 const maxDate = new Date(maxMs);
 const curYear = now.getFullYear();
-const curMonth = now.getMonth();                 // 0-based
-const curQuarter = Math.floor(curMonth / 3) + 1; // 1..4
+const curMonth = now.getMonth();
+const curQuarter = Math.floor(curMonth / 3) + 1;
 
-// Year ticks: every Jan 1 between min and max
 const startYear = minDate.getFullYear();
 const endYear = maxDate.getFullYear();
 for (let y = startYear; y <= endYear; y++) {
@@ -101,18 +92,16 @@ for (let y = startYear; y <= endYear; y++) {
     }
 }
 
-// Quarter ticks: Apr 1 / Jul 1 / Oct 1 of the current year only
 const quarterPrefix = lang === "fr" ? "T" : "Q";
 for (const m of [3, 6, 9]) {
     const d = new Date(curYear, m, 1).getTime();
     if (d >= minMs && d <= maxMs) {
-        const qNum = m / 3 + 1; // Apr->2, Jul->3, Oct->4
+        const qNum = m / 3 + 1;
         ticks.push({ x: timeToX(d), label: `${quarterPrefix}${qNum}`, level: "quarter" });
     }
 }
 
-// Month ticks: 1st of month within the current quarter (skip first month -- already a quarter or year tick)
-const quarterStartMonth = (curQuarter - 1) * 3;  // 0,3,6,9
+const quarterStartMonth = (curQuarter - 1) * 3;
 const monthFmt = new Intl.DateTimeFormat(lang === "fr" ? "fr-FR" : "en-US", { month: "short" });
 for (let mOff = 1; mOff < 3; mOff++) {
     const m = quarterStartMonth + mOff;
@@ -135,24 +124,10 @@ const BELOW_LANE_HEIGHT = 130;
 const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
 ---
 
-<div class="timeline-wrapper relative my-8 flex">
-
-    <!-- Left lane labels (swim lane row headers) -->
-    <div class="flex-shrink-0 w-32 pr-4 flex flex-col">
-        <!-- Milestones lane label -->
-        <div class="flex items-center justify-end" style={`height: ${ABOVE_LANE_HEIGHT}px;`}>
-            <span class="text-xs font-semibold text-gray-700 leading-tight text-right">{milestoneLegend}</span>
-        </div>
-        <!-- Axis spacer -->
-        <div style={`height: ${AXIS_HEIGHT}px;`}></div>
-        <!-- Events lane label -->
-        <div class="flex items-center justify-end" style={`height: ${BELOW_LANE_HEIGHT}px;`}>
-            <span class="text-xs font-semibold text-gray-700 leading-tight text-right">{eventLegend}</span>
-        </div>
-    </div>
+<div class="timeline-wrapper relative my-8">
 
     <!-- Scrollable timeline content -->
-    <div class="relative flex-1 min-w-0">
+    <div class="relative">
         <button id="tl-left" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/90 border border-gray-200 rounded-full shadow flex items-center justify-center hover:bg-gray-100" aria-label="Scroll left">
             <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
         </button>
@@ -163,13 +138,12 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
         <div id="tl-scroll" class="overflow-x-auto px-12 tl-scrollbar cursor-grab">
             <div class="relative" style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
 
-                <!-- Today marker line (spans the whole stack) -->
+                <!-- Today marker line + badge -->
                 <div
                     id="tl-today-marker"
                     class="absolute z-10 pointer-events-none"
                     style={`left: ${todayX}px; top: 0; width: 2px; height: ${TOTAL_HEIGHT}px; background-color: ${COLOR_TODAY};`}
                 ></div>
-                <!-- Today badge above the axis -->
                 <div
                     class="absolute z-20 pointer-events-none"
                     style={`left: ${todayX}px; top: 0; transform: translateX(-50%);`}
@@ -177,28 +151,38 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                     <span class="text-[10px] px-1 rounded text-white" style={`background-color: ${COLOR_TODAY};`}>{todayLabel}</span>
                 </div>
 
-                <!-- Milestones above the axis -->
+                <!-- Above strip: items at even index (0, 2, 4, ...) -->
                 <div class="absolute left-0 right-0" style={`top: 0; height: ${ABOVE_LANE_HEIGHT}px;`}>
-                    {positionedItems.map(({ item, x }) => {
-                        if (!item.programMilestone) return null;
+                    {positionedItems.map(({ item, x }, idx) => {
+                        if (idx % 2 !== 0) return null;
                         const past = item.date < now;
-                        const titleColor = past ? COLOR_PAST : COLOR_MILESTONE;
+                        const titleColor = past ? COLOR_PAST : COLOR_ITEM;
+                        const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
                         return (
                             <div class="absolute" style={`left: ${x}px; bottom: 12px;`}>
                                 <div class="-rotate-45 origin-bottom-left ml-2 whitespace-nowrap">
                                     <time class="text-[10px] font-mono block text-gray-500">
                                         {item.timeLabel ?? fmtDate(item.date)}
                                     </time>
-                                    <span class="text-xs font-bold leading-tight block" style={`color: ${titleColor}`}>
-                                        {item.title}
-                                    </span>
+                                    {href ? (
+                                        <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
+                                            {item.title}
+                                        </a>
+                                    ) : (
+                                        <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
+                                            {item.title}
+                                        </span>
+                                    )}
+                                    {item.location && (
+                                        <span class="text-[10px] text-gray-500 block mt-0.5">{item.location}</span>
+                                    )}
                                 </div>
                             </div>
                         );
                     })}
                 </div>
 
-                <!-- Axis: line + ticks + dots -->
+                <!-- Axis: line + ticks + dots (all items, single style) -->
                 <div class="absolute left-0 right-0" style={`top: ${ABOVE_LANE_HEIGHT}px; height: ${AXIS_HEIGHT}px;`}>
                     <div class="absolute inset-x-0 top-1/2 h-0.5 bg-gradient-to-r from-gray-300 to-gray-400"></div>
 
@@ -223,25 +207,23 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
 
                     {positionedItems.map(({ item, x }) => {
                         const past = item.date < now;
-                        const baseColor = item.programMilestone ? COLOR_MILESTONE : COLOR_EVENT;
-                        const dotColor = past ? COLOR_PAST : baseColor;
-                        const size = item.programMilestone ? 16 : 12;
+                        const dotColor = past ? COLOR_PAST : COLOR_ITEM;
                         return (
                             <div
                                 class="absolute rounded-full border-2 border-white shadow z-10"
-                                style={`left: ${x}px; top: 50%; transform: translate(-50%, -50%); width: ${size}px; height: ${size}px; background-color: ${dotColor};`}
+                                style={`left: ${x}px; top: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background-color: ${dotColor};`}
                             ></div>
                         );
                     })}
                 </div>
 
-                <!-- Events below the axis -->
+                <!-- Below strip: items at odd index (1, 3, 5, ...) -->
                 <div class="absolute left-0 right-0" style={`top: ${ABOVE_LANE_HEIGHT + AXIS_HEIGHT}px; height: ${BELOW_LANE_HEIGHT}px;`}>
-                    {positionedItems.map(({ item, x }) => {
-                        if (item.programMilestone) return null;
+                    {positionedItems.map(({ item, x }, idx) => {
+                        if (idx % 2 !== 1) return null;
                         const past = item.date < now;
+                        const titleColor = past ? COLOR_PAST : COLOR_ITEM;
                         const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
-                        const titleColor = past ? COLOR_PAST : COLOR_EVENT;
                         return (
                             <div class="absolute" style={`left: ${x}px; top: 12px;`}>
                                 <div class="rotate-45 origin-top-left ml-2 whitespace-nowrap">
@@ -253,7 +235,7 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                                             {item.title}
                                         </a>
                                     ) : (
-                                        <span class="text-xs font-semibold leading-tight italic block" style={`color: ${titleColor}`}>
+                                        <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
                                             {item.title}
                                         </span>
                                     )}
