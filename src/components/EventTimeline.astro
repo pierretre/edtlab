@@ -43,7 +43,7 @@ const COLOR_PAST = "#737373";
 
 // ---- Time-proportional axis ----------------------------------------------
 const INNER_WIDTH = 4800;          // px -- ~80px per month over ~5 years
-const MIN_GAP_PX = 30;             // minimum px between displayed dots
+const MIN_GAP_PX = 12;             // minimum px between displayed dots (small -- titles are truncated to fit)
 
 const sixMonthsAhead = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 const itemMs = allItems.map(it => it.date.getTime());
@@ -106,10 +106,11 @@ function fmtDate(date: Date): string {
     });
 }
 
-const ABOVE_LANE_HEIGHT = 130;
+const ABOVE_LANE_HEIGHT = 110;
 const AXIS_HEIGHT = 24;
-const BELOW_LANE_HEIGHT = 130;
+const BELOW_LANE_HEIGHT = 110;
 const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
+const TITLE_MAX_WIDTH = 160;        // px -- title text truncated above this
 ---
 
 <div class="timeline-wrapper relative my-8">
@@ -145,11 +146,11 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                                             <span class="text-[10px] text-gray-500 block">{item.location}</span>
                                         )}
                                         {href ? (
-                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
+                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
                                                 {item.title}
                                             </a>
                                         ) : (
-                                            <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
+                                            <span class="text-xs font-semibold leading-tight block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
                                                 {item.title}
                                             </span>
                                         )}
@@ -208,11 +209,11 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
                                 <div class="absolute" style={`left: ${x}px; top: 12px;`}>
                                     <div class="rotate-45 origin-top-left whitespace-nowrap">
                                         {href ? (
-                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block" style={`color: ${titleColor}`}>
+                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
                                                 {item.title}
                                             </a>
                                         ) : (
-                                            <span class="text-xs font-semibold leading-tight block" style={`color: ${titleColor}`}>
+                                            <span class="text-xs font-semibold leading-tight block truncate" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px;`} title={item.title}>
                                                 {item.title}
                                             </span>
                                         )}
