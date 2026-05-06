@@ -13,7 +13,7 @@
         },
         {
             "date": "2026-04-29",
-            "title": "PC4-Synchronic-Scientific Workshop",
+            "title": "PC4/WP1-Synchronic-Scientific Workshop",
             "isMilestone": true
         },
         {
@@ -35,31 +35,24 @@
         },
         {
             "date": "2028-01-01",
-            "title": "Presentation Platform & Demonstrators (PoC)",
+            "title": "Public presentation Platform & Demonstrators",
             "isMilestone": true,
             "programMilestone": true,
             "timeLabel": "2028/Q1"
         },
         {
             "date": "2030-01-01",
-            "title": "Demonstration Platform & Demonstrators (Prototype)",
+            "title": "Public demonstration Platform & Demonstrators",
             "isMilestone": true,
             "programMilestone": true,
             "timeLabel": "2030/Q1"
         },
         {
             "date": "2031-07-01",
-            "title": "Demonstration Platform & Demonstrators (Pilot)",
+            "title": "Public demonstration Platform & Demonstrators",
             "isMilestone": true,
             "programMilestone": true,
             "timeLabel": "2031/Q3"
-        },
-        {
-            "date": "2031-12-30",
-            "title": "Final Platform & Demonstrators review",
-            "isMilestone": true,
-            "programMilestone": true,
-            "timeLabel": "2031/Q4"
         },
         {
             "date": "2031-12-31",
