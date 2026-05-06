@@ -1,4 +1,4 @@
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import { getContentLink } from "@i18n/links";
 import { enToFrMapping } from "@i18n/page-mapping";
 
@@ -41,30 +41,35 @@ async function generateBasePagesStaticPaths() {
  */
 async function generateNewsPagesStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("news");
+    return await Promise.all(allEntries
+        .filter((entry: CollectionEntry<"news">) =>
+            // On filtre les news qui sont de simples redirections (et qui sont valides)
+            entry.data.redirectTo === undefined || getEntry("news", entry.data.redirectTo) === undefined
+        )
+        .map(
+            (entry: CollectionEntry<"news">) => {
+                const { lang } = entry.data;
 
-    return allEntries.map(
-        (entry: CollectionEntry<"news">) => {
-            const { lang } = entry.data;
-            const link = getContentLink(
-                lang,
-                "news",
-                entry.slug,
-                true,
-            );
+                const link = getContentLink(
+                    lang,
+                    "news",
+                    entry.slug,
+                    true,
+                );
 
-            // Remove lang suffix from link for slug param
-            const cleanSlug = link ? link.replace(/-(en|fr)$/, '') : undefined;
+                // Remove lang suffix from link for slug param
+                const cleanSlug = link ? link.replace(/-(en|fr)$/, '') : undefined;
 
-            return {
-                params: {
-                    lang: lang,
-                    slug: cleanSlug,
-                },
-                props: {
-                    page: entry
-                },
-            };
-        });
+                return {
+                    params: {
+                        lang: lang,
+                        slug: cleanSlug,
+                    },
+                    props: {
+                        page: entry
+                    },
+                };
+            }));
 }
 
 /**

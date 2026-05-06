@@ -13,4 +13,5 @@ export interface NewsItem {
     template?: string,
     tags: string[],
     icsPath?: string,
+    redirectTo?: string;
 }

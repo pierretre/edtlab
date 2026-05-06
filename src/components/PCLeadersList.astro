@@ -10,12 +10,12 @@ const t = useTranslations(lang);
 <div class="flex flex-col gap-4 my-6">
     {
         leaders.map((leader) => (
-            <article class="card bg-white border shadow-sm p-4 relative">
+            <article class="card bg-white border shadow-sm relative">
                 <div class="absolute top-4 right-4">
                     <Badge key={leader.project || "General"} t={t} />
                 </div>
 
-                <div class="flex flex-col md:flex-row md:items-stretch gap-3 md:pr-24">
+                <div class="flex flex-col md:flex-row md:items-center gap-3 md:pr-24">
                     <div class="flex flex-col items-center flex-shrink-0">
                         {leader.picture ? (
                             <img
@@ -37,8 +37,8 @@ const t = useTranslations(lang);
                     </div>
 
                     <div class="min-w-0 flex-1 text-center md:text-left">
-                        <div class="mb-2 flex flex-wrap justify-center md:justify-start items-baseline gap-x-2 gap-y-1">
-                            <h4 class="text-lg font-semibold text-gray-900 leading-tight">
+                        <div class="mb-2 flex-col flex-wrap justify-center md:justify-start items-baseline gap-x-2 gap-y-1">
+                            <h4 class="text-lg font-semibold text-gray-900 leading-tight mt-0">
                                 {leader.name}
                             </h4>
                             <span class="text-sm text-gray-600">

@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import NewsCard from "./NewsCard.astro";
 import { linkHelpers } from "@i18n/links";
@@ -28,10 +28,27 @@ if (project) {
     relatedItems = news
       .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
       .slice(0, 3)
-      .map((item) => ({
-        ...item,
-        coverImage: item.data.photo, // URL like "/media/uploads/photo.jpg"
-      }));
+      .map(async (item) => {
+        let { data, slug } = item;
+        let hrefLang = lang;
+        if (data.redirectTo) {
+          const redirectItem = await getEntry("news", data.redirectTo);
+
+          if (redirectItem) {
+            console;
+            hrefLang = redirectItem.data.lang;
+            slug = redirectItem.slug;
+          }
+        }
+
+        return {
+          ...item,
+          href:
+            data.newsType === "press-release"
+              ? linkHelpers.press(hrefLang, slug)
+              : linkHelpers.event(hrefLang, slug),
+        };
+      });
   } catch (error) {
     console.warn(`Could not load news/events: ${error}`);
   }
@@ -47,13 +64,7 @@ if (project) {
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {relatedItems.map((item) => (
-          <NewsCard
-            item={item.data}
-            lang={lang}
-            coverImage={item.coverImage}
-            t={t}
-            slug={item.slug}
-          />
+          <NewsCard item={item.data} lang={lang} href={item.href} t={t} />
         ))}
       </div>
 

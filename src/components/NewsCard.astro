@@ -1,18 +1,16 @@
 ---
 import { formatDate } from "@utils/./";
-import { linkHelpers } from "@i18n/links";
 import Badge from "@components/Badge.astro";
 import type { NewsItem } from "@models/NewsItem.model";
 
 export interface Props {
     item: NewsItem;
     lang: "en" | "fr";
-    coverImage: string;
     t: any;
-    slug: string;
+    href: string;
 }
 
-const { item, lang, coverImage, t, slug } = Astro.props;
+const { item, lang, href, t } = Astro.props;
 
 const badges = [
     item.newsType,
@@ -33,14 +31,12 @@ const badges = [
     </div>
 
     <a
-        href={item.newsType === "press-release"
-            ? linkHelpers.press(lang, slug)
-            : linkHelpers.event(lang, slug)}
+        href={href}
         class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0"
     >
         <img
             class="h-full w-full object-contain transition-transform duration-200 ease-out group-hover:scale-105"
-            src={coverImage}
+            src={item.photo}
             alt={item.title}
             loading="lazy"
             decoding="async"
@@ -51,20 +47,18 @@ const badges = [
         </div>
     </a>
     <div class="p-3 flex-grow flex flex-col">
-        <div class="flex justify-between mb-2">
-            <p class="text-sm">
+        <div class="flex justify-between mb-2 text-sm">
+            <span class="">
                 {formatDate(item.date, lang)}
-            </p>
-            <p class="text-sm">
+            </span>
+            <span class="text-sm">
                 {item.newsType === "event" ? (item as any).location : ""}
-            </p>
+            </span>
         </div>
 
-        <h4 class="text-base line-clamp-3">
+        <h4 class="text-base line-clamp-3 mt-0">
             <a
-                href={item.newsType === "press-release"
-                    ? linkHelpers.press(lang, slug)
-                    : linkHelpers.event(lang, slug)}
+                href={href}
                 class="hover:text-primary-600 text-gray-800 transition-colors duration-200"
             >
                 {item.title}

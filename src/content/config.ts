@@ -45,7 +45,8 @@ const newsCollection = defineCollection({
         location: z.string().optional(),
         url: z.string().url().optional(),
         icsPath: z.string().optional(),
-        tags: z.array(z.string()).optional().default([])
+        tags: z.array(z.string()).optional().default([]),
+        redirectTo: z.string().optional(),
     })
 });
 

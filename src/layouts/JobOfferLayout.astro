@@ -124,7 +124,7 @@ const badges = [
                     <span class="text-sm font-medium text-gray-500"
                         >{t("job-offers.location")}</span
                     >
-                    <p class="font-medium">{frontmatter.location}</p>
+                    <p class="font-medium my-0">{frontmatter.location}</p>
                 </div>
             </div>
             <div class="flex items-center text-gray-700">
@@ -146,7 +146,7 @@ const badges = [
                         >{t("job-offers.expected-start")}</span
                     >
                     <p
-                        class={`font-medium ${frontmatter.filled ? "text-gray-500" : "text-green-600"}`}
+                        class={`font-medium my-0 ${frontmatter.filled ? "text-gray-500" : "text-green-600"}`}
                     >
                         {frontmatter.expectedStartDate}
                     </p>
