@@ -20,12 +20,17 @@ const allPublications = await getCollection("publications");
 type Pub = (typeof allPublications)[number];
 const sortByYearTitle = (a: Pub, b: Pub) => {
     if (b.data.year !== a.data.year) return b.data.year - a.data.year;
-    return a.data.title.localeCompare(b.data.title);
+    return (a.data.title || "").localeCompare(b.data.title || "");
 };
 
-const publications = (origin
-    ? allPublications.filter((p: Pub) => origin === "edt" ? p.data.origin === "edt" : p.data.origin !== "edt")
-    : allPublications
+const publications = (
+    origin
+        ? allPublications.filter((p: Pub) =>
+              origin === "edt"
+                  ? p.data.origin === "edt"
+                  : p.data.origin !== "edt",
+          )
+        : allPublications
 ).sort(sortByYearTitle);
 
 // Generate structured data for publications
@@ -57,7 +62,12 @@ const publicationStructuredData = publications.map((pub) =>
                     id="results-count"
                     data-template={t("publications.results-count")}
                 >
-                    {t("publications.results-count").replace("{count}", publications.length.toString())}
+                    {
+                        t("publications.results-count").replace(
+                            "{count}",
+                            publications.length.toString(),
+                        )
+                    }
                 </span>
             </div>
 
@@ -68,9 +78,14 @@ const publicationStructuredData = publications.map((pub) =>
                 aria-label={t("accessibility.table-caption")}
             >
                 <div class="space-y-2">
-                    {publications.map((publication: Pub) => (
-                        <PublicationCard publication={publication.data} t={t} />
-                    ))}
+                    {
+                        publications.map((publication: Pub) => (
+                            <PublicationCard
+                                publication={publication.data}
+                                t={t}
+                            />
+                        ))
+                    }
                 </div>
             </div>
 
@@ -103,12 +118,17 @@ const publicationStructuredData = publications.map((pub) =>
         import { publicationsFilterConfig } from "@utils/filter-configs";
 
         function initPublicationFilters() {
-            const filterManager = new FilterManagerImpl(publicationsFilterConfig);
+            const filterManager = new FilterManagerImpl(
+                publicationsFilterConfig,
+            );
             filterManager.initialize();
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPublicationFilters);
+        if (document.readyState === "loading") {
+            document.addEventListener(
+                "DOMContentLoaded",
+                initPublicationFilters,
+            );
         } else {
             initPublicationFilters();
         }

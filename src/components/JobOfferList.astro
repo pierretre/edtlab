@@ -16,8 +16,8 @@ const t = useTranslations(lang);
 const allJobOffers = await getCollection("job-offers");
 
 // Sort job offers: EDT first, then external; within each group by date then title
-const isExtern = (job: typeof allJobOffers[number]) =>
-    (job.data.tags || []).some(t => t.toLowerCase() === 'extern');
+const isExtern = (job: (typeof allJobOffers)[number]) =>
+    (job.data.tags || []).some((t) => t.toLowerCase() === "extern");
 
 const sortedJobOffers = allJobOffers.sort((a, b) => {
     // External offers go after EDT offers
@@ -31,7 +31,7 @@ const sortedJobOffers = allJobOffers.sort((a, b) => {
     }
 
     // Finally by title
-    return a.data.title.localeCompare(b.data.title);
+    return (a.data.title || "").localeCompare(b.data.title || "");
 });
 
 // Count available and filled job offers
@@ -116,8 +116,8 @@ const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
                             item={jobOffer.data}
                             body={jobOffer.body}
                             lang={lang}
+                            slug={jobOffer.id}
                             t={t}
-                            slug={jobOffer.slug}
                         />
                     ))
                 }
@@ -148,8 +148,8 @@ const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
         filterManager.initialize();
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFilters);
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initFilters);
     } else {
         initFilters();
     }

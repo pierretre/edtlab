@@ -17,7 +17,7 @@ describe('Content Schema Validation', () => {
         year: z.number(),
         venue: z.string().optional(),
         doi: z.string().optional(),
-        url: z.string().url().optional(),
+        url: z.url().optional(),
         lang: z.enum(['en', 'fr'])
     });
 
@@ -31,7 +31,7 @@ describe('Content Schema Validation', () => {
         publishedDate: z.date(),
         description: z.string(),
         requirements: z.array(z.string()),
-        contacts: z.array(z.string().email()).optional(),
+        contacts: z.array(z.email()).optional(),
         lang: z.enum(['en', 'fr']),
         template: z.string().optional(),
         tags: z.array(z.string()).optional()
@@ -43,7 +43,7 @@ describe('Content Schema Validation', () => {
         type: z.enum(['conference', 'workshop', 'seminar', 'press']),
         location: z.string().optional(),
         description: z.string(),
-        url: z.string().url().optional(),
+        url: z.url().optional(),
         lang: z.enum(['en', 'fr'])
     });
 

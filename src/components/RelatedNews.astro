@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import NewsCard from "./NewsCard.astro";
 import { linkHelpers } from "@i18n/links";
@@ -29,24 +29,16 @@ if (project) {
       .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
       .slice(0, 3)
       .map(async (item) => {
-        let { data, slug } = item;
+        let { data, id } = item;
         let hrefLang = lang;
-        if (data.redirectTo) {
-          const redirectItem = await getEntry("news", data.redirectTo);
-
-          if (redirectItem) {
-            console;
-            hrefLang = redirectItem.data.lang;
-            slug = redirectItem.slug;
-          }
-        }
+        let idHref = data.redirectTo?.id || id;
 
         return {
           ...item,
           href:
             data.newsType === "press-release"
-              ? linkHelpers.press(hrefLang, slug)
-              : linkHelpers.event(hrefLang, slug),
+              ? linkHelpers.press(hrefLang, idHref)
+              : linkHelpers.event(hrefLang, idHref),
         };
       });
   } catch (error) {

@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
-import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
@@ -36,6 +36,7 @@ export default defineConfig({
   },
 
   vite: {
+    plugins: [tailwindcss()],
     server: {
       watch: {
         usePolling: true
@@ -66,11 +67,6 @@ export default defineConfig({
   },
 
   integrations: [
-    tailwind({
-      // Let Tailwind handle base styles properly
-      applyBaseStyles: true,
-      configFile: './tailwind.config.js'
-    }),
     mdx({
       // Optimize MDX processing
       optimize: true,

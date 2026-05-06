@@ -48,7 +48,7 @@ export async function validateInternalLink(
         }
 
         // Check focused projects (fp1-fp5)
-        const fpMatch = cleanPath.match(/^focused-projects\/(fp[1-5])$/);
+        const fpMatch = new RegExp(/^focused-projects\/(fp[1-5])$/).exec(cleanPath);
         if (fpMatch) {
             return {
                 isValid: true,
@@ -109,7 +109,7 @@ function getSuggestions(path: string, validPaths: string[]): string[] {
     });
 
     return suggestions
-        .sort((a, b) => b.score - a.score)
+        .toSorted((a, b) => b.score - a.score)
         .map(s => s.path)
         .slice(0, 3);
 }
@@ -155,10 +155,10 @@ function calculateSimilarity(str1: string, str2: string): number {
 export function generateAnchorId(text: string): string {
     return text
         .toLowerCase()
-        .replace(/[^\w\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-')     // Replace spaces with hyphens
-        .replace(/-+/g, '-')      // Replace multiple hyphens with single
-        .replace(/^-|-$/g, '');   // Remove leading/trailing hyphens
+        .replaceAll(/[^\w\s-]/g, '') // Remove special characters
+        .replaceAll(/\s+/g, '-')     // Replace spaces with hyphens
+        .replaceAll(/-+/g, '-')      // Replace multiple hyphens with single
+        .replaceAll(/^-|-$/g, '');   // Remove leading/trailing hyphens
 }
 
 /**
@@ -189,7 +189,7 @@ export function extractInternalLinks(content: string): string[] {
  */
 export function buildInternalLink(path: string, lang: 'en' | 'fr'): string {
     // If path already has language prefix, return as is
-    if (path.match(/^\/[a-z]{2}\//)) {
+    if (new RegExp(/^\/[a-z]{2}\//).exec(path)) {
         return path;
     }
 
@@ -224,7 +224,7 @@ export async function generateRelatedLinks(
         // Get pages from the same section
         const currentSection = currentPath.split('/')[0];
         const sectionPages = currentPagePages.filter(page =>
-            page.slug.startsWith(currentSection) &&
+            page.id.startsWith(currentSection) &&
             page.data.href !== currentPath
         );
 
@@ -240,8 +240,8 @@ export async function generateRelatedLinks(
         // Fill remaining slots with other pages
         if (relatedLinks.length < maxLinks) {
             const otherPages = currentPagePages.filter(page =>
-                !page.slug.startsWith(currentSection) &&
-                !relatedLinks.some(link => link.href.includes(page.slug))
+                !page.id.startsWith(currentSection) &&
+                !relatedLinks.some(link => link.href.includes(page.id))
             );
 
             otherPages.slice(0, maxLinks - relatedLinks.length).forEach(page => {
