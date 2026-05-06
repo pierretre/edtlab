@@ -4,6 +4,8 @@ import { useTranslations } from "@i18n/utils";
 import NewsCard from "./NewsCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
 import { newsFilterConfig } from "@utils/filter-configs";
+import { linkHelpers } from "@i18n/links";
+import { getEntry } from "astro:content";
 
 interface Props {
     lang: "en" | "fr";
@@ -14,7 +16,33 @@ const { lang } = Astro.props as Props;
 const t = useTranslations(lang);
 
 // Load content
-const news = await getCollection("news", (item) => item.data.lang === lang);
+const allNews = await getCollection("news");
+
+const filteredNews = await Promise.all(
+    allNews
+        .filter((item) => item.data.lang === lang)
+        .map(async (item) => {
+            let { data, slug } = item;
+            let hrefLang = lang;
+            if (data.redirectTo) {
+                const redirectItem = await getEntry("news", data.redirectTo);
+
+                if (redirectItem) {
+                    console;
+                    hrefLang = redirectItem.data.lang;
+                    slug = redirectItem.slug;
+                }
+            }
+
+            return {
+                ...item,
+                href:
+                    data.newsType === "press-release"
+                        ? linkHelpers.press(hrefLang, slug)
+                        : linkHelpers.event(hrefLang, slug),
+            };
+        }),
+);
 ---
 
 <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
@@ -39,7 +67,7 @@ const news = await getCollection("news", (item) => item.data.lang === lang);
                     {
                         t("news.results-count").replace(
                             "{count}",
-                            news.length.toString(),
+                            filteredNews.length.toString(),
                         )
                     }
                 </span>
@@ -50,13 +78,12 @@ const news = await getCollection("news", (item) => item.data.lang === lang);
                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
                 {
-                    news.map((item) => (
+                    filteredNews.map((item) => (
                         <NewsCard
                             item={item.data}
                             lang={lang}
-                            coverImage={item.data.photo}
+                            href={item.href}
                             t={t}
-                            slug={item.slug}
                         />
                     ))
                 }
@@ -273,8 +300,8 @@ const news = await getCollection("news", (item) => item.data.lang === lang);
         updatePageDisplay();
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initNewsFilters);
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initNewsFilters);
     } else {
         initNewsFilters();
     }

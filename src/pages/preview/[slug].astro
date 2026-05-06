@@ -20,7 +20,6 @@ if (!uc || !token || !uc.data.previewToken || token !== uc.data.previewToken) {
 
 const { Content } = await uc.render();
 const lang = (uc.data.lang || 'fr') as "en" | "fr";
-const t = useTranslations(lang);
 
 // Read frontmatter directly from file to bypass Astro's content collection cache
 let liveReferences: any[] = [];

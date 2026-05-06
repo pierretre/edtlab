@@ -14,11 +14,21 @@ interface Props {
 
 const { item, body, lang, t, slug } = Astro.props;
 
-const projectTags = new Set(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General', 'Extern']);
-const referenceTags = new Set(['roadmap']);
+const projectTags = new Set([
+    "PC1",
+    "PC2",
+    "PC3",
+    "PC4",
+    "PC5",
+    "General",
+    "Extern",
+]);
+const referenceTags = new Set(["roadmap"]);
 const tags = (item.tags || []).filter((tag) => tag && tag.trim());
 const projectBadges = tags.filter((tag) => projectTags.has(tag));
-const keywords = tags.filter((tag) => !projectTags.has(tag) && !referenceTags.has(tag.toLowerCase()));
+const keywords = tags.filter(
+    (tag) => !projectTags.has(tag) && !referenceTags.has(tag.toLowerCase()),
+);
 
 const badges = [
     `job-offers.type.${item.type}`,
@@ -33,11 +43,12 @@ const isExternal = !!item.externalUrl;
 <a
     href={cardHref}
     class="job-offer-item card group hover:shadow-lg h-full flex flex-col"
+    style="text-decoration: none;"
     {...isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}}
     data-tags={(item.tags ?? []).join(" ").toLowerCase()}
     data-type={item.type}
     data-status={item.filled ? "filled" : "available"}
-    data-search-text={`${JSON.stringify(item)} ${body || ''}`.toLowerCase()}
+    data-search-text={`${JSON.stringify(item)} ${body || ""}`.toLowerCase()}
 >
     <!-- Header with badges -->
     <div class="flex flex-wrap gap-2 mb-3">
@@ -45,7 +56,7 @@ const isExternal = !!item.externalUrl;
     </div>
 
     <!-- Title -->
-    <h3 class="font-bold tracking-tight text-gray-900 line-clamp-2">
+    <h3 class="font-bold tracking-tight text-gray-900 line-clamp-2 mt-0">
         {item.title}
     </h3>
 

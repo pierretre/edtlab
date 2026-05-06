@@ -11,7 +11,7 @@ const t = useTranslations(lang);
 // Get menu data from content collection
 const currentMenu = await getEntry("menu", lang);
 const menuSections = currentMenu?.data.sections || [];
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
 ---
 
 <nav
@@ -49,12 +49,18 @@ const currentPath = Astro.url.pathname;
             <ul class="flex space-x-4 items-center m-0 p-0">
                 {
                     menuSections.map((section) => {
+                        const sectionPath = `/${lang}/${section.href}`;
                         const isActive =
-                            currentPath === `/${lang}/${section.href}` ||
+                            currentPath === sectionPath ||
+                            currentPath.startsWith(sectionPath + "/") ||
                             (section.items &&
                                 section.items.some(
                                     (sub) =>
-                                        currentPath === `/${lang}/${sub.href}`,
+                                        currentPath ===
+                                            `/${lang}/${sub.href}` ||
+                                        currentPath.startsWith(
+                                            `/${lang}/${sub.href}/`,
+                                        ),
                                 ));
 
                         return (
@@ -104,14 +110,20 @@ const currentPath = Astro.url.pathname;
                                                             href={`/${lang}/${sub.href}`}
                                                             class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
                                                                 currentPath ===
-                                                                `/${lang}/${sub.href}`
+                                                                    `/${lang}/${sub.href}` ||
+                                                                currentPath.startsWith(
+                                                                    `/${lang}/${sub.href}/`,
+                                                                )
                                                                     ? "text-primary-600 font-medium"
                                                                     : ""
                                                             }`}
                                                             role="menuitem"
                                                             aria-current={
                                                                 currentPath ===
-                                                                `/${lang}/${sub.href}`
+                                                                    `/${lang}/${sub.href}` ||
+                                                                currentPath.startsWith(
+                                                                    `/${lang}/${sub.href}/`,
+                                                                )
                                                                     ? "page"
                                                                     : undefined
                                                             }
@@ -184,7 +196,24 @@ const currentPath = Astro.url.pathname;
                         <div>
                             <button
                                 type="button"
-                                class="text-gray-700 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left"
+                                class={`hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left ${
+                                    currentPath ===
+                                        `/${lang}/${section.href}` ||
+                                    currentPath.startsWith(
+                                        `/${lang}/${section.href}/`,
+                                    ) ||
+                                    (section.items &&
+                                        section.items.some(
+                                            (sub) =>
+                                                currentPath ===
+                                                    `/${lang}/${sub.href}` ||
+                                                currentPath.startsWith(
+                                                    `/${lang}/${sub.href}/`,
+                                                ),
+                                        ))
+                                        ? "text-primary-600"
+                                        : "text-gray-700"
+                                }`}
                                 data-collapse-toggle={`mobile-dropdown-${section.href}`}
                                 aria-expanded="false"
                             >
@@ -212,7 +241,15 @@ const currentPath = Astro.url.pathname;
                                 {section.items.map((item) => (
                                     <a
                                         href={`/${lang}/${item.href}`}
-                                        class="text-gray-600 hover:text-primary-600 block px-3 py-2 text-sm no-underline"
+                                        class={`block px-3 py-2 text-sm no-underline ${
+                                            currentPath ===
+                                                `/${lang}/${item.href}` ||
+                                            currentPath.startsWith(
+                                                `/${lang}/${item.href}/`,
+                                            )
+                                                ? "text-primary-600 font-medium"
+                                                : "text-gray-600 hover:text-primary-600"
+                                        }`}
                                     >
                                         {item.name}
                                     </a>
@@ -222,7 +259,14 @@ const currentPath = Astro.url.pathname;
                     ) : (
                         <a
                             href={`/${lang}/${section.href}`}
-                            class="text-gray-700 hover:text-primary-600 block px-3 py-2 text-base font-medium no-underline"
+                            class={`block px-3 py-2 text-base font-medium no-underline ${
+                                currentPath === `/${lang}/${section.href}` ||
+                                currentPath.startsWith(
+                                    `/${lang}/${section.href}/`,
+                                )
+                                    ? "text-primary-600"
+                                    : "text-gray-700 hover:text-primary-600"
+                            }`}
                         >
                             {section.name}
                         </a>

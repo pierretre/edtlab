@@ -1,5 +1,5 @@
 ---
-import { formatDate, isRecent } from "@utils/date";
+import { formatDate } from "@utils/date";
 import PageLayout from "./PageLayout.astro";
 import type { NewsItem } from "@models/NewsItem.model";
 import { linkHelpers, useTranslations } from "@i18n/utils";
@@ -106,7 +106,9 @@ const badges = [
                             <span class="text-sm font-medium text-gray-500">
                                 {t("news-item.location")}
                             </span>
-                            <p class="font-medium">{frontmatter.location}</p>
+                            <p class="font-medium my-0">
+                                {frontmatter.location}
+                            </p>
                         </div>
                     </div>
                 ) : null
@@ -129,7 +131,7 @@ const badges = [
                     <span class="text-sm font-medium text-gray-500"
                         >{t("news-item.date")}</span
                     >
-                    <p class="font-medium">
+                    <p class="font-medium my-0">
                         {formatDate(frontmatter.date, lang)}
                     </p>
                 </div>
@@ -140,7 +142,10 @@ const badges = [
         {
             frontmatter.newsType === "event" && (frontmatter as any).icsPath ? (
                 <div class="flex justify-start mt-2">
-                    <AddToCalendarButton icsPath={(frontmatter as any).icsPath} label={t("news-item.add-to-calendar")} />
+                    <AddToCalendarButton
+                        icsPath={(frontmatter as any).icsPath}
+                        label={t("news-item.add-to-calendar")}
+                    />
                 </div>
             ) : null
         }
@@ -173,13 +178,13 @@ const badges = [
 <style is:global>
     .news-content a,
     .news-content a * {
-        color: #665BA7;
+        color: #665ba7;
     }
     .news-content a {
         text-decoration: underline;
     }
     .news-content a:hover,
     .news-content a:hover * {
-        color: #4F4783;
+        color: #4f4783;
     }
 </style>

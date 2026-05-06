@@ -66,19 +66,19 @@ export function getContentLink(
     withoutLangSuffix: boolean = false
 ): string {
     const route = CONTENT_ROUTES[contentType][lang];
-    let link;
     // If a slug is provided, remove any trailing language suffix ("-en" or "-fr").
     const cleanSlug = slug ? slug.replace(/-(en|fr)$/, '') : undefined;
 
-    if (!cleanSlug) {
-        link = `/${route}`;
-    } else {
-        link = `/${route}/${cleanSlug}`;
+    let link = `/${route}`;
+
+    if (cleanSlug) {
+        link += `/${cleanSlug}`;
+    }
+    if (!withoutLangSuffix) {
+        link = `/${lang}${link}`
     }
 
-    // console.log(`2) getContentLink - lang: ${lang}, contentType: ${contentType}, slug: ${slug}, withoutLangSuffix: ${withoutLangSuffix} => link before suffix check: ${link}`);
-
-    return !withoutLangSuffix ? `/${lang}${link}` : link;
+    return link;
 }
 
 /**
