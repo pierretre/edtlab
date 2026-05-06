@@ -56,10 +56,7 @@ function timeToX(d: Date | number): number {
     return ((t - minMs) / spanMs) * INNER_WIDTH;
 }
 
-const positionedItems = allItems.map((item) => {
-    const baseX = timeToX(item.date);
-    return { item, baseX, x: baseX };
-});
+const positionedItems = allItems.map((item) => ({ item, x: timeToX(item.date) }));
 for (let i = 1; i < positionedItems.length; i++) {
     const prev = positionedItems[i - 1];
     const cur = positionedItems[i];
@@ -70,18 +67,13 @@ for (let i = 1; i < positionedItems.length; i++) {
 
 const todayX = timeToX(now);
 
-// ---- Hierarchical date ticks --------------------------------------------
-type Tick = { x: number; label: string; level: "year" | "quarter" | "month" };
+// ---- Date ticks: years (full span) + quarters (current year only) -------
+type Tick = { x: number; label: string; level: "year" | "quarter" };
 const ticks: Tick[] = [];
 
-const minDate = new Date(minMs);
-const maxDate = new Date(maxMs);
 const curYear = now.getFullYear();
-const curMonth = now.getMonth();
-const curQuarter = Math.floor(curMonth / 3) + 1;
-
-const startYear = minDate.getFullYear();
-const endYear = maxDate.getFullYear();
+const startYear = new Date(minMs).getFullYear();
+const endYear = new Date(maxMs).getFullYear();
 for (let y = startYear; y <= endYear; y++) {
     const d = new Date(y, 0, 1).getTime();
     if (d >= minMs && d <= maxMs) {
@@ -93,12 +85,9 @@ const quarterPrefix = lang === "fr" ? "T" : "Q";
 for (const m of [3, 6, 9]) {
     const d = new Date(curYear, m, 1).getTime();
     if (d >= minMs && d <= maxMs) {
-        const qNum = m / 3 + 1;
-        ticks.push({ x: timeToX(d), label: `${quarterPrefix}${qNum}`, level: "quarter" });
+        ticks.push({ x: timeToX(d), label: `${quarterPrefix}${m / 3 + 1}`, level: "quarter" });
     }
 }
-
-// Month ticks intentionally omitted — kept only year + current-year quarter ticks for readability
 
 function fmtDate(date: Date): string {
     return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
@@ -113,12 +102,10 @@ const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
 const TITLE_MAX_WIDTH = 130;        // px -- title wraps on 2 lines above this
 ---
 
-<div class="timeline-wrapper relative my-8">
+<div class="timeline-wrapper my-8">
 
-    <!-- Scrollable timeline content -->
-    <div class="relative">
-        <div id="tl-scroll" class="overflow-x-auto tl-scrollbar cursor-grab">
-            <div id="tl-inner" class="relative" data-today-x={todayX} style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
+    <div id="tl-scroll" class="overflow-x-auto tl-scrollbar cursor-grab">
+        <div id="tl-inner" class="relative" data-today-x={todayX} style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
 
                 <!-- Above strip: items at even index (0, 2, 4, ...) — connector + title at bottom near dot -->
                 <div class="absolute left-0 right-0" style={`top: 0; height: ${ABOVE_LANE_HEIGHT}px;`}>
@@ -223,7 +210,6 @@ const TITLE_MAX_WIDTH = 130;        // px -- title wraps on 2 lines above this
                     })}
                 </div>
 
-            </div>
         </div>
     </div>
 
