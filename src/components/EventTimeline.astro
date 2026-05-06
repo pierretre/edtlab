@@ -51,8 +51,8 @@ const COLOR_PAST = "#737373";
 const COLOR_TODAY = "#ef4444";
 
 // ---- Time-proportional axis ----------------------------------------------
-const INNER_WIDTH = 3600;          // px -- fixed inner width (~60px per month over ~5 years)
-const MIN_GAP_PX = 130;            // minimum px between displayed item positions (matches rotated label width)
+const INNER_WIDTH = 4800;          // px -- fixed inner width (~80px per month over ~5 years)
+const MIN_GAP_PX = 30;             // minimum px between displayed dots (small -- prefer date accuracy over label collisions)
 
 // Time domain: spans min(items, today) to max(items, today + 6 months)
 const sixMonthsAhead = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
