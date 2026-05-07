@@ -38,7 +38,7 @@ RUN apk add --no-cache dumb-init nano
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production --ignore-scripts
+RUN npm ci --ignore-scripts
 
 # Copy built files from builder stage
 # The dist folder contains:
