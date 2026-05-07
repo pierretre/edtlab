@@ -1,4 +1,4 @@
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { getContentLink } from "@i18n/links";
 import { enToFrMapping } from "@i18n/page-mapping";
 
@@ -20,7 +20,7 @@ async function generateBasePagesStaticPaths() {
 
     return allPages.map((page: CollectionEntry<"pages">) => {
         const { lang, href, template } = page.data;
-        const { resolvedLang, resolvedSlug } = getLangAndSlugFromPageData(page.slug, lang, href);
+        const { resolvedLang, resolvedSlug } = getLangAndSlugFromPageData(page.id, lang, href);
 
         return {
             params: {
@@ -44,7 +44,7 @@ async function generateNewsPagesStaticPaths(): Promise<any[]> {
     return await Promise.all(allEntries
         .filter((entry: CollectionEntry<"news">) =>
             // On filtre les news qui sont de simples redirections (et qui sont valides)
-            entry.data.redirectTo === undefined || getEntry("news", entry.data.redirectTo) === undefined
+            entry.data.redirectTo === undefined || entry.data.redirectTo === undefined
         )
         .map(
             (entry: CollectionEntry<"news">) => {
@@ -53,7 +53,7 @@ async function generateNewsPagesStaticPaths(): Promise<any[]> {
                 const link = getContentLink(
                     lang,
                     "news",
-                    entry.slug,
+                    entry.id,
                     true,
                 );
 
@@ -82,7 +82,7 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
     let pages: any[] = [];
     allEntries.forEach(
         (entry: CollectionEntry<"job-offers">) => {
-            const linkEN = getContentLink("en", "job-offers", entry.slug, true);
+            const linkEN = getContentLink("en", "job-offers", entry.id, true);
             pages.push({
                 params: {
                     lang: "en",
@@ -93,7 +93,7 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
                 },
             });
 
-            const linkFR = getContentLink("fr", "job-offers", entry.slug, true);
+            const linkFR = getContentLink("fr", "job-offers", entry.id, true);
             pages.push({
                 params: {
                     lang: "fr",
@@ -117,7 +117,7 @@ async function generateUseCasesStaticPaths(): Promise<any[]> {
     let pages: any[] = [];
     allEntries.forEach(
         (entry: CollectionEntry<"use-cases">) => {
-            const linkEN = getContentLink("en", "use-cases", entry.slug, true);
+            const linkEN = getContentLink("en", "use-cases", entry.id, true);
             pages.push({
                 params: {
                     lang: "en",
@@ -128,7 +128,7 @@ async function generateUseCasesStaticPaths(): Promise<any[]> {
                 },
             });
 
-            const linkFR = getContentLink("fr", "use-cases", entry.slug, true);
+            const linkFR = getContentLink("fr", "use-cases", entry.id, true);
             pages.push({
                 params: {
                     lang: "fr",

@@ -1,7 +1,7 @@
 ---
 import { formatDate } from "@utils/./";
 import Badge from "@components/Badge.astro";
-import type { NewsItem } from "@models/NewsItem.model";
+import { type NewsItem } from "@models/NewsItem.model";
 
 export interface Props {
     item: NewsItem;
@@ -32,7 +32,7 @@ const badges = [
 
     <a
         href={href}
-        class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0"
+        class="relative block h-48 overflow-hidden group rounded-t-lg shrink-0"
     >
         <img
             class="h-full w-full object-contain transition-transform duration-200 ease-out group-hover:scale-105"
@@ -42,11 +42,11 @@ const badges = [
             decoding="async"
         />
         <div
-            class="absolute inset-0 bg-black bg-opacity-0 transition duration-200 group-hover:bg-opacity-30"
+            class="absolute inset-0 bg-black/0 transition duration-200 group-hover:bg-black/30"
         >
         </div>
     </a>
-    <div class="p-3 flex-grow flex flex-col">
+    <div class="p-3 grow flex flex-col">
         <div class="flex justify-between mb-2 text-sm">
             <span class="">
                 {formatDate(item.date, lang)}

@@ -18,13 +18,13 @@ const projects = (
     await getCollection("pages", ({ data }) => data.lang === lang)
 )
     .filter((page) => page.filePath?.includes("focused-projects/fp"))
-    .sort((a, b) => a.slug.localeCompare(b.slug));
+    .sort((a, b) => (a.id || "").localeCompare(b.id || ""));
 
 // CMS images are now in public/media/uploads - no import needed
 // Prepare tiles with images
 const tiles = projects.map((project) => {
-    // Remove language suffix from slug (e.g., "focused-projects/fp1/en" -> "focused-projects/fp1")
-    const cleanSlug = project.slug.replace(/\/(en|fr)$/, "");
+    // Remove language suffix from id (e.g., "focused-projects/fp1/en" -> "focused-projects/fp1")
+    const cleanSlug = project.id.replace(/\/(en|fr)$/, "");
     return {
         title: project.data.title,
         slug: linkHelpers.page(lang, cleanSlug),

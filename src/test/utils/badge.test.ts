@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { getBadge } from '@utils/badge';
 
 // Mock translation function: returns undefined to trigger fallback to upperedValue
-const t = vi.fn((_key: string) => undefined);
+const t = vi.fn(() => undefined);
 
 describe('getBadge', () => {
     describe('project colors (PC1-PC3)', () => {

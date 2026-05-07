@@ -12,43 +12,82 @@ type TimelineItem = {
     date: Date;
     title: string;
     location?: string;
-    slug?: string;
+    programMilestone: boolean;
+    href?: string | null;
     timeLabel?: string;
 };
 
-const allEvents = await getCollection("news", (item) =>
-    item.data.newsType === "event" && item.data.lang === lang
+const allEvents = await getCollection(
+    "news",
+    (item) => item.data.newsType === "event" && item.data.lang === lang,
 );
 
 const calendarEntry = await getEntry("calendar", lang);
-const calendarItems: TimelineItem[] = (calendarEntry?.data.items ?? []).map(item => ({
-    date: new Date(item.date),
-    title: item.title,
-    location: item.location,
-    timeLabel: item.timeLabel,
-}));
+const calendarItems: TimelineItem[] = (calendarEntry?.data.items ?? []).map(
+    (item) => ({
+        date: new Date(item.date),
+        title: item.title,
+        location: item.location,
+        programMilestone: item.programMilestone === true,
+        href: undefined,
+        timeLabel: item.timeLabel,
+    }),
+);
 
-const eventItems: TimelineItem[] = allEvents.map(e => ({
-    date: e.data.date,
-    title: e.data.title,
-    location: e.data.location,
-    slug: e.slug,
-}));
+const eventItems: TimelineItem[] = await Promise.all(
+    allEvents.map(async (item) => {
+        const { data, id } = item;
+        let hrefLang = lang,
+            hrefId = id;
 
-const allItems = [...calendarItems, ...eventItems].sort((a, b) => a.date.getTime() - b.date.getTime());
+        if (data.redirectTo) {
+            const redirectItem = await getEntry(
+                data.redirectTo.collection,
+                data.redirectTo.id,
+            );
+
+            if (redirectItem) {
+                hrefLang = redirectItem.data.lang;
+                hrefId = redirectItem.id;
+            }
+        }
+
+        return {
+            date: item.data.date,
+            title: item.data.title,
+            location: item.data.location,
+            programMilestone: false,
+            href: linkHelpers.event(hrefLang, hrefId),
+        };
+    }),
+);
+
+const allItems = [...calendarItems, ...eventItems].sort(
+    (a, b) => a.date.getTime() - b.date.getTime(),
+);
 const now = new Date();
 
-const COLOR_ITEM = "#665BA7";       // primary brand violet — single color for all items
+const COLOR_ITEM = "#665BA7"; // primary brand violet — single color for all items
 const COLOR_PAST = "#737373";
 
 // ---- Time-proportional axis ----------------------------------------------
-const INNER_WIDTH = 2400;          // px -- ~40px per month over ~5 years
-const MIN_GAP_PX = 4;              // minimum px between displayed dots
+const INNER_WIDTH = 2400; // px -- ~40px per month over ~5 years
+const MIN_GAP_PX = 4; // minimum px between displayed dots
 
-const sixMonthsAhead = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
-const itemMs = allItems.map(it => it.date.getTime());
-const minMs = Math.min(now.getTime(), ...(itemMs.length ? itemMs : [now.getTime()]));
-const maxMs = Math.max(sixMonthsAhead.getTime(), ...(itemMs.length ? itemMs : [sixMonthsAhead.getTime()]));
+const sixMonthsAhead = new Date(
+    now.getFullYear(),
+    now.getMonth() + 6,
+    now.getDate(),
+);
+const itemMs = allItems.map((it) => it.date.getTime());
+const minMs = Math.min(
+    now.getTime(),
+    ...(itemMs.length ? itemMs : [now.getTime()]),
+);
+const maxMs = Math.max(
+    sixMonthsAhead.getTime(),
+    ...(itemMs.length ? itemMs : [sixMonthsAhead.getTime()]),
+);
 const spanMs = Math.max(1, maxMs - minMs);
 
 function timeToX(d: Date | number): number {
@@ -56,7 +95,10 @@ function timeToX(d: Date | number): number {
     return ((t - minMs) / spanMs) * INNER_WIDTH;
 }
 
-const positionedItems = allItems.map((item) => ({ item, x: timeToX(item.date) }));
+const positionedItems = allItems.map((item) => ({
+    item,
+    x: timeToX(item.date),
+}));
 for (let i = 1; i < positionedItems.length; i++) {
     const prev = positionedItems[i - 1];
     const cur = positionedItems[i];
@@ -85,13 +127,19 @@ const quarterPrefix = lang === "fr" ? "T" : "Q";
 for (const m of [3, 6, 9]) {
     const d = new Date(curYear, m, 1).getTime();
     if (d >= minMs && d <= maxMs) {
-        ticks.push({ x: timeToX(d), label: `${quarterPrefix}${m / 3 + 1}`, level: "quarter" });
+        ticks.push({
+            x: timeToX(d),
+            label: `${quarterPrefix}${m / 3 + 1}`,
+            level: "quarter",
+        });
     }
 }
 
 function fmtDate(date: Date): string {
     return date.toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", {
-        day: "numeric", month: "short", year: "numeric",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
     });
 }
 
@@ -99,38 +147,62 @@ const ABOVE_LANE_HEIGHT = 130;
 const AXIS_HEIGHT = 24;
 const BELOW_LANE_HEIGHT = 130;
 const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
-const TITLE_MAX_WIDTH = 130;        // px -- title wraps on 2 lines above this
+const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
 ---
 
 <div class="timeline-wrapper my-8">
-
     <div id="tl-scroll" class="overflow-x-auto tl-scrollbar cursor-grab">
-        <div id="tl-inner" class="relative" data-today-x={todayX} style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}>
-
-                <!-- Above strip: items at even index (0, 2, 4, ...) — connector + title at bottom near dot -->
-                <div class="absolute left-0 right-0" style={`top: 0; height: ${ABOVE_LANE_HEIGHT}px;`}>
-                    {positionedItems.map(({ item, x }, idx) => {
+        <div
+            id="tl-inner"
+            class="relative"
+            data-today-x={todayX}
+            style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}
+        >
+            <!-- Above strip: items at even index (0, 2, 4, ...) — connector + title at bottom near dot -->
+            <div
+                class="absolute left-0 right-0"
+                style={`top: 0; height: ${ABOVE_LANE_HEIGHT}px;`}
+            >
+                {
+                    positionedItems.map(({ item, x }, idx) => {
                         if (idx % 2 !== 0) return null;
                         const past = item.date < now;
                         const titleColor = past ? COLOR_PAST : COLOR_ITEM;
-                        const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
                         return (
                             <>
-                                <div class="absolute" style={`left: ${x}px; bottom: 0; width: 1px; height: 12px; background-color: ${titleColor};`}></div>
-                                <div class="absolute" style={`left: ${x}px; bottom: 12px;`}>
+                                <div
+                                    class="absolute"
+                                    style={`left: ${x}px; bottom: 0; width: 1px; height: 12px; background-color: ${titleColor};`}
+                                />
+                                <div
+                                    class="absolute"
+                                    style={`left: ${x}px; bottom: 12px;`}
+                                >
                                     <div class="-rotate-45 origin-bottom-left whitespace-nowrap">
                                         <time class="text-[10px] font-mono block text-gray-500">
-                                            {item.timeLabel ?? fmtDate(item.date)}
+                                            {item.timeLabel ??
+                                                fmtDate(item.date)}
                                         </time>
                                         {item.location && (
-                                            <span class="text-[10px] text-gray-500 block">{item.location}</span>
+                                            <span class="text-[10px] text-gray-500 block">
+                                                {item.location}
+                                            </span>
                                         )}
-                                        {href ? (
-                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
+                                        {item.href ? (
+                                            <a
+                                                href={item.href}
+                                                class="text-xs font-semibold leading-tight hover:underline block line-clamp-2"
+                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                title={item.title}
+                                            >
                                                 {item.title}
                                             </a>
                                         ) : (
-                                            <span class="text-xs font-semibold leading-tight block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
+                                            <span
+                                                class="text-xs font-semibold leading-tight block line-clamp-2"
+                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                title={item.title}
+                                            >
                                                 {item.title}
                                             </span>
                                         )}
@@ -138,22 +210,32 @@ const TITLE_MAX_WIDTH = 130;        // px -- title wraps on 2 lines above this
                                 </div>
                             </>
                         );
-                    })}
+                    })
+                }
+            </div>
+
+            <!-- Axis: line + ticks + dots (all items, single style) -->
+            <div
+                class="absolute left-0 right-0"
+                style={`top: ${ABOVE_LANE_HEIGHT}px; height: ${AXIS_HEIGHT}px;`}
+            >
+                <div
+                    class="absolute inset-x-0 top-1/2 h-0.5 bg-gradient-to-r from-gray-300 to-gray-400"
+                >
                 </div>
 
-                <!-- Axis: line + ticks + dots (all items, single style) -->
-                <div class="absolute left-0 right-0" style={`top: ${ABOVE_LANE_HEIGHT}px; height: ${AXIS_HEIGHT}px;`}>
-                    <div class="absolute inset-x-0 top-1/2 h-0.5 bg-gradient-to-r from-gray-300 to-gray-400"></div>
-
-                    {ticks.map((tick) => {
+                {
+                    ticks.map((tick) => {
                         const isYear = tick.level === "year";
-                        const tickColor = isYear ? "bg-gray-300" : "bg-gray-200";
+                        const tickColor = isYear
+                            ? "bg-gray-300"
+                            : "bg-gray-200";
                         return (
                             <>
                                 <div
                                     class={`absolute ${tickColor}`}
                                     style={`left: ${tick.x}px; top: 50%; transform: translate(-50%, -50%); width: 1px; height: ${AXIS_HEIGHT}px;`}
-                                ></div>
+                                />
                                 <div
                                     class="absolute text-[9px] text-gray-500 whitespace-nowrap"
                                     style={`left: ${tick.x}px; top: ${AXIS_HEIGHT}px; transform: translateX(-50%);`}
@@ -162,81 +244,127 @@ const TITLE_MAX_WIDTH = 130;        // px -- title wraps on 2 lines above this
                                 </div>
                             </>
                         );
-                    })}
+                    })
+                }
 
-                    {positionedItems.map(({ item, x }) => {
+                {
+                    positionedItems.map(({ item, x }) => {
                         const past = item.date < now;
                         const dotColor = past ? COLOR_PAST : COLOR_ITEM;
                         return (
                             <div
                                 class="absolute rounded-full border-2 border-white shadow z-10"
                                 style={`left: ${x}px; top: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background-color: ${dotColor};`}
-                            ></div>
+                            />
                         );
-                    })}
-                </div>
+                    })
+                }
+            </div>
 
-                <!-- Below strip: items at odd index (1, 3, 5, ...) — connector + title at top near dot -->
-                <div class="absolute left-0 right-0" style={`top: ${ABOVE_LANE_HEIGHT + AXIS_HEIGHT}px; height: ${BELOW_LANE_HEIGHT}px;`}>
-                    {positionedItems.map(({ item, x }, idx) => {
+            <!-- Below strip: items at odd index (1, 3, 5, ...) — connector + title at top near dot -->
+            <div
+                class="absolute left-0 right-0"
+                style={`top: ${ABOVE_LANE_HEIGHT + AXIS_HEIGHT}px; height: ${BELOW_LANE_HEIGHT}px;`}
+            >
+                {
+                    positionedItems.map(({ item, x }, idx) => {
                         if (idx % 2 !== 1) return null;
                         const past = item.date < now;
                         const titleColor = past ? COLOR_PAST : COLOR_ITEM;
-                        const href = item.slug ? linkHelpers.event(lang, item.slug) : undefined;
+                        const href = item.href;
                         return (
                             <>
-                                <div class="absolute" style={`left: ${x}px; top: 0; width: 1px; height: 12px; background-color: ${titleColor};`}></div>
-                                <div class="absolute" style={`left: ${x}px; top: 12px;`}>
+                                <div
+                                    class="absolute"
+                                    style={`left: ${x}px; top: 0; width: 1px; height: 12px; background-color: ${titleColor};`}
+                                />
+                                <div
+                                    class="absolute"
+                                    style={`left: ${x}px; top: 12px;`}
+                                >
                                     <div class="rotate-45 origin-top-left whitespace-nowrap">
                                         {href ? (
-                                            <a href={href} class="text-xs font-semibold leading-tight hover:underline block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
+                                            <a
+                                                href={href}
+                                                class="text-xs font-semibold leading-tight hover:underline block line-clamp-2"
+                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                title={item.title}
+                                            >
                                                 {item.title}
                                             </a>
                                         ) : (
-                                            <span class="text-xs font-semibold leading-tight block line-clamp-2" style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`} title={item.title}>
+                                            <span
+                                                class="text-xs font-semibold leading-tight block line-clamp-2"
+                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                title={item.title}
+                                            >
                                                 {item.title}
                                             </span>
                                         )}
                                         <time class="text-[10px] font-mono block text-gray-500">
-                                            {item.timeLabel ?? fmtDate(item.date)}
+                                            {item.timeLabel ??
+                                                fmtDate(item.date)}
                                         </time>
                                         {item.location && (
-                                            <span class="text-[10px] text-gray-500 block">{item.location}</span>
+                                            <span class="text-[10px] text-gray-500 block">
+                                                {item.location}
+                                            </span>
                                         )}
                                     </div>
                                 </div>
                             </>
                         );
-                    })}
-                </div>
-
+                    })
+                }
+            </div>
         </div>
     </div>
 
-    {allItems.length === 0 && (
-        <p class="text-center text-gray-500 py-8 w-full">
-            {lang === "fr" ? "Aucun événement pour le moment." : "No events yet."}
-        </p>
-    )}
+    {
+        allItems.length === 0 && (
+            <p class="text-center text-gray-500 py-8 w-full">
+                {lang === "fr"
+                    ? "Aucun événement pour le moment."
+                    : "No events yet."}
+            </p>
+        )
+    }
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const c = document.getElementById('tl-scroll');
+    document.addEventListener("DOMContentLoaded", () => {
+        const c = document.getElementById("tl-scroll");
         if (!c) return;
 
         // Drag to scroll horizontally (no scroll buttons, no scrollbar)
-        let down = false, sx = 0, sl = 0;
-        c.addEventListener('mousedown', (e) => { down = true; c.style.cursor = 'grabbing'; sx = e.pageX; sl = c.scrollLeft; });
-        c.addEventListener('mouseleave', () => { down = false; c.style.cursor = 'grab'; });
-        c.addEventListener('mouseup', () => { down = false; c.style.cursor = 'grab'; });
-        c.addEventListener('mousemove', (e) => { if (!down) return; e.preventDefault(); c.scrollLeft = sl - (e.pageX - sx); });
+        let down = false,
+            sx = 0,
+            sl = 0;
+        c.addEventListener("mousedown", (e) => {
+            down = true;
+            c.style.cursor = "grabbing";
+            sx = e.pageX;
+            sl = c.scrollLeft;
+        });
+        c.addEventListener("mouseleave", () => {
+            down = false;
+            c.style.cursor = "grab";
+        });
+        c.addEventListener("mouseup", () => {
+            down = false;
+            c.style.cursor = "grab";
+        });
+        c.addEventListener("mousemove", (e) => {
+            if (!down) return;
+            e.preventDefault();
+            c.scrollLeft = sl - (e.pageX - sx);
+        });
 
         // Auto-scroll to center today on load (uses data-today-x attribute)
         requestAnimationFrame(() => {
-            const inner = document.getElementById('tl-inner');
+            const inner = document.getElementById("tl-inner");
             if (inner && c) {
-                const todayX = parseFloat(inner.dataset.todayX || '0');
+                const todayX = parseFloat(inner.dataset.todayX || "0");
                 const containerWidth = c.clientWidth;
                 c.scrollLeft = Math.max(0, todayX - containerWidth / 2);
             }
@@ -246,6 +374,11 @@ const TITLE_MAX_WIDTH = 130;        // px -- title wraps on 2 lines above this
 
 <style>
     /* Hide horizontal scrollbar -- timeline scrolls via drag */
-    .tl-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
-    .tl-scrollbar::-webkit-scrollbar { display: none; }
+    .tl-scrollbar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .tl-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
 </style>

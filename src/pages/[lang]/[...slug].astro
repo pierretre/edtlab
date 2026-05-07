@@ -1,6 +1,6 @@
 ---
 export const prerender = true;
-import { type CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
@@ -29,7 +29,8 @@ if (!page) {
 }
 
 // Get the rendered content
-const { Content, headings } = await page.render();
+const { Content, headings } = await render(page);
+
 const Layout: any = getLayoutFromTemplateOrCollection(
     page.collection,
     template,

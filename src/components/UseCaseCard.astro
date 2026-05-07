@@ -11,7 +11,7 @@ export interface Props {
     slug: string;
 }
 
-const { item, body, lang, slug } = Astro.props;
+const { item, body, lang, t, slug } = Astro.props;
 const link = `/${lang}${getContentLink(lang, "use-cases", slug, true)}`;
 const coverSrc = item.photo || "/media/use-cases/uc-default.svg";
 

@@ -8,11 +8,11 @@ interface Props {
     item: JobOffer;
     body?: string;
     lang: "en" | "fr";
-    t: any;
     slug: string;
+    t: any;
 }
 
-const { item, body, lang, t, slug } = Astro.props;
+const { item, body, lang, slug, t } = Astro.props;
 
 const projectTags = new Set([
     "PC1",
