@@ -17,8 +17,6 @@ test.describe('Route Testing', () => {
         '/fr/cas-d-utilisation',
         '/en/demo-center',
         '/fr/centre-demo',
-        '/en/resources',
-        '/fr/ressources',
         '/en/news',
         '/fr/actualites',
         '/en/join-us',

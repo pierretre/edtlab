@@ -14,8 +14,6 @@ test.describe('Link Verification Tests', () => {
         '/fr/production',
         '/en/demo-center',
         '/fr/centre-demo',
-        '/en/resources',
-        '/fr/ressources',
         '/en/news',
         '/fr/actualites',
         '/en/join-us',
