@@ -13,7 +13,7 @@ summary: >-
 # usersCount : nombre d'utilisateurs effectifs du JN (métrique de diffusion)
 usersCount: 1
 lang: fr
-photo: /media/use-cases/inria-guy-de-spiegeleer-capteur-temperature.png
+photo: /media/use-cases/Temperature-Sensors-DirecTemp-USB-Thermometers-DTU6005-001.jpg
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: industrial-engineering
 # maturity : concept | poc | prototype | operational
@@ -23,6 +23,7 @@ originType: engineered
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 version: r0.1
 license: CC-BY-4.0
+# license : identifiant SPDX
 tags:
   - capteur-usb
   - monitoring-temperature
@@ -31,8 +32,6 @@ tags:
   - simulation
 publishedDate: 2026-04-15T00:00:00.000Z
 lastUpdated: 2026-04-15T00:00:00.000Z
-# license : identifiant SPDX (ex CC-BY-4.0, CC-BY-SA-4.0, CC-BY-NC-4.0, CC0-1.0, MIT, Apache-2.0, Proprietary)
-license: CC-BY-4.0
 
 ---
 ## Résumé
@@ -186,7 +185,10 @@ Pas de risque identifié.
 
 ---
 
-## References
-<!-- Liste de publications, datasheets, liens externes. Format markdown standard : - [title](url) — venue. -->
+## Matériel
+<!-- Liste des datasets, models, repos : - [title](url) — venue. -->
+
+## Références
+<!-- Liste de publications, sites web. Format markdown standard : - [title](url) — venue. -->
 
 - [Temperature Sensor (datasheet AliExpress)](https://fr.aliexpress.com/item/1005004139995534.html?spm=a2g0o.order_list.order_list_main.4.531a1802AyNwZz&gatewayAdapt=glo2fra)
