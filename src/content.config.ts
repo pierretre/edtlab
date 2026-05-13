@@ -120,6 +120,7 @@ const useCasesCollection = defineCollection({
         status: z.enum(['draft', 'published']).default('published'),
         previewToken: z.string().optional(),
         confirmToken: z.string().optional(),
+        usersCount: z.number().optional(),
         // Identity card fields (HN-T009-S1)
         provider: z.string().optional(),
         originType: z.enum(['natural', 'anthropic', 'engineered', 'infrastructure', 'process']).optional(),

@@ -1,7 +1,6 @@
 ---
 import PageLayout from "./PageLayout.astro";
 import { linkHelpers, useTranslations } from "@i18n/utils";
-import { formatDate } from "@utils/./";
 
 export interface Props {
     frontmatter: any;
@@ -10,31 +9,6 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const lang = Astro.currentLocale as "en" | "fr";
 const t = useTranslations(lang);
-
-// originType label mapping
-const originTypeLabels: Record<string, Record<string, string>> = {
-    en: {
-        natural: 'Natural',
-        anthropic: 'Anthropic',
-        engineered: 'Engineered',
-        infrastructure: 'Infrastructure',
-        process: 'Process',
-    },
-    fr: {
-        natural: 'Naturel',
-        anthropic: 'Anthropique',
-        engineered: 'Ingéniéré',
-        infrastructure: 'Infrastructure',
-        process: 'Processus',
-    },
-};
-
-const originTypeLabel = frontmatter.originType
-    ? (originTypeLabels[lang]?.[frontmatter.originType] ?? frontmatter.originType)
-    : null;
-
-// Identity card: provider + originType + since. Other fields (users, objectives, etc.) now live in the body markdown.
-const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontmatter.since;
 ---
 
 <PageLayout
@@ -102,46 +76,14 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
                     {frontmatter.maturity}
                 </span>
             )}
+            {frontmatter.provider && (
+                <span class="text-gray-500 italic">{frontmatter.provider}</span>
+            )}
         </div>
-
-        <!-- Identity Card — minimal: provider, originType, since -->
-        {hasIdentityCard && (
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
-                <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
-                    {t('use-case.identity.title')}
-                </h2>
-                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
-
-                    {frontmatter.provider && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.provider')}</dt>
-                            <dd class="text-gray-800">{frontmatter.provider}</dd>
-                        </>
-                    )}
-
-                    {originTypeLabel && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.originType')}</dt>
-                            <dd class="text-gray-800">{originTypeLabel}</dd>
-                        </>
-                    )}
-
-                    {frontmatter.since && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.since')}</dt>
-                            <dd class="text-gray-800">
-                                {formatDate(frontmatter.since instanceof Date ? frontmatter.since : new Date(frontmatter.since), lang)}
-                            </dd>
-                        </>
-                    )}
-
-                </dl>
-            </div>
-        )}
 
     </header>
 
-    <!-- Body content (Résumé / Caractérisation MC1-MC21 / Description fonctionnelle / References — all in markdown) -->
+    <!-- Body content (Résumé / Description fonctionnelle / Caractérisation MC1-MC21 / References — all in markdown) -->
     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
         <slot />
     </div>
