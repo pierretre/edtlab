@@ -30,6 +30,25 @@ tags:
   - alerte-seuil
   - jumeau-numerique
   - simulation
+# challenges : enjeux scientifiques/techniques. Chaque enjeu peut pointer vers un bac à sable
+# (notebook, repo, démo en ligne) permettant de prendre en main le problème.
+challenges:
+  - title: Détection de pics non supervisée
+    summary: >-
+      Identifier en temps réel un franchissement de seuil sans labels
+      d'entraînement, robuste au bruit du capteur USB.
+    sandboxUrl: https://colab.research.google.com/drive/example-uc00-detection
+    sandboxLabel: Notebook Colab
+  - title: Rejeu accéléré de scénarios
+    summary: >-
+      Rejouer 1 h de profil de température en moins d'1 s tout en préservant
+      la cadence relative des évènements.
+    sandboxUrl: https://github.com/edt/uc00-replay
+    sandboxLabel: Repo GitHub
+  - title: Comparaison d'algorithmes de détection
+    summary: >-
+      Banc d'essai reproductible pour comparer ≥ 3 algorithmes de détection
+      sur ≥ 50 scénarios de référence (sensibilité / faux positifs).
 publishedDate: 2026-04-15T00:00:00.000Z
 lastUpdated: 2026-04-15T00:00:00.000Z
 
@@ -44,6 +63,13 @@ Le jumeau numérique complète le dispositif physique en permettant de simuler l
 Le prototype mis en oeuvre pour: 
 - service de test pour l amise en place du portfolio,
 - être distribué aux chercheurs intéressés de EDT pour accompagner leur travaux, 
+
+---
+
+## Enjeux scientifiques/techniques
+### Installateur robuste - AT3
+Disposer d'un installateur du jumeau numérique mettant à disposition du chercheur l'ensemble des éléments permettant de faire fonctionner, et de développer les fonctionnalités du jumeau numérique.
+
 ---
 
 ## Description fonctionnelle

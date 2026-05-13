@@ -130,6 +130,12 @@ const useCasesCollection = defineCollection({
         usageLevel: z.enum(['reduced', 'consortium', 'public']).optional(),
         since: z.coerce.date().optional(),
         schema: z.string().optional(),
+        challenges: z.array(z.object({
+            title: z.string(),
+            summary: z.string(),
+            sandboxUrl: z.string().url().optional(),
+            sandboxLabel: z.string().optional(),
+        })).optional().default([]),
     })
 });
 

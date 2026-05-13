@@ -85,30 +85,30 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
         <!-- Meta badges + version selector — each badge is preceded by its label -->
         <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 mb-4">
             {frontmatter.domain && (
-                <span class="inline-flex items-center gap-1">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Domaine' : 'Domain'} :</span>
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Domaine :' : 'Domain:'}</span>
                     <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
                         {frontmatter.domain}
                     </span>
                 </span>
             )}
             {frontmatter.maturity && (
-                <span class="inline-flex items-center gap-1">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Maturité' : 'Maturity'} :</span>
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Maturité :' : 'Maturity:'}</span>
                     <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
                         {frontmatter.maturity}
                     </span>
                 </span>
             )}
             {frontmatter.provider && (
-                <span class="inline-flex items-center gap-1">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Fournisseur' : 'Provider'} :</span>
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Fournisseur :' : 'Provider:'}</span>
                     <span class="text-gray-700 italic">{frontmatter.provider}</span>
                 </span>
             )}
             {frontmatter.license && (
-                <span class="inline-flex items-center gap-1">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Licence' : 'License'} :</span>
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Licence :' : 'License:'}</span>
                     {frontmatter.license.startsWith('CC') ? (
                         <a
                             href={`https://creativecommons.org/licenses/${frontmatter.license.replace(/^CC-/, '').replace(/-/g, '/').toLowerCase()}/`}
@@ -126,8 +126,8 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
 
             {/* Version selector — visible only when more than one version exists; single-version case shows a small badge */}
             {allVersions.length > 1 ? (
-                <span class="inline-flex items-center gap-1">
-                    <label for="uc-version-select" class="text-gray-500">{lang === 'fr' ? 'Version' : 'Version'} :</label>
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <label for="uc-version-select" class="text-gray-500">{lang === 'fr' ? 'Version :' : 'Version:'}</label>
                     <select
                         id="uc-version-select"
                         class="border border-gray-300 rounded px-2 py-0.5 text-sm bg-white"
@@ -145,8 +145,8 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
                 </span>
             ) : (
                 frontmatter.version && (
-                    <span class="text-gray-500">
-                        {lang === 'fr' ? 'Version' : 'Version'} : <span class="font-medium">{frontmatter.version}</span>
+                    <span class="text-gray-500 whitespace-nowrap">
+                        {lang === 'fr' ? 'Version :' : 'Version:'} <span class="font-medium">{frontmatter.version}</span>
                     </span>
                 )
             )}
@@ -168,6 +168,36 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
         )}
 
     </header>
+
+    {/* Enjeux scientifiques et techniques — un bac à sable possible par enjeu */}
+    {frontmatter.challenges && frontmatter.challenges.length > 0 && (
+        <section class="mb-10">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                {lang === 'fr' ? 'Enjeux scientifiques et techniques' : 'Scientific & technical challenges'}
+            </h2>
+            <div class="grid gap-4 md:grid-cols-2">
+                {frontmatter.challenges.map((c: any) => (
+                    <div class="border border-gray-200 rounded-lg p-4 bg-white flex flex-col">
+                        <h3 class="font-semibold text-gray-900 mb-2">{c.title}</h3>
+                        <p class="text-sm text-gray-600 mb-3 flex-grow">{c.summary}</p>
+                        {c.sandboxUrl && (
+                            <a
+                                href={c.sandboxUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center gap-1 text-sm text-primary-600 hover:underline self-start"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                                {c.sandboxLabel || (lang === 'fr' ? 'Bac à sable' : 'Sandbox')}
+                            </a>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </section>
+    )}
 
     <!-- Body content (Résumé / Description fonctionnelle / Caractérisation MC1-MC21 / References — all in markdown) -->
     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
