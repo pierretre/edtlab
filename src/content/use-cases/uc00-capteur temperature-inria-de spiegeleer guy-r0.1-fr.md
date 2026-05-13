@@ -186,6 +186,4 @@ Pas de risque identifié.
 ## References
 <!-- Liste de publications, datasheets, liens externes. Format markdown standard : - [title](url) — venue. -->
 
-  - title: Temperature Sensor
-    url: >-
-      https://fr.aliexpress.com/item/1005004139995534.html?spm=a2g0o.order_list.order_list_main.4.531a1802AyNwZz&gatewayAdapt=glo2fra
+- [Temperature Sensor (datasheet AliExpress)](https://fr.aliexpress.com/item/1005004139995534.html?spm=a2g0o.order_list.order_list_main.4.531a1802AyNwZz&gatewayAdapt=glo2fra)
