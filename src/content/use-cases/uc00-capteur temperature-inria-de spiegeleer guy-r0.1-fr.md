@@ -22,6 +22,8 @@ maturity: prototype
 originType: engineered
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 version: r0.1
+# draft or published
+status: draft
 license: CC-BY-4.0
 # license : identifiant SPDX
 tags:
@@ -32,7 +34,6 @@ tags:
   - simulation
 publishedDate: 2026-04-15T00:00:00.000Z
 lastUpdated: 2026-04-15T00:00:00.000Z
-
 ---
 ## Résumé
 <!-- Décrivez en 3-5 phrases le cas d'usage : quel système physique, quel jumeau numérique, quels objectifs. -->
