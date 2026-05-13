@@ -169,37 +169,7 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
 
     </header>
 
-    {/* Enjeux scientifiques et techniques — un bac à sable possible par enjeu */}
-    {frontmatter.challenges && frontmatter.challenges.length > 0 && (
-        <section class="mb-10">
-            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
-                {lang === 'fr' ? 'Enjeux scientifiques et techniques' : 'Scientific & technical challenges'}
-            </h2>
-            <div class="grid gap-4 md:grid-cols-2">
-                {frontmatter.challenges.map((c: any) => (
-                    <div class="border border-gray-200 rounded-lg p-4 bg-white flex flex-col">
-                        <h3 class="font-semibold text-gray-900 mb-2">{c.title}</h3>
-                        <p class="text-sm text-gray-600 mb-3 flex-grow">{c.summary}</p>
-                        {c.sandboxUrl && (
-                            <a
-                                href={c.sandboxUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center gap-1 text-sm text-primary-600 hover:underline self-start"
-                            >
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
-                                {c.sandboxLabel || (lang === 'fr' ? 'Bac à sable' : 'Sandbox')}
-                            </a>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </section>
-    )}
-
-    <!-- Body content (Résumé / Description fonctionnelle / Caractérisation MC1-MC21 / References — all in markdown) -->
+    <!-- Body content (Résumé / Description fonctionnelle / Caractérisation MC1-MC21 / Enjeux scientifiques / References — all in markdown) -->
     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
         <slot />
     </div>

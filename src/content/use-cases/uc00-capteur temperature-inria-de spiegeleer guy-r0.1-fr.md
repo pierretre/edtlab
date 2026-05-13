@@ -30,25 +30,6 @@ tags:
   - alerte-seuil
   - jumeau-numerique
   - simulation
-# challenges : enjeux scientifiques/techniques. Chaque enjeu peut pointer vers un bac à sable
-# (notebook, repo, démo en ligne) permettant de prendre en main le problème.
-challenges:
-  - title: Détection de pics non supervisée
-    summary: >-
-      Identifier en temps réel un franchissement de seuil sans labels
-      d'entraînement, robuste au bruit du capteur USB.
-    sandboxUrl: https://colab.research.google.com/drive/example-uc00-detection
-    sandboxLabel: Notebook Colab
-  - title: Rejeu accéléré de scénarios
-    summary: >-
-      Rejouer 1 h de profil de température en moins d'1 s tout en préservant
-      la cadence relative des évènements.
-    sandboxUrl: https://github.com/edt/uc00-replay
-    sandboxLabel: Repo GitHub
-  - title: Comparaison d'algorithmes de détection
-    summary: >-
-      Banc d'essai reproductible pour comparer ≥ 3 algorithmes de détection
-      sur ≥ 50 scénarios de référence (sensibilité / faux positifs).
 publishedDate: 2026-04-15T00:00:00.000Z
 lastUpdated: 2026-04-15T00:00:00.000Z
 
@@ -63,12 +44,6 @@ Le jumeau numérique complète le dispositif physique en permettant de simuler l
 Le prototype mis en oeuvre pour: 
 - service de test pour l amise en place du portfolio,
 - être distribué aux chercheurs intéressés de EDT pour accompagner leur travaux, 
-
----
-
-## Enjeux scientifiques/techniques
-### Installateur robuste - AT3
-Disposer d'un installateur du jumeau numérique mettant à disposition du chercheur l'ensemble des éléments permettant de faire fonctionner, et de développer les fonctionnalités du jumeau numérique.
 
 ---
 
@@ -208,6 +183,45 @@ Pas de standard retenu pour le moment.
 <!-- Y a-t-il des considérations de cybersécurité ou de sûreté de fonctionnement ? -->
 
 Pas de risque identifié.
+
+---
+
+## Enjeux scientifiques et techniques
+
+<!--
+Décrivez librement les questions scientifiques/techniques ouvertes que ce UC permet d'explorer.
+Pour chaque enjeu, donnez :
+- un titre court (### Titre)
+- un paragraphe de contexte (1 à 3 phrases)
+- éventuellement une image illustrative : ![légende](/media/use-cases/xxx.png)
+- les ressources associées en liste à puces :
+  - 🧪 bac à sable : notebook, repo, démo en ligne
+  - 🎓 thèses / doctorants travaillant sur le sujet
+  - 📄 publications de référence
+  - 🔗 autres liens (datasets, outils, …)
+-->
+
+### Détection de pics non supervisée
+
+Identifier en temps réel un franchissement de seuil sans labels d'entraînement, robuste au bruit du capteur USB. L'enjeu central est la robustesse aux dérives lentes (offset thermique) et aux faux positifs liés aux à-coups de mesure.
+
+- 🧪 Bac à sable : [Notebook Colab](https://colab.research.google.com/drive/example-uc00-detection) — comparaison de 3 détecteurs sur 50 scénarios de référence
+- 🎓 Thèse en cours : *Détection adaptative pour capteurs IoT bas-coût*, doctorant à préciser (Inria, 2025-2028)
+- 📄 [Pang et al. (2021) — Deep Learning for Anomaly Detection](https://doi.org/10.1145/3439950) — ACM Computing Surveys
+
+### Rejeu accéléré de scénarios
+
+Rejouer 1 h de profil de température en moins d'1 s tout en préservant la cadence relative des évènements, pour valider une règle d'alerte sans matériel physique. Question de fidélité temporelle et de reproductibilité.
+
+- 🧪 [Repo GitHub `uc00-replay`](https://github.com/edt/uc00-replay) — moteur de rejeu accéléré
+- 🔗 Jeu de scénarios de référence (à publier)
+
+### Comparaison d'algorithmes de détection
+
+Banc d'essai reproductible pour comparer ≥ 3 algorithmes de détection (seuil simple, EWMA, isolation forest…) sur ≥ 50 scénarios de référence, en ciblant le meilleur compromis sensibilité / faux positifs.
+
+- 🧪 Bac à sable de comparaison — à venir
+- 🎓 Sujet ouvert pour stage M2 (2026)
 
 ---
 
