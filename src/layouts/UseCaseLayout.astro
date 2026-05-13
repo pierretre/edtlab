@@ -1,7 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import PageLayout from "./PageLayout.astro";
 import { linkHelpers, useTranslations } from "@i18n/utils";
-import { formatDate } from "@utils/./";
+import { getContentLink } from "@i18n/links";
 
 export interface Props {
     frontmatter: any;
@@ -11,44 +12,21 @@ const { frontmatter } = Astro.props;
 const lang = Astro.currentLocale as "en" | "fr";
 const t = useTranslations(lang);
 
-// originType label mapping
-const originTypeLabels: Record<string, Record<string, string>> = {
-    en: {
-        natural: 'Natural',
-        anthropic: 'Anthropic',
-        engineered: 'Engineered',
-        infrastructure: 'Infrastructure',
-        process: 'Process',
-    },
-    fr: {
-        natural: 'Naturel',
-        anthropic: 'Anthropique',
-        engineered: 'Ingéniéré',
-        infrastructure: 'Infrastructure',
-        process: 'Processus',
-    },
-};
-
-const usageLevelLabels: Record<string, Record<string, string>> = {
-    en: { reduced: 'Reduced', consortium: 'Consortium', public: 'Public' },
-    fr: { reduced: 'Réduit', consortium: 'Consortium', public: 'Public' },
-};
-
-const originTypeLabel = frontmatter.originType
-    ? (originTypeLabels[lang]?.[frontmatter.originType] ?? frontmatter.originType)
-    : null;
-
-const showUsageLevel = frontmatter.maturity === 'operational' && frontmatter.usageLevel;
-const usageLevelLabel = showUsageLevel
-    ? (usageLevelLabels[lang]?.[frontmatter.usageLevel] ?? frontmatter.usageLevel)
-    : null;
-
-// Check if any identity field is set
-const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontmatter.usagePhase ||
-    showUsageLevel || frontmatter.since ||
-    (frontmatter.users && frontmatter.users.length > 0) ||
-    (frontmatter.objectives && frontmatter.objectives.length > 0) ||
-    frontmatter.schema;
+// Collect all versions of this UC (same id + same language) for the version selector.
+// Listing UI already shows only the latest version per id; this selector lets the
+// reader switch to older versions from the detail page.
+let allVersions: any[] = [];
+if (frontmatter.id) {
+    const allUcs = await getCollection("use-cases", (item: any) =>
+        item.data.id === frontmatter.id && item.data.lang === lang
+    );
+    allVersions = allUcs.sort((a: any, b: any) =>
+        (b.data.version || "").localeCompare(a.data.version || "")
+    );
+}
+const currentVersion = frontmatter.version || "";
+const latestVersion = allVersions.length > 0 ? (allVersions[0].data.version || "") : "";
+const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
 ---
 
 <PageLayout
@@ -75,23 +53,20 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
     <header class="mb-8">
         <!-- Image -->
         {frontmatter.photo && (
-            <div class="mb-6 rounded-lg overflow-hidden">
+            <div class="mb-6 flex justify-center bg-gray-50 rounded-lg">
                 <img
                     src={frontmatter.photo}
                     alt={frontmatter.title}
-                    class="w-full h-64 object-cover"
+                    class="max-h-64 w-auto object-contain"
                     loading="lazy"
                 />
             </div>
         )}
 
-        <!-- Title + Version -->
-        <div class="flex items-baseline justify-between mb-2">
-            <h1 class="text-4xl font-bold text-gray-900">
-                {frontmatter.title}
-            </h1>
-            {frontmatter.version && <span class="text-sm text-gray-400">v{frontmatter.version}</span>}
-        </div>
+        <!-- Title -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">
+            {frontmatter.title}
+        </h1>
 
         <!-- Authors / Contacts — academic style -->
         {frontmatter.contacts && frontmatter.contacts.length > 0 && (
@@ -107,151 +82,95 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
             </p>
         )}
 
-        <!-- ApprovedBy -->
-        {frontmatter.approvedBy && (
-            <p class="text-sm text-gray-500 italic mb-4">
-                Autorisation de mise à disposition accordée par {frontmatter.approvedBy.name}, {frontmatter.approvedBy.title}, {frontmatter.approvedBy.org}, le {frontmatter.approvedBy.date instanceof Date ? frontmatter.approvedBy.date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB') : frontmatter.approvedBy.date}.
-            </p>
-        )}
-
-        <!-- Meta badges -->
-        <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+        <!-- Meta badges + version selector — each badge is preceded by its label -->
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 mb-4">
             {frontmatter.domain && (
-                <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
-                    {frontmatter.domain}
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Domaine :' : 'Domain:'}</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
+                        {frontmatter.domain}
+                    </span>
                 </span>
             )}
             {frontmatter.maturity && (
-                <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
-                    {frontmatter.maturity}
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Maturité :' : 'Maturity:'}</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                        {frontmatter.maturity}
+                    </span>
                 </span>
+            )}
+            {frontmatter.provider && (
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Fournisseur :' : 'Provider:'}</span>
+                    <span class="text-gray-700 italic">{frontmatter.provider}</span>
+                </span>
+            )}
+            {frontmatter.license && (
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Licence :' : 'License:'}</span>
+                    {frontmatter.license.startsWith('CC') ? (
+                        <a
+                            href={`https://creativecommons.org/licenses/${frontmatter.license.replace(/^CC-/, '').replace(/-/g, '/').toLowerCase()}/`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-primary-600 hover:underline"
+                        >
+                            {frontmatter.license}
+                        </a>
+                    ) : (
+                        <span class="text-gray-700">{frontmatter.license}</span>
+                    )}
+                </span>
+            )}
+
+            {/* Version selector — visible only when more than one version exists; single-version case shows a small badge */}
+            {allVersions.length > 1 ? (
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <label for="uc-version-select" class="text-gray-500">{lang === 'fr' ? 'Version :' : 'Version:'}</label>
+                    <select
+                        id="uc-version-select"
+                        class="border border-gray-300 rounded px-2 py-0.5 text-sm bg-white"
+                        onchange="if (this.value) window.location.href = this.value;"
+                    >
+                        {allVersions.map((v: any) => (
+                            <option
+                                value={`/${lang}${getContentLink(lang, "use-cases", v.id, true)}`}
+                                selected={v.data.version === currentVersion}
+                            >
+                                {v.data.version || '(sans version)'}
+                            </option>
+                        ))}
+                    </select>
+                </span>
+            ) : (
+                frontmatter.version && (
+                    <span class="text-gray-500 whitespace-nowrap">
+                        {lang === 'fr' ? 'Version :' : 'Version:'} <span class="font-medium">{frontmatter.version}</span>
+                    </span>
+                )
             )}
         </div>
 
-        <!-- Identity Card section -->
-        {hasIdentityCard && (
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
-                <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
-                    {t('use-case.identity.title')}
-                </h2>
-                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
-
-                    {frontmatter.provider && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.provider')}</dt>
-                            <dd class="text-gray-800">{frontmatter.provider}</dd>
-                        </>
-                    )}
-
-                    {originTypeLabel && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.originType')}</dt>
-                            <dd class="text-gray-800">{originTypeLabel}</dd>
-                        </>
-                    )}
-
-                    {frontmatter.usagePhase && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.usagePhase')}</dt>
-                            <dd class="text-gray-800">{frontmatter.usagePhase}</dd>
-                        </>
-                    )}
-
-                    {showUsageLevel && usageLevelLabel && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.usageLevel')}</dt>
-                            <dd class="text-gray-800">{usageLevelLabel}</dd>
-                        </>
-                    )}
-
-                    {frontmatter.since && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.since')}</dt>
-                            <dd class="text-gray-800">
-                                {formatDate(frontmatter.since instanceof Date ? frontmatter.since : new Date(frontmatter.since), lang)}
-                            </dd>
-                        </>
-                    )}
-
-                    {frontmatter.users && frontmatter.users.length > 0 && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.users')}</dt>
-                            <dd class="text-gray-800">
-                                <ul class="list-none space-y-0.5">
-                                    {frontmatter.users.map((u: any) => (
-                                        <li>
-                                            {typeof u === 'string'
-                                                ? u
-                                                : (
-                                                    <span>
-                                                        <span class="font-medium">{u.name}</span>
-                                                        {u.role && <span class="text-gray-500"> — {u.role}</span>}
-                                                    </span>
-                                                )
-                                            }
-                                        </li>
-                                    ))}
-                                </ul>
-                            </dd>
-                        </>
-                    )}
-
-                    {frontmatter.objectives && frontmatter.objectives.length > 0 && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.objectives')}</dt>
-                            <dd class="text-gray-800">
-                                <ul class="list-disc list-inside space-y-0.5">
-                                    {frontmatter.objectives.map((obj: string) => (
-                                        <li>{obj}</li>
-                                    ))}
-                                </ul>
-                            </dd>
-                        </>
-                    )}
-
-                    {frontmatter.schema && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.schema')}</dt>
-                            <dd class="col-span-full mt-2">
-                                <img
-                                    src={frontmatter.schema}
-                                    alt={`Schema — ${frontmatter.title}`}
-                                    class="max-w-full h-auto rounded border border-gray-200"
-                                    loading="lazy"
-                                />
-                            </dd>
-                        </>
-                    )}
-
-                </dl>
+        {/* Banner when viewing a non-latest version */}
+        {isOutdated && (
+            <div class="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded p-3 mb-4">
+                {lang === 'fr'
+                    ? `Vous consultez la version ${currentVersion}. La version la plus récente est `
+                    : `You are viewing version ${currentVersion}. The latest version is `}
+                <a
+                    href={`/${lang}${getContentLink(lang, "use-cases", allVersions[0].id, true)}`}
+                    class="font-medium underline hover:no-underline"
+                >
+                    {latestVersion}
+                </a>.
             </div>
         )}
 
     </header>
 
-    <!-- Content -->
+    <!-- Body content (Résumé / Description fonctionnelle / Caractérisation MC1-MC21 / Enjeux scientifiques / References — all in markdown) -->
     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
         <slot />
-
-    <!-- References from frontmatter -->
-    {frontmatter.references && frontmatter.references.length > 0 && (
-        <section class="mt-8">
-            <h2>Références</h2>
-            <ul>
-                {frontmatter.references.map((ref: any) => (
-                    <li>
-                        <strong>{ref.title}</strong>
-                        {ref.venue && <span> — {ref.venue}</span>}
-                        {ref.url && (
-                            <span>
-                                {' '}
-                                <a href={ref.url} target="_blank" rel="noopener noreferrer">lien</a>
-                            </span>
-                        )}
-                    </li>
-                ))}
-            </ul>
-        </section>
-    )}
     </div>
 </PageLayout>
