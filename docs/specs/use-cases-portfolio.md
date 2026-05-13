@@ -550,21 +550,43 @@ Structure :
 
 ### Besoins fonctionnels
 
-*Format : <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
+*Format : **<Typologie>** · <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
 
-- *<Utilisateur>* **veut <action>** pour <objectif>, dans <contexte d'utilisation>. **Métrique :** <indicateur>.
+- **<Typologie>** · *<Utilisateur>* **veut <action>** pour <objectif>, dans <contexte d'utilisation>. **Métrique :** <indicateur>.
 ```
 
 **Sémantique** :
+- **`<Typologie>`** : famille de scénario générique du JN (voir tableau ci-dessous)
 - `<Utilisateur>` : un des rôles listés au-dessus (ou de la carte d'identité frontmatter `users[]`)
 - `<action>` : ce que l'utilisateur veut faire avec / via le jumeau numérique
 - `<objectif>` : la valeur métier ou résultat visé (le « pourquoi »)
 - `<contexte>` : la phase, l'environnement ou l'état du système où le besoin s'exprime
 - **`métrique`** : un indicateur quantifié et mesurable de réussite (latence, fréquence, profondeur d'historique, taux de couverture, etc.)
 
+### Typologie de scénarios génériques
+
+Chaque besoin fonctionnel est rattaché à une **typologie de scénario générique**. Cette typologie facilite la recherche, la classification et la complétude du portfolio, en s'inspirant des taxonomies de référence du domaine (NIST IR 8356 § 5, Tao et al. 2024, CT-JN AIF).
+
+| Typologie | Intent | Exemple |
+|---|---|---|
+| **Décrire** | Observer, visualiser, superviser l'état courant | Tableau de bord temps réel |
+| **Diagnostiquer** | Analyser, expliquer, identifier des causes | Replay d'historique pour analyse de panne |
+| **Prédire** | Anticiper, simuler, projeter (what-if) | Simulation d'un scénario de charge |
+| **Optimiser** | Améliorer paramètres, planifier | Optimisation d'un setpoint |
+| **Contrôler** | Piloter, fermer la boucle, agir | Régulation automatique |
+| **Sécuriser** | Détecter anomalies, alerter, garantir conformité | Détection d'intrusion, alerte de seuil |
+| **Interagir** | Interface humain-jumeau, XR, formation | Visite VR du jumeau, mode formation |
+
+Un besoin peut combiner deux typologies (ex. `Décrire + Sécuriser` pour une supervision avec alerte) — dans ce cas, séparer par `+`.
+
+**Sources** :
+- [NIST IR 8356 — Considerations for Digital Twin Technology and Emerging Standards](https://nvlpubs.nist.gov/nistpubs/ir/2025/NIST.IR.8356.pdf) (section 5)
+- [Tao et al. 2024 — Digital twin in industry: State-of-the-art and recent trends](https://www.sciencedirect.com/science/article/pii/S0166361524000411)
+- [CT-JN AIF — brochures Comprendre/Environnement/Architecture](https://solutionsindustriedufutur.org/cpt_projets/jumeaux-numeriques/)
+
 **Différence avec la grille MC1-MC21** :
 - MC1-21 décrivent **la structure** du jumeau (comment il est fait)
-- Description fonctionnelle décrit **les usages attendus** (qui veut quoi, dans quel but, avec quelle preuve d'usage)
+- Description fonctionnelle décrit **les usages attendus** (qui veut quoi, dans quel but, avec quelle preuve d'usage) **et leur typologie** (à quelle famille de scénario génériques DT le besoin appartient)
 
 Pour un exemple complet, voir `src/content/use-cases/inria-guy-de-spiegeleer-capteur-temperature-fr.md`.
 

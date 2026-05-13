@@ -157,13 +157,13 @@ Données de température locales, non sensibles. Pas de partage externe dans la 
 
 ### Besoins fonctionnels
 
-*Format : <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
+*Format : **<Typologie>** · <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
 
-- *Développeur* **veut rejouer des profils de température (rampe, pic, oscillation) via le simulateur** pour valider une règle d'alerte sans matériel physique, en phase de prototypage. **Métrique :** reproductibilité 100 %, scénario d'1 h rejoué en < 1 s.
+- **Prédire** · *Développeur* **veut rejouer des profils de température (rampe, pic, oscillation) via le simulateur** pour valider une règle d'alerte sans matériel physique, en phase de prototypage. **Métrique :** reproductibilité 100 %, scénario d'1 h rejoué en < 1 s.
 
-- *Chercheur EDT* **veut comparer plusieurs algorithmes de détection sur un même flux de mesures** pour identifier le meilleur compromis sensibilité / faux positifs, en phase de recherche méthodologique. **Métrique :** ≥ 3 algorithmes comparés sur ≥ 50 scénarios de référence.
+- **Diagnostiquer** · *Chercheur EDT* **veut comparer plusieurs algorithmes de détection sur un même flux de mesures** pour identifier le meilleur compromis sensibilité / faux positifs, en phase de recherche méthodologique. **Métrique :** ≥ 3 algorithmes comparés sur ≥ 50 scénarios de référence.
 
-- *Opérateur de supervision* **veut visualiser la température courante et être alerté au franchissement de seuil** pour intervenir avant détérioration du procédé, dans une cellule de production en exploitation continue. **Métrique :** rafraîchissement ≤ 5 s, délai d'alerte < 1 s après franchissement.
+- **Décrire + Sécuriser** · *Opérateur de supervision* **veut visualiser la température courante et être alerté au franchissement de seuil** pour intervenir avant détérioration du procédé, dans une cellule de production en exploitation continue. **Métrique :** rafraîchissement ≤ 5 s, délai d'alerte < 1 s après franchissement.
 
 ---
 
