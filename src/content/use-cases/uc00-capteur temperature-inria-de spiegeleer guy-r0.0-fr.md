@@ -28,9 +28,6 @@ lastUpdated: 2026-01-01T00:00:00.000Z
 ---
 ## Résumé
 <!-- Décrivez en 3-5 phrases le cas d'usage : quel système physique, quel jumeau numérique, quels objectifs. -->
-
-xxx — version initiale / brouillon.
-
 ---
 
 ## Description fonctionnelle
@@ -38,12 +35,8 @@ xxx — version initiale / brouillon.
 ### Utilisateurs
 <!-- Liste des rôles utilisateurs concrets qui interagissent avec le JN (développeur, opérateur, chercheur, mainteneur, décideur, etc.). -->
 
-xxx
-
 ### Besoins fonctionnels
 <!-- Typologies disponibles : Décrire | Diagnostiquer | Prédire | Optimiser | Contrôler | Sécuriser | Interagir. Combinaisons possibles avec '+' (ex : Décrire + Sécuriser). -->
-
-xxx
 
 ---
 
@@ -54,16 +47,10 @@ xxx
 ### MC1 — Système étudié
 <!-- Décrivez le système physique étudié (le jumeau physique), son environnement et les agents/opérateurs présents. -->
 
-xxx
-
 ### MC2 — Composants d'action physiques
 <!-- Listez les actionneurs et mécanismes par lesquels le jumeau numérique peut agir sur le système physique. -->
-
-xxx
 
 ---
 
 ## References
 <!-- Liste de publications, datasheets, liens externes. Format markdown standard : - [title](url) — venue. -->
-
-xxx
