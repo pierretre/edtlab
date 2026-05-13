@@ -106,6 +106,23 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
                     <span class="text-gray-700 italic">{frontmatter.provider}</span>
                 </span>
             )}
+            {frontmatter.license && (
+                <span class="inline-flex items-center gap-1">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Licence' : 'License'} :</span>
+                    {frontmatter.license.startsWith('CC') ? (
+                        <a
+                            href={`https://creativecommons.org/licenses/${frontmatter.license.replace(/^CC-/, '').replace(/-/g, '/').toLowerCase()}/`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-primary-600 hover:underline"
+                        >
+                            {frontmatter.license}
+                        </a>
+                    ) : (
+                        <span class="text-gray-700">{frontmatter.license}</span>
+                    )}
+                </span>
+            )}
 
             {/* Version selector — visible only when more than one version exists; single-version case shows a small badge */}
             {allVersions.length > 1 ? (
