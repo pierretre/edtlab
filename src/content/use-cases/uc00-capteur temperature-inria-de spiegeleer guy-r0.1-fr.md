@@ -189,5 +189,3 @@ Pas de risque identifié.
   - title: Temperature Sensor
     url: >-
       https://fr.aliexpress.com/item/1005004139995534.html?spm=a2g0o.order_list.order_list_main.4.531a1802AyNwZz&gatewayAdapt=glo2fra
-
-*A compléter — format des mesures (timestamp, valeur, unité), persistance éventuelle, export.*
