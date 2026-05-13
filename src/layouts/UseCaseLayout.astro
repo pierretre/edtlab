@@ -53,11 +53,11 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
     <header class="mb-8">
         <!-- Image -->
         {frontmatter.photo && (
-            <div class="mb-6 rounded-lg overflow-hidden">
+            <div class="mb-6 flex justify-center bg-gray-50 rounded-lg">
                 <img
                     src={frontmatter.photo}
                     alt={frontmatter.title}
-                    class="w-full h-64 object-cover"
+                    class="max-h-64 w-auto object-contain"
                     loading="lazy"
                 />
             </div>
