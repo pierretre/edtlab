@@ -20,10 +20,11 @@
  * ```
  */
 
+import { getEntry, type CollectionEntry } from 'astro:content';
 import { enToFrMapping, getCorrespondingPage } from './page-mapping';
 
 export type Lang = 'en' | 'fr';
-export type ContentType = 'news' | 'press-releases' | 'job-offers' | 'events' | 'use-cases';
+export type ContentType = 'news' | 'job-offers' | 'use-cases';
 
 /**
  * Content type to route mappings
@@ -33,17 +34,9 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
         en: 'news',
         fr: 'actualites'
     },
-    'press-releases': {
-        en: 'news',
-        fr: 'actualites'
-    },
     'job-offers': {
         en: 'join-us',
         fr: 'nous-rejoindre'
-    },
-    events: {
-        en: 'news',
-        fr: 'actualites'
     },
     'use-cases': {
         en: 'use-cases',
@@ -183,19 +176,9 @@ export const linkHelpers = {
     news: (lang: Lang, slug?: string) => getContentLink(lang, 'news', slug),
 
     /**
-     * Generate press release link
-     */
-    press: (lang: Lang, slug?: string) => getContentLink(lang, 'press-releases', slug),
-
-    /**
      * Generate job offer link
      */
     jobOffer: (lang: Lang, slug?: string) => getContentLink(lang, 'job-offers', slug),
-
-    /**
-     * Generate event link (alias for news)
-     */
-    event: (lang: Lang, slug?: string) => getContentLink(lang, 'events', slug),
 
     /**
      * Generate use case link
@@ -220,5 +203,15 @@ export const linkHelpers = {
     /**
      * Generate careers/join-us link
      */
-    careers: (lang: Lang) => getContentLink(lang, 'job-offers')
+    careers: (lang: Lang) => getContentLink(lang, 'job-offers'),
+
+    /**
+     * Generate redirected page link (for entries with redirectTo field) for any collection
+     */
+    redirect: async (entry: CollectionEntry<ContentType | "pages">) => {
+        const item = await getEntry(entry.collection, entry.id);
+        if (item?.data.lang) {
+            return getContentLink(item.data.lang, entry.collection as ContentType, item.id);
+        }
+    }
 };

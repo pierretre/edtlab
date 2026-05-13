@@ -34,33 +34,13 @@ const calendarItems: TimelineItem[] = (calendarEntry?.data.items ?? []).map(
     }),
 );
 
-const eventItems: TimelineItem[] = await Promise.all(
-    allEvents.map(async (item) => {
-        const { data, id } = item;
-        let hrefLang = lang,
-            hrefId = id;
-
-        if (data.redirectTo) {
-            const redirectItem = await getEntry(
-                data.redirectTo.collection,
-                data.redirectTo.id,
-            );
-
-            if (redirectItem) {
-                hrefLang = redirectItem.data.lang;
-                hrefId = redirectItem.id;
-            }
-        }
-
-        return {
-            date: item.data.date,
-            title: item.data.title,
-            location: item.data.location,
-            programMilestone: false,
-            href: linkHelpers.event(hrefLang, hrefId),
-        };
-    }),
-);
+const eventItems: TimelineItem[] = allEvents.map((item) => ({
+    date: item.data.date,
+    title: item.data.title,
+    location: item.data.location,
+    programMilestone: false,
+    href: linkHelpers.news(lang, item.id),
+}));
 
 const allItems = [...calendarItems, ...eventItems].sort(
     (a, b) => a.date.getTime() - b.date.getTime(),

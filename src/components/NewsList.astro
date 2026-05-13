@@ -5,7 +5,6 @@ import NewsCard from "./NewsCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
 import { newsFilterConfig } from "@utils/filter-configs";
 import { linkHelpers } from "@i18n/links";
-import { getEntry } from "astro:content";
 import type { NewsItem } from "~/models/NewsItem.model";
 
 interface Props {
@@ -19,33 +18,10 @@ const t = useTranslations(lang);
 // Load content
 const allNews = await getCollection("news", (item) => item.data.lang === lang);
 
-const filteredNews = await Promise.all(
-    allNews.map(async (item) => {
-        const { data, id } = item;
-        let hrefLang = lang;
-        let hrefId = id;
-
-        if (data.redirectTo) {
-            const redirectItem = await getEntry(
-                data.redirectTo.collection,
-                data.redirectTo.id,
-            );
-
-            if (redirectItem) {
-                hrefLang = redirectItem.data.lang;
-                hrefId = redirectItem.id;
-            }
-        }
-
-        return {
-            data: item.data,
-            href:
-                data.newsType === "press-release"
-                    ? linkHelpers.press(hrefLang, hrefId)
-                    : linkHelpers.event(hrefLang, hrefId),
-        };
-    }),
-);
+const filteredNews = allNews.map((item) => ({
+    data: item.data,
+    href: linkHelpers.news(lang, item.id),
+}));
 ---
 
 <div class="w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
