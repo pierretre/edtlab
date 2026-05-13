@@ -530,9 +530,43 @@ Lecture de la fiche détaillée (UCP-02)
 
 - Schema UC : `src/content/config.ts` (collection `use-cases`)
 - Layout public : `src/layouts/UseCaseLayout.astro`
-- Route preview : `src/pages/preview/[slug].astro`
-- Routes API : `src/pages/api/uc-*.ts`
-- Utilitaires : `src/utils/uc-file-utils.ts`
+- Card listing : `src/components/UseCaseCard.astro` / `UseCaseList.astro`
+
+*Note : depuis la simplification display-only, la route `/preview/[slug]` et les routes `/api/uc-*` ont été supprimées. L'édition se fait directement sur les fichiers `.md` via PR git.*
+
+### A4 — Section « Description fonctionnelle » dans un UC
+
+Section optionnelle à placer **après la grille MC1-MC21** et avant `## Données` dans le fichier `.md` d'un UC. Elle traduit les caractéristiques structurelles (MC) en **besoins utilisateurs concrets et mesurables**.
+
+Structure :
+
+```markdown
+## Description fonctionnelle
+
+### Utilisateurs
+
+- **<Rôle 1>** — <description courte>
+- **<Rôle 2>** — <description courte>
+
+### Besoins fonctionnels
+
+*Format : <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
+
+- *<Utilisateur>* **veut <action>** pour <objectif>, dans <contexte d'utilisation>. **Métrique :** <indicateur>.
+```
+
+**Sémantique** :
+- `<Utilisateur>` : un des rôles listés au-dessus (ou de la carte d'identité frontmatter `users[]`)
+- `<action>` : ce que l'utilisateur veut faire avec / via le jumeau numérique
+- `<objectif>` : la valeur métier ou résultat visé (le « pourquoi »)
+- `<contexte>` : la phase, l'environnement ou l'état du système où le besoin s'exprime
+- **`métrique`** : un indicateur quantifié et mesurable de réussite (latence, fréquence, profondeur d'historique, taux de couverture, etc.)
+
+**Différence avec la grille MC1-MC21** :
+- MC1-21 décrivent **la structure** du jumeau (comment il est fait)
+- Description fonctionnelle décrit **les usages attendus** (qui veut quoi, dans quel but, avec quelle preuve d'usage)
+
+Pour un exemple complet, voir `src/content/use-cases/inria-guy-de-spiegeleer-capteur-temperature-fr.md`.
 
 ---
 

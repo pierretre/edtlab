@@ -30,7 +30,7 @@ license: CC-BY-4.0
 publishedDate: 2026-04-15T00:00:00.000Z
 lastUpdated: 2026-04-15T00:00:00.000Z
 version: '0.1'
-status: draft
+status: published
 previewToken: inria-gdespieg-temp-2026
 provider: Inria
 originType: engineered
@@ -144,6 +144,26 @@ Données de température locales, non sensibles. Pas de partage externe dans la 
 ### MC21 — Sécurité et sûreté
 
 *A compléter — considérations minimales (accès physique au PC hôte). Pas de criticité de sûreté dans la version prototype.*
+
+---
+
+## Description fonctionnelle
+
+### Utilisateurs
+
+- **Développeur** — implémente et teste les règles d'alerte de température
+- **Chercheur EDT** — utilise le jumeau comme banc d'essai pour méthodes d'agrégation et de détection
+- **Opérateur de supervision** — surveille la température en exploitation et acquitte les alertes
+
+### Besoins fonctionnels
+
+*Format : <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
+
+- *Développeur* **veut rejouer des profils de température (rampe, pic, oscillation) via le simulateur** pour valider une règle d'alerte sans matériel physique, en phase de prototypage. **Métrique :** reproductibilité 100 %, scénario d'1 h rejoué en < 1 s.
+
+- *Chercheur EDT* **veut comparer plusieurs algorithmes de détection sur un même flux de mesures** pour identifier le meilleur compromis sensibilité / faux positifs, en phase de recherche méthodologique. **Métrique :** ≥ 3 algorithmes comparés sur ≥ 50 scénarios de référence.
+
+- *Opérateur de supervision* **veut visualiser la température courante et être alerté au franchissement de seuil** pour intervenir avant détérioration du procédé, dans une cellule de production en exploitation continue. **Métrique :** rafraîchissement ≤ 5 s, délai d'alerte < 1 s après franchissement.
 
 ---
 
