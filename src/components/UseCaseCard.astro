@@ -27,38 +27,6 @@ const searchText = [
 ]
     .join(" ")
     .toLowerCase();
-
-// originType label mapping
-const originTypeLabels: Record<string, Record<string, string>> = {
-    en: {
-        natural: "Natural",
-        anthropic: "Anthropic",
-        engineered: "Engineered",
-        infrastructure: "Infrastructure",
-        process: "Process",
-    },
-    fr: {
-        natural: "Naturel",
-        anthropic: "Anthropique",
-        engineered: "Ingéniéré",
-        infrastructure: "Infrastructure",
-        process: "Processus",
-    },
-};
-
-// usageLevel label mapping
-const usageLevelLabels: Record<string, Record<string, string>> = {
-    en: { reduced: "Reduced", consortium: "Consortium", public: "Public" },
-    fr: { reduced: "Réduit", consortium: "Consortium", public: "Public" },
-};
-
-const originTypeLabel = item.originType
-    ? (originTypeLabels[lang]?.[item.originType] ?? item.originType)
-    : null;
-const showUsageLevel = item.maturity === "operational" && item.usageLevel;
-const usageLevelLabel = showUsageLevel
-    ? (usageLevelLabels[lang]?.[item.usageLevel] ?? item.usageLevel)
-    : null;
 ---
 
 <div
@@ -72,7 +40,7 @@ const usageLevelLabel = showUsageLevel
 >
     <a
         href={link}
-        class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0"
+        class="relative block h-48 overflow-hidden group rounded-t-lg flex-shrink-0 bg-gray-50"
     >
         <img
             class="h-full w-full object-contain transition-transform duration-200 ease-out group-hover:scale-105"
@@ -113,60 +81,23 @@ const usageLevelLabel = showUsageLevel
             </a>
         </h4>
 
-        {
-            item.provider && (
-                <p class="text-xs text-gray-500 mb-2 italic">{item.provider}</p>
-            )
-        }
+        {item.provider && (
+            <p class="text-xs text-gray-500 mb-2 italic">{item.provider}</p>
+        )}
 
         <p class="text-sm text-gray-600 line-clamp-3 flex-grow">
             {item.summary}
         </p>
 
-        {/* New identity fields — max 2-3, compact */}
-        <div class="flex flex-wrap gap-1 mt-2">
-            {
-                originTypeLabel && (
-                    <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-purple-100 text-purple-800 text-xs font-medium">
-                        {originTypeLabel}
-                    </span>
-                )
-            }
-            {
-                showUsageLevel && usageLevelLabel && (
-                    <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-green-100 text-green-800 text-xs font-medium">
-                        {usageLevelLabel}
-                    </span>
-                )
-            }
-            {
-                item.since && (
-                    <span class="text-xs text-gray-400 self-center">
-                        {lang === "fr" ? "depuis" : "since"}{" "}
-                        {formatDate(
-                            item.since instanceof Date
-                                ? item.since
-                                : new Date(item.since),
-                            lang,
-                            { year: "numeric" },
-                        )}
-                    </span>
-                )
-            }
-        </div>
-
-        {
-            item.contacts?.length > 0 && (
-                <p class="text-xs text-gray-400 mt-3">
-                    {[
-                        ...new Set(
-                            item.contacts
-                                .map((c: any) => c.org)
-                                .filter(Boolean),
-                        ),
-                    ].join(", ")}
-                </p>
-            )
-        }
+        {item.since && (
+            <p class="text-xs text-gray-400 mt-2">
+                {lang === "fr" ? "depuis" : "since"}{" "}
+                {formatDate(
+                    item.since instanceof Date ? item.since : new Date(item.since),
+                    lang,
+                    { year: "numeric" },
+                )}
+            </p>
+        )}
     </div>
 </div>
