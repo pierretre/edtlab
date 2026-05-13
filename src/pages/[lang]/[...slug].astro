@@ -1,7 +1,7 @@
 ---
 export const prerender = true;
 import { type CollectionEntry, render } from "astro:content";
-import { useTranslations } from "@i18n/utils";
+import { linkHelpers, useTranslations } from "@i18n/utils";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import {
     getLayoutFromTemplateOrCollection,
@@ -37,6 +37,10 @@ const Layout: any = getLayoutFromTemplateOrCollection(
 );
 // Triage: cast page.data to unknown->any to avoid type union conflicts during check
 const pageDataAny = page.data as unknown as any;
+
+if (pageDataAny.redirectTo) {
+    return Astro.redirect(await linkHelpers.redirect(pageDataAny.redirectTo));
+}
 ---
 
 <BaseLayout

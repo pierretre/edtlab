@@ -41,11 +41,7 @@ async function generateBasePagesStaticPaths() {
  */
 async function generateNewsPagesStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("news");
-    return await Promise.all(allEntries
-        .filter((entry: CollectionEntry<"news">) =>
-            // On filtre les news qui sont de simples redirections (et qui sont valides)
-            entry.data.redirectTo === undefined || entry.data.redirectTo === undefined
-        )
+    return allEntries
         .map(
             (entry: CollectionEntry<"news">) => {
                 const { lang } = entry.data;
@@ -69,7 +65,7 @@ async function generateNewsPagesStaticPaths(): Promise<any[]> {
                         page: entry
                     },
                 };
-            }));
+            });
 }
 
 /**

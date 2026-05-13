@@ -28,19 +28,10 @@ if (project) {
     relatedItems = news
       .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
       .slice(0, 3)
-      .map(async (item) => {
-        let { data, id } = item;
-        let hrefLang = lang;
-        let idHref = data.redirectTo?.id || id;
-
-        return {
-          ...item,
-          href:
-            data.newsType === "press-release"
-              ? linkHelpers.press(hrefLang, idHref)
-              : linkHelpers.event(hrefLang, idHref),
-        };
-      });
+      .map(async (item) => ({
+        ...item,
+        href: linkHelpers.news(lang, item.id),
+      }));
   } catch (error) {
     console.warn(`Could not load news/events: ${error}`);
   }
