@@ -1,6 +1,12 @@
 ---
-id: inria-gdespieg-capteur-temperature
-title: Inria — Guy de Spiegeleer — Capteur de température
+id: uc00
+title: Capteur de température
+originType: engineered
+provider: Inria
+contacts:
+  - name: Guy de Spiegeleer
+    org: Inria
+    email: guy.de-spiegeleer@inria.fr
 summary: >-
   Jumeau numérique d'un capteur de température USB : acquisition temps réel,
   alerte de dépassement de seuil, et simulateur pour tester le comportement sans
@@ -15,39 +21,14 @@ tags:
   - alerte-seuil
   - jumeau-numerique
   - simulation
-contacts:
-  - name: Guy de Spiegeleer
-    org: Inria
-    email: guy.de-spiegeleer@inria.fr
-    role: UC owner
-pepr: ''
-references:
-  - title: Temperature Sensor
-    url: >-
-      https://fr.aliexpress.com/item/1005004139995534.html?spm=a2g0o.order_list.order_list_main.4.531a1802AyNwZz&gatewayAdapt=glo2fra
-resources: []
-license: CC-BY-4.0
 publishedDate: 2026-04-15T00:00:00.000Z
 lastUpdated: 2026-04-15T00:00:00.000Z
-version: '0.1'
-status: published
-previewToken: inria-gdespieg-temp-2026
-provider: Inria
-originType: engineered
-users:
-  - Développeurs et chercheurs testant des règles d'alerte
-  - Opérateurs supervisant des capteurs physiques
-objectives:
-  - Superviser la température en temps réel via un capteur USB
-  - Détecter et alerter lors du dépassement d'un seuil configurable
-  - Simuler le capteur pour tester le comportement sans matériel réel
-usagePhase: prototype-et-test
 since: 2026-04-15T00:00:00.000Z
+
 ---
 
+## Résumé
 Système de supervision de température basé sur un capteur USB connecté à un PC. Le jumeau numérique complète le dispositif physique en permettant de simuler le capteur, de rejouer des scénarios et de tester les règles d'alerte (notamment le dépassement de seuil) sans matériel réel.
-
----
 
 ## Caractérisation du Jumeau Numérique
 
@@ -148,25 +129,29 @@ Données de température locales, non sensibles. Pas de partage externe dans la 
 ---
 
 ## Description fonctionnelle
+*Descriptif basé sur le <a href="https://www.sciencedirect.com/science/article/pii/S0166361524000411" target="_blank" rel="noopener noreferrer"> A Digital Twin use cases classification and definition framework based on Industrial feedback de E. Abisset-Chavanne et al.</a>*
 
 ### Utilisateurs
 
-- **Développeur** — implémente et teste les règles d'alerte de température
-- **Chercheur EDT** — utilise le jumeau comme banc d'essai pour méthodes d'agrégation et de détection
-- **Opérateur de supervision** — surveille la température en exploitation et acquitte les alertes
+- **Un développeur** — implémente et teste les règles d'alerte de température
+- **Un chercheur** — utilise le jumeau comme banc d'essai pour méthodes d'agrégation et de détection
+- **Un opérateur de supervision** — surveille la température en exploitation et acquitte les alertes
 
 ### Besoins fonctionnels
 
 *Format : **<Typologie>** · <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
 
-- **Prédire** · *Développeur* **veut rejouer des profils de température (rampe, pic, oscillation) via le simulateur** pour valider une règle d'alerte sans matériel physique, en phase de prototypage. **Métrique :** reproductibilité 100 %, scénario d'1 h rejoué en < 1 s.
+- **Prédire** · *Un développeur* **veut rejouer des profils de température (rampe, pic, oscillation) via le simulateur** pour valider une règle d'alerte sans matériel physique, en phase de prototypage. **Métrique :** reproductibilité 100 %, scénario d'1 h rejoué en < 1 s.
 
-- **Diagnostiquer** · *Chercheur EDT* **veut comparer plusieurs algorithmes de détection sur un même flux de mesures** pour identifier le meilleur compromis sensibilité / faux positifs, en phase de recherche méthodologique. **Métrique :** ≥ 3 algorithmes comparés sur ≥ 50 scénarios de référence.
+- **Diagnostiquer** · *Un chercheur* **veut comparer plusieurs algorithmes de détection sur un même flux de mesures** pour identifier le meilleur compromis sensibilité / faux positifs, en phase de recherche méthodologique. **Métrique :** ≥ 3 algorithmes comparés sur ≥ 50 scénarios de référence.
 
-- **Décrire + Sécuriser** · *Opérateur de supervision* **veut visualiser la température courante et être alerté au franchissement de seuil** pour intervenir avant détérioration du procédé, dans une cellule de production en exploitation continue. **Métrique :** rafraîchissement ≤ 5 s, délai d'alerte < 1 s après franchissement.
+- **Décrire + Sécuriser** · *Un opérateur de supervision* **veut visualiser la température courante et être alerté au franchissement de seuil** pour intervenir avant détérioration du procédé, dans une cellule de production en exploitation continue. **Métrique :** rafraîchissement ≤ 5 s, délai d'alerte < 1 s après franchissement.
 
 ---
 
-## Données
+## References
+  - title: Temperature Sensor
+    url: >-
+      https://fr.aliexpress.com/item/1005004139995534.html?spm=a2g0o.order_list.order_list_main.4.531a1802AyNwZz&gatewayAdapt=glo2fra
 
 *A compléter — format des mesures (timestamp, valeur, unité), persistance éventuelle, export.*

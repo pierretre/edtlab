@@ -29,26 +29,12 @@ const originTypeLabels: Record<string, Record<string, string>> = {
     },
 };
 
-const usageLevelLabels: Record<string, Record<string, string>> = {
-    en: { reduced: 'Reduced', consortium: 'Consortium', public: 'Public' },
-    fr: { reduced: 'Réduit', consortium: 'Consortium', public: 'Public' },
-};
-
 const originTypeLabel = frontmatter.originType
     ? (originTypeLabels[lang]?.[frontmatter.originType] ?? frontmatter.originType)
     : null;
 
-const showUsageLevel = frontmatter.maturity === 'operational' && frontmatter.usageLevel;
-const usageLevelLabel = showUsageLevel
-    ? (usageLevelLabels[lang]?.[frontmatter.usageLevel] ?? frontmatter.usageLevel)
-    : null;
-
-// Check if any identity field is set
-const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontmatter.usagePhase ||
-    showUsageLevel || frontmatter.since ||
-    (frontmatter.users && frontmatter.users.length > 0) ||
-    (frontmatter.objectives && frontmatter.objectives.length > 0) ||
-    frontmatter.schema;
+// Identity card: provider + originType + since. Other fields (users, objectives, etc.) now live in the body markdown.
+const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontmatter.since;
 ---
 
 <PageLayout
@@ -85,13 +71,10 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
             </div>
         )}
 
-        <!-- Title + Version -->
-        <div class="flex items-baseline justify-between mb-2">
-            <h1 class="text-4xl font-bold text-gray-900">
-                {frontmatter.title}
-            </h1>
-            {frontmatter.version && <span class="text-sm text-gray-400">v{frontmatter.version}</span>}
-        </div>
+        <!-- Title -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">
+            {frontmatter.title}
+        </h1>
 
         <!-- Authors / Contacts — academic style -->
         {frontmatter.contacts && frontmatter.contacts.length > 0 && (
@@ -104,13 +87,6 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
                         {i < frontmatter.contacts.length - 1 && <span class="text-gray-400 mx-1">·</span>}
                     </span>
                 ))}
-            </p>
-        )}
-
-        <!-- ApprovedBy -->
-        {frontmatter.approvedBy && (
-            <p class="text-sm text-gray-500 italic mb-4">
-                Autorisation de mise à disposition accordée par {frontmatter.approvedBy.name}, {frontmatter.approvedBy.title}, {frontmatter.approvedBy.org}, le {frontmatter.approvedBy.date instanceof Date ? frontmatter.approvedBy.date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB') : frontmatter.approvedBy.date}.
             </p>
         )}
 
@@ -128,7 +104,7 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
             )}
         </div>
 
-        <!-- Identity Card section -->
+        <!-- Identity Card — minimal: provider, originType, since -->
         {hasIdentityCard && (
             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
                 <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
@@ -150,75 +126,11 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
                         </>
                     )}
 
-                    {frontmatter.usagePhase && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.usagePhase')}</dt>
-                            <dd class="text-gray-800">{frontmatter.usagePhase}</dd>
-                        </>
-                    )}
-
-                    {showUsageLevel && usageLevelLabel && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.usageLevel')}</dt>
-                            <dd class="text-gray-800">{usageLevelLabel}</dd>
-                        </>
-                    )}
-
                     {frontmatter.since && (
                         <>
                             <dt class="text-gray-500 font-medium">{t('use-case.field.since')}</dt>
                             <dd class="text-gray-800">
                                 {formatDate(frontmatter.since instanceof Date ? frontmatter.since : new Date(frontmatter.since), lang)}
-                            </dd>
-                        </>
-                    )}
-
-                    {frontmatter.users && frontmatter.users.length > 0 && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.users')}</dt>
-                            <dd class="text-gray-800">
-                                <ul class="list-none space-y-0.5">
-                                    {frontmatter.users.map((u: any) => (
-                                        <li>
-                                            {typeof u === 'string'
-                                                ? u
-                                                : (
-                                                    <span>
-                                                        <span class="font-medium">{u.name}</span>
-                                                        {u.role && <span class="text-gray-500"> — {u.role}</span>}
-                                                    </span>
-                                                )
-                                            }
-                                        </li>
-                                    ))}
-                                </ul>
-                            </dd>
-                        </>
-                    )}
-
-                    {frontmatter.objectives && frontmatter.objectives.length > 0 && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.objectives')}</dt>
-                            <dd class="text-gray-800">
-                                <ul class="list-disc list-inside space-y-0.5">
-                                    {frontmatter.objectives.map((obj: string) => (
-                                        <li>{obj}</li>
-                                    ))}
-                                </ul>
-                            </dd>
-                        </>
-                    )}
-
-                    {frontmatter.schema && (
-                        <>
-                            <dt class="text-gray-500 font-medium">{t('use-case.field.schema')}</dt>
-                            <dd class="col-span-full mt-2">
-                                <img
-                                    src={frontmatter.schema}
-                                    alt={`Schema — ${frontmatter.title}`}
-                                    class="max-w-full h-auto rounded border border-gray-200"
-                                    loading="lazy"
-                                />
                             </dd>
                         </>
                     )}
@@ -229,29 +141,8 @@ const hasIdentityCard = frontmatter.provider || frontmatter.originType || frontm
 
     </header>
 
-    <!-- Content -->
+    <!-- Body content (Résumé / Caractérisation MC1-MC21 / Description fonctionnelle / References — all in markdown) -->
     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
         <slot />
-
-    <!-- References from frontmatter -->
-    {frontmatter.references && frontmatter.references.length > 0 && (
-        <section class="mt-8">
-            <h2>Références</h2>
-            <ul>
-                {frontmatter.references.map((ref: any) => (
-                    <li>
-                        <strong>{ref.title}</strong>
-                        {ref.venue && <span> — {ref.venue}</span>}
-                        {ref.url && (
-                            <span>
-                                {' '}
-                                <a href={ref.url} target="_blank" rel="noopener noreferrer">lien</a>
-                            </span>
-                        )}
-                    </li>
-                ))}
-            </ul>
-        </section>
-    )}
     </div>
 </PageLayout>

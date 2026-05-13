@@ -117,7 +117,7 @@ const useCasesCollection = defineCollection({
         approvedDate: z.coerce.date().optional(),
         lastUpdated: z.coerce.date().optional(),
         version: z.string().optional(),
-        status: z.enum(['draft', 'published']).default('draft'),
+        status: z.enum(['draft', 'published']).default('published'),
         previewToken: z.string().optional(),
         confirmToken: z.string().optional(),
         // Identity card fields (HN-T009-S1)
