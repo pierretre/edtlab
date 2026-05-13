@@ -82,20 +82,29 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
             </p>
         )}
 
-        <!-- Meta badges + version selector -->
-        <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
+        <!-- Meta badges + version selector — each badge is preceded by its label -->
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 mb-4">
             {frontmatter.domain && (
-                <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
-                    {frontmatter.domain}
+                <span class="inline-flex items-center gap-1">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Domaine' : 'Domain'} :</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
+                        {frontmatter.domain}
+                    </span>
                 </span>
             )}
             {frontmatter.maturity && (
-                <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
-                    {frontmatter.maturity}
+                <span class="inline-flex items-center gap-1">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Maturité' : 'Maturity'} :</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                        {frontmatter.maturity}
+                    </span>
                 </span>
             )}
             {frontmatter.provider && (
-                <span class="text-gray-500 italic">{frontmatter.provider}</span>
+                <span class="inline-flex items-center gap-1">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Propriétaire' : 'Owner'} :</span>
+                    <span class="text-gray-700 italic">{frontmatter.provider}</span>
+                </span>
             )}
 
             {/* Version selector — visible only when more than one version exists; single-version case shows a small badge */}
