@@ -139,7 +139,6 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
                                 selected={v.data.version === currentVersion}
                             >
                                 {v.data.version || '(sans version)'}
-                                {v.data.version === latestVersion && ` — ${lang === 'fr' ? 'dernière' : 'latest'}`}
                             </option>
                         ))}
                     </select>
