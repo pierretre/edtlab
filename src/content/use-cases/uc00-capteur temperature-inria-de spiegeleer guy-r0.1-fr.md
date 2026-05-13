@@ -20,6 +20,8 @@ domain: industrial-engineering
 maturity: prototype
 # originType : natural | anthropic | engineered | infrastructure | process
 originType: engineered
+# version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
+version: r0.1
 tags:
   - capteur-usb
   - monitoring-temperature
@@ -52,9 +54,9 @@ Le prototype mis en oeuvre pour:
 - **Un opérateur de supervision** — surveille la température en exploitation et acquitte les alertes
 
 ### Besoins fonctionnels
-<!-- Typologies disponibles : Décrire | Diagnostiquer | Prédire | Optimiser | Contrôler | Sécuriser | Interagir. Combinaisons possibles avec '+' (ex : Décrire + Sécuriser). -->
+<!-- Typologies disponibles : Décrire | Diagnostiquer | Prédire | Optimiser | Contrôler | Sécuriser | Interagir. Combinaisons possibles avec '+' (ex : Décrire + Sécuriser).
 
-*Format : **<Typologie>** · <Utilisateur> veut <action> pour <objectif>, dans <contexte>. **Métrique :** <indicateur quantifié>.*
+Format : <Typologie> · <Utilisateur> veut <action> pour <objectif>, dans <contexte>. Métrique : <indicateur quantifié>. -->
 
 - **Prédire** · *Un développeur* **veut rejouer des profils de température (rampe, pic, oscillation) via le simulateur** pour valider une règle d'alerte sans matériel physique, en phase de prototypage. **Métrique :** reproductibilité 100 %, scénario d'1 h rejoué en < 1 s.
 
@@ -85,14 +87,14 @@ Pas d'actionneur physique dans la version actuelle — le système est purement 
 - PC hôte assurant l'alimentation et l'acquisition via le port USB
 
 ### MC4 — Interaction physique → virtuel
-<!-- Décrivez les données transmises du système physique vers le jumeau numérique : protocoles, fréquences, types de données. -->
+<!-- Décrivez les données transmises du système physique vers le jumeau numérique : protocoles, fréquences, types de données, standards et normes. -->
 
 Acquisition périodique de la mesure de température toutes les 5 secondes via le driver USB du capteur. Transmission de la valeur brute à l'interface d'affichage et au module de surveillance de seuil.
 
 ### MC5 — Interaction virtuel → physique
-<!-- Décrivez les données transmises du jumeau numérique vers le système physique : commandes, alertes, paramètres. -->
+<!-- Décrivez les données transmises du jumeau numérique vers le système physique : commandes, alertes, paramètres, standards et normes. -->
 
-*A compléter — pas d'action retour physique dans la version prototype. Piste future : commander un actionneur (ventilation, chauffage) en fonction de la mesure.*
+Pas de donnée transmise. 
 
 ### MC6 — Services du JN
 <!-- Listez les services fournis par le jumeau numérique : simulation, optimisation, détection, visualisation, etc. -->
@@ -122,12 +124,11 @@ Prototype en phase de conception et de validation. Usage typique : développemen
 
 - Modèle de simulation du capteur : générateur de mesures (constante, rampe, bruit, pic)
 - Flux de données : valeurs de température horodatées (timestamp, valeur en °C)
-- *A compléter — persistance éventuelle en base ou fichier CSV*
 
 ### MC11 — Outils et facilitateurs
-<!-- Listez les outils, frameworks et plateformes utilisés pour réaliser les services du JN. -->
+<!-- Listez les outils, frameworks et plateformes utilisés pour réaliser les services du JN, lister les API. -->
 
-*A compléter — langage et framework (Python, Node.js, Rust ?), librairie d'accès USB (pyserial, hid), framework d'UI (Tkinter, Electron, web).*
+Jumeau numérique programmé en python, interface graphique en html natif. 
 
 ### MC12 — Constellation du JN
 <!-- Comment les modèles, données, outils et services sont-ils orchestrés ensemble ? Architecture logique du JN. -->
@@ -140,7 +141,7 @@ Architecture simple : driver USB → module d'acquisition → module de surveill
 Approche incrémentale : d'abord le capteur physique + interface, puis ajout du simulateur pour les tests, puis raffinement des règles d'alerte.
 
 ### MC14 — Fidélité et validité
-<!-- Quelle est la précision des modèles ? Comment sont-ils validés et calibrés ? -->
+<!-- Quelle est la précision des modèles ? Comment sont-ils validés et calibrés ? Quelle est la précision des mesures ? Sont elles bruitées ? Partielles ? Polluées ? -->
 
 Le simulateur reproduit la plage de mesure et la cadence du capteur physique. Validation par comparaison des valeurs simulées et des valeurs mesurées sur scénarios de référence.
 
@@ -159,12 +160,11 @@ Exécution locale sur le PC hôte. Pas de composant cloud ou distant dans la ver
 
 - Affichage continu de la mesure
 - Alerte visuelle (et/ou sonore) au dépassement de seuil
-- *A compléter — journalisation des alertes, export des historiques*
 
 ### MC18 — Intégration horizontale
 <!-- Le JN échange-t-il des données avec d'autres systèmes (SCADA, autres JN, SI) ? -->
 
-*A compléter — intégration possible avec d'autres systèmes de supervision (MQTT, SCADA, webhook) en évolution future.*
+Pas d'échange de donnée avec d'autres systèmes, mais extention possible. 
 
 ### MC19 — Propriété et confidentialité des données
 <!-- Y a-t-il des considérations de propriété ou confidentialité des données ? RGPD ? -->
@@ -174,12 +174,12 @@ Données de température locales, non sensibles. Pas de partage externe dans la 
 ### MC20 — Standardisation
 <!-- Quelles normes sont suivies (FMI, AAS, ISO-23247, etc.) ? -->
 
-*A compléter — protocoles capteur (USB HID, série), format des données (JSON, CSV).*
+Pas de standard retenu pour le moment. 
 
 ### MC21 — Sécurité et sûreté
 <!-- Y a-t-il des considérations de cybersécurité ou de sûreté de fonctionnement ? -->
 
-*A compléter — considérations minimales (accès physique au PC hôte). Pas de criticité de sûreté dans la version prototype.*
+Pas de risque identifié.
 
 ---
 

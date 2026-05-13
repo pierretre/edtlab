@@ -1,6 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import PageLayout from "./PageLayout.astro";
 import { linkHelpers, useTranslations } from "@i18n/utils";
+import { getContentLink } from "@i18n/links";
 
 export interface Props {
     frontmatter: any;
@@ -9,6 +11,22 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const lang = Astro.currentLocale as "en" | "fr";
 const t = useTranslations(lang);
+
+// Collect all versions of this UC (same id + same language) for the version selector.
+// Listing UI already shows only the latest version per id; this selector lets the
+// reader switch to older versions from the detail page.
+let allVersions: any[] = [];
+if (frontmatter.id) {
+    const allUcs = await getCollection("use-cases", (item: any) =>
+        item.data.id === frontmatter.id && item.data.lang === lang
+    );
+    allVersions = allUcs.sort((a: any, b: any) =>
+        (b.data.version || "").localeCompare(a.data.version || "")
+    );
+}
+const currentVersion = frontmatter.version || "";
+const latestVersion = allVersions.length > 0 ? (allVersions[0].data.version || "") : "";
+const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
 ---
 
 <PageLayout
@@ -64,8 +82,8 @@ const t = useTranslations(lang);
             </p>
         )}
 
-        <!-- Meta badges -->
-        <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+        <!-- Meta badges + version selector -->
+        <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
             {frontmatter.domain && (
                 <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
                     {frontmatter.domain}
@@ -79,7 +97,50 @@ const t = useTranslations(lang);
             {frontmatter.provider && (
                 <span class="text-gray-500 italic">{frontmatter.provider}</span>
             )}
+
+            {/* Version selector — visible only when more than one version exists; single-version case shows a small badge */}
+            {allVersions.length > 1 ? (
+                <span class="inline-flex items-center gap-1">
+                    <label for="uc-version-select" class="text-gray-500">{lang === 'fr' ? 'Version' : 'Version'} :</label>
+                    <select
+                        id="uc-version-select"
+                        class="border border-gray-300 rounded px-2 py-0.5 text-sm bg-white"
+                        onchange="if (this.value) window.location.href = this.value;"
+                    >
+                        {allVersions.map((v: any) => (
+                            <option
+                                value={`/${lang}${getContentLink(lang, "use-cases", v.id, true)}`}
+                                selected={v.data.version === currentVersion}
+                            >
+                                {v.data.version || '(sans version)'}
+                                {v.data.version === latestVersion && ` — ${lang === 'fr' ? 'dernière' : 'latest'}`}
+                            </option>
+                        ))}
+                    </select>
+                </span>
+            ) : (
+                frontmatter.version && (
+                    <span class="text-gray-500">
+                        {lang === 'fr' ? 'Version' : 'Version'} : <span class="font-medium">{frontmatter.version}</span>
+                    </span>
+                )
+            )}
         </div>
+
+        {/* Banner when viewing a non-latest version */}
+        {isOutdated && (
+            <div class="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded p-3 mb-4">
+                {lang === 'fr'
+                    ? `Vous consultez la version ${currentVersion}. La version la plus récente est `
+                    : `You are viewing version ${currentVersion}. The latest version is `}
+                <a
+                    href={`/${lang}${getContentLink(lang, "use-cases", allVersions[0].id, true)}`}
+                    class="font-medium underline hover:no-underline"
+                >
+                    {latestVersion}
+                </a>.
+            </div>
+        )}
 
     </header>
 
