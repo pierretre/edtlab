@@ -56,7 +56,6 @@ export const ui = {
 
         // Home page
         'home.hero.learn-more': 'Learn about our program',
-        'home.hero.keep-in-touch': 'Keep in touch',
         'home.hero.title': 'Engineering Digital Twins (EDT)',
         'home.hero.subtitle': 'A French nationwide research program advancing the science and engineering of digital twins.',
         'home.funded-by': 'Funded by',
@@ -378,7 +377,6 @@ export const ui = {
 
         // Home page
         'home.hero.learn-more': 'En savoir plus sur notre programme',
-        'home.hero.keep-in-touch': 'Rester en contact',
         'home.hero.title': 'La Fabrique des Jumeaux Numériques (EDT)',
         'home.hero.subtitle': 'Un programme de recherche national français qui fait avancer la science et l\'ingénierie des jumeaux numériques.',
         'home.funded-by': 'Financé par',

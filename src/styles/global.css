@@ -836,6 +836,11 @@ img[loading="lazy"] {
         display: none !important;
     }
 
+    /* Opt-in: keep specific icons visible in print (e.g. contact page) */
+    svg.print-show {
+        display: inline-block !important;
+    }
+
     /* Content sections */
     section {
         page-break-inside: avoid !important;
