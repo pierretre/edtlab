@@ -4,8 +4,8 @@ lang: en
 date: 2026-06-02
 newsType: event
 location: Videoconference
-description: Building Block CGAL presentation by Pierre Allez (Inria). June 2, 2026, 3:30-4:30 PM UTC.
-photo: https://www.cgal.org/images/cgal_front_page.png
+description: Building Block CGAL presentation by Pierre Allez (Inria). June 2, 2026, 5:30-6:30 PM CEST.
+photo: /media/uploads/CGAL.png
 icsPath: /calendar/seminaire-cgal-2026-06-02.ics
 tags:
   - at1
@@ -13,7 +13,7 @@ tags:
   - building-blocks
 ---
 
-The **EDT** seminar will take place on **June 2, 2026, from 5:30 to 6:30 PM (CET)**, by videoconference.
+The **EDT** seminar will take place on **June 2, 2026, from 5:30 to 6:30 PM (CEST)**, by videoconference.
 
 **Pierre Allez** (Inria) will present the Building Block [**CGAL**](https://www.cgal.org/) (Computational Geometry Algorithms Library), which provides validated implementations for processing complex spatial data: meshing (2D/3D), surface reconstruction, convex hulls, Voronoi diagrams and spatial search structures.
 
