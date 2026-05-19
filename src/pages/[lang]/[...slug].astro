@@ -17,7 +17,7 @@ const { page, template } = Astro.props as {
     page: CollectionEntry<"pages">;
     template: string;
 };
-
+const pageDataAny = page.data as any;
 const { lang } = Astro.params;
 const t = useTranslations(lang as "en" | "fr");
 
@@ -35,23 +35,35 @@ const Layout: any = getLayoutFromTemplateOrCollection(
     page.collection,
     template,
 );
-// Triage: cast page.data to unknown->any to avoid type union conflicts during check
-const pageDataAny = page.data as unknown as any;
-
-if (pageDataAny.redirectTo) {
-    return Astro.redirect(await linkHelpers.redirect(pageDataAny.redirectTo));
-}
 ---
 
-<BaseLayout
-    title={page.data.title}
-    description={page.data.description || t("site.description")}
-    canonical={pageDataAny.canonical}
-    noindex={pageDataAny.noindex}
-    lang={lang as "en" | "fr"}
-    showBreadcrumb={true}
->
-    <Layout frontmatter={page.data} headings={headings}>
-        <Content components={mdxComponents} />
-    </Layout>
-</BaseLayout>
+{
+    pageDataAny.redirectTo ? (
+        <html lang={lang} dir="ltr">
+            <head>
+                <meta charset="utf-8" />
+
+                <meta
+                    http-equiv="refresh"
+                    content={
+                        "0;url=" +
+                        (await linkHelpers.redirect(pageDataAny.redirectTo))
+                    }
+                />
+            </head>
+        </html>
+    ) : (
+        <BaseLayout
+            title={page.data.title}
+            description={page.data.description || t("site.description")}
+            canonical={pageDataAny.canonical}
+            noindex={pageDataAny.noindex}
+            lang={lang as "en" | "fr"}
+            showBreadcrumb={true}
+        >
+            <Layout frontmatter={page.data} headings={headings}>
+                <Content components={mdxComponents} />
+            </Layout>
+        </BaseLayout>
+    )
+}

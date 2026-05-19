@@ -2,55 +2,19 @@
 export const prerender = true;
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang="en-US">
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>EDT Research Program - Redirecting</title>
-        <meta
-            name="description"
-            content="Redirecting to EDT Research Program website"
-        />
-        <meta name="robots" content="noindex" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="refresh" content="0; url=/en/" />
+        <script type="text/javascript">
+            window.location.href = "/en/";
+        </script>
+        <title>Page Redirection</title>
     </head>
     <body>
-        <main>
-            <h1>EDT Research Program</h1>
-
-            <div class="redirect-message">
-                <p>
-                    <span class="sr-only"
-                        >Automatic redirection in progress.</span
-                    >
-                    You are being redirected to the EDT Research Program website.
-                </p>
-
-                <p>
-                    If you are not redirected automatically, please choose your
-                    language:
-                </p>
-
-                <div class="language-links">
-                    <a href="/en/" hreflang="en">
-                        English
-                        <span class="sr-only"
-                            >(English version of the website)</span
-                        >
-                    </a>
-                    <a href="/fr/" hreflang="fr">
-                        Français
-                        <span class="sr-only"
-                            >(Version française du site web)</span
-                        >
-                    </a>
-                </div>
-            </div>
-
-            <p>
-                <small>
-                    Redirecting from <code>/</code> to <code>/en/</code>
-                </small>
-            </p>
-        </main>
+        If you are not redirected automatically, follow this <a href="/en"
+            >link to example</a
+        >.
     </body>
 </html>
