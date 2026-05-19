@@ -47,7 +47,7 @@ The results of this thesis will directly contribute to the Artemis platform, an 
 
 ## Work Environment
 
-The PhD candidate will be co-supervised by Jérôme David (UGA,LIG,Inria), Cassia Trojahn (UGA,LIG,Inria) within [MOEX Team, INRIA/Grenoble] (https://moex.inria.fr) and Sophie Ebersold (IRIT, Toulouse) . The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators, and the opportunity to contribute to Artemis, the program's open software platform.
+The PhD candidate will be co-supervised by Jérôme David (UGA,LIG,Inria), Cassia Trojahn (UGA,LIG,Inria) within [MOEX Team, INRIA/Grenoble](https://moex.inria.fr) and Sophie Ebersold (IRIT, Toulouse) . The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators, and the opportunity to contribute to Artemis, the program's open software platform.
 
 ## What You Will Gain from This PhD
 
@@ -60,4 +60,4 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
+

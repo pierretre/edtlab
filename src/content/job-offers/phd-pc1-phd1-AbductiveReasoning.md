@@ -24,8 +24,7 @@ requirements:
   - Fluency in English
 contacts:
   - gerald.rocher@univ-cotedazur.fr
-title: PhD Position - Distributed Abductive Reasoning for Self-Explaining
-  Digital Twins
+title: Distributed Abductive Reasoning for Self-Explaining Digital Twins
 location: Nice, France
 expectedStartDate: October 2026
 tags:

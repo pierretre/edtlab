@@ -1,6 +1,6 @@
 ---
 # Please respect these sections and template for good integration in the web site
-title: "Automatic construction of a digital model from real-world scenes - EDT" # Avoid accents in title
+title: "Automatic construction of a digital model from real-world scenes" # Avoid accents in title
 type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
 location: "Dijon - Paris, France"
 expectedStartDate: "Q4 2026"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
@@ -65,5 +65,6 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
+
+
 

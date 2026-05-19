@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Compositional Hybrid Digital Twins for Fermented Microbial Ecosystems"
+title: "Compositional Hybrid Digital Twins for Fermented Microbial Ecosystems"
 tags:
   - "PC1"
 type: "PhD"

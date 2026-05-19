@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Structural Methods for Mixed Model/Data Digital Twin Engineering"
+title: "Structural Methods for Mixed Model/Data Digital Twin Engineering"
 tags:
   - "PC1"
 type: "PhD"

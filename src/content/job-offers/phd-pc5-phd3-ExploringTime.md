@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Navigating through the temporal aspects of the digital twin"
+title: "Navigating through the temporal aspects of the digital twin"
 tags:
   - "PC5"
 type: "PhD"
