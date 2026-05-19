@@ -25,14 +25,12 @@ export default defineConfig({
     inlineStylesheets: 'auto',
     assets: '_assets',
     assetsPrefix: '/',
+    redirects: true,
   },
 
   i18n: {
     locales: ['en', 'fr'],
     defaultLocale: 'en',
-    routing: {
-      prefixDefaultLocale: true,
-    }
   },
 
   vite: {
