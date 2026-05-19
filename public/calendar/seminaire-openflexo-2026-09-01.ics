@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//EDT Lab//Seminar//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+SUMMARY:Seminar EDT : OpenFlexo
+DTSTART:20260901T153000Z
+DTEND:20260901T163000Z
+DTSTAMP:20260519T120000Z
+UID:seminaire-edt-2026-09-01@edtlab.fr
+DESCRIPTION:Presentation de la brique OpenFlexo par Sylvain Guerin (IMT Atlantique).\nLien visio : https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
+LOCATION:https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
+URL:https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
