@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Interpretable and Robust Machine Learning for Physics-Based Numerical Simulations"
+title: "Interpretable and Robust Machine Learning for Physics-Based Numerical Simulations"
 tags:
   - "PC1"
 type: "PhD"

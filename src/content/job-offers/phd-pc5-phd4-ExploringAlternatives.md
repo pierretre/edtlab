@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Exploring Alternative Evolutions of Digital Twins"
+title: "Exploring Alternative Evolutions of Digital Twins"
 type: "PhD"
 location: "Brest, France"
 expectedStartDate: "October 2026"
@@ -107,4 +107,5 @@ CESI engineering school supports engineering students through a customizable fiv
 
 The Engineering and Digital Tools research team of CESI LINEACT develops its research in the fields of modeling, simulation, optimization and control of complex systems, materials, and processes and human-system interactions in cyber-physical systems.
 https://lineact.cesi.fr/en/engineering-and-numerical-tools/presentation/
- 
+
+ 

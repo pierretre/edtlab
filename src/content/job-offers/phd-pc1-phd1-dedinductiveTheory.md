@@ -1,5 +1,5 @@
 ---
-title: "PhD Position – Hybridization of Simulation and Learning Models in Digital Twins for Mechanical Systems"
+title: "Hybridization of Simulation and Learning Models in Digital Twins for Mechanical Systems"
 tags:
   - "PC1"
 type: "PhD"

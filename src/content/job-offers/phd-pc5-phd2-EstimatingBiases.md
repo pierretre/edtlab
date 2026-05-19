@@ -1,6 +1,6 @@
 ---
 # Please respect these sections and template for good integration in the web site
-title: "Visualization of the Plausibility and Bias for Data Resources used in a Geographic Digital Twin - EDT PC 5" # Avoid accents in title
+title: "Visualization of the Plausibility and Bias for Data Resources used in a Geographic Digital Twin" # Avoid accents in title
 type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
 location: "Gif-sur-Yvette, France"
 expectedStartDate: "Spring 2026"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
@@ -70,4 +70,5 @@ This PhD offers the opportunity to:
 - Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
 
 Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-
+
+

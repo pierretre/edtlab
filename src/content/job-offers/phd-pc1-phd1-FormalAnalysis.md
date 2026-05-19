@@ -18,7 +18,7 @@ contacts:
   - Guillaume.Dupont@toulouse-inp.fr
   - Xavier.Cregut@toulouse-inp.fr
   - rabea.ameur-boulifa@telecom-paris.fr
-title: PhD Position - Formal Engineering Methods for Digital Twin Development
+title: Formal Engineering Methods for Digital Twin Development
 location: Toulouse, France
 expectedStartDate: October 2026
 tags:

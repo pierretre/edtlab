@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Engineering Digital Twins Dedicated to 2D and 3D Input and Output Technologies of Interactive Systems"
+title: "Engineering Digital Twins Dedicated to 2D and 3D Input and Output Technologies of Interactive Systems"
 tags:
   - "PC5"
 type: "PhD"

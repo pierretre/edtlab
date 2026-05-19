@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Explainable and Traceable Hybrid Model Management for Digital Twins"
+title: "Explainable and Traceable Hybrid Model Management for Digital Twins"
 tags:
   - "PC1"
 type: "PhD"

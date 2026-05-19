@@ -1,5 +1,5 @@
 ---
-title: "PhD Position - Smart Scenario Exploration for Digital Twins through Validity Envelopes"
+title: "Smart Scenario Exploration for Digital Twins through Validity Envelopes"
 tags:
   - "PC1"
 type: "PhD"
