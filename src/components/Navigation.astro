@@ -21,25 +21,36 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
     <div
         class="max-w-screen-xl min-h-16 lg:min-h-20 mx-auto flex items-center justify-between lg:p-1"
     >
-        <a
-            href={`/${lang}/`}
-            class="flex-shrink-0 flex items-center no-underline h-full"
-        >
-            <Picture
-                src={logoImagePng}
-                alt="EDT Logo"
-                class="h-full w-auto object-contain"
-                sizes="(max-width: 768px) 120px, 160px"
-                widths={[120, 160, 240, 320]}
-                quality={80}
-                format="webp"
-                pictureAttributes={{
-                    class: "flex-shrink-0 h-full",
-                }}
-                loading={"eager"}
-                decoding={"sync"}
+        <div class="flex-shrink-0 flex items-center gap-3 lg:gap-5 h-full">
+            <img
+                src="/RF-Inria_Logo_RVB.svg"
+                alt="République Française — Inria"
+                class="h-9 lg:h-12 w-auto object-contain"
+                width="294"
+                height="105"
+                loading="eager"
+                decoding="sync"
             />
-        </a>
+            <a
+                href={`/${lang}/`}
+                class="flex-shrink-0 flex items-center no-underline h-full"
+            >
+                <Picture
+                    src={logoImagePng}
+                    alt="EDT Logo"
+                    class="h-full w-auto object-contain"
+                    sizes="(max-width: 768px) 120px, 160px"
+                    widths={[120, 160, 240, 320]}
+                    quality={80}
+                    format="webp"
+                    pictureAttributes={{
+                        class: "flex-shrink-0 h-full",
+                    }}
+                    loading={"eager"}
+                    decoding={"sync"}
+                />
+            </a>
+        </div>
 
         <nav
             class="hidden lg:flex justify-center items-center"
@@ -154,7 +165,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
             </ul>
         </nav>
 
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 lg:ml-8">
             <LanguageToggle />
             <button
                 data-collapse-toggle="navbar-language"
