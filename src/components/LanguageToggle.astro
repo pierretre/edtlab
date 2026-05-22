@@ -24,7 +24,9 @@ const currentHref = Astro.url.pathname
     .join("/");
 ---
 
-<div class="flex items-center space-x-2 text-sm font-medium text-gray-900">
+<div
+    class="flex items-center space-x-2 text-sm font-medium text-gray-900 lg:w-20 lg:justify-end"
+>
     {
         Object.keys(languages).map((locale, index) => {
             const isActive = locale === lang;
@@ -44,7 +46,7 @@ const currentHref = Astro.url.pathname
                 <>
                     <a
                         href={targetUrl}
-                        class={`transition-colors duration-150 ${
+                        class={`transition-colors duration-150 w-7 text-center ${
                             isActive
                                 ? "text-primary-600 font-semibold underline underline-offset-4"
                                 : "text-gray-700 hover:text-primary-500"
