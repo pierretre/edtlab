@@ -3,7 +3,6 @@ import { Picture } from "astro:assets";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import france2030Logo from "../../public/media/uploads/France 2030.png";
 import anrLogo from "../../public/media/uploads/ANR_Logo.svg.png";
-import inriaLogo from "../../public/media/uploads/Inria.png";
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
@@ -57,18 +56,19 @@ const t = useTranslations(lang);
                 <span
                     class="w-px h-14 bg-gray-800 flex-shrink-0"
                     aria-hidden="true"></span>
-                <Picture
-                    src={inriaLogo}
-                    alt="Inria - Institut national de recherche en sciences et technologies du numérique"
-                    class="h-12 w-[164px] object-contain"
-                    widths={[180, 360, 540]}
-                    sizes="180px"
-                    format="webp"
-                    quality={80}
-                    pictureAttributes={{
-                        class: "flex-shrink-0",
-                    }}
-                />
+                <div
+                    class="flex items-center bg-white rounded-lg px-3 py-2 flex-shrink-0"
+                >
+                    <img
+                        src="/RF-Inria_Logo_RVB.svg"
+                        alt="République Française - Inria"
+                        class="h-12 w-[134px] object-contain"
+                        width="294"
+                        height="105"
+                        loading="eager"
+                        decoding="sync"
+                    />
+                </div>
             </div>
         </div>
         <div class="text-sm">
