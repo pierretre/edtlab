@@ -80,6 +80,7 @@ export const ui = {
         'home.updates.view-all-positions': 'View all positions',
 
         // Footer
+        'footer.supported-by': 'Supported by',
         'footer.tagline': 'Fundamental research project serving the national strategy',
         'footer.legal-mentions': 'Legal Mentions',
         'footer.analytics': 'This website uses anonymous analytics about page visits, user interactions, and geographic distribution to improve user experience. No cookies are used for tracking purposes. No personal data is collected or stored.',
@@ -403,6 +404,7 @@ export const ui = {
         'home.updates.view-all-positions': 'Voir tous les postes',
 
         // Footer
+        'footer.supported-by': 'Soutenu par',
         'footer.tagline': 'Un projet de recherche fondamentale au service de la stratégie nationale',
         'footer.legal-mentions': 'Mentions Légales',
         'footer.analytics': 'Ce site utilise des analyses anonymes concernant les visites de pages, les interactions des utilisateurs et la répartition géographique pour améliorer l\'expérience utilisateur. Aucun cookie n\'est utilisé à des fins de suivi. Aucune donnée personnelle n\'est collectée ou stockée.',
