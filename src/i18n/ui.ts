@@ -18,6 +18,7 @@ export const ui = {
         'nav.join-us': 'Join Us',
         'nav.contact': 'Contact',
         'nav.about': 'About',
+        'nav.operated-by': 'Operated by',
         'site.title': 'EDT Research Program',
         'site.description': 'Engineering Digital Twins Research Program',
         'seo.keywords.base': 'digital twins,engineering,research,EDT,simulation,modeling',
@@ -79,11 +80,10 @@ export const ui = {
         'home.updates.view-all-positions': 'View all positions',
 
         // Footer
-        'footer.supported-by': 'Supported by',
-        'footer.operated-by': 'Operated by',
         'footer.tagline': 'Fundamental research project serving the national strategy',
         'footer.legal-mentions': 'Legal Mentions',
         'footer.analytics': 'This website uses anonymous analytics about page visits, user interactions, and geographic distribution to improve user experience. No cookies are used for tracking purposes. No personal data is collected or stored.',
+        'footer.anr-funding-statement': 'This work benefited from government funding managed by the French National Research Agency under the France 2030 programme, with the reference "ANR-25-APJN-0001".',
 
         // Publications
         'publications.no-results': 'No publications found matching your criteria.',
@@ -341,6 +341,7 @@ export const ui = {
         'nav.join-us': 'Nous Rejoindre',
         'nav.contact': 'Contact',
         'nav.about': 'À Propos',
+        'nav.operated-by': 'Piloté par',
         'site.title': 'Programme de Recherche EDT',
         'site.description': 'Programme de Recherche Jumeaux Numériques d\'Ingénierie',
         'seo.keywords.base': 'jumeaux numériques,ingénierie,recherche,EDT,simulation,modélisation',
@@ -402,11 +403,10 @@ export const ui = {
         'home.updates.view-all-positions': 'Voir tous les postes',
 
         // Footer
-        'footer.supported-by': 'Soutenu par',
-        'footer.operated-by': 'Opéré par',
         'footer.tagline': 'Un projet de recherche fondamentale au service de la stratégie nationale',
         'footer.legal-mentions': 'Mentions Légales',
         'footer.analytics': 'Ce site utilise des analyses anonymes concernant les visites de pages, les interactions des utilisateurs et la répartition géographique pour améliorer l\'expérience utilisateur. Aucun cookie n\'est utilisé à des fins de suivi. Aucune donnée personnelle n\'est collectée ou stockée.',
+        'footer.anr-funding-statement': 'Ce travail a bénéficié d\'une aide de l\'État gérée par l\'Agence Nationale de la Recherche au titre du programme France 2030 portant la référence « ANR-25-APJN-0001 ».',
 
         // Publications
         'publications.no-results': 'Aucune publication trouvée correspondant à vos critères.',

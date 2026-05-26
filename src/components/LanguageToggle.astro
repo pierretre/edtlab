@@ -3,11 +3,10 @@
  * Smart Language Toggle Component
  *
  * Features:
+ * - Compact dropdown showing the current language with a chevron
  * - Smart redirecting to corresponding translated pages
  * - Fallback to home page if no translation exists
  * - Accessible with proper ARIA labels and keyboard navigation
- * - Light mode optimized design
- * - Smooth transitions and hover effects
  */
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { languages } from "@i18n/ui";
@@ -22,52 +21,72 @@ const currentHref = Astro.url.pathname
     .filter((part) => part.length > 0)
     .slice(1) // Remove language prefix
     .join("/");
+
+const otherLocales = (Object.keys(languages) as Array<"en" | "fr">).filter(
+    (locale) => locale !== lang,
+);
 ---
 
-<div
-    class="flex items-center space-x-2 text-sm font-medium text-gray-900 lg:w-20 lg:justify-end"
->
-    {
-        Object.keys(languages).map((locale, index) => {
-            const isActive = locale === lang;
+<div class="relative group">
+    <button
+        type="button"
+        class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-gray-900 hover:text-primary-500 transition-colors duration-150"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-label={t("language.current")}
+        data-language-toggle
+    >
+        <span>{lang.toUpperCase()}</span>
+        <svg
+            class="w-2.5 h-2.5 transition-transform group-hover:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+        >
+            <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"></path>
+        </svg>
+    </button>
 
-            // Get the corresponding page in the target language
-            const targetLang = locale as "en" | "fr";
-            const correspondingHref = getCorrespondingPage(
-                currentHref,
-                lang,
-                targetLang,
-            );
-            const targetUrl = correspondingHref
-                ? `/${targetLang}/${correspondingHref}`
-                : `/${targetLang}/`;
+    <div
+        class="absolute right-0 top-full hidden group-hover:block group-focus-within:block z-50 bg-white shadow border border-gray-200 min-w-[3.5rem]"
+        role="menu"
+        data-language-menu
+    >
+        <ul class="m-0 p-0 list-none">
+            {
+                otherLocales.map((locale) => {
+                    const correspondingHref = getCorrespondingPage(
+                        currentHref,
+                        lang,
+                        locale,
+                    );
+                    const targetUrl = correspondingHref
+                        ? `/${locale}/${correspondingHref}`
+                        : `/${locale}/`;
 
-            return (
-                <>
-                    <a
-                        href={targetUrl}
-                        class={`transition-colors duration-150 w-7 text-center ${
-                            isActive
-                                ? "text-primary-600 font-semibold underline underline-offset-4"
-                                : "text-gray-700 hover:text-primary-500"
-                        }`}
-                        title={
-                            isActive
-                                ? t("language.current")
-                                : t("language.switch-to").replace(
-                                      "{lang}",
-                                      locale.toUpperCase(),
-                                  )
-                        }
-                    >
-                        {locale.toUpperCase()}
-                    </a>
-
-                    {index < Object.keys(languages).length - 1 && (
-                        <span class="text-gray-400 select-none">|</span>
-                    )}
-                </>
-            );
-        })
-    }
+                    return (
+                        <li class="m-0 p-0">
+                            <a
+                                href={targetUrl}
+                                role="menuitem"
+                                class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-gray-100 no-underline text-center"
+                                title={t("language.switch-to").replace(
+                                    "{lang}",
+                                    locale.toUpperCase(),
+                                )}
+                            >
+                                {locale.toUpperCase()}
+                            </a>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+    </div>
 </div>
