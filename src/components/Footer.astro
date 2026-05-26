@@ -11,17 +11,9 @@ const t = useTranslations(lang);
 <div class="bg-[#e5e5e5] text-gray-800 w-full">
     <div class="max-w-5xl mx-auto p-6 gap-6">
         <div
-            class="flex flex-wrap items-start justify-between gap-6 mb-8"
+            class="flex flex-wrap items-center justify-between gap-6 mb-6"
         >
             <div class="flex h-20 items-center gap-6 flex-wrap">
-                <span
-                    class="flex h-14 w-28 items-center text-sm font-medium text-gray-900 self-start"
-                >
-                    {t("footer.supported-by")}
-                </span>
-                <span
-                    class="w-px h-14 bg-gray-800 flex-shrink-0"
-                    aria-hidden="true"></span>
                 <Picture
                     src={france2030Logo}
                     alt="France 2030 - Logo officiel du programme de financement"
@@ -47,15 +39,7 @@ const t = useTranslations(lang);
                     }}
                 />
             </div>
-            <div class="flex h-20 items-center gap-6 flex-wrap">
-                <span
-                    class="flex h-14 w-28 items-center text-sm font-medium text-gray-900 self-start"
-                >
-                    {t("footer.operated-by")}
-                </span>
-                <span
-                    class="w-px h-14 bg-gray-800 flex-shrink-0"
-                    aria-hidden="true"></span>
+            <div class="flex h-20 items-center flex-shrink-0">
                 <div
                     class="flex items-center bg-white rounded-lg px-3 py-2 flex-shrink-0"
                 >
@@ -71,6 +55,9 @@ const t = useTranslations(lang);
                 </div>
             </div>
         </div>
+        <p class="text-sm mb-6">
+            {t("footer.anr-funding-statement")}
+        </p>
         <div class="text-sm">
             <h5>
                 {t("footer.legal-mentions")}

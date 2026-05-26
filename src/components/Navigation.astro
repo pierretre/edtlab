@@ -42,11 +42,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
         </a>
 
         <nav
-            class="hidden lg:flex justify-center items-center"
+            class="hidden lg:flex justify-center items-center flex-1 min-w-0"
             role="navigation"
             aria-label={t("accessibility.main-navigation")}
         >
-            <ul class="flex space-x-4 items-center m-0 p-0">
+            <ul
+                class="flex space-x-4 items-center m-0 p-0 max-w-full overflow-x-auto whitespace-nowrap"
+            >
                 {
                     menuSections.map((section) => {
                         const sectionPath = `/${lang}/${section.href}`;
@@ -155,15 +157,25 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
         </nav>
 
         <div class="flex items-center space-x-2 lg:ml-8 flex-shrink-0">
-            <img
-                src="/RF-Inria_Logo_RVB.svg"
-                alt="République Française — Inria"
-                class="hidden lg:block flex-shrink-0 h-12 w-auto object-contain"
-                width="294"
-                height="105"
-                loading="eager"
-                decoding="sync"
-            />
+            <div class="hidden lg:flex items-center gap-2 flex-shrink-0">
+                <span
+                    class="hidden xl:inline text-xs leading-tight text-right text-gray-900 max-w-[52px]"
+                >
+                    {t("nav.operated-by")}
+                </span>
+                <span
+                    class="hidden xl:inline-block w-px h-12 bg-gray-800 flex-shrink-0"
+                    aria-hidden="true"></span>
+                <img
+                    src="/RF-Inria_Logo_RVB.svg"
+                    alt="République Française — Inria"
+                    class="flex-shrink-0 h-14 w-auto object-contain"
+                    width="294"
+                    height="105"
+                    loading="eager"
+                    decoding="sync"
+                />
+            </div>
             <LanguageToggle />
             <button
                 data-collapse-toggle="navbar-language"
