@@ -10,54 +10,43 @@ const t = useTranslations(lang);
 
 <div class="bg-[#e5e5e5] text-gray-800 w-full">
     <div class="max-w-5xl mx-auto p-6 gap-6">
-        <div
-            class="flex flex-wrap items-center justify-between gap-6 mb-6"
-        >
-            <div class="flex h-20 items-center gap-6 flex-wrap">
-                <Picture
-                    src={france2030Logo}
-                    alt="France 2030 - Logo officiel du programme de financement"
-                    class="h-20 w-auto object-contain"
-                    widths={[120, 240, 360]}
-                    sizes="120px"
-                    format="webp"
-                    quality={80}
-                    pictureAttributes={{
-                        class: "flex-shrink-0",
-                    }}
-                />
-                <Picture
-                    src={anrLogo}
-                    alt="ANR - Agence nationale de la recherche"
-                    class="h-10 w-auto object-contain"
-                    widths={[240, 480, 720]}
-                    sizes="240px"
-                    format="webp"
-                    quality={80}
-                    pictureAttributes={{
-                        class: "flex-shrink-0",
-                    }}
-                />
-            </div>
-            <div class="flex h-20 items-center flex-shrink-0">
-                <div
-                    class="flex items-center bg-white rounded-lg px-3 py-2 flex-shrink-0"
-                >
-                    <img
-                        src="/RF-Inria_Logo_RVB.svg"
-                        alt="République Française - Inria"
-                        class="h-12 w-[134px] object-contain"
-                        width="294"
-                        height="105"
-                        loading="eager"
-                        decoding="sync"
-                    />
-                </div>
-            </div>
+        <div class="flex items-center gap-6 flex-wrap mb-6">
+            <span
+                class="text-sm font-medium text-gray-900"
+            >
+                {t("footer.supported-by")}
+            </span>
+            <span
+                class="w-px h-14 bg-gray-800 flex-shrink-0"
+                aria-hidden="true"></span>
+            <Picture
+                src={france2030Logo}
+                alt="France 2030 - Logo officiel du programme de financement"
+                class="h-20 w-auto object-contain"
+                widths={[120, 240, 360]}
+                sizes="120px"
+                format="webp"
+                quality={80}
+                pictureAttributes={{
+                    class: "flex-shrink-0",
+                }}
+            />
+            <Picture
+                src={anrLogo}
+                alt="ANR - Agence nationale de la recherche"
+                class="h-10 w-auto object-contain"
+                widths={[240, 480, 720]}
+                sizes="240px"
+                format="webp"
+                quality={80}
+                pictureAttributes={{
+                    class: "flex-shrink-0",
+                }}
+            />
+            <p class="text-sm flex-1 min-w-[240px] m-0">
+                {t("footer.anr-funding-statement")}
+            </p>
         </div>
-        <p class="text-sm mb-6">
-            {t("footer.anr-funding-statement")}
-        </p>
         <div class="text-sm">
             <h5>
                 {t("footer.legal-mentions")}
