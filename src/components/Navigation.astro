@@ -48,9 +48,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                 role="navigation"
                 aria-label={t("accessibility.main-navigation")}
             >
-                <ul
-                    class="flex space-x-4 items-center m-0 p-0 max-w-full overflow-x-auto whitespace-nowrap"
-                >
+                <ul class="flex space-x-4 items-center m-0 p-0">
                     {
                         menuSections.map((section) => {
                             const sectionPath = `/${lang}/${section.href}`;
@@ -162,7 +160,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
             </nav>
 
             <!-- Mobile Navigation -->
-            <div class="flex items-center space-x-2 flex-shrink-0">
+            <div class="flex items-center space-x-2">
                 <LanguageToggle />
                 <button
                     data-collapse-toggle="navbar-language"
