@@ -18,190 +18,201 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
     id="site-header"
     class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200"
 >
-    <div
-        class="max-w-screen-xl min-h-16 lg:min-h-20 mx-auto flex items-center justify-between lg:p-1"
-    >
-        <a
-            href={`/${lang}/`}
-            class="flex-shrink-0 flex items-center no-underline h-full"
+    <div class="flex h-16 lg:h-20 gap-2">
+        <div class="hidden lg:flex flex-1"></div>
+        <div
+            class="xl:max-w-6xl flex items-center w-full justify-between lg:p-1"
         >
-            <Picture
-                src={logoImagePng}
-                alt="EDT Logo"
-                class="h-full w-auto object-contain"
-                sizes="(max-width: 768px) 120px, 160px"
-                widths={[120, 160, 240, 320]}
-                quality={80}
-                format="webp"
-                pictureAttributes={{
-                    class: "flex-shrink-0 h-full",
-                }}
-                loading={"eager"}
-                decoding={"sync"}
-            />
-        </a>
-
-        <nav
-            class="hidden lg:flex justify-center items-center flex-1 min-w-0"
-            role="navigation"
-            aria-label={t("accessibility.main-navigation")}
-        >
-            <ul
-                class="flex space-x-4 items-center m-0 p-0 max-w-full overflow-x-auto whitespace-nowrap"
+            <a
+                href={`/${lang}/`}
+                class="shrink-0 flex items-center no-underline h-full"
             >
-                {
-                    menuSections.map((section) => {
-                        const sectionPath = `/${lang}/${section.href}`;
-                        const isActive =
-                            currentPath === sectionPath ||
-                            currentPath.startsWith(sectionPath + "/") ||
-                            (section.items &&
-                                section.items.some(
-                                    (sub) =>
-                                        currentPath ===
-                                            `/${lang}/${sub.href}` ||
-                                        currentPath.startsWith(
-                                            `/${lang}/${sub.href}/`,
-                                        ),
-                                ));
+                <Picture
+                    src={logoImagePng}
+                    alt="EDT Logo"
+                    class="h-full w-auto object-contain"
+                    sizes="(max-width: 768px) 120px, 160px"
+                    widths={[120, 160, 240, 320]}
+                    quality={80}
+                    format="webp"
+                    pictureAttributes={{
+                        class: "flex-shrink-0 h-full",
+                    }}
+                    loading={"eager"}
+                    decoding={"sync"}
+                />
+            </a>
 
-                        return (
-                            <li class="relative group flex items-center">
-                                {section.items && section.items.length > 0 ? (
-                                    <>
-                                        <span
-                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out cursor-default
+            <nav
+                class="hidden lg:flex justify-center items-center flex-1 min-w-0"
+                role="navigation"
+                aria-label={t("accessibility.main-navigation")}
+            >
+                <ul
+                    class="flex space-x-4 items-center m-0 p-0 max-w-full overflow-x-auto whitespace-nowrap"
+                >
+                    {
+                        menuSections.map((section) => {
+                            const sectionPath = `/${lang}/${section.href}`;
+                            const isActive =
+                                currentPath === sectionPath ||
+                                currentPath.startsWith(sectionPath + "/") ||
+                                (section.items &&
+                                    section.items.some(
+                                        (sub) =>
+                                            currentPath ===
+                                                `/${lang}/${sub.href}` ||
+                                            currentPath.startsWith(
+                                                `/${lang}/${sub.href}/`,
+                                            ),
+                                    ));
+
+                            return (
+                                <li class="relative group flex items-center">
+                                    {section.items &&
+                                    section.items.length > 0 ? (
+                                        <>
+                                            <span
+                                                class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out cursor-default
                                     before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
                                     before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
                                     ${isActive ? "text-primary-600 before:w-full" : "before:w-0"}`}
-                                        >
-                                            <span>{section.name}</span>
-                                            <svg
-                                                class="w-2.5 h-2.5 mt-[4px] transition-transform group-hover:rotate-180"
-                                                aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 10 6"
                                             >
-                                                <path
-                                                    stroke="currentColor"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="m1 1 4 4 4-4"
-                                                />
-                                            </svg>
-                                        </span>
+                                                <span>{section.name}</span>
+                                                <svg
+                                                    class="w-2.5 h-2.5 mt-[4px] transition-transform group-hover:rotate-180"
+                                                    aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 10 6"
+                                                >
+                                                    <path
+                                                        stroke="currentColor"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="m1 1 4 4 4-4"
+                                                    />
+                                                </svg>
+                                            </span>
 
-                                        <div
-                                            class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
-                                            style="top: 100%;"
-                                            role="menu"
-                                            aria-label={`${section.name} submenu`}
-                                        >
-                                            <ul
-                                                class="text-sm text-gray-700 m-0 p-0"
-                                                role="none"
+                                            <div
+                                                class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
+                                                style="top: 100%;"
+                                                role="menu"
+                                                aria-label={`${section.name} submenu`}
                                             >
-                                                {section.items.map((sub) => (
-                                                    <li
-                                                        class="m-0 p-0"
-                                                        role="none"
-                                                    >
-                                                        <a
-                                                            href={`/${lang}/${sub.href}`}
-                                                            class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
-                                                                currentPath ===
-                                                                    `/${lang}/${sub.href}` ||
-                                                                currentPath.startsWith(
-                                                                    `/${lang}/${sub.href}/`,
-                                                                )
-                                                                    ? "text-primary-600 font-medium"
-                                                                    : ""
-                                                            }`}
-                                                            role="menuitem"
-                                                            aria-current={
-                                                                currentPath ===
-                                                                    `/${lang}/${sub.href}` ||
-                                                                currentPath.startsWith(
-                                                                    `/${lang}/${sub.href}/`,
-                                                                )
-                                                                    ? "page"
-                                                                    : undefined
-                                                            }
-                                                        >
-                                                            {sub.name}
-                                                        </a>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <a
-                                        href={`/${lang}/${section.href}`}
-                                        class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
+                                                <ul
+                                                    class="text-sm text-gray-700 m-0 p-0"
+                                                    role="none"
+                                                >
+                                                    {section.items.map(
+                                                        (sub) => (
+                                                            <li
+                                                                class="m-0 p-0"
+                                                                role="none"
+                                                            >
+                                                                <a
+                                                                    href={`/${lang}/${sub.href}`}
+                                                                    class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
+                                                                        currentPath ===
+                                                                            `/${lang}/${sub.href}` ||
+                                                                        currentPath.startsWith(
+                                                                            `/${lang}/${sub.href}/`,
+                                                                        )
+                                                                            ? "text-primary-600 font-medium"
+                                                                            : ""
+                                                                    }`}
+                                                                    role="menuitem"
+                                                                    aria-current={
+                                                                        currentPath ===
+                                                                            `/${lang}/${sub.href}` ||
+                                                                        currentPath.startsWith(
+                                                                            `/${lang}/${sub.href}/`,
+                                                                        )
+                                                                            ? "page"
+                                                                            : undefined
+                                                                    }
+                                                                >
+                                                                    {sub.name}
+                                                                </a>
+                                                            </li>
+                                                        ),
+                                                    )}
+                                                </ul>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <a
+                                            href={`/${lang}/${section.href}`}
+                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
                                 before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
                                 before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
                                 hover:before:w-full hover:text-primary-600
                                 ${isActive ? "text-primary-600 before:w-full" : ""}`}
-                                    >
-                                        <span>{section.name}</span>
-                                    </a>
-                                )}
-                            </li>
-                        );
-                    })
-                }
-            </ul>
-        </nav>
+                                        >
+                                            <span>{section.name}</span>
+                                        </a>
+                                    )}
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </nav>
 
-        <!-- Mobile Navigation -->
-        <div class="flex items-center space-x-2 flex-shrink-0">
-            <LanguageToggle />
-            <button
-                data-collapse-toggle="navbar-language"
-                type="button"
-                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                aria-controls="navbar-language"
-                aria-expanded="false"
-                aria-label={t("accessibility.menu-toggle")}
-            >
-                <span class="sr-only">{t("accessibility.menu-toggle")}</span>
-                <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 17 14"
+            <!-- Mobile Navigation -->
+            <div class="flex items-center space-x-2 flex-shrink-0">
+                <LanguageToggle />
+                <button
+                    data-collapse-toggle="navbar-language"
+                    type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    aria-controls="navbar-language"
+                    aria-expanded="false"
+                    aria-label={t("accessibility.menu-toggle")}
                 >
-                    <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M1 1h15M1 7h15M1 13h15"></path>
-                </svg>
-            </button>
+                    <span class="sr-only">{t("accessibility.menu-toggle")}</span
+                    >
+                    <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 17 14"
+                    >
+                        <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div
-            class="pointer-events-none hidden min-[1800px]:flex absolute right-4 top-1/2 -translate-y-1/2 items-center gap-2"
+            class="hidden lg:flex ml-auto flex-1 min-w-0 max-h-full flex-col justify-evenly [@media(min-width:1650px)]:gap-1 py-1
+        xl:flex-1 xl:w-auto
+        [@media(min-width:1650px)]:flex-row
+        [@media(min-width:1650px)]:items-center
+        [@media(min-width:1650px)]:justify-end"
         >
             <span
-                class="hidden xl:inline text-sm leading-tight text-right text-gray-900 max-w-[65px]"
+                class="text-xs sm:text-sm leading-tight text-center text-gray-900 [@media(min-width:1650px)]:text-right"
             >
                 {t("nav.operated-by")}
             </span>
+
             <span
-                class="hidden xl:inline-block w-px h-[60px] bg-gray-800 flex-shrink-0"
+                class="[@media(min-width:1650px)]:inline-block hidden w-px h-[90%] bg-gray-800 flex-shrink-0"
                 aria-hidden="true"></span>
+
             <img
                 src="/RF-Inria_Logo_RVB.svg"
                 alt="République Française — Inria"
-                class="flex-shrink-0 h-[70px] w-auto object-contain"
-                width="294"
-                height="105"
+                class="block w-auto h-auto [@media(min-width:1650px)]:max-h-[90%] max-h-[75%] max-w-full object-contain"
                 loading="eager"
                 decoding="sync"
             />
