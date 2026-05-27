@@ -27,34 +27,27 @@ const otherLocales = (Object.keys(languages) as Array<"en" | "fr">).filter(
 );
 ---
 
-<div class="relative group">
-    <button
-        type="button"
-        class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-gray-900 hover:text-primary-500 transition-colors duration-150"
-        aria-haspopup="true"
-        aria-expanded="false"
-        aria-label={t("language.current")}
-        data-language-toggle
+<span
+    class="relative group flex items-center gap-1 py-1 px-1 text-sm font-medium text-gray-900 hover:text-primary-500 transition-colors duration-150"
+>
+    <span>{lang.toUpperCase()}</span>
+    <svg
+        class="w-2.5 h-2.5 mt-[4px] transition-transform group-hover:rotate-180"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 10 6"
     >
-        <span>{lang.toUpperCase()}</span>
-        <svg
-            class="w-2.5 h-2.5 transition-transform group-hover:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 10 6"
-        >
-            <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 4 4 4-4"></path>
-        </svg>
-    </button>
+        <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"></path>
+    </svg>
 
     <div
-        class="absolute right-0 top-full hidden group-hover:block group-focus-within:block z-50 bg-white shadow border border-gray-200 min-w-[3.5rem]"
+        class="absolute right-0 top-full hidden group-hover:block group-focus-within:block z-50 bg-white shadow border border-gray-200 min-w-[3rem]"
         role="menu"
         data-language-menu
     >
@@ -75,7 +68,7 @@ const otherLocales = (Object.keys(languages) as Array<"en" | "fr">).filter(
                             <a
                                 href={targetUrl}
                                 role="menuitem"
-                                class="block px-3 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-gray-100 no-underline text-center"
+                                class="block p-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-gray-100 no-underline text-center"
                                 title={t("language.switch-to").replace(
                                     "{lang}",
                                     locale.toUpperCase(),
@@ -89,4 +82,4 @@ const otherLocales = (Object.keys(languages) as Array<"en" | "fr">).filter(
             }
         </ul>
     </div>
-</div>
+</span>

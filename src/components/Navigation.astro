@@ -77,7 +77,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                                         >
                                             <span>{section.name}</span>
                                             <svg
-                                                class="w-2.5 h-2.5 mt-[6px] transition-transform group-hover:rotate-180"
+                                                class="w-2.5 h-2.5 mt-[4px] transition-transform group-hover:rotate-180"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
@@ -156,26 +156,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
             </ul>
         </nav>
 
-        <div class="flex items-center space-x-2 lg:ml-8 flex-shrink-0">
-            <div class="hidden lg:flex items-center gap-2 flex-shrink-0">
-                <span
-                    class="hidden xl:inline text-sm leading-tight text-right text-gray-900 max-w-[65px]"
-                >
-                    {t("nav.operated-by")}
-                </span>
-                <span
-                    class="hidden xl:inline-block w-px h-[60px] bg-gray-800 flex-shrink-0"
-                    aria-hidden="true"></span>
-                <img
-                    src="/RF-Inria_Logo_RVB.svg"
-                    alt="République Française — Inria"
-                    class="flex-shrink-0 h-[70px] w-auto object-contain"
-                    width="294"
-                    height="105"
-                    loading="eager"
-                    decoding="sync"
-                />
-            </div>
+        <!-- Mobile Navigation -->
+        <div class="flex items-center space-x-2 flex-shrink-0">
             <LanguageToggle />
             <button
                 data-collapse-toggle="navbar-language"
@@ -201,6 +183,28 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                         d="M1 1h15M1 7h15M1 13h15"></path>
                 </svg>
             </button>
+        </div>
+
+        <div
+            class="pointer-events-none hidden min-[1800px]:flex absolute right-4 top-1/2 -translate-y-1/2 items-center gap-2"
+        >
+            <span
+                class="hidden xl:inline text-sm leading-tight text-right text-gray-900 max-w-[65px]"
+            >
+                {t("nav.operated-by")}
+            </span>
+            <span
+                class="hidden xl:inline-block w-px h-[60px] bg-gray-800 flex-shrink-0"
+                aria-hidden="true"></span>
+            <img
+                src="/RF-Inria_Logo_RVB.svg"
+                alt="République Française — Inria"
+                class="flex-shrink-0 h-[70px] w-auto object-contain"
+                width="294"
+                height="105"
+                loading="eager"
+                decoding="sync"
+            />
         </div>
     </div>
 
