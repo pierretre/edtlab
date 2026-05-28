@@ -191,26 +191,22 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
         </div>
 
         <div
-            class="hidden lg:flex ml-auto flex-1 min-w-0 max-h-full flex-col justify-evenly [@media(min-width:1650px)]:gap-1 py-1
-        xl:flex-1 xl:w-auto
-        [@media(min-width:1650px)]:flex-row
-        [@media(min-width:1650px)]:items-center
-        [@media(min-width:1650px)]:justify-end"
+            class="hidden lg:flex ml-auto items-center justify-end gap-2 py-1 flex-shrink-0"
         >
             <span
-                class="text-xs sm:text-sm leading-tight text-center text-gray-900 [@media(min-width:1650px)]:text-right"
+                class="text-sm leading-tight text-right text-gray-900"
             >
                 {t("nav.operated-by")}
             </span>
 
             <span
-                class="[@media(min-width:1650px)]:inline-block hidden w-px h-[90%] bg-gray-800 flex-shrink-0"
+                class="inline-block w-px h-[48px] bg-gray-800 flex-shrink-0"
                 aria-hidden="true"></span>
 
             <img
                 src="/RF-Inria_Logo_RVB.svg"
                 alt="République Française — Inria"
-                class="block h-[48px] [@media(min-width:1650px)]:h-[64px] w-auto object-contain"
+                class="block h-[60px] w-auto object-contain"
                 loading="eager"
                 decoding="sync"
             />
