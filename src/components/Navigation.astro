@@ -18,11 +18,12 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
     id="site-header"
     class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200"
 >
-    <div class="flex h-16 lg:h-20 gap-2">
-        <div class="hidden lg:flex flex-1"></div>
-        <div
-            class="xl:max-w-6xl flex items-center w-full justify-between lg:p-1"
-        >
+    <div class="flex h-16 lg:h-20">
+        <!-- LEFT SPACER -->
+        <div class="hidden 2xl:flex shrink-0 basis-[220px]"></div>
+        
+        <!-- MIDDLE NAVIGATION CONTENT -->
+       <div class="flex-1 min-w-0 max-w-7xl w-full mx-auto flex items-center justify-between lg:p-1">
             <a
                 href={`/${lang}/`}
                 class="shrink-0 flex items-center no-underline h-full"
@@ -44,11 +45,13 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
             </a>
 
             <nav
-                class="hidden lg:flex justify-center items-center flex-1 min-w-0"
+                class="hidden lg:flex justify-center items-center min-w-0"
                 role="navigation"
                 aria-label={t("accessibility.main-navigation")}
             >
-                <ul class="flex space-x-4 items-center m-0 p-0">
+                <ul
+                    class="flex gap-x-1 xl:gap-x-2 2xl:gap-x-3 items-center m-0 p-0"
+                >
                     {
                         menuSections.map((section) => {
                             const sectionPath = `/${lang}/${section.href}`;
@@ -69,85 +72,84 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                                 <li class="relative group flex items-center">
                                     {section.items &&
                                     section.items.length > 0 ? (
-                                        <>
-                                            <span
-                                                class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out cursor-default
-                                    before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                                    before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
-                                    ${isActive ? "text-primary-600 before:w-full" : "before:w-0"}`}
+                                        <span
+                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out cursor-default
+                                            before:absolute before:bottom-0 before:left-0 before:h-0.5
+                                            before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                                            ${isActive ? "text-primary-600 before:w-full" : "before:w-0"}`}
+                                        >
+                                            <span>{section.name}</span>
+                                            <svg
+                                                class="w-2.5 h-2.5 mt-1 transition-transform group-hover:rotate-180"
+                                                aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 10 6"
                                             >
-                                                <span>{section.name}</span>
-                                                <svg
-                                                    class="w-2.5 h-2.5 mt-[4px] transition-transform group-hover:rotate-180"
-                                                    aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 10 6"
-                                                >
-                                                    <path
-                                                        stroke="currentColor"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="m1 1 4 4 4-4"
-                                                    />
-                                                </svg>
-                                            </span>
+                                                <path
+                                                    stroke="currentColor"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="m1 1 4 4 4-4"
+                                                />
+                                            </svg>
+                                        </span>
 
-                                            <div
-                                                class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
-                                                style="top: 100%;"
-                                                role="menu"
-                                                aria-label={`${section.name} submenu`}
+                                        <div
+                                            class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
+                                            style="top: 100%;"
+                                            role="menu"
+                                            aria-label={`${section.name} submenu`}
+                                        >
+                                            <ul
+                                                class="text-sm text-gray-700 m-0 p-0"
+                                                role="none"
                                             >
-                                                <ul
-                                                    class="text-sm text-gray-700 m-0 p-0"
-                                                    role="none"
-                                                >
-                                                    {section.items.map(
-                                                        (sub) => (
-                                                            <li
-                                                                class="m-0 p-0"
-                                                                role="none"
+                                                {section.items.map(
+                                                    (sub) => (
+                                                        <li
+                                                            class="m-0 p-0"
+                                                            role="none"
+                                                        >
+                                                            <a
+                                                                href={`/${lang}/${sub.href}`}
+                                                                class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
+                                                                    currentPath ===
+                                                                        `/${lang}/${sub.href}` ||
+                                                                    currentPath.startsWith(
+                                                                        `/${lang}/${sub.href}/`,
+                                                                    )
+                                                                        ? "text-primary-600 font-medium"
+                                                                        : ""
+                                                                }`}
+                                                                role="menuitem"
+                                                                aria-current={
+                                                                    currentPath ===
+                                                                        `/${lang}/${sub.href}` ||
+                                                                    currentPath.startsWith(
+                                                                        `/${lang}/${sub.href}/`,
+                                                                    )
+                                                                        ? "page"
+                                                                        : undefined
+                                                                }
                                                             >
-                                                                <a
-                                                                    href={`/${lang}/${sub.href}`}
-                                                                    class={`block p-2.5 hover:text-primary-600 hover:bg-gray-100 whitespace-nowrap ${
-                                                                        currentPath ===
-                                                                            `/${lang}/${sub.href}` ||
-                                                                        currentPath.startsWith(
-                                                                            `/${lang}/${sub.href}/`,
-                                                                        )
-                                                                            ? "text-primary-600 font-medium"
-                                                                            : ""
-                                                                    }`}
-                                                                    role="menuitem"
-                                                                    aria-current={
-                                                                        currentPath ===
-                                                                            `/${lang}/${sub.href}` ||
-                                                                        currentPath.startsWith(
-                                                                            `/${lang}/${sub.href}/`,
-                                                                        )
-                                                                            ? "page"
-                                                                            : undefined
-                                                                    }
-                                                                >
-                                                                    {sub.name}
-                                                                </a>
-                                                            </li>
-                                                        ),
-                                                    )}
-                                                </ul>
-                                            </div>
-                                        </>
+                                                                {sub.name}
+                                                            </a>
+                                                        </li>
+                                                    ),
+                                                )}
+                                            </ul>
+                                        </div>
+                                        
                                     ) : (
                                         <a
                                             href={`/${lang}/${section.href}`}
                                             class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out
-                                before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
-                                before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
-                                hover:before:w-full hover:text-primary-600
-                                ${isActive ? "text-primary-600 before:w-full" : ""}`}
+                                            before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px]
+                                            before:w-0 before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
+                                            hover:before:w-full hover:text-primary-600
+                                            ${isActive ? "text-primary-600 before:w-full" : ""}`}
                                         >
                                             <span>{section.name}</span>
                                         </a>
@@ -190,27 +192,24 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
             </div>
         </div>
 
+        <!-- RIGHT SIDE LOGO -->
         <div
-            class="hidden lg:flex ml-auto flex-1 min-w-0 max-h-full flex-col justify-evenly [@media(min-width:1650px)]:gap-1 py-1
-        xl:flex-1 xl:w-auto
-        [@media(min-width:1650px)]:flex-row
-        [@media(min-width:1650px)]:items-center
-        [@media(min-width:1650px)]:justify-end"
+            class="hidden xl:flex items-center justify-end shrink-0 basis-[220px] max-h-full gap-1 py-1"
         >
             <span
-                class="text-xs sm:text-sm leading-tight text-center text-gray-900 [@media(min-width:1650px)]:text-right"
+                class="text-xs sm:text-sm leading-tight text-right w-fit text-gray-900"
             >
                 {t("nav.operated-by")}
             </span>
 
             <span
-                class="[@media(min-width:1650px)]:inline-block hidden w-px h-[90%] bg-gray-800 flex-shrink-0"
+                class="inline-block w-px h-[90%] bg-gray-800"
                 aria-hidden="true"></span>
 
             <img
                 src="/RF-Inria_Logo_RVB.svg"
                 alt="République Française — Inria"
-                class="block w-auto h-auto [@media(min-width:1650px)]:max-h-[90%] max-h-[75%] max-w-full object-contain"
+                class="block w-auto h-[90%] max-w-full max-h-12 my-auto object-contain"
                 loading="eager"
                 decoding="sync"
             />
