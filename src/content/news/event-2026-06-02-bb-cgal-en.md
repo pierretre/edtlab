@@ -4,6 +4,7 @@ lang: en
 date: 2026-06-02
 newsType: event
 location: Videoconference
+url: https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
 description: Building Block CGAL presentation by Pierre Allez (Inria). June 2, 2026, 5:30-6:30 PM CEST.
 photo: /media/uploads/CGAL.png
 icsPath: /calendar/seminaire-cgal-2026-06-02.ics

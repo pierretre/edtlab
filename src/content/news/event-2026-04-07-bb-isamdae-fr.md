@@ -4,6 +4,7 @@ lang: fr
 date: 2026-04-07
 newsType: event
 location: Visioconference
+url: https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
 description: Presentation Building Block Isamdae par Benoit CAILLAUD. 7 avril 2026.
 photo: https://team.inria.fr/hycomes/files/2020/07/rldc2-cc1-768x620.png
 tags:

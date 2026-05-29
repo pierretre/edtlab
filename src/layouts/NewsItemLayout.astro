@@ -107,7 +107,18 @@ const badges = [
                                 {t("news-item.location")}
                             </span>
                             <p class="font-medium my-0">
-                                {frontmatter.location}
+                                {frontmatter.url ? (
+                                    <a
+                                        href={frontmatter.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-primary-600 hover:text-primary-800 hover:underline"
+                                    >
+                                        {frontmatter.location}
+                                    </a>
+                                ) : (
+                                    frontmatter.location
+                                )}
                             </p>
                         </div>
                     </div>

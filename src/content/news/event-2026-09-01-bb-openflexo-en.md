@@ -4,6 +4,7 @@ lang: en
 date: 2026-09-01
 newsType: event
 location: Videoconference
+url: https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
 description: Building Block OpenFlexo presentation by Sylvain Guerin (IMT Atlantique). September 1, 2026, 5:30-6:30 PM CEST.
 photo: /media/uploads/openflexo.png
 icsPath: /calendar/seminaire-openflexo-2026-09-01.ics
