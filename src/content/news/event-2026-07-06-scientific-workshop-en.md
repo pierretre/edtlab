@@ -20,6 +20,7 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 # Logistics
 
+* How: On-site and by invitation only. Contact: ops@edtlab.fr
 * When: from July 6th, 2026 at noon to July 8th, 2026, after lunch.
 * Where: Inria, centre de l'Université de Rennes ([how to get there](https://www.inria.fr/en/how-reach-inria-centre-rennes-university)), Centre de conférences
 * Warning: you might need an ID card to enter the center
