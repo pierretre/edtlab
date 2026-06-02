@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//EDT Lab//Kick Off Meeting//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+SUMMARY:Réunion de lancement EDT
+DTSTART:20260624T100000Z
+DTEND:20260624T160000Z
+DTSTAMP:20260602T000000Z
+UID:edt-kick-off-meeting-2026-06-24@edtlab.fr
+DESCRIPTION:Réunion officielle de lancement du programme Engineering Digital Twins (EDT)\, le 24 juin 2026 de 12h00 à 18h00 (CEST).\nEn présentiel et sur invitation uniquement. Contact : ops@edtlab.fr
+LOCATION:Inria\, Paris
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

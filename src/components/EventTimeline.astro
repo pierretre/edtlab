@@ -29,7 +29,7 @@ const calendarItems: TimelineItem[] = (calendarEntry?.data.items ?? []).map(
         title: item.title,
         location: item.location,
         programMilestone: item.programMilestone === true,
-        href: undefined,
+        href: item.link,
         timeLabel: item.timeLabel,
     }),
 );

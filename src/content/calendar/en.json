@@ -30,12 +30,6 @@
             "date": "2026-06-09",
             "title": "PC5-Genuine Kick Off Meeting",
             "isMilestone": true
-        },
-        {
-            "date": "2026-06-24",
-            "title": "Kick Off Meeting",
-            "isMilestone": true,
-            "programMilestone": true
         }
     ]
 }

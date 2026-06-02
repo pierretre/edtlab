@@ -144,6 +144,7 @@ const calendarCollection = defineCollection({
             programMilestone: z.boolean().default(false),
             location: z.string().optional(),
             timeLabel: z.string().optional(),
+            link: z.string().optional(),
         }))
     })
 });
