@@ -10,7 +10,7 @@ description: "The goal is to define a generic methodology that covers the whole 
 requirements: ["PhD in computer science", "Programming skills", "Modeling skills", "Experience with digital twins development"] 
 tags:
  - "PC3"  #
-contacts: ["hiring.manager@edt-program.fr", "Sophie.Ebersold@univ-tlse2.fr", "marcos.didonetdelfabro@cea.fr"] 
+contacts: ["Sophie.Ebersold@univ-tlse2.fr", "marcos.didonetdelfabro@cea.fr"] 
 lang: "en"
 ---
 
@@ -27,15 +27,15 @@ To this end, we would like to propose an approach to building digital twins base
 We are seeking a highly motivated postdoctoral researcher to join our team working on the methodological aspects of digital twin development.
 
 ## Objectives
+
 The mission of the position is to propose innovative methodological approaches for the development, implementation and industrialization of digital twins.
 The task consists of studying what is currently being done in the field and proposing innovative approaches that allow researchers and PhD students in the EDT program to use tried-and-tested methods and tools.
 
 This methodology, will be accompanied by a digital twin development lifecycle model, including traceability, evolution, analysis, and change impact management
-. 
+.
 To this end, case studies relying on existing digital twins (models and data) will be central to the work and cover a wide range of uses.
 
 The position will be closely collaborating with the engineering teams of the AT3.
-
 
 ## Responsibilities
 
@@ -50,7 +50,6 @@ The position will be closely collaborating with the engineering teams of the AT3
 The PhD candidate will be co-supervised by Sophie Eberdold, UT2J and Marcos Didonet del Fabro, CEA List within [UT2J-IRIT-SM@RT](https://smart-researchteam.github.io/).
 
 The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators, and will be responsible for defining the early versions of Artemis, the program's open software platform.
-
 
 ## Application Process
 
@@ -75,5 +74,3 @@ Upon completion, you will be positioned as a recognized expert in a key domain f
 - Tarek Alskaif, Önder Babur, Francis Bordeleau, Loek Cleophas, Benoît Combemale, et al., Evolution at the Core of Digital Twin Engineering EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-6
 - Judith Michael, Loek Cleophas, Steffen Zschaler, Tony Clark, Benoît Combemale, et al., Model‐Driven Engineering for Digital Twins: Opportunities and Challenges, Systems Engineering, 2025, 28 (5), pp.659-670. ⟨10.1002/sys.21815⟩
 - Meriem Smati, Vincent Cheutet, Christophe Danjou, Jannik Laval, Digital Twin System of Systems: A Layered Architecture Proposal. MODELSWARD 2025: 273-279
-
-

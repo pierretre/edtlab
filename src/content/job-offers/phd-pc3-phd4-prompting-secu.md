@@ -10,7 +10,7 @@ description: "This PhD thesis has the objective to address the challenges of mod
 requirements: ["Master degree in computer science", "Programming skills", "Modeling skills", "English or French", "Experience with digital twins is a plus"] 
 tags:
  - "PC3"  
-contacts: ["hiring.manager@edt-program.fr", "marcos.didonetdelfabro@cea.fr", "brahim.hamid@irit.fr"]  # Array of contact emails for this position
+contacts: ["marcos.didonetdelfabro@cea.fr", "brahim.hamid@irit.fr"]  # Array of contact emails for this position
 ---
 
 ## Description
@@ -26,7 +26,6 @@ The primary goal of this thesis is to study and define an assisted Model-Driven 
 - Security Injection and Synchronization: developing mechanisms to update architectural models based on security reports, attack simulations, and vulnerability scans (e.g., Mitre ATT&CK or CVE data).
 - Cyber-Security Simulation: Enabling the execution/simulation of complex attack scenarios on a Digital Twin reference architecture to evaluate system configurations without risking physical infrastructure.
 
-
 ## Proposed Methodology
 
 The research will conduct a detailed research on current state of the art to refine and support the objectives previously presented. The study will enable to direct the research actions for a proposed framework. The basis artifacts initially used will be the Asset Administration Sheel (AAS) specification, which will serve as basis for DigitalTwin modeling. A formalisation of the framework and solution will be required, as well as the implementation and integration of a POC within the scope of the case studies of the EDT program.
@@ -38,5 +37,5 @@ The PhD candidate will be co-supervised by [Pr. Brahim Hamid](https://www.irit.f
 ## References
 
 [1] S. Peldszus, J. Bürger and J. Jürjens, "UMLsecRT: Reactive Security Monitoring of Java Applications With Round-Trip Engineering," in IEEE Transactions on Software Engineering, vol. 50, no. 1, pp. 16-47, Jan. 2024, doi: 10.1109/TSE.2023.3326366.
-   
+
 [2] Lifecycle Security for IoMT Systems: Bridging the Gap Between Design and Operation ,  Marcos Didonet Del Fabro, Mahender Kumar, Nabil Moukafih, Miroslaw Malinowski, Pascal Bannerot, Gregory Epiphaniou, Nikolaos Matragkas, IoTBDS, 2026, To appear.
