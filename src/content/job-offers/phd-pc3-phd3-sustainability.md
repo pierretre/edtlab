@@ -10,31 +10,31 @@ description: "PhD position in the area of sustainable middleware for digital twi
 requirements: ["Master degree in relevant field", "Experience with digital twins", "Programming skills", "Language requirements"] # Some requirements in a list
 tags:
  - "PC3"  # Options (Feel free to add others): "PC1", "PC2", "PC3", "PC4", "PC5", "General", ...
-contacts: ["hiring.manager@edt-program.fr", "romain.rouvoy@univ-lille.fr", "quentin.perez@irisa.fr"]  # Array of contact emails for this position
+contacts: ["romain.rouvoy@univ-lille.fr", "quentin.perez@irisa.fr"]  # Array of contact emails for this position
 ---
 
 ## Context
 
 Digital twins are virtual representations of real-world products, systems, or processes, enabling simulation, integration, testing, monitoring, and maintenance [1-4]. They play a pivotal role in optimizing complex systems across a wide range of domains, from industrial manufacturing and energy to environmental monitoring and healthcare.
 
-Digital twins are commonly used in various industries, including manufacturing, healthcare, transportation, and more. Digital twins are increasingly being used to model anthropogenic systems and climate change. By mimicking the real-world entity in a digital space, one can interact with and manipulate the digital twin to understand and improve the associated system or object. Digital twins are complex objects linked to a physical representation of a system called a physical twin. This complexity makes it difficult to analyze the life cycle and environmental impacts associated with the variability of twin types and the components they integrate [5]. 
+Digital twins are commonly used in various industries, including manufacturing, healthcare, transportation, and more. Digital twins are increasingly being used to model anthropogenic systems and climate change. By mimicking the real-world entity in a digital space, one can interact with and manipulate the digital twin to understand and improve the associated system or object. Digital twins are complex objects linked to a physical representation of a system called a physical twin. This complexity makes it difficult to analyze the life cycle and environmental impacts associated with the variability of twin types and the components they integrate [5].
 
 The Engineering Digital Twin [EDT program](https://edtlab.fr/en/), funded by the France 2030 investment plan, is a national initiative aimed at advancing the foundations of digital twin engineering in France and Europe. By bringing together leading academic and industrial partners, EDT seeks to strengthen the bases for the design, use, and deployment of digital twins, addressing key open challenges in model hybridization, composability, development methodologies, digital coupling, and human–twin interaction.
 
 ## Thesis Objectives
 
 This thesis aims to explore the sustainability of physical and digital twins, with a particular focus on the lifecycle analysis and energy consumption. Several scientific challenges are related to the sustainability of digital twins, including:
+
 - The size or precision of the models used in digital twins: Digital twins rely on models to create a virtual representation of the physical system. These models can vary in precision and, consequently, in energy consumption. Selecting the right models on a Pareto front between precision and energy consumption remains a challenging task.
 - The devices executing these models: Some digital twins can be deployed across a variety of devices, this would also extend the lifespan of certain IT devices by adapting the deployment of the twin. Dynamically adapting the digital twin deploiment on the basis of sustainability issues to have an optimal execution is a challenge.
 - The deployment platform for the models: Computations can be performed on centralized high-performance infrastructures or decentralized at the edge, closer to the user.
-- The lifecycle analysis: the environmental cost for desiging, implementing and maintaining a digital twin is a new challenge due to their inherent complexity. 
-
+- The lifecycle analysis: the environmental cost for desiging, implementing and maintaining a digital twin is a new challenge due to their inherent complexity.
 
 In this thesis, we aim to investigate these factors and their related variability to create a middleware reasoning framework for optimizing the energy consumption of digital twins. The main objectives of this thesis are as follows:
+
 1) Observe and familiarize yourself with the tools (design, use, deployment) of digital twins and the various components they incorporate (models, communication gateways, data, etc.) [6]. The infrastructure (peripherals, servers, physical twin hardware, etc.) on which the physical and digital twins are based is also an element to be observed. A state-of-the-art review of LCA methods for software, and more specifically digital twins, will also be carried out.
 2) Based on the familiarization and state-of-the-art analysis carried out previously, the implementation of methods for measuring and quantifying the environmental costs of digital twins will be conducted. Experiments related to the variability of digital twin configurations will be carried out to find potentially optimal configurations in terms of sustainability [7,8]
 3) The results collected previously will be used to create middleware connected to the Artemis platform to assist digital twin engineers, users, and researchers.
-
 
 ## Work Environment
 
