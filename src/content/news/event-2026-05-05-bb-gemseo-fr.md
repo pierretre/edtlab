@@ -4,10 +4,8 @@ lang: fr
 date: 2026-05-05
 newsType: event
 location: Visioconference
-url: https://rendez-vous.renater.fr/lobby_muted_lastN30_user200/EDT_seminaire_a4d910-cbfead-573c0c
 description: Presentation Building Block Gemseo par Jean-Christophe GIRET. 5 mai 2026 15h30-16h30 UTC.
 photo: https://gemseo.readthedocs.io/en/stable/_images/gemseo_schema.png
-icsPath: /calendar/seminaire-gemseo-2026-05-05.ics
 tags:
   - at1
   - seminar
