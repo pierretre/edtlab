@@ -22,8 +22,10 @@ Le programme Engineering Digital Twins (EDT), financé par l'Agence Nationale de
 Cette journée réunira l'ensemble des partenaires institutionnels, scientifiques et industriels du programme autour de présentations des objectifs et des axes de recherche, et constituera une première occasion privilégiée d'échanges entre les équipes engagées dans cette initiative nationale.
 
 # Informations pratiques
+En présentiel et sur invitation uniquement, à Inria, Amphithéâtre Jacques-Louis Lions, 48 rue Barrault 75013 Paris. 
 
-En présentiel et sur invitation uniquement.
+Prévoir une pièce d'identité. 
+
 Contact : ops@edtlab.fr
 
 # Programme
