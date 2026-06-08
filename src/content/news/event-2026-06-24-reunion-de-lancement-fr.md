@@ -48,7 +48,7 @@ Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, 
 - **PC4 — Synchronic** — Hind Bril el-Haouzi
 - **PC5 — Genuine** — Thierry Duval et Arnaud Blouin
 
-**15h30 – 16h00 · Actions transverses**
+**15h30 – 15h50 · Actions transverses**
 Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegeleer, Benoit Combemale, Pascale Vicat-Blanc).
 
 - **AT1** — Animation et structuration de la communauté
@@ -56,6 +56,8 @@ Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegel
 - **AT3** — Plateforme open source, Artemis
 - **AT4** — Éthique et développement durable
 - **AT5** — Dissémination, exploitation, standardisation, formation
+
+**15h50 – 16h00 · Intervention de partenaires industriels**
 
 **16h00 – 16h30 · Présentation par l'ANR**
 Axelle Croise (ANR).
