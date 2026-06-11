@@ -64,7 +64,4 @@ Axelle Croise (ANR).
 
 **16h25 – 16h30 · Conclusions**
 
-**16h30 – 17h00 · Informations administratives et remarques de clôture**
-Informations administratives et conclusion (Benoit, Pascale et Guy).
-
-**17h00 – 18h00 · Cocktail de clôture et événement de réseautage**
+**16h30 – 17h30 · Cocktail de clôture et événement de réseautage**
