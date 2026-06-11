@@ -35,7 +35,7 @@ Cocktail d'accueil et déjeuner
 
 **13h30 – 14h00 · Ouverture du séminaire**
 Allocutions d'accueil et discours introductifs par les responsables de séance : Pascale Vicat-Blanc et Benoit Combemale (Inria, EDT).
-Intervenants invités : Ouiddad Labbani-I. (SSRI/DGRI), Daniela Fiorani (ANR), Sophie Proust (Inria, Agence).
+Intervenants invités : Anuchika Stanislaus ou Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Daniela Fiorani (ANR), Sophie Proust (Inria, Agence).
 
 **14h00 – 14h30 · Présentation du programme EDT**
 Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, feuille de route et jalons principaux (Benoit Combemale & Pascale Vicat-Blanc).
