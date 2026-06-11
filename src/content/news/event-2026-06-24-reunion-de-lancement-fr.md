@@ -40,7 +40,7 @@ Intervenants invités : Ouiddad Labbani-I. (SSRI/DGRI), Daniela Fiorani (ANR), S
 **14h00 – 14h30 · Présentation du programme EDT**
 Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, feuille de route et jalons principaux (Benoit Combemale & Pascale Vicat-Blanc).
 
-**14h30 – 15h30 · Projets scientifiques ciblés**
+**14h30 – 15h20 · Projets scientifiques ciblés**
 
 - **PC1 — Catalyst** — Julien Déantoni
 - **PC2 — DT Compose** — Jean-Marc Jezequel et Jannick Laval
@@ -48,7 +48,7 @@ Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, 
 - **PC4 — Synchronic** — Hind Bril el-Haouzi
 - **PC5 — Genuine** — Thierry Duval et Arnaud Blouin
 
-**15h30 – 15h50 · Actions transverses**
+**15h20 – 15h50 · Actions transverses**
 Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegeleer, Benoit Combemale, Pascale Vicat-Blanc).
 
 - **AT1** — Animation et structuration de la communauté
@@ -59,8 +59,10 @@ Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegel
 
 **15h50 – 16h00 · Intervention de partenaires industriels**
 
-**16h00 – 16h30 · Présentation par l'ANR**
+**16h00 – 16h25 · Informations administratives**
 Axelle Croise (ANR).
+
+**16h25 – 16h30 · Conclusions**
 
 **16h30 – 17h00 · Informations administratives et remarques de clôture**
 Informations administratives et conclusion (Benoit, Pascale et Guy).
