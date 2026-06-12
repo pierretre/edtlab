@@ -146,31 +146,37 @@ async function generateResearchStudiesStaticPaths(): Promise<any[]> {
 async function generateUseCasesStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("use-cases");
 
-    let pages: any[] = [];
-    allEntries.forEach(
-        (entry: CollectionEntry<"use-cases">) => {
-            const linkEN = getContentLink("en", "use-cases", entry.id, true);
-            pages.push({
-                params: {
-                    lang: "en",
-                    slug: linkEN,
-                },
-                props: {
-                    page: entry
-                },
-            });
+    // Group entries by their language-agnostic base slug (filename without the
+    // trailing "-en"/"-fr"). Like job offers, a use case provided in a single
+    // language is still served under both /en and /fr; when both languages
+    // exist, each locale serves its own file instead of generating a duplicate
+    // static path for the shared slug.
+    const byBaseSlug = new Map<string, CollectionEntry<"use-cases">[]>();
+    for (const entry of allEntries) {
+        const baseSlug = entry.id.replace(/-(en|fr)$/, "");
+        const group = byBaseSlug.get(baseSlug) ?? [];
+        group.push(entry);
+        byBaseSlug.set(baseSlug, group);
+    }
 
-            const linkFR = getContentLink("fr", "use-cases", entry.id, true);
+    const langs: ("en" | "fr")[] = ["en", "fr"];
+    const pages: any[] = [];
+    for (const group of byBaseSlug.values()) {
+        for (const lang of langs) {
+            // Prefer the file written in the target language, otherwise fall
+            // back to whichever language is available.
+            const entry = group.find((e) => e.data.lang === lang) ?? group[0];
             pages.push({
                 params: {
-                    lang: "fr",
-                    slug: linkFR,
+                    lang,
+                    slug: getContentLink(lang, "use-cases", entry.id, true),
                 },
                 props: {
-                    page: entry
+                    page: entry,
                 },
             });
-        });
+        }
+    }
     return pages;
 }
 
