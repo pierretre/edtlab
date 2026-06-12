@@ -4,9 +4,8 @@ import TableOfContent from "@components/TableOfContent.astro";
 import RelatedPublications from "@components/RelatedPublications.astro";
 import RelatedJobOffers from "@components/RelatedJobOffers.astro";
 import RelatedNews from "@components/RelatedNews.astro";
-import FilledPhDComponent from "@components/FilledPhDComponent.astro";
+import OngoingResearchStudies from "@components/OngoingResearchStudies.astro";
 import type { Project } from "@models/Project.model";
-import { getLangFromUrl } from "@i18n/utils";
 
 export interface Props {
     frontmatter: Project;
@@ -18,7 +17,6 @@ const { frontmatter, headings } = Astro.props as Props;
 
 const color = frontmatter?.color || "primary";
 const showToc = frontmatter?.toc;
-const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 
 // Extract project ID from title (e.g., "PC1: Model Hybridization" -> "PC1")
 const projectId =
@@ -54,14 +52,14 @@ const projectId =
                     <div class="mt-8 space-y-6">
                         <RelatedPublications project={projectId} />
 
+                        <!-- Ongoing Research Studies (PhDs and postdocs) -->
+                        <OngoingResearchStudies project={projectId} />
+
                         <!-- Related Job Offers -->
                         <RelatedJobOffers project={projectId} />
 
                         <!-- Related News & Events -->
                         <RelatedNews project={projectId} />
-
-                        <!-- Filled PhD Positions Section -->
-                        <FilledPhDComponent lang={lang} project={projectId} />
                     </div>
                 </article>
             </main>

@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import PageLayout from "./PageLayout.astro";
 import { linkHelpers, useTranslations } from "@i18n/utils";
 import { getContentLink } from "@i18n/links";
+import RelatedResearchStudies from "@components/RelatedResearchStudies.astro";
 
 export interface Props {
     frontmatter: any;
@@ -172,5 +173,9 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
     <!-- Body content (Résumé / Description fonctionnelle / Caractérisation MC1-MC21 / Enjeux scientifiques / References — all in markdown) -->
     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
         <slot />
+    </div>
+
+    <div class="mt-8">
+        <RelatedResearchStudies useCaseId={frontmatter.id} />
     </div>
 </PageLayout>

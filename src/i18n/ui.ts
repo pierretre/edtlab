@@ -146,9 +146,23 @@ export const ui = {
         'job-offers.position-filled-message': 'This position has been filled. Please check our other available opportunities.',
         'job-offers.filter.available': 'Available',
         'job-offers.filter.filled': 'Filled',
-        'job-offers.filled-phd-positions': 'Ongoing PhD Positions',
-        'job-offers.started': 'Started',
         'job-offers.funding-funded-by': 'is funded by',
+
+        // Research studies (ongoing PhDs / postdocs maintained by the researcher)
+        'research-studies.ongoing.title': 'Ongoing Research Studies',
+        'research-studies.supervised-by': 'supervised by',
+        'research-studies.start-date': 'Start date',
+        'research-studies.related-use-cases': 'Related use cases',
+        'research-studies.publications': 'Publications',
+        'research-studies.last-updated': 'Last updated',
+        'research-studies.type.phd': 'PhD',
+        'research-studies.type.postdoc': 'Postdoc',
+        'research-studies.status.ongoing': 'Ongoing',
+        'research-studies.status.completed': 'Completed',
+        'research-studies.status.paused': 'Paused',
+        'research-studies.status.withdrawn': 'Withdrawn',
+        'use-cases.related-research-studies': 'Related research studies',
+
         'job-offers.funding-edt': 'EDT (Engineering of Digital Twins) project',
         'job-offers.funding-france2030': 'France 2030',
 
@@ -470,9 +484,23 @@ export const ui = {
         'job-offers.position-filled-message': 'Ce poste a été pourvu. Veuillez consulter nos autres opportunités disponibles.',
         'job-offers.filter.available': 'Disponible',
         'job-offers.filter.filled': 'Pourvu',
-        'job-offers.filled-phd-positions': 'Doctorats en cours',
-        'job-offers.started': 'Commencé',
         'job-offers.funding-funded-by': 'est financé par',
+
+        // Travaux de recherche (doctorats / postdocs en cours, maintenus par le chercheur)
+        'research-studies.ongoing.title': 'Études de recherche en cours',
+        'research-studies.supervised-by': 'encadré par',
+        'research-studies.start-date': 'Démarrage',
+        'research-studies.related-use-cases': 'Cas d\'usage liés',
+        'research-studies.publications': 'Publications',
+        'research-studies.last-updated': 'Dernière mise à jour',
+        'research-studies.type.phd': 'Doctorat',
+        'research-studies.type.postdoc': 'Post-doctorat',
+        'research-studies.status.ongoing': 'En cours',
+        'research-studies.status.completed': 'Achevée',
+        'research-studies.status.paused': 'Suspendue',
+        'research-studies.status.withdrawn': 'Abandonnée',
+        'use-cases.related-research-studies': 'Travaux de recherche associés',
+
         'job-offers.funding-edt': 'projet EDT (Engineering of Digital Twins)',
         'job-offers.funding-france2030': 'France 2030',
 

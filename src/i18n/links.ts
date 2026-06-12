@@ -24,7 +24,7 @@ import { getEntry, type CollectionEntry } from 'astro:content';
 import { enToFrMapping, getCorrespondingPage } from './page-mapping';
 
 export type Lang = 'en' | 'fr';
-export type ContentType = 'news' | 'job-offers' | 'use-cases';
+export type ContentType = 'news' | 'job-offers' | 'use-cases' | 'research-studies';
 
 /**
  * Content type to route mappings
@@ -41,6 +41,10 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
     'use-cases': {
         en: 'use-cases',
         fr: 'cas-utilisation'
+    },
+    'research-studies': {
+        en: 'research-studies',
+        fr: 'travaux-de-recherche'
     }
 };
 
@@ -184,6 +188,11 @@ export const linkHelpers = {
      * Generate use case link
      */
     useCase: (lang: Lang, slug?: string) => getContentLink(lang, 'use-cases', slug),
+
+    /**
+     * Generate research study link
+     */
+    researchStudy: (lang: Lang, slug?: string) => getContentLink(lang, 'research-studies', slug),
 
     /**
      * Generate page links using page mapping

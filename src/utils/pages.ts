@@ -7,8 +7,9 @@ export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const newsEntries = await generateNewsPagesStaticPaths();
     const jobOfferEntries = await generateJobOffersStaticPaths();
     const useCaseEntries = await generateUseCasesStaticPaths();
+    const researchStudyEntries = await generateResearchStudiesStaticPaths();
 
-    return [...baseEntries, ...newsEntries, ...jobOfferEntries, ...useCaseEntries];
+    return [...baseEntries, ...newsEntries, ...jobOfferEntries, ...useCaseEntries, ...researchStudyEntries];
 }
 
 /**
@@ -90,6 +91,41 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
             });
 
             const linkFR = getContentLink("fr", "job-offers", entry.id, true);
+            pages.push({
+                params: {
+                    lang: "fr",
+                    slug: linkFR,
+                },
+                props: {
+                    page: entry
+                },
+            });
+        });
+    return pages;
+}
+
+/**
+ * Generate static paths for research-studies pages (ongoing PhD / postdoc)
+ * @returns Array of static path entries
+ */
+async function generateResearchStudiesStaticPaths(): Promise<any[]> {
+    const allEntries = await getCollection("research-studies");
+
+    let pages: any[] = [];
+    allEntries.forEach(
+        (entry: CollectionEntry<"research-studies">) => {
+            const linkEN = getContentLink("en", "research-studies", entry.id, true);
+            pages.push({
+                params: {
+                    lang: "en",
+                    slug: linkEN,
+                },
+                props: {
+                    page: entry
+                },
+            });
+
+            const linkFR = getContentLink("fr", "research-studies", entry.id, true);
             pages.push({
                 params: {
                     lang: "fr",
