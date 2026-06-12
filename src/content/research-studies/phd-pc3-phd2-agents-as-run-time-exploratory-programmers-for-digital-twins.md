@@ -5,8 +5,8 @@ researcher:
   name: Pierre Treton
   email: pierre.treton@inria.fr
 pc: PC3
-location: Inria Rennes, France
-host: Inria Rennes, diverSE
+location: Rennes, France
+host: Inria, diverSE
 supervisors:
   - name: Benoit Combemale
     org: Inria & University of Rennes
