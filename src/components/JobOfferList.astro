@@ -12,8 +12,11 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-// Get all job offers for the current language
-const allJobOffers = await getCollection("job-offers");
+// Get all job offers for the current language, excluding filled positions
+// (filled PhDs/postdocs are surfaced on the project (PC) pages via research-studies)
+const allJobOffers = (await getCollection("job-offers")).filter(
+    (job) => !job.data.filled,
+);
 
 // Sort job offers: EDT first, then external; within each group by date then title
 const isExtern = (job: (typeof allJobOffers)[number]) =>
@@ -34,9 +37,6 @@ const sortedJobOffers = allJobOffers.sort((a, b) => {
     return (a.data.title || "").localeCompare(b.data.title || "");
 });
 
-// Count available and filled job offers
-const availableJobOffers = sortedJobOffers.filter((job) => !job.data.filled);
-const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
 ---
 
 <div class="w-full mb-12">
@@ -53,18 +53,7 @@ const filledJobOffers = sortedJobOffers.filter((job) => job.data.filled);
                     {
                         t("job-offers.available-count").replace(
                             "{count}",
-                            availableJobOffers.length.toString(),
-                        )
-                    }
-                    {
-                        filledJobOffers.length > 0 && (
-                            <span class="ml-2 font-normal">
-                                •{" "}
-                                {t("job-offers.filled-count").replace(
-                                    "{count}",
-                                    filledJobOffers.length.toString(),
-                                )}
-                            </span>
+                            sortedJobOffers.length.toString(),
                         )
                     }
                 </p>

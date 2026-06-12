@@ -164,6 +164,42 @@ const menuCollection = defineCollection({
     })
 });
 
+// Research studies collection schema (ongoing PhDs and postdocs, maintained by the researcher)
+const researchStudiesCollection = defineCollection({
+    loader: glob({ base: "./src/content/research-studies", pattern: "**/*.{md,mdx}" }),
+    schema: z.object({
+        title: z.string(),
+        lang: z.enum(['en', 'fr']).optional(),
+        type: z.enum(['PhD', 'PostDoc']),
+        researcher: z.object({
+            name: z.string(),
+            email: z.email().optional(),
+        }),
+        pc: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']),
+        // Funding source: 'EDT' (funded by the EDT programme) or 'external' (e.g. CIFRE, other).
+        funding: z.enum(['EDT', 'external']).optional(),
+        location: z.string(),
+        host: z.string().optional(),
+        supervisors: z.array(z.object({
+            name: z.string(),
+            org: z.string().optional(),
+        })).min(1),
+        startDate: z.coerce.date(),
+        expectedEndDate: z.coerce.date().optional(),
+        status: z.enum(['planned', 'ongoing', 'completed', 'paused', 'withdrawn']).default('ongoing'),
+        description: z.string(),
+        useCases: z.array(z.object({
+            title: z.string(),
+            ref: reference("use-cases").optional(),
+            note: z.string().optional(),
+        })).optional().default([]),
+        publications: z.array(reference("publications")).optional().default([]),
+        tags: z.array(z.string()).optional().default([]),
+        lastUpdated: z.coerce.date().optional(),
+        originalJobOffer: reference("job-offers").optional(),
+    })
+});
+
 export const collections = {
     'pages': pagesCollection,
     'publications': publicationsCollection,
@@ -171,5 +207,6 @@ export const collections = {
     'job-offers': jobOffersCollection,
     'calendar': calendarCollection,
     'menu': menuCollection,
-    'use-cases': useCasesCollection
+    'use-cases': useCasesCollection,
+    'research-studies': researchStudiesCollection
 };
