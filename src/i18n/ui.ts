@@ -162,6 +162,9 @@ export const ui = {
         'research-studies.status.completed': 'Completed',
         'research-studies.status.paused': 'Paused',
         'research-studies.status.withdrawn': 'Withdrawn',
+        'research-studies.funding.label': 'Funding',
+        'research-studies.funding.EDT': 'EDT',
+        'research-studies.funding.external': 'External',
         'use-cases.related-research-studies': 'Related research studies',
 
         'job-offers.funding-edt': 'EDT (Engineering of Digital Twins) project',
@@ -501,6 +504,9 @@ export const ui = {
         'research-studies.status.completed': 'Achevée',
         'research-studies.status.paused': 'Suspendue',
         'research-studies.status.withdrawn': 'Abandonnée',
+        'research-studies.funding.label': 'Financement',
+        'research-studies.funding.EDT': 'EDT',
+        'research-studies.funding.external': 'Externe',
         'use-cases.related-research-studies': 'Travaux de recherche associés',
 
         'job-offers.funding-edt': 'projet EDT (Engineering of Digital Twins)',

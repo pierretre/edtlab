@@ -66,6 +66,16 @@ const publicationsResolved = await Promise.all(
             <span class="badge bg-blue-100 text-blue-800">
                 {t(`research-studies.status.${frontmatter.status}` as any)}
             </span>
+            {
+                frontmatter.funding && (
+                    <span
+                        class={`badge ${frontmatter.funding === "EDT" ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}
+                        title={t("research-studies.funding.label")}
+                    >
+                        {t(`research-studies.funding.${frontmatter.funding}` as any)}
+                    </span>
+                )
+            }
         </div>
 
         <h1 class="text-4xl font-bold text-gray-900">

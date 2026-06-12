@@ -176,6 +176,8 @@ const researchStudiesCollection = defineCollection({
             email: z.email().optional(),
         }),
         pc: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']),
+        // Funding source: 'EDT' (funded by the EDT programme) or 'external' (e.g. CIFRE, other).
+        funding: z.enum(['EDT', 'external']).optional(),
         location: z.string(),
         host: z.string().optional(),
         supervisors: z.array(z.object({

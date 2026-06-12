@@ -5,6 +5,7 @@ researcher:
   name: Mahussi Datongnon
   email: mahussi-jeff-fidele.datongnon@inria.fr
 pc: PC1
+funding: external
 location: Sophia Antipolis, France
 supervisors:
   - name: Benoit Combemale

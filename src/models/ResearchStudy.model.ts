@@ -4,6 +4,7 @@ export type Lang = 'en' | 'fr';
 export type ResearchStudyType = 'PhD' | 'PostDoc';
 export type ResearchStudyStatus = 'planned' | 'ongoing' | 'completed' | 'paused' | 'withdrawn';
 export type Pc = 'PC1' | 'PC2' | 'PC3' | 'PC4' | 'PC5';
+export type ResearchStudyFunding = 'EDT' | 'external';
 
 export interface Supervisor {
     name: string;
@@ -27,6 +28,7 @@ export interface ResearchStudy {
     type: ResearchStudyType;
     researcher: Researcher;
     pc: Pc;
+    funding?: ResearchStudyFunding;
     location: string;
     host?: string;
     supervisors: Supervisor[];

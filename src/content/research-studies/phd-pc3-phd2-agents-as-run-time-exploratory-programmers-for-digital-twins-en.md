@@ -5,6 +5,7 @@ researcher:
   name: Pierre Treton
   email: pierre.treton@inria.fr
 pc: PC3
+funding: EDT
 location: Rennes, France
 host: Inria, diverSE
 supervisors:
