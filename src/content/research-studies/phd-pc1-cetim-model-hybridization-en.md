@@ -18,9 +18,6 @@ supervisors:
 startDate: 2025-10-01
 status: ongoing
 description: CETIM-funded PhD on hybrid modeling for digital twins of mechanical equipment, combining model simulation and data science to enable predictive maintenance, optimization and decision support on the CETIM JNEM thermal-hydraulic loop.
-useCases:
-  - title: UC05 Boucle fluidique CETIM
-    ref: uc05-boucle-fluidique-cetim-r0-1-fr
 tags:
   - hybrid-modeling
   - adaptive-modeling
@@ -49,7 +46,7 @@ This objective focuses on the definition of well-defined concepts to specify com
 This objective aims at formalizing the required model interfaces and protocols to leverage on the two aforementioned objectives. The outcome is a unifying predictive platform, supporting both the orchestration of service requests on the different available predictive models, but also possibly the adaptation of them from others.
 
 ## Application domain
-The application domain of this work involves Mechanical equipments or systems made of several mechanical equipments. Several potential industrial applications in the field of Process equipment (fluid systems, specific components as valves,…), Mobile (off-road) working machines (as forklift or parts of it) and Production machines (welding robot, machining,…) are targeted. Therefore the developped pattern should be generic enough to encompass the aforementioned applications. Nevertheless, the existing thermal-hydraulic loop (JNEM) available at the Cetim facility may be used as a support for the involved developpment — see the dedicated use case [Boucle fluidique CETIM (UC05)](/fr/cas-utilisation/uc05-boucle-fluidique-cetim-r0-1).
+The application domain of this work involves Mechanical equipments or systems made of several mechanical equipments. Several potential industrial applications in the field of Process equipment (fluid systems, specific components as valves,…), Mobile (off-road) working machines (as forklift or parts of it) and Production machines (welding robot, machining,…) are targeted. Therefore the developped pattern should be generic enough to encompass the aforementioned applications. Nevertheless, the existing thermal-hydraulic loop (JNEM) available at the Cetim facility may be used as a support for the involved developpment.
 
 The JNEM loop is representative of an industrial process loop. It’s a closed, instrumented hydraulic loop. It is equipped with a pump, a heat exchanger, a tank, a regulation valve and three piping sections. Its function is simply to provide the flow, pressure and/or temperature requested by the operator. Several control devices have been added to generate some defects artificially in the future.
 
@@ -62,6 +59,9 @@ The main objectives are to:
 
 ## Environment
 This PhD is funded by the CETIM (the French Technical Center for Mechanical Industries) in the context of a collaboration with Inria (the national center for research in computer science).
+
+## Use cases
+[UC05 — CETIM Fluid loop](/fr/cas-utilisation/uc05-boucle-fluidique-cetim-r0-1)
 
 ## References
 

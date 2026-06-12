@@ -2,7 +2,6 @@
 import { getEntry } from "astro:content";
 import PageLayout from "./PageLayout.astro";
 import { linkHelpers, useTranslations } from "@i18n/utils";
-import { getContentLink } from "@i18n/links";
 import { formatDate } from "@utils/date";
 import type { ResearchStudy } from "@models/ResearchStudy.model";
 
@@ -13,14 +12,6 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const lang = Astro.currentLocale as "en" | "fr";
 const t = useTranslations(lang);
-
-// Resolve use case references so we can link to existing UCs
-const useCasesResolved = await Promise.all(
-    (frontmatter.useCases || []).map(async (uc) => {
-        const resolved = uc.ref ? await getEntry(uc.ref) : undefined;
-        return { ...uc, resolved };
-    }),
-);
 
 // Resolve publications
 const publicationsResolved = await Promise.all(
@@ -184,39 +175,6 @@ const publicationsResolved = await Promise.all(
                 </span>
             </div>
         </div>
-
-        {
-            useCasesResolved.length > 0 && (
-                <div>
-                    <h2 class="text-lg font-semibold text-gray-900 mb-2 mt-4">
-                        {t("research-studies.related-use-cases")}
-                    </h2>
-                    <ul class="list-disc pl-6 my-0 space-y-1">
-                        {useCasesResolved.map((uc) => (
-                            <li>
-                                {uc.resolved ? (
-                                    <a
-                                        href={`/${lang}${getContentLink(lang, "use-cases", uc.resolved.id, true)}`}
-                                        class="text-primary-600 hover:underline"
-                                    >
-                                        {uc.title}
-                                    </a>
-                                ) : (
-                                    <span class="text-gray-800">
-                                        {uc.title}
-                                    </span>
-                                )}
-                                {uc.note && (
-                                    <span class="text-gray-500 text-sm ml-2">
-                                        ({uc.note})
-                                    </span>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )
-        }
     </header>
 
     <article
