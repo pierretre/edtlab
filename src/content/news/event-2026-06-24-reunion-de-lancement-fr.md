@@ -51,11 +51,11 @@ Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, 
 **15h20 – 15h50 · Actions transverses**
 Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegeleer, Benoit Combemale, Pascale Vicat-Blanc).
 
-- **AT1** — Animation et structuration de la communauté
+- **AT1** — Animation
 - **AT2** — Cas d'usage et démonstrateurs
-- **AT3** — Plateforme open source, Artemis
+- **AT3** — Integration
 - **AT4** — Éthique et développement durable
-- **AT5** — Dissémination, exploitation, standardisation, formation
+- **AT5** — Dissémination et exploitation
 
 **15h50 – 16h00 · Intervention de partenaires industriels**
 
