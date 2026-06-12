@@ -49,10 +49,22 @@ Specifically, the thesis aims to design and evaluate run-time agents that:
 
 ## Research Challenges
 
-- **Feasibility and reliability**: assessing whether LLM-based agents can effectively reason over noisy, partially observable, and time-dependent run-time data, and safely intervene in a running system.
-- **Learning from run-time feedback**: studying how agents can exploit debugging information (live variable values, stack traces, etc.), execution traces, and sensor streams, and whether fine-tuning or adaptation strategies improve their performance in this setting.
-- **Exploratory programming by delegation**: characterizing exploratory programming tasks in digital twins and determining how they can be delegated to autonomous agents to systematically explore alternatives and trade-offs in collaboration with the digital twin users.
+*Each challenge is annotated with the research questions (RQ_X) of the [EDT roadmap](https://hal.science/hal-05559524v1) [Vicat-Blanc et al., 2026].*
 
-## News
+### Feasibility and reliability
 
-<!-- À compléter par le doctorant -->
+Assessing whether LLM-based agents can effectively reason over noisy, partially observable, and time-dependent run-time data, and safely intervene in a running system.
+
+**Associated RQs:** `RQ_D2` (data uncertainty, partial observations), `RQ_I2` (substitution of inductive models — validity envelope of the LLM), `RQ_F4` (precision and fidelity)
+
+### Learning from run-time feedback
+
+Studying how agents can exploit debugging information (live variable values, stack traces, etc.), execution traces, and sensor streams, and whether fine-tuning or adaptation strategies improve their performance in this setting.
+
+**Associated RQs:** `RQ_D3` (collection of heterogeneous, noisy, incomplete data), `RQ_I2` (FATES+ properties of inductive models), `RQ_F6` (continuous improvement of quality properties)
+
+### Exploratory programming by delegation
+
+Characterizing exploratory programming tasks in digital twins and determining how they can be delegated to autonomous agents to systematically explore alternatives and trade-offs in collaboration with the digital twin users.
+
+**Associated RQs:** `RQ_U2` (perception of the original system), `RQ_U3` (programming interactions with the DT), `RQ_U6` (collaboration within a DT)
