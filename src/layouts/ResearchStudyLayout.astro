@@ -11,7 +11,7 @@ export interface Props {
 }
 
 const { frontmatter } = Astro.props;
-const lang = (frontmatter.lang || (Astro.currentLocale as "en" | "fr") || "en") as "en" | "fr";
+const lang = Astro.currentLocale as "en" | "fr";
 const t = useTranslations(lang);
 
 // Resolve use case references so we can link to existing UCs
@@ -19,15 +19,13 @@ const useCasesResolved = await Promise.all(
     (frontmatter.useCases || []).map(async (uc) => {
         const resolved = uc.ref ? await getEntry(uc.ref) : undefined;
         return { ...uc, resolved };
-    })
+    }),
 );
 
 // Resolve publications
 const publicationsResolved = await Promise.all(
-    (frontmatter.publications || []).map((pub) => getEntry(pub))
+    (frontmatter.publications || []).map((pub) => getEntry(pub)),
 );
-
-const tAny = t as any;
 ---
 
 <PageLayout
@@ -35,16 +33,28 @@ const tAny = t as any;
     description={frontmatter.description || t("site.description")}
     lang={lang}
     showBreadcrumb={true}
-    showToc={true}
+    showToc={false}
 >
     <!-- Back to PC link -->
     <div class="mb-6">
         <a
-            href={linkHelpers.page(lang, `focused-projects/fp${frontmatter.pc.replace("PC", "")}`)}
+            href={linkHelpers.page(
+                lang,
+                `focused-projects/fp${frontmatter.pc.replace("PC", "")}`,
+            )}
             class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
         >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"></path>
             </svg>
             {frontmatter.pc}
         </a>
@@ -53,13 +63,17 @@ const tAny = t as any;
     <header class="mb-8 space-y-4">
         <div class="flex flex-wrap gap-2">
             <span class="badge bg-primary-100 text-primary-800">
-                {tAny(`research-studies.type.${frontmatter.type.toLowerCase()}`)}
+                {
+                    t(
+                        `research-studies.type.${frontmatter.type.toLowerCase()}` as any,
+                    )
+                }
             </span>
             <span class="badge bg-gray-100 text-gray-700">
                 {frontmatter.pc}
             </span>
             <span class="badge bg-blue-100 text-blue-800">
-                {tAny(`research-studies.status.${frontmatter.status}`)}
+                {t(`research-studies.status.${frontmatter.status}` as any)}
             </span>
         </div>
 
@@ -67,111 +81,191 @@ const tAny = t as any;
             {frontmatter.title}
         </h1>
 
-        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
+        <div
+            class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600"
+        >
             <!-- Researcher + supervisors -->
             <div class="flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    ></path>
                 </svg>
-                <span class="font-medium text-gray-800">{frontmatter.researcher.name}</span>
-                {frontmatter.researcher.email && (
-                    <a
-                        href={`mailto:${frontmatter.researcher.email}`}
-                        class="text-primary-600 hover:underline ml-1"
-                    >
-                        ({frontmatter.researcher.email})
-                    </a>
-                )}
-                {frontmatter.supervisors.length > 0 && (
-                    <span class="text-gray-500 ml-1">
-                        · {t("research-studies.supervised-by")}{" "}
-                        {frontmatter.supervisors.map((s) => s.name).join(", ")}
-                    </span>
-                )}
+                <span class="font-medium text-gray-800"
+                    >{frontmatter.researcher.name}</span
+                >
+                {
+                    frontmatter.researcher.email && (
+                        <a
+                            href={`mailto:${frontmatter.researcher.email}`}
+                            class="text-primary-600 hover:underline ml-1"
+                        >
+                            ({frontmatter.researcher.email})
+                        </a>
+                    )
+                }
+                {
+                    frontmatter.supervisors.length > 0 && (
+                        <span class="text-gray-500 ml-1">
+                            · {t("research-studies.supervised-by")}{" "}
+                            {frontmatter.supervisors
+                                .map((s) => s.name)
+                                .join(", ")}
+                        </span>
+                    )
+                }
             </div>
 
             <!-- Location (+ host) -->
             <div class="flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    ></path>
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 <span>{frontmatter.location}</span>
-                {frontmatter.host && (
-                    <span class="text-gray-500 ml-1">· {frontmatter.host}</span>
-                )}
+                {
+                    frontmatter.host && (
+                        <span class="text-gray-500 ml-1">
+                            · {frontmatter.host}
+                        </span>
+                    )
+                }
             </div>
 
             <!-- Start date -->
             <div class="flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <span>
-                    {t("research-studies.start-date")}: {formatDate(frontmatter.startDate, lang)}
-                    {frontmatter.expectedEndDate && (
-                        <span class="text-gray-500"> → {formatDate(frontmatter.expectedEndDate, lang)}</span>
-                    )}
+                    {t("research-studies.start-date")}: {
+                        formatDate(frontmatter.startDate, lang)
+                    }
+                    {
+                        frontmatter.expectedEndDate && (
+                            <span class="text-gray-500">
+                                {" "}
+                                →{" "}
+                                {formatDate(frontmatter.expectedEndDate, lang)}
+                            </span>
+                        )
+                    }
                 </span>
             </div>
         </div>
 
-        {useCasesResolved.length > 0 && (
-            <div>
-                <h2 class="text-lg font-semibold text-gray-900 mb-2 mt-4">
-                    {t("research-studies.related-use-cases")}
-                </h2>
-                <ul class="list-disc pl-6 my-0 space-y-1">
-                    {useCasesResolved.map((uc) => (
-                        <li>
-                            {uc.resolved ? (
-                                <a
-                                    href={`/${lang}${getContentLink(lang, "use-cases", uc.resolved.id, true)}`}
-                                    class="text-primary-600 hover:underline"
-                                >
-                                    {uc.title}
-                                </a>
-                            ) : (
-                                <span class="text-gray-800">{uc.title}</span>
-                            )}
-                            {uc.note && (
-                                <span class="text-gray-500 text-sm ml-2">({uc.note})</span>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        )}
+        {
+            useCasesResolved.length > 0 && (
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900 mb-2 mt-4">
+                        {t("research-studies.related-use-cases")}
+                    </h2>
+                    <ul class="list-disc pl-6 my-0 space-y-1">
+                        {useCasesResolved.map((uc) => (
+                            <li>
+                                {uc.resolved ? (
+                                    <a
+                                        href={`/${lang}${getContentLink(lang, "use-cases", uc.resolved.id, true)}`}
+                                        class="text-primary-600 hover:underline"
+                                    >
+                                        {uc.title}
+                                    </a>
+                                ) : (
+                                    <span class="text-gray-800">
+                                        {uc.title}
+                                    </span>
+                                )}
+                                {uc.note && (
+                                    <span class="text-gray-500 text-sm ml-2">
+                                        ({uc.note})
+                                    </span>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )
+        }
     </header>
 
-    <article class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
+    <article
+        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
+    >
         <slot />
 
-        {publicationsResolved.length > 0 && (
-            <section>
-                <h2>{t("research-studies.publications")}</h2>
-                <ul>
-                    {publicationsResolved.map((pub) => (
-                        <li>
-                            {pub.data.url ? (
-                                <a href={pub.data.url} target="_blank" rel="noopener noreferrer">
-                                    {pub.data.title}
-                                </a>
-                            ) : (
-                                pub.data.title
-                            )}
-                            {pub.data.venue && <span class="text-gray-500"> · {pub.data.venue}</span>}
-                            <span class="text-gray-500"> ({pub.data.year})</span>
-                        </li>
-                    ))}
-                </ul>
-            </section>
-        )}
+        {
+            publicationsResolved.length > 0 && (
+                <section>
+                    <h2>{t("research-studies.publications")}</h2>
+                    <ul>
+                        {publicationsResolved.map((pub) => (
+                            <li>
+                                {pub.data.url ? (
+                                    <a
+                                        href={pub.data.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {pub.data.title}
+                                    </a>
+                                ) : (
+                                    pub.data.title
+                                )}
+                                {pub.data.venue && (
+                                    <span class="text-gray-500">
+                                        {" "}
+                                        · {pub.data.venue}
+                                    </span>
+                                )}
+                                <span class="text-gray-500">
+                                    {" "}
+                                    ({pub.data.year})
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )
+        }
     </article>
 
-    {frontmatter.lastUpdated && (
-        <p class="text-sm text-gray-500 mt-8">
-            {t("research-studies.last-updated")}: {formatDate(frontmatter.lastUpdated, lang)}
-        </p>
-    )}
+    {
+        frontmatter.lastUpdated && (
+            <p class="text-sm text-gray-500 mt-8">
+                {t("research-studies.last-updated")}:{" "}
+                {formatDate(frontmatter.lastUpdated, lang)}
+            </p>
+        )
+    }
 </PageLayout>
