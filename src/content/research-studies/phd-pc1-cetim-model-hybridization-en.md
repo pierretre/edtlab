@@ -62,7 +62,7 @@ The main objectives are to:
 This PhD is funded by the CETIM (the French Technical Center for Mechanical Industries) in the context of a collaboration with Inria (the national center for research in computer science).
 
 ## Use cases
-[UC05 — CETIM Fluid loop](/fr/cas-utilisation/uc05-boucle-fluidique-cetim-r0-1)
+[UC05 — CETIM Fluid loop](/en/use-cases/uc05-boucle-fluidique-cetim-r0-1)
 
 ## References
 

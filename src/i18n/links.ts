@@ -40,7 +40,7 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
     },
     'use-cases': {
         en: 'use-cases',
-        fr: 'cas-utilisation'
+        fr: 'cas-d-utilisation'
     },
     'research-studies': {
         en: 'research-studies',

@@ -15,10 +15,14 @@ const t = useTranslations(lang);
 // Collect all versions of this UC (same id + same language) for the version selector.
 // Listing UI already shows only the latest version per id; this selector lets the
 // reader switch to older versions from the detail page.
+// Use the content's own language (frontmatter.lang) rather than the URL
+// language: a single-language use case is served under both locales, so the
+// version list must follow the file actually shown, not the requested locale.
+const contentLang = frontmatter.lang || lang;
 let allVersions: any[] = [];
 if (frontmatter.id) {
     const allUcs = await getCollection("use-cases", (item: any) =>
-        item.data.id === frontmatter.id && item.data.lang === lang
+        item.data.id === frontmatter.id && item.data.lang === contentLang
     );
     allVersions = allUcs.sort((a: any, b: any) =>
         (b.data.version || "").localeCompare(a.data.version || "")
