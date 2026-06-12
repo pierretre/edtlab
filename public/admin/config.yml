@@ -205,7 +205,7 @@ collections:
           - { label: "Organization", name: "org", widget: "string", required: false }
       - { label: "Start Date", name: "startDate", widget: "datetime", date_format: "YYYY-MM-DD", required: true }
       - { label: "Expected End Date", name: "expectedEndDate", widget: "datetime", date_format: "YYYY-MM-DD", required: false }
-      - { label: "Status", name: "status", widget: "select", options: ["ongoing", "completed", "paused", "withdrawn"], required: true, default: "ongoing" }
+      - { label: "Status", name: "status", widget: "select", options: ["planned", "ongoing", "completed", "paused", "withdrawn"], required: true, default: "ongoing" }
       - { label: "Summary", name: "description", widget: "text", required: true }
       - label: "Related Use Cases"
         name: "useCases"

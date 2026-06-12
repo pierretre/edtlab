@@ -2,7 +2,7 @@ import type { CollectionEntry } from "astro:content";
 
 export type Lang = 'en' | 'fr';
 export type ResearchStudyType = 'PhD' | 'PostDoc';
-export type ResearchStudyStatus = 'ongoing' | 'completed' | 'paused' | 'withdrawn';
+export type ResearchStudyStatus = 'planned' | 'ongoing' | 'completed' | 'paused' | 'withdrawn';
 export type Pc = 'PC1' | 'PC2' | 'PC3' | 'PC4' | 'PC5';
 
 export interface Supervisor {

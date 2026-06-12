@@ -184,7 +184,7 @@ const researchStudiesCollection = defineCollection({
         })).min(1),
         startDate: z.coerce.date(),
         expectedEndDate: z.coerce.date().optional(),
-        status: z.enum(['ongoing', 'completed', 'paused', 'withdrawn']).default('ongoing'),
+        status: z.enum(['planned', 'ongoing', 'completed', 'paused', 'withdrawn']).default('ongoing'),
         description: z.string(),
         useCases: z.array(z.object({
             title: z.string(),

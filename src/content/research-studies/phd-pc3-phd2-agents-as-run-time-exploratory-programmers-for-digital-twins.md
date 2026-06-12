@@ -14,7 +14,7 @@ supervisors:
   - name: Thomas Degueule
     org: CNRS, LaBRI
     role: co-supervisor
-startDate: 2026-09-01
+startDate: 2026-10-01
 status: ongoing
 description: This PhD investigates how LLM-enabled autonomous agents can act as
   run-time exploratory programmers for digital twins, enabling live what-if
@@ -49,7 +49,7 @@ Specifically, the thesis aims to design and evaluate run-time agents that:
 
 ## Research Challenges
 
-*Each challenge is annotated with the research questions (RQ_X) of the [EDT roadmap](https://hal.science/hal-05559524v1) [Vicat-Blanc et al., 2026].*
+*Each challenge is annotated with the research questions (RQ_X) of the [EDT research roadmap](https://inria.hal.science/hal-05223776) [Combemale, Vicat-Blanc et al., EDTconf 2025].*
 
 ### Feasibility and reliability
 
