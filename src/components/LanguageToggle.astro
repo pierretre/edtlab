@@ -27,25 +27,31 @@ const otherLocales = (Object.keys(languages) as Array<"en" | "fr">).filter(
 );
 ---
 
-<span
-    class="relative group flex items-center gap-1 py-1 px-1 text-sm font-medium mb-0.75 text-gray-900 hover:text-primary-500 transition-colors duration-150"
->
-    <span>{lang.toUpperCase()}</span>
-    <svg
-        class="w-2.5 h-2.5 mt-1 transition-transform group-hover:rotate-180"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 10 6"
+<div class="relative group">
+    <button
+        type="button"
+        class="flex items-center gap-1 py-1 px-1 text-sm font-medium mb-0.75 text-gray-900 hover:text-primary-500 transition-colors duration-150"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-label={t("language.current")}
+        data-language-toggle
     >
-        <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 4 4 4-4"></path>
-    </svg>
-
+        <span>{lang.toUpperCase()}</span>
+        <svg
+            class="w-2.5 h-2.5 mt-1 transition-transform group-hover:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+        >
+            <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"></path>
+        </svg>
+    </button>
     <div
         class="absolute left-0 top-full hidden group-hover:block group-focus-within:block z-50 bg-white shadow border border-gray-200 min-w-12"
         role="menu"
@@ -82,4 +88,4 @@ const otherLocales = (Object.keys(languages) as Array<"en" | "fr">).filter(
             }
         </ul>
     </div>
-</span>
+</div>
