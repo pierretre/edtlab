@@ -47,6 +47,7 @@ const newsCollection = defineCollection({
         location: z.string().optional(),
         url: z.url().optional(),
         icsPath: z.string().optional(),
+        timeLabel: z.string().optional(),
         tags: z.array(z.string()).optional().default([]),
         redirectTo: reference("news").optional(),
     })

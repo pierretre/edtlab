@@ -11,6 +11,7 @@ tags:
   - at1
   - workshop
 icsPath: /calendar/scientific-workshop-2026-07-06.ics
+timeLabel: "July 6-8, 2026"
 ---
 # Workshop Description and Objectives
 

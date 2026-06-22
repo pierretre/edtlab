@@ -11,5 +11,6 @@ tags:
   - at1
   - workshop
 icsPath: /calendar/scientific-workshop-2026-07-06.ics
+timeLabel: "6-8 juil. 2026"
 redirectTo: event-2026-07-06-scientific-workshop-en
 ---
