@@ -7,6 +7,7 @@ location: Lyon, ENS
 description: "Premier séminaire d'échange entre fournisseurs de UC (Use Cases)
   et les scientifiques impliqués dans EDT. "
 photo: /media/uploads/97fd8364-7fc2-49dc-9f79-783e56cff2f9_1_105_c.jpeg
+timeLabel: "6-7 janv. 2026"
 tags:
   - at2
 ---

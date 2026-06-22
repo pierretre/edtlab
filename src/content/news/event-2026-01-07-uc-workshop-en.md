@@ -8,6 +8,7 @@ description: The first seminar bringing together EDT Use Case providers and
   scientific partners was held on 6–7 January 2026 at ENS Lyon, with around
   thirty Use Cases presented to nearly one hundred participants.
 photo: /media/uploads/97fd8364-7fc2-49dc-9f79-783e56cff2f9_1_105_c.jpeg
+timeLabel: "Jan 6-7, 2026"
 tags:
   - at2
 ---
