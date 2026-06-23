@@ -27,11 +27,7 @@ The Engineering Digital Twins (EDT) program, funded by the French National Resea
 This day will bring together all the institutional, scientific and industrial partners of the program around presentations of its objectives and research areas, and will be a first key opportunity for exchanges between the teams involved in this national initiative.
 
 # Practical information
-**Join Zoom Meeting:** [https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1](https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1)
-- Meeting ID: 813 2557 4043
-- Passcode: 099671
-
-Contact: ops@edtlab.fr
+By invitation only. If you are interested, contact the organisers: ops@edtlab.fr
 
 # Program
 

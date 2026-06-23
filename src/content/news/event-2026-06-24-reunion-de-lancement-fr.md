@@ -27,11 +27,7 @@ Le programme Engineering Digital Twins (EDT), financé par l'Agence Nationale de
 Cette journée réunira l'ensemble des partenaires institutionnels, scientifiques et industriels du programme autour de présentations des objectifs et des axes de recherche, et constituera une première occasion privilégiée d'échanges entre les équipes engagées dans cette initiative nationale.
 
 # Informations pratiques
-**Rejoindre la réunion Zoom :** [https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1](https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1)
-- ID de réunion : 813 2557 4043
-- Code : 099671
-
-Contact : ops@edtlab.fr
+Sur invitation uniquement. Si vous êtes intéressé(e), contactez les organisateurs : ops@edtlab.fr
 
 # Programme
 
