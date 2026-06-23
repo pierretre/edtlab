@@ -33,7 +33,6 @@ tags:
   - jumeau-numerique
   - simulation
 publishedDate: 2026-04-15T00:00:00.000Z
-lastUpdated: 2026-04-15T00:00:00.000Z
 ---
 ## Résumé
 <!-- Décrivez en 3-5 phrases le cas d'usage : quel système physique, quel jumeau numérique, quels objectifs. -->

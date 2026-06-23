@@ -128,6 +128,15 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
                 </span>
             )}
 
+            {frontmatter.publishedDate && (
+                <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                    <span class="text-gray-500">{lang === 'fr' ? 'Publié le :' : 'Published:'}</span>
+                    <span class="text-gray-700">
+                        {new Date(frontmatter.publishedDate).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </span>
+                </span>
+            )}
+
             {/* Version selector — visible only when more than one version exists; single-version case shows a small badge */}
             {allVersions.length > 1 ? (
                 <span class="inline-flex items-center gap-1 whitespace-nowrap">
