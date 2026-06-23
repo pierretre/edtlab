@@ -5,6 +5,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
 import tailwindcss from '@tailwindcss/vite';
+import emailObfuscator from './src/remark/email-obfuscator.js';
 
 // https://astro.build/config
 export default defineConfig({
@@ -59,6 +60,7 @@ export default defineConfig({
   // Markdown configuration (for .md files)
   markdown: {
     remarkPlugins: [
+      emailObfuscator
     ],
     rehypePlugins: [
     ]
@@ -69,6 +71,7 @@ export default defineConfig({
       // Optimize MDX processing
       optimize: true,
       remarkPlugins: [
+        emailObfuscator
       ],
       rehypePlugins: [
       ]

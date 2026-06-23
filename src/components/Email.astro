@@ -1,0 +1,14 @@
+---
+interface Props {
+  user: string;
+  domain: string;
+  lang?: string;
+}
+const { user, domain, lang = 'en' } = Astro.props;
+const label = lang === 'fr' ? "Afficher l'e-mail" : 'Show email';
+---
+<span class="email-reveal"><button
+  data-user={user}
+  data-domain={domain}
+  onclick="var d=this.dataset,e=d.user+'@'+d.domain,a=document.createElement('a');a.href='mailto:'+e;a.textContent=e;this.parentNode.replaceWith(a);"
+>{label}</button></span>

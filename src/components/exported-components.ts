@@ -1,3 +1,4 @@
+import Email from "./Email.astro";
 import OutlinedCard from "./OutlinedCard.astro";
 import OptimizedFigure from "./OptimizedFigure.astro";
 import ContactForm from '@components/ContactForm.astro';
@@ -12,6 +13,7 @@ import EventTimeline from '@components/EventTimeline.astro';
 import UseCaseList from '@components/UseCaseList.astro';
 
 const mdxComponents = {
+    Email,
     OutlinedCard,
     OptimizedFigure,
     ContactForm,
