@@ -32,8 +32,8 @@ By invitation only. If you are interested, contact the organisers: ops@edtlab.fr
 # Program
 
 **1:30 PM – 2:00 PM · Seminar opening**
-Welcome address and introductory speeches: Pascale Vicat-Blanc and Benoit Combemale (Inria).
-Anuchika Stanislaus or Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
+Welcome address and introductory speeches: Pascale Vicat-Blanc and Benoit Combemale (Inria), 
+Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
 
 **2:00 PM – 2:30 PM · Presentation of the EDT program**
 Vision, program overview, main objectives, expected outcomes, roadmap and key milestones (Benoit Combemale & Pascale Vicat-Blanc).

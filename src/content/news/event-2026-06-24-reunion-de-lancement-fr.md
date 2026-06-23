@@ -32,8 +32,8 @@ Sur invitation uniquement. Si vous êtes intéressé(e), contactez les organisat
 # Programme
 
 **13h30 – 14h00 · Ouverture du séminaire**
-Allocutions d'accueil et discours introductifs : Pascale Vicat-Blanc et Benoit Combemale (Inria).
-Anuchika Stanislaus ou Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
+Allocutions d'accueil et discours introductifs : Pascale Vicat-Blanc et Benoit Combemale (Inria), 
+Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
 
 **14h00 – 14h30 · Présentation du programme EDT**
 Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, feuille de route et jalons principaux (Benoit Combemale & Pascale Vicat-Blanc).
