@@ -38,7 +38,6 @@ tags:
   - jumeau-numerique
   - simulation
 publishedDate: 2026-06-04T00:00:00.000Z
-lastUpdated: 2026-06-04T00:00:00.000Z
 ---
 
 ## Résumé
