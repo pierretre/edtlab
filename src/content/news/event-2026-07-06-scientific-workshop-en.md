@@ -45,7 +45,7 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 * **17h00 – 17h30 :** Plenary session (reporting)
 
-* **19h30 – 22h30 :** Dinner (info provided ASAP)
+* **19h30 – 22h30 :** Dinner at ([Piccadilly](https://www.le-piccadilly.fr/), [here](https://maps.app.goo.gl/kUN6pDGai13tekBz5))
 
 ## July 7th
 
@@ -67,7 +67,7 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 * **17h00 – 17h30 :** Plenary session (reporting)
 
-* **19h30 – 22h30 :** Dinner (info provided ASAP)
+* **19h30 – 22h30 :** Dinner at ([chez Monsieur Arthur](https://www.monsieurarthur.bzh/), [here](https://maps.app.goo.gl/deUXMNV72xzxa9Qb7))
 
 ## July 8th
 
