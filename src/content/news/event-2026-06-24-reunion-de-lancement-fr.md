@@ -3,7 +3,7 @@ title: Réunion de lancement
 lang: fr
 date: 2026-06-24
 newsType: event
-location: Inria, Paris
+location: Videoconference
 description: Réunion officielle de lancement du programme EDT le 24 juin 2026 —
   accueil, présentation du programme, des projets ciblés et des actions
   transverses, et cocktail de clôture.
@@ -12,6 +12,11 @@ tags:
   - at1
 icsPath: /calendar/edt-kick-off-meeting-2026-06-24.ics
 ---
+
+<div class="bg-amber-50 border border-amber-400 text-amber-900 rounded-lg p-4 my-4">
+<strong>En raison de la canicule, cet événement se tient désormais entièrement en distanciel.</strong>
+</div>
+
 
 Inria, dans sa mission d'Agence de programmes dans le Numérique, Algorithmes, Logiciels et Usages a le plaisir de lancer le programme de recherche EDT, Engineering Digital Twin ou la Fabrique des Jumeaux Numériques.
 
@@ -22,20 +27,17 @@ Le programme Engineering Digital Twins (EDT), financé par l'Agence Nationale de
 Cette journée réunira l'ensemble des partenaires institutionnels, scientifiques et industriels du programme autour de présentations des objectifs et des axes de recherche, et constituera une première occasion privilégiée d'échanges entre les équipes engagées dans cette initiative nationale.
 
 # Informations pratiques
-En présentiel et sur invitation uniquement, à Inria, Amphithéâtre Jacques-Louis Lions, 48 rue Barrault 75013 Paris. 
-
-Prévoir une pièce d'identité. 
+**Rejoindre la réunion Zoom :** [https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1](https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1)
+- ID de réunion : 813 2557 4043
+- Code : 099671
 
 Contact : ops@edtlab.fr
 
 # Programme
 
-**12h00 – 13h30 · Buffet d'accueil**
-Cocktail d'accueil et déjeuner
-
 **13h30 – 14h00 · Ouverture du séminaire**
-Allocutions d'accueil et discours introductifs par les responsables de séance : Pascale Vicat-Blanc et Benoit Combemale (Inria, EDT).
-Intervenants invités : Anuchika Stanislaus ou Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Daniela Fiorani (ANR), Sophie Proust (Inria, Agence).
+Allocutions d'accueil et discours introductifs : Pascale Vicat-Blanc et Benoit Combemale (Inria).
+Anuchika Stanislaus ou Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
 
 **14h00 – 14h30 · Présentation du programme EDT**
 Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, feuille de route et jalons principaux (Benoit Combemale & Pascale Vicat-Blanc).
@@ -63,5 +65,3 @@ Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegel
 Axelle Croise (ANR).
 
 **16h25 – 16h30 · Conclusions**
-
-**16h30 – 17h30 · Cocktail de clôture et événement de réseautage**

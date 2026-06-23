@@ -3,7 +3,7 @@ title: Kick Off Meeting
 lang: en
 date: 2026-06-24
 newsType: event
-location: Inria, Paris
+location: Visioconference
 description: Official EDT program kick-off meeting on 24 June 2026 — welcome,
   program overview, presentations of the focused projects and cross-cutting
   actions, and closing networking event.
@@ -12,6 +12,11 @@ icsPath: /calendar/edt-kick-off-meeting-2026-06-24.ics
 tags:
   - at1
 ---
+
+<div class="bg-amber-50 border border-amber-400 text-amber-900 rounded-lg p-4 my-4">
+<strong>Due to the heatwave, this event is now held entirely online.</strong>
+</div>
+
 
 As part of its mission as a Programs Agency for Digital Technology, Algorithms, Software and Uses, Inria is pleased to launch the EDT research program - Engineering Digital Twins.
 
@@ -22,20 +27,17 @@ The Engineering Digital Twins (EDT) program, funded by the French National Resea
 This day will bring together all the institutional, scientific and industrial partners of the program around presentations of its objectives and research areas, and will be a first key opportunity for exchanges between the teams involved in this national initiative.
 
 # Practical information
-In person and by invitation only, at Inria, Amphithéâtre Jacques-Louis Lions, 48 rue Barrault, 75013 Paris.
-
-Please bring a valid ID.
+**Join Zoom Meeting:** [https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1](https://us06web.zoom.us/j/81325574043?pwd=ga6RIs6VxTbEOHcPU62qzEoUVXaCEb.1)
+- Meeting ID: 813 2557 4043
+- Passcode: 099671
 
 Contact: ops@edtlab.fr
 
 # Program
 
-**12:00 PM – 1:30 PM · Welcome buffet**
-Welcome cocktail and lunch
-
 **1:30 PM – 2:00 PM · Seminar opening**
-Welcome address and introductory speeches by the session chairs: Pascale Vicat-Blanc and Benoit Combemale (Inria, EDT).
-Invited speakers: Anuchika Stanislaus or Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Daniela Fiorani (ANR), Sophie Proust (Inria, Agency).
+Welcome address and introductory speeches: Pascale Vicat-Blanc and Benoit Combemale (Inria).
+Anuchika Stanislaus or Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
 
 **2:00 PM – 2:30 PM · Presentation of the EDT program**
 Vision, program overview, main objectives, expected outcomes, roadmap and key milestones (Benoit Combemale & Pascale Vicat-Blanc).
@@ -53,7 +55,7 @@ Main objectives, planned activities and expected outcomes (Guy De Spiegeleer, Be
 
 - **AT1** — Animation
 - **AT2** — Use cases and demonstrators
-- **AT3** — OIntegration
+- **AT3** — Integration
 - **AT4** — Ethics and sustainability
 - **AT5** — Dissemination and exploitation
 
@@ -63,5 +65,3 @@ Main objectives, planned activities and expected outcomes (Guy De Spiegeleer, Be
 Axelle Croise (ANR).
 
 **4:25 PM – 4:30 PM · Closing remarks**
-
-**4:30 PM – 5:30 PM · Closing cocktail and networking event**
