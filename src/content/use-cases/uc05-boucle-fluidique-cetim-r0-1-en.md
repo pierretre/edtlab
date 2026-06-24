@@ -26,7 +26,7 @@ maturity: operational
 # originType : natural | anthropic | engineered | infrastructure | process
 originType: engineered
 # version : version identifier (e.g. r0.1, r1.0, ...). The latest is shown by default in the list.
-version: r0.1
+version: r1.0
 # draft or published
 status: published
 tags:

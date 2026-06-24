@@ -26,7 +26,7 @@ maturity: operational
 # originType : natural | anthropic | engineered | infrastructure | process
 originType: engineered
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
-version: r0.1
+version: r1.0
 # draft or published
 status: published
 # license: CC-BY-4.0
