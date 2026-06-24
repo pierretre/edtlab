@@ -66,7 +66,7 @@ Lorsque des écarts significatifs sont détectés, les modèles data-driven inte
 - **Un opérateur de supervision** - surveille les variables du système, consulte les indicateurs fournis par le jumeau numérique et prend des décisions opérationnelles (gestion du refroidissement). Il utilise les fonctionnalités d’aide à la détection de cavitation afin d’évaluer si un futur point de fonctionnement est susceptible de générer de la cavitation au niveau de la pompe, de la vanne d’aspiration ou de la vanne de régulation.
 - **Un ingénieur développement (modélisation / simulation)** - conçoit, calibre et maintient le modèle physique thermo-hydraulique ainsi que son intégration dans le jumeau numérique.  
 - **Un chercheur / expert R&D** - utilise le jumeau numérique comme plateforme expérimentale pour tester des stratégies d’hybridation, d’adaptation des modèles et d’amélioration de la fidélité. Il développe, entraîne et valide les modèles data-driven (localisation et estimation de défauts) utilisés pour le recalibrage du modèle.
-- **Un système automatisé (via PLC)** — exécute les actions de contrôle (ajustement de la pompe, ouverture de vanne, activation du refroidissement) sur demande de l'opérateur.
+- **Un système automatisé (via PLC)** - exécute les actions de contrôle (ajustement de la pompe, ouverture de vanne, activation du refroidissement) sur demande de l'opérateur.
 
 ### Besoins fonctionnels
 <!-- Typologies disponibles : Décrire | Diagnostiquer | Prédire | Optimiser | Contrôler | Sécuriser | Interagir. Combinaisons possibles avec '+' (ex : Décrire + Sécuriser).
@@ -112,9 +112,9 @@ Les agents impliqués incluent :
 
 Les composants d’action du système physique sont les **actionneurs permettant de modifier le comportement de la boucle fluidique** :
 
-- **Pompe (contrôle de vitesse)** — ajuste le débit du fluide dans la boucle.
-- **Vanne de régulation** — contrôle l’ouverture pour moduler la pression et le débit.
-- **Système de refroidissement (vanne on/off)** — permet de réguler la température du fluide en activant ou désactivant le refroidissement.
+- **Pompe (contrôle de vitesse)** - ajuste le débit du fluide dans la boucle.
+- **Vanne de régulation** - contrôle l’ouverture pour moduler la pression et le débit.
+- **Système de refroidissement (vanne on/off)** - permet de réguler la température du fluide en activant ou désactivant le refroidissement.
 
 Ces actionneurs sont pilotés via le **PLC Beckhoff**, qui exécute les consignes reçues du système de contrôle.
 
@@ -330,22 +330,22 @@ services du jumeau numérique --> consignes du superviseur --> communication ver
 
 Approche incrémentale et progressive :
 
-- **Étape 1 — Modélisation physique initiale**  
+- **Étape 1 - Modélisation physique initiale**  
   Développement d’un modèle hydraulique 1D et thermo-hydraulique 1D du système (simulation) avec une calibration initiale basée sur des données expérimentales.
 
-- **Étape 2 — Connexion au système réel**  
+- **Étape 2 - Connexion au système réel**  
   Intégration des capteurs et du PLC permettant l’acquisition des données et la synchronisation avec le modèle (mode observation + simulation).
 
-- **Étape 3 — Déploiement des services de base**  
+- **Étape 3 - Déploiement des services de base**  
   Mise en place des premières fonctionnalités du jumeau numérique : simulation, visualisation, détection de cavitation, capteur virtuel.
 
-- **Étape 4 — Introduction de l’hybridation**  
+- **Étape 4 - Introduction de l’hybridation**  
   Ajout de modèles data-driven entraînés sur des données simulées et réelles pour :
   - détecter les divergences,
   - identifier les paramètres responsables,
   - estimer leurs corrections.
 
-- **Étape 5 — Boucle d’adaptation continue**  
+- **Étape 5 - Boucle d’adaptation continue**  
   Intégration des modèles dans une boucle fermée permettant l’ajustement des paramètres du modèle physique à l’exécution.
 
 **Évolution prévue :**
@@ -484,9 +484,9 @@ Le jumeau numérique de la boucle fluidique met en évidence le besoin de **comb
 ## Références
 <!-- Liste de publications, sites web. Format markdown standard : - [title](url) - venue. -->
 
-- [Poster — EDT · UC05 · Boucle thermo-hydraulique JNEM](/media/use-cases/uc05-poster-jnem-thermal-hydraulic-loop-cetim.pdf) — Yoann Jus, CETIM
+- [Poster - EDT · UC05 · Boucle thermo-hydraulique JNEM](/media/use-cases/uc05-poster-jnem-thermal-hydraulic-loop-cetim.pdf) - Yoann Jus, CETIM
 
 
 ## Thèses en cours
 
-- [Model Hybridization in Digital Twins for Mechanical Engineering](/fr/travaux-de-recherche/phd-pc1-cetim-model-hybridization) — Mahussi Datongnon, Inria (PC1)
+- [Model Hybridization in Digital Twins for Mechanical Engineering](/fr/travaux-de-recherche/phd-pc1-cetim-model-hybridization) - Mahussi Datongnon, Inria (PC1)
