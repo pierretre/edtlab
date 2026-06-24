@@ -163,9 +163,11 @@ async function generateUseCasesStaticPaths(): Promise<any[]> {
     const pages: any[] = [];
     for (const group of byBaseSlug.values()) {
         for (const lang of langs) {
-            // Prefer the file written in the target language, otherwise fall
-            // back to whichever language is available.
-            const entry = group.find((e) => e.data.lang === lang) ?? group[0];
+            // Prefer published entry in target language, then any published
+            // entry as fallback. Draft-only groups produce no path for that lang.
+            const published = group.filter((e) => e.data.status !== "draft");
+            const entry = published.find((e) => e.data.lang === lang) ?? published[0];
+            if (!entry) continue;
             pages.push({
                 params: {
                     lang,
