@@ -48,9 +48,9 @@ The prototype was developed to:
 
 ### Users
 
-- **A developer** — implements and tests temperature alert rules.
-- **A researcher** — uses the twin as a test bench for aggregation and detection methods.
-- **A supervision operator** — monitors temperature during operations and acknowledges alerts.
+- **A developer** - implements and tests temperature alert rules.
+- **A researcher** - uses the twin as a test bench for aggregation and detection methods.
+- **A supervision operator** - monitors temperature during operations and acknowledges alerts.
 
 ### Functional Requirements
 
@@ -64,95 +64,95 @@ The prototype was developed to:
 
 ## Digital Twin Characterisation
 
-*Grid based on the <a href="https://journals.sagepub.com/doi/10.1177/00375497241261406" target="_blank" rel="noopener noreferrer">unified framework by Gil et al. (2024)</a> — 21 characteristics.*
+*Grid based on the <a href="https://journals.sagepub.com/doi/10.1177/00375497241261406" target="_blank" rel="noopener noreferrer">unified framework by Gil et al. (2024)</a> - 21 characteristics.*
 
-### MC1 — System under study
+### MC1 - System under study
 
 Temperature measurement device consisting of a USB sensor connected to a PC, a software interface displaying the measurement every 5 seconds, and an alert system triggered when the temperature exceeds a configured maximum threshold.
 
-### MC2 — Physical Acting Components
+### MC2 - Physical Acting Components
 
-No physical actuator in the current version — the system is purely observational. The alert is an application signal (notification, log, screen).
+No physical actuator in the current version - the system is purely observational. The alert is an application signal (notification, log, screen).
 
-### MC3 — Physical sensing components
+### MC3 - Physical sensing components
 
 - USB temperature sensor (PT100 probe, DS18B20, or thermocouple + USB converter)
 - Host PC providing power and acquisition via the USB port
 
-### MC4 — Physical-to-Virtual Interaction
+### MC4 - Physical-to-Virtual Interaction
 
 Periodic temperature measurement acquisition every 5 seconds via the sensor's USB driver. Transmission of the raw value to the display interface and the threshold monitoring module.
 
-### MC5 — Virtual-to-Physical Interaction
+### MC5 - Virtual-to-Physical Interaction
 
 No data transmitted.
 
-### MC6 — Digital Twin Services
+### MC6 - Digital Twin Services
 
 - **Real-time monitoring**: display of temperature measurement refreshed every 5 seconds
 - **Threshold exceedance detection**: alert when temperature crosses the configured maximum threshold
 - **Simulation**: the twin enables sensor simulation (virtual measurement generation) to test interface and alert behaviour without hardware
 - **Scenario replay**: ability to force temperature profiles (ramp, peak, oscillation) to validate alert rules
 
-### MC7 — Twinning Time-scale
+### MC7 - Twinning Time-scale
 
 Real-time at a fixed 5-second step. The digital twin operates at the same cadence or can be accelerated to quickly replay test scenarios.
 
-### MC8 — Multiplicities
+### MC8 - Multiplicities
 
 A single twin for a single sensor in the prototype version. Extension possible to N parallel sensors.
 
-### MC9 — Life-cycle Stages
+### MC9 - Life-cycle Stages
 
 Prototype in the design and validation phase. Typical use: development and testing of alert rules before deployment on real hardware.
 
-### MC10 — Digital Twin Models and Data
+### MC10 - Digital Twin Models and Data
 
 - Sensor simulation model: measurement generator (constant, ramp, noise, peak)
 - Data stream: timestamped temperature values (timestamp, value in °C)
 
-### MC11 — Tooling and Enablers
+### MC11 - Tooling and Enablers
 
 Digital twin implemented in Python, graphical interface in native HTML.
 
-### MC12 — Digital Twin Constellation
+### MC12 - Digital Twin Constellation
 
 Simple architecture: USB driver → acquisition module → threshold monitoring module → user interface. The simulator replaces the USB driver in test mode.
 
-### MC13 — Twinning Process and Digital Twin Evolution
+### MC13 - Twinning Process and Digital Twin Evolution
 
 Incremental approach: first the physical sensor + interface, then addition of the simulator for testing, then refinement of alert rules.
 
-### MC14 — Fidelity and Validity Considerations
+### MC14 - Fidelity and Validity Considerations
 
 The simulator reproduces the measurement range and cadence of the physical sensor. Validation by comparison of simulated and measured values on reference scenarios.
 
-### MC15 — Digital Twin Technical Connection
+### MC15 - Digital Twin Technical Connection
 
 USB bus between sensor and PC. Local communication only in the prototype version.
 
-### MC16 — Digital Twin Hosting/Deployment
+### MC16 - Digital Twin Hosting/Deployment
 
 Local execution on the host PC. No cloud or remote component in the current version.
 
-### MC17 — Insights and decision-making
+### MC17 - Insights and decision-making
 
 - Continuous display of the measurement
 - Visual (and/or audible) alert on threshold crossing
 
-### MC18 — Horizontal integration
+### MC18 - Horizontal integration
 
 No data exchange with other systems, but extension possible.
 
-### MC19 — Data ownership and privacy
+### MC19 - Data ownership and privacy
 
 Local temperature data, non-sensitive. No external sharing in the prototype version.
 
-### MC20 — Standardisation
+### MC20 - Standardisation
 
 No standard adopted at this stage.
 
-### MC21 — Security and Safety Considerations
+### MC21 - Security and Safety Considerations
 
 No identified risk.
 
@@ -164,11 +164,11 @@ No identified risk.
 
 Identifying a threshold crossing in real time without training labels, robust to USB sensor noise. The central challenge is robustness to slow drifts (thermal offset) and false positives caused by measurement spikes.
 
-**Sandbox**: [Colab Notebook](https://colab.research.google.com/drive/example-uc00-detection) — comparison of 3 detectors on 50 reference scenarios
+**Sandbox**: [Colab Notebook](https://colab.research.google.com/drive/example-uc00-detection) - comparison of 3 detectors on 50 reference scenarios
 
 **Thesis**: *Adaptive detection for low-cost IoT sensors*, PhD candidate to be specified (Inria, 2025-2028)
 
-**References**: [Pang et al. (2021) — Deep Learning for Anomaly Detection](https://doi.org/10.1145/3439950) — ACM Computing Surveys
+**References**: [Pang et al. (2021) - Deep Learning for Anomaly Detection](https://doi.org/10.1145/3439950) - ACM Computing Surveys
 
 ---
 

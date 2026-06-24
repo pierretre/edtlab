@@ -20,7 +20,7 @@ originType: engineered
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 version: r0.1
 # draft or published
-status: published
+status: draft
 tags:
   - transport-logistique
   - décarbonation
@@ -33,7 +33,7 @@ publishedDate: 2026-06-23T00:00:00.000Z
 
 ## Summary
 
-The physical system under study is the road logistics transport fleet — heavy goods vehicles with internal combustion engines (ICE), battery electric vehicles (BEV) and fuel cell vehicles (FCEV) — operating on multimodal routes in a dynamic environment (traffic, weather, topography).
+The physical system under study is the road logistics transport fleet - heavy goods vehicles with internal combustion engines (ICE), battery electric vehicles (BEV) and fuel cell vehicles (FCEV) - operating on multimodal routes in a dynamic environment (traffic, weather, topography).
 
 The eco4impact digital twin is a predictive SaaS platform used across two horizons: strategic planning 2030-2050 (technology transition, charging/H₂ infrastructure) and tactical/daily planning (optimal route generation, energy planning). It integrates Digital Truck Twins (physical and data models), a scenario generator and economic/CO₂ models (TCO, LCA), connected to the physical twin through continuous ingestion of telematics, usage and infrastructure data.
 
@@ -45,10 +45,10 @@ Two parallel developments: the EcoRoadLog consortium (being formed with logistic
 
 ### Users
 
-- **A fleet manager** — drives daily operations (routes, energy) and evaluates renewal scenarios.
-- **A logistics decision-maker / management** — arbitrates strategic transition choices (technologies, timeline, infrastructure) over long horizons.
-- **A TCO / CSR analyst** — evaluates cost-risk trade-offs and sustainability KPIs (CO₂e, regulatory compliance).
-- **A public authority / professional federation** — simulates the impact of regulations, subsidies and CO₂ pricing.
+- **A fleet manager** - drives daily operations (routes, energy) and evaluates renewal scenarios.
+- **A logistics decision-maker / management** - arbitrates strategic transition choices (technologies, timeline, infrastructure) over long horizons.
+- **A TCO / CSR analyst** - evaluates cost-risk trade-offs and sustainability KPIs (CO₂e, regulatory compliance).
+- **A public authority / professional federation** - simulates the impact of regulations, subsidies and CO₂ pricing.
 
 ### Functional Requirements
 
@@ -64,31 +64,31 @@ Two parallel developments: the EcoRoadLog consortium (being formed with logistic
 
 ## Digital Twin Characterisation
 
-*Grid based on the <a href="https://journals.sagepub.com/doi/10.1177/00375497241261406" target="_blank" rel="noopener noreferrer">unified framework by Gil et al. (2024)</a> — 21 characteristics.*
+*Grid based on the <a href="https://journals.sagepub.com/doi/10.1177/00375497241261406" target="_blank" rel="noopener noreferrer">unified framework by Gil et al. (2024)</a> - 21 characteristics.*
 
-### MC1 — System under study
+### MC1 - System under study
 
 Real road logistics transport system: heavy goods vehicles (ICE, BEV, FCEV), transport processes (missions, routes), multimodal itineraries, drivers, infrastructure (delivery points, charging/H₂ stations), and environmental context (traffic, weather, topography).
 
-### MC2 — Physical Acting Components
+### MC2 - Physical Acting Components
 
-No direct actuator in the current version: the DT (Digital Twin) is primarily decision-oriented. Outputs drive human choices (fleet manager, management) — scheduling, vehicle allocation, investment timeline.
+No direct actuator in the current version: the DT (Digital Twin) is primarily decision-oriented. Outputs drive human choices (fleet manager, management) - scheduling, vehicle allocation, investment timeline.
 
-### MC3 — Physical sensing components
+### MC3 - Physical sensing components
 
 - On-board telematics sensors (consumption, position, speed, load, battery state)
 - Infrastructure data (charging points, energy prices)
 - External sources (traffic, weather, market trends)
 
-### MC4 — Physical-to-Virtual Interaction
+### MC4 - Physical-to-Virtual Interaction
 
 Continuous ingestion of vehicle telematics data and logistics usage data (TMS). Coupling with external data (traffic, weather, market) for calibration and scenario enrichment. Standards and frequencies to be specified according to TMS integration.
 
-### MC5 — Virtual-to-Physical Interaction
+### MC5 - Virtual-to-Physical Interaction
 
 No direct command: the DT produces recommendations (routes, energy schedules, renewal decisions) consumed by human operators or exported to the TMS.
 
-### MC6 — Digital Twin Services
+### MC6 - Digital Twin Services
 
 - Generation of strategic (2030-2050) and tactical (daily) scenarios via Sequence Building Blocks
 - Route and energy usage optimisation under constraints
@@ -96,19 +96,19 @@ No direct command: the DT produces recommendations (routes, energy schedules, re
 - Comparison of fleet configurations (technology mix, mission profiles)
 - Daily reporting (CO₂e, ESG, CSRD)
 
-### MC7 — Twinning Time-scale
+### MC7 - Twinning Time-scale
 
-Two coupled scales: tactical/daily (operational planning) and strategic (5 to 25-year horizons). Not strict real-time — the DT is a simulation and decision tool.
+Two coupled scales: tactical/daily (operational planning) and strategic (5 to 25-year horizons). Not strict real-time - the DT is a simulation and decision tool.
 
-### MC8 — Multiplicities
+### MC8 - Multiplicities
 
 Multi-instance architecture: one Digital Truck Twin per vehicle or per type configuration, aggregated into a fleet. Ability to reason at the scale of a mission, a fleet or a national fleet.
 
-### MC9 — Life-cycle Stages
+### MC9 - Life-cycle Stages
 
 Covers mainly operations (daily planning) and fleet evolution strategy (renewal, technology transition). LCA covers the full vehicle lifecycle for environmental assessment.
 
-### MC10 — Digital Twin Models and Data
+### MC10 - Digital Twin Models and Data
 
 - **Digital Truck Twins**: coupling of physical models (consumption, range) and ML models calibrated on telematics
 - **Scenario generator** based on Sequence Building Blocks (scenario: sequence of several scene/mission types)
@@ -116,52 +116,52 @@ Covers mainly operations (daily planning) and fleet evolution strategy (renewal,
 - **Life Cycle Analysis models (LCA)**
 - **Data**: telematics, infrastructure, energy prices, weather, traffic, market trends
 
-### MC11 — Tooling and Enablers
+### MC11 - Tooling and Enablers
 
 SaaS web platform.
 
-### MC12 — Digital Twin Constellation
+### MC12 - Digital Twin Constellation
 
 Pipeline: ingestion (telematics + external sources) → Digital Truck Twin calibration → scenario generator → optimisation/simulation engine → TCO and LCA models → user interface (strategic planning, tactical simulation, reporting).
 
-### MC13 — Twinning Process and Digital Twin Evolution
+### MC13 - Twinning Process and Digital Twin Evolution
 
 Incremental and collaborative approach: EcoRoadLog consortium being built with logistics operators, federations and universities (France and Germany). Eco4Impact-Offroad extension for off-road applications with UNICEM and FNTP.
 
-### MC14 — Fidelity and Validity Considerations
+### MC14 - Fidelity and Validity Considerations
 
-Calibration of Digital Truck Twins on real telematics data. Validation by comparison of modelled vs measured consumption over operational cycles. Predictive modelling under high uncertainty — uncertainty propagation (future energy mix, prices, regulations) to be specified.
+Calibration of Digital Truck Twins on real telematics data. Validation by comparison of modelled vs measured consumption over operational cycles. Predictive modelling under high uncertainty - uncertainty propagation (future energy mix, prices, regulations) to be specified.
 
-### MC15 — Digital Twin Technical Connection
+### MC15 - Digital Twin Technical Connection
 
 Ingestion via API from TMS and telematics platforms. Precise protocols and standards to be specified.
 
-### MC16 — Digital Twin Hosting/Deployment
+### MC16 - Digital Twin Hosting/Deployment
 
-SaaS — hosted web platform. Details (cloud, data centre, multi-tenant) to be specified.
+SaaS - hosted web platform. Details (cloud, data centre, multi-tenant) to be specified.
 
-### MC17 — Insights and decision-making
+### MC17 - Insights and decision-making
 
 - Comparison of fleet transition scenarios with quantified TCO and CO₂e
 - Optimal routes and energy schedules for daily operations
 - CO₂e, ESG, CSRD reporting
 - Sensitivity of adoption to regulatory parameters (regulations, subsidies, CO₂ pricing)
 
-### MC18 — Horizontal integration
+### MC18 - Horizontal integration
 
 Connected to TMS (Transport Management Systems) and FMS (Fleet Management Systems) for operational flows. Future integration of component databases and fuel APIs envisaged.
 
-### MC19 — Data ownership and privacy
+### MC19 - Data ownership and privacy
 
 Operational data (telematics, missions) potentially sensitive (competition, contractualisation). Governance and GDPR compliance to be formalised in the multi-tenant SaaS context.
 
-### MC20 — Standardisation
+### MC20 - Standardisation
 
 Reporting aligned with ESG and CSRD. Digital Truck Twin modelling standards and LCA inventory to be specified.
 
-### MC21 — Security and Safety Considerations
+### MC21 - Security and Safety Considerations
 
-SaaS application security (authentication, tenant isolation). No real-time control loop — operational safety risks limited to the decision-making scope.
+SaaS application security (authentication, tenant isolation). No real-time control loop - operational safety risks limited to the decision-making scope.
 
 ---
 
@@ -183,7 +183,7 @@ Associated RQs: RQ_D3 (heterogeneous data collection), RQ_D11 (semantic interope
 
 ### Multi-model coupling
 
-Aligning and integrating complex models — Machine Learning, physical truck twins, predictive cost models and life cycle analysis — within a single evaluation pipeline.
+Aligning and integrating complex models - Machine Learning, physical truck twins, predictive cost models and life cycle analysis - within a single evaluation pipeline.
 
 Associated RQs: RQ_I3 (model hybridisation), RQ_I4 (hybridisation operators)
 
@@ -199,7 +199,7 @@ Associated RQs: RQ_D2 (data uncertainty), RQ_I5 (validity envelope), RQ_F3 (comp
 
 ## References
 
-- [eco4impact Poster](/media/use-cases/uc18-poster-eco4impact-vectura.pdf) — Use Case Workshop, Lyon, 6-7 January 2026
-- Combemale B., Vicat-Blanc P., Blouin A., Bril El Haouzi H., Bruel J.-M. et al. [Engineering Digital Twins: A Research Roadmap](https://inria.hal.science/hal-05223776). EDTconf 2025 — 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. ⟨hal-05223776⟩ — scientific roadmap of the EDT programme (RQ_X codes).
+- [eco4impact Poster](/media/use-cases/uc18-poster-eco4impact-vectura.pdf) - Use Case Workshop, Lyon, 6-7 January 2026
+- Combemale B., Vicat-Blanc P., Blouin A., Bril El Haouzi H., Bruel J.-M. et al. [Engineering Digital Twins: A Research Roadmap](https://inria.hal.science/hal-05223776). EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. ⟨hal-05223776⟩ - scientific roadmap of the EDT programme (RQ_X codes).
 
 ## Ongoing Theses

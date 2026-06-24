@@ -20,7 +20,7 @@ originType: engineered
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 version: r0.1
 # draft or published
-status: published
+status: draft
 tags:
   - maritime
   - navire
@@ -34,7 +34,7 @@ publishedDate: 2026-06-23T00:00:00.000Z
 
 ## Summary
 
-The physical system under study consists of working vessels — trawlers, service vessels, pushers, barges — equipped with various powertrains (diesel, parallel hybrid, electric), hull geometries, fixed or variable-pitch propellers, hydraulic systems, fishing gear and on-board consumers. These vessels operate in variable maritime environments and generate heterogeneous data: propulsion, sea state, emissions, hydraulic loads, usage profiles.
+The physical system under study consists of working vessels - trawlers, service vessels, pushers, barges - equipped with various powertrains (diesel, parallel hybrid, electric), hull geometries, fixed or variable-pitch propellers, hydraulic systems, fishing gear and on-board consumers. These vessels operate in variable maritime environments and generate heterogeneous data: propulsion, sea state, emissions, hydraulic loads, usage profiles.
 
 EcoBoatTwin is a SaaS decision-support platform for naval architects, shipyards, shipowners and public authorities. It enables simulation, optimisation and comparison of vessel configurations and decarbonisation trajectories, integrating high-fidelity energy models (hull, propeller, engine, hybrid) calibrated on real measurements, fishing gear twins, scenario-based simulations and economic/CO₂ models (TCO, ROI).
 
@@ -46,10 +46,10 @@ The twin interacts with the physical twin through ingestion of real sensor data 
 
 ### Users
 
-- **A naval architect** — explores design variants (hull, propeller, propulsion) and evaluates their energy performance before prototyping.
-- **A shipyard** — sizes retrofits (hybridisation, new powertrain, optimised propeller) on existing vessels.
-- **A shipowner** — arbitrates powertrain choices and fleet renewal timeline based on TCO and ROI.
-- **A public authority / port** — models infrastructure needs (electric, H₂) to plan investments at fleet scale.
+- **A naval architect** - explores design variants (hull, propeller, propulsion) and evaluates their energy performance before prototyping.
+- **A shipyard** - sizes retrofits (hybridisation, new powertrain, optimised propeller) on existing vessels.
+- **A shipowner** - arbitrates powertrain choices and fleet renewal timeline based on TCO and ROI.
+- **A public authority / port** - models infrastructure needs (electric, H₂) to plan investments at fleet scale.
 
 ### Functional Requirements
 
@@ -67,31 +67,31 @@ The twin interacts with the physical twin through ingestion of real sensor data 
 
 ## Digital Twin Characterisation
 
-*Grid based on the <a href="https://journals.sagepub.com/doi/10.1177/00375497241261406" target="_blank" rel="noopener noreferrer">unified framework by Gil et al. (2024)</a> — 21 characteristics.*
+*Grid based on the <a href="https://journals.sagepub.com/doi/10.1177/00375497241261406" target="_blank" rel="noopener noreferrer">unified framework by Gil et al. (2024)</a> - 21 characteristics.*
 
-### MC1 — System under study
+### MC1 - System under study
 
 Real working vessels (trawlers, service vessels, pushers, barges) and their sub-systems: propulsion (diesel, parallel hybrid, electric), hulls, fixed or variable-pitch propellers, hydraulic systems, fishing gear, on-board consumers. Operational environment: missions (fishing, towing, transport), sea state, weather conditions, port infrastructure.
 
-### MC2 — Physical Acting Components
+### MC2 - Physical Acting Components
 
 No direct control loop: the DT is a decision-support tool for design, retrofit and strategic arbitration. Outputs drive human decisions (architects, shipowners) or investment decisions (public authorities).
 
-### MC3 — Physical sensing components
+### MC3 - Physical sensing components
 
 - 80+ on-board sensor channels (propulsion, hydraulics, sea state, emissions, usage)
 - HYBA reference dataset for calibration
 - External data (component databases, future fuel APIs)
 
-### MC4 — Physical-to-Virtual Interaction
+### MC4 - Physical-to-Virtual Interaction
 
 Ingestion of real sensor data for energy model calibration. Standardisation and calibration of 80+ heterogeneous sensor channels. Frequency and protocols to be specified according to on-board contexts.
 
-### MC5 — Virtual-to-Physical Interaction
+### MC5 - Virtual-to-Physical Interaction
 
 No direct command. DT outputs guide design choices (architect), retrofit decisions (shipyard), powertrain selection (shipowner) and infrastructure planning (port/authority).
 
-### MC6 — Digital Twin Services
+### MC6 - Digital Twin Services
 
 - Simulation and optimisation of vessel configurations and decarbonisation trajectories
 - Calibration of high-fidelity energy models on real measurements
@@ -100,21 +100,21 @@ No direct command. DT outputs guide design choices (architect), retrofit decisio
 - ROI prediction on real operational cycles
 - Multi-stakeholder comparison (architects, shipowners, authorities)
 
-### MC7 — Twinning Time-scale
+### MC7 - Twinning Time-scale
 
 Not real-time for now: the DT is a simulation and decision-support tool. Analysis scales: mission (operational scenarios), vessel lifecycle (design, retrofit), fleet (strategic planning).
 
 An embedded use for predictive energy optimisation could be envisaged in the near future.
 
-### MC8 — Multiplicities
+### MC8 - Multiplicities
 
 Multi-instance architecture: one twin per vessel or per type configuration. Aggregation at fleet scale for strategic planning and port infrastructure.
 
-### MC9 — Life-cycle Stages
+### MC9 - Life-cycle Stages
 
 Covers design (architectural variants), retrofit (hybridisation, optimisation), operations (calibration, configuration comparison) and planning (port infrastructure). Partial LCA via economic and CO₂ modelling.
 
-### MC10 — Digital Twin Models and Data
+### MC10 - Digital Twin Models and Data
 
 - **High-fidelity multi-physics energy models**: hull, propeller, thermal engine, hybrid, hydraulic
 - **Digital twins of fishing gear**
@@ -122,52 +122,52 @@ Covers design (architectural variants), retrofit (hybridisation, optimisation), 
 - **3D hull reconstruction** by scan / video (unknown hulls)
 - **Data**: HYBA dataset, sensor measurements (80+ channels), component databases, fuel APIs
 
-### MC11 — Tooling and Enablers
+### MC11 - Tooling and Enablers
 
 SaaS web platform (multi-level UX/UI: basic, advanced and professional users). Technical details of the stack to be specified.
 
-### MC12 — Digital Twin Constellation
+### MC12 - Digital Twin Constellation
 
 Pipeline: measurement ingestion (HYBA and on-board) → multi-physics model calibration (hull, propeller, engine, hybrid, hydraulic) → mission scenario generator → optimisation/simulation engines → economic models (TCO, ROI) and infrastructure → multi-user interface (macro-scenarios, scenes, simulations).
 
-### MC13 — Twinning Process and Digital Twin Evolution
+### MC13 - Twinning Process and Digital Twin Evolution
 
 Incremental approach: extension of the energy model to different vessel types (trawlers, service, pushers, barges) and progressive integration of fishing gear. Open calibration on new on-board datasets.
 
-### MC14 — Fidelity and Validity Considerations
+### MC14 - Fidelity and Validity Considerations
 
 Calibration of high-fidelity models on 80+ real measurement channels (HYBA dataset). Validation by comparison of modelled vs measured consumption on characterised sea-state scenes. Approximate 3D reconstruction for undocumented hulls.
 
-### MC15 — Digital Twin Technical Connection
+### MC15 - Digital Twin Technical Connection
 
 Ingestion via API from on-board systems and component databases. Precise exchange protocols and standards to be specified.
 
-### MC16 — Digital Twin Hosting/Deployment
+### MC16 - Digital Twin Hosting/Deployment
 
-SaaS — hosted web platform. Details (cloud, data centre, multi-tenant) to be specified.
+SaaS - hosted web platform. Details (cloud, data centre, multi-tenant) to be specified.
 
-### MC17 — Insights and decision-making
+### MC17 - Insights and decision-making
 
 - Comparison of vessel configurations with consumption and CO₂e quantified per operational scene
 - ROI of retrofit scenarios (hybridisation, powertrain, propeller)
 - Port infrastructure sizing
 - Multi-stakeholder dashboard (architects, shipowners, public authorities)
 
-### MC18 — Horizontal integration
+### MC18 - Horizontal integration
 
 Integration of external component databases and fuel APIs planned. Connection to on-board systems for measurement ingestion.
 
-### MC19 — Data ownership and privacy
+### MC19 - Data ownership and privacy
 
 On-board data (propulsion measurements, usage) potentially sensitive (shipowner competitiveness, architect intellectual property). Governance to be formalised in the multi-stakeholder SaaS context.
 
-### MC20 — Standardisation
+### MC20 - Standardisation
 
 Naval energy standards and CO₂ reporting to be specified. Standardisation of 80+ sensor channels identified as a challenge.
 
-### MC21 — Security and Safety Considerations
+### MC21 - Security and Safety Considerations
 
-SaaS application security (authentication, tenant isolation). No real-time control loop — operational safety risks limited to the decision-making scope.
+SaaS application security (authentication, tenant isolation). No real-time control loop - operational safety risks limited to the decision-making scope.
 
 ---
 
@@ -215,7 +215,7 @@ Associated RQs: RQ_E3 (deployment orchestration), RQ_E6 (syntactic interoperabil
 
 Combine TCO, ROI, port infrastructure modelling and subsidy schemes for coherent strategic arbitrations.
 
-Associated RQs: RQ_E2 (modularisation) — partially outside taxonomy: covers decision-support questions.
+Associated RQs: RQ_E2 (modularisation) - partially outside taxonomy: covers decision-support questions.
 
 ### Multi-level UX/UI design
 
@@ -231,7 +231,7 @@ Associated RQs: RQ_U5 (usability), RQ_U6 (collaboration)
 
 ## References
 
-- [EcoBoatTwin Poster](/media/use-cases/uc21-poster-ecoboattwin-vectura.pdf) — Use Case Workshop, Lyon, 6-7 January 2026
-- Combemale B., Vicat-Blanc P., Blouin A., Bril El Haouzi H., Bruel J.-M. et al. [Engineering Digital Twins: A Research Roadmap](https://inria.hal.science/hal-05223776). EDTconf 2025 — 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. ⟨hal-05223776⟩ — scientific roadmap of the EDT programme (RQ_X codes).
+- [EcoBoatTwin Poster](/media/use-cases/uc21-poster-ecoboattwin-vectura.pdf) - Use Case Workshop, Lyon, 6-7 January 2026
+- Combemale B., Vicat-Blanc P., Blouin A., Bril El Haouzi H., Bruel J.-M. et al. [Engineering Digital Twins: A Research Roadmap](https://inria.hal.science/hal-05223776). EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. ⟨hal-05223776⟩ - scientific roadmap of the EDT programme (RQ_X codes).
 
 ## Ongoing Theses
