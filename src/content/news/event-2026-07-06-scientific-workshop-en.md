@@ -35,7 +35,9 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 * **13h30 – 14h00 :** Workshop introduction
 
-* **14h00 – 15h00 :** Overview of the focused projects and associated PhD topics
+* **14h00 – 14h10 :** Opening by [F. Kirchner](https://fr.linkedin.com/in/fkirchner)
+
+* **14h10 – 15h00 :** Overview of the focused projects and associated PhD topics
 
 * **15h00 – 15h30 :** *coffee break*
 
