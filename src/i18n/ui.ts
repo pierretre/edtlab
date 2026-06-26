@@ -327,6 +327,14 @@ export const ui = {
         'projects.related-news-events.view-all': 'View all news',
 
         // Use Case Identity Card
+        'use-case.back-to-list': 'Back to Use Cases',
+        'use-case.since': 'since',
+        'use-case.field.license': 'License',
+        'use-case.field.published-date': 'Published',
+        'use-case.field.version': 'Version',
+        'use-case.no-version': '(no version)',
+        'use-case.outdated-viewing': 'You are viewing version',
+        'use-case.outdated-latest': 'The latest version is',
         'use-case.identity.title': 'Identity Card',
         'use-case.field.provider': 'Provider',
         'use-case.field.originType': 'Type',
@@ -347,6 +355,9 @@ export const ui = {
 
         // PC leaders
         'pc-leaders.website': 'Website',
+
+        // Email component
+        'show-email-label': 'Show email',
     },
     fr: {
         // Navigation
@@ -669,6 +680,14 @@ export const ui = {
         'projects.related-news-events.view-all': 'Voir toutes les actualités',
 
         // Use Case Identity Card
+        'use-case.back-to-list': "Retour aux cas d'utilisation",
+        'use-case.since': 'depuis',
+        'use-case.field.license': 'Licence',
+        'use-case.field.published-date': 'Publié le',
+        'use-case.field.version': 'Version',
+        'use-case.no-version': '(sans version)',
+        'use-case.outdated-viewing': 'Vous consultez la version',
+        'use-case.outdated-latest': 'La version la plus récente est',
         'use-case.identity.title': "Carte d'identité",
         'use-case.field.provider': 'Provider',
         'use-case.field.originType': 'Type',
@@ -689,6 +708,9 @@ export const ui = {
 
         // PC leaders
         'pc-leaders.website': 'Site web',
+
+        // Email component
+        'show-email-label': "Afficher l'email",
     },
 } as const;
 

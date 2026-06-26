@@ -56,16 +56,19 @@ const searchText = [
             <span class="text-xs font-medium text-primary-600 uppercase"
                 >{item.id}</span
             >
-            <div class="flex items-center gap-2 text-xs text-gray-500">
-                {item.maturity && <Badge key={item.maturity} t={t} />}
-            </div>
+            {item.maturity && <Badge key={item.maturity} t={t} />}
         </div>
 
-        {item.domain && (
-            <p class="text-xs text-gray-500 mb-1">
-                <span class="font-medium">{lang === 'fr' ? 'Domaine' : 'Domain'} :</span> {item.domain}
-            </p>
-        )}
+        {
+            item.domain && (
+                <p class="text-xs text-gray-500 mb-1">
+                    <span class="font-medium">
+                        {t("use-cases.filter.domain")}:
+                    </span>{" "}
+                    {item.domain}
+                </p>
+            )
+        }
 
         <h4 class="text-base font-semibold mb-1">
             <a
@@ -76,23 +79,29 @@ const searchText = [
             </a>
         </h4>
 
-        {item.provider && (
-            <p class="text-xs text-gray-500 mb-2 italic">{item.provider}</p>
-        )}
+        {
+            item.provider && (
+                <p class="text-xs text-gray-500 mb-2 italic">{item.provider}</p>
+            )
+        }
 
         <p class="text-sm text-gray-600 line-clamp-3 flex-grow">
             {item.summary}
         </p>
 
-        {item.since && (
-            <p class="text-xs text-gray-400 mt-2">
-                {lang === "fr" ? "depuis" : "since"}{" "}
-                {formatDate(
-                    item.since instanceof Date ? item.since : new Date(item.since),
-                    lang,
-                    { year: "numeric" },
-                )}
-            </p>
-        )}
+        {
+            item.since && (
+                <p class="text-xs text-gray-400 mt-2">
+                    {t("use-case.since")}{" "}
+                    {formatDate(
+                        item.since instanceof Date
+                            ? item.since
+                            : new Date(item.since),
+                        lang,
+                        { year: "numeric" },
+                    )}
+                </p>
+            )
+        }
     </div>
 </div>

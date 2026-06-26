@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import PageLayout from "./PageLayout.astro";
 import { linkHelpers, useTranslations } from "@i18n/utils";
 import { getContentLink } from "@i18n/links";
+import Badge from "@components/Badge.astro";
+import Email from "@components/Email.astro";
 
 export interface Props {
     frontmatter: any;
@@ -21,15 +23,18 @@ const t = useTranslations(lang);
 const contentLang = frontmatter.lang || lang;
 let allVersions: any[] = [];
 if (frontmatter.id) {
-    const allUcs = await getCollection("use-cases", (item: any) =>
-        item.data.id === frontmatter.id && item.data.lang === contentLang
+    const allUcs = await getCollection(
+        "use-cases",
+        (item: any) =>
+            item.data.id === frontmatter.id && item.data.lang === contentLang,
     );
     allVersions = allUcs.sort((a: any, b: any) =>
-        (b.data.version || "").localeCompare(a.data.version || "")
+        (b.data.version || "").localeCompare(a.data.version || ""),
     );
 }
 const currentVersion = frontmatter.version || "";
-const latestVersion = allVersions.length > 0 ? (allVersions[0].data.version || "") : "";
+const latestVersion =
+    allVersions.length > 0 ? allVersions[0].data.version || "" : "";
 const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
 ---
 
@@ -46,144 +51,218 @@ const isOutdated = allVersions.length > 1 && currentVersion !== latestVersion;
             href={linkHelpers.page(lang, "use-cases")}
             class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
         >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"></path>
             </svg>
-            {lang === 'fr' ? 'Retour aux cas d\'utilisation' : 'Back to Use Cases'}
+            {t("use-case.back-to-list")}
         </a>
     </div>
 
     <!-- Header -->
     <header class="mb-8">
         <!-- Image -->
-        {frontmatter.photo && (
-            <div class="mb-6 flex justify-center bg-gray-50 rounded-lg">
-                <img
-                    src={frontmatter.photo}
-                    alt={frontmatter.title}
-                    class="max-h-64 w-auto object-contain"
-                    loading="lazy"
-                />
-            </div>
-        )}
+        {
+            frontmatter.photo && (
+                <div class="mb-6 flex justify-center bg-gray-50 rounded-lg">
+                    <img
+                        src={frontmatter.photo}
+                        alt={frontmatter.title}
+                        class="max-h-64 w-auto object-contain"
+                        loading="lazy"
+                    />
+                </div>
+            )
+        }
 
-        <!-- Title -->
         <h1 class="text-4xl font-bold text-gray-900 mb-2">
             {frontmatter.title}
         </h1>
 
         <!-- Authors / Contacts — academic style -->
-        {frontmatter.contacts && frontmatter.contacts.length > 0 && (
-            <p class="text-base text-gray-600 mb-1">
-                {frontmatter.contacts.map((c: any, i: number) => (
-                    <span>
-                        <span class="font-medium text-gray-800">{c.name}</span>
-                        {c.org && <span class="text-gray-500"> ({c.org})</span>}
-                        {c.email && <a href={`mailto:${c.email}`} class="text-primary-600 hover:underline text-sm ml-1">{c.email}</a>}
-                        {i < frontmatter.contacts.length - 1 && <span class="text-gray-400 mx-1">·</span>}
-                    </span>
-                ))}
-            </p>
-        )}
+        {
+            frontmatter.contacts && frontmatter.contacts.length > 0 && (
+                <p class="text-base text-gray-600 mb-1">
+                    {frontmatter.contacts.map((c: any, i: number) => (
+                        <span>
+                            <span class="font-medium text-gray-800">
+                                {c.name}
+                            </span>
+                            {c.org && (
+                                <span class="text-gray-500"> ({c.org})</span>
+                            )}
+
+                            {c.email && (
+                                <Email
+                                    user={c.email.split("@")[0]}
+                                    domain={c.email.split("@")[1]}
+                                    lang={lang}
+                                />
+                            )}
+                            {i < frontmatter.contacts.length - 1 && (
+                                <span class="text-gray-400 mx-1">·</span>
+                            )}
+                        </span>
+                    ))}
+                </p>
+            )
+        }
 
         <!-- Meta badges + version selector — each badge is preceded by its label -->
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 mb-4">
-            {frontmatter.domain && (
-                <span class="inline-flex items-center gap-1 whitespace-nowrap">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Domaine :' : 'Domain:'}</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-700">
-                        {frontmatter.domain}
-                    </span>
-                </span>
-            )}
-            {frontmatter.maturity && (
-                <span class="inline-flex items-center gap-1 whitespace-nowrap">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Maturité :' : 'Maturity:'}</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800">
-                        {frontmatter.maturity}
-                    </span>
-                </span>
-            )}
-            {frontmatter.provider && (
-                <span class="inline-flex items-center gap-1 whitespace-nowrap">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Fournisseur :' : 'Provider:'}</span>
-                    <span class="text-gray-700 italic">{frontmatter.provider}</span>
-                </span>
-            )}
-            {frontmatter.license && (
-                <span class="inline-flex items-center gap-1 whitespace-nowrap">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Licence :' : 'License:'}</span>
-                    {frontmatter.license.startsWith('CC') ? (
-                        <a
-                            href={`https://creativecommons.org/licenses/${frontmatter.license.replace(/^CC-/, '').replace(/-/g, '/').toLowerCase()}/`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-primary-600 hover:underline"
-                        >
-                            {frontmatter.license}
-                        </a>
-                    ) : (
-                        <span class="text-gray-700">{frontmatter.license}</span>
-                    )}
-                </span>
-            )}
-
-            {frontmatter.publishedDate && (
-                <span class="inline-flex items-center gap-1 whitespace-nowrap">
-                    <span class="text-gray-500">{lang === 'fr' ? 'Publié le :' : 'Published:'}</span>
-                    <span class="text-gray-700">
-                        {new Date(frontmatter.publishedDate).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </span>
-                </span>
-            )}
-
-            {/* Version selector — visible only when more than one version exists; single-version case shows a small badge */}
-            {allVersions.length > 1 ? (
-                <span class="inline-flex items-center gap-1 whitespace-nowrap">
-                    <label for="uc-version-select" class="text-gray-500">{lang === 'fr' ? 'Version :' : 'Version:'}</label>
-                    <select
-                        id="uc-version-select"
-                        class="border border-gray-300 rounded px-2 py-0.5 text-sm bg-white"
-                        onchange="if (this.value) window.location.href = this.value;"
-                    >
-                        {allVersions.map((v: any) => (
-                            <option
-                                value={`/${lang}${getContentLink(lang, "use-cases", v.id, true)}`}
-                                selected={v.data.version === currentVersion}
-                            >
-                                {v.data.version || '(sans version)'}
-                            </option>
-                        ))}
-                    </select>
-                </span>
-            ) : (
-                frontmatter.version && (
-                    <span class="text-gray-500 whitespace-nowrap">
-                        {lang === 'fr' ? 'Version :' : 'Version:'} <span class="font-medium">{frontmatter.version}</span>
+        <div
+            class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 mb-4"
+        >
+            {
+                frontmatter.id && (
+                    <span class="text-xs font-medium text-primary-600 uppercase">
+                        {frontmatter.id}
                     </span>
                 )
-            )}
+            }
+            {
+                frontmatter.domain && (
+                    <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                        <span class="text-gray-500">
+                            {t("use-cases.filter.domain")}:
+                        </span>
+                        <Badge key={frontmatter.domain} t={t} />
+                    </span>
+                )
+            }
+            {
+                frontmatter.maturity && (
+                    <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                        <span class="text-gray-500">
+                            {t("use-cases.filter.maturity")}:
+                        </span>
+                        <Badge key={frontmatter.maturity} t={t} />
+                    </span>
+                )
+            }
+            {
+                frontmatter.provider && (
+                    <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                        <span class="text-gray-500">
+                            {t("use-case.field.provider")}:
+                        </span>
+                        <span class="text-gray-700 italic">
+                            {frontmatter.provider}
+                        </span>
+                    </span>
+                )
+            }
+            {
+                frontmatter.license && (
+                    <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                        <span class="text-gray-500">
+                            {t("use-case.field.license")}:
+                        </span>
+                        {frontmatter.license.startsWith("CC") ? (
+                            <a
+                                href={`https://creativecommons.org/licenses/${frontmatter.license.replace(/^CC-/, "").replace(/-/g, "/").toLowerCase()}/`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-primary-600 hover:underline"
+                            >
+                                {frontmatter.license}
+                            </a>
+                        ) : (
+                            <span class="text-gray-700">
+                                {frontmatter.license}
+                            </span>
+                        )}
+                    </span>
+                )
+            }
+
+            {
+                frontmatter.publishedDate && (
+                    <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                        <span class="text-gray-500">
+                            {t("use-case.field.published-date")}:
+                        </span>
+                        <span class="text-gray-700">
+                            {new Date(
+                                frontmatter.publishedDate,
+                            ).toLocaleDateString(
+                                lang === "fr" ? "fr-FR" : "en-GB",
+                                {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                },
+                            )}
+                        </span>
+                    </span>
+                )
+            }
+
+            {
+                /* Version selector — visible only when more than one version exists; single-version case shows a small badge */
+            }
+            {
+                allVersions.length > 1 ? (
+                    <span class="inline-flex items-center gap-1 whitespace-nowrap">
+                        <label for="uc-version-select" class="text-gray-500">
+                            {t("use-case.field.version")}:
+                        </label>
+                        <select
+                            id="uc-version-select"
+                            class="border border-gray-300 rounded px-2 py-0.5 text-sm bg-white"
+                            onchange="if (this.value) window.location.href = this.value;"
+                        >
+                            {allVersions.map((v: any) => (
+                                <option
+                                    value={`/${lang}${getContentLink(lang, "use-cases", v.id, true)}`}
+                                    selected={v.data.version === currentVersion}
+                                >
+                                    {v.data.version || t("use-case.no-version")}
+                                </option>
+                            ))}
+                        </select>
+                    </span>
+                ) : (
+                    frontmatter.version && (
+                        <span class="text-gray-500 whitespace-nowrap">
+                            {t("use-case.field.version")}:{" "}
+                            <span class="font-medium">
+                                {frontmatter.version}
+                            </span>
+                        </span>
+                    )
+                )
+            }
         </div>
 
         {/* Banner when viewing a non-latest version */}
-        {isOutdated && (
-            <div class="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded p-3 mb-4">
-                {lang === 'fr'
-                    ? `Vous consultez la version ${currentVersion}. La version la plus récente est `
-                    : `You are viewing version ${currentVersion}. The latest version is `}
-                <a
-                    href={`/${lang}${getContentLink(lang, "use-cases", allVersions[0].id, true)}`}
-                    class="font-medium underline hover:no-underline"
-                >
-                    {latestVersion}
-                </a>.
-            </div>
-        )}
-
+        {
+            isOutdated && (
+                <div class="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded p-3 mb-4">
+                    {t("use-case.outdated-viewing")} {currentVersion}. {t("use-case.outdated-latest")}{" "}
+                    <a
+                        href={`/${lang}${getContentLink(lang, "use-cases", allVersions[0].id, true)}`}
+                        class="font-medium underline hover:no-underline"
+                    >
+                        {latestVersion}
+                    </a>
+                    .
+                </div>
+            )
+        }
     </header>
 
     <!-- Body content (Résumé / Description fonctionnelle / Caractérisation MC1-MC21 / Enjeux scientifiques / References — all in markdown) -->
-    <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline">
+    <div
+        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
+    >
         <slot />
     </div>
 </PageLayout>
