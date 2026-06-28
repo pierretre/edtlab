@@ -41,7 +41,7 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 * **15h00 – 15h30 :** *coffee break*
 
-* **15h30 – 16h00 :** Topics identification, working groups definition, and ellicitation of the expected outcomes
+* **15h30 – 16h00 :** Topics identification, working groups definition, and elicitation of the expected outcomes
 
 * **16h00 – 17h00 :** Working groups (e.g., refinement of the topic and the expected outcomes)
 
