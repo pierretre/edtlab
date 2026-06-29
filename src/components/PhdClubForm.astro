@@ -26,7 +26,6 @@ const clientTranslations = {
     invalidEmail: t("phd-club.form.validation-email"),
     consentRequired: t("phd-club.form.validation-consent"),
     charterFirst: t("phd-club.form.charter-hint"),
-    pcsRequired: t("phd-club.form.validation-pcs"),
 };
 
 const apiUrl = "/api/phd-club";
@@ -180,23 +179,43 @@ const apiUrl = "/api/phd-club";
         <textarea
             id="thesisDescription"
             name="thesisDescription"
-            rows="6"
+            rows="4"
             placeholder={t("phd-club.form.thesis-placeholder")}
             required
             aria-describedby="thesisDescription-help thesisDescription-error"
             minlength="20"
-            maxlength="3000"></textarea>
+            maxlength="300"></textarea>
         <div id="thesisDescription-help" class="mt-1 text-sm text-gray-500">
             {t("phd-club.form.thesis-help")}
         </div>
         <div id="thesisDescription-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
     </div>
 
-    <!-- Focused projects (PC) — at least one required -->
+    <!-- Motivation: why join the club -->
+    <div>
+        <label for="motivation" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.motivation")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </label>
+        <textarea
+            id="motivation"
+            name="motivation"
+            rows="4"
+            placeholder={t("phd-club.form.motivation-placeholder")}
+            required
+            aria-describedby="motivation-help motivation-error"
+            minlength="20"
+            maxlength="500"></textarea>
+        <div id="motivation-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.motivation-help")}
+        </div>
+        <div id="motivation-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </div>
+
+    <!-- Focused projects (PC) — optional -->
     <fieldset aria-describedby="pc-help pc-error">
         <legend class="block mb-2 text-sm font-medium text-gray-900">
             {t("phd-club.form.pcs")}
-            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
         </legend>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {PC_OPTIONS.map((pc) => (
@@ -422,20 +441,10 @@ const apiUrl = "/api/phd-club";
             field.addEventListener(evt, () => validateField(field));
         });
 
-        // PC group: at least one focused project must be selected.
+        // PC group: focused projects are optional.
         const pcCheckboxes = Array.from(form.querySelectorAll('input[name="pc"]'));
         const getSelectedPcs = () =>
             pcCheckboxes.filter((c) => c.checked).map((c) => c.value);
-        const validatePcs = () => {
-            const valid = getSelectedPcs().length > 0;
-            setError("pc", valid ? "" : t("pcsRequired"));
-            return valid;
-        };
-        pcCheckboxes.forEach((c) =>
-            c.addEventListener("change", () => {
-                if (getSelectedPcs().length > 0) setError("pc", "");
-            }),
-        );
 
         // The charter consent toggle is enabled only after the charter has been opened.
         const charterLink = document.getElementById("charter-link");
@@ -480,7 +489,6 @@ const apiUrl = "/api/phd-club";
             fields.forEach((field) => {
                 if (!validateField(field)) isFormValid = false;
             });
-            if (!validatePcs()) isFormValid = false;
             if (!isFormValid) {
                 const firstError = form.querySelector(".border-red-500, [aria-live='polite']:not(.hidden)");
                 if (firstError && firstError.focus) firstError.focus();
@@ -502,6 +510,7 @@ const apiUrl = "/api/phd-club";
                 funding: formData.get("funding"),
                 funder: formData.get("funder"),
                 thesisDescription: formData.get("thesisDescription"),
+                motivation: formData.get("motivation"),
                 consentSupervisors: form.querySelector("#consentSupervisors").checked,
                 consentCharter: form.querySelector("#consentCharter").checked,
                 mailingList: form.querySelector("#mailingList").checked,

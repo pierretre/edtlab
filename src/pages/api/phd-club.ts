@@ -16,6 +16,7 @@ interface MembershipFormData {
     funding: string;
     funder: string;
     thesisDescription: string;
+    motivation: string;
     consentSupervisors: boolean;
     consentCharter: boolean;
     mailingList: boolean;
@@ -135,6 +136,7 @@ const generateEmailHtml = (data: MembershipFormData): string => {
     const funding = escapeHtml(fundingLabels[data.funding] || data.funding);
     const funder = data.funder && data.funder.trim() ? escapeHtml(data.funder) : 'Non précisé';
     const thesisDescription = escapeHtml(data.thesisDescription).replace(/\n/g, '<br>');
+    const motivation = escapeHtml(data.motivation).replace(/\n/g, '<br>');
 
     const yes = '✅';
     const mailing = data.mailingList ? 'Oui' : 'Non';
@@ -185,6 +187,10 @@ const generateEmailHtml = (data: MembershipFormData): string => {
             <div class='field'>
                 <span class='label'>Descriptif de la thèse :</span>
                 <div class='message-box'>${thesisDescription}</div>
+            </div>
+            <div class='field'>
+                <span class='label'>Motivation pour rejoindre le club :</span>
+                <div class='message-box'>${motivation}</div>
             </div>
             <div class='field'>
                 <span class='label'>Accord des encadrants :</span> ${yes}
@@ -274,13 +280,13 @@ export const POST: APIRoute = async ({ request }) => {
         const data = await request.json() as MembershipFormData;
         const {
             firstName, lastName, email, institution,
-            supervisors, pcs, funding, funder, thesisDescription,
+            supervisors, pcs, funding, funder, thesisDescription, motivation,
             consentSupervisors, consentCharter, mailingList
         } = data;
 
         if (!firstName || !lastName || !email || !institution ||
-            !supervisors || !funding || !thesisDescription ||
-            !Array.isArray(pcs) || pcs.length === 0 ||
+            !supervisors || !funding || !thesisDescription || !motivation ||
+            !Array.isArray(pcs) ||
             consentSupervisors === undefined || consentCharter === undefined ||
             mailingList === undefined) {
             return new Response(
@@ -299,7 +305,7 @@ export const POST: APIRoute = async ({ request }) => {
         // Send email
         await sendMembershipEmail({
             firstName, lastName, email, institution,
-            supervisors, pcs, funding, funder, thesisDescription,
+            supervisors, pcs, funding, funder, thesisDescription, motivation,
             consentSupervisors, consentCharter, mailingList: !!mailingList
         });
 
