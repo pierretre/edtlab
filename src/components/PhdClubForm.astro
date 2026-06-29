@@ -242,6 +242,29 @@ const apiUrl = "/api/phd-club";
             </div>
             <div id="consentCharter-error" class="mt-1 ml-14 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
         </div>
+
+        <!-- Toggle 3: mailing list subscription (required) -->
+        <div>
+            <label for="mailingList" class="flex items-start gap-3 cursor-pointer">
+                <span class="relative inline-flex flex-shrink-0 mt-0.5">
+                    <input
+                        type="checkbox"
+                        id="mailingList"
+                        name="mailingList"
+                        class="sr-only peer"
+                        required
+                        aria-describedby="mailingList-error"
+                    />
+                    <span class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-primary-600 peer-focus:ring-2 peer-focus:ring-primary-400 transition-colors"></span>
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></span>
+                </span>
+                <span class="text-sm font-light text-gray-600">
+                    {t("phd-club.form.consent-mailing")}
+                    <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+                </span>
+            </label>
+            <div id="mailingList-error" class="mt-1 ml-14 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+        </div>
     </fieldset>
 
     <!-- Submit Button -->
@@ -424,6 +447,7 @@ const apiUrl = "/api/phd-club";
                 thesisDescription: formData.get("thesisDescription"),
                 consentSupervisors: form.querySelector("#consentSupervisors").checked,
                 consentCharter: form.querySelector("#consentCharter").checked,
+                mailingList: form.querySelector("#mailingList").checked,
             };
 
             try {

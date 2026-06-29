@@ -17,6 +17,7 @@ interface MembershipFormData {
     thesisDescription: string;
     consentSupervisors: boolean;
     consentCharter: boolean;
+    mailingList: boolean;
 }
 
 // Human-readable labels for the funding type select values.
@@ -134,6 +135,7 @@ const generateEmailHtml = (data: MembershipFormData): string => {
     const thesisDescription = escapeHtml(data.thesisDescription).replace(/\n/g, '<br>');
 
     const yes = '✅';
+    const mailing = data.mailingList ? 'Oui' : 'Non';
 
     return `
 <!DOCTYPE html>
@@ -184,6 +186,9 @@ const generateEmailHtml = (data: MembershipFormData): string => {
             </div>
             <div class='field'>
                 <span class='label'>Charte lue et acceptée :</span> ${yes}
+            </div>
+            <div class='field'>
+                <span class='label'>Inscription liste de diffusion :</span> ${mailing}
             </div>
         </div>
         <div class='footer'>
@@ -265,21 +270,22 @@ export const POST: APIRoute = async ({ request }) => {
         const {
             firstName, lastName, email, institution,
             supervisors, funding, funder, thesisDescription,
-            consentSupervisors, consentCharter
+            consentSupervisors, consentCharter, mailingList
         } = data;
 
         if (!firstName || !lastName || !email || !institution ||
             !supervisors || !funding || !thesisDescription ||
-            consentSupervisors === undefined || consentCharter === undefined) {
+            consentSupervisors === undefined || consentCharter === undefined ||
+            mailingList === undefined) {
             return new Response(
                 JSON.stringify({ error: 'Missing required fields' }),
                 { status: 400, headers: { 'Content-Type': 'application/json' } }
             );
         }
 
-        if (!consentSupervisors || !consentCharter) {
+        if (!consentSupervisors || !consentCharter || !mailingList) {
             return new Response(
-                JSON.stringify({ error: 'Both consents must be accepted' }),
+                JSON.stringify({ error: 'All consents must be accepted' }),
                 { status: 400, headers: { 'Content-Type': 'application/json' } }
             );
         }
@@ -288,7 +294,7 @@ export const POST: APIRoute = async ({ request }) => {
         await sendMembershipEmail({
             firstName, lastName, email, institution,
             supervisors, funding, funder, thesisDescription,
-            consentSupervisors, consentCharter
+            consentSupervisors, consentCharter, mailingList: !!mailingList
         });
 
         // Update rate limit
