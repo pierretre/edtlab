@@ -1,0 +1,421 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// URL of the club charter (PDF served from /public).
+const charterUrl = "/media/phds-club/membership_charter_phd_students_club.pdf";
+
+// Prepare translations for client-side
+const clientTranslations = {
+    cooldown: t("phd-club.form.error-cooldown"),
+    rateLimit: t("phd-club.form.error-rate-limit"),
+    genericError: t("phd-club.form.error-generic"),
+    requiredField: t("phd-club.form.validation-required"),
+    invalidEmail: t("phd-club.form.validation-email"),
+    consentRequired: t("phd-club.form.validation-consent"),
+    charterFirst: t("phd-club.form.charter-hint"),
+};
+
+const apiUrl = "/api/phd-club";
+---
+
+<form
+    id="phd-club-form"
+    class="space-y-8"
+    novalidate
+    data-translations={JSON.stringify(clientTranslations)}
+    data-api-url={apiUrl}
+>
+    <!-- First name + Last name -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+            <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">
+                {t("phd-club.form.firstname")}
+                <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+            </label>
+            <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder={t("phd-club.form.firstname-placeholder")}
+                required
+                aria-describedby="firstName-error"
+                autocomplete="given-name"
+            />
+            <div id="firstName-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+        </div>
+
+        <div>
+            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900">
+                {t("phd-club.form.lastname")}
+                <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+            </label>
+            <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder={t("phd-club.form.lastname-placeholder")}
+                required
+                aria-describedby="lastName-error"
+                autocomplete="family-name"
+            />
+            <div id="lastName-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div>
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.email")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder={t("phd-club.form.email-placeholder")}
+            required
+            aria-describedby="email-help email-error"
+            autocomplete="email"
+        />
+        <div id="email-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.email-help")}
+        </div>
+        <div id="email-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </div>
+
+    <!-- Institution -->
+    <div>
+        <label for="institution" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.institution")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </label>
+        <input
+            type="text"
+            id="institution"
+            name="institution"
+            placeholder={t("phd-club.form.institution-placeholder")}
+            required
+            aria-describedby="institution-error"
+            autocomplete="organization"
+        />
+        <div id="institution-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </div>
+
+    <!-- Supervisors -->
+    <div>
+        <label for="supervisors" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.supervisors")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </label>
+        <input
+            type="text"
+            id="supervisors"
+            name="supervisors"
+            placeholder={t("phd-club.form.supervisors-placeholder")}
+            required
+            aria-describedby="supervisors-help supervisors-error"
+        />
+        <div id="supervisors-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.supervisors-help")}
+        </div>
+        <div id="supervisors-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </div>
+
+    <!-- Thesis description -->
+    <div>
+        <label for="thesisDescription" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.thesis")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </label>
+        <textarea
+            id="thesisDescription"
+            name="thesisDescription"
+            rows="6"
+            placeholder={t("phd-club.form.thesis-placeholder")}
+            required
+            aria-describedby="thesisDescription-help thesisDescription-error"
+            minlength="20"
+            maxlength="3000"></textarea>
+        <div id="thesisDescription-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.thesis-help")}
+        </div>
+        <div id="thesisDescription-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </div>
+
+    <!-- Consents -->
+    <fieldset class="space-y-4">
+        <!-- Toggle 1: supervisors are aware and agreed -->
+        <div>
+            <label for="consentSupervisors" class="flex items-start gap-3 cursor-pointer">
+                <span class="relative inline-flex flex-shrink-0 mt-0.5">
+                    <input
+                        type="checkbox"
+                        id="consentSupervisors"
+                        name="consentSupervisors"
+                        class="sr-only peer"
+                        required
+                        aria-describedby="consentSupervisors-error"
+                    />
+                    <span class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-primary-600 peer-focus:ring-2 peer-focus:ring-primary-400 transition-colors"></span>
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></span>
+                </span>
+                <span class="text-sm font-light text-gray-600">
+                    {t("phd-club.form.consent-supervisors")}
+                    <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+                </span>
+            </label>
+            <div id="consentSupervisors-error" class="mt-1 ml-14 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Toggle 2: charter read and accepted.
+             The toggle stays disabled until the "Read the charter" link is opened,
+             so the charter must be consulted before the application can be submitted. -->
+        <div>
+            <div class="mb-2">
+                <a id="charter-link" href={charterUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm font-medium text-primary-600 hover:underline">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75A5.25 5.25 0 0 1 7.5 4.5H4.5v13.5h3a5.25 5.25 0 0 1 4.5 2.25m0-13.5A5.25 5.25 0 0 0 16.5 4.5h3v13.5h-3a5.25 5.25 0 0 0-4.5 2.25m0-13.5v13.5"></path>
+                    </svg>
+                    {t("phd-club.form.charter-link")}
+                </a>
+            </div>
+            <label for="consentCharter" class="flex items-start gap-3 cursor-pointer">
+                <span class="relative inline-flex flex-shrink-0 mt-0.5">
+                    <input
+                        type="checkbox"
+                        id="consentCharter"
+                        name="consentCharter"
+                        class="sr-only peer"
+                        required
+                        disabled
+                        aria-describedby="consentCharter-hint consentCharter-error"
+                    />
+                    <span class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-primary-600 peer-focus:ring-2 peer-focus:ring-primary-400 peer-disabled:opacity-50 transition-colors"></span>
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5 peer-disabled:opacity-50"></span>
+                </span>
+                <span class="text-sm font-light text-gray-600 peer-disabled:text-gray-400">
+                    {t("phd-club.form.consent-charter")}
+                    <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+                </span>
+            </label>
+            <div id="consentCharter-hint" class="mt-1 ml-14 text-sm text-gray-500">
+                {t("phd-club.form.charter-hint")}
+            </div>
+            <div id="consentCharter-error" class="mt-1 ml-14 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+        </div>
+    </fieldset>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+        <button
+            type="submit"
+            class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+            id="submit-button"
+        >
+            <span id="submit-text">{t("phd-club.form.submit")}</span>
+            <span id="submit-loading" class="hidden">
+                <svg class="inline w-4 h-4 mr-2 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m100 50.5908c0 27.2899-22.1781 49.4081-49.4081 49.4081s-49.4081-22.1182-49.4081-49.4081c0-27.2899 22.1781-49.4081 49.4081-49.4081s49.4081 22.1182 49.4081 49.4081z" fill="currentColor"></path>
+                    <path d="m93.9676 39.0409c0-15.1956-12.3244-27.52-27.52-27.52s-27.52 12.3244-27.52 27.52 12.3244 27.52 27.52 27.52 27.52-12.3244 27.52-27.52z" fill="currentFill"></path>
+                </svg>
+                {t("phd-club.form.sending")}
+            </span>
+        </button>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" class="hidden p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200" role="alert" aria-live="polite">
+        <div class="flex items-center">
+            <svg class="flex-shrink-0 w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="font-medium">{t("phd-club.form.success-title")}</span>
+        </div>
+        <div class="mt-2">{t("phd-club.form.success-message")}</div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error-message" class="hidden p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200" role="alert" aria-live="polite">
+        <div class="flex items-center">
+            <svg class="flex-shrink-0 w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="font-medium">{t("phd-club.form.error-title")}</span>
+        </div>
+        <div class="mt-2" id="error-details">{t("phd-club.form.error-message")}</div>
+    </div>
+</form>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("phd-club-form");
+        if (!form) return;
+
+        const submitButton = document.getElementById("submit-button");
+        const submitText = document.getElementById("submit-text");
+        const submitLoading = document.getElementById("submit-loading");
+        const successMessage = document.getElementById("success-message");
+        const errorMessage = document.getElementById("error-message");
+        const errorDetails = document.getElementById("error-details");
+
+        const translations = JSON.parse(form.getAttribute("data-translations") || "{}");
+        const t = (key, params) => {
+            let text = translations[key] || key;
+            if (params) {
+                Object.keys(params).forEach((param) => {
+                    text = text.replace(`{${param}}`, params[param]);
+                });
+            }
+            return text;
+        };
+
+        const setError = (name, message) => {
+            const errorElement = document.getElementById(`${name}-error`);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.toggle("hidden", !message);
+            }
+        };
+
+        // Validate a single field; returns true when valid.
+        const validateField = (field) => {
+            const name = field.name;
+
+            if (field.type === "checkbox") {
+                // Charter toggle stays disabled until the charter link is opened.
+                if (field.disabled) {
+                    setError(name, t("charterFirst"));
+                    return false;
+                }
+                const valid = field.checked;
+                setError(name, valid ? "" : t("consentRequired"));
+                return valid;
+            }
+
+            const value = (field.value || "").trim();
+
+            if (field.hasAttribute("required") && !value) {
+                setError(name, t("requiredField"));
+                field.classList.add("border-red-500");
+                return false;
+            }
+
+            if (field.type === "email" && value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    setError(name, t("invalidEmail"));
+                    field.classList.add("border-red-500");
+                    return false;
+                }
+            }
+
+            setError(name, "");
+            field.classList.remove("border-red-500");
+            return true;
+        };
+
+        const fields = Array.from(form.querySelectorAll("input, textarea"));
+        fields.forEach((field) => {
+            const evt = field.type === "checkbox" ? "change" : "blur";
+            field.addEventListener(evt, () => validateField(field));
+        });
+
+        // The charter consent toggle is enabled only after the charter has been opened.
+        const charterLink = document.getElementById("charter-link");
+        const charterCheckbox = document.getElementById("consentCharter");
+        const charterHint = document.getElementById("consentCharter-hint");
+        if (charterLink && charterCheckbox) {
+            charterLink.addEventListener("click", () => {
+                charterCheckbox.disabled = false;
+                if (charterHint) charterHint.classList.add("hidden");
+                setError("consentCharter", "");
+            });
+        }
+
+        // Cooldown management
+        const COOLDOWN_KEY = "phd_club_form_last_submit";
+        const COOLDOWN_DURATION = 60000;
+        const checkCooldown = () => {
+            const last = localStorage.getItem(COOLDOWN_KEY);
+            return !last || Date.now() - parseInt(last) >= COOLDOWN_DURATION;
+        };
+        const getRemainingCooldown = () => {
+            const last = localStorage.getItem(COOLDOWN_KEY);
+            if (!last) return 0;
+            const remaining = COOLDOWN_DURATION - (Date.now() - parseInt(last));
+            return remaining > 0 ? Math.ceil(remaining / 1000) : 0;
+        };
+        const setCooldown = () => localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            successMessage.classList.add("hidden");
+            errorMessage.classList.add("hidden");
+
+            if (!checkCooldown()) {
+                errorDetails.textContent = t("cooldown", { seconds: getRemainingCooldown() });
+                errorMessage.classList.remove("hidden");
+                errorMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+                return;
+            }
+
+            let isFormValid = true;
+            fields.forEach((field) => {
+                if (!validateField(field)) isFormValid = false;
+            });
+            if (!isFormValid) {
+                const firstError = form.querySelector(".border-red-500, [aria-live='polite']:not(.hidden)");
+                if (firstError && firstError.focus) firstError.focus();
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitText.classList.add("hidden");
+            submitLoading.classList.remove("hidden");
+
+            const formData = new FormData(form);
+            const payload = {
+                firstName: formData.get("firstName"),
+                lastName: formData.get("lastName"),
+                email: formData.get("email"),
+                institution: formData.get("institution"),
+                supervisors: formData.get("supervisors"),
+                thesisDescription: formData.get("thesisDescription"),
+                consentSupervisors: form.querySelector("#consentSupervisors").checked,
+                consentCharter: form.querySelector("#consentCharter").checked,
+            };
+
+            try {
+                const apiUrl = form.getAttribute("data-api-url") || "/api/phd-club";
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    setCooldown();
+                    successMessage.classList.remove("hidden");
+                    form.reset();
+                    successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+                } else if (response.status === 429) {
+                    throw new Error(t("cooldown", { seconds: result.retry_after || 60 }));
+                } else {
+                    throw new Error(result.error || t("genericError"));
+                }
+            } catch (error) {
+                errorDetails.textContent = error instanceof Error ? error.message : t("genericError");
+                errorMessage.classList.remove("hidden");
+                errorMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+            } finally {
+                submitButton.disabled = false;
+                submitText.classList.remove("hidden");
+                submitLoading.classList.add("hidden");
+            }
+        });
+    });
+</script>
