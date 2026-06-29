@@ -124,6 +124,42 @@ const apiUrl = "/api/phd-club";
         <div id="supervisors-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
     </div>
 
+    <!-- Funding type -->
+    <div>
+        <label for="funding" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.funding")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </label>
+        <select id="funding" name="funding" required aria-describedby="funding-help funding-error">
+            <option value="">{t("phd-club.form.funding-placeholder")}</option>
+            <option value="doctoral-contract">{t("phd-club.form.funding-doctoral-contract")}</option>
+            <option value="cifre">{t("phd-club.form.funding-cifre")}</option>
+            <option value="project">{t("phd-club.form.funding-project")}</option>
+            <option value="other">{t("phd-club.form.funding-other")}</option>
+        </select>
+        <div id="funding-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.funding-help")}
+        </div>
+        <div id="funding-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </div>
+
+    <!-- Funder name (optional) -->
+    <div>
+        <label for="funder" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.funder")}
+        </label>
+        <input
+            type="text"
+            id="funder"
+            name="funder"
+            placeholder={t("phd-club.form.funder-placeholder")}
+            aria-describedby="funder-help"
+        />
+        <div id="funder-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.funder-help")}
+        </div>
+    </div>
+
     <!-- Thesis description -->
     <div>
         <label for="thesisDescription" class="block mb-2 text-sm font-medium text-gray-900">
@@ -317,9 +353,9 @@ const apiUrl = "/api/phd-club";
             return true;
         };
 
-        const fields = Array.from(form.querySelectorAll("input, textarea"));
+        const fields = Array.from(form.querySelectorAll("input, textarea, select"));
         fields.forEach((field) => {
-            const evt = field.type === "checkbox" ? "change" : "blur";
+            const evt = (field.type === "checkbox" || field.tagName === "SELECT") ? "change" : "blur";
             field.addEventListener(evt, () => validateField(field));
         });
 
@@ -383,6 +419,8 @@ const apiUrl = "/api/phd-club";
                 email: formData.get("email"),
                 institution: formData.get("institution"),
                 supervisors: formData.get("supervisors"),
+                funding: formData.get("funding"),
+                funder: formData.get("funder"),
                 thesisDescription: formData.get("thesisDescription"),
                 consentSupervisors: form.querySelector("#consentSupervisors").checked,
                 consentCharter: form.querySelector("#consentCharter").checked,

@@ -12,10 +12,20 @@ interface MembershipFormData {
     email: string;
     institution: string;
     supervisors: string;
+    funding: string;
+    funder: string;
     thesisDescription: string;
     consentSupervisors: boolean;
     consentCharter: boolean;
 }
+
+// Human-readable labels for the funding type select values.
+const fundingLabels: Record<string, string> = {
+    'doctoral-contract': 'Contrat doctoral (établissement ou organisme public)',
+    'cifre': 'Convention CIFRE (entreprise)',
+    'project': 'Financement sur projet',
+    'other': 'Autre',
+};
 
 interface RateLimitEntry {
     timestamp: number;
@@ -119,6 +129,8 @@ const generateEmailHtml = (data: MembershipFormData): string => {
     const userEmail = escapeHtml(data.email);
     const institution = escapeHtml(data.institution);
     const supervisors = escapeHtml(data.supervisors);
+    const funding = escapeHtml(fundingLabels[data.funding] || data.funding);
+    const funder = data.funder && data.funder.trim() ? escapeHtml(data.funder) : 'Non précisé';
     const thesisDescription = escapeHtml(data.thesisDescription).replace(/\n/g, '<br>');
 
     const yes = '✅';
@@ -156,6 +168,12 @@ const generateEmailHtml = (data: MembershipFormData): string => {
             </div>
             <div class='field'>
                 <span class='label'>Encadrant(s) :</span> ${supervisors}
+            </div>
+            <div class='field'>
+                <span class='label'>Financement :</span> ${funding}
+            </div>
+            <div class='field'>
+                <span class='label'>Financeur :</span> ${funder}
             </div>
             <div class='field'>
                 <span class='label'>Descriptif de la thèse :</span>
@@ -246,11 +264,12 @@ export const POST: APIRoute = async ({ request }) => {
         const data = await request.json() as MembershipFormData;
         const {
             firstName, lastName, email, institution,
-            supervisors, thesisDescription, consentSupervisors, consentCharter
+            supervisors, funding, funder, thesisDescription,
+            consentSupervisors, consentCharter
         } = data;
 
         if (!firstName || !lastName || !email || !institution ||
-            !supervisors || !thesisDescription ||
+            !supervisors || !funding || !thesisDescription ||
             consentSupervisors === undefined || consentCharter === undefined) {
             return new Response(
                 JSON.stringify({ error: 'Missing required fields' }),
@@ -268,7 +287,8 @@ export const POST: APIRoute = async ({ request }) => {
         // Send email
         await sendMembershipEmail({
             firstName, lastName, email, institution,
-            supervisors, thesisDescription, consentSupervisors, consentCharter
+            supervisors, funding, funder, thesisDescription,
+            consentSupervisors, consentCharter
         });
 
         // Update rate limit
