@@ -219,8 +219,7 @@ const sendMembershipEmail = async (data: MembershipFormData): Promise<void> => {
     const brevoApiKey = process.env.BREVO_API_KEY || import.meta.env.BREVO_API_KEY;
     const senderEmail = process.env.SENDER_EMAIL || import.meta.env.SENDER_EMAIL || 'contact@edtlab.fr';
     const senderName = process.env.SENDER_NAME || import.meta.env.SENDER_NAME || 'EDT Research Program';
-    // Trial phase: route applications to a single reviewer inbox.
-    const recipientEmail = process.env.PHD_CLUB_INBOX || import.meta.env.PHD_CLUB_INBOX || 'guy.de-spiegeleer@inria.fr';
+    const recipientEmail = process.env.PHD_CLUB_INBOX || import.meta.env.PHD_CLUB_INBOX;
 
     if (!brevoApiKey) {
         // Local/dev fallback: with no Brevo key configured, log the application so the

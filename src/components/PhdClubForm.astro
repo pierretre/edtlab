@@ -240,8 +240,7 @@ const apiUrl = "/api/phd-club";
     <fieldset class="space-y-4">
         <!-- Toggle 1: supervisors are aware and agreed -->
         <div>
-            <label for="consentSupervisors" class="flex items-start gap-3 cursor-pointer">
-                <span class="relative inline-flex flex-shrink-0 mt-0.5">
+            <label class="inline-flex items-start cursor-pointer">
                     <input
                         type="checkbox"
                         id="consentSupervisors"
@@ -250,15 +249,25 @@ const apiUrl = "/api/phd-club";
                         required
                         aria-describedby="consentSupervisors-error"
                     />
-                    <span class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-primary-600 peer-focus:ring-2 peer-focus:ring-primary-400 transition-colors"></span>
-                    <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></span>
-                </span>
-                <span class="text-sm font-light text-gray-600">
+                <div
+                    class="relative w-9 h-5 mt-0.5 flex-shrink-0 bg-primary-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"
+                >
+                </div>
+                <span class="select-none ms-3 text-sm font-light text-gray-600">
                     {t("phd-club.form.consent-supervisors")}
-                    <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+                    <span
+                        class="text-red-500"
+                        aria-label={t("phd-club.form.required")}>*</span
+                    >
                 </span>
             </label>
-            <div id="consentSupervisors-error" class="mt-1 ml-14 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+            <div
+                id="consentSupervisors-error"
+                class="mt-1 text-sm text-red-600 hidden"
+                role="alert"
+                aria-live="polite"
+            >
+            </div>
         </div>
 
         <!-- Toggle 2: charter read and accepted.
@@ -266,15 +275,31 @@ const apiUrl = "/api/phd-club";
              so the charter must be consulted before the application can be submitted. -->
         <div>
             <div class="mb-2">
-                <a id="charter-link" href={charterUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm font-medium text-primary-600 hover:underline">
-                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75A5.25 5.25 0 0 1 7.5 4.5H4.5v13.5h3a5.25 5.25 0 0 1 4.5 2.25m0-13.5A5.25 5.25 0 0 0 16.5 4.5h3v13.5h-3a5.25 5.25 0 0 0-4.5 2.25m0-13.5v13.5"></path>
+                <a
+                    id="charter-link"
+                    href={charterUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 text-sm font-medium text-primary-600 hover:underline"
+                >
+                    <svg
+                        class="w-4 h-4 flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 6.75A5.25 5.25 0 0 1 7.5 4.5H4.5v13.5h3a5.25 5.25 0 0 1 4.5 2.25m0-13.5A5.25 5.25 0 0 0 16.5 4.5h3v13.5h-3a5.25 5.25 0 0 0-4.5 2.25m0-13.5v13.5"
+                        ></path>
                     </svg>
                     {t("phd-club.form.charter-link")}
                 </a>
             </div>
-            <label for="consentCharter" class="flex items-start gap-3 cursor-pointer">
-                <span class="relative inline-flex flex-shrink-0 mt-0.5">
+            <label class="inline-flex items-start cursor-pointer">
                     <input
                         type="checkbox"
                         id="consentCharter"
@@ -284,24 +309,36 @@ const apiUrl = "/api/phd-club";
                         disabled
                         aria-describedby="consentCharter-hint consentCharter-error"
                     />
-                    <span class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-primary-600 peer-focus:ring-2 peer-focus:ring-primary-400 peer-disabled:opacity-50 transition-colors"></span>
-                    <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5 peer-disabled:opacity-50"></span>
-                </span>
-                <span class="text-sm font-light text-gray-600 peer-disabled:text-gray-400">
+                <div
+                    class="relative w-9 h-5 mt-0.5 flex-shrink-0 bg-primary-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"
+                >
+                </div>
+                <span class="select-none ms-3 text-sm font-light text-gray-600">
                     {t("phd-club.form.consent-charter")}
-                    <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+                    <span
+                        class="text-red-500"
+                        aria-label={t("phd-club.form.required")}>*</span
+                    >
                 </span>
             </label>
-            <div id="consentCharter-hint" class="mt-1 ml-14 text-sm text-gray-500">
+            <div id="consentCharter-hint" class="mt-1 text-sm text-gray-500">
                 {t("phd-club.form.charter-hint")}
             </div>
-            <div id="consentCharter-error" class="mt-1 ml-14 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+            <div
+                id="consentCharter-error"
+                class="mt-1 text-sm text-red-600 hidden"
+                role="alert"
+                aria-live="polite"
+            >
+            </div>
         </div>
 
         <!-- Toggle 3: mailing list subscription (required) -->
         <div>
-            <label for="mailingList" class="flex items-start gap-3 cursor-pointer">
-                <span class="relative inline-flex flex-shrink-0 mt-0.5">
+            <label
+                for="mailingList"
+                class="inline-flex items-start cursor-pointer"
+            >
                     <input
                         type="checkbox"
                         id="mailingList"
@@ -310,15 +347,25 @@ const apiUrl = "/api/phd-club";
                         required
                         aria-describedby="mailingList-error"
                     />
-                    <span class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-primary-600 peer-focus:ring-2 peer-focus:ring-primary-400 transition-colors"></span>
-                    <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></span>
-                </span>
-                <span class="text-sm font-light text-gray-600">
+                <div
+                    class="relative w-9 h-5 mt-0.5 flex-shrink-0 bg-primary-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"
+                >
+                </div>
+                <span class="select-none ms-3 text-sm font-light text-gray-600">
                     {t("phd-club.form.consent-mailing")}
-                    <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+                    <span
+                        class="text-red-500"
+                        aria-label={t("phd-club.form.required")}>*</span
+                    >
                 </span>
             </label>
-            <div id="mailingList-error" class="mt-1 ml-14 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+            <div
+                id="mailingList-error"
+                class="mt-1 text-sm text-red-600 hidden"
+                role="alert"
+                aria-live="polite"
+            >
+            </div>
         </div>
     </fieldset>
 

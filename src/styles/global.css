@@ -502,7 +502,10 @@
     border: 0;
 }
 
-.sr-only:focus {
+/* Reveal on focus only for elements that explicitly opt in (e.g. skip-to-content links).
+   Avoid applying to ALL .sr-only elements — hidden form controls like toggle checkboxes
+   would re-enter the layout flow when focused and push surrounding elements. */
+.sr-only.focusable:focus {
     position: static;
     width: auto;
     height: auto;
