@@ -12,6 +12,7 @@ interface MembershipFormData {
     email: string;
     institution: string;
     supervisors: string;
+    pcs: string[];
     funding: string;
     funder: string;
     thesisDescription: string;
@@ -130,6 +131,7 @@ const generateEmailHtml = (data: MembershipFormData): string => {
     const userEmail = escapeHtml(data.email);
     const institution = escapeHtml(data.institution);
     const supervisors = escapeHtml(data.supervisors);
+    const pcs = Array.isArray(data.pcs) ? escapeHtml(data.pcs.join(', ')) : '';
     const funding = escapeHtml(fundingLabels[data.funding] || data.funding);
     const funder = data.funder && data.funder.trim() ? escapeHtml(data.funder) : 'Non précisé';
     const thesisDescription = escapeHtml(data.thesisDescription).replace(/\n/g, '<br>');
@@ -170,6 +172,9 @@ const generateEmailHtml = (data: MembershipFormData): string => {
             </div>
             <div class='field'>
                 <span class='label'>Encadrant(s) :</span> ${supervisors}
+            </div>
+            <div class='field'>
+                <span class='label'>Projets ciblés (PC) :</span> ${pcs}
             </div>
             <div class='field'>
                 <span class='label'>Financement :</span> ${funding}
@@ -269,12 +274,13 @@ export const POST: APIRoute = async ({ request }) => {
         const data = await request.json() as MembershipFormData;
         const {
             firstName, lastName, email, institution,
-            supervisors, funding, funder, thesisDescription,
+            supervisors, pcs, funding, funder, thesisDescription,
             consentSupervisors, consentCharter, mailingList
         } = data;
 
         if (!firstName || !lastName || !email || !institution ||
             !supervisors || !funding || !thesisDescription ||
+            !Array.isArray(pcs) || pcs.length === 0 ||
             consentSupervisors === undefined || consentCharter === undefined ||
             mailingList === undefined) {
             return new Response(
@@ -293,7 +299,7 @@ export const POST: APIRoute = async ({ request }) => {
         // Send email
         await sendMembershipEmail({
             firstName, lastName, email, institution,
-            supervisors, funding, funder, thesisDescription,
+            supervisors, pcs, funding, funder, thesisDescription,
             consentSupervisors, consentCharter, mailingList: !!mailingList
         });
 

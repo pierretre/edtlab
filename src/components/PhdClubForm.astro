@@ -7,6 +7,16 @@ const t = useTranslations(lang);
 // URL of the club charter (PDF served from /public).
 const charterUrl = "/media/phds-club/membership_charter_phd_students_club.pdf";
 
+// Focused projects (PC) a PhD student can relate to. Project names are proper
+// nouns, identical in both languages.
+const PC_OPTIONS = [
+    { value: "PC1", label: "PC1 — Catalyst" },
+    { value: "PC2", label: "PC2 — DT Compose" },
+    { value: "PC3", label: "PC3 — TwinOps" },
+    { value: "PC4", label: "PC4 — Synchronic" },
+    { value: "PC5", label: "PC5 — Genuine" },
+];
+
 // Prepare translations for client-side
 const clientTranslations = {
     cooldown: t("phd-club.form.error-cooldown"),
@@ -16,6 +26,7 @@ const clientTranslations = {
     invalidEmail: t("phd-club.form.validation-email"),
     consentRequired: t("phd-club.form.validation-consent"),
     charterFirst: t("phd-club.form.charter-hint"),
+    pcsRequired: t("phd-club.form.validation-pcs"),
 };
 
 const apiUrl = "/api/phd-club";
@@ -181,6 +192,31 @@ const apiUrl = "/api/phd-club";
         <div id="thesisDescription-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
     </div>
 
+    <!-- Focused projects (PC) — at least one required -->
+    <fieldset aria-describedby="pc-help pc-error">
+        <legend class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.pcs")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </legend>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {PC_OPTIONS.map((pc) => (
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input
+                        type="checkbox"
+                        name="pc"
+                        value={pc.value}
+                        class="w-4 h-4 rounded border-gray-300 text-primary-600 focus:ring-primary-400"
+                    />
+                    <span class="text-sm text-gray-700">{pc.label}</span>
+                </label>
+            ))}
+        </div>
+        <div id="pc-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.pcs-help")}
+        </div>
+        <div id="pc-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </fieldset>
+
     <!-- Consents -->
     <fieldset class="space-y-4">
         <!-- Toggle 1: supervisors are aware and agreed -->
@@ -344,6 +380,10 @@ const apiUrl = "/api/phd-club";
             const name = field.name;
 
             if (field.type === "checkbox") {
+                // Non-required checkboxes (e.g. the PC group) are validated as a group.
+                if (!field.hasAttribute("required")) {
+                    return true;
+                }
                 // Charter toggle stays disabled until the charter link is opened.
                 if (field.disabled) {
                     setError(name, t("charterFirst"));
@@ -381,6 +421,21 @@ const apiUrl = "/api/phd-club";
             const evt = (field.type === "checkbox" || field.tagName === "SELECT") ? "change" : "blur";
             field.addEventListener(evt, () => validateField(field));
         });
+
+        // PC group: at least one focused project must be selected.
+        const pcCheckboxes = Array.from(form.querySelectorAll('input[name="pc"]'));
+        const getSelectedPcs = () =>
+            pcCheckboxes.filter((c) => c.checked).map((c) => c.value);
+        const validatePcs = () => {
+            const valid = getSelectedPcs().length > 0;
+            setError("pc", valid ? "" : t("pcsRequired"));
+            return valid;
+        };
+        pcCheckboxes.forEach((c) =>
+            c.addEventListener("change", () => {
+                if (getSelectedPcs().length > 0) setError("pc", "");
+            }),
+        );
 
         // The charter consent toggle is enabled only after the charter has been opened.
         const charterLink = document.getElementById("charter-link");
@@ -425,6 +480,7 @@ const apiUrl = "/api/phd-club";
             fields.forEach((field) => {
                 if (!validateField(field)) isFormValid = false;
             });
+            if (!validatePcs()) isFormValid = false;
             if (!isFormValid) {
                 const firstError = form.querySelector(".border-red-500, [aria-live='polite']:not(.hidden)");
                 if (firstError && firstError.focus) firstError.focus();
@@ -442,6 +498,7 @@ const apiUrl = "/api/phd-club";
                 email: formData.get("email"),
                 institution: formData.get("institution"),
                 supervisors: formData.get("supervisors"),
+                pcs: getSelectedPcs(),
                 funding: formData.get("funding"),
                 funder: formData.get("funder"),
                 thesisDescription: formData.get("thesisDescription"),
