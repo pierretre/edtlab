@@ -35,18 +35,18 @@ Sur invitation uniquement. Si vous êtes intéressé(e), contactez les organisat
 Allocutions d'accueil et discours introductifs : Pascale Vicat-Blanc et Benoit Combemale (Inria), 
 Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
 
-**14h00 – 14h30 · Présentation du programme EDT**
+**14h00 – 14h30 · Présentation du programme EDT** — [Planches](/deliverables/EDT-Réunion%20de%20lancement-01-Intro.pdf)
 Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, feuille de route et jalons principaux (Benoit Combemale & Pascale Vicat-Blanc).
 
 **14h30 – 15h20 · Projets scientifiques ciblés**
 
-- **PC1 — Catalyst** — Julien Déantoni
-- **PC2 — DT Compose** — Jean-Marc Jezequel et Jannick Laval
-- **PC3 — TwinOps** — Jean-Michel Bruel et Antoine Beugnard
-- **PC4 — Synchronic** — Hind Bril el-Haouzi
-- **PC5 — Genuine** — Thierry Duval et Arnaud Blouin
+- **PC1 — Catalyst** — Julien Déantoni — [Planches](/deliverables/EDT-Réunion%20de%20lancement-02-PC1.pdf)
+- **PC2 — DT Compose** — Jean-Marc Jezequel et Jannick Laval — [Planches](/deliverables/EDT-Réunion%20de%20lancement-02-PC2.pdf)
+- **PC3 — TwinOps** — Jean-Michel Bruel et Antoine Beugnard — [Planches](/deliverables/EDT-Réunion%20de%20lancement-02-PC3.pdf)
+- **PC4 — Synchronic** — Hind Bril el-Haouzi — [Planches](/deliverables/EDT-Réunion%20de%20lancement-02-PC4.pdf)
+- **PC5 — Genuine** — Thierry Duval et Arnaud Blouin — [Planches](/deliverables/EDT-Réunion%20de%20lancement-02-PC5.pdf)
 
-**15h20 – 15h50 · Actions transverses**
+**15h20 – 15h50 · Actions transverses** — [Planches](/deliverables/EDT-Réunion%20de%20lancement-03-ATs.pdf)
 Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegeleer, Benoit Combemale, Pascale Vicat-Blanc).
 
 - **AT1** — Animation
@@ -55,9 +55,9 @@ Objectifs principaux, activités prévues et résultats attendus (Guy De Spiegel
 - **AT4** — Éthique et développement durable
 - **AT5** — Dissémination et exploitation
 
-**15h50 – 16h00 · Intervention de partenaires industriels**
+**15h50 – 16h00 · Intervention de partenaires industriels** — [Planches](/deliverables/EDT-Réunion%20de%20lancement-04-Partenaires%20industriels.pdf)
 
-**16h00 – 16h25 · Informations administratives**
+**16h00 – 16h25 · Informations administratives** — [ANR](/deliverables/EDT-Réunion%20de%20lancement-05-ANR.pdf) · [Programme](/deliverables/EDT-Réunion%20de%20lancement-05-Admin.pdf)
 Axelle Croise (ANR).
 
 **16h25 – 16h30 · Conclusions**

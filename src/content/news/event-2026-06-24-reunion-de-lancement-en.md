@@ -35,18 +35,18 @@ By invitation only. If you are interested, contact the organisers: ops@edtlab.fr
 Welcome address and introductory speeches: Pascale Vicat-Blanc and Benoit Combemale (Inria), 
 Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
 
-**2:00 PM – 2:30 PM · Presentation of the EDT program**
+**2:00 PM – 2:30 PM · Presentation of the EDT program** — [Slides](/deliverables/EDT-Réunion%20de%20lancement-01-Intro.pdf)
 Vision, program overview, main objectives, expected outcomes, roadmap and key milestones (Benoit Combemale & Pascale Vicat-Blanc).
 
 **2:30 PM – 3:20 PM · Focused scientific projects**
 
-- **PC1 — Catalyst** — Julien Déantoni
-- **PC2 — DT Compose** — Jean-Marc Jezequel and Jannik Laval
-- **PC3 — TwinOps** — Jean-Michel Bruel and Antoine Beugnard
-- **PC4 — Synchronic** — Hind Bril el-Haouzi
-- **PC5 — Genuine** — Thierry Duval and Arnaud Blouin
+- **PC1 — Catalyst** — Julien Déantoni — [Slides](/deliverables/EDT-Réunion%20de%20lancement-02-PC1.pdf)
+- **PC2 — DT Compose** — Jean-Marc Jezequel and Jannik Laval — [Slides](/deliverables/EDT-Réunion%20de%20lancement-02-PC2.pdf)
+- **PC3 — TwinOps** — Jean-Michel Bruel and Antoine Beugnard — [Slides](/deliverables/EDT-Réunion%20de%20lancement-02-PC3.pdf)
+- **PC4 — Synchronic** — Hind Bril el-Haouzi — [Slides](/deliverables/EDT-Réunion%20de%20lancement-02-PC4.pdf)
+- **PC5 — Genuine** — Thierry Duval and Arnaud Blouin — [Slides](/deliverables/EDT-Réunion%20de%20lancement-02-PC5.pdf)
 
-**3:20 PM – 3:50 PM · Cross-cutting actions**
+**3:20 PM – 3:50 PM · Cross-cutting actions** — [Slides](/deliverables/EDT-Réunion%20de%20lancement-03-ATs.pdf)
 Main objectives, planned activities and expected outcomes (Guy De Spiegeleer, Benoit Combemale, Pascale Vicat-Blanc).
 
 - **AT1** — Animation
@@ -55,9 +55,9 @@ Main objectives, planned activities and expected outcomes (Guy De Spiegeleer, Be
 - **AT4** — Ethics and sustainability
 - **AT5** — Dissemination and exploitation
 
-**3:50 PM – 4:00 PM · Industrial partners' address**
+**3:50 PM – 4:00 PM · Industrial partners' address** — [Slides](/deliverables/EDT-Réunion%20de%20lancement-04-Partenaires%20industriels.pdf)
 
-**4:00 PM – 4:25 PM · Administrative information**
+**4:00 PM – 4:25 PM · Administrative information** — [ANR](/deliverables/EDT-Réunion%20de%20lancement-05-ANR.pdf) · [Program](/deliverables/EDT-Réunion%20de%20lancement-05-Admin.pdf)
 Axelle Croise (ANR).
 
 **4:25 PM – 4:30 PM · Closing remarks**
