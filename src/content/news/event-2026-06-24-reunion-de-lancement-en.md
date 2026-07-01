@@ -48,7 +48,7 @@ Vision, program overview, main objectives, expected outcomes, roadmap and key mi
 - **AT2** — Use cases and demonstrators
 - **AT5** — Dissemination and exploitation
 
-**3:50 PM – 4:00 PM · [Industrial partners' address](/deliverables/EDT-Réunion%20de%20lancement-04-Partenaires%20industriels.pdf)**
+**3:50 PM – 4:00 PM · [Industrial partners’ address](/deliverables/EDT-Réunion%20de%20lancement-04-Partenaires%20industriels.pdf)**
 - Comité technique Jumeau Numérique Industriel (EDT - France Industrie) - Olivier Scart (3DS)
 - Thing’in Digital Twin Platform & EDT - Thierry Coupaye (Orange)
 - Projet GI-JOE - Mohamed Bennabach (CETIM - Instituts Carnot)
