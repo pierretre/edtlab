@@ -31,28 +31,28 @@ Cette journée a réuni l'ensemble des partenaires institutionnels, scientifique
 Allocutions d'accueil et discours introductifs : Pascale Vicat-Blanc et Benoit Combemale (Inria), 
 Florent Kirchner (SGPI), Ouiddad Labbani-I. (SSRI/DGRI), Sophie Proust (Inria).
 
-**14h00 – 14h30 · [Présentation du programme EDT](/deliverables/EDT-Réunion%20de%20lancement-01-Intro.pdf)**
+**14h00 – 14h30 · [Présentation du programme EDT](/deliverables/edt-kom-2026-01-intro.pdf)**
 Vision, vue d'ensemble du programme, objectifs principaux, résultats attendus, feuille de route et jalons principaux (Benoit Combemale & Pascale Vicat-Blanc).
 
 **14h30 – 15h20 · Projets scientifiques ciblés**
 
-- **PC1 — [Catalyst](/deliverables/EDT-Réunion%20de%20lancement-02-PC1.pdf)** — Julien Déantoni
-- **PC2 — [DT Compose](/deliverables/EDT-Réunion%20de%20lancement-02-PC2.pdf)** — Jean-Marc Jezequel et Jannick Laval
-- **PC3 — [TwinOps](/deliverables/EDT-Réunion%20de%20lancement-02-PC3.pdf)** — Jean-Michel Bruel et Antoine Beugnard
-- **PC4 — [Synchronic](/deliverables/EDT-Réunion%20de%20lancement-02-PC4.pdf)** — Hind Bril el-Haouzi
-- **PC5 — [Genuine](/deliverables/EDT-Réunion%20de%20lancement-02-PC5.pdf)** — Thierry Duval et Arnaud Blouin
+- **PC1 — [Catalyst](/deliverables/edt-kom-2026-02-pc1.pdf)** — Julien Déantoni
+- **PC2 — [DT Compose](/deliverables/edt-kom-2026-02-pc2.pdf)** — Jean-Marc Jezequel et Jannick Laval
+- **PC3 — [TwinOps](/deliverables/edt-kom-2026-02-pc3.pdf)** — Jean-Michel Bruel et Antoine Beugnard
+- **PC4 — [Synchronic](/deliverables/edt-kom-2026-02-pc4.pdf)** — Hind Bril el-Haouzi
+- **PC5 — [Genuine](/deliverables/edt-kom-2026-02-pc5.pdf)** — Thierry Duval et Arnaud Blouin
 
-**15h20 – 15h50 · Actions transverses** — [Objectifs principaux, activités prévues et résultats attendus](/deliverables/EDT-Réunion%20de%20lancement-03-ATs.pdf) (Guy De Spiegeleer).
+**15h20 – 15h50 · Actions transverses** — [Objectifs principaux, activités prévues et résultats attendus](/deliverables/edt-kom-2026-03-ats.pdf) (Guy De Spiegeleer).
 
 - **AT1** — Animation
 - **AT2** — Cas d'usage et démonstrateurs
 - **AT5** — Dissémination et exploitation
 
-**15h50 – 16h00 · [Intervention de partenaires industriels](/deliverables/EDT-Réunion%20de%20lancement-04-Partenaires%20industriels.pdf)**
+**15h50 – 16h00 · [Intervention de partenaires industriels](/deliverables/edt-kom-2026-04-industrial-partners.pdf)**
 - Comité technique Jumeau Numérique Industriel (EDT - France Industrie) - Olivier Scart (3DS)
 - Thing’in Digital Twin Platform & EDT - Thierry Coupaye (Orange)
 - Projet GI-JOE - Mohamed Bennabach (CETIM - Instituts Carnot)
 
-**16h00 – 16h25 · [Informations administratives](/deliverables/EDT-Réunion%20de%20lancement-05-ANR.pdf)** — Axelle Croise (ANR).
+**16h00 – 16h25 · [Informations administratives](/deliverables/edt-kom-2026-05-anr.pdf)** — Axelle Croise (ANR).
 
-**16h25 – 16h30 · [Conclusions](/deliverables/EDT-Réunion%20de%20lancement-05-Admin.pdf)**
+**16h25 – 16h30 · [Conclusions](/deliverables/edt-kom-2026-05-admin.pdf)**
