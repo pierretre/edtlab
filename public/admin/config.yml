@@ -159,6 +159,7 @@ collections:
       - { label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication" }
       - { label: "Tags", name: "tags", widget: "list", required: false, hint: "e.g., PC1, PC2, keywords" }
 
+  # Newsletter
   - name: "newsletter"
     label: "Newsletter"
     folder: "src/content/newsletter"
@@ -231,4 +232,3 @@ collections:
           ## News
 
           [Liens vers les news liées, séminaires, etc.]
-      - { label: "Body", name: "body", widget: "markdown" }
