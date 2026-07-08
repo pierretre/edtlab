@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import fs from "fs";
+import readline from "node:readline/promises";
 import matter from "gray-matter";
 import { remark } from "remark";
 import { render } from "@react-email/render";
@@ -55,6 +56,23 @@ if (!process.env.SENDER_EMAIL) {
     console.error("No sender email provided.");
     process.exit(0);
 }
+
+// Ask for confirmation before sending
+console.log("\nAbout to send newsletter campaign:");
+console.log(`  File:       ${filePath}`);
+console.log(`  Title:      ${data.title}`);
+console.log(`  Recipients: ${data.recipients} (list ID: ${listId})`);
+console.log(`  Sender:     ${process.env.SENDER_NAME} <${process.env.SENDER_EMAIL}>\n`);
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const answer = await rl.question("Send this campaign now? (yes/no) ");
+rl.close();
+
+if (answer.trim().toLowerCase() !== "yes") {
+    console.log("Aborted. Newsletter was not sent.");
+    process.exit(0);
+}
+
 // Create Campaign
 const campaign = await apiInstance.createEmailCampaign({
     name: data.title,
