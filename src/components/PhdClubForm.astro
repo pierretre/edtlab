@@ -134,6 +134,25 @@ const apiUrl = "/api/phd-club";
         <div id="supervisors-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
     </div>
 
+    <!-- Thesis start date -->
+    <div>
+        <label for="startDate" class="block mb-2 text-sm font-medium text-gray-900">
+            {t("phd-club.form.start-date")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
+        </label>
+        <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            required
+            aria-describedby="startDate-help startDate-error"
+        />
+        <div id="startDate-help" class="mt-1 text-sm text-gray-500">
+            {t("phd-club.form.start-date-help")}
+        </div>
+        <div id="startDate-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+    </div>
+
     <!-- Funding type -->
     <div>
         <label for="funding" class="block mb-2 text-sm font-medium text-gray-900">
@@ -153,21 +172,24 @@ const apiUrl = "/api/phd-club";
         <div id="funding-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
     </div>
 
-    <!-- Funder name (optional) -->
+    <!-- Funder name -->
     <div>
         <label for="funder" class="block mb-2 text-sm font-medium text-gray-900">
             {t("phd-club.form.funder")}
+            <span class="text-red-500" aria-label={t("phd-club.form.required")}>*</span>
         </label>
         <input
             type="text"
             id="funder"
             name="funder"
             placeholder={t("phd-club.form.funder-placeholder")}
-            aria-describedby="funder-help"
+            required
+            aria-describedby="funder-help funder-error"
         />
         <div id="funder-help" class="mt-1 text-sm text-gray-500">
             {t("phd-club.form.funder-help")}
         </div>
+        <div id="funder-error" class="mt-1 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
     </div>
 
     <!-- Thesis description -->
@@ -553,6 +575,7 @@ const apiUrl = "/api/phd-club";
                 email: formData.get("email"),
                 institution: formData.get("institution"),
                 supervisors: formData.get("supervisors"),
+                startDate: formData.get("startDate"),
                 pcs: getSelectedPcs(),
                 funding: formData.get("funding"),
                 funder: formData.get("funder"),
