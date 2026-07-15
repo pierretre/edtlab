@@ -10,7 +10,7 @@ summary: >-
   SaaS digital twin platform for predictive decarbonisation of road transport fleets (ICE, BEV, FCEV), covering strategic planning 2030-2050 and tactical/daily planning via Digital Truck Twins, scenario generation and economic/CO₂ models.
 usersCount: 0
 lang: en
-photo: /media/use-cases/uc18-eco4impact-vectura.png
+photo: /media/uploads/uc18-eco4impact-vectura.png
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: energy
 # maturity : concept | poc | prototype | operational

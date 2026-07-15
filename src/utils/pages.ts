@@ -146,22 +146,21 @@ async function generateResearchStudiesStaticPaths(): Promise<any[]> {
 async function generateUseCasesStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("use-cases");
 
-    // Group entries by their language-agnostic base slug (filename without the
-    // trailing "-en"/"-fr"). Like job offers, a use case provided in a single
-    // language is still served under both /en and /fr; when both languages
-    // exist, each locale serves its own file instead of generating a duplicate
-    // static path for the shared slug.
-    const byBaseSlug = new Map<string, CollectionEntry<"use-cases">[]>();
+    // Group entries by their use-case id field (e.g. "uc05"), which is
+    // language-agnostic and decoupled from the filename. Like job offers, a use
+    // case provided in a single language is still served under both /en and /fr;
+    // when both languages exist, each locale serves its own file.
+    const byId = new Map<string, CollectionEntry<"use-cases">[]>();
     for (const entry of allEntries) {
-        const baseSlug = entry.id.replace(/-(en|fr)$/, "");
-        const group = byBaseSlug.get(baseSlug) ?? [];
+        const ucId = entry.data.id;
+        const group = byId.get(ucId) ?? [];
         group.push(entry);
-        byBaseSlug.set(baseSlug, group);
+        byId.set(ucId, group);
     }
 
     const langs: ("en" | "fr")[] = ["en", "fr"];
     const pages: any[] = [];
-    for (const group of byBaseSlug.values()) {
+    for (const group of byId.values()) {
         for (const lang of langs) {
             // Prefer published entry in target language, then any published
             // entry as fallback. Draft-only groups produce no path for that lang.
