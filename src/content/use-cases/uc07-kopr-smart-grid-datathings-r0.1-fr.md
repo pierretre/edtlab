@@ -1,6 +1,6 @@
----
+﻿---
 
-id: uc01
+id: uc07
 
 title: KOPR SmartGrid DigitalTwin
 
@@ -14,6 +14,8 @@ contacts:
 
     email: francois.fouquet@datathings.com
 
+    role: Fondateur & CEO
+
 summary: >-
 
   Jumeau numérique de la grille de distribution électrique, en aide à la décision pour les gestionnaires de réseaux : planification de la maintenance, détection de problèmes, simulation d'extensions ou de reconfigurations.
@@ -26,11 +28,11 @@ summary: >-
 
   Le système fournit enfin des alertes et des visualisations en temps réel pour aider à reconfigurer la grille et à piloter les productions renouvelables, notamment pour lisser les fluctuations de tension.
 
-usersCount: 30+
+usersCount: 30
 
 lang: fr
 
-photo: 
+photo: /media/uploads/kopr.png
 
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 
@@ -47,6 +49,8 @@ originType: infrastructure
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 
 version: r0.1
+
+status: published
 
 license: BUSL-1.1
 
@@ -73,10 +77,6 @@ lastUpdated: 2026-04-15T00:00:00.000Z
 ---
 
 ## Résumé
-
-<!-- Décrivez en 3-5 phrases le cas d'usage : quel système physique, quel jumeau numérique, quels objectifs. -->
-
-
 
 **KOPR** est un jumeau numérique des réseaux électriques de distribution, surtout des grilles basse tension mises sous pression par les énergies renouvelables (photovoltaïque, éolien), les véhicules électriques et les pompes à chaleur. 
 
@@ -108,10 +108,6 @@ Il s'appuie sur GreyCat, une base de données programmable, temporelle et graphe
 
 ### Utilisateurs
 
-<!-- Liste des rôles utilisateurs concrets qui interagissent avec le JN (développeur, opérateur, chercheur, mainteneur, décideur, etc.). -->
-
-
-
 - **Un opérateur d'exploitation** - supervise le réseau en temps réel, détecte et traite les incidents
 
 - **Un ingénieur planification** - simule des scénarios d'extension ou de reconfiguration du réseau
@@ -121,14 +117,6 @@ Il s'appuie sur GreyCat, une base de données programmable, temporelle et graphe
 
 
 ### Besoins fonctionnels
-
-<!-- Typologies disponibles : Décrire | Diagnostiquer | Prédire | Optimiser | Contrôler | Sécuriser | Interagir. Combinaisons possibles avec '+' (ex : Décrire + Sécuriser).
-
-
-
-Format : <Typologie> · <Utilisateur> veut <action> pour <objectif>, dans <contexte>. Métrique : <indicateur quantifié>. -->
-
-
 
 - **Décrire** · *Un opérateur d'exploitation* **veut visualiser en quasi temps réel l'état de charge des transformateurs et des départs basse tension** pour repérer les zones en dépassement de contraintes, dans un centre de conduite. **Métrique :** > 330 000 points de livraison suivis, rafraîchissement à la cadence des données (15 min smart meters, temps quasi réel capteurs 4G).
 
@@ -160,8 +148,6 @@ Format : <Typologie> · <Utilisateur> veut <action> pour <objectif>, dans <conte
 
 ### MC1 - Système étudié
 
-<!-- Décrivez le système physique étudié (le jumeau physique), son environnement et les agents/opérateurs présents. -->
-
 
 
 Réseau électrique de distribution, principalement basse tension : transformateurs (postes de distribution), câbles et lignes, concentrateurs, ainsi que les points de livraison (clients) équipés de compteurs communicants. L'environnement est marqué par l'intégration croissante des productions décentralisées (photovoltaïque, éolien) et de nouvelles charges (véhicules électriques, pompes à chaleur). Les agents en présence sont les gestionnaires de réseau (DSO), les opérateurs de conduite et les consommateurs/producteurs raccordés.
@@ -170,8 +156,6 @@ Réseau électrique de distribution, principalement basse tension : transformate
 
 ### MC2 - Composants d'action physiques
 
-<!-- Listez les actionneurs et mécanismes par lesquels le jumeau numérique peut agir sur le système physique. -->
-
 
 
 Le périmètre principal en exploitation est observationnel et décisionnel : le jumeau produit états, alertes et recommandations à destination des exploitants. Une boucle de commande (« prescription et actionnement ») est toutefois déjà déployée à périmètre limité : à partir des violations de contraintes anticipées, KOPR génère des recommandations puis des ordres pour les charges flexibles - limitation d'injection des onduleurs PV, plafonnement de puissance des bornes de recharge VE, activation d'une production pilotable (ex. hydrogène) ou déclenchement de relais de compteurs pour la réponse à la demande. Le déploiement est **progressif** : mode conseil, puis supervision semi-autonome, puis boucle fermée complète à mesure que la confiance opérationnelle augmente (voir scénarios).
@@ -179,8 +163,6 @@ Le périmètre principal en exploitation est observationnel et décisionnel : le
 
 
 ### MC3 - Composants de captation physiques
-
-<!-- Listez les capteurs et mécanismes par lesquels le système physique transmet des données au jumeau numérique. -->
 
 
 
@@ -202,8 +184,6 @@ Le périmètre principal en exploitation est observationnel et décisionnel : le
 
 ### MC4 - Interaction physique → virtuel
 
-<!-- Décrivez les données transmises du système physique vers le jumeau numérique : protocoles, fréquences, types de données, standards et normes. -->
-
 
 
 Ingestion multi-sources dont les schémas et fréquences diffèrent radicalement (de la sous-seconde à l'hebdomadaire) : SIG en exports par lots (quotidiens à hebdomadaires), synchronisation ERP des métadonnées d'actifs, relevés AMI au pas de 15 minutes, événements d'état SCADA en quasi temps réel (Kafka / MQTT), données phasorielles PMU haute fréquence, mesures des capteurs de poste (4G/LoRa) et flux météo/calendaires externes.
@@ -216,8 +196,6 @@ L'intégration n'est pas un simple raccordement mais un **problème de modélisa
 
 ### MC5 - Interaction virtuel → physique
 
-<!-- Décrivez les données transmises du jumeau numérique vers le système physique : commandes, alertes, paramètres, standards et normes. -->
-
 
 
 Au niveau analytique, KOPR transmet aux systèmes des exploitants des prévisions de consommation et de production (estimations de charge prospectives) et émet des avertissements lorsqu'il anticipe une violation de contrainte (surcharge de câble, saturation de transformateur, excursion de tension) *avant* qu'elle ne se matérialise. Au niveau opérationnel, des ordres correctifs sont transmis aux équipements raccordés via des dispositifs de contrôle : limitation d'injection PV, plafonnement de puissance des bornes VE, pilotage de production flexible, relais de compteurs. Cette boucle est déployée à périmètre limité (déploiement par phases). L'actionnement futur généralisé est envisagé.
@@ -225,8 +203,6 @@ Au niveau analytique, KOPR transmet aux systèmes des exploitants des prévision
 
 
 ### MC6 - Services du JN
-
-<!-- Listez les services fournis par le jumeau numérique : simulation, optimisation, détection, visualisation, etc. -->
 
 
 
@@ -246,8 +222,6 @@ Au niveau analytique, KOPR transmet aux systèmes des exploitants des prévision
 
 ### MC7 - Échelle temporelle
 
-<!-- Précisez les échelles de temps : synchronisation temps réel, plus rapide, plus lent que le système physique. -->
-
 
 
 Cadences hétérogènes : quasi temps réel pour les capteurs 4G/LoRa des postes et transformateurs ( < 5 seconds), pas de 15 minutes pour les smart meters. Le jumeau fonctionne en quasi temps réel (apprentissage continu) et peut être accéléré pour rejouer rapidement l'historique ou simuler des scénarios prospectifs.
@@ -255,8 +229,6 @@ Cadences hétérogènes : quasi temps réel pour les capteurs 4G/LoRa des postes
 
 
 ### MC8 - Multiplicités
-
-<!-- Le JN est-il composé de sous-jumeaux ? Architecture centralisée ou décentralisée ? Multi-instance ? -->
 
 
 
@@ -266,8 +238,6 @@ Jumeau à grande échelle couvrant l'ensemble d'un réseau de distribution : plu
 
 ### MC9 - Phases du cycle de vie
 
-<!-- Quelles phases du cycle de vie sont couvertes ? Conception, fabrication, exploitation, maintenance, démantèlement. -->
-
 
 
 Système en exploitation, couvrant principalement les phases d'exploitation et de maintenance du réseau, ainsi que la planification (extension, reconfiguration, raccordement des EnR et VE).
@@ -275,8 +245,6 @@ Système en exploitation, couvrant principalement les phases d'exploitation et d
 
 
 ### MC10 - Modèles et données
-
-<!-- Décrivez les modèles utilisés (physiques, données, hybrides) et les données d'entrée/sortie. -->
 
 
 
@@ -292,8 +260,6 @@ Système en exploitation, couvrant principalement les phases d'exploitation et d
 
 ### MC11 - Outils et facilitateurs
 
-<!-- Listez les outils, frameworks et plateformes utilisés pour réaliser les services du JN, lister les API. -->
-
 
 
 - **GreyCat** - base de données temporelle et graphe assurant le stockage, la modélisation et le traitement à grande échelle des séries temporelles et de la topologie réseau
@@ -308,8 +274,6 @@ Système en exploitation, couvrant principalement les phases d'exploitation et d
 
 ### MC12 - Constellation du JN
 
-<!-- Comment les modèles, données, outils et services sont-ils orchestrés ensemble ? Architecture logique du JN. -->
-
 
 
 Chaîne : sources hétérogènes (SIG, AMI/smart meters, capteurs 4G/LoRa) → connecteurs d'ingestion → modèle temporel-graphe GreyCat → moteurs d'analyse (ML/IA de prévision et détection, power-flow) → services de visualisation, d'alerte et de simulation exposés via l'interface web. La topologie du graphe relie les mesures aux éléments physiques du réseau, permettant analyses et simulations contextualisées.
@@ -318,8 +282,6 @@ Chaîne : sources hétérogènes (SIG, AMI/smart meters, capteurs 4G/LoRa) → c
 
 ### MC13 - Processus de jumelage et évolution
 
-<!-- Décrivez la méthodologie de développement du JN, ses jalons et ses évolutions prévues. -->
-
 
 
 Approche incrémentale : intégration progressive des sources de données (SIG, comptage, capteurs terrain), enrichissement du modèle de réseau, puis ajout des services d'analyse (détection, prévision) et de simulation. Évolution vers une boucle de pilotage (envoi d'ordres aux équipements) prévue dans la feuille de route.
@@ -327,8 +289,6 @@ Approche incrémentale : intégration progressive des sources de données (SIG, 
 
 
 ### MC14 - Fidélité et validité
-
-<!-- Quelle est la précision des modèles ? Comment sont-ils validés et calibrés ? Quelle est la précision des mesures ? Sont elles bruitées ? Partielles ? Polluées ? -->
 
 
 
@@ -342,8 +302,6 @@ Les données peuvent être partielles (points non instrumentés), bruitées ou e
 
 ### MC15 - Connexion technique
 
-<!-- Quels protocoles réseau et architectures de communication sont utilisés entre le physique et le virtuel ? -->
-
 
 
 Communications terrain via réseaux cellulaires (4G) et LoRa pour les capteurs de poste. Collecte des smart meters de proche en proche : chaque compteur relaie les relevés vers un **concentrateur de données** co-localisé avec le poste de transformation local, qui agrège et transmet au système central. Les états SCADA remontent en flux d'événements quasi temps réel (Kafka / MQTT) ; l'intégration des SIG et ERP se fait par connecteurs/API. La commande future généralisée des équipements est envisagée via un protocole standardisé de type ISO.
@@ -352,8 +310,6 @@ Communications terrain via réseaux cellulaires (4G) et LoRa pour les capteurs d
 
 ### MC16 - Hébergement / déploiement
 
-<!-- Où est hébergé le JN ? Local, cloud, plateforme dédiée ? Mode de déploiement. -->
-
 
 
 KOPR s'exécute sur un **serveur central unique** qui maintient le graphe temporel à l'échelle nationale, exécute les calculs de power-flow, orchestre les modèles ML distribués, sert le tableau de bord des exploitants et exécute les simulations « what-if ». La collecte de données est en revanche distribuée (concentrateurs co-localisés avec les postes). Le déploiement (cloud ou on-premise chez le gestionnaire de réseau) est dimensionné pour la volumétrie (330 000+ points de livraison, 45 Md+ relevés/an, ~225 Md historisés). Accès aux services via interface web, protocole binaire, json-rpc et MCP.
@@ -361,8 +317,6 @@ KOPR s'exécute sur un **serveur central unique** qui maintient le graphe tempor
 
 
 ### MC17 - Insights et prise de décision
-
-<!-- Quels insights et aides à la décision le JN fournit-il aux opérateurs ? -->
 
 
 
@@ -382,8 +336,6 @@ KOPR s'exécute sur un **serveur central unique** qui maintient le graphe tempor
 
 ### MC18 - Intégration horizontale
 
-<!-- Le JN échange-t-il des données avec d'autres systèmes (SCADA, autres JN, SI) ? -->
-
 
 
 Fortement intégré à l'écosystème d'exploitation. 
@@ -398,8 +350,6 @@ Le défi n'est pas le raccordement mais la réconciliation de schémas, la réso
 
 ### MC19 - Propriété et confidentialité des données
 
-<!-- Y a-t-il des considérations de propriété ou confidentialité des données ? RGPD ? -->
-
 
 
 Le jumeau traite des données de comptage (consommation/production) à l'échelle de centaines de milliers de points de livraison, potentiellement rattachables à des clients donc soumises à des exigences de confidentialité et de protection des données (RGPD). 
@@ -412,8 +362,6 @@ Les données restent sous la gouvernance du gestionnaire de réseau hôte ; l'in
 
 ### MC20 - Standardisation
 
-<!-- Quelles normes sont suivies (FMI, AAS, ISO-23247, etc.) ? -->
-
 
 
 Il n'existe pas encore de standard universellement adopté pour représenter et échanger les données d'exploitation du réseau (topologie, télémétrie, métadonnées d'actifs, prévisions, interfaces de commande) : l'écosystème smart-grid reste fragmenté (systèmes hérités, protocoles propriétaires, schémas spécifiques par organisation). 
@@ -425,8 +373,6 @@ Les standards d'interopérabilité émergents, en particulier le **Common Inform
 
 
 ### MC21 - Sécurité et sûreté
-
-<!-- Y a-t-il des considérations de cybersécurité ou de sûreté de fonctionnement ? -->
 
 
 
@@ -448,31 +394,6 @@ Côté sûreté de fonctionnement, les fonctions analytiques critiques (power-fl
 
 ## Enjeux scientifiques et techniques
 
-
-
-<!--
-
-Décrivez librement les questions scientifiques/techniques ouvertes que ce UC permet d'explorer.
-
-Pour chaque enjeu, donnez :
-
-- un titre court (### Titre)
-
-- un paragraphe de contexte (1 à 3 phrases)
-
-- éventuellement une image illustrative : ![légende](/media/use-cases/xxx.png)
-
-- les ressources associées :
-
-  - bac à sable : notebook, repo, démo en ligne
-
-  - thèses / doctorants travaillant sur le sujet
-
-  - publications de référence
-
-  - autres liens (datasets, outils, …)
-
--->
 
 
 
@@ -530,10 +451,6 @@ KOPR évalue chaque plan candidat par simulation « what-if » (power-flow sur l
 
 
 
-![Isolation d'un concentrateur : recherche d'une reconfiguration de secours et choix de la fenêtre d'intervention de moindre impact](/media/use-cases/uc01-isolation-planification.png)
-
-
-
 **Bac à sable** : module de recherche de reconfiguration en mode *dry-run* sur le jumeau KOPR - démo / notebook *à publier* · [GreyCat](https://greycat.io) (parcours de graphe temporel et power-flow)
 
 
@@ -561,8 +478,6 @@ KOPR évalue chaque plan candidat par simulation « what-if » (power-flow sur l
 
 
 ## Matériel
-
-<!-- Liste des datasets, models, repos : - [title](url) - venue. -->
 
 
 
@@ -601,8 +516,6 @@ Le UC est fourni sous la forme d'un **kit d'évaluation source-available** (Busi
 
 
 ## Références
-
-<!-- Liste de publications, sites web. Format markdown standard : - [title](url) - venue. -->
 
 
 
