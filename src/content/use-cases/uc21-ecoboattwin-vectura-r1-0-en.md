@@ -10,7 +10,7 @@ summary: >-
   SaaS digital twin platform for energy optimisation and decarbonisation of working vessels (trawlers, service vessels, pushers, barges), integrating high-fidelity multi-physics models calibrated on real measurements, scenario-based simulations and economic/CO₂ models.
 usersCount: 0
 lang: en
-photo: /media/use-cases/uc21-ecoboattwin-vectura.png
+photo: /media/uploads/uc21-ecoboattwin-vectura.png
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: maritime
 # maturity : concept | poc | prototype | operational

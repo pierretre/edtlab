@@ -13,7 +13,7 @@ summary: >-
 # usersCount : nombre d'utilisateurs effectifs du JN (métrique de diffusion)
 usersCount: 1
 lang: fr
-photo: /media/use-cases/Temperature-Sensors-DirecTemp-USB-Thermometers-DTU6005-001.jpg
+photo: /media/uploads/uc00-temperature-sensor-inria.jpg
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: industrial-engineering
 # maturity : concept | poc | prototype | operational

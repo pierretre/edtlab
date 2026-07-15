@@ -12,7 +12,7 @@ summary: >-
 # usersCount : number of actual DT users (diffusion metric)
 usersCount: 1
 lang: en
-photo: /media/use-cases/Temperature-Sensors-DirecTemp-USB-Thermometers-DTU6005-001.jpg
+photo: /media/uploads/uc00-temperature-sensor-inria.jpg
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: industrial-engineering
 # maturity : concept | poc | prototype | operational

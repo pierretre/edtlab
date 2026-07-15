@@ -10,7 +10,7 @@ summary: >-
   Plateforme SaaS de jumeau numérique pour la décarbonation prédictive des flottes de transport routier (ICE, BEV, FCEV), couvrant la planification stratégique 2030-2050 et la planification tactique/journalière via Digital Truck Twins, génération de scénarios et modèles économiques/CO₂.
 usersCount: 0
 lang: fr
-photo: /media/use-cases/uc18-eco4impact-vectura.png
+photo: /media/uploads/uc18-eco4impact-vectura.png
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: energy
 # maturity : concept | poc | prototype | operational

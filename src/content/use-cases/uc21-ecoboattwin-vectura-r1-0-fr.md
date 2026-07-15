@@ -10,7 +10,7 @@ summary: >-
   Plateforme SaaS de jumeau numérique pour l'optimisation énergétique et la décarbonation des navires de travail (chalutiers, navires de service, pousseurs, barges), intégrant des modèles haute-fidélité multi-physiques calibrés sur mesures réelles, des simulations par scénarios et des modèles économiques/CO₂.
 usersCount: 0
 lang: fr
-photo: /media/use-cases/uc21-ecoboattwin-vectura.png
+photo: /media/uploads/uc21-ecoboattwin-vectura.png
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: maritime
 # maturity : concept | poc | prototype | operational

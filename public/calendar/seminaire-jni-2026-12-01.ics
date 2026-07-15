@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//EDT Lab//Seminar//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+SUMMARY:Seminar EDT : JNI - Jumeau Numérique Industriel
+DTSTART:20261201T163000Z
+DTEND:20261201T173000Z
+DTSTAMP:20260715T120000Z
+UID:seminaire-edt-2026-12-01@edtlab.fr
+DESCRIPTION:Presentation de la plateforme JNI (Jumeau Numérique Industriel) par Stephen Creff (IRT Saint Exupéry).\nLien visio : https://rendez-vous.renater.fr/muted_user200/EDT_-_Webinar_be166a-424391-54cfc1#config.startWithVideoMuted=true&config.startWithAudioMuted=true
+LOCATION:https://rendez-vous.renater.fr/muted_user200/EDT_-_Webinar_be166a-424391-54cfc1#config.startWithVideoMuted=true&config.startWithAudioMuted=true
+URL:https://rendez-vous.renater.fr/muted_user200/EDT_-_Webinar_be166a-424391-54cfc1#config.startWithVideoMuted=true&config.startWithAudioMuted=true
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
