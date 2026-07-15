@@ -16,7 +16,7 @@ tags:
 
 Le seminaire **EDT** aura lieu le **15 septembre 2026 de 17h30 a 18h30 (CEST)**, en visioconference.
 
-**Hubert Lejeune** (CETIM) présente le cas d'usage [**UC05 — Boucle fluidique**](/fr/cas-d-utilisation/uc05-boucle-fluidique-cetim-r0-1).
+**Hubert Lejeune** (CETIM) présente le cas d'usage [**UC05 — Boucle fluidique**](/fr/cas-d-utilisation/uc05-fluidic-loop-cetim-r1-0).
 
 ---
 

@@ -16,7 +16,7 @@ tags:
 
 The **EDT** seminar will take place on **September 15, 2026, from 5:30 to 6:30 PM (CEST)**, by videoconference.
 
-**Hubert Lejeune** (CETIM) will present use case [**UC05 — Fluidic loop**](/en/use-cases/uc05-boucle-fluidique-cetim-r0-1).
+**Hubert Lejeune** (CETIM) will present use case [**UC05 — Fluidic loop**](/en/use-cases/uc05-fluidic-loop-cetim-r1-0).
 
 ---
 
