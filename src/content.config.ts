@@ -156,12 +156,27 @@ const menuCollection = defineCollection({
     schema: z.object({
         sections: z.array(z.object({
             name: z.string(),
-            href: z.string(),
+            href: z.string().optional(),
             items: z.array(z.object({
                 name: z.string(),
                 href: z.string()
             })).optional()
-        })),
+        }))
+        ,
+    }).refine(data => {
+        const sections = data.sections;
+        sections.forEach(section => {
+            if (section.items && section.items.length > 0) {
+                if (section.href) {
+                    throw new Error(`Section "${section.name}" has both "href" and "items". Only one is allowed.`);
+                }
+            } else {
+                if (!section.href) {
+                    throw new Error(`Section "${section.name}" must have either "href" or "items".`);
+                }
+            }
+        });
+        return true;
     })
 });
 
