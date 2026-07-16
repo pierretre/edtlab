@@ -74,8 +74,12 @@ collections:
       - { label: "Published Date", name: "date", widget: "datetime",   default: "{{now}}", date_format: "YYYY-MM-DD", required: true }
       - { label: "News Type", name: "newsType", widget: "select", options: ["event", "press-release"], default: "event", required: true }
       - { label: "Location", name: "location", widget: "string", required: false, hint: "For events only" }
+      - { label: "Time Label", name: "timeLabel", widget: "string", required: false, hint: "For events only, e.g. 'July 6-8, 2026'" }
+      - { label: "External URL", name: "url", widget: "string", required: false, hint: "Link to an external page for this news item, if any" }
+      - { label: "Calendar (.ics) Path", name: "icsPath", widget: "file", required: false, hint: "For events only, e.g. /calendar/my-event.ics" }
+      - { label: "Redirect To (slug)", name: "redirectTo", widget: "relation", collection: "news", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false, hint: "Use to point this entry to its translation/other-language counterpart" }
       - { label: "Summary", name: "description", widget: "text", required: true, hint : "Brief summary of the news item (2-3 sentences)" }
-      - { label: "Photo", name: "photo", widget: "image", required: true, hint: "Cover image filename" } 
+      - { label: "Photo", name: "photo", widget: "image", required: true, hint: "Cover image filename" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [], hint: "List of tags (e.g. PC1) (separated by comma)", allow_add: true }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
@@ -100,7 +104,11 @@ collections:
       - { label: "Summary", name: "description", widget: "text", required: true, hint: "Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below." }
       - { label: "Requirements", name: "requirements", widget: "list", required: true, min: 1, default: ["Fluency in English and French"], hint: "List of key requirements for the position (separated by comma)", allow_add: true }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [], hint: "List of tags (e.g. PC1) (separated by comma)", allow_add: true }
-      - { label: "Contacts", name: "contact", widget: "list", required: false, default: [], hint: "List of contact emails (separated by comma)", allow_add: true }
+      - { label: "Contacts", name: "contacts", widget: "list", required: true, default: [], hint: "List of contact emails (separated by comma)", allow_add: true }
+      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: false }
+      - { label: "References", name: "references", widget: "list", required: false, default: [], hint: "e.g. related publications, use cases", allow_add: true }
+      - { label: "Partner", name: "partner", widget: "string", required: false, hint: "Partner organization co-hosting this position, if any" }
+      - { label: "External URL", name: "externalUrl", widget: "string", required: false, hint: "Link to the full offer if hosted externally" }
       - label: "Body"
         name: "body"
         widget: "markdown"
@@ -152,11 +160,12 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
-      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "report"], required: true }
+      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "report", "white-paper", "preprint", "thesis", "workshop", "slidedeck"], required: true }
       - { label: "Year", name: "year", widget: "number", required: true, value_type: "int", min: 1900, max: 2100 }
       - { label: "Venue", name: "venue", widget: "string", required: false, hint: "Journal name, conference name, etc." }
       - { label: "DOI", name: "doi", widget: "string", required: false, hint: "Digital Object Identifier" }
       - { label: "URL", name: "url", widget: "string", required: false, hint: "Link to publication" }
+      - { label: "Origin", name: "origin", widget: "select", options: ["edt", "external"], required: false, default: "external", hint: "Was this publication produced within the EDT program?" }
       - { label: "Tags", name: "tags", widget: "list", required: false, hint: "e.g., PC1, PC2, keywords" }
 
   # Newsletter
@@ -195,6 +204,7 @@ collections:
           - { label: "Name", name: "name", widget: "string", required: true }
           - { label: "Email", name: "email", widget: "string", required: false }
       - { label: "PC", name: "pc", widget: "select", options: ["PC1", "PC2", "PC3", "PC4", "PC5"], required: true }
+      - { label: "Funding", name: "funding", widget: "select", options: ["EDT", "external"], required: false, hint: "e.g. CIFRE, other external funding" }
       - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country (e.g., 'Inria Rennes, France') — same format as job offers" }
       - { label: "Host institute / team", name: "host", widget: "string", required: false, hint: "e.g., 'Inria Rennes, diverSE'" }
       - label: "Supervisors"
