@@ -191,7 +191,7 @@ RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridatio
 
 Prévoir le TCO des motorisations émergentes sous des incertitudes structurelles (mix énergétique futur, prix, régulations) et propager ces incertitudes jusqu'aux décisions.
 
-RQ associées : RQ_D2 (incertitude des données), RQ_I5 (enveloppe de validité), RQ_F3 (composition et incertitude)
+RQ associées : RQ_D2 (incertitude des données), RQ_I5 (enveloppe de validité), RQ_T3 (composition d'incertitudes inter-DTs)
 
 ---
 

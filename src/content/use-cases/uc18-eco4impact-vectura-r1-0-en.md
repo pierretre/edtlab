@@ -191,7 +191,7 @@ Associated RQs: RQ_I3 (model hybridisation), RQ_I4 (hybridisation operators)
 
 Forecasting TCO for emerging powertrains under structural uncertainties (future energy mix, prices, regulations) and propagating these uncertainties through to decisions.
 
-Associated RQs: RQ_D2 (data uncertainty), RQ_I5 (validity envelope), RQ_F3 (composition and uncertainty)
+Associated RQs: RQ_D2 (data uncertainty), RQ_I5 (validity envelope), RQ_T3 (uncertainty compounding across DTs)
 
 ---
 
