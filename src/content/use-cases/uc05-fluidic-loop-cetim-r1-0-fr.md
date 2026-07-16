@@ -472,7 +472,7 @@ Pour chaque enjeu, donnez :
     - RQ_I3 Hybridation de modèles
     - RQ_I4 Opérateurs  d’hybridation
     - RQ_I5 Enveloppe de validité
-    - RQ_F2 Qualité du modèle
+    - RQ_T2 Qualité du modèle
 -->
 Le jumeau numérique de la boucle fluidique met en évidence le besoin de **combiner des modèles physiques (déductifs) et des modèles data-driven (inductifs)** pour répondre aux exigences des systèmes industriels modernes. En pratique, le modèle physique fournit une structure explicative robuste, tandis que les modèles d’apprentissage permettent de capturer des phénomènes non modélisés (pertes, dégradations, bruit). L’enjeu scientifique réside dans la définition de **modes d’hybridation cohérents et généralisables**, permettant une interaction structurée entre ces modèles.
 

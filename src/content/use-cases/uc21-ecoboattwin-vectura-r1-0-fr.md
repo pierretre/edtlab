@@ -187,19 +187,19 @@ RQ associées : RQ_D6 (évolution des modèles), RQ_E2 (modularisation)
 
 Coupler et aligner des modèles complexes : coque, hélice, moteur thermique, hybride, hydraulique. Enjeu de cohérence numérique, de temps de calcul et d'interfaces entre disciplines.
 
-RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridation), RQ_F3 (composition et incertitude)
+RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridation), RQ_T3 (composition d'incertitudes inter-DTs)
 
 ### Intégration de données hétérogènes
 
 Standardiser et calibrer 80+ canaux de capteurs hétérogènes. Enjeux de qualité, d'horodatage, de cohérence sémantique.
 
-RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D11 (interopérabilité sémantique), RQ_F1 (qualité des données)
+RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D11 (interopérabilité sémantique), RQ_T1 (propagation de la qualité des données vers les modèles)
 
 ### Système de gestion énergétique (EMS)
 
 Algorithmes de coordination du système hybride sous contrainte de temps de calcul (intégration à des optimisations multi-scénarios).
 
-RQ associées : RQ_I3 (hybridation de modèles), RQ_F4 (précision et fidélité)
+RQ associées : RQ_I3 (hybridation de modèles), RQ_T4 (quantification de la précision et fidélité)
 
 ### Reconstruction 3D de coques
 
@@ -211,7 +211,7 @@ RQ associées : RQ_D2 (incertitude des données, reconstruction sous observation
 
 Connecter des bases de composants (moteurs, batteries, hélices) et des APIs futures (carburants alternatifs : H₂, méthanol, etc.).
 
-RQ associées : RQ_E3 (orchestration du déploiement), RQ_E6 (interopérabilité syntaxique)
+RQ associées : RQ_E3 (orchestration du déploiement), RQ_E6 (standards et protocoles d'interopérabilité)
 
 ### Modélisation économique et portuaire
 

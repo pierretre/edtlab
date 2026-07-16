@@ -185,19 +185,19 @@ Associated RQs: RQ_D6 (model evolution), RQ_E2 (modularisation)
 
 Coupling and aligning complex models: hull, propeller, thermal engine, hybrid, hydraulic. Issues of numerical consistency, computation time and interfaces between disciplines.
 
-Associated RQs: RQ_I3 (model hybridisation), RQ_I4 (hybridisation operators), RQ_F3 (composition and uncertainty)
+Associated RQs: RQ_I3 (model hybridisation), RQ_I4 (hybridisation operators), RQ_T3 (uncertainty compounding across DTs)
 
 ### Heterogeneous data integration
 
 Standardise and calibrate 80+ heterogeneous sensor channels. Issues of quality, timestamping, semantic consistency.
 
-Associated RQs: RQ_D3 (heterogeneous data collection), RQ_D11 (semantic interoperability), RQ_F1 (data quality)
+Associated RQs: RQ_D3 (heterogeneous data collection), RQ_D11 (semantic interoperability), RQ_T1 (data quality effect on model properties)
 
 ### Energy Management System (EMS)
 
 Hybrid system coordination algorithms under computation time constraints (integration into multi-scenario optimisations).
 
-Associated RQs: RQ_I3 (model hybridisation), RQ_F4 (accuracy and fidelity)
+Associated RQs: RQ_I3 (model hybridisation), RQ_T4 (accuracy and fidelity quantification)
 
 ### 3D hull reconstruction
 
@@ -209,7 +209,7 @@ Associated RQs: RQ_D2 (data uncertainty, reconstruction under partial observatio
 
 Connect component databases (engines, batteries, propellers) and future APIs (alternative fuels: H₂, methanol, etc.).
 
-Associated RQs: RQ_E3 (deployment orchestration), RQ_E6 (syntactic interoperability)
+Associated RQs: RQ_E3 (deployment orchestration), RQ_E6 (interoperability standards and protocols)
 
 ### Economic and port modelling
 
