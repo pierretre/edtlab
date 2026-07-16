@@ -1,12 +1,11 @@
 {
     "sections": [
         {
-            "name": "Program",
+            "name": "Programme",
             "href": "program"
         },
         {
             "name": "Projects",
-            "href": "focused-projects",
             "items": [
                 {
                     "name": "Overview",
@@ -35,16 +34,30 @@
             ]
         },
         {
-            "name": "Publications",
-            "href": "publications"
+            "name": "Results",
+            "items": [
+                {
+                    "name": "Publications",
+                    "href": "publications"
+                },
+                {
+                    "name": "Platform",
+                    "href": "platform"
+                },
+                {
+                    "name": "Use Cases",
+                    "href": "use-cases"
+                }
+            ]
         },
         {
-            "name": "Platform",
-            "href": "platform"
-        },
-        {
-            "name": "Use Cases",
-            "href": "use-cases"
+            "name": "Community & Groups",
+            "items": [
+                {
+                    "name": "PhD Club",
+                    "href": "phd-club"
+                }
+            ]
         },
         {
             "name": "News",

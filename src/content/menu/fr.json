@@ -6,10 +6,9 @@
         },
         {
             "name": "Projets",
-            "href": "projets-cibles",
             "items": [
                 {
-                    "name": "Vue d’ensemble",
+                    "name": "Vue d'ensemble",
                     "href": "projets-cibles"
                 },
                 {
@@ -35,16 +34,30 @@
             ]
         },
         {
-            "name": "Publications",
-            "href": "publications"
+            "name": "Résultats",
+            "items": [
+                {
+                    "name": "Publications",
+                    "href": "publications"
+                },
+                {
+                    "name": "Plateforme",
+                    "href": "plateforme"
+                },
+                {
+                    "name": "Cas d'Utilisation",
+                    "href": "cas-d-utilisation"
+                }
+            ]
         },
         {
-            "name": "Plateforme",
-            "href": "plateforme"
-        },
-        {
-            "name": "Cas d'Utilisation",
-            "href": "cas-d-utilisation"
+            "name": "Communauté & Groupes",
+            "items": [
+                {
+                    "name": "Club des doctorants",
+                    "href": "club-des-doctorants"
+                }
+            ]
         },
         {
             "name": "Actualités",
