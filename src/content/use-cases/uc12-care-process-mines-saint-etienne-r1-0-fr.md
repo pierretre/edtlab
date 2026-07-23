@@ -23,7 +23,7 @@ originType: process
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 version: r1.0
 # draft or published
-status: draft
+status: published
 tags:
   - sante
   - parcours-de-soins
