@@ -1,6 +1,6 @@
 # Référence — Génération de fiches Use Case EDT
 
-> Ce fichier est exclu de la collection Astro (préfixe `_`). Il sert de référence pour la génération de nouvelles fiches.
+> Ce fichier vit hors de `src/content/use-cases` pour ne pas être traité comme une fiche par la collection Astro. Il sert de référence pour la génération de nouvelles fiches.
 
 ---
 
