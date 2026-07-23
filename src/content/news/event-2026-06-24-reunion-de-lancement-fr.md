@@ -16,6 +16,8 @@ tags:
 <strong>Cet événement a eu lieu le 24 juin 2026 entièrement en distanciel, en raison de la canicule.</strong>
 </div>
 
+Les vidéos des interventions sont disponibles sur la chaîne Canal-U du programme EDT : **[Réunion de lancement sur Canal-U](https://www.canal-u.tv/chaines/edt/reunion-de-lancement)**.
+
 
 Inria, dans sa mission d'Agence de programmes dans le Numérique, Algorithmes, Logiciels et Usages a lancé le programme de recherche EDT, Engineering Digital Twin ou la Fabrique des Jumeaux Numériques.
 
