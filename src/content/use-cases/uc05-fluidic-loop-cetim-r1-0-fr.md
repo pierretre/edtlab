@@ -465,16 +465,10 @@ Pour chaque enjeu, donnez :
 
 
 ### Hybridation des modèles dans les jumeaux numériques
-<!--
-    - RQ_D6 Évolution des modèles
-    - RQ_D7 Manipulation des modèles
-    - RQ_D8 Entraînement des modèles
-    - RQ_I3 Hybridation de modèles
-    - RQ_I4 Opérateurs  d’hybridation
-    - RQ_I5 Enveloppe de validité
-    - RQ_T2 Qualité du modèle
--->
+
 Le jumeau numérique de la boucle fluidique met en évidence le besoin de **combiner des modèles physiques (déductifs) et des modèles data-driven (inductifs)** pour répondre aux exigences des systèmes industriels modernes. En pratique, le modèle physique fournit une structure explicative robuste, tandis que les modèles d’apprentissage permettent de capturer des phénomènes non modélisés (pertes, dégradations, bruit). L’enjeu scientifique réside dans la définition de **modes d’hybridation cohérents et généralisables**, permettant une interaction structurée entre ces modèles.
+
+RQ associées : RQ_D6 (évolution des modèles de simulation), RQ_D7 (interface CRUD modèles de simulation), RQ_D8 (entraînement des modèles IA), RQ_I3 (patterns d'hybridation déductif × inductif), RQ_I4 (opérateurs de composition pour hybridation), RQ_I5 (effet de l'hybridation sur la validité / FATES+), RQ_T2 (analyse automatique de la qualité des modèles)
 
 ---
 
