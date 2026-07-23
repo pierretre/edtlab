@@ -144,12 +144,13 @@ async function generateResearchStudiesStaticPaths(): Promise<any[]> {
  * @returns Array of static path entries
  */
 async function generateUseCasesStaticPaths(): Promise<any[]> {
-    const allEntries = await getCollection("use-cases");
+    const allEntries = (await getCollection("use-cases")).filter((e) => e.data.status !== "draft");
 
     // Group entries by their use-case id field (e.g. "uc05"), which is
-    // language-agnostic and decoupled from the filename. Like job offers, a use
-    // case provided in a single language is still served under both /en and /fr;
-    // when both languages exist, each locale serves its own file.
+    // language-agnostic and decoupled from the filename. A use case can have several
+    // versions per language (e.g. r1.0 and r1.1) — every version of every language
+    // must get its own route, since the version selector and the synthesis list both
+    // link directly to a specific entry's own slug.
     const byId = new Map<string, CollectionEntry<"use-cases">[]>();
     for (const entry of allEntries) {
         const ucId = entry.data.id;
@@ -161,19 +162,34 @@ async function generateUseCasesStaticPaths(): Promise<any[]> {
     const langs: ("en" | "fr")[] = ["en", "fr"];
     const pages: any[] = [];
     for (const group of byId.values()) {
-        for (const lang of langs) {
-            // Prefer published entry in target language, then any published
-            // entry as fallback. Draft-only groups produce no path for that lang.
-            const published = group.filter((e) => e.data.status !== "draft");
-            const entry = published.find((e) => e.data.lang === lang) ?? published[0];
-            if (!entry) continue;
+        // One route per entry, at its own language and its own slug.
+        for (const entry of group) {
             pages.push({
                 params: {
-                    lang,
-                    slug: getContentLink(lang, "use-cases", entry.id, true),
+                    lang: entry.data.lang,
+                    slug: getContentLink(entry.data.lang, "use-cases", entry.id, true),
                 },
                 props: {
                     page: entry,
+                },
+            });
+        }
+
+        // Cross-language fallback: a use case provided in only one language is still
+        // served under both /en and /fr — the other locale shows its latest version.
+        for (const lang of langs) {
+            if (group.some((e) => e.data.lang === lang)) continue;
+            const latest = [...group].sort((a, b) =>
+                (b.data.version || "0").localeCompare(a.data.version || "0"),
+            )[0];
+            if (!latest) continue;
+            pages.push({
+                params: {
+                    lang,
+                    slug: getContentLink(lang, "use-cases", latest.id, true),
+                },
+                props: {
+                    page: latest,
                 },
             });
         }
