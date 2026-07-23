@@ -193,7 +193,7 @@ Sécurité applicative (OIDC, contrôle d'accès par rôle). Pour les use cases 
 
 Produire des représentations fidèles et à jour des territoires côtiers en fusionnant des données spatiales de natures variées (optique VHR, SAR, IRT, MNT, données in-situ) avec des degrés de couverture et de qualité variables selon les territoires (notamment Nouvelle-Calédonie et Corse, peu instrumentés).
 
-RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D4 (qualité et couverture des données), RQ_D2 (incertitude des données)
+RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D1 (déploiement capteurs), RQ_D2 (incertitude des données)
 
 ### Hybridation observations spatiales et modèles de simulation (PC1)
 
@@ -205,7 +205,7 @@ RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridatio
 
 Construire et mettre à jour des surrogate models data-driven (salinité et température lagunaire, taux de propagation des incendies) permettant de remplacer ou compléter des simulations HPC coûteuses (SYMPHONIE), pour rendre les analyses "what-if?" interactives et accessibles.
 
-RQ associées : RQ_I3 (hybridation de modèles), RQ_I5 (enveloppe de validité), RQ_F3 (composition et incertitude)
+RQ associées : RQ_I3 (hybridation de modèles), RQ_I5 (enveloppe de validité), RQ_T3 (composition d'incertitudes / fidélité inter-DTs)
 
 ### Architecture de référence interopérable pour les JN côtiers
 
@@ -217,7 +217,7 @@ RQ associées : RQ_E1 (standardisation des interfaces), RQ_E2 (modularisation), 
 
 Traiter des volumes massifs de données satellitaires (5 000+ km de littoral, imagerie VHR nationale) avec des pipelines distribués (K8s, HPC/Slurm) tout en maintenant des temps de réponse compatibles avec les besoins opérationnels et en assurant la reproductibilité des traitements.
 
-RQ associées : RQ_E4 (scalabilité), RQ_E5 (performance et temps réel), RQ_I2 (composition de simulations)
+RQ associées : RQ_P6 (passage à l'échelle), RQ_C1 (orchestration dynamique Cloud/Edge), RQ_P8 (déploiement et versionnement des modèles)
 
 ### Modélisation sur données à faible densité in-situ
 

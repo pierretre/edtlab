@@ -184,37 +184,37 @@ Sécurité des données territoriales sensibles (infrastructure critique, occupa
 
 Combiner des modèles de natures très différentes (raster, vecteur, maillage 3D, modèles de simulation physique) et des données d'échelles hétérogènes (mondiale, nationale, locale) au sein d'une représentation cohérente et exploitable du territoire.
 
-RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridation), RQ_D6 (évolution des modèles)
+RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridation), RQ_D4 (métadonnées pour synergie inter-modèles)
 
 ### Interopérabilité des outils et des données géospatiales (PC2)
 
 Assurer la compatibilité et l'échange entre des sources de données hétérogènes (IGN, SIRADEL, LUXCARTA, DestinE, IoT terrain), des formats variés (raster, vecteur, 3D Tiles, CityGML) et des géoplatformes différentes, tout en respectant les standards OGC et INSPIRE.
 
-RQ associées : RQ_D11 (interopérabilité sémantique), RQ_E1 (standardisation des interfaces), RQ_E2 (modularisation)
+RQ associées : RQ_D11 (interopérabilité sémantique), RQ_E1 (interface métadonnées modèles et services), RQ_E6 (standards et protocoles d'interopérabilité)
 
 ### Gestion du cycle de vie et développement collaboratif des modèles (PC3)
 
 Gérer l'évolution continue du jeu de données 3D ouvert et de la fondation logicielle open-source dans un contexte multi-acteurs (IGN, collectivités, chercheurs, industriels), en assurant la traçabilité des versions, la cohérence des mises à jour et la gouvernance ouverte.
 
-RQ associées : RQ_D6 (évolution des modèles), RQ_E3 (co-simulation et composition), RQ_D4 (qualité et couverture des données)
+RQ associées : RQ_D6 (évolution des modèles), RQ_P8 (déploiement et versionnement des modèles), RQ_P5 (gestion modèles/données par secteur)
 
 ### Collecte intelligente de données territoriales (PC4)
 
 Optimiser les stratégies d'acquisition de données géospatiales à grande échelle (type, résolution, fréquence de mise à jour) pour alimenter le JNFT de manière efficiente, en s'appuyant sur des capteurs IoT, des drones, des satellites et des sources participatives.
 
-RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D4 (qualité et couverture des données), RQ_D2 (incertitude des données)
+RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D1 (déploiement capteurs), RQ_D2 (incertitude des données)
 
 ### Interactions humain-machine pour l'exploration territoriale (PC5)
 
 Concevoir des interfaces de visualisation et d'exploration du modèle 3D adaptées à des utilisateurs aux profils variés (décideurs, chercheurs, grand public), permettant une interrogation intuitive, la comparaison de scénarios et l'interprétation des résultats de simulation.
 
-RQ associées : RQ_F5 (interfaces et visualisation), RQ_F2 (explicabilité), RQ_F3 (composition et incertitude)
+RQ associées : RQ_U1 (création de représentations visuelles DT), RQ_U2 (perception et compréhension du système original), RQ_U5 (utilisabilité des DTs)
 
 ### Passage à l'échelle nationale
 
 Relever les défis techniques du déploiement à l'échelle nationale d'un jumeau numérique 3D (volumétrie des données, calcul distribué, temps de rendu 3D, gestion des mises à jour continues) tout en maintenant des performances d'accès acceptables pour les utilisateurs.
 
-RQ associées : RQ_E4 (scalabilité), RQ_E5 (performance et temps réel), RQ_I2 (composition de simulations)
+RQ associées : RQ_P6 (passage à l'échelle), RQ_C1 (orchestration dynamique Cloud/Edge), RQ_D7 (interface CRUD modèles de simulation)
 
 ---
 
