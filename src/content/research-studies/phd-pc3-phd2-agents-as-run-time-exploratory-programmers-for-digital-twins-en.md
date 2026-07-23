@@ -56,13 +56,13 @@ Specifically, the thesis aims to design and evaluate run-time agents that:
 
 Assessing whether LLM-based agents can effectively reason over noisy, partially observable, and time-dependent run-time data, and safely intervene in a running system.
 
-**Associated RQs:** `RQ_D2` (data uncertainty, partial observations), `RQ_I2` (substitution of inductive models — validity envelope of the LLM), `RQ_F4` (precision and fidelity)
+**Associated RQs:** `RQ_D2` (data uncertainty, partial observations), `RQ_I2` (substitution of inductive models — validity envelope of the LLM), `RQ_T4` (precision and fidelity)
 
 ### Learning from run-time feedback
 
 Studying how agents can exploit debugging information (live variable values, stack traces, etc.), execution traces, and sensor streams, and whether fine-tuning or adaptation strategies improve their performance in this setting.
 
-**Associated RQs:** `RQ_D3` (collection of heterogeneous, noisy, incomplete data), `RQ_I2` (FATES+ properties of inductive models), `RQ_F6` (continuous improvement of quality properties)
+**Associated RQs:** `RQ_D3` (collection of heterogeneous, noisy, incomplete data), `RQ_I2` (FATES+ properties of inductive models), `RQ_T6` (continuous improvement of quality properties)
 
 ### Exploratory programming by delegation
 

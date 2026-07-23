@@ -61,6 +61,34 @@ The main objectives are to:
 ## Environment
 This PhD is funded by the CETIM (the French Technical Center for Mechanical Industries) in the context of a collaboration with Inria (the national center for research in computer science).
 
+## Research Challenges
+
+*Each challenge is annotated with the research questions (RQ_X) of the [EDT research roadmap](https://inria.hal.science/hal-05223776) [Combemale, Vicat-Blanc et al., EDTconf 2025].*
+
+### Hybrid modeling: coordinated use of heterogeneous predictive models
+
+Defining well-defined concepts to specify complex hybrid modeling scenarios through the coordinated use of different techniques (Modeling & Simulation, Machine Learning, Data Mining) in digital twin services such as recommenders, linters and decision-making tools.
+
+**Associated RQs:** `RQ_I3` (hybridization patterns of deductive/inductive models), `RQ_I4` (composition operators for hybridization)
+
+### Adaptive modeling: model adaptation (inference/refinement/configuration)
+
+Specifying complex adaptive modeling scenarios through retro-action between the different models involved (Modeling & Simulation, Machine Learning, Data Mining), continuously evolving/training wrt. observations, and assessing the effect on validity.
+
+**Associated RQs:** `RQ_D6` (continuous evolution of simulation models), `RQ_D8` (continuous training/tuning of AI models), `RQ_I5` (effect of hybridization on validity/FATES+)
+
+### Model interfaces and protocols
+
+Formalizing the required model manipulation interfaces and protocols to orchestrate service requests across heterogeneous predictive models and enable their adaptation from one another.
+
+**Associated RQs:** `RQ_D7` (CRUD-like interface for simulation models), `RQ_D9` (CRUD-like interface for AI models)
+
+### Application to predictive maintenance and virtual sensing
+
+Detecting, localizing and estimating variations in process parameters on the CETIM JNEM loop, including estimating unmeasurable parameters (e.g., flow rate on flow meter failure) and quantifying the fidelity of hybrid model predictions.
+
+**Associated RQs:** `RQ_D2` (unmeasurable / partially observable data), `RQ_T4` (quantification of accuracy and fidelity)
+
 ## Use cases
 [UC05 — CETIM Fluid loop](/en/use-cases/uc05-boucle-fluidique-cetim-r0-1)
 

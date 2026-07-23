@@ -76,7 +76,7 @@ const jobOffersCollection = defineCollection({
 
 // Use cases collection schema
 const useCasesCollection = defineCollection({
-    loader: glob({ base: "./src/content/use-cases", pattern: "**/*.{md,mdx}" }),
+    loader: glob({ base: "./src/content/use-cases", pattern: ["**/*.{md,mdx}", "!_*.{md,mdx}", "!**/_*.{md,mdx}"] }),
     schema: z.object({
         id: z.string(),
         title: z.string(),
