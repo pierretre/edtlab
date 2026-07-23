@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import {
     extractRQCodes,
+    extractRQGlosses,
     extractSection,
-    splitH3Subsections,
-    parseFunctionalNeeds,
-    parseChallenges,
+    themeOf,
+    sortRQCodes,
     getPortfolioGraph,
 } from '@utils/portfolio-graph';
 
@@ -84,78 +84,63 @@ describe('extractSection', () => {
     });
 });
 
-describe('splitH3Subsections', () => {
-    it('splits a section into its titled subsections', () => {
-        const section = [
-            '### First',
-            'Body of first.',
-            '',
-            '### Second',
-            'Body of second.',
-        ].join('\n');
-
-        const items = splitH3Subsections(section);
-        expect(items).toHaveLength(2);
-        expect(items[0]).toEqual({ title: 'First', body: 'Body of first.' });
-        expect(items[1]).toEqual({ title: 'Second', body: 'Body of second.' });
+describe('extractRQGlosses', () => {
+    it('extracts the parenthetical gloss authors wrote next to a code', () => {
+        const text = 'RQ associées : RQ_D6 (évolution des modèles), RQ_E2 (modularisation)';
+        const glosses = extractRQGlosses(text);
+        expect(glosses.get('RQ_D6')).toBe('évolution des modèles');
+        expect(glosses.get('RQ_E2')).toBe('modularisation');
     });
 
-    it('returns an empty array when there are no subsections', () => {
-        expect(splitH3Subsections('just some text, no heading')).toEqual([]);
-    });
-});
-
-describe('parseFunctionalNeeds', () => {
-    it('parses verb, actor, need and metric from a real UC bullet (French)', () => {
-        const section =
-            "- **Prédire + Optimiser** · *Un décideur logistique* veut simuler des trajectoires de transition de flotte 2030-2050. **Métrique :** différents scénarios comparés sur l'horizon 10-25 ans.";
-        const [need] = parseFunctionalNeeds(section, 'uc18');
-        expect(need).toMatchObject({
-            useCaseId: 'uc18',
-            verb: 'Prédire + Optimiser',
-            actor: 'Un décideur logistique',
-        });
-        expect(need.need).toContain('simuler des trajectoires');
-        expect(need.metric).toContain("différents scénarios comparés");
+    it('keeps the first gloss when the same code is glossed more than once', () => {
+        const text = 'RQ_D2 (first gloss) ... later RQ_D2 (second gloss)';
+        expect(extractRQGlosses(text).get('RQ_D2')).toBe('first gloss');
     });
 
-    it('parses an English bullet using the "Metric:" label', () => {
-        const section =
-            '- **Predict** · *A developer* wants to replay temperature profiles via the simulator. **Metric:** 100% reproducibility, 1-hour scenario replayed in < 1 s.';
-        const [need] = parseFunctionalNeeds(section, 'uc00');
-        expect(need.verb).toBe('Predict');
-        expect(need.actor).toBe('A developer');
-        expect(need.metric).toContain('100% reproducibility');
+    it('returns an empty map when no code is glossed', () => {
+        expect(extractRQGlosses('no gloss here').size).toBe(0);
     });
 
-    it('ignores bullets that do not follow the verb/actor convention', () => {
-        const section = '- [Some link](https://example.com) - not a need bullet';
-        expect(parseFunctionalNeeds(section, 'uc00')).toEqual([]);
+    it('extracts the gloss when the code is wrapped in backticks (thesis "Associated RQs" style)', () => {
+        const text =
+            '**Associated RQs:** `RQ_D7` (CRUD-like interface for simulation models), `RQ_D9` (CRUD-like interface for AI models)';
+        const glosses = extractRQGlosses(text);
+        expect(glosses.get('RQ_D7')).toBe('CRUD-like interface for simulation models');
+        expect(glosses.get('RQ_D9')).toBe('CRUD-like interface for AI models');
     });
 });
 
-describe('parseChallenges', () => {
-    it('extracts title, cleaned description and RQ codes per subsection', () => {
-        const section = [
-            '### Génération automatisée de scénarios',
-            '',
-            "Défi central du UC : produire des scénarios réalistes.",
-            '',
-            'RQ associées : RQ_D6 (évolution des modèles), RQ_E2 (modularisation)',
-        ].join('\n');
-
-        const [challenge] = parseChallenges(section, 'uc18');
-        expect(challenge.useCaseId).toBe('uc18');
-        expect(challenge.title).toBe('Génération automatisée de scénarios');
-        expect(challenge.rqCodes).toEqual(['RQ_D6', 'RQ_E2']);
-        expect(challenge.description).not.toContain('RQ associées');
-        expect(challenge.description).toContain('produire des scénarios réalistes');
+describe('themeOf', () => {
+    it('derives the taxonomy category letter from a code', () => {
+        expect(themeOf('RQ_D2')).toBe('D');
+        expect(themeOf('RQ_I3')).toBe('I');
+        expect(themeOf('RQ_T4')).toBe('T');
     });
 
-    it('returns an empty rqCodes array when a challenge has no annotated RQ', () => {
-        const section = ['### Un enjeu sans RQ', '', 'Texte libre sans annotation.'].join('\n');
-        const [challenge] = parseChallenges(section, 'uc07');
-        expect(challenge.rqCodes).toEqual([]);
+    it('returns null for a malformed or unknown-category code', () => {
+        expect(themeOf('RQ_Z9')).toBeNull();
+        expect(themeOf('not-a-code')).toBeNull();
+    });
+});
+
+describe('sortRQCodes', () => {
+    it('orders codes by taxonomy category then by number', () => {
+        expect(sortRQCodes(['RQ_I3', 'RQ_D6', 'RQ_D2', 'RQ_T4'])).toEqual([
+            'RQ_D2',
+            'RQ_D6',
+            'RQ_I3',
+            'RQ_T4',
+        ]);
+    });
+
+    it('does not mutate the input array', () => {
+        const input = ['RQ_T4', 'RQ_D2'];
+        sortRQCodes(input);
+        expect(input).toEqual(['RQ_T4', 'RQ_D2']);
+    });
+
+    it('returns an empty array for no codes', () => {
+        expect(sortRQCodes([])).toEqual([]);
     });
 });
 
@@ -164,7 +149,6 @@ describe('getPortfolioGraph', () => {
         const graph = await getPortfolioGraph('en');
         expect(graph).toEqual({
             useCases: [],
-            needs: [],
             challenges: [],
             theses: [],
             challengeToThesis: [],
