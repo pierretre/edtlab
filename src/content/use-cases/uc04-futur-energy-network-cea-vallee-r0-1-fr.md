@@ -187,37 +187,37 @@ Boucle de contrôle active sur un système physique expérimental avec des contr
 
 Définir des stratégies optimales d'instrumentation et d'acquisition pour un système multi-vecteur hétérogène, en tenant compte des contraintes de coût, de latence et de couverture. Défi particulier : les variables d'état les plus critiques (stockage thermique) sont souvent les moins accessibles à la mesure directe.
 
-RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D4 (qualité et couverture des données)
+RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D1 (déploiement capteurs)
 
 ### Synchronisation et calibration des modèles sur données réelles (WP4.2, WP4.3)
 
 Maintenir en continu la cohérence entre les modèles numériques et le système physique réel, en adaptant les paramètres des modèles au fil du vieillissement des équipements et de l'évolution des conditions d'exploitation. Défi : calibration en ligne sans interruption du service.
 
-RQ associées : RQ_I6 (assimilation de données), RQ_D2 (incertitude des données), RQ_D6 (évolution des modèles)
+RQ associées : RQ_D8 (entraînement des modèles IA), RQ_D2 (incertitude des données), RQ_D6 (évolution des modèles)
 
 ### Hybridation modèles physiques et ML (WP1.1, WP3.1)
 
 Construire des modèles hybrides couplant la physique (thermodynamique, électrique) et le machine learning (prédiction de la demande, comportement non-linéaire des composants) pour concilier interprétabilité physique et capacité d'adaptation aux données. Analyser la composition de tels modèles hybrides.
 
-RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridation), RQ_F3 (composition et incertitude)
+RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridation), RQ_I5 (effet de l'hybridation sur la validité)
 
 ### Architecture de référence multi-niveau et gestion de la variabilité/fidélité/incertitude (WP2.1)
 
 Formaliser une architecture de référence permettant de gérer la variabilité des modèles (fidélité variable selon le niveau), les incertitudes de mesure et de prédiction, et la coexistence de niveaux de représentation (équipement, système, multi-énergie) dans un cadre cohérent.
 
-RQ associées : RQ_I5 (enveloppe de validité), RQ_E1 (standardisation des interfaces), RQ_F3 (composition et incertitude)
+RQ associées : RQ_I5 (enveloppe de validité), RQ_E1 (standardisation des interfaces), RQ_T3 (composition d'incertitudes / fidélité inter-DTs)
 
 ### Modularisation et composabilité intra et inter-JN (WP2.2)
 
 Concevoir les JN d'équipements et de systèmes comme des modules composables, permettant leur agrégation cohérente au niveau multi-énergie et leur réutilisation dans d'autres contextes (extension à d'autres sites, autres configurations multi-énergie).
 
-RQ associées : RQ_E2 (modularisation), RQ_E3 (co-simulation et composition), RQ_I2 (composition de simulations)
+RQ associées : RQ_E2 (modularisation), RQ_E3 (orchestration dynamique au déploiement), RQ_D10 (agrégation de données inter-DTs)
 
 ### Optimisation multi-vecteur et couplage numérique des réseaux (WP4.4)
 
 Calculer en temps (quasi-)réel des consignes de contrôle optimal pour un système couplant simultanément plusieurs vecteurs énergétiques (électricité, chaleur HP/BP, froid, H₂, gaz naturel), avec des contraintes physiques, économiques et de marché hétérogènes.
 
-RQ associées : RQ_F1 (vérification formelle), RQ_F4 (analyse de défaillances), RQ_D11 (interopérabilité sémantique)
+RQ associées : RQ_C3 (co-optimisation réseau / DT), RQ_C4 (échange bidirectionnel cohérent dans le temps), RQ_D11 (interopérabilité sémantique)
 
 ---
 
