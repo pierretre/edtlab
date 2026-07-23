@@ -50,10 +50,10 @@ Ce UC s'inscrit dans le cadre du PEPR Future Energy Networks (Réseaux du Futur)
 
 ### Utilisateurs
 
-- **Un opérateur du système** — surveille l'état en temps réel, reçoit les alertes de défauts et applique (ou valide) les consignes de contrôle calculées par le JN.
-- **Un ingénieur d'exploitation** — analyse les performances, diagnostique les anomalies et optimise les stratégies d'exploitation à court et moyen terme.
-- **Un chercheur en systèmes énergétiques** — développe et valide des modèles de composants, des algorithmes de contrôle et des méthodes d'estimation d'état sur l'infrastructure expérimentale.
-- **Un planificateur réseau** — utilise le JN multi-énergie pour évaluer des stratégies de dispatch optimal et de participation aux marchés de l'énergie.
+- **Un opérateur du système** - surveille l'état en temps réel, reçoit les alertes de défauts et applique (ou valide) les consignes de contrôle calculées par le JN.
+- **Un ingénieur d'exploitation** - analyse les performances, diagnostique les anomalies et optimise les stratégies d'exploitation à court et moyen terme.
+- **Un chercheur en systèmes énergétiques** - développe et valide des modèles de composants, des algorithmes de contrôle et des méthodes d'estimation d'état sur l'infrastructure expérimentale.
+- **Un planificateur réseau** - utilise le JN multi-énergie pour évaluer des stratégies de dispatch optimal et de participation aux marchés de l'énergie.
 
 ### Besoins fonctionnels
 
@@ -131,7 +131,7 @@ Phase d'exploitation de l'infrastructure expérimentale. Maintenance prédictive
 
 ### MC11 - Outils et facilitateurs
 
-Outils de modélisation physique (thermodynamique, électrique), bibliothèques ML (prédiction, estimation d'état), solveurs d'optimisation (MPC, programmation stochastique). Plateforme expérimentale CEA LITEN (INES — Institut National de l'Énergie Solaire). PEPR Future Energy Networks (cadre scientifique et financement).
+Outils de modélisation physique (thermodynamique, électrique), bibliothèques ML (prédiction, estimation d'état), solveurs d'optimisation (MPC, programmation stochastique). Plateforme expérimentale CEA LITEN (INES - Institut National de l'Énergie Solaire). PEPR Future Energy Networks (cadre scientifique et financement).
 
 ### MC12 - Constellation du JN
 
@@ -225,8 +225,8 @@ RQ associées : RQ_F1 (vérification formelle), RQ_F4 (analyse de défaillances)
 
 ## Références
 
-- [Poster UC04 — Système multi-énergie expérimental](/media/use-cases/uc04-futur-energy-network-cea.pdf) - Use Case Workshop, Lyon, 6-7 janvier 2026
-- PEPR Future Energy Networks (Réseaux du Futur) — cadre scientifique et financement
+- [Poster UC04 - Système multi-énergie expérimental](/media/use-cases/uc04-futur-energy-network-cea.pdf) - Use Case Workshop, Lyon, 6-7 janvier 2026
+- PEPR Future Energy Networks (Réseaux du Futur) - cadre scientifique et financement
 - Combemale B., Vicat-Blanc P., Blouin A., Bril El Haouzi H., Bruel J.-M. et al. [Engineering Digital Twins: A Research Roadmap](https://inria.hal.science/hal-05223776). EDTconf 2025 - 2nd International Conference on Engineering Digital Twins, Oct 2025, Grand Rapids, Michigan, United States. pp.1-7. ⟨hal-05223776⟩ - feuille de route scientifique du programme EDT (codes RQ_X).
 
 ## Thèses en cours
