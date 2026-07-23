@@ -182,19 +182,19 @@ RQ associées : RQ_I3 (hybridation de modèles physiques et ML), RQ_I4 (opérate
 
 Le JN doit s'adapter en continu à l'état réel du système : déformations imprévisibles de l'objet manipulé, changements de configuration de la cellule, présence ou absence d'opérateurs humains. L'enjeu est de concevoir des **mécanismes d'adaptation run-time** qui permettent au JN de mettre à jour ses modèles à partir de données capteurs partielles et bruitées, sans interruption de la boucle de contrôle. Cela inclut l'estimation d'état en temps réel de l'objet souple à partir d'images (vision) et de données de force (tactile).
 
-RQ associées : RQ_D6 (évolution des modèles en ligne), RQ_I6 (assimilation de données temps réel), RQ_I2 (composition de simulations à différentes fidélités)
+RQ associées : RQ_D6 (évolution des modèles en ligne), RQ_D2 (données non mesurables / partiellement observables), RQ_C4 (échange bidirectionnel cohérent dans le temps)
 
 ### Interaction JN–opérateur dans des espaces de décision complexes
 
 Certains scénarios (démantèlement de centrales nucléaires, manipulation de tissus composites à haute valeur) impliquent un très grand nombre de configurations possibles et des conséquences potentiellement graves d'une mauvaise décision. L'enjeu est de concevoir des **interfaces d'interaction JN–opérateur** qui permettent à l'opérateur de comprendre et de valider les recommandations du JN, de naviguer dans l'espace des scénarios possibles, et de garder la main sur les décisions critiques - sans être submergé par la complexité.
 
-RQ associées : RQ_F1 (vérification des comportements), RQ_F4 (analyse de défaillances et scénarios extrêmes), RQ_E1 (interfaces standardisées entre JN et opérateurs)
+RQ associées : RQ_U2 (perception et compréhension du système original), RQ_U4 (navigation dans l'espace et le temps), RQ_U3 (périphériques d'entrée et interactions DT)
 
 ### Analyse de sécurité formelle des SoS robotiques pour la certification CE
 
 Les cellules robotisées impliquant plusieurs robots, des opérateurs humains et des objets manipulés constituent des **systèmes de systèmes** (SoS) dont l'analyse de sécurité est complexe. L'enjeu est de coupler les modèles SysMLv2 du JN avec des méthodes formelles d'analyse de sécurité (FMEA, FTA, HAZOP) pour automatiser (ou semi-automatiser) la production de la documentation de certification CE, tout en permettant un travail collaboratif entre les parties prenantes (programmeurs, ingénieurs sécurité, auditeurs).
 
-RQ associées : RQ_E2 (modularisation et composabilité des JN dans un SoS), RQ_F3 (composition et propagation d'incertitudes), RQ_E3 (co-simulation inter-JN), RQ_I5 (validité des analyses de sécurité)
+RQ associées : RQ_E2 (modularisation et composabilité des JN dans un SoS), RQ_T7 (conformité réglementaire), RQ_E3 (orchestration dynamique au déploiement), RQ_P3 (stratégies de communication parties prenantes)
 
 ---
 
