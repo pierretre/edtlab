@@ -48,7 +48,7 @@ originType: infrastructure
 
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 
-version: r1.0
+version: r1.1
 
 status: published
 
@@ -415,6 +415,8 @@ En l'absence de lien physique descendant vers les équipements, le module est d'
 
 Côté algorithmique, la génération pourra s'appuyer sur des méthodes **multi-objectifs** (algorithmes génétiques), des **solveurs de contraintes**, voire de l'**IA générative**.
 
+RQ associées : RQ_E2 (modularisation), RQ_U1 (création de représentations visuelles), RQ_P6 (passage à l'échelle)
+
 
 
 **Bac à sable** : module de génération de scénarios en mode *dry-run* sur le jumeau KOPR - démo / notebook *à publier* · [GreyCat](https://greycat.io) (moteur d'évaluation temporel-graphe et power-flow)
@@ -448,6 +450,8 @@ Lorsqu'un segment de réseau ou un concentrateur doit être isolé - maintenance
 
 
 KOPR évalue chaque plan candidat par simulation « what-if » (power-flow sur la topologie reconfigurée) et par projection sur l'horizon d'intervention. La recherche de reconfiguration peut combiner **parcours de graphe** (identification des chemins d'alimentation de secours), **solveurs de contraintes** et **optimisation** (minimisation des clients coupés, des pertes et du risque de dépassement). Comme pour l'enjeu précédent, et en l'absence de commande descendante généralisée, le module est proposé en **dry-run** pour une évaluation qualitative et la publication comparée de plusieurs plans.
+
+RQ associées : RQ_P6 (passage à l'échelle), RQ_E3 (orchestration dynamique au déploiement)
 
 
 
