@@ -16,6 +16,8 @@ tags:
 <strong>This event took place on 24 June 2026, held entirely online due to the heatwave.</strong>
 </div>
 
+Videos of the talks are available on the EDT program's Canal-U channel: **[Kick-off meeting on Canal-U](https://www.canal-u.tv/chaines/edt/reunion-de-lancement)**.
+
 
 As part of its mission as a Programs Agency for Digital Technology, Algorithms, Software and Uses, Inria launched the EDT research program - Engineering Digital Twins.
 

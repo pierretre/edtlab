@@ -10,22 +10,18 @@ photo: /media/uploads/edt.png
 tags:
   - at1
   - workshop
-icsPath: /calendar/scientific-workshop-2026-07-06.ics
 timeLabel: "July 6-8, 2026"
 ---
+
+<div class="bg-green-50 border border-green-400 text-green-900 rounded-lg p-4 my-4">
+<strong>This event took place from July 6 to July 8, 2026, at Inria Centre Rennes.</strong>
+</div>
+
 # Workshop Description and Objectives
 
-This EDT scientific workshop aims to bring together all the scientific community involved in the EDT program to collectively share, discuss, and refine the overarching scientific vision of EDT. It will provide a unique opportunity to align perspectives, identify common challenges, and strengthen synergies across projects.
+This EDT scientific workshop brought together the scientific community involved in the EDT program to collectively share, discuss, and refine the overarching scientific vision of EDT. It provided a unique opportunity to align perspectives, identify common challenges, and strengthen synergies across projects.
 
-The workshop will feature plenary sessions (e.g., keynotes) as well as interactive working groups. These groups will be defined during the workshop and will focus on specific scientific topics that are both transversal and relevant to the various focused projects.
-
-# Logistics
-
-* How: On-site and by invitation only. Contact: <ops@edtlab.fr>
-* When: from July 6th, 2026 at noon to July 8th, 2026, after lunch.
-* Where: Inria, centre de l'Université de Rennes ([how to get there](https://www.inria.fr/en/how-reach-inria-centre-rennes-university)), Centre de conférences
-* Warning: you might need an ID card to enter the center
-* Coffee breaks, lunches and dinners provided
+The workshop featured plenary sessions (e.g., keynotes) as well as interactive working groups. These groups were defined during the workshop and focused on specific scientific topics that are both transversal and relevant to the various focused projects.
 
 # Program
 
@@ -51,7 +47,7 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 ## July 7th
 
-* **09h00 – 10h00:** Keynote by [Roberto Di Cosmo](https://www.dicosmo.org)
+* **09h00 – 10h00:** Keynote by [Roberto Di Cosmo](https://www.dicosmo.org) — [slides](/deliverables/edt-ws1-2026-01-keynote-dicosmo.pdf)
   > **Software as Critical Infrastructure — open source, resilience, and the backbone digital twins need**
   > Digital twins are, at their core, software: long-lived assemblies of models, solvers, couplers and data connectors standing on open building blocks that must run, be trusted, and be reproduced for years, sometimes decades. Yet the way we manage that source code today is fragile: it is scattered across development platforms we do not control, and it depends on external infrastructures on which we do not have control.
   > Open source is the rational engineering and strategic choice for a programme like EDT but an open license is one of the things a durable digital-twins platform needs. Software Heritage, the universal archive of source code, a UNESCO-supported infrastructure preserving billions of unique source files is anoter: a backbone for resilience (when a registry fails, the build continues), for research and software science, for cybersecurity, and an observatory to map and find the software that matters, across all public code. Together with  a shared collaborative development platform, they make the open-source choice hold: sovereign, reproducible, and durable.
@@ -76,7 +72,7 @@ The workshop will feature plenary sessions (e.g., keynotes) as well as interacti
 
 ## July 8th
 
-* **09h00 – 10h00:** Keynote by [Maria Angela Ferrario](https://pure.qub.ac.uk/en/persons/maria-angela-ferrario/) 
+* **09h00 – 10h00:** Keynote by [Maria Angela Ferrario](https://pure.qub.ac.uk/en/persons/maria-angela-ferrario/) — [slides](/deliverables/edt-ws1-2026-02-keynote-ferrario.pdf)
   > **Sustainability and Ethics, without the hot air?**
   > The late physicist David MacKay cut through sustainable energy rhetoric with a simple approach: convert energy supply and demand to the same units, do the arithmetic, and let the numbers speak for themselves. This talk invites us to think what a similar approach could look like applied to digital technology (and to the EDT project). How much computation do we actually need, and for whom, for what? What does it cost - in energy, materials, and human effort - to design, maintain, and decommission a software system responsibly, as social, environmental, and geopolitical conditions shift around it faster than what we build? Beneath the numbers and the questions lies a harder problem: "sustainability" and "ethics" can be words worn thin by overuse, caught between hype and dismissal. Rather than settled answers, this talk sets out the questions we should be asking from day one of a project or a programme, with some first, practical pointers toward answering them.
 
