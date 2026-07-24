@@ -185,25 +185,25 @@ RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridatio
 
 Caractériser les incertitudes sur les paramètres physiques (perméabilité, porosité, conditions aux limites) et les propager jusqu'aux prédictions et évaluations de risque pour produire des intervalles de confiance exploitables par les opérateurs.
 
-RQ associées : RQ_D2 (incertitude des données), RQ_I5 (enveloppe de validité), RQ_F3 (composition et incertitude)
+RQ associées : RQ_D2 (incertitude des données), RQ_I5 (enveloppe de validité), RQ_T3 (composition d'incertitudes / fidélité inter-DTs)
 
 ### Détection d'anomalies et gestion des risques
 
 Identifier en quasi-temps réel des comportements anormaux du réservoir (surpression, migration de CO₂ hors du réservoir prévu) et mettre à jour les évaluations de risque pour déclencher des actions correctives au bon moment.
 
-RQ associées : RQ_F4 (analyse de défaillances), RQ_F1 (vérification formelle)
+RQ associées : RQ_T6 (surveillance continue de la qualité), RQ_T7 (conformité réglementaire)
 
 ### Optimisation des stratégies d'acquisition de données
 
 Déterminer le type, la localisation et la fréquence optimaux des mesures pour améliorer la précision des modèles et réduire les incertitudes critiques, tout en maîtrisant les coûts d'instrumentation et de surveillance.
 
-RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D4 (qualité et couverture des données)
+RQ associées : RQ_D1 (déploiement capteurs), RQ_T4 (quantification de la précision et fidélité)
 
 ### Généricité et réutilisabilité via les ontologies
 
 Concevoir le JN pour qu'il soit applicable à d'autres contextes souterrains (géothermie, autres aquifères, autres échelles) sans reprise majeure, en s'appuyant sur des ontologies contextualisées interopérables.
 
-RQ associées : RQ_D11 (interopérabilité sémantique), RQ_D6 (évolution des modèles), RQ_E2 (modularisation)
+RQ associées : RQ_D11 (interopérabilité sémantique), RQ_E4 (interopérabilité sémantique multi-points de vue), RQ_E2 (modularisation)
 
 ---
 
