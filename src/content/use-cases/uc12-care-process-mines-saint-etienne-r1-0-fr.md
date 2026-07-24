@@ -14,6 +14,7 @@ summary: >-
   soins et des équipes.
 usersCount: 0
 lang: fr
+photo: /media/uploads/uc12.png
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: health
 # maturity : concept | poc | prototype | operational

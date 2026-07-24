@@ -13,6 +13,7 @@ summary: >-
   use cases, aiming to simulate and optimise the organisation of care and staff.
 usersCount: 0
 lang: en
+photo: /media/uploads/uc12.png
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: health
 # maturity : concept | poc | prototype | operational
