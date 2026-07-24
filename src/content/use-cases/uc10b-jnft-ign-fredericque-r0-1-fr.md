@@ -38,9 +38,9 @@ publishedDate: 2026-06-24T00:00:00.000Z
 
 ## Résumé
 
-Le système physique est France et ses territoires : systèmes naturels et anthropisés liés à l'occupation des sols, à la construction, dans un contexte de changement climatique et de menaces anthropiques croissantes.
+Le système physique est la France et ses territoires : systèmes naturels et anthropisés liés à l'occupation des sols, à la construction, dans un contexte de changement climatique et de menaces anthropiques croissantes.
 
-Le Jumeau Numérique de France et ses Territoires (JNFT) est un modèle numérique dynamique et prospectif du territoire. Son objectif est de fournir une fondation technique open-source et un jeu de données 3D ouvert pour faciliter le développement d'initiatives de jumeaux numériques géographiques en France. Il vise à combler le fossé entre les échelles globales (modèles climatiques mondiaux, DestinE) et locales (conditions environnementales et risques), en articulant trois niveaux : mondial, national et local.
+Le Jumeau Numérique de la France et ses Territoires (JNFT) est un modèle numérique dynamique et prospectif du territoire. Son objectif est de fournir une fondation technique open-source et un jeu de données 3D ouvert pour faciliter le développement d'initiatives de jumeaux numériques géographiques en France. Il vise à combler le fossé entre les échelles globales (modèles climatiques mondiaux, DestinE) et locales (conditions environnementales et risques), en articulant trois niveaux : mondial, national et local.
 
 Sept cas d'usage métier ont été priorisés : planification urbaine durable, identification de sites d'énergies renouvelables, territoires résilients face aux catastrophes naturelles, optimisation de l'usage de l'eau, adaptation des forêts au changement climatique, lutte contre les épidémies, optimisation des offres de mobilité territoriale.
 
@@ -73,7 +73,7 @@ Sept cas d'usage métier ont été priorisés : planification urbaine durable, i
 
 ### MC1 - Système étudié
 
-France et ses territoires : systèmes naturels (relief, hydrographie, végétation, forêts) et anthropisés (occupation des sols, bâti, infrastructure, réseaux de transport), couvrant les échelles mondiale, nationale et locale, dans un contexte de changement climatique et de pression anthropique.
+La France et ses territoires : systèmes naturels (relief, hydrographie, végétation, forêts) et anthropisés (occupation des sols, bâti, infrastructure, réseaux de transport), couvrant les échelles mondiale, nationale et locale, dans un contexte de changement climatique et de pression anthropique.
 
 ### MC2 - Composants d'action physiques
 
@@ -81,11 +81,11 @@ Pas d'actionneur direct : le JNFT est un outil de connaissance, de simulation et
 
 ### MC3 - Composants de captation physiques
 
-- Orthoimages, MNS (Modèle Numérique de Surface) et MNT (Modèle Numérique de Terrain) — IGN, 20 cm/pixel, échelle nationale
-- Cartes d'occupation des sols (Land Use Land Cover) — IGN, 20 cm/pixel
+- Orthoimages, MNS (Modèle Numérique de Surface) et MNT (Modèle Numérique de Terrain) - IGN, 20 cm/pixel, échelle nationale
+- Cartes d'occupation des sols (Land Use Land Cover) - IGN, 20 cm/pixel
 - Maillages sémantiques non texturés (Wasure + CGAL + LidarHD / IGN, Geometry Factory & LASTIG)
 - Maillages texturés photoréalistes (IGO, 4 départements pilotes)
-- Données vectorielles multithématiques (SIRADEL — données, LUXCARTA — logiciel)
+- Données vectorielles multithématiques (SIRADEL - données, LUXCARTA - logiciel)
 - Capteurs IoT terrain, data spaces, bases de données thématiques
 
 ### MC4 - Interaction physique → virtuel
@@ -105,7 +105,7 @@ Pas de boucle de contrôle automatique. Le JNFT produit des visualisations inter
 
 ### MC7 - Échelle temporelle
 
-Temporalité prospective et de planification (simulation de scénarios à moyen et long terme). Mise à jour continue du jeu de données géospatiales selon les cycles de production IGN. Pas de temps réel strict — le JNFT est un outil d'analyse et de prospective territoriale.
+Temporalité prospective et de planification (simulation de scénarios à moyen et long terme). Mise à jour continue du jeu de données géospatiales selon les cycles de production IGN. Pas de temps réel strict - le JNFT est un outil d'analyse et de prospective territoriale.
 
 ### MC8 - Multiplicités
 
@@ -164,7 +164,7 @@ Architecture conçue pour fédérer des données et outils multi-sources (IGN, S
 
 ### MC19 - Propriété et confidentialité des données
 
-Données géospatiales ouvertes (open data IGN). Certaines données vectorielles proviennent de fournisseurs privés (SIRADEL, LUXCARTA — technologies propriétaires). Gouvernance des données territoriales à formaliser, en particulier pour les usages sensibles (sécurité, infrastructure critique).
+Données géospatiales ouvertes (open data IGN). Certaines données vectorielles proviennent de fournisseurs privés (SIRADEL, LUXCARTA - technologies propriétaires). Gouvernance des données territoriales à formaliser, en particulier pour les usages sensibles (sécurité, infrastructure critique).
 
 ### MC20 - Standardisation
 
