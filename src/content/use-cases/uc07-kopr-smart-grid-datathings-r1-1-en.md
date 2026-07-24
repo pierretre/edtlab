@@ -48,7 +48,7 @@ originType: infrastructure
 
 # version : identifiant de version du UC (ex r0.1, r1.0, ...). La dernière est affichée par défaut sur la liste.
 
-version: r1.0
+version: r1.1
 
 status: published
 
@@ -383,6 +383,8 @@ The engine proposes scenarios, **KOPR evaluates them** (network impact via power
 In the absence of a downstream physical link to the equipment, the module is first offered in **dry-run** mode: it enables qualitative evaluation and side-by-side comparison of multiple scenarios before any real actuation.
 Algorithmically, generation may draw on **multi-objective methods** (genetic algorithms), **constraint solvers**, or **generative AI**.
 
+**Associated RQs:** `RQ_E2` (modularization), `RQ_U1` (creation of DT visual representations), `RQ_P6` (scaling)
+
 **Sandbox**: scenario generation module in *dry-run* mode on the KOPR twin - demo / notebook *to be published* · [GreyCat](https://greycat.io) (temporal-graph and power-flow evaluation engine)
 
 **PhD**: *Multi-objective generation and evaluation of flexibility control strategies under network, fairness and market constraints* - researcher TBD (DataThings / academic partner, 2025–2028)
@@ -408,6 +410,8 @@ When a network segment or concentrator must be isolated - planned maintenance, e
 KOPR evaluates each candidate plan via what-if simulation (power-flow on the reconfigured topology) and projection over the intervention horizon. Reconfiguration search can combine **graph traversal** (identification of backup supply paths), **constraint solvers** and **optimisation** (minimising disconnected customers, losses and violation risk). As with the previous challenge, and in the absence of generalised downstream actuation, the module is offered in **dry-run** mode for qualitative evaluation and side-by-side comparison of plans.
 
 ![Concentrator isolation: backup reconfiguration search and lowest-impact intervention window selection](/media/use-cases/uc07-isolation-planification.png)
+
+**Associated RQs:** `RQ_P6` (scaling), `RQ_E3` (dynamic deployment orchestration)
 
 **Sandbox**: reconfiguration search module in *dry-run* mode on the KOPR twin - demo / notebook *to be published* · [GreyCat](https://greycat.io) (temporal graph traversal and power-flow)
 
