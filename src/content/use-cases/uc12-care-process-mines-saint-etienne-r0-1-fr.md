@@ -49,7 +49,7 @@ régulation équitable et coordonnée des parcours de soins, et de former le per
 crise ou à de nouvelles organisations.
 
 Le cas d'usage est mené avec plusieurs partenaires hospitaliers et de recherche, dont le CHU de
-Saint-Étienne, l'Hôpital Le Corbusier (Firminy), AÉSIO Santé, IMT Mines Albi-Carmaux, LIMOS et le CNRS.
+Saint-Étienne, l'Hôpital Le Corbusier (Firminy), AÉSIO Santé, IMT Mines Albi-Carmaux, Telecom Sud Paris. Différentes versions sont développées et expérimentées in situ selon le service (bloc opératoire, service d'urgences) et le partenaire hospitalier.
 
 ---
 
@@ -63,6 +63,8 @@ Saint-Étienne, l'Hôpital Le Corbusier (Firminy), AÉSIO Santé, IMT Mines Albi
 - **Un chercheur / analyste de processus** - étudie les parcours patients réels et l'usage des ressources pour calibrer les modèles.
 
 ### Besoins fonctionnels
+
+- **Piloter** · *Le chef de service* suit l'activité en temps réel, est alerté de risques à venir. Peut anticiper l'évolution du système sans action, ou avec des actions managériales simulées dans le système.  **Métrique :** Ecart entre activité prévue et constatée, en mode suivi et simulé.
 
 - **Prédire + Optimiser** · *Un responsable de parcours de soins* veut simuler et évaluer des scénarios futurs d'offre et de demande de soins pour proposer des configurations organisationnelles optimisées, en amont des décisions de planification de capacité. **Métrique :** scénarios comparés sur la charge des ressources et les indicateurs de parcours (temps d'attente, occupation).
 
@@ -154,7 +156,7 @@ scénarios de formation VR. Un réseau de jumeaux numériques coordonné entre u
 ### MC13 - Processus de jumelage et évolution
 
 Approche incrémentale construite avec les partenaires hospitaliers (CHU de Saint-Étienne, Hôpital Le
-Corbusier) et de recherche (IMT Mines Albi-Carmaux, LIMOS, CNRS). Détails à préciser à mesure que le réseau
+Corbusier) et de recherche (IMT Mines Albi-Carmaux, Telecom Sud Paris). Détails à préciser à mesure que le réseau
 de jumeaux numériques se développe.
 
 ### MC14 - Fidélité et validité
@@ -168,7 +170,7 @@ Connexion au système de suivi indoor et aux systèmes d'information hospitalier
 
 ### MC16 - Hébergement / déploiement
 
-À préciser.
+Dans les hôpitaux partenaires.
 
 ### MC17 - Insights et prise de décision
 
@@ -180,7 +182,7 @@ Connexion au système de suivi indoor et aux systèmes d'information hospitalier
 ### MC18 - Intégration horizontale
 
 Implique plusieurs partenaires hospitaliers (CHU de Saint-Étienne, Hôpital Le Corbusier, AÉSIO Santé) et de
-recherche (IMT Mines Albi-Carmaux, LIMOS, CNRS), coordonnant un réseau de jumeaux numériques entre unités de
+recherche (IMT Mines Albi-Carmaux, Telecom Sud Paris), coordonnant un réseau de jumeaux numériques entre unités de
 soins.
 
 ### MC19 - Propriété et confidentialité des données
