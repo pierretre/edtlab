@@ -194,7 +194,7 @@ Sécurité applicative (OIDC, contrôle d'accès par rôle). Pour les applicatio
 
 Produire des représentations fidèles et à jour des territoires côtiers en fusionnant des données spatiales de natures variées (optique VHR, SAR, IRT, MNT, données in-situ) avec des degrés de couverture et de qualité variables selon les territoires — en particulier ceux faiblement instrumentés.
 
-RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D4 (qualité et couverture des données), RQ_D2 (incertitude des données)
+RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D1 (déploiement capteurs), RQ_D2 (incertitude des données)
 
 ### Hybridation observations spatiales et modèles de simulation (PC1)
 
@@ -206,7 +206,7 @@ RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridatio
 
 Construire et maintenir des surrogate models data-driven permettant de remplacer ou compléter des simulations HPC coûteuses, pour rendre les analyses "what-if?" interactives et accessibles aux partenaires non-spécialistes.
 
-RQ associées : RQ_I3 (hybridation de modèles), RQ_I5 (enveloppe de validité), RQ_F3 (composition et incertitude)
+RQ associées : RQ_I3 (hybridation de modèles), RQ_I5 (enveloppe de validité), RQ_T3 (composition d'incertitudes / fidélité inter-DTs)
 
 ### Architecture de référence interopérable (PC2)
 
@@ -218,7 +218,7 @@ RQ associées : RQ_E1 (standardisation des interfaces), RQ_E2 (modularisation), 
 
 Traiter des volumes massifs de données satellitaires avec des pipelines distribués (K8s, HPC/Slurm) en assurant la reproductibilité des traitements et des temps de réponse compatibles avec les besoins opérationnels.
 
-RQ associées : RQ_E4 (scalabilité), RQ_E5 (performance et temps réel), RQ_I2 (composition de simulations)
+RQ associées : RQ_P6 (passage à l'échelle), RQ_C1 (orchestration dynamique Cloud/Edge), RQ_P8 (déploiement et versionnement des modèles)
 
 ---
 
