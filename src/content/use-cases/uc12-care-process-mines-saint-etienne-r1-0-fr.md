@@ -241,10 +241,6 @@ RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_E5 (sécurité d
 
 ---
 
-## Matériel
-
-- [Care process DT for complex demand with resource management (Poster)](/media/use-cases/uc12-poster-care-process-mines-saint-etienne.pdf) - Use Case Workshop, Lyon, 6-7 janvier 2026
-
 ## Références
 
 - [Poster - Care process DT for complex demand with resource management](/media/use-cases/uc12-poster-care-process-mines-saint-etienne.pdf) - Thierry Garaix, Mines Saint-Étienne - Use Case Workshop, Lyon, 6-7 janvier 2026
