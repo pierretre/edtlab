@@ -1,0 +1,306 @@
+---
+import { useTranslations } from "@i18n/utils";
+import { getContentLink } from "@i18n/links";
+import { NODE_W, GAP_X, GAP_Y, ROW_H, buildPortfolioGraphLayout } from "@utils/portfolio-graph-layout";
+import type { PortfolioGraph } from "@utils/portfolio-graph";
+
+export interface Props {
+    graph: PortfolioGraph;
+    lang: "en" | "fr";
+}
+
+const { graph, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const {
+    sortedUseCases,
+    ucLayout,
+    challengeLayout,
+    thesisLayout,
+    svgWidth,
+    svgHeight,
+    allLinks,
+    related,
+    getLinkPath: linkPath,
+} = buildPortfolioGraphLayout(graph);
+
+const isEmpty = sortedUseCases.length === 0;
+
+function ucHref(uc: { slug: string }): string {
+    return getContentLink(lang, "use-cases", uc.slug);
+}
+function thesisHref(thesis: { id: string }): string {
+    return getContentLink(lang, "research-studies", thesis.id);
+}
+---
+
+{
+    isEmpty ? (
+        <p class="text-gray-500">{t("portfolio-graph.empty")}</p>
+    ) : (
+        <div
+            class="pg-root"
+            data-row-h={`${ROW_H.uc},${ROW_H.challenge},${ROW_H.thesis}`}
+            data-gap-y={GAP_Y}
+        >
+            <div class="overflow-x-auto border border-gray-200 rounded-lg bg-white p-3">
+                <div class="flex items-center justify-between mb-2" style={`min-width:${svgWidth}px`}>
+                    <div class="flex" style={`gap:${GAP_X}px`}>
+                        {[
+                            t("portfolio-graph.column.use-cases"),
+                            t("portfolio-graph.column.challenges"),
+                            t("portfolio-graph.column.theses"),
+                        ].map((label) => (
+                            <div
+                                class="text-xs font-semibold uppercase tracking-wide text-gray-500"
+                                style={`width:${NODE_W}px`}
+                            >
+                                {label}
+                            </div>
+                        ))}
+                    </div>
+                    <button type="button" class="pg-reset-btn" hidden>
+                        {t("portfolio-graph.reset-view")}
+                    </button>
+                </div>
+                <svg
+                    viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+                    width={svgWidth}
+                    height={svgHeight}
+                    style={`min-width:${svgWidth}px`}
+                    role="group"
+                    aria-label={t("portfolio-graph.title")}
+                >
+                    <!-- Links (drawn first, under the nodes) -->
+                    <g>
+                        {allLinks.map((link) => {
+                            const d = linkPath(link.source, link.target);
+                            if (!d) return null;
+                            return (
+                                <path
+                                    d={d}
+                                    class="pg-link"
+                                    data-link-source={link.source}
+                                    data-link-target={link.target}
+                                />
+                            );
+                        })}
+                    </g>
+
+                    <!-- Use case nodes: click navigates to the UC page; the isolate button reduces the graph -->
+                    {ucLayout.map(({ item: uc, x, y, w, h }) => (
+                        <foreignObject x={x} y={y} width={w} height={h} data-node-id={uc.id} data-col="0">
+                            <div class="pg-node-wrapper">
+                                <a
+                                    href={ucHref(uc)}
+                                    class="pg-node pg-node-uc"
+                                    data-node-id={uc.id}
+                                    data-related={related[uc.id].join(",")}
+                                >
+                                    <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide line-clamp-1">
+                                        {uc.id}
+                                    </p>
+                                    <p class="font-semibold line-clamp-2">{uc.title}</p>
+                                    {uc.domain && <p class="text-gray-500 text-[11px]">{uc.domain}</p>}
+                                </a>
+                                <button
+                                    type="button"
+                                    class="pg-isolate-btn"
+                                    aria-label={`${t("portfolio-graph.isolate")}: ${uc.title}`}
+                                    data-isolate-target={uc.id}
+                                >
+                                    <span aria-hidden="true">⌖</span>
+                                </button>
+                            </div>
+                        </foreignObject>
+                    ))}
+
+                    <!-- Challenge nodes: one per RQ_X reference, possibly shared by several use cases.
+                         No page of its own, so the card has no click-to-navigate action. -->
+                    {challengeLayout.map(({ item: challenge, x, y, w, h }) => (
+                        <foreignObject x={x} y={y} width={w} height={h} data-node-id={challenge.id} data-col="1">
+                            <div class="pg-node-wrapper">
+                                <div
+                                    class="pg-node"
+                                    tabindex="0"
+                                    role="button"
+                                    aria-label={
+                                        challenge.label !== challenge.id
+                                            ? `${challenge.id} — ${challenge.label}`
+                                            : challenge.id
+                                    }
+                                    data-node-id={challenge.id}
+                                    data-related={related[challenge.id].join(",")}
+                                >
+                                    {challenge.label !== challenge.id && (
+                                        <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide line-clamp-1">
+                                            {challenge.id}
+                                        </p>
+                                    )}
+                                    <p class="font-semibold line-clamp-2">{challenge.label}</p>
+                                    {challenge.theme && (
+                                        <p class="text-gray-500 text-[11px] line-clamp-1">
+                                            {t(`portfolio-graph.theme.${challenge.theme}` as any)}
+                                        </p>
+                                    )}
+                                </div>
+                                <button
+                                    type="button"
+                                    class="pg-isolate-btn"
+                                    aria-label={`${t("portfolio-graph.isolate")}: ${challenge.id}`}
+                                    data-isolate-target={challenge.id}
+                                >
+                                    <span aria-hidden="true">⌖</span>
+                                </button>
+                            </div>
+                        </foreignObject>
+                    ))}
+
+                    <!-- Thesis nodes: click navigates to the thesis page -->
+                    {thesisLayout.map(({ item: thesis, x, y, w, h }) => (
+                        <foreignObject x={x} y={y} width={w} height={h} data-node-id={thesis.id} data-col="2">
+                            <div class="pg-node-wrapper">
+                                <a
+                                    href={thesisHref(thesis)}
+                                    class="pg-node pg-node-thesis"
+                                    data-node-id={thesis.id}
+                                    data-related={related[thesis.id].join(",")}
+                                >
+                                    <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide line-clamp-1">
+                                        {thesis.pc}
+                                    </p>
+                                    <p class="font-semibold line-clamp-2">{thesis.title}</p>
+                                    <p class="text-gray-500 text-[11px] line-clamp-1">{thesis.researcher}</p>
+                                </a>
+                                <button
+                                    type="button"
+                                    class="pg-isolate-btn"
+                                    aria-label={`${t("portfolio-graph.isolate")}: ${thesis.title}`}
+                                    data-isolate-target={thesis.id}
+                                >
+                                    <span aria-hidden="true">⌖</span>
+                                </button>
+                            </div>
+                        </foreignObject>
+                    ))}
+                </svg>
+            </div>
+        </div>
+    )
+}
+
+<style>
+    /* Cancels the site's global `p { margin-bottom }` inside the compact SVG cards */
+    .pg-node p {
+        margin: 0;
+    }
+    .pg-node-wrapper {
+        position: relative;
+        height: 100%;
+    }
+    .pg-node {
+        display: block;
+        border-radius: 8px;
+        border: 1px solid #e1e0d9;
+        border-left: 3px solid var(--pg-color, #898781);
+        background: #fff;
+        padding: 6px 10px;
+        font-size: 12px;
+        line-height: 1.3;
+        height: calc(100% - 2px);
+        box-sizing: border-box;
+        overflow: hidden;
+        cursor: pointer;
+        color: inherit;
+        text-decoration: none;
+        transition:
+            box-shadow 0.15s,
+            opacity 0.15s;
+    }
+    .pg-node:hover,
+    .pg-node:focus-visible {
+        box-shadow: 0 0 0 2px var(--pg-color, #898781);
+    }
+    .pg-node:focus-visible {
+        outline: none;
+    }
+    .pg-node.is-active {
+        box-shadow: 0 0 0 2px var(--pg-color, #898781);
+    }
+    .pg-node.is-dim {
+        opacity: 0.3;
+    }
+    .pg-link {
+        fill: none;
+        stroke: var(--pg-color, #c3c2b7);
+        stroke-width: 1.5;
+        opacity: 0.35;
+        transition:
+            opacity 0.15s,
+            stroke-width 0.15s;
+    }
+    .pg-link.is-active {
+        opacity: 0.9;
+        stroke-width: 2.5;
+    }
+    .pg-link.is-dim {
+        opacity: 0.06;
+    }
+    .pg-isolate-btn {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 4px;
+        border: none;
+        background: transparent;
+        color: #898781;
+        opacity: 0.45;
+        cursor: pointer;
+        z-index: 1;
+        transition:
+            opacity 0.15s,
+            background-color 0.15s;
+    }
+    .pg-isolate-btn:hover,
+    .pg-isolate-btn:focus-visible {
+        opacity: 1;
+        background: #f3f2ee;
+    }
+    .pg-reset-btn {
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid #c3c2b7;
+        background: #fff;
+        color: #52514e;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+    .pg-reset-btn:hover {
+        background: #f3f2ee;
+    }
+    .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    import "./PortfolioGraphViz.client.ts";
+</script>

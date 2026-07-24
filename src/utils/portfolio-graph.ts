@@ -2,7 +2,6 @@ import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 
 // Heading conventions used across UC fiches and research-study fiches (fr/en).
 // Add a new title here if a future fiche uses different wording for the same section.
-const NEEDS_HEADINGS = ["Besoins fonctionnels", "Functional Requirements"];
 const USE_CASE_CHALLENGES_HEADINGS = [
     "Enjeux scientifiques et techniques",
     "Scientific and Technical Challenges",
@@ -10,32 +9,32 @@ const USE_CASE_CHALLENGES_HEADINGS = [
 const THESIS_CHALLENGES_HEADINGS = ["Research Challenges"];
 
 const RQ_CODE_PATTERN = /RQ_[A-Z]+\d+/g;
+// Tolerates an optional closing backtick between the code and its gloss, since some
+// fiches write the code as inline code: "`RQ_D9` (CRUD-like interface for AI models)".
+const RQ_CODE_WITH_GLOSS = /(RQ_[A-Z]+\d+)`?\s*\(([^)]+)\)/g;
 
-const NEED_LINE = /^-\s*\*\*(.+?)\*\*\s*·\s*\*(.+?)\*\s+(.+)$/;
-const METRIC_INLINE = /\*\*(?:Métrique|Metric)\s*:?\*\*\s*:?\s*(.+)$/i;
+// EDT scientific roadmap (Combemale et al., hal-05223776) top-level RQ categories,
+// in the taxonomy's own order. A challenge's theme is derived from the category
+// letter of its RQ code (e.g. "RQ_D6" -> "D").
+const RQ_THEME_ORDER = ["D", "I", "U", "C", "T", "E", "P"] as const;
+export type RQTheme = (typeof RQ_THEME_ORDER)[number];
+const RQ_THEME_SET: ReadonlySet<string> = new Set(RQ_THEME_ORDER);
 
-export interface PortfolioNeed {
-    id: string;
-    useCaseId: string;
-    verb: string;
-    actor: string;
-    need: string;
-    metric?: string;
-}
-
+// A challenge is a single RQ_X entry from the EDT scientific roadmap (Combemale et al.,
+// 2025, hal-05223776) — the reference itself, not a UC author's prose blurb. Several use
+// cases addressing the same underlying scientific question converge on the same challenge.
 export interface PortfolioChallenge {
     id: string;
-    useCaseId: string;
-    title: string;
-    description: string;
-    rqCodes: string[];
+    label: string;
+    theme: RQTheme | null;
+    useCaseIds: string[];
 }
 
 export interface PortfolioThesis {
     id: string;
     title: string;
     researcher: string;
-    status: CollectionEntry<"research-studies">["data"]["status"];
+    pc: CollectionEntry<"research-studies">["data"]["pc"];
     useCaseIds: string[];
     rqCodes: string[];
 }
@@ -54,7 +53,6 @@ export interface ChallengeThesisLink {
 
 export interface PortfolioGraph {
     useCases: PortfolioUseCase[];
-    needs: PortfolioNeed[];
     challenges: PortfolioChallenge[];
     theses: PortfolioThesis[];
     challengeToThesis: ChallengeThesisLink[];
@@ -67,6 +65,44 @@ export interface PortfolioGraph {
 export function extractRQCodes(text: string): string[] {
     const matches = text.match(RQ_CODE_PATTERN) ?? [];
     return [...new Set(matches)];
+}
+
+/**
+ * Extracts the human-readable gloss authors wrote next to a code, e.g. "RQ_D2 (données non
+ * mesurables / partiellement observables)" -> {"RQ_D2": "données non mesurables / partiellement
+ * observables"}. First occurrence wins when the same code is glossed more than once.
+ */
+export function extractRQGlosses(text: string): Map<string, string> {
+    const glosses = new Map<string, string>();
+    for (const match of text.matchAll(RQ_CODE_WITH_GLOSS)) {
+        const [, code, gloss] = match;
+        if (!glosses.has(code)) glosses.set(code, gloss.trim());
+    }
+    return glosses;
+}
+
+/** Derives the top-level RQ category (theme) a single RQ_X code belongs to. */
+export function themeOf(code: string): RQTheme | null {
+    const letter = code.match(/^RQ_([A-Z]+)\d+$/)?.[1];
+    return letter && RQ_THEME_SET.has(letter) ? (letter as RQTheme) : null;
+}
+
+const RQ_THEME_RANK = new Map<string, number>(RQ_THEME_ORDER.map((theme, i) => [theme, i]));
+
+/**
+ * Sorts RQ_X codes in the EDT roadmap's own taxonomy order (category, then number),
+ * e.g. ["RQ_I3", "RQ_D2"] -> ["RQ_D2", "RQ_I3"]. This is the canonical reference
+ * order used to order challenges and to display them on portfolio graph cards.
+ */
+export function sortRQCodes(rqCodes: string[]): string[] {
+    return [...rqCodes].sort((a, b) => {
+        const ma = a.match(/^RQ_([A-Z]+)(\d+)$/);
+        const mb = b.match(/^RQ_([A-Z]+)(\d+)$/);
+        const rankA = RQ_THEME_RANK.get(ma?.[1] ?? "") ?? Number.MAX_SAFE_INTEGER;
+        const rankB = RQ_THEME_RANK.get(mb?.[1] ?? "") ?? Number.MAX_SAFE_INTEGER;
+        if (rankA !== rankB) return rankA - rankB;
+        return Number(ma?.[2] ?? 0) - Number(mb?.[2] ?? 0);
+    });
 }
 
 /**
@@ -100,79 +136,6 @@ export function extractSection(
     return lines.slice(startIdx + 1, endIdx).join("\n").trim();
 }
 
-/** Splits a level-2 section's body into its "###" subsections. */
-export function splitH3Subsections(
-    sectionText: string,
-): { title: string; body: string }[] {
-    const lines = sectionText.split(/\r?\n/);
-    const items: { title: string; body: string }[] = [];
-    let current: { title: string; lines: string[] } | null = null;
-
-    for (const line of lines) {
-        const m = line.match(/^###\s+(.+)$/);
-        if (m) {
-            if (current) {
-                items.push({ title: current.title, body: current.lines.join("\n").trim() });
-            }
-            current = { title: m[1].trim(), lines: [] };
-        } else if (current) {
-            current.lines.push(line);
-        }
-    }
-    if (current) {
-        items.push({ title: current.title, body: current.lines.join("\n").trim() });
-    }
-    return items;
-}
-
-/** Parses the "Besoins fonctionnels" / "Functional Requirements" bullet list into structured needs. */
-export function parseFunctionalNeeds(
-    sectionText: string,
-    useCaseId: string,
-): PortfolioNeed[] {
-    const needs: PortfolioNeed[] = [];
-    const bulletLines = sectionText
-        .split(/\r?\n/)
-        .filter((line) => line.trim().startsWith("-"));
-
-    bulletLines.forEach((line, index) => {
-        const m = line.trim().match(NEED_LINE);
-        if (!m) return;
-        const [, verb, actor, rest] = m;
-        const metricMatch = rest.match(METRIC_INLINE);
-        const metric = metricMatch ? metricMatch[1].trim() : undefined;
-        const need = metricMatch ? rest.slice(0, metricMatch.index).trim() : rest.trim();
-
-        needs.push({
-            id: `${useCaseId}-need-${index}`,
-            useCaseId,
-            verb: verb.trim(),
-            actor: actor.trim(),
-            need,
-            metric,
-        });
-    });
-    return needs;
-}
-
-/** Parses a "Enjeux scientifiques" / "Research Challenges" section into per-subsection challenges. */
-export function parseChallenges(
-    sectionText: string,
-    useCaseId: string,
-): PortfolioChallenge[] {
-    return splitH3Subsections(sectionText).map((sub, index) => ({
-        id: `${useCaseId}-challenge-${index}`,
-        useCaseId,
-        title: sub.title,
-        description: sub.body
-            .split(/\r?\n/)
-            .filter((line) => !/RQ associées|Associated RQs/i.test(line))
-            .join("\n")
-            .trim(),
-        rqCodes: extractRQCodes(sub.body),
-    }));
-}
-
 /** Groups use-case entries by their logical `id`, keeping the latest version for the given language. */
 function pickLatestUseCasesByLang(
     entries: CollectionEntry<"use-cases">[],
@@ -198,7 +161,7 @@ function pickLatestUseCasesByLang(
 }
 
 /**
- * Builds the full portfolio graph (use cases -> needs -> scientific challenges -> theses)
+ * Builds the full portfolio graph (use cases -> scientific challenges -> theses)
  * by parsing the semi-structured markdown bodies of the `use-cases` and `research-studies`
  * collections. Re-derived on every call, so it always reflects the latest content.
  */
@@ -210,8 +173,7 @@ export async function getPortfolioGraph(lang: "en" | "fr"): Promise<PortfolioGra
     const useCaseEntries = pickLatestUseCasesByLang(allUseCases, lang);
 
     const useCases: PortfolioUseCase[] = [];
-    const needs: PortfolioNeed[] = [];
-    const challenges: PortfolioChallenge[] = [];
+    const challengesByCode = new Map<string, { useCaseIds: Set<string>; gloss?: string }>();
 
     for (const entry of useCaseEntries) {
         const ucId = entry.data.id;
@@ -222,15 +184,20 @@ export async function getPortfolioGraph(lang: "en" | "fr"): Promise<PortfolioGra
             domain: entry.data.domain,
         });
 
-        const needsSection = extractSection(entry.body ?? "", 3, NEEDS_HEADINGS);
-        if (needsSection) needs.push(...parseFunctionalNeeds(needsSection, ucId));
-
         const challengesSection = extractSection(
             entry.body ?? "",
             2,
             USE_CASE_CHALLENGES_HEADINGS,
         );
-        if (challengesSection) challenges.push(...parseChallenges(challengesSection, ucId));
+        if (!challengesSection) continue;
+
+        const glosses = extractRQGlosses(challengesSection);
+        for (const code of extractRQCodes(challengesSection)) {
+            const challenge = challengesByCode.get(code) ?? { useCaseIds: new Set<string>() };
+            challenge.useCaseIds.add(ucId);
+            if (!challenge.gloss && glosses.has(code)) challenge.gloss = glosses.get(code);
+            challengesByCode.set(code, challenge);
+        }
     }
 
     const researchStudies = await getCollection("research-studies");
@@ -251,27 +218,43 @@ export async function getPortfolioGraph(lang: "en" | "fr"): Promise<PortfolioGra
             THESIS_CHALLENGES_HEADINGS,
         );
         const rqCodes = challengesSection ? extractRQCodes(challengesSection) : [];
+        const thesisGlosses = challengesSection ? extractRQGlosses(challengesSection) : new Map<string, string>();
+        for (const code of rqCodes) {
+            const challenge = challengesByCode.get(code) ?? { useCaseIds: new Set<string>() };
+            if (!challenge.gloss && thesisGlosses.has(code)) challenge.gloss = thesisGlosses.get(code);
+            challengesByCode.set(code, challenge);
+        }
 
         theses.push({
             id: entry.id,
             title: entry.data.title,
             researcher: entry.data.researcher.name,
-            status: entry.data.status,
+            pc: entry.data.pc,
             useCaseIds,
             rqCodes,
         });
     }
 
+    const challenges: PortfolioChallenge[] = sortRQCodes([...challengesByCode.keys()]).map((code) => {
+        const entry = challengesByCode.get(code)!;
+        return {
+            id: code,
+            label: entry.gloss ?? code,
+            theme: themeOf(code),
+            useCaseIds: [...entry.useCaseIds],
+        };
+    });
+
+    // Challenges are the reference itself, so a thesis links to one purely by sharing the
+    // code — regardless of which use case(s) either side happens to be attached to.
     const challengeToThesis: ChallengeThesisLink[] = [];
     for (const thesis of theses) {
-        if (thesis.rqCodes.length === 0) continue;
-        const relatedChallenges = challenges.filter(
-            (c) => thesis.useCaseIds.includes(c.useCaseId) && c.rqCodes.some((code) => thesis.rqCodes.includes(code)),
-        );
-        for (const challenge of relatedChallenges) {
-            challengeToThesis.push({ challengeId: challenge.id, thesisId: thesis.id });
+        for (const code of thesis.rqCodes) {
+            if (challengesByCode.has(code)) {
+                challengeToThesis.push({ challengeId: code, thesisId: thesis.id });
+            }
         }
     }
 
-    return { useCases, needs, challenges, theses, challengeToThesis };
+    return { useCases, challenges, theses, challengeToThesis };
 }
