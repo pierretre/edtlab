@@ -1,5 +1,5 @@
 ---
-id: uc02
+id: uc20
 title: Démonstrateur Fischertechnik — Jumeaux numériques pour les systèmes de production
 provider: IRISA / RWTH Aachen / ISW Stuttgart / Univ. Regensburg (projet MBDO)
 contacts:
@@ -7,10 +7,6 @@ contacts:
     org: IRISA, Université de Rennes
     email: lina.bilal@inria.fr
     role: Chercheuse (première auteure)
-  - name: Benoît Combemale
-    org: IRISA, Université de Rennes
-    email: benoit.combemale@irisa.fr
-    role: Responsable scientifique EDT
 summary: >-
   Démonstrateur de recherche pour l'ingénierie des jumeaux numériques de systèmes de production manufacturière, basé sur une ligne Fischertechnik modulaire (stockage haute baie, manutention, transport, traitement, tri). Une architecture de référence partagée — passerelle, synchroniseur, moteur DT, gestionnaires de données et de modèles, services — est instanciée pour trois scénarios d'exploitation complémentaires : surveillance énergétique, replanification flexible et maintenance prédictive. Ce démonstrateur sert de plateforme comparative pour évaluer les approches d'ingénierie des jumeaux numériques.
 lang: fr
@@ -22,7 +18,7 @@ maturity: prototype
 # originType : natural | anthropic | engineered | infrastructure | process
 originType: engineered
 version: r0.1
-status: published
+status: draft
 tags:
   - manufacturing
   - systeme-de-production
@@ -240,7 +236,7 @@ Le JN enregistre en continu les signaux moteur (vitesse, timing d'arrivée capte
 
 La principale contribution du démonstrateur est de montrer qu'une même architecture de référence (gateway → synchronizer → engine → data/model managers + services) peut être **instanciée et réutilisée** pour des préoccupations opérationnelles multiples et concurrentes sur le même système physique. L'enjeu est de formaliser les contrats de service, les mécanismes de coordination entre services, et les conditions de réutilisation des éléments architecturaux, afin que cette architecture devienne un standard praticable pour l'industrie manufacturière.
 
-RQ associées : RQ_E2 (modularisation), RQ_E3 (orchestration du déploiement), RQ_E6 (interopérabilité syntaxique)
+RQ associées : RQ_E2 (modularisation), RQ_E3 (orchestration du déploiement), RQ_E6 (standards et protocoles d'interopérabilité)
 
 ### Composition de JN pour des préoccupations opérationnelles multiples
 
@@ -258,13 +254,13 @@ RQ associées : RQ_E2 (modularisation), RQ_D7 (manipulation des modèles), RQ_D1
 
 L'intégration de sources hétérogènes (MQTT event-driven, REST polling, modèles SysMLv2, AAS) dans un moteur DT cohérent soulève des enjeux de synchronisation, de résolution d'identité et de cohérence des digital shadows. L'enjeu est de formaliser les mécanismes de synchronisation bidirectionnelle dans des architectures DT à sources multiples, et de gérer les données partielles, en retard ou bruitées (ex. dérive d'encodeur).
 
-RQ associées : RQ_D2 (incertitude des données), RQ_D3 (collecte de données hétérogènes), RQ_D6 (évolution des modèles), RQ_I5 (enveloppe de validité)
+RQ associées : RQ_D2 (incertitude des données), RQ_D3 (collecte de données hétérogènes), RQ_D6 (évolution des modèles), RQ_I5 (effet de l'hybridation sur la validité)
 
 ### Maintenance prédictive par détection comportementale et planification automatique
 
 Le scénario UC3 illustre une boucle MAPE-K complète (Monitor–Analyse–Plan–Execute) sur un système de production physique. L'enjeu est de généraliser cette approche à des systèmes de production réels, où les profils de comportement nominal sont plus complexes, les données plus bruitées, et les actions de maintenance plus contraintes (fenêtres d'arrêt, disponibilité techniciens). Cela inclut la construction automatique des profils baseline, le transfert d'apprentissage entre machines similaires et la corrélation anomalie–qualité.
 
-RQ associées : RQ_I3 (hybridation de modèles), RQ_I5 (enveloppe de validité), RQ_D6 (évolution des modèles), RQ_T4 (précision et fidélité)
+RQ associées : RQ_I3 (hybridation de modèles), RQ_I5 (effet de l'hybridation sur la validité), RQ_D6 (évolution des modèles), RQ_T4 (précision et fidélité)
 
 ---
 
@@ -279,7 +275,7 @@ Le démonstrateur Fischertechnik est disponible comme plateforme de référence 
 
 ## Références
 
-- Bilal L., Hellwig A., Treton P., Vojtisek D., Zhang J., Combemale B., Jézéquel J.-M., Michael J., Rumpe B., Wortmann A. — *Digital Twins for Manufacturing Systems: A Case Study Based On a Fischertechnik Factory* — MBDO project, IRISA / RWTH Aachen / ISW Stuttgart / Univ. Regensburg, 2025
+- Bilal L., Hellwig A., Treton P., Vojtisek D., Zhang J., Combemale B., Jézéquel J.-M., Michael J., Rumpe B., Wortmann A. — *Digital Twins for Manufacturing Systems: A Case Study Based On a Fischertechnik Factory* — MBDO project, IRISA / RWTH Aachen / ISW Stuttgart / Univ. Regensburg, 2026
 - [Projet MBDO — Model-Based DevOps](https://mbdo.github.io) (ANR + DFG)
 - ISO 23247-1:2021 — *Digital twin framework for manufacturing*
 - Combemale B. et al. [Engineering Digital Twins: A Research Roadmap](https://inria.hal.science/hal-05223776). EDTconf 2025. ⟨hal-05223776⟩
