@@ -19,6 +19,9 @@ supervisors:
 startDate: 2025-10-01
 status: ongoing
 description: CETIM-funded PhD on hybrid modeling for digital twins of mechanical equipment, combining model simulation and data science to enable predictive maintenance, optimization and decision support on the CETIM JNEM thermal-hydraulic loop.
+useCases:
+  - title: UC05 — CETIM Fluid loop
+    ref: uc05-fluidic-loop-cetim-r1-0-fr
 tags:
   - hybrid-modeling
   - adaptive-modeling
