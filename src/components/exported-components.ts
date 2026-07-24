@@ -12,6 +12,7 @@ import ProjectGrid from '@components/ProjectGrid.astro';
 import PCLeadersList from '@components/PCLeadersList.astro';
 import EventTimeline from '@components/EventTimeline.astro';
 import UseCaseList from '@components/UseCaseList.astro';
+import PortfolioGraphViz from '@components/PortfolioGraphViz.astro';
 
 const mdxComponents = {
     Email,
@@ -27,7 +28,8 @@ const mdxComponents = {
     ProjectGrid,
     PCLeadersList,
     EventTimeline,
-    UseCaseList
+    UseCaseList,
+    PortfolioGraphViz
 };
 
 export default mdxComponents;

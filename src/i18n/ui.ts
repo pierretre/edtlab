@@ -54,6 +54,7 @@ export const ui = {
 
         // Breadcrumb
         'breadcrumb.aria-label': 'Breadcrumb',
+        'breadcrumb.use-cases': 'Use Cases',
 
         // Home page
         'home.hero.learn-more': 'Learn about our program',
@@ -177,6 +178,7 @@ export const ui = {
         'portfolio-graph.column.challenges': 'Scientific challenges',
         'portfolio-graph.column.theses': 'PhD theses',
         'portfolio-graph.isolate': 'Isolate',
+        'portfolio-graph.cancel-isolate': 'Cancel pin',
         'portfolio-graph.reset-view': 'Reset view',
         'portfolio-graph.theme.D': 'Data',
         'portfolio-graph.theme.I': 'Intelligence',
@@ -479,6 +481,7 @@ export const ui = {
 
         // Breadcrumb
         'breadcrumb.aria-label': 'Fil d\'Ariane',
+        'breadcrumb.cas-d-utilisation': 'Cas d\'utilisation',
 
         // Home page
         'home.hero.learn-more': 'En savoir plus sur notre programme',
@@ -602,6 +605,7 @@ export const ui = {
         'portfolio-graph.column.challenges': 'Enjeux scientifiques',
         'portfolio-graph.column.theses': 'Thèses',
         'portfolio-graph.isolate': 'Isoler',
+        'portfolio-graph.cancel-isolate': 'Annuler l\'épinglage',
         'portfolio-graph.reset-view': 'Réinitialiser la vue',
         'portfolio-graph.theme.D': 'Données',
         'portfolio-graph.theme.I': 'Intelligence',

@@ -2,6 +2,22 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { getContentLink } from "@i18n/links";
 import { enToFrMapping } from "@i18n/page-mapping";
 
+/**
+ * Builds one Astro static-path entry ({ params: { lang, slug }, props: { page, ... } }),
+ * the shape every generate*StaticPaths function below produces one (or more) of per entry.
+ */
+function createStaticPage<T>(
+    lang: "en" | "fr",
+    slug: string | undefined,
+    page: T,
+    extraProps: Record<string, unknown> = {},
+) {
+    return {
+        params: { lang, slug },
+        props: { page, ...extraProps },
+    };
+}
+
 export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const baseEntries = await generateBasePagesStaticPaths();
     const newsEntries = await generateNewsPagesStaticPaths();
@@ -23,16 +39,7 @@ async function generateBasePagesStaticPaths() {
         const { lang, href, template } = page.data;
         const { resolvedLang, resolvedSlug } = getLangAndSlugFromPageData(page.id, lang, href);
 
-        return {
-            params: {
-                lang: resolvedLang,
-                slug: resolvedSlug,
-            },
-            props: {
-                page,
-                template,
-            },
-        };
+        return createStaticPage(resolvedLang, resolvedSlug, page, { template });
     });
 }
 
@@ -42,31 +49,15 @@ async function generateBasePagesStaticPaths() {
  */
 async function generateNewsPagesStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("news");
-    return allEntries
-        .map(
-            (entry: CollectionEntry<"news">) => {
-                const { lang } = entry.data;
+    return allEntries.map((entry: CollectionEntry<"news">) => {
+        const { lang } = entry.data;
+        const link = getContentLink(lang, "news", entry.id, true);
 
-                const link = getContentLink(
-                    lang,
-                    "news",
-                    entry.id,
-                    true,
-                );
+        // Remove lang suffix from link for slug param
+        const cleanSlug = link ? link.replace(/-(en|fr)$/, '') : undefined;
 
-                // Remove lang suffix from link for slug param
-                const cleanSlug = link ? link.replace(/-(en|fr)$/, '') : undefined;
-
-                return {
-                    params: {
-                        lang: lang,
-                        slug: cleanSlug,
-                    },
-                    props: {
-                        page: entry
-                    },
-                };
-            });
+        return createStaticPage(lang, cleanSlug, entry);
+    });
 }
 
 /**
@@ -76,32 +67,11 @@ async function generateNewsPagesStaticPaths(): Promise<any[]> {
 async function generateJobOffersStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("job-offers");
 
-    let pages: any[] = [];
-    allEntries.forEach(
-        (entry: CollectionEntry<"job-offers">) => {
-            const linkEN = getContentLink("en", "job-offers", entry.id, true);
-            pages.push({
-                params: {
-                    lang: "en",
-                    slug: linkEN,
-                },
-                props: {
-                    page: entry
-                },
-            });
-
-            const linkFR = getContentLink("fr", "job-offers", entry.id, true);
-            pages.push({
-                params: {
-                    lang: "fr",
-                    slug: linkFR,
-                },
-                props: {
-                    page: entry
-                },
-            });
-        });
-    return pages;
+    return allEntries.flatMap((entry: CollectionEntry<"job-offers">) =>
+        (["en", "fr"] as const).map((lang) =>
+            createStaticPage(lang, getContentLink(lang, "job-offers", entry.id, true), entry),
+        ),
+    );
 }
 
 /**
@@ -111,32 +81,11 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
 async function generateResearchStudiesStaticPaths(): Promise<any[]> {
     const allEntries = await getCollection("research-studies");
 
-    let pages: any[] = [];
-    allEntries.forEach(
-        (entry: CollectionEntry<"research-studies">) => {
-            const linkEN = getContentLink("en", "research-studies", entry.id, true);
-            pages.push({
-                params: {
-                    lang: "en",
-                    slug: linkEN,
-                },
-                props: {
-                    page: entry
-                },
-            });
-
-            const linkFR = getContentLink("fr", "research-studies", entry.id, true);
-            pages.push({
-                params: {
-                    lang: "fr",
-                    slug: linkFR,
-                },
-                props: {
-                    page: entry
-                },
-            });
-        });
-    return pages;
+    return allEntries.flatMap((entry: CollectionEntry<"research-studies">) =>
+        (["en", "fr"] as const).map((lang) =>
+            createStaticPage(lang, getContentLink(lang, "research-studies", entry.id, true), entry),
+        ),
+    );
 }
 
 /**
@@ -144,7 +93,7 @@ async function generateResearchStudiesStaticPaths(): Promise<any[]> {
  * @returns Array of static path entries
  */
 async function generateUseCasesStaticPaths(): Promise<any[]> {
-    const allEntries = (await getCollection("use-cases")).filter((e) => e.data.status !== "draft");
+    const allEntries = await getCollection("use-cases", (e) => e.data.status !== "draft");
 
     // Group entries by their use-case id field (e.g. "uc05"), which is
     // language-agnostic and decoupled from the filename. A use case can have several
@@ -153,46 +102,28 @@ async function generateUseCasesStaticPaths(): Promise<any[]> {
     // link directly to a specific entry's own slug.
     const byId = new Map<string, CollectionEntry<"use-cases">[]>();
     for (const entry of allEntries) {
-        const ucId = entry.data.id;
-        const group = byId.get(ucId) ?? [];
+        const group = byId.get(entry.data.id) ?? [];
         group.push(entry);
-        byId.set(ucId, group);
+        byId.set(entry.data.id, group);
     }
 
-    const langs: ("en" | "fr")[] = ["en", "fr"];
     const pages: any[] = [];
+    const addPage = (lang: "en" | "fr", entry: CollectionEntry<"use-cases">) =>
+        pages.push(createStaticPage(lang, getContentLink(lang, "use-cases", entry.id, true), entry));
+
     for (const group of byId.values()) {
         // One route per entry, at its own language and its own slug.
-        for (const entry of group) {
-            pages.push({
-                params: {
-                    lang: entry.data.lang,
-                    slug: getContentLink(entry.data.lang, "use-cases", entry.id, true),
-                },
-                props: {
-                    page: entry,
-                },
-            });
-        }
+        group.forEach((entry) => {
+            const otherLang = entry.data.lang === "en" ? "fr" : "en";
+            addPage(entry.data.lang, entry);
 
-        // Cross-language fallback: a use case provided in only one language is still
-        // served under both /en and /fr — the other locale shows its latest version.
-        for (const lang of langs) {
-            if (group.some((e) => e.data.lang === lang)) continue;
-            const latest = [...group].sort((a, b) =>
-                (b.data.version || "0").localeCompare(a.data.version || "0"),
-            )[0];
-            if (!latest) continue;
-            pages.push({
-                params: {
-                    lang,
-                    slug: getContentLink(lang, "use-cases", latest.id, true),
-                },
-                props: {
-                    page: latest,
-                },
-            });
-        }
+            // Cross-language fallback: a use case provided in only one language is still
+            // served under both /en and /fr — the other locale shows its latest version.
+            if (!group.some((e) => e.data.lang === otherLang)) {
+                const latest = [...group].sort((a, b) => (b.data.version || "0").localeCompare(a.data.version || "0"))[0];
+                if (latest) addPage(otherLang, latest);
+            }
+        });
     }
     return pages;
 }
