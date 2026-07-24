@@ -47,7 +47,7 @@ The workshop featured plenary sessions (e.g., keynotes) as well as interactive w
 
 ## July 7th
 
-* **09h00 – 10h00:** Keynote by [Roberto Di Cosmo](https://www.dicosmo.org) — [slides](/deliverables/edt-ws1-2026-01-keynote-dicosmo.pdf)
+* **09h00 – 10h00:** Keynote by [Roberto Di Cosmo](https://www.dicosmo.org) — [slides](/deliverables/edt-ws1-2026-01-keynote-dicosmo.pdf) — [video](https://www.canal-u.tv/chaines/edt/seminaire-scientifique-roberto-di-cosmo-software-heritage)
   > **Software as Critical Infrastructure — open source, resilience, and the backbone digital twins need**
   > Digital twins are, at their core, software: long-lived assemblies of models, solvers, couplers and data connectors standing on open building blocks that must run, be trusted, and be reproduced for years, sometimes decades. Yet the way we manage that source code today is fragile: it is scattered across development platforms we do not control, and it depends on external infrastructures on which we do not have control.
   > Open source is the rational engineering and strategic choice for a programme like EDT but an open license is one of the things a durable digital-twins platform needs. Software Heritage, the universal archive of source code, a UNESCO-supported infrastructure preserving billions of unique source files is anoter: a backbone for resilience (when a registry fails, the build continues), for research and software science, for cybersecurity, and an observatory to map and find the software that matters, across all public code. Together with  a shared collaborative development platform, they make the open-source choice hold: sovereign, reproducible, and durable.
@@ -72,7 +72,7 @@ The workshop featured plenary sessions (e.g., keynotes) as well as interactive w
 
 ## July 8th
 
-* **09h00 – 10h00:** Keynote by [Maria Angela Ferrario](https://pure.qub.ac.uk/en/persons/maria-angela-ferrario/) — [slides](/deliverables/edt-ws1-2026-02-keynote-ferrario.pdf)
+* **09h00 – 10h00:** Keynote by [Maria Angela Ferrario](https://pure.qub.ac.uk/en/persons/maria-angela-ferrario/) — [slides](/deliverables/edt-ws1-2026-02-keynote-ferrario.pdf) — [video](https://www.canal-u.tv/chaines/edt/seminar-scientific-maria-angela-ferrario-ethics-sustainability)
   > **Sustainability and Ethics, without the hot air?**
   > The late physicist David MacKay cut through sustainable energy rhetoric with a simple approach: convert energy supply and demand to the same units, do the arithmetic, and let the numbers speak for themselves. This talk invites us to think what a similar approach could look like applied to digital technology (and to the EDT project). How much computation do we actually need, and for whom, for what? What does it cost - in energy, materials, and human effort - to design, maintain, and decommission a software system responsibly, as social, environmental, and geopolitical conditions shift around it faster than what we build? Beneath the numbers and the questions lies a harder problem: "sustainability" and "ethics" can be words worn thin by overuse, caught between hype and dismissal. Rather than settled answers, this talk sets out the questions we should be asking from day one of a project or a programme, with some first, practical pointers toward answering them.
 
