@@ -62,6 +62,12 @@ export default defineConfig({
 
   // Markdown configuration (for .md files)
   markdown: {
+    shikiConfig: {
+      // The site has no dark theme, so fenced code blocks use a light
+      // Shiki theme instead of Astro's dark default (which renders as a
+      // jarring black box on this light-only design).
+      theme: 'github-light',
+    },
     remarkPlugins: [
       emailObfuscator
     ],
