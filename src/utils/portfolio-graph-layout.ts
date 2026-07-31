@@ -13,9 +13,9 @@ export interface Pos {
 }
 
 export const NODE_W = 260;
-export const GAP_X = 100;
+export const GAP_X = 80;
 export const GAP_Y = 8;
-export const ROW_H = { uc: 82, challenge: 82, thesis: 82 } as const;
+export const ROW_H = { uc: 96, challenge: 96, thesis: 96 } as const;
 export const COL_X = [0, NODE_W + GAP_X, 2 * (NODE_W + GAP_X)];
 
 /** Smooth cubic-bezier path from the right edge of `s` to the left edge of `t`. */

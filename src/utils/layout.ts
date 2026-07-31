@@ -4,7 +4,6 @@ import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
 import UseCaseLayout from "@layouts/UseCaseLayout.astro";
 import ResearchStudyLayout from "@layouts/ResearchStudyLayout.astro";
-import PortfolioGraphLayout from "@layouts/PortfolioGraphLayout.astro";
 
 /**
  * Get layout component based on template or collection
@@ -27,8 +26,6 @@ function getLayoutFromTemplate(template: string) {
     switch (template) {
         case 'project-page':
             return ProjectLayout;
-        case 'portfolio-graph':
-            return PortfolioGraphLayout;
         default:
             return PageLayout;
     }

@@ -1,16 +1,16 @@
 ---
 import { useTranslations } from "@i18n/utils";
 import { getContentLink } from "@i18n/links";
-import { NODE_W, GAP_X, GAP_Y, ROW_H, buildPortfolioGraphLayout } from "@utils/portfolio-graph-layout";
-import type { PortfolioGraph } from "@utils/portfolio-graph";
+import { NODE_W, GAP_X, GAP_Y, buildPortfolioGraphLayout } from "@utils/portfolio-graph-layout";
+import { getPortfolioGraph } from "@utils/portfolio-graph";
 
 export interface Props {
-    graph: PortfolioGraph;
     lang: "en" | "fr";
 }
 
-const { graph, lang } = Astro.props;
+const { lang } = Astro.props;
 const t = useTranslations(lang);
+const graph = await getPortfolioGraph(lang);
 
 const {
     sortedUseCases,
@@ -38,36 +38,32 @@ function thesisHref(thesis: { id: string }): string {
     isEmpty ? (
         <p class="text-gray-500">{t("portfolio-graph.empty")}</p>
     ) : (
-        <div
-            class="pg-root"
-            data-row-h={`${ROW_H.uc},${ROW_H.challenge},${ROW_H.thesis}`}
-            data-gap-y={GAP_Y}
-        >
-            <div class="overflow-x-auto border border-gray-200 rounded-lg bg-white p-3">
-                <div class="flex items-center justify-between mb-2" style={`min-width:${svgWidth}px`}>
-                    <div class="flex" style={`gap:${GAP_X}px`}>
-                        {[
-                            t("portfolio-graph.column.use-cases"),
-                            t("portfolio-graph.column.challenges"),
-                            t("portfolio-graph.column.theses"),
-                        ].map((label) => (
-                            <div
-                                class="text-xs font-semibold uppercase tracking-wide text-gray-500"
-                                style={`width:${NODE_W}px`}
-                            >
-                                {label}
-                            </div>
-                        ))}
-                    </div>
-                    <button type="button" class="pg-reset-btn" hidden>
-                        {t("portfolio-graph.reset-view")}
-                    </button>
+        <div class="pg-root" data-gap-y={GAP_Y}>
+            <div class="flex justify-end mb-2">
+                <button type="button" class="pg-reset-btn" hidden>
+                    {t("portfolio-graph.reset-view")}
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <div class="flex mb-2" style={`gap:${(GAP_X / svgWidth) * 100}%;min-width:${svgWidth}px`}>
+                    {[
+                        t("portfolio-graph.column.use-cases"),
+                        t("portfolio-graph.column.challenges"),
+                        t("portfolio-graph.column.theses"),
+                    ].map((label) => (
+                        <div
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-500"
+                            style={`width:${(NODE_W / svgWidth) * 100}%`}
+                        >
+                            {label}
+                        </div>
+                    ))}
                 </div>
                 <svg
                     viewBox={`0 0 ${svgWidth} ${svgHeight}`}
                     width={svgWidth}
                     height={svgHeight}
-                    style={`min-width:${svgWidth}px`}
+                    style={`width:100%;min-width:${svgWidth}px;height:auto`}
                     role="group"
                     aria-label={t("portfolio-graph.title")}
                 >
@@ -100,7 +96,7 @@ function thesisHref(thesis: { id: string }): string {
                                     <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide line-clamp-1">
                                         {uc.id}
                                     </p>
-                                    <p class="font-semibold line-clamp-2">{uc.title}</p>
+                                    <p class="font-semibold">{uc.title}</p>
                                     {uc.domain && <p class="text-gray-500 text-[11px]">{uc.domain}</p>}
                                 </a>
                                 <button
@@ -108,8 +104,37 @@ function thesisHref(thesis: { id: string }): string {
                                     class="pg-isolate-btn"
                                     aria-label={`${t("portfolio-graph.isolate")}: ${uc.title}`}
                                     data-isolate-target={uc.id}
+                                    data-cancel-label={t("portfolio-graph.cancel-isolate")}
                                 >
-                                    <span aria-hidden="true">⌖</span>
+                                    <svg
+                                        class="pg-icon-pin"
+                                        aria-hidden="true"
+                                        viewBox="0 0 24 24"
+                                        width="18"
+                                        height="18"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 17v5" />
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1Z"
+                                        />
+                                    </svg>
+                                    <svg
+                                        class="pg-icon-cancel"
+                                        aria-hidden="true"
+                                        viewBox="0 0 24 24"
+                                        width="18"
+                                        height="18"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18" />
+                                    </svg>
                                 </button>
                             </div>
                         </foreignObject>
@@ -137,7 +162,7 @@ function thesisHref(thesis: { id: string }): string {
                                             {challenge.id}
                                         </p>
                                     )}
-                                    <p class="font-semibold line-clamp-2">{challenge.label}</p>
+                                    <p class="font-semibold">{challenge.label}</p>
                                     {challenge.theme && (
                                         <p class="text-gray-500 text-[11px] line-clamp-1">
                                             {t(`portfolio-graph.theme.${challenge.theme}` as any)}
@@ -149,8 +174,37 @@ function thesisHref(thesis: { id: string }): string {
                                     class="pg-isolate-btn"
                                     aria-label={`${t("portfolio-graph.isolate")}: ${challenge.id}`}
                                     data-isolate-target={challenge.id}
+                                    data-cancel-label={t("portfolio-graph.cancel-isolate")}
                                 >
-                                    <span aria-hidden="true">⌖</span>
+                                    <svg
+                                        class="pg-icon-pin"
+                                        aria-hidden="true"
+                                        viewBox="0 0 24 24"
+                                        width="18"
+                                        height="18"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 17v5" />
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1Z"
+                                        />
+                                    </svg>
+                                    <svg
+                                        class="pg-icon-cancel"
+                                        aria-hidden="true"
+                                        viewBox="0 0 24 24"
+                                        width="18"
+                                        height="18"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18" />
+                                    </svg>
                                 </button>
                             </div>
                         </foreignObject>
@@ -169,7 +223,7 @@ function thesisHref(thesis: { id: string }): string {
                                     <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide line-clamp-1">
                                         {thesis.pc}
                                     </p>
-                                    <p class="font-semibold line-clamp-2">{thesis.title}</p>
+                                    <p class="font-semibold">{thesis.title}</p>
                                     <p class="text-gray-500 text-[11px] line-clamp-1">{thesis.researcher}</p>
                                 </a>
                                 <button
@@ -177,8 +231,37 @@ function thesisHref(thesis: { id: string }): string {
                                     class="pg-isolate-btn"
                                     aria-label={`${t("portfolio-graph.isolate")}: ${thesis.title}`}
                                     data-isolate-target={thesis.id}
+                                    data-cancel-label={t("portfolio-graph.cancel-isolate")}
                                 >
-                                    <span aria-hidden="true">⌖</span>
+                                    <svg
+                                        class="pg-icon-pin"
+                                        aria-hidden="true"
+                                        viewBox="0 0 24 24"
+                                        width="18"
+                                        height="18"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 17v5" />
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1Z"
+                                        />
+                                    </svg>
+                                    <svg
+                                        class="pg-icon-cancel"
+                                        aria-hidden="true"
+                                        viewBox="0 0 24 24"
+                                        width="18"
+                                        height="18"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18" />
+                                    </svg>
                                 </button>
                             </div>
                         </foreignObject>
@@ -207,28 +290,35 @@ function thesisHref(thesis: { id: string }): string {
         padding: 6px 10px;
         font-size: 12px;
         line-height: 1.3;
-        height: calc(100% - 2px);
+        height: auto;
         box-sizing: border-box;
-        overflow: hidden;
-        cursor: pointer;
         color: inherit;
         text-decoration: none;
         transition:
             box-shadow 0.15s,
             opacity 0.15s;
     }
+    /* Only the use-case and thesis cards navigate on click; the challenge
+       column in the middle is hover/focus-only, so it must not look clickable. */
+    .pg-node-uc,
+    .pg-node-thesis {
+        cursor: pointer;
+    }
     .pg-node:hover,
-    .pg-node:focus-visible {
-        box-shadow: 0 0 0 2px var(--pg-color, #898781);
+    .pg-node:focus-visible,
+    .pg-node.is-active {
+        /* Inset so the ring never gets clipped by the foreignObject's bounds. */
+        box-shadow: inset 0 0 0 2px var(--pg-color, #898781);
     }
     .pg-node:focus-visible {
         outline: none;
     }
-    .pg-node.is-active {
-        box-shadow: 0 0 0 2px var(--pg-color, #898781);
-    }
     .pg-node.is-dim {
         opacity: 0.3;
+    }
+    .pg-node.is-selected {
+        box-shadow: inset 0 0 0 2px var(--pg-color, #898781);
+        background: color-mix(in srgb, var(--pg-color, #898781) 12%, white);
     }
     .pg-link {
         fill: none;
@@ -272,7 +362,20 @@ function thesisHref(thesis: { id: string }): string {
     .pg-isolate-btn:hover,
     .pg-isolate-btn:focus-visible {
         opacity: 1;
-        background: #f3f2ee;
+    }
+    /* Once a card is pinned, its own button swaps from "pin" to "cancel the pin". */
+    .pg-isolate-btn .pg-icon-cancel {
+        display: none;
+    }
+    .pg-isolate-btn.is-cancel .pg-icon-pin {
+        display: none;
+    }
+    .pg-isolate-btn.is-cancel .pg-icon-cancel {
+        display: block;
+    }
+    .pg-isolate-btn.is-cancel {
+        color: var(--pg-color, #898781);
+        opacity: 0.9;
     }
     .pg-reset-btn {
         font-size: 12px;
@@ -290,12 +393,6 @@ function thesisHref(thesis: { id: string }): string {
     .line-clamp-1 {
         display: -webkit-box;
         -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
