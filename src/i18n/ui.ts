@@ -169,7 +169,6 @@ export const ui = {
         'use-cases.related-research-studies': 'Related research studies',
 
         // Portfolio graph
-        'portfolio-graph.nav-link': 'View the portfolio graph',
         'portfolio-graph.title': 'Research Portfolio Graph',
         'portfolio-graph.description': 'How use cases, scientific challenges and PhD theses connect across the EDT program.',
         'portfolio-graph.intro': 'Hover, click or focus any item to trace how a use case connects to its scientific challenges, and the theses addressing them.',
@@ -596,7 +595,6 @@ export const ui = {
         'use-cases.related-research-studies': 'Travaux de recherche associés',
 
         // Portfolio graph
-        'portfolio-graph.nav-link': 'Voir le graphe du portefeuille',
         'portfolio-graph.title': 'Graphe du portefeuille de recherche',
         'portfolio-graph.description': "Comment les cas d'usage, les enjeux scientifiques et les thèses du programme EDT se relient entre eux.",
         'portfolio-graph.intro': "Survolez, cliquez ou naviguez au clavier sur un élément pour suivre comment un cas d'usage se relie à ses enjeux scientifiques, et les thèses qui y travaillent.",
