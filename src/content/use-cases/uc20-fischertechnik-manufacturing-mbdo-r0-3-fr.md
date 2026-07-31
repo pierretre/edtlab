@@ -18,7 +18,7 @@ maturity: prototype
 # originType : natural | anthropic | engineered | infrastructure | process
 originType: engineered
 version: r0.3
-status: draft
+status: published
 tags:
   - manufacturing
   - systeme-de-production
