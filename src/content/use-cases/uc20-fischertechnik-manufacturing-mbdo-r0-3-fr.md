@@ -5,12 +5,12 @@ provider: IRISA / RWTH Aachen / ISW Stuttgart / Univ. Regensburg (projet MBDO)
 contacts:
   - name: Didier Vojtisek
     org: IRISA, Inria
-    email: didioer.vojtisek@inira.fr
+    email: didier.vojtisek@inria.fr
     role: Ingénieur de recherche
 summary: >-
   Démonstrateur de recherche pour l'ingénierie des jumeaux numériques de systèmes de production manufacturière, basé sur une ligne Fischertechnik modulaire (stockage haute baie, manutention, transport, traitement, tri). Une architecture de référence partagée - passerelle, synchroniseur, moteur DT, gestionnaires de données et de modèles, services - est instanciée pour trois scénarios d'exploitation complémentaires : surveillance énergétique, replanification flexible et maintenance prédictive. Ce démonstrateur sert de plateforme comparative pour évaluer les approches d'ingénierie des jumeaux numériques.
 lang: fr
-photo: /media/use-cases/uc-default.svg
+photo: /media/uploads/UseCase_FactoryFischerTechnik.jpg
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: industrial-engineering
 # maturity : concept | poc | prototype | operational
@@ -40,7 +40,13 @@ Une **architecture de référence** partagée est instanciée pour trois scénar
 
 L'objectif principal est de montrer comment **une même infrastructure DT** peut être réutilisée pour des préoccupations opérationnelles multiples et concurrentes, et de constituer une **base de comparaison** pour l'évaluation des approches d'ingénierie des jumeaux numériques.
 
-Ce travail est issu du projet **MBDO** (*Model-Based DevOps*, ANR + DFG), réunissant IRISA (Université de Rennes), RWTH Aachen et ISW (Univ. Stuttgart).
+Ce travail est issu du projet **MBDO** (*Model-Based DevOps*, ANR + DFG), réunissant IRISA (Université de Rennes), RWTH Aachen University et ISW  Stuttgart University.
+
+<video autoplay loop muted playsinline controls poster="/media/uploads/UseCase_FactoryFischerTechnik.jpg" style="max-width:100%;height:auto;" aria-label="Démonstrateur Fischertechnik - morphing animé de la ligne de production physique">
+  <source src="/media/uploads/UseCase_FactoryFischerTechnik-morphing.webm" type="video/webm" />
+</video>
+
+*Démonstrateur physique - ligne de production modulaire Fischertechnik.*
 
 ---
 
@@ -399,7 +405,7 @@ Le démonstrateur Fischertechnik est fourni comme une **plateforme de référenc
 
 ### Plateforme physique et réplication multi-sites
 
-La plateforme repose sur une ligne de production modulaire Fischertechnik, reproduite sur plusieurs sites partenaires du projet, notamment à l'IRISA (Rennes), à la RWTH Aachen et à l'ISW Stuttgart. Les configurations matérielles et logicielles, notamment le code des contrôleurs et du SCADA, sont partagées afin de faciliter la réplication des expérimentations et la comparaison des résultats entre sites.
+La plateforme repose sur une ligne de production modulaire Fischertechnik, reproduite sur plusieurs sites partenaires du projet, notamment à l'IRISA (Rennes), à la RWTH Aachen University et à l'ISW Stuttgart University. Les configurations matérielles et logicielles, notamment le code des contrôleurs et du SCADA, sont partagées afin de faciliter la réplication des expérimentations et la comparaison des résultats entre sites.
 
 ### Ressources logicielles et d'ingénierie
 
