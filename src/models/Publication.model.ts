@@ -7,5 +7,5 @@ export interface Publication {
     url?: string;
     type: 'journal' | 'conference' | 'book' | 'report' | 'white-paper' | 'preprint' | 'thesis' | 'workshop' | 'slidedeck';
     tags?: string[];
-    origin?: 'edt' | 'external';
+    origin?: 'edt' | 'external' | 'hal';
 }

@@ -10,7 +10,9 @@ const { publication, t } = Astro.props as Props;
 
 const badges = [
     ...(publication.tags || []).filter((tag) => tag && tag.trim()),
-    ...(publication.origin === "edt" ? ["EDT"] : []),
+    ...(publication.origin && ["edt", "hal"].includes(publication.origin)
+        ? [publication.origin.toUpperCase()]
+        : []),
 ];
 ---
 
@@ -22,9 +24,7 @@ const badges = [
     data-tags={(publication.tags ?? []).join(" ").toLowerCase()}
     role="row"
 >
-    <h3
-        class="flex items-baseline font-medium justify-between text-gray-900 leading-tight"
-    >
+    <h3 class="font-medium text-gray-900 leading-tight">
         {
             publication.url ? (
                 <a
@@ -39,11 +39,16 @@ const badges = [
                 <span>{publication.title}</span>
             )
         }
-
-        <div class="flex gap-1 flex-wrap justify-end items-center">
-            {badges.map((badge) => <Badge key={badge} t={t} />)}
-        </div>
     </h3>
+    {
+        badges.length > 0 && (
+            <div class="flex gap-1 flex-wrap justify-end items-center mt-1">
+                {badges.map((badge) => (
+                    <Badge key={badge} t={t} />
+                ))}
+            </div>
+        )
+    }
     <p class="text-xs text-gray-600 mt-1">
         {publication.authors.join(", ")} • {publication.year}
     </p>

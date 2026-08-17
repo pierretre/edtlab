@@ -17,23 +17,24 @@ export async function generateAllPagesStaticPaths(): Promise<any[]> {
  * @returns Array of static path entries
  */
 async function generateBasePagesStaticPaths() {
-    const allPages = await getCollection("pages");
+    const allPages = await getCollection("pages", (page) => page.id !== "publications"); // Exclude publications page, which is served by its own SSR route
 
-    return allPages.map((page: CollectionEntry<"pages">) => {
-        const { lang, href, template } = page.data;
-        const { resolvedLang, resolvedSlug } = getLangAndSlugFromPageData(page.id, lang, href);
+    return allPages
+        .map((page: CollectionEntry<"pages">) => {
+            const { lang, href, template } = page.data;
+            const { resolvedLang, resolvedSlug } = getLangAndSlugFromPageData(page.id, lang, href);
 
-        return {
-            params: {
-                lang: resolvedLang,
-                slug: resolvedSlug,
-            },
-            props: {
-                page,
-                template,
-            },
-        };
-    });
+            return {
+                params: {
+                    lang: resolvedLang,
+                    slug: resolvedSlug,
+                },
+                props: {
+                    page,
+                    template,
+                },
+            };
+        });
 }
 
 /**

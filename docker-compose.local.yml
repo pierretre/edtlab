@@ -25,11 +25,32 @@ services:
       - LIST_INBOX=${LIST_INBOX}
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_NAME=${SENDER_NAME}
+      - MONGODB_URI=${MONGODB_URI}
+      - HAL_SYNC_SECRET=${HAL_SYNC_SECRET}
+    depends_on:
+      - mongo
     healthcheck:
       test: [ "CMD", "node", "-e", "require('http').get('http://localhost:4321/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" ]
       interval: 30s
       timeout: 3s
       retries: 3
+      start_period: 10s
+
+  mongo:
+    image: mongo:7
+    container_name: edtlab_mongo_local
+    restart: unless-stopped
+    networks:
+      - edtlab_network
+    volumes:
+      - /var/www/edtlabfr/mongo/data:/data/db
+    ports:
+      - "127.0.0.1:4004:27017"
+    healthcheck:
+      test: [ "CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
       start_period: 10s
 
   matomo-db:

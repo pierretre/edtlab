@@ -32,6 +32,9 @@ export default defineConfig({
   i18n: {
     locales: ['en', 'fr'],
     defaultLocale: 'en',
+    routing: {
+      prefixDefaultLocale: true,
+    },
   },
 
   vite: {
@@ -89,7 +92,13 @@ export default defineConfig({
           en: 'en',
           fr: 'fr'
         }
-      }
+      },
+      // The publications page is SSR (prerender = false) so the sitemap
+      // integration can't discover it automatically like prerendered pages.
+      customPages: [
+        'https://www.edtlab.fr/en/publications',
+        'https://www.edtlab.fr/fr/publications',
+      ]
     }),
     partytown({
       // Configuration for Partytown
