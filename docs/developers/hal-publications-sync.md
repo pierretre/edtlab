@@ -9,7 +9,7 @@ This guide explains how publications from the lab's [HAL open-science](https://h
 The publications page (`/en/publications`, `/fr/publications`) shows two sources of publications, merged into one list:
 
 - **Static publications** — hand-written MDX files in `src/content/publications/`, managed through the CMS like any other content.
-- **HAL publications** — fetched from the `EDT` collection on HAL, stored in MongoDB, refreshed once a day by a cron job hitting a sync endpoint.
+- **HAL publications** — fetched from the `EDT` collection on HAL, stored in MongoDB, refreshed once a day by a cron job running a sync script inside the container. There is no network-reachable endpoint for this — the sync is not callable from outside the server.
 
 The page is rendered server-side (SSR) so it can read from MongoDB on every request; it is no longer part of the statically prerendered build output.
 
@@ -23,23 +23,24 @@ src/
 │   ├── hal.ts             # Fetch HAL search API (paginated) + map to Publication shape
 │   └── mongodb.ts         # Singleton MongoClient, getPublicationsCollection()
 ├── pages/
-│   ├── api/
-│   │   └── hal-collection.ts   # POST endpoint: triggers a full HAL -> Mongo sync
 │   └── [lang]/
 │       └── publications.astro  # SSR page (prerender = false)
 ├── components/
-│   ├── PublicationList.astro   # Merges static + Mongo publications, renders + filters
+│   ├── PublicationList.astro   # Merges + dedupes static + Mongo publications, renders + filters
 │   └── PublicationCard.astro   # Renders one publication, incl. "HAL"/"EDT" badges
 ├── models/
 │   └── Publication.model.ts    # origin: 'edt' | 'external' | 'hal'
 └── content.config.ts            # publications schema, same origin enum
+
+scripts/
+└── sync-hal.ts             # One-shot sync script, bundled to dist/scripts/sync-hal.mjs
 ```
 
 **Data flow:**
 
-1. A daily cron job on the host calls `POST /api/hal-collection` with a shared secret.
-2. The endpoint pages through the HAL search API for the `EDT` collection, maps every doc to the `Publication` shape, and replaces the entire `publications` collection in MongoDB (`deleteMany({})` + `insertMany(...)`).
-3. On every request to `/[lang]/publications`, `PublicationList.astro` reads the static MDX publications (`getCollection("publications")`) and the Mongo publications (`getPublicationsCollection().find()`), concatenates them, sorts by year/title, and renders.
+1. A daily cron job on the host runs `docker exec edtlab_web node dist/scripts/sync-hal.mjs` — a script inside the running container, not an HTTP endpoint. Nothing listens on the network for this.
+2. The script pages through the HAL search API for the `EDT` collection, maps every doc to the `Publication` shape, and replaces the entire `publications` collection in MongoDB (`deleteMany({})` + `insertMany(...)`).
+3. On every request to `/[lang]/publications`, `PublicationList.astro` reads the static MDX publications (`getCollection("publications")`) and the Mongo publications (`getPublicationsCollection().find()`), dedupes and concatenates them, sorts by year/title, and renders.
 4. If MongoDB is unreachable, the fetch is wrapped in a `try/catch` and the page falls back to static-only publications rather than failing.
 
 ---
@@ -71,26 +72,23 @@ Fields requested (`fl=`): `docid`, `title_s`, `authFullName_s`, `producedDateY_i
 
 ---
 
-## API endpoint: `POST /api/hal-collection`
+## Sync script: `scripts/sync-hal.ts`
 
-**Auth**: shared secret via the `X-Sync-Secret` header, checked against `HAL_SYNC_SECRET`.
+There is deliberately no HTTP endpoint for this — the original implementation used a secret-protected `POST /api/hal-collection` route, but that meant dealing with Astro's same-site `Origin` check, a shared secret to manage, and a publicly reachable route whose only purpose was to be hit by cron. Running it as an in-container script removes all of that: nothing listens on the network, there's no secret to leak or rotate, and cron just needs shell access to the box it already runs on.
 
-**Request**: no body required.
+**Build**: `scripts/sync-hal.ts` is bundled by `esbuild` into a single `dist/scripts/sync-hal.mjs` as part of `npm run build` / `npm run build:prod` (see the `build:scripts` script in `package.json`). It reuses `src/utils/hal.ts` and `src/utils/mongodb.ts` directly — esbuild resolves the `@utils/*`/`@models/*` path aliases via `tsconfig.json` at bundle time, so the output is self-contained (the `mongodb` driver itself stays external, resolved from `node_modules` at runtime, same as everywhere else in the app). This mirrors how `dist/server/entry.mjs` already works: the final Docker image only ever ships `dist/` — no `src/`, no `tsconfig.json`, no `tsx` needed at runtime.
+
+**Run it**:
 
 ```bash
-curl -X POST \
-  -H "X-Sync-Secret: $HAL_SYNC_SECRET" \
-  -H "Origin: https://edtlab.fr" \
-  https://edtlab.fr/api/hal-collection
+# Inside a running container (production/local docker-compose)
+docker exec edtlab_web node dist/scripts/sync-hal.mjs
+
+# Directly, if MONGODB_URI is set in the environment
+node dist/scripts/sync-hal.mjs
 ```
 
-> The `Origin` header is required — Astro rejects same-site, non-GET requests without a matching `Origin` by default. A bare `curl -X POST` with no `Origin` header gets a 403 ("Cross-site POST form submissions are forbidden"), not a 401.
-
-**Responses:**
-
-- `200` — `{ "success": true, "count": 7 }`
-- `401` — `{ "error": "Unauthorized" }` (missing/incorrect `X-Sync-Secret`)
-- `500` — `{ "error": "<message>" }` (HAL API or MongoDB failure)
+Prints `Synced <N> HAL publications.` and exits `0` on success, or logs the error and exits `1` on failure (bad HAL response, Mongo unreachable, etc.) — suitable for cron's own failure handling/alerting.
 
 ---
 
@@ -99,13 +97,11 @@ curl -X POST \
 ```bash
 # MongoDB (HAL publications sync)
 MONGODB_URI=mongodb://mongo:27017/edtlab
-HAL_SYNC_SECRET=change_me
 ```
 
-- `MONGODB_URI` — connection string. Inside Docker Compose this points at the `mongo` service (`mongodb://mongo:27017/edtlab`); for `npm run dev` against a local container, use `mongodb://localhost:27017/edtlab`.
-- `HAL_SYNC_SECRET` — shared secret required by the sync endpoint. Generate a random value for production; any value works for local testing.
+`MONGODB_URI` is the only variable this feature needs. Inside Docker Compose it points at the `mongo` service (`mongodb://mongo:27017/edtlab`); for `npm run dev` against a local container, use `mongodb://localhost:27017/edtlab`.
 
-Both are read via `process.env.X || import.meta.env.X`, matching the pattern used by the other API routes (e.g. `contact.ts`, `phd-club.ts`).
+Read via `process.env.MONGODB_URI` (see `src/utils/mongodb.ts`), matching the pattern used by the other API routes (e.g. `contact.ts`, `phd-club.ts`).
 
 ---
 
@@ -131,13 +127,13 @@ docker exec edtlab-mongo-dev mongosh edtlab --quiet --eval 'db.publications.find
 
 ## Cron setup
 
-The daily sync is triggered externally — there's no cron process inside this repo/container. Install a crontab entry on the host:
+There's no cron process inside this repo/container — install a crontab entry on the host that shells into the running `web` container:
 
 ```cron
-0 3 * * * curl -sf -X POST -H "X-Sync-Secret: $HAL_SYNC_SECRET" -H "Origin: https://edtlab.fr" https://edtlab.fr/api/hal-collection
+0 3 * * * docker exec edtlab_web node dist/scripts/sync-hal.mjs >> /var/log/hal-sync.log 2>&1
 ```
 
-This line is also documented as a comment next to `HAL_SYNC_SECRET` in `.env.example`.
+This line is also documented as a comment next to `MONGODB_URI` in `.env.example`. The container name (`edtlab_web`) comes from `docker-compose.yml`; adjust it if you're running under a different compose project name or on `docker-compose.local.yml` (`edtlab_web_local`).
 
 ---
 
@@ -147,16 +143,15 @@ This line is also documented as a comment next to `HAL_SYNC_SECRET` in `.env.exa
 # 1. Start a local Mongo container
 docker run -d -p 27017:27017 --name edtlab-mongo-dev mongo:7
 
-# 2. Set MONGODB_URI=mongodb://localhost:27017/edtlab and HAL_SYNC_SECRET in .env
+# 2. Set MONGODB_URI=mongodb://localhost:27017/edtlab in .env
 
-# 3. Start the dev server
+# 3. Build the script (or `npm run build:scripts` alone if the rest of the
+#    build is already up to date) and run it directly
+npm run build:scripts
+MONGODB_URI=mongodb://localhost:27017/edtlab node dist/scripts/sync-hal.mjs
+
+# 4. Start the dev server and visit the merged page
 npm run dev
-
-# 4. Trigger a sync
-curl -X POST -H "X-Sync-Secret: <secret>" -H "Origin: http://localhost:4321" \
-  http://localhost:4321/api/hal-collection
-
-# 5. Visit the merged page
 open http://localhost:4321/en/publications
 ```
 
@@ -170,9 +165,7 @@ open http://localhost:4321/en/publications
 
 ## Dedupe
 
-If a publication is both hand-written in `src/content/publications/` and present in the HAL collection, the HAL copy is dropped so it doesn't show up twice. `filterOutHalDuplicates()` in `src/utils/publications.ts` matches by DOI first (case-insensitive), falling back to a normalized title match (lowercased, punctuation stripped) when no DOI is available on either side. The static entry always wins — it may carry manual edits (better-formatted author names, curated tags) that the HAL copy doesn't have. This runs in `PublicationList.astro` before the HAL docs are merged into the render list, so a duplicate never reaches the page at all (not just visually hidden).
-
-Unit tests: `src/test/utils/publications.test.ts`.
+If a publication is both hand-written in `src/content/publications/` and present in the HAL collection, the HAL copy is dropped so it doesn't show up twice. `PublicationList.astro` filters the Mongo docs against the static entries by DOI first (case-insensitive), falling back to a lowercased title match when no DOI is available on either side, before merging them into the render list. The static entry always wins — it may carry manual edits (better-formatted author names, curated tags) that the HAL copy doesn't have.
 
 ## Known limitations
 
