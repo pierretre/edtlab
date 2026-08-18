@@ -1,12 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import { generatePublicationStructuredData } from "@utils/seo";
 import PublicationCard from "./PublicationCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
 import { publicationsFilterConfig } from "@utils/filter-configs";
-import { getPublicationsCollection } from "@utils/mongodb";
-import type { Publication } from "@models/Publication.model";
+import { getAllPublications } from "@utils/publications";
+import type { Publication } from "~/models/Publication.model";
 
 export interface Props {
     lang: "en" | "fr";
@@ -16,71 +15,19 @@ export interface Props {
 const { lang, origin } = Astro.props as Props;
 const t = useTranslations(lang);
 
-type Pub = { id: string; data: Publication };
-
-// Statically authored publications (content collection)
-const staticPublications: Pub[] = (await getCollection("publications")).map(
-    (p) => ({ id: p.id, data: p.data }),
-);
-
-// Publications synced from HAL into MongoDB. Best-effort: if Mongo is
-// unreachable, the page still renders with just the static publications.
-let halPublications: Pub[] = [];
-try {
-    const collection = await getPublicationsCollection();
-    const docs = await collection.find().toArray();
-    const staticDois = new Set(
-        staticPublications.map((p) => p.data.doi?.toLowerCase()),
-    );
-    const staticTitles = new Set(
-        staticPublications.map((p) => p.data.title.toLowerCase()),
-    );
-
-    console.log(
-        `Loaded ${docs.length} HAL publications from MongoDB, filtering out ${staticDois.size} static DOIs and ${staticTitles.size} static titles`,
-    );
-
-    halPublications = docs
-        .filter(
-            (doc) =>
-                !(doc.doi && staticDois.has(doc.doi.toLowerCase())) &&
-                !staticTitles.has(doc.title.toLowerCase()),
-        )
-        .map((doc) => ({ id: doc.halId, data: doc }));
-} catch (error) {
-    console.error("Failed to load HAL publications from MongoDB:", error);
-}
-
-const allPublications = [...staticPublications, ...halPublications];
-
-const sortByYearTitle = (a: Pub, b: Pub) => {
-    if (b.data.year !== a.data.year) return b.data.year - a.data.year;
-    return (a.data.title || "").localeCompare(b.data.title || "");
-};
-
-// HAL-origin publications come from the lab's own HAL collection, so they
-// count as "edt" for the purposes of this origin filter.
-const publications = (
-    origin
-        ? allPublications.filter((p: Pub) =>
-              origin === "edt"
-                  ? p.data.origin === "edt" || p.data.origin === "hal"
-                  : p.data.origin !== "edt" && p.data.origin !== "hal",
-          )
-        : allPublications
-).sort(sortByYearTitle);
+const publications = await getAllPublications(origin);
 
 // Generate structured data for publications
-const publicationStructuredData = publications.map((pub) =>
+const publicationStructuredData = publications.map((pub: Publication) =>
     generatePublicationStructuredData(
-        pub.data.title,
-        pub.data.authors,
-        pub.data.year.toString(),
-        pub.data.tags ?? [],
-        pub.data.url,
-        pub.data.doi,
-        pub.data.venue,
-        pub.data.type,
+        pub.title,
+        pub.authors,
+        pub.year.toString(),
+        pub.tags ?? [],
+        pub.url,
+        pub.doi,
+        pub.venue,
+        pub.type,
     ),
 );
 ---
@@ -116,11 +63,8 @@ const publicationStructuredData = publications.map((pub) =>
             >
                 <div class="space-y-2">
                     {
-                        publications.map((publication: Pub) => (
-                            <PublicationCard
-                                publication={publication.data}
-                                t={t}
-                            />
+                        publications.map((publication: Publication) => (
+                            <PublicationCard publication={publication} t={t} />
                         ))
                     }
                 </div>

@@ -30,7 +30,7 @@ const publicationsCollection = defineCollection({
         doi: z.string().optional(),
         url: z.url().optional(),
         tags: z.array(z.string()).optional().default([]),
-        origin: z.enum(['edt', 'external', 'hal']).optional().default('external'),
+        origin: z.enum(['edt', 'external']).optional().default('external'),
     })
 });
 

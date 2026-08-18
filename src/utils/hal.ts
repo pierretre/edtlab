@@ -82,6 +82,6 @@ export function mapHalDocToPublication(doc: HalDoc): Publication & { halId: stri
         url: doc.uri_s,
         type: (doc.docType_s && DOC_TYPE_MAP[doc.docType_s]) || 'preprint',
         tags: doc.keyword_s || [],
-        origin: 'hal',
+        origin: 'edt',
     };
 }

@@ -9,6 +9,7 @@ import { Picture } from "astro:assets";
 import { getPublicationTypeTranslation } from "@utils/translation";
 import heroBackground from "@assets/images/INRIA_EDT_CBLOT_fond_herosection.jpg";
 import heroIllustration from "@assets/images/INRIA_EDT_CBLOT_Illu_Herosection.png";
+import { getAllPublications } from "~/utils/publications";
 
 export interface Props {
     title?: string;
@@ -38,10 +39,8 @@ const recentEvents = news.sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
-const allPublications = await getCollection("publications", ({ data }) => data.origin === 'edt');
-const recentPublications = allPublications.sort(
-    (a, b) => b.data.year - a.data.year,
-);
+const allPublications = await getAllPublications("edt");
+const recentPublications = allPublications.sort((a, b) => b.year - a.year);
 
 const allJobOffers = await getCollection(
     "job-offers",
@@ -319,24 +318,23 @@ const activeJobOffers = allJobOffers;
                                     .map((publication) => (
                                         <div class="border-l-4 border-[#434672] pl-4">
                                             <h4 class="font-semibold text-gray-900 text-sm">
-                                                {publication.data.title}
+                                                {publication.title}
                                             </h4>
                                             <p class="text-xs text-gray-500 mt-1">
-                                                {publication.data.authors
+                                                {publication.authors
                                                     .slice(0, 2)
                                                     .join(", ")}
-                                                {publication.data.authors
-                                                    .length > 2 &&
-                                                    ` et al.`}{" "}
-                                                • {publication.data.year}
+                                                {publication.authors.length >
+                                                    2 && ` et al.`}{" "}
+                                                • {publication.year}
                                             </p>
                                             <p class="text-xs text-[#434672] mt-1 capitalize">
                                                 {getPublicationTypeTranslation(
-                                                    publication.data.type,
+                                                    publication.type,
                                                     lang,
                                                 )}
-                                                {publication.data.venue &&
-                                                    ` • ${publication.data.venue}`}
+                                                {publication.venue &&
+                                                    ` • ${publication.venue}`}
                                             </p>
                                         </div>
                                     ))}
