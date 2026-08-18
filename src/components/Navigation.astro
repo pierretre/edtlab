@@ -224,7 +224,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
     >
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50">
             {
-                menuSections.map((section) =>
+                menuSections.map((section, sectionIndex) =>
                     section.items && section.items.length > 0 ? (
                         <div>
                             <button
@@ -247,7 +247,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                                         ? "text-primary-600"
                                         : "text-gray-700"
                                 }`}
-                                data-collapse-toggle={`mobile-dropdown-${section.href}`}
+                                data-collapse-toggle={`mobile-dropdown-${sectionIndex}`}
                                 aria-expanded="false"
                             >
                                 {section.name}
@@ -268,7 +268,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                                 </svg>
                             </button>
                             <div
-                                id={`mobile-dropdown-${section.href}`}
+                                id={`mobile-dropdown-${sectionIndex}`}
                                 class="hidden pl-4"
                             >
                                 {section.items.map((item) => (
