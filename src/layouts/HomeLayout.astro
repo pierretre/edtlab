@@ -47,6 +47,14 @@ const allJobOffers = await getCollection(
     ({ data }) => !data.filled,
 );
 const activeJobOffers = allJobOffers;
+
+// Count distinct published use cases (each use case can have en/fr entries
+// sharing the same data.id, so dedupe by id like generateUseCasesStaticPaths does)
+const publishedUseCases = await getCollection(
+    "use-cases",
+    ({ data }) => data.status === "published",
+);
+const useCasesCount = new Set(publishedUseCases.map((uc) => uc.data.id)).size;
 ---
 
 <BaseLayout
@@ -163,7 +171,8 @@ const activeJobOffers = allJobOffers;
             <div class="mr-5 mb-5 lg:mb-0">
                 <a
                     href={linkHelpers.page(lang, "use-cases")}
-                    class="text-2xl font-bold text-primary-600">40+</a
+                    class="text-2xl font-bold text-primary-600"
+                    >{useCasesCount}</a
                 >
                 <p class="text-sm">{t("home.stats.use-cases")}</p>
             </div>
