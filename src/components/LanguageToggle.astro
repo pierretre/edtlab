@@ -89,3 +89,26 @@ const otherLocales = (Object.keys(languages) as Array<"en" | "fr">).filter(
         </ul>
     </div>
 </div>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        // iOS Safari doesn't focus a <button> on tap, so the CSS
+        // group-focus-within fallback never triggers there — toggle
+        // the menu explicitly on click as well.
+        const button = document.querySelector("[data-language-toggle]");
+        const menu = document.querySelector("[data-language-menu]");
+
+        if (button && menu) {
+            button.addEventListener("click", function () {
+                const isHidden = menu.classList.contains("hidden");
+                if (isHidden) {
+                    menu.classList.remove("hidden");
+                    button.setAttribute("aria-expanded", "true");
+                } else {
+                    menu.classList.add("hidden");
+                    button.setAttribute("aria-expanded", "false");
+                }
+            });
+        }
+    });
+</script>

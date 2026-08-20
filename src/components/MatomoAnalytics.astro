@@ -17,27 +17,27 @@ const matomoSiteId = import.meta.env.MATOMO_SITE_ID || "1";
     window.location.href.includes("127.0.0.1")
   ) {
     console.log("Matomo tracking disabled on localhost");
-    return;
+  } else {
+    var _paq = (window._paq = window._paq || []);
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(["trackPageView"]);
+    _paq.push(["enableLinkTracking"]);
+    // Configure privacy settings
+    _paq.push(["setDoNotTrack", "false"]);
+    // Cookie settings for GDPR compliance
+    _paq.push(["disableCookies"]);
+    // Enable heartbeat timer if configured
+    _paq.push(["enableHeartBeatTimer", "15"]);
+    (function () {
+      var u = matomoUrl;
+      _paq.push(["setTrackerUrl", u + "matomo.php"]);
+      _paq.push(["setSiteId", matomoSiteId]);
+      var d = document,
+        g = d.createElement("script"),
+        s = d.getElementsByTagName("script")[0];
+      g.async = true;
+      g.src = u + "matomo.js";
+      s.parentNode.insertBefore(g, s);
+    })();
   }
-  var _paq = (window._paq = window._paq || []);
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(["trackPageView"]);
-  _paq.push(["enableLinkTracking"]);
-  // Configure privacy settings
-  _paq.push(["setDoNotTrack", "false"]);
-  // Cookie settings for GDPR compliance
-  _paq.push(["disableCookies"]);
-  // Enable heartbeat timer if configured
-  _paq.push(["enableHeartBeatTimer", "15"]);
-  (function () {
-    var u = matomoUrl;
-    _paq.push(["setTrackerUrl", u + "matomo.php"]);
-    _paq.push(["setSiteId", matomoSiteId]);
-    var d = document,
-      g = d.createElement("script"),
-      s = d.getElementsByTagName("script")[0];
-    g.async = true;
-    g.src = u + "matomo.js";
-    s.parentNode.insertBefore(g, s);
-  })();
 </script>

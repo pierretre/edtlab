@@ -1,10 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import { generatePublicationStructuredData } from "@utils/seo";
 import PublicationCard from "./PublicationCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
 import { publicationsFilterConfig } from "@utils/filter-configs";
+import { getAllPublications } from "@utils/publications";
+import type { Publication } from "~/models/Publication.model";
 
 export interface Props {
     lang: "en" | "fr";
@@ -14,36 +15,19 @@ export interface Props {
 const { lang, origin } = Astro.props as Props;
 const t = useTranslations(lang);
 
-// Get all publications, optionally filtered by origin
-const allPublications = await getCollection("publications");
-
-type Pub = (typeof allPublications)[number];
-const sortByYearTitle = (a: Pub, b: Pub) => {
-    if (b.data.year !== a.data.year) return b.data.year - a.data.year;
-    return (a.data.title || "").localeCompare(b.data.title || "");
-};
-
-const publications = (
-    origin
-        ? allPublications.filter((p: Pub) =>
-              origin === "edt"
-                  ? p.data.origin === "edt"
-                  : p.data.origin !== "edt",
-          )
-        : allPublications
-).sort(sortByYearTitle);
+const publications = await getAllPublications(origin);
 
 // Generate structured data for publications
-const publicationStructuredData = publications.map((pub) =>
+const publicationStructuredData = publications.map((pub: Publication) =>
     generatePublicationStructuredData(
-        pub.data.title,
-        pub.data.authors,
-        pub.data.year.toString(),
-        pub.data.tags,
-        pub.data.url,
-        pub.data.doi,
-        pub.data.venue,
-        pub.data.type,
+        pub.title,
+        pub.authors,
+        pub.year.toString(),
+        pub.tags ?? [],
+        pub.url,
+        pub.doi,
+        pub.venue,
+        pub.type,
     ),
 );
 ---
@@ -79,11 +63,8 @@ const publicationStructuredData = publications.map((pub) =>
             >
                 <div class="space-y-2">
                     {
-                        publications.map((publication: Pub) => (
-                            <PublicationCard
-                                publication={publication.data}
-                                t={t}
-                            />
+                        publications.map((publication: Publication) => (
+                            <PublicationCard publication={publication} t={t} />
                         ))
                     }
                 </div>

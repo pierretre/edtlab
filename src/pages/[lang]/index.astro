@@ -1,11 +1,7 @@
 ---
-export const prerender = true;
+export const prerender = false;
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import HomeLayout from "@layouts/HomeLayout.astro";
-
-export function getStaticPaths() {
-    return [{ params: { lang: "en" } }, { params: { lang: "fr" } }];
-}
 
 const lang = getLangFromUrl(Astro.url) as "en" | "fr";
 const t = useTranslations(lang);
