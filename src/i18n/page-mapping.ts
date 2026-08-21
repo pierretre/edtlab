@@ -30,7 +30,6 @@ export const enToFrMapping: PageMapping = {
     'join-us': 'nous-rejoindre',
     'contact-us': 'nous-contacter', // Both use same href but different lang
     'about': 'a-propos',
-    'research-studies': 'travaux-de-recherche',
     'phd-club': 'club-des-doctorants'
 };
 

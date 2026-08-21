@@ -7,7 +7,7 @@ import PartnersGrid from '@components/PartnersGrid.astro';
 import PrincipalInvestigator from '@components/PrincipalInvestigator.astro';
 import PublicationList from '@components/PublicationList.astro';
 import NewsList from '@components/NewsList.astro';
-import JobOfferList from '@components/JobOfferList.astro';
+import PositionList from '@components/PositionList.astro';
 import ProjectGrid from '@components/ProjectGrid.astro';
 import PCLeadersList from '@components/PCLeadersList.astro';
 import EventTimeline from '@components/EventTimeline.astro';
@@ -23,7 +23,7 @@ const mdxComponents = {
     PrincipalInvestigator,
     PublicationList,
     NewsList,
-    JobOfferList,
+    PositionList,
     ProjectGrid,
     PCLeadersList,
     EventTimeline,

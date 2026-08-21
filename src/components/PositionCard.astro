@@ -1,0 +1,183 @@
+---
+import { linkHelpers } from "@i18n/links";
+import { formatDate } from "@utils/.";
+import Badge from "./Badge.astro";
+import type { Position } from "@models/Position.model";
+
+interface Props {
+    item: Position;
+    body?: string;
+    lang: "en" | "fr";
+    slug: string;
+    t: any;
+}
+
+const { item, body, lang, slug, t } = Astro.props;
+
+const occupied = item.filled && !!item.researcher;
+
+const referenceTags = new Set(["roadmap"]);
+const keywords = (item.tags || [])
+    .filter((tag) => tag && tag.trim())
+    .filter((tag) => !referenceTags.has(tag.toLowerCase()));
+
+const badges = [
+    `positions.type.${item.type}`,
+    ...(item.pc ? [item.pc] : []),
+    ...(!occupied && item.filled ? ["positions.position-filled"] : []),
+];
+
+const cardHref = item.externalUrl ?? linkHelpers.position(lang, slug);
+const isExternal = !!item.externalUrl;
+---
+
+<a
+    href={cardHref}
+    class="position-item card group hover:shadow-lg h-full flex flex-col"
+    style="text-decoration: none;"
+    {...isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+    data-tags={(item.tags ?? []).join(" ").toLowerCase()}
+    data-pc={(item.pc ?? "").toLowerCase()}
+    data-type={item.type}
+    data-status={item.filled ? "filled" : "available"}
+    data-search-text={`${JSON.stringify(item)} ${body || ""}`.toLowerCase()}
+>
+    <!-- Header with badges -->
+    <div class="flex flex-wrap gap-2 mb-3">
+        {badges.map((badge) => <Badge key={badge} t={t} />)}
+    </div>
+
+    <!-- Title -->
+    <h3 class="font-bold tracking-tight text-gray-900 line-clamp-2 mt-0">
+        {item.title}
+    </h3>
+
+    {
+        occupied ? (
+            <div class="mb-4 flex justify-between flex-wrap gap-3">
+                <div class="flex items-center text-sm text-gray-600">
+                    {item.researcher!.name}
+                    {item.supervisors && item.supervisors.length > 0 && (
+                        <span class="text-gray-500 ml-1">
+                            {" "}
+                            · {item.supervisors.map((s) => s.name).join(", ")}
+                        </span>
+                    )}
+                </div>
+                <div class="flex items-center text-sm text-gray-600">{item.location}</div>
+                {item.startDate && (
+                    <div class="flex items-center text-sm text-gray-600">
+                        {formatDate(item.startDate, lang)}
+                    </div>
+                )}
+            </div>
+        ) : (
+            <div class="mb-4 flex justify-between flex-wrap gap-3">
+                <div class="flex items-center text-sm text-gray-600">
+                    <svg
+                        class="w-4 h-4 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
+                    {item.location}
+                </div>
+                {item.publishedDate && (
+                    <div class="flex items-center text-sm text-gray-600">
+                        <svg
+                            class="w-4 h-4 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        {t("positions.published")}: {formatDate(item.publishedDate, lang)}
+                    </div>
+                )}
+                {item.expectedStartDate && (
+                    <div class="flex items-center text-sm text-gray-600">
+                        <svg
+                            class="w-4 h-4 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                        </svg>
+                        {t("positions.expected-start")}: {item.expectedStartDate}
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+    <!-- Description -->
+    <p class="text-gray-700 text-sm line-clamp-3 mb-4">
+        {item.description}
+    </p>
+
+    <!-- Keywords -->
+    {
+        keywords.length > 0 && (
+            <div class="mb-3">
+                <div class="text-sm font-semibold text-gray-900 mb-1">{t("positions.keywords")}</div>
+                <div class="flex flex-wrap gap-1.5">
+                    {keywords.map((kw) => (
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs text-gray-600 bg-gray-100">
+                            {kw}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    <!-- Requirements preview -->
+    {
+        !occupied && item.requirements && item.requirements.length > 0 && (
+            <div>
+                <div class="text-sm font-semibold text-gray-900">{t("positions.key-requirements")}</div>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    {item.requirements.slice(0, 2).map((req) => (
+                        <li class="flex items-start">
+                            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 mr-2 flex-shrink-0" />
+                            <span class="line-clamp-1">{req}</span>
+                        </li>
+                    ))}
+                    {item.requirements.length > 2 && (
+                        <li class="text-gray-500 text-xs">
+                            {t("positions.more-requirements").replace(
+                                "{count}",
+                                (item.requirements.length - 2).toString(),
+                            )}
+                        </li>
+                    )}
+                </ul>
+            </div>
+        )
+    }
+</a>

@@ -36,7 +36,7 @@ A simple step-by-step process for creating content, testing locally, and publish
 ### Example Branch Names
 
 ```
-content/job-offer-pc1-postdoc
+content/position-pc1-postdoc
 content/news-models2024-conference  
 content/publication-digital-twins-survey
 content/page-about-update
@@ -168,7 +168,7 @@ content/page-about-update
    ## Content Updates
    
    ### Added
-   - New job offer: PhD position in PC1
+   - New position: PhD position in PC1
    - Event announcement: MODELS 2024 conference
    
    ### Updated

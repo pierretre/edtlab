@@ -13,7 +13,7 @@ describe('Content Schema Validation', () => {
     const publicationSchema = z.object({
         title: z.string(),
         authors: z.array(z.string()),
-        type: z.enum(['journal', 'conference', 'book', 'report', 'preprint', 'thesis', 'workshop']),
+        type: z.enum(['journal', 'conference', 'book', 'report', 'preprint', 'thesis', 'workshop-paper']),
         year: z.number(),
         venue: z.string().optional(),
         doi: z.string().optional(),
@@ -21,9 +21,9 @@ describe('Content Schema Validation', () => {
         lang: z.enum(['en', 'fr'])
     });
 
-    const jobOfferSchema = z.object({
+    const positionSchema = z.object({
         title: z.string(),
-        project: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'General']),
+        pc: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']).optional(),
         type: z.enum(['postdoc', 'phd', 'engineer', 'intern']),
         location: z.string(),
         expectedStartDate: z.string(),
@@ -85,10 +85,10 @@ describe('Content Schema Validation', () => {
         expect(result.success).toBe(true);
     });
 
-    it('should validate job offer schema', () => {
-        const validJobOffer = {
+    it('should validate position schema', () => {
+        const validPosition = {
             title: 'Test Position',
-            project: 'PC1' as const,
+            pc: 'PC1' as const,
             type: 'postdoc' as const,
             location: 'Paris, France',
             expectedStartDate: 'Spring 2025',
@@ -101,7 +101,7 @@ describe('Content Schema Validation', () => {
             tags: ['research', 'digital-twins']
         };
 
-        const result = jobOfferSchema.safeParse(validJobOffer);
+        const result = positionSchema.safeParse(validPosition);
         expect(result.success).toBe(true);
     });
 

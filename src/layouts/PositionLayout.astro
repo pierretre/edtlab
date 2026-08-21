@@ -1,0 +1,390 @@
+---
+import PageLayout from "./PageLayout.astro";
+import type { Position } from "@models/Position.model";
+import { linkHelpers, useTranslations } from "@i18n/utils";
+import { getEntry } from "astro:content";
+import Badge from "@components/Badge.astro";
+import Citation from "@components/Citation.astro";
+import { generateJobPostingStructuredData } from "@utils/seo";
+import { formatDate } from "@utils/date";
+
+export interface Props {
+    frontmatter: Position;
+}
+
+const { frontmatter } = Astro.props;
+const lang = Astro.currentLocale as "en" | "fr";
+const t = useTranslations(lang);
+
+// A position becomes an "occupied" research record once it has been filled
+// in by the researcher (see docs/editors/how-to/positions-guide.md).
+const occupied = !!frontmatter.researcher;
+
+const publicationsResolved = occupied
+    ? await Promise.all((frontmatter.publications || []).map((pub) => getEntry(pub)))
+    : [];
+
+const jobStructuredData =
+    !occupied && frontmatter.publishedDate && frontmatter.expectedStartDate
+        ? generateJobPostingStructuredData(
+              frontmatter.title,
+              frontmatter.description,
+              frontmatter.location,
+              frontmatter.publishedDate.toISOString().split("T")[0],
+              frontmatter.expectedStartDate,
+              "FULL_TIME",
+              frontmatter.requirements,
+              undefined,
+          )
+        : undefined;
+
+const badges = [
+    ...(frontmatter.pc ? [frontmatter.pc] : []),
+    ...(frontmatter.tags || []).filter((tag) => tag && tag.trim()),
+    `positions.type.${frontmatter.type}`,
+    ...(occupied && frontmatter.funding ? [`positions.funding.${frontmatter.funding}`] : []),
+    ...(occupied && frontmatter.researchStatus
+        ? [`positions.research-status.${frontmatter.researchStatus}`]
+        : []),
+    ...(!occupied && frontmatter.filled ? ["positions.position-filled"] : []),
+];
+
+const backLink =
+    occupied && frontmatter.pc
+        ? linkHelpers.page(lang, `focused-projects/fp${frontmatter.pc.replace("PC", "")}`)
+        : linkHelpers.page(lang, "join-us");
+---
+
+<PageLayout
+    title={frontmatter.title}
+    description={frontmatter.description || t("site.description")}
+    lang={lang}
+    showBreadcrumb={true}
+    showToc={false}
+>
+    {
+        jobStructuredData && (
+            <script
+                type="application/ld+json"
+                is:inline
+                set:html={JSON.stringify(jobStructuredData)}
+            />
+        )
+    }
+
+    {
+        !occupied && (
+            <div class="funding-notice-print">
+                <p class="text-xs text-gray-700">
+                    <a
+                        href="https://edtlab.fr/"
+                        target="_blank"
+                        rel="noopener noreferrer">{t("positions.funding-edt")}</a
+                    >
+                    {t("positions.funding-funded-by")}
+                    <a
+                        href="https://www.info.gouv.fr/grand-dossier/france-2030"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >{t("positions.funding-france2030")}</a
+                    >.
+                </p>
+            </div>
+        )
+    }
+
+    <!-- Back link -->
+    <div class="mb-6">
+        <a
+            href={backLink}
+            class="inline-flex items-center text-primary-600 hover:text-primary-800 text-sm font-medium"
+        >
+            <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"></path>
+            </svg>
+            {occupied && frontmatter.pc ? frontmatter.pc : t("positions.back-to-careers")}
+        </a>
+    </div>
+
+    <header class="mb-8">
+        <!-- Badges -->
+        <div class="flex flex-wrap gap-2 mb-4">
+            {badges.map((badge) => <Badge key={badge} t={t} />)}
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            {frontmatter.title}
+        </h1>
+
+        {
+            occupied ? (
+                <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 mb-4">
+                    <div class="flex items-center">
+                        <span class="font-medium text-gray-800">{frontmatter.researcher!.name}</span>
+                        {frontmatter.researcher!.email && (
+                            <a
+                                href={`mailto:${frontmatter.researcher!.email}`}
+                                class="text-primary-600 hover:underline ml-1"
+                            >
+                                ({frontmatter.researcher!.email})
+                            </a>
+                        )}
+                        {frontmatter.supervisors && frontmatter.supervisors.length > 0 && (
+                            <span class="text-gray-500 ml-1">
+                                {" "}
+                                · {t("positions.supervised-by")}{" "}
+                                {frontmatter.supervisors.map((s) => s.name).join(", ")}
+                            </span>
+                        )}
+                    </div>
+
+                    <div class="flex items-center">
+                        <span>{frontmatter.location}</span>
+                        {frontmatter.host && <span class="text-gray-500 ml-1"> · {frontmatter.host}</span>}
+                    </div>
+
+                    {frontmatter.startDate && (
+                        <div class="flex items-center">
+                            <span>
+                                {t("positions.start-date")}: {formatDate(frontmatter.startDate, lang)}
+                                {frontmatter.expectedEndDate && (
+                                    <span class="text-gray-500">
+                                        {" "}
+                                        → {formatDate(frontmatter.expectedEndDate, lang)}
+                                    </span>
+                                )}
+                            </span>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 bg-gray-50 rounded-lg border">
+                    <div class="flex items-center text-gray-700">
+                        <svg
+                            class="w-5 h-5 mr-3 text-gray-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+                        <div>
+                            <span class="text-sm font-medium text-gray-500">{t("positions.location")}</span>
+                            <p class="font-medium my-0">{frontmatter.location}</p>
+                        </div>
+                    </div>
+                    {frontmatter.expectedStartDate && (
+                        <div class="flex items-center text-gray-700">
+                            <svg
+                                class="w-5 h-5 mr-3 text-gray-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                            </svg>
+                            <div>
+                                <span class="text-sm font-medium text-gray-500">
+                                    {t("positions.expected-start")}
+                                </span>
+                                <p
+                                    class={`font-medium my-0 ${frontmatter.filled ? "text-gray-500" : "text-green-600"}`}
+                                >
+                                    {frontmatter.expectedStartDate}
+                                </p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )
+        }
+    </header>
+
+    <slot
+        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
+    />
+
+    <!-- References Section (from centralized publications) -->
+    {
+        frontmatter.references && frontmatter.references.length > 0 && (
+            <section class="mt-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">{t("positions.references")}</h3>
+                <div class="space-y-1">
+                    {frontmatter.references.map((slug: string, i: number) => (
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-sm text-gray-500 font-medium shrink-0">[{i + 1}]</span>
+                            <Citation slug={slug} />
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )
+    }
+
+    {
+        occupied && publicationsResolved.length > 0 && (
+            <section class="mt-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">{t("positions.publications")}</h3>
+                <ul>
+                    {publicationsResolved.map((pub) => (
+                        <li>
+                            {pub.data.url ? (
+                                <a href={pub.data.url} target="_blank" rel="noopener noreferrer">
+                                    {pub.data.title}
+                                </a>
+                            ) : (
+                                pub.data.title
+                            )}
+                            {pub.data.venue && <span class="text-gray-500"> · {pub.data.venue}</span>}
+                            <span class="text-gray-500"> ({pub.data.year})</span>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )
+    }
+
+    <!-- Requirements Section -->
+    {
+        !occupied && frontmatter.requirements && frontmatter.requirements.length > 0 && (
+            <section class="mt-8 p-6 bg-primary-50 rounded-lg border-2 border-primary-200">
+                <h2 class="text-xl mt-0 font-semibold text-primary-800 mb-4">
+                    {t("positions.requirements")}
+                </h2>
+                <ul class="space-y-2">
+                    {frontmatter.requirements.map((requirement) => (
+                        <li class="flex items-start">
+                            <svg
+                                class="w-5 h-5 text-primary-600 mr-3 mt-0.5 flex-shrink-0"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                            <span class="text-gray-700">{requirement}</span>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )
+    }
+
+    <!-- Application CTA -->
+    {
+        !occupied && !frontmatter.filled && (
+            <section class="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white">
+                <h2 class="text-xl mt-0 font-semibold mb-3 text-blue-50">{t("positions.ready-to-apply")}</h2>
+                <p class="mb-4 text-primary-100">{t("positions.application-instructions")}</p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a
+                        href={`mailto:${frontmatter.contacts?.join(";")}?subject=${encodeURIComponent(`Application: ${frontmatter.title}`)}`}
+                        class="inline-flex items-center justify-center px-6 py-3 bg-white text-primary-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                    >
+                        <svg
+                            class="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                        </svg>
+                        {t("positions.apply-now")}
+                    </a>
+                    <a href={`/${lang}/join-us`} class="btn-primary-light font-medium">
+                        {t("positions.view-all-positions")}
+                    </a>
+                </div>
+            </section>
+        )
+    }
+
+    {
+        !occupied && frontmatter.filled && (
+            <section class="mt-8 p-6 bg-gray-100 rounded-lg border">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">{t("positions.position-filled")}</h2>
+                <p class="mb-4 text-gray-600">{t("positions.position-filled-message")}</p>
+                <a href={linkHelpers.page(lang, "join-us")} class="btn-primary">
+                    {t("positions.view-all-positions")}
+                </a>
+            </section>
+        )
+    }
+
+    {
+        occupied && frontmatter.lastUpdated && (
+            <p class="text-sm text-gray-500 mt-8">
+                {t("positions.last-updated")}: {formatDate(frontmatter.lastUpdated, lang)}
+            </p>
+        )
+    }
+</PageLayout>
+
+<style>
+    /* Hide funding notice on screen, show only when printing */
+    .funding-notice-print {
+        display: none;
+    }
+
+    @media print {
+        .funding-notice-print {
+            display: block;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            max-width: 250px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            page-break-inside: avoid;
+            z-index: 1000;
+        }
+
+        .funding-notice-print p {
+            margin: 0;
+            font-size: 0.7rem;
+            line-height: 1.3;
+            color: #231f3a;
+            white-space: normal;
+        }
+
+        .funding-notice-print a {
+            color: #231f3a;
+            text-decoration: underline;
+        }
+    }
+</style>

@@ -24,7 +24,7 @@ const publicationsCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         authors: z.array(z.string()),
-        type: z.enum(['journal', 'conference', 'book', 'report', 'white-paper', 'preprint', 'thesis', 'workshop', 'slidedeck']),
+        type: z.enum(['journal', 'conference', 'book', 'report', 'white-paper', 'preprint', 'thesis', 'workshop-paper', 'slidedeck']),
         year: z.number(),
         venue: z.string().optional(),
         doi: z.string().optional(),
@@ -53,24 +53,58 @@ const newsCollection = defineCollection({
     })
 });
 
-// Job offers collection schema
-const jobOffersCollection = defineCollection({
-    loader: glob({ base: "./src/content/job-offers", pattern: "**/*.{md,mdx}" }),
+// Positions collection schema (open positions, and occupied/ongoing research
+// positions maintained by the researcher once filled — see
+// docs/editors/how-to/positions-guide.md)
+const positionsCollection = defineCollection({
+    loader: glob({ base: "./src/content/positions", pattern: "**/*.{md,mdx}" }),
     schema: z.object({
         title: z.string(),
         type: z.enum(['PostDoc', 'PhD', 'Engineer', 'Intern', 'Others']),
         location: z.string(),
-        expectedStartDate: z.string(),
-        filled: z.boolean().default(false),
-        publishedDate: z.coerce.date(),
         description: z.string(),
-        requirements: z.array(z.string()),
-        contacts: z.array(z.email()).optional(),
+        filled: z.boolean().default(false),
         lang: z.enum(['en', 'fr']).optional(),
+        // Focused project this position belongs to. Drives whether it appears
+        // on that project's page — see docs/editors/how-to/positions-guide.md.
+        pc: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']).optional(),
         tags: z.array(z.string()).optional().default([]),
         references: z.array(z.string()).optional().default([]),
+
+        // Open-position fields
+        expectedStartDate: z.string().optional(),
+        publishedDate: z.coerce.date().optional(),
+        requirements: z.array(z.string()).optional().default([]),
+        contacts: z.array(z.email()).optional(),
         partner: z.string().optional(),
-        externalUrl: z.string().optional()
+        externalUrl: z.string().optional(),
+
+        // Occupied / research-position fields, filled in once the position
+        // has been taken (filled: true) by the researcher.
+        researcher: z.object({
+            name: z.string(),
+            email: z.email().optional(),
+        }).optional(),
+        supervisors: z.array(z.object({
+            name: z.string(),
+            org: z.string().optional(),
+            role: z.string().optional(),
+        })).optional().default([]),
+        // Funding source: 'EDT' (funded by the EDT programme) or 'external' (e.g. CIFRE, other).
+        funding: z.enum(['EDT', 'external']).optional(),
+        host: z.string().optional(),
+        startDate: z.coerce.date().optional(),
+        expectedEndDate: z.coerce.date().optional(),
+        researchStatus: z.enum(['planned', 'ongoing', 'completed', 'paused', 'withdrawn']).optional(),
+        useCases: z.array(z.object({
+            title: z.string(),
+            ref: reference("use-cases").optional(),
+            note: z.string().optional(),
+        })).optional().default([]),
+        publications: z.array(reference("publications")).optional().default([]),
+        lastUpdated: z.coerce.date().optional(),
+
+        originalPosition: reference("positions").optional(),
     })
 });
 
@@ -180,49 +214,12 @@ const menuCollection = defineCollection({
     })
 });
 
-// Research studies collection schema (ongoing PhDs and postdocs, maintained by the researcher)
-const researchStudiesCollection = defineCollection({
-    loader: glob({ base: "./src/content/research-studies", pattern: "**/*.{md,mdx}" }),
-    schema: z.object({
-        title: z.string(),
-        lang: z.enum(['en', 'fr']).optional(),
-        type: z.enum(['PhD', 'PostDoc']),
-        researcher: z.object({
-            name: z.string(),
-            email: z.email().optional(),
-        }),
-        pc: z.enum(['PC1', 'PC2', 'PC3', 'PC4', 'PC5']),
-        // Funding source: 'EDT' (funded by the EDT programme) or 'external' (e.g. CIFRE, other).
-        funding: z.enum(['EDT', 'external']).optional(),
-        location: z.string(),
-        host: z.string().optional(),
-        supervisors: z.array(z.object({
-            name: z.string(),
-            org: z.string().optional(),
-        })).min(1),
-        startDate: z.coerce.date(),
-        expectedEndDate: z.coerce.date().optional(),
-        status: z.enum(['planned', 'ongoing', 'completed', 'paused', 'withdrawn']).default('ongoing'),
-        description: z.string(),
-        useCases: z.array(z.object({
-            title: z.string(),
-            ref: reference("use-cases").optional(),
-            note: z.string().optional(),
-        })).optional().default([]),
-        publications: z.array(reference("publications")).optional().default([]),
-        tags: z.array(z.string()).optional().default([]),
-        lastUpdated: z.coerce.date().optional(),
-        originalJobOffer: reference("job-offers").optional(),
-    })
-});
-
 export const collections = {
     'pages': pagesCollection,
     'publications': publicationsCollection,
     'news': newsCollection,
-    'job-offers': jobOffersCollection,
+    'positions': positionsCollection,
     'calendar': calendarCollection,
     'menu': menuCollection,
     'use-cases': useCasesCollection,
-    'research-studies': researchStudiesCollection
 };

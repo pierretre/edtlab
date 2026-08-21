@@ -585,11 +585,11 @@ Coordinate with developers to create custom templates for specific needs.
 For pages that need to display dynamic information:
 
 ```mdx
-import JobOffersList from '@components/JobOffersList.astro';
+import PositionList from '@components/PositionList.astro';
 
 ## Current Opportunities
 
-<JobOffersList project="PC1" limit={5} />
+<PositionList lang="en" />
 ```
 
 ### Interactive Elements

@@ -83,32 +83,66 @@ collections:
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [], hint: "List of tags (e.g. PC1) (separated by comma)", allow_add: true }
       - { label: "Body", name: "body", widget: "markdown", required: true }
 
-  # Job Offers
-  - name: "job-offers"
-    label: "Job Offers"
-    label_singular: "Job Offer"
-    folder: "src/content/job-offers"
+  # Positions (open positions, and occupied/ongoing research positions
+  # maintained by the researcher once filled)
+  - name: "positions"
+    label: "Positions"
+    label_singular: "Position"
+    folder: "src/content/positions"
     create: true
-    summary: "{{fields.type}} Position: {{fields.title}} ({{fields.tags}})"
+    summary: "{{fields.type}} Position: {{fields.title}} ({{fields.pc}})"
     editor:
       preview: true
     format: "frontmatter"
-    slug: "{{fields.type}}-{{fields.tags}}-{{fields.title}}"
+    slug: "{{fields.type}}-{{fields.pc}}-{{fields.title}}"
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Type", name: "type", widget: "select", options: ["PhD", "PostDoc", "Engineer", "Intern", "Others"], required: true }
+      - { label: "Focused Project (PC)", name: "pc", widget: "select", options: ["PC1", "PC2", "PC3", "PC4", "PC5"], required: false, hint: "Makes this position appear on that focused project's page. Leave empty for a general/cross-project position." }
       - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country" }
-      - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: true, hint: "e.g., 'Spring 2025', 'September 2024'" }
-      - { label: "Published Date", name: "publishedDate", widget: "datetime",   default: "{{now}}", date_format: "YYYY-MM-DD", required: true }
-      - { label: "Position Filled", name: "filled", widget: "boolean", default: false, required: true }
       - { label: "Summary", name: "description", widget: "text", required: true, hint: "Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below." }
-      - { label: "Requirements", name: "requirements", widget: "list", required: true, min: 1, default: ["Fluency in English and French"], hint: "List of key requirements for the position (separated by comma)", allow_add: true }
-      - { label: "Tags", name: "tags", widget: "list", required: false, default: [], hint: "List of tags (e.g. PC1) (separated by comma)", allow_add: true }
-      - { label: "Contacts", name: "contacts", widget: "list", required: true, default: [], hint: "List of contact emails (separated by comma)", allow_add: true }
+      - { label: "Position Filled", name: "filled", widget: "boolean", default: false, required: true, hint: "Set to true once the position has been taken. If a researcher is filled in below, the page switches to the ongoing-research view." }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [], hint: "Keywords, or 'General' / 'Extern' (separated by comma)", allow_add: true }
       - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: false }
       - { label: "References", name: "references", widget: "list", required: false, default: [], hint: "e.g. related publications, use cases", allow_add: true }
+      - { label: "Expected Start Date", name: "expectedStartDate", widget: "string", required: false, hint: "e.g., 'Spring 2025', 'September 2024'" }
+      - { label: "Published Date", name: "publishedDate", widget: "datetime",   default: "{{now}}", date_format: "YYYY-MM-DD", required: false }
+      - { label: "Requirements", name: "requirements", widget: "list", required: false, default: ["Fluency in English and French"], hint: "List of key requirements for the position (separated by comma)", allow_add: true }
+      - { label: "Contacts", name: "contacts", widget: "list", required: false, default: [], hint: "List of contact emails (separated by comma)", allow_add: true }
       - { label: "Partner", name: "partner", widget: "string", required: false, hint: "Partner organization co-hosting this position, if any" }
       - { label: "External URL", name: "externalUrl", widget: "string", required: false, hint: "Link to the full offer if hosted externally" }
+      - label: "Researcher"
+        name: "researcher"
+        widget: "object"
+        required: false
+        hint: "Fill in once the position is filled, to switch this page to the ongoing-research view"
+        fields:
+          - { label: "Name", name: "name", widget: "string", required: true }
+          - { label: "Email", name: "email", widget: "string", required: false }
+      - label: "Supervisors"
+        name: "supervisors"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Name", name: "name", widget: "string", required: true }
+          - { label: "Organization", name: "org", widget: "string", required: false }
+          - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Funding", name: "funding", widget: "select", options: ["EDT", "external"], required: false, hint: "e.g. CIFRE, other external funding" }
+      - { label: "Host institute / team", name: "host", widget: "string", required: false, hint: "e.g., 'Inria Rennes, diverSE'" }
+      - { label: "Start Date", name: "startDate", widget: "datetime", date_format: "YYYY-MM-DD", required: false }
+      - { label: "Expected End Date", name: "expectedEndDate", widget: "datetime", date_format: "YYYY-MM-DD", required: false }
+      - { label: "Research Status", name: "researchStatus", widget: "select", options: ["planned", "ongoing", "completed", "paused", "withdrawn"], required: false, default: "ongoing" }
+      - label: "Related Use Cases"
+        name: "useCases"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string", required: true, hint: "Displayed even if the UC is not yet published" }
+          - { label: "Reference (slug)", name: "ref", widget: "relation", collection: "use-cases", search_fields: ["title", "id"], value_field: "{{slug}}", display_fields: ["title"], required: false }
+          - { label: "Note", name: "note", widget: "string", required: false, hint: "e.g., 'in preparation'" }
+      - { label: "Publications", name: "publications", widget: "relation", collection: "publications", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title", "year"], multiple: true, required: false }
+      - { label: "Last Updated", name: "lastUpdated", widget: "datetime", date_format: "YYYY-MM-DD", required: false }
+      - { label: "Original Position (slug)", name: "originalPosition", widget: "relation", collection: "positions", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
       - label: "Body"
         name: "body"
         widget: "markdown"
@@ -160,7 +194,7 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
-      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "report", "white-paper", "preprint", "thesis", "workshop", "slidedeck"], required: true }
+      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "report", "white-paper", "preprint", "thesis", "workshop-paper", "slidedeck"], required: true }
       - { label: "Year", name: "year", widget: "number", required: true, value_type: "int", min: 1900, max: 2100 }
       - { label: "Venue", name: "venue", widget: "string", required: false, hint: "Journal name, conference name, etc." }
       - { label: "DOI", name: "doi", widget: "string", required: false, hint: "Digital Object Identifier" }
@@ -183,62 +217,3 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Recipients", name: "recipients", widget: "select", options: ["Internal", "External"], required: true, default: "Internal" }
 
-  # Research Studies (ongoing PhDs and postdocs, maintained by the researcher)
-  - name: "research-studies"
-    label: "Research Studies"
-    label_singular: "Research Study"
-    folder: "src/content/research-studies"
-    create: true
-    summary: "{{fields.title}} ({{fields.pc}}) - {{fields.researcher.name}}"
-    editor:
-      preview: true
-    format: "frontmatter"
-    fields:
-      - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "Language", name: "lang", widget: "select", options: ["en", "fr"], required: false }
-      - { label: "Type", name: "type", widget: "select", options: ["PhD", "PostDoc"], required: true, default: "PhD" }
-      - label: "Researcher"
-        name: "researcher"
-        widget: "object"
-        fields:
-          - { label: "Name", name: "name", widget: "string", required: true }
-          - { label: "Email", name: "email", widget: "string", required: false }
-      - { label: "PC", name: "pc", widget: "select", options: ["PC1", "PC2", "PC3", "PC4", "PC5"], required: true }
-      - { label: "Funding", name: "funding", widget: "select", options: ["EDT", "external"], required: false, hint: "e.g. CIFRE, other external funding" }
-      - { label: "Location", name: "location", widget: "string", required: true, hint: "City, Country (e.g., 'Inria Rennes, France') — same format as job offers" }
-      - { label: "Host institute / team", name: "host", widget: "string", required: false, hint: "e.g., 'Inria Rennes, diverSE'" }
-      - label: "Supervisors"
-        name: "supervisors"
-        widget: "list"
-        min: 1
-        fields:
-          - { label: "Name", name: "name", widget: "string", required: true }
-          - { label: "Organization", name: "org", widget: "string", required: false }
-      - { label: "Start Date", name: "startDate", widget: "datetime", date_format: "YYYY-MM-DD", required: true }
-      - { label: "Expected End Date", name: "expectedEndDate", widget: "datetime", date_format: "YYYY-MM-DD", required: false }
-      - { label: "Status", name: "status", widget: "select", options: ["planned", "ongoing", "completed", "paused", "withdrawn"], required: true, default: "ongoing" }
-      - { label: "Summary", name: "description", widget: "text", required: true }
-      - label: "Related Use Cases"
-        name: "useCases"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "Title", name: "title", widget: "string", required: true, hint: "Displayed even if the UC is not yet published" }
-          - { label: "Reference (slug)", name: "ref", widget: "relation", collection: "use-cases", search_fields: ["title", "id"], value_field: "{{slug}}", display_fields: ["title"], required: false }
-          - { label: "Note", name: "note", widget: "string", required: false, hint: "e.g., 'in preparation'" }
-      - { label: "Publications", name: "publications", widget: "relation", collection: "publications", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title", "year"], multiple: true, required: false }
-      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - { label: "Last Updated", name: "lastUpdated", widget: "datetime", date_format: "YYYY-MM-DD", required: false }
-      - { label: "Original Job Offer (slug)", name: "originalJobOffer", widget: "relation", collection: "job-offers", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
-      - label: "Body"
-        name: "body"
-        widget: "markdown"
-        required: true
-        default: |
-          ## Avancement
-
-          [Décrire l'avancement de la thèse / des travaux]
-
-          ## News
-
-          [Liens vers les news liées, séminaires, etc.]

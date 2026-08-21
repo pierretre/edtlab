@@ -408,9 +408,9 @@ var NewsPreview = createClass({
 
 /**
  * Job Offers Preview Template
- * Matches JobOfferLayout.astro structure
+ * Matches PositionLayout.astro structure
  */
-var JobOffersPreview = createClass({
+var PositionsPreview = createClass({
     render: function () {
         var entry = this.props.entry;
         var widgetFor = this.props.widgetFor;
@@ -467,6 +467,10 @@ var JobOffersPreview = createClass({
                     h('span', {
                         className: 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ' + badgeClass
                     }, badgeLabel),
+                    // PC badge
+                    data.pc && h('span', {
+                        className: 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ' + getBadgeClasses(data.pc)
+                    }, data.pc),
                     // Tags badges
                     data.tags && data.tags.map(function (tag, i) {
                         return h('span', {
@@ -830,7 +834,7 @@ var NewsletterPreview = createClass({
  */
 CMS.registerPreviewTemplate('pages', PagesPreview);
 CMS.registerPreviewTemplate('news', NewsPreview);
-CMS.registerPreviewTemplate('job-offers', JobOffersPreview);
+CMS.registerPreviewTemplate('positions', PositionsPreview);
 CMS.registerPreviewTemplate('newsletter', NewsletterPreview);
 
 /**
@@ -1635,22 +1639,22 @@ CMS.registerEditorComponent({
 
 /**
  * Job Offer List Component
- * Usage: <JobOfferList lang="en" />
+ * Usage: <PositionList lang="en" />
  */
 CMS.registerEditorComponent({
-    id: 'JobOfferList',
+    id: 'PositionList',
     label: 'Job Offer List',
     fields: [
         { name: 'lang', label: 'Language', widget: 'select', options: ['en', 'fr'], default: 'en' }
     ],
-    pattern: /<JobOfferList\s+lang="(en|fr)"\s*\/?>/,
+    pattern: /<PositionList\s+lang="(en|fr)"\s*\/?>/,
     fromBlock: function (match) {
         return {
             lang: match[1]
         };
     },
     toBlock: function (obj) {
-        return '<JobOfferList lang="' + obj.lang + '" />';
+        return '<PositionList lang="' + obj.lang + '" />';
     },
     toPreview: function (obj) {
         var lang = obj.lang || 'en';
@@ -1686,7 +1690,7 @@ CMS.registerEditorComponent({
         var t = translations[lang];
 
         // Mock data for preview
-        var mockJobOffers = [
+        var mockPositions = [
             {
                 title: 'PhD Position in Digital Twin Architecture',
                 type: 'phd',
@@ -1716,8 +1720,8 @@ CMS.registerEditorComponent({
             }
         ];
 
-        var availableCount = mockJobOffers.filter(function (j) { return !j.filled; }).length;
-        var filledCount = mockJobOffers.filter(function (j) { return j.filled; }).length;
+        var availableCount = mockPositions.filter(function (j) { return !j.filled; }).length;
+        var filledCount = mockPositions.filter(function (j) { return j.filled; }).length;
 
         // Type badge classes
         var typeBadgeClass = {
@@ -1736,7 +1740,7 @@ CMS.registerEditorComponent({
             'others': lang === 'fr' ? 'Autres' : 'Others'
         };
 
-        var jobCardsHtml = mockJobOffers.map(function (job) {
+        var jobCardsHtml = mockPositions.map(function (job) {
             var badgeClass = typeBadgeClass[job.type] || typeBadgeClass.phd;
             var badgeLabel = typeBadgeLabel[job.type] || job.type;
 
@@ -1776,7 +1780,7 @@ CMS.registerEditorComponent({
             '</div>' +
             '<div class="mt-3 sm:mt-0">' +
             '<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-600">' +
-            t.totalPositions.replace('{count}', mockJobOffers.length) +
+            t.totalPositions.replace('{count}', mockPositions.length) +
             '</span>' +
             '</div>' +
             '</div>' +
@@ -1789,7 +1793,7 @@ CMS.registerEditorComponent({
             '</div>' +
             '<!-- Results Count -->' +
             '<div class="mb-6 text-sm text-gray-600 text-center">' +
-            t.resultsCount.replace('{count}', mockJobOffers.length) +
+            t.resultsCount.replace('{count}', mockPositions.length) +
             '</div>' +
             '<!-- Job Offers Grid -->' +
             '<div class="grid grid-cols-1 gap-6">' +

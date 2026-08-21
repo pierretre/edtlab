@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 // Mock Astro layout components before importing the util
 vi.mock('@layouts/NewsItemLayout.astro', () => ({ default: 'NewsItemLayout' }));
-vi.mock('@layouts/JobOfferLayout.astro', () => ({ default: 'JobOfferLayout' }));
+vi.mock('@layouts/PositionLayout.astro', () => ({ default: 'PositionLayout' }));
 vi.mock('@layouts/PageLayout.astro', () => ({ default: 'PageLayout' }));
 vi.mock('@layouts/ProjectLayout.astro', () => ({ default: 'ProjectLayout' }));
 
@@ -28,9 +28,9 @@ describe('getLayoutFromTemplateOrCollection', () => {
     });
 
     describe('collection-based selection (no template)', () => {
-        it('should return JobOfferLayout for job-offers collection', () => {
-            const layout = getLayoutFromTemplateOrCollection('job-offers');
-            expect(layout).toBe('JobOfferLayout');
+        it('should return PositionLayout for positions collection', () => {
+            const layout = getLayoutFromTemplateOrCollection('positions');
+            expect(layout).toBe('PositionLayout');
         });
 
         it('should return NewsItemLayout for news collection', () => {

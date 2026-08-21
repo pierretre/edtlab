@@ -6,7 +6,7 @@
 
 ```
 src/content/
-├── job-offers/     # Employment opportunities
+├── positions/      # Open and occupied/ongoing positions
 ├── news/           # Events and press releases  
 ├── publications/   # Research papers and articles
 ├── pages/          # Static content pages
@@ -254,7 +254,7 @@ npm run build
 ### Quick Links
 
 - [Pages Guide](how-to/pages-guide.md)
-- [Job Offers Guide](how-to/job-offers-guide.md)
+- [Positions Guide](how-to/positions-guide.md)
 - [News Guide](how-to/news-guide.md)
 - [Publications Guide](how-to/publications-guide.md)
 - [Image Management](guidelines/image-management.md)

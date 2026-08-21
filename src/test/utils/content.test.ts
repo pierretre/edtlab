@@ -28,7 +28,7 @@ describe('Content Collections', () => {
             'pages',
             'menu',
             'events',
-            'job-offers',
+            'positions',
             'publications'
         ];
 

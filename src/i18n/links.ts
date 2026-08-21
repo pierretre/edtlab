@@ -9,8 +9,8 @@
  * const lang = 'fr';
  * ---
  * 
- * <!-- Instead of: href={lang === "fr" ? `/fr/nous-rejoindre/${jobOffer.slug.replace("-fr", "")}` : `/en/join-us/${jobOffer.slug.replace("-en", "")}`} -->
- * <a href={linkHelpers.jobOffer(lang, jobOffer.slug)}>Job Offer</a>
+ * <!-- Instead of: href={lang === "fr" ? `/fr/nous-rejoindre/${position.slug.replace("-fr", "")}` : `/en/join-us/${position.slug.replace("-en", "")}`} -->
+ * <a href={linkHelpers.position(lang, position.slug)}>Position</a>
  * 
  * <!-- Instead of: href={lang === "fr" ? "/fr/actualites" : "/en/news"} -->
  * <a href={linkHelpers.newsIndex(lang)}>News</a>
@@ -24,7 +24,7 @@ import { getEntry, type CollectionEntry } from 'astro:content';
 import { enToFrMapping, getCorrespondingPage } from './page-mapping';
 
 export type Lang = 'en' | 'fr';
-export type ContentType = 'news' | 'job-offers' | 'use-cases' | 'research-studies';
+export type ContentType = 'news' | 'positions' | 'use-cases';
 
 /**
  * Content type to route mappings
@@ -34,17 +34,13 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
         en: 'news',
         fr: 'actualites'
     },
-    'job-offers': {
+    'positions': {
         en: 'join-us',
         fr: 'nous-rejoindre'
     },
     'use-cases': {
         en: 'use-cases',
         fr: 'cas-d-utilisation'
-    },
-    'research-studies': {
-        en: 'research-studies',
-        fr: 'travaux-de-recherche'
     }
 };
 
@@ -180,19 +176,14 @@ export const linkHelpers = {
     news: (lang: Lang, slug?: string) => getContentLink(lang, 'news', slug),
 
     /**
-     * Generate job offer link
+     * Generate position link
      */
-    jobOffer: (lang: Lang, slug?: string) => getContentLink(lang, 'job-offers', slug),
+    position: (lang: Lang, slug?: string) => getContentLink(lang, 'positions', slug),
 
     /**
      * Generate use case link
      */
     useCase: (lang: Lang, slug?: string) => getContentLink(lang, 'use-cases', slug),
-
-    /**
-     * Generate research study link
-     */
-    researchStudy: (lang: Lang, slug?: string) => getContentLink(lang, 'research-studies', slug),
 
     /**
      * Generate page links using page mapping
@@ -212,7 +203,7 @@ export const linkHelpers = {
     /**
      * Generate careers/join-us link
      */
-    careers: (lang: Lang) => getContentLink(lang, 'job-offers'),
+    careers: (lang: Lang) => getContentLink(lang, 'positions'),
 
     /**
      * Generate redirected page link (for entries with redirectTo field) for any collection

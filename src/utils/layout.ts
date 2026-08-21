@@ -1,9 +1,8 @@
 import NewsItemLayout from "@layouts/NewsItemLayout.astro";
-import JobOfferLayout from "@layouts/JobOfferLayout.astro";
+import PositionLayout from "@layouts/PositionLayout.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
 import UseCaseLayout from "@layouts/UseCaseLayout.astro";
-import ResearchStudyLayout from "@layouts/ResearchStudyLayout.astro";
 
 /**
  * Get layout component based on template or collection
@@ -38,14 +37,12 @@ function getLayoutFromTemplate(template: string) {
  */
 function getLayoutFromCollection(collection: string) {
     switch (collection) {
-        case 'job-offers':
-            return JobOfferLayout;
+        case 'positions':
+            return PositionLayout;
         case 'use-cases':
             return UseCaseLayout;
         case 'news':
             return NewsItemLayout;
-        case 'research-studies':
-            return ResearchStudyLayout;
         default:
             return PageLayout;
     }

@@ -5,11 +5,10 @@ import { enToFrMapping } from "@i18n/page-mapping";
 export async function generateAllPagesStaticPaths(): Promise<any[]> {
     const baseEntries = await generateBasePagesStaticPaths();
     const newsEntries = await generateNewsPagesStaticPaths();
-    const jobOfferEntries = await generateJobOffersStaticPaths();
+    const positionEntries = await generatePositionsStaticPaths();
     const useCaseEntries = await generateUseCasesStaticPaths();
-    const researchStudyEntries = await generateResearchStudiesStaticPaths();
 
-    return [...baseEntries, ...newsEntries, ...jobOfferEntries, ...useCaseEntries, ...researchStudyEntries];
+    return [...baseEntries, ...newsEntries, ...positionEntries, ...useCaseEntries];
 }
 
 /**
@@ -71,16 +70,17 @@ async function generateNewsPagesStaticPaths(): Promise<any[]> {
 }
 
 /**
- * Generate static paths for job offer pages
+ * Generate static paths for position pages (open positions, and
+ * occupied/ongoing research positions)
  * @returns Array of static path entries
  */
-async function generateJobOffersStaticPaths(): Promise<any[]> {
-    const allEntries = await getCollection("job-offers");
+async function generatePositionsStaticPaths(): Promise<any[]> {
+    const allEntries = await getCollection("positions");
 
     let pages: any[] = [];
     allEntries.forEach(
-        (entry: CollectionEntry<"job-offers">) => {
-            const linkEN = getContentLink("en", "job-offers", entry.id, true);
+        (entry: CollectionEntry<"positions">) => {
+            const linkEN = getContentLink("en", "positions", entry.id, true);
             pages.push({
                 params: {
                     lang: "en",
@@ -91,42 +91,7 @@ async function generateJobOffersStaticPaths(): Promise<any[]> {
                 },
             });
 
-            const linkFR = getContentLink("fr", "job-offers", entry.id, true);
-            pages.push({
-                params: {
-                    lang: "fr",
-                    slug: linkFR,
-                },
-                props: {
-                    page: entry
-                },
-            });
-        });
-    return pages;
-}
-
-/**
- * Generate static paths for research-studies pages (ongoing PhD / postdoc)
- * @returns Array of static path entries
- */
-async function generateResearchStudiesStaticPaths(): Promise<any[]> {
-    const allEntries = await getCollection("research-studies");
-
-    let pages: any[] = [];
-    allEntries.forEach(
-        (entry: CollectionEntry<"research-studies">) => {
-            const linkEN = getContentLink("en", "research-studies", entry.id, true);
-            pages.push({
-                params: {
-                    lang: "en",
-                    slug: linkEN,
-                },
-                props: {
-                    page: entry
-                },
-            });
-
-            const linkFR = getContentLink("fr", "research-studies", entry.id, true);
+            const linkFR = getContentLink("fr", "positions", entry.id, true);
             pages.push({
                 params: {
                     lang: "fr",

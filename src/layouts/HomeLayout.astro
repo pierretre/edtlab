@@ -42,11 +42,11 @@ const recentEvents = news.sort(
 const allPublications = await getAllPublications("edt");
 const recentPublications = allPublications.sort((a, b) => b.year - a.year);
 
-const allJobOffers = await getCollection(
-    "job-offers",
+const allPositions = await getCollection(
+    "positions",
     ({ data }) => !data.filled,
 );
-const activeJobOffers = allJobOffers;
+const activePositions = allPositions;
 
 // Count distinct published use cases (each use case can have en/fr entries
 // sharing the same data.id, so dedupe by id like generateUseCasesStaticPaths does)
@@ -188,7 +188,7 @@ const useCasesCount = new Set(publishedUseCases.map((uc) => uc.data.id)).size;
                 <a
                     href={linkHelpers.page(lang, "join-us")}
                     class="text-2xl font-bold text-primary-600"
-                    >{activeJobOffers.length}</a
+                    >{activePositions.length}</a
                 >
                 <p class="text-sm">{t("home.stats.open-positions")}</p>
             </div>
@@ -376,7 +376,7 @@ const useCasesCount = new Set(publishedUseCases.map((uc) => uc.data.id)).size;
 
                 <!-- Active Job Offers -->
                 {
-                    activeJobOffers.length > 0 && (
+                    activePositions.length > 0 && (
                         <div class="bg-gray-50 rounded-lg p-6">
                             <div class="flex items-center mb-4">
                                 <svg
@@ -397,13 +397,19 @@ const useCasesCount = new Set(publishedUseCases.map((uc) => uc.data.id)).size;
                                 </h3>
                             </div>
                             <div class="space-y-4">
-                                {activeJobOffers.slice(0, 3).map((job) => (
+                                {activePositions.slice(0, 3).map((position) => (
                                     <div class="border-l-4 border-[#434672] pl-4">
                                         <h4 class="font-semibold text-gray-900 text-sm">
-                                            {job.data.title}
+                                            {position.data.title}
                                         </h4>
                                         <div class="flex items-center gap-2 mt-1 flex-wrap">
-                                            {(job.data.tags || [])
+                                            {position.data.pc && (
+                                                <Badge
+                                                    key={position.data.pc}
+                                                    t={t}
+                                                />
+                                            )}
+                                            {(position.data.tags || [])
                                                 .filter(
                                                     (tag) => tag && tag.trim(),
                                                 )
@@ -411,14 +417,14 @@ const useCasesCount = new Set(publishedUseCases.map((uc) => uc.data.id)).size;
                                                     <Badge key={tag} t={t} />
                                                 ))}
                                             <Badge
-                                                key={`job-offers.type.${job.data.type}`}
+                                                key={`positions.type.${position.data.type}`}
                                                 t={t}
                                             />
                                         </div>
                                         <p class="text-xs text-gray-500 mt-1">
-                                            {job.data.location} •{" "}
-                                            {t("job-offers.expected-start")}:{" "}
-                                            {job.data.expectedStartDate}
+                                            {position.data.location} •{" "}
+                                            {t("positions.expected-start")}:{" "}
+                                            {position.data.expectedStartDate}
                                         </p>
                                     </div>
                                 ))}

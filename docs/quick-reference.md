@@ -46,19 +46,20 @@ lang: "en" # or "fr"
 ---
 ```
 
-### Job Offers (`src/content/job-offers/`)
+### Positions (`src/content/positions/`)
 
 ```yaml
 ---
 title: "Position Title"
-tags:
-  - "PC1" # PC1|PC2|PC3|PC4|PC5|General
-type: "postdoc" # PostDoc|PhD|Engineer|Intern
+type: "postdoc" # PostDoc|PhD|Engineer|Intern|Others
+pc: "PC1" # PC1|PC2|PC3|PC4|PC5, optional — makes it appear on that project's page
 location: "City, Country"
-deadline: 2024-12-31
+filled: false
 publishedDate: 2024-01-15
 description: "Brief description"
 requirements: ["Requirement 1", "Requirement 2"]
+tags:
+  - "General" # or "Extern", or free-form keywords
 lang: "en" # or "fr"
 ---
 ```
@@ -70,7 +71,7 @@ lang: "en" # or "fr"
 | Pages | `src/content/pages/[section]/` | `en.md`, `fr.md` |
 | Publications | `src/content/publications/` | `title-slug.md` |
 | News | `src/content/news/` | `event-name-year-en.md` |
-| Job Offers | `src/content/job-offers/` | `position-type-project-year-en.md` |
+| Positions | `src/content/positions/` | `position-type-project-year-en.md` |
 | Navigation | `src/content/menu/` | `en.json`, `fr.json` |
 
 ## MDX Components
@@ -107,15 +108,10 @@ lang: "en" # or "fr"
 />
 ```
 
-### JobOfferList
+### PositionList
 
 ```mdx
-<JobOfferList 
-  limit={3}
-  showProject={true}
-  lang="en"
-  filterProject="PC1"
-/>
+<PositionList lang="en" />
 ```
 
 ## Common Tailwind Classes

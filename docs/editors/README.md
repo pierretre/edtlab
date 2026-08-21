@@ -6,7 +6,7 @@ This directory contains comprehensive documentation for creating and managing co
 
 - **⚡ [Workflow Guide](workflow-guide.md)** - Simple process from creation to publication
 - **📄 [Pages Guide](how-to/pages-guide.md)** - Complete page creation workflow
-- **📋 [Job Offers Guide](how-to/job-offers-guide.md)** - Complete job posting workflow
+- **📋 [Positions Guide](how-to/positions-guide.md)** - Complete position posting workflow (open and ongoing/occupied)
 - **📰 [News Guide](how-to/news-guide.md)** - Events and press releases
 - **📚 [Publications Guide](how-to/publications-guide.md)** - Research publication management
 - **🖼️ [Image Management](guidelines/image-management.md)** - Image storage, optimization, and usage
@@ -25,7 +25,7 @@ This directory contains comprehensive documentation for creating and managing co
 docs/editors/
 ├── README.md                    # This file - documentation hub
 ├── how-to/                      # Step-by-step content creation guides
-│   ├── job-offers-guide.md     # Complete job offer creation guide
+│   ├── positions-guide.md      # Complete position creation guide
 │   ├── news-guide.md           # Events and press releases guide
 │   └── publications-guide.md   # Research publications guide
 ├── templates/                   # Content templates for different types
@@ -34,7 +34,7 @@ docs/editors/
 │   ├── publication.md          # Publication entry template
 │   ├── event.md               # Event entry template
 │   ├── press-release.md       # Press release template
-│   └── job-offer.md           # Job offer template
+│   └── position.md             # Position template
 └── guidelines/                 # Technical reference and style guides
     ├── content-style-guide.md # Writing and formatting standards
     ├── frontmatter-reference.md # Complete frontmatter documentation
@@ -56,16 +56,17 @@ Complete instructions for creating and modifying static content pages:
 - Bilingual content management
 - Quality assurance and best practices
 
-### 📋 [Job Offers Guide](how-to/job-offers-guide.md)
+### 📋 [Positions Guide](how-to/positions-guide.md)
 
-Complete step-by-step instructions for creating and managing job postings:
+Complete step-by-step instructions for creating and managing positions, from open recruitment listings through to the ongoing-research record once filled:
 
 - Position types and requirements
 - File naming and organization
 - Frontmatter configuration
-- Writing effective job descriptions
+- The `pc` field and how it makes a position appear on its focused project's page
+- Writing effective position descriptions
 - Bilingual content management
-- Status updates and promotion
+- Marking a position as filled / ongoing research, status updates and promotion
 
 ### 📰 [News Guide](how-to/news-guide.md)
 
@@ -99,7 +100,7 @@ Dynamic content collections that power the website's interactive features:
 
 - **Publications** (`publications/`): Research papers, articles, and reports with filtering and search
 - **News** (`news/`): Events and press releases with chronological organization
-- **Job Offers** (`job-offers/`): Employment opportunities with status tracking
+- **Positions** (`positions/`): Open and occupied/ongoing positions, with status tracking and focused-project association via `pc`
 - **Menu** (`menu/`): Navigation structure data for site organization
 
 ## Key Requirements

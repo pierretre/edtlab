@@ -72,9 +72,9 @@ describe('Spell checking', () => {
         });
     });
 
-    describe('Job offers', () => {
-        it('should have no spelling errors in job offers', () => {
-            const issues = runCSpell(['src/content/job-offers/**/*.md', 'src/content/job-offers/**/*.mdx']);
+    describe('Positions', () => {
+        it('should have no spelling errors in positions', () => {
+            const issues = runCSpell(['src/content/positions/**/*.md', 'src/content/positions/**/*.mdx']);
             const report = issues
                 .map(i => `  ${i.file}:${i.line}:${i.col} — "${i.word}"`)
                 .join('\n');
