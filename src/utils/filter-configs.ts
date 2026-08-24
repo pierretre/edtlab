@@ -9,7 +9,7 @@
  */
 
 import type { FilterSystemConfig } from './filtering';
-import type { JobOffer } from '../models/JobOffer.model';
+import type { Position } from '../models/Position.model';
 import type { Publication } from '../models/Publication.model';
 import type { NewsItem } from '../models/NewsItem.model';
 
@@ -22,38 +22,39 @@ interface DOMItemData {
 }
 
 /**
- * Filter configuration for job offers
- * 
+ * Filter configuration for positions
+ *
  * Provides filtering by:
  * - Project (PC1-PC5, General)
  * - Type (postdoc, phd, engineer, intern)
  * - Status (available, filled based on position availability)
  * - Search (title, description, location)
- * 
- * Expected data attributes on job offer items:
- * - data-tags: Space-separated list of tags (including project codes like PC1-PC5, General)
- * - data-type: The job type (postdoc, phd, engineer, intern)
+ *
+ * Expected data attributes on position items:
+ * - data-pc: The focused-project code (PC1-PC5), if any
+ * - data-tags: Space-separated list of tags (e.g. General, Extern, keywords)
+ * - data-type: The position type (postdoc, phd, engineer, intern)
  * - data-status: The status (active, expired)
  * - data-search-text: Combined searchable text (title, description, location)
- * 
+ *
  * @example
  * ```typescript
- * import { jobOffersFilterConfig } from './filter-configs';
+ * import { positionsFilterConfig } from './filter-configs';
  * import { FilterManagerImpl } from './filtering';
- * 
- * const filterManager = new FilterManagerImpl(jobOffersFilterConfig);
+ *
+ * const filterManager = new FilterManagerImpl(positionsFilterConfig);
  * filterManager.initialize();
  * ```
  */
-export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
+export const positionsFilterConfig: FilterSystemConfig<DOMItemData> = {
     filters: [
         {
             id: 'project-filter',
             type: 'select',
             label: 'Project',
-            translationKey: 'job-offers.filter.project',
+            translationKey: 'positions.filter.project',
             options: [
-                { value: '', label: 'All Projects', translationKey: 'job-offers.filter.all-projects' },
+                { value: '', label: 'All Projects', translationKey: 'positions.filter.all-projects' },
                 { value: 'PC1', label: 'PC1' },
                 { value: 'PC2', label: 'PC2' },
                 { value: 'PC3', label: 'PC3' },
@@ -64,10 +65,12 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             ],
             predicate: (data, value) => {
                 if (!value) return true;
-                // Check if the project tag is present in the tags string
-                const tags = (data.tags || '').toLowerCase();
-                const projectTag = value.toLowerCase();
-                return tags.includes(projectTag);
+                if (value === 'General' || value === 'Extern') {
+                    const tags = (data.tags || '').toLowerCase();
+                    return tags.includes(value.toLowerCase());
+                }
+                // Exact match against the position's focused-project code
+                return (data.pc || '').toLowerCase() === value.toLowerCase();
             },
             urlParam: 'project',
             defaultValue: ''
@@ -76,14 +79,14 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             id: 'type-filter',
             type: 'select',
             label: 'Type',
-            translationKey: 'job-offers.filter.type',
+            translationKey: 'positions.filter.type',
             options: [
-                { value: '', label: 'All Types', translationKey: 'job-offers.filter.all-types' },
-                { value: 'postdoc', label: 'Postdoc', translationKey: 'job-offers.type.PostDoc' },
-                { value: 'phd', label: 'PhD', translationKey: 'job-offers.type.PhD' },
-                { value: 'engineer', label: 'Engineer', translationKey: 'job-offers.type.Engineer' },
-                { value: 'intern', label: 'Intern', translationKey: 'job-offers.type.Intern' },
-                { value: 'others', label: 'Others', translationKey: 'job-offers.type.Others' }
+                { value: '', label: 'All Types', translationKey: 'positions.filter.all-types' },
+                { value: 'postdoc', label: 'Postdoc', translationKey: 'positions.type.PostDoc' },
+                { value: 'phd', label: 'PhD', translationKey: 'positions.type.PhD' },
+                { value: 'engineer', label: 'Engineer', translationKey: 'positions.type.Engineer' },
+                { value: 'intern', label: 'Intern', translationKey: 'positions.type.Intern' },
+                { value: 'others', label: 'Others', translationKey: 'positions.type.Others' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
@@ -96,16 +99,16 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             id: 'status-filter',
             type: 'select',
             label: 'Status',
-            translationKey: 'job-offers.filter.status',
+            translationKey: 'positions.filter.status',
             options: [
-                { value: '', label: 'All Status', translationKey: 'job-offers.filter.all-status' },
-                { value: 'available', label: 'Available', translationKey: 'job-offers.filter.available' },
-                { value: 'filled', label: 'Filled', translationKey: 'job-offers.filter.filled' }
+                { value: '', label: 'All Status', translationKey: 'positions.filter.all-status' },
+                { value: 'available', label: 'Available', translationKey: 'positions.filter.available' },
+                { value: 'filled', label: 'Filled', translationKey: 'positions.filter.filled' }
             ],
             predicate: (data, value) => {
                 if (!value) return true;
 
-                // Determine if the job offer is available or filled based on filled status
+                // Determine if the position is available or filled based on filled status
                 // The status should be set as a data attribute on the DOM element
                 const status = data.status || '';
                 return status === value;
@@ -117,9 +120,9 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             id: 'search-filter',
             type: 'search',
             label: 'Search',
-            translationKey: 'job-offers.filter.search',
-            placeholder: 'Search job offers...',
-            placeholderTranslationKey: 'job-offers.filter.search-placeholder',
+            translationKey: 'positions.filter.search',
+            placeholder: 'Search positions...',
+            placeholderTranslationKey: 'positions.filter.search-placeholder',
             predicate: (data, value) => {
                 if (!value) return true;
                 const searchText = (data.searchText || '').toLowerCase();
@@ -131,8 +134,8 @@ export const jobOffersFilterConfig: FilterSystemConfig<DOMItemData> = {
             defaultValue: ''
         }
     ],
-    itemSelector: '.job-offer-item',
-    containerSelector: '#job-offers-grid',
+    itemSelector: '.position-item',
+    containerSelector: '#positions-grid',
     noResultsSelector: '#no-results',
     resultsCountSelector: '#results-count',
     clearButtonSelector: '#clear-filters'
@@ -209,7 +212,7 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'white-paper', label: 'White Paper', translationKey: 'publications.type.white-paper' },
                 { value: 'preprint', label: 'Preprint', translationKey: 'publications.type.preprint' },
                 { value: 'thesis', label: 'Thesis', translationKey: 'publications.type.thesis' },
-                { value: 'workshop', label: 'Workshop', translationKey: 'publications.type.workshop' },
+                { value: 'workshop-paper', label: 'Workshop Paper', translationKey: 'publications.type.workshop-paper' },
                 { value: 'slidedeck', label: 'Slide Deck', translationKey: 'publications.type.slidedeck' }
             ],
             predicate: (data, value) => {
@@ -510,65 +513,66 @@ export function getAvailableYears(publications: Publication[]): number[] {
 }
 
 /**
- * Helper function to determine if a job offer is available or filled
- * 
- * @param filled - The job offer filled status
+ * Helper function to determine if a position is available or filled
+ *
+ * @param filled - The position's filled status
  * @returns 'available' if position is open, 'filled' if position is filled
- * 
+ *
  * @example
  * ```typescript
- * const status = getJobOfferStatus(jobOffer.filled);
+ * const status = getPositionStatus(position.filled);
  * console.log(status); // 'available' or 'filled'
  * ```
  */
-export function getJobOfferStatus(filled: boolean): 'available' | 'filled' {
+export function getPositionStatus(filled: boolean): 'available' | 'filled' {
     return filled ? 'filled' : 'available';
 }
 
 /**
- * Helper function to prepare tags string for a job offer
+ * Helper function to prepare tags string for a position
  * Converts tags array to a space-separated lowercase string
- * 
- * @param jobOffer - The job offer object
+ *
+ * @param position - The position object
  * @returns Space-separated lowercase tags string
- * 
+ *
  * @example
  * ```typescript
- * const tagsString = prepareJobOfferTagsString(jobOffer);
+ * const tagsString = preparePositionTagsString(position);
  * // Use in data-tags attribute
  * ```
  */
-export function prepareJobOfferTagsString(jobOffer: JobOffer): string {
-    if (!jobOffer.tags || jobOffer.tags.length === 0) {
+export function preparePositionTagsString(position: Position): string {
+    if (!position.tags || position.tags.length === 0) {
         return '';
     }
 
-    return jobOffer.tags.join(' ').toLowerCase();
+    return position.tags.join(' ').toLowerCase();
 }
 
 /**
- * Helper function to prepare search text for a job offer
+ * Helper function to prepare search text for a position
  * Combines all searchable fields including title, description, location,
  * requirements, tags, partner, and contacts into a single searchable string
  *
- * @param jobOffer - The job offer object
+ * @param position - The position object
  * @returns Lowercase search text
  *
  * @example
  * ```typescript
- * const searchText = prepareJobOfferSearchText(jobOffer);
+ * const searchText = preparePositionSearchText(position);
  * // Use in data-search-text attribute
  * ```
  */
-export function prepareJobOfferSearchText(jobOffer: JobOffer): string {
+export function preparePositionSearchText(position: Position): string {
     const parts = [
-        jobOffer.title || '',
-        jobOffer.description || '',
-        jobOffer.location || '',
-        ...(jobOffer.requirements || []),
-        ...(jobOffer.tags || []),
-        jobOffer.partner || '',
-        ...(jobOffer.contacts || []),
+        position.title || '',
+        position.description || '',
+        position.location || '',
+        position.pc || '',
+        ...(position.requirements || []),
+        ...(position.tags || []),
+        position.partner || '',
+        ...(position.contacts || []),
     ];
 
     return parts.join(' ').toLowerCase();

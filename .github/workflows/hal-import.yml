@@ -1,0 +1,60 @@
+name: Import HAL publications
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download publications from HAL
+        run: |
+          wget \
+            --output-document=src/content/publications/hal-publications.json \
+            "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,keyword_s"
+
+          echo "Downloaded file:"
+          file src/content/publications/hal-publications.json
+
+          echo "First lines:"
+          head -n 10 src/content/publications/hal-publications.json
+
+          if ! jq -e '.response.docs' src/content/publications/hal-publications.json > /dev/null; then
+            echo "ERROR: HAL did not return the expected JSON document (missing .response.docs)."
+            exit 1
+          fi
+      - name: Build the app with the refreshed export
+        run: npm run build
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add src/content/publications/hal-publications.json
+
+          if git diff --cached --quiet; then
+            echo "No publication changes detected."
+          else
+            git commit -m "chore(hal): publications updated"
+            git push
+          fi

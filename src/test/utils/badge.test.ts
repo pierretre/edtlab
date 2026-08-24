@@ -47,15 +47,15 @@ describe('getBadge', () => {
         });
     });
 
-    describe('job offer statuses', () => {
-        it('should return green colors for available job offers', () => {
-            const badge = getBadge('job-offers.available', t);
+    describe('position statuses', () => {
+        it('should return green colors for available positions', () => {
+            const badge = getBadge('positions.available', t);
             expect(badge.color).toBe('text-green-800');
             expect(badge.backgroundColor).toBe('bg-green-200');
         });
 
-        it('should return gray colors for filled job offers', () => {
-            const badge = getBadge('job-offers.filled', t);
+        it('should return gray colors for filled positions', () => {
+            const badge = getBadge('positions.filled', t);
             expect(badge.color).toBe('text-gray-800');
             expect(badge.backgroundColor).toBe('bg-gray-200');
         });

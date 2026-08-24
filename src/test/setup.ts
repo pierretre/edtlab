@@ -16,7 +16,7 @@ export const mockContentCollections = {
     pages: [],
     publications: [],
     events: [],
-    jobOffers: []
+    positions: []
 };
 
 // Helper functions for testing
@@ -38,9 +38,9 @@ export const createMockPublication = (overrides = {}) => ({
     ...overrides
 });
 
-export const createMockJobOffer = (overrides = {}) => ({
+export const createMockPosition = (overrides = {}) => ({
     title: 'Test Position',
-    project: 'PC1',
+    pc: 'PC1',
     type: 'postdoc',
     location: 'Test Location',
     expectedStartDate: 'Spring 2025',
@@ -50,7 +50,7 @@ export const createMockJobOffer = (overrides = {}) => ({
     requirements: ['Test requirement'],
     contacts: ['contact@example.com'],
     lang: 'en',
-    template: 'job-offer',
+    template: 'position',
     tags: ['research'],
     ...overrides
 });

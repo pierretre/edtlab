@@ -119,30 +119,21 @@ import PublicationList from '@components/PublicationList.astro';
 - Consider the target audience when setting defaults
 - Provide clear categorization
 
-### JobOfferList
+### PositionList
 
-Displays current job opportunities with project-based filtering.
+Displays current open positions with project-based filtering.
 
 #### Usage
 
 ```mdx
-import JobOfferList from '@components/JobOfferList.astro';
+import PositionList from '@components/PositionList.astro';
 
-<JobOfferList 
-  limit={5}
-  showProject={true}
-  lang="en"
-  filterProject="PC1"
-/>
+<PositionList lang="en" />
 ```
 
 #### Props
 
-- `limit` (optional): Maximum number of job offers to display
-- `showProject` (optional): Display project badges (default: true)
 - `lang` (required): Language filter ("en" or "fr")
-- `filterProject` (optional): Filter by specific project ("PC1"-"PC5", "General")
-- `showDeadline` (optional): Display application deadlines (default: true)
 
 #### Guidelines
 
@@ -379,7 +370,7 @@ Create tabbed interfaces for organized content:
     <EventList limit={5} lang="en" />
   </div>
   <div>
-    <JobOfferList limit={3} lang="en" showProject={true} />
+    <PositionList lang="en" />
   </div>
 </div>
 ```
