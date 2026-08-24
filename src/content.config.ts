@@ -1,6 +1,7 @@
 import { defineCollection, reference } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
+import { publicationsLoader } from './loaders/publications-loader';
 
 // Pages collection schema
 const pagesCollection = defineCollection({
@@ -18,9 +19,11 @@ const pagesCollection = defineCollection({
     })
 });
 
-// Publications collection schema
+// Publications collection schema. The loader merges hand-written MDX/MD
+// publications with HAL publications (static JSON export, see
+// docs/developers/hal-publications-sync.md).
 const publicationsCollection = defineCollection({
-    loader: glob({ base: "./src/content/publications", pattern: "**/*.{md,mdx}" }),
+    loader: publicationsLoader(),
     schema: z.object({
         title: z.string(),
         authors: z.array(z.string()),

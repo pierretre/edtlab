@@ -1,10 +1,10 @@
 ---
+import { getCollection } from "astro:content";
 import { useTranslations } from "@i18n/utils";
 import { generatePublicationStructuredData } from "@utils/seo";
 import PublicationCard from "./PublicationCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
 import { publicationsFilterConfig } from "@utils/filter-configs";
-import { getAllPublications } from "@utils/publications";
 import type { Publication } from "~/models/Publication.model";
 
 export interface Props {
@@ -15,7 +15,16 @@ export interface Props {
 const { lang, origin } = Astro.props as Props;
 const t = useTranslations(lang);
 
-const publications = await getAllPublications(origin);
+const publicationEntries = await getCollection(
+    "publications",
+    ({ data }) => origin === undefined || data.origin === origin,
+);
+const publications = publicationEntries
+    .map((entry) => entry.data as Publication)
+    .sort((a, b) => {
+        if (b.year !== a.year) return b.year - a.year;
+        return (a.title || "").localeCompare(b.title || "");
+    });
 
 // Generate structured data for publications
 const publicationStructuredData = publications.map((pub: Publication) =>

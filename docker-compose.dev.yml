@@ -14,25 +14,7 @@ services:
     environment:
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
-    depends_on:
-      - mongo
     command: npm run dev -- --host --watch
-
-  mongo:
-    image: mongo:7
-    container_name: mongo-dev
-    restart: unless-stopped
-    network_mode: bridge
-    volumes:
-      - mongo-dev-data:/data/db
-    ports:
-      - "0.0.0.0:4004:27017"
-    healthcheck:
-      test: [ "CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
 
   matomo-db:
     image: mariadb:10.11
@@ -85,6 +67,3 @@ services:
       - ./matomo-apache-config.conf:/etc/apache2/conf-enabled/matomo.conf:ro
     ports:
       - "0.0.0.0:4002:80"
-
-volumes:
-  mongo-dev-data:

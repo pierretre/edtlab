@@ -16,7 +16,7 @@ export async function generateAllPagesStaticPaths(): Promise<any[]> {
  * @returns Array of static path entries
  */
 async function generateBasePagesStaticPaths() {
-    const allPages = await getCollection("pages", (page) => !page.id.startsWith("publications/"));
+    const allPages = await getCollection("pages");
 
     return allPages
         .map((page: CollectionEntry<"pages">) => {
