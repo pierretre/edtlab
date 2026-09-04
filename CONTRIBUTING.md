@@ -60,6 +60,6 @@ These are the same checks CI runs on every pull request (see [ci.yml](.github/wo
 2. **Make your change** — content in `src/content/`, code anywhere else.
 3. **Test locally** — `npm run dev` for content, plus the checks above for code.
 4. **Open a pull request** against `main` with a clear description of what changed and why.
-5. **Address review feedback.** Once approved and merged, the site rebuilds and redeploys automatically.
+5. **Address review feedback.** Once approved and merged, CI builds and publishes a new Docker image automatically; the production server picks it up via its own webhook shortly after (see [Deployment](docs/developers/deployment.md)).
 
 For content changes specifically, this is spelled out step by step in the [Editor Workflow Guide](docs/editors/workflow-guide.md).

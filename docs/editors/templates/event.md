@@ -1,8 +1,8 @@
 ---
 title: "Event Title"
 date: 2024-06-15  # Event date in YYYY-MM-DD format
-newsType: "event"  # Options: "conference", "workshop", "seminar"
-photo: "event-photo.jpg"  # REQUIRED: filename of the event photo used for listings and social previews
+newsType: "event"  # Options: "event", "press-release" — this is an events template, always "event"
+photo: /media/uploads/event-photo.jpg  # REQUIRED: path to the uploaded photo, used for listings and social previews
 tags:
   - "PC1"  # Optional: associate event with a focused project (PC1..PC5 or General)
 location: "City, Country"  # Optional: Physical or virtual location
@@ -122,7 +122,7 @@ Details about technology demonstrations and exhibits.
 **Template Notes**:
 
 - **Date**: Use YYYY-MM-DD format for proper sorting and filtering
-- **Type**: Choose conference for large academic gatherings, workshop for focused technical sessions, seminar for smaller presentations
+- **`newsType`**: Always `"event"` for this template — the only other value, `"press-release"`, has its own template
 - **Location**: Include city and country, or specify "Virtual" for online events
 - **Description**: Keep under 200 characters for optimal display in listings
 - **URL**: Link to official event website if available
@@ -137,7 +137,7 @@ Details about technology demonstrations and exhibits.
 
 **File Naming**:
 
-- English: `event-name-year-en.md` in `src/content/events/`
-- French: `event-name-year-fr.md` in `src/content/events/`
+- English: `event-name-year-en.md` in `src/content/news/`
+- French: `event-name-year-fr.md` in `src/content/news/`
 
 **Bilingual Requirements**: Create both English and French versions with identical information but appropriate language

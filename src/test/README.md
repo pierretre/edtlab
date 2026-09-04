@@ -4,15 +4,15 @@ This directory contains the automated testing suite for the EDT Research Website
 
 ## Test Structure
 
-```
+```text
 src/test/
-├── accessibility/          # Accessibility compliance tests
-├── content/                # Content validation and schema tests
-├── e2e/                    # End-to-end tests with Playwright
-├── routes/                 # Route structure and navigation tests
-├── utils/                  # Utility function tests
-├── setup.ts               # Test environment setup
-└── README.md              # This file
+├── accessibility/          # Accessibility compliance tests (Vitest)
+├── content/                # Content validation and schema tests (Vitest)
+├── integration/            # build.test.ts — build-process integration test (Vitest)
+├── e2e/                    # Playwright specs: accessibility, routes, link-verification, performance
+├── utils/                  # Utility function tests (Vitest)
+├── setup.ts                # Test environment setup
+└── README.md                # This file
 ```
 
 ## Test Types
@@ -53,10 +53,7 @@ npm run test src/test/content/schema.test.ts
 ```
 
 ### CI/CD Pipeline
-Tests are automatically run on:
-- Pull requests to main/develop branches
-- Pushes to main/develop branches
-- Manual workflow dispatch
+`.github/workflows/ci.yml` runs on push and pull request to `main` only (not `develop`). It runs `npm run check` on every push/PR, and `npm run test:ci` (unit tests, excluding the spelling test) on pushes to `main`. Playwright e2e/accessibility tests are not run in CI — see [CI/CD Setup](../../docs/developers/ci-cd-setup.md).
 
 ## Test Coverage
 
@@ -68,11 +65,11 @@ The test suite aims for:
 
 ## Coverage Thresholds
 
-Current minimum thresholds:
-- Branches: 50%
-- Functions: 50%
-- Lines: 50%
-- Statements: 50%
+Set in `vitest.config.ts`:
+- Branches: 70%
+- Functions: 70%
+- Lines: 70%
+- Statements: 70%
 
 ## Accessibility Testing
 
@@ -93,13 +90,7 @@ Content tests validate:
 
 ## CI/CD Integration
 
-The GitHub Actions workflow includes:
-- Unit test execution
-- Build validation
-- Accessibility testing
-- Route validation
-- Coverage reporting
-- Quality gates
+See "CI/CD Pipeline" above — accessibility/route testing, coverage reporting, and quality gates are not part of the current `ci.yml`, only `check`/`test:ci`/`build`.
 
 ## Adding New Tests
 

@@ -98,7 +98,7 @@ Every image must have descriptive alternative text:
 
 ```mdx
 <OptimizedFigure 
-  src="research-diagram.jpg"
+  src="/media/uploads/research-diagram.jpg"
   alt="Flowchart showing digital twin development process with five stages: data collection, model creation, validation, deployment, and monitoring"
   caption="Digital Twin Development Process"
 />
@@ -122,7 +122,7 @@ For complex diagrams, charts, or infographics:
 
 ```mdx
 <OptimizedFigure 
-  src="complex-architecture.jpg"
+  src="/media/uploads/complex-architecture.jpg"
   alt="System architecture diagram with 5 main components"
   caption="EDT System Architecture (detailed description follows)"
 />

@@ -15,40 +15,30 @@ This template demonstrates how to use MDX components for rich, interactive conte
 
 ## Images and Media
 
-Use the OptimizedFigure component for all images to ensure accessibility and responsive design:
+Use the OptimizedFigure component for all images to ensure accessibility and responsive design. `src` must start with `/media/uploads/` (a file already uploaded to `public/media/uploads/`) — any other value renders no image:
 
 <OptimizedFigure 
-  src="image-filename.jpg"
+  src="/media/uploads/example-image.jpg"
   alt="Descriptive alt text for accessibility"
   caption="Optional caption that provides additional context about the image"
 />
 
 ### Image Guidelines
 - Always include descriptive `alt` text
-- Use meaningful filenames
+- Upload the file to `public/media/uploads/` first, then reference it as `/media/uploads/<filename>`
 - Provide captions when they add value
-- Images should be placed in `src/assets/images/` or `public/`
 
 ## Dynamic Content Lists
 
 ### Recent Events
-Display events dynamically using the EventList component:
+Display the program's event/milestone timeline using EventTimeline:
 
-<EventList 
-  limit={3}
-  showType={true}
-  lang="en"
-/>
+<EventTimeline lang="en" />
 
 ### Publications
-Show publications with filtering options:
+Show the publications list:
 
-<PublicationList 
-  limit={5}
-  showFilters={true}
-  defaultType="all"
-  defaultYear="all"
-/>
+<PublicationList lang="en" />
 
 ### Job Opportunities
 Display current open positions:

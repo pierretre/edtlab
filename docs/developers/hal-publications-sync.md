@@ -9,7 +9,7 @@ This guide explains how publications from the lab's [HAL open-science](https://h
 The publications page (`/en/publications`, `/fr/publications`) shows two sources of publications, merged into one list:
 
 - **Static publications** — hand-written MDX files in `src/content/publications/`, managed through the CMS like any other content.
-- **HAL publications** — fetched from the `EDT` collection on HAL as a raw JSON export, refreshed weekly by a scheduled GitHub Actions workflow that commits the new export.
+- **HAL publications** — fetched from the `EDT` collection on HAL as a raw JSON export, refreshed daily by a scheduled GitHub Actions workflow that commits the new export.
 
 Both sources are merged into the `publications` content collection at build time by a custom Astro loader, so the page is fully static — it is prerendered like any other page, with no server-side dependency.
 
@@ -43,7 +43,7 @@ src/
 
 **Data flow:**
 
-1. `.github/workflows/hal-import.yml` runs weekly (Mondays at 04:00 UTC) or on manual dispatch. It `wget`s the HAL search API response for the `EDT` collection straight to `src/content/publications/hal-publications.json` — no intermediate transform, just the raw Solr JSON response.
+1. `.github/workflows/hal-import.yml` runs daily (03:00 UTC) or on manual dispatch. It `wget`s the HAL search API response for the `EDT` collection straight to `src/content/publications/hal-publications.json` — no intermediate transform, just the raw Solr JSON response.
 2. It then runs `npm run build` to make sure the app still builds with the refreshed export before committing anything.
 3. If `src/content/publications/hal-publications.json` changed, the workflow commits it as `github-actions[bot]` and pushes to `main`. That push triggers `.github/workflows/docker-build-publish.yml`, which rebuilds and republishes the production image with the new publications baked in.
 4. At build time, `publicationsLoader()` (`src/loaders/publications-loader.ts`) populates the `publications` content collection: it first loads the hand-written MDX files the usual way, then reads `hal-publications.json`, maps each HAL doc to the `Publication` shape, and adds any publication not already covered by a hand-written entry.
@@ -112,10 +112,10 @@ If `src/content/publications/hal-publications.json` doesn't exist locally yet, t
 - **No pagination**: see the HAL API section above — the fetch is a single `rows=100` page.
 - **Full replace, not diff**: every scheduled run overwrites the whole `hal-publications.json` file from HAL. Simple and always consistent with HAL, at the cost of the whole file's diff changing even for small updates.
 - **No pagination on the page**: all publications (static + HAL) render in one list; filtering is client-side (`FilterManagerImpl`), same as before this feature.
-- **Up to a week stale**: since the export only refreshes weekly (or on manual `workflow_dispatch`), a publication added to HAL can take up to a week to appear on the site.
+- **Up to a day stale**: since the export only refreshes daily (or on manual `workflow_dispatch`), a publication added to HAL can take up to a day to appear on the site.
 
 ---
 
 ## Cron schedule
 
-`.github/workflows/hal-import.yml` runs on `cron: "0 4 * * 1"` (04:00 UTC every Monday) and can also be triggered manually from the Actions tab (`workflow_dispatch`).
+`.github/workflows/hal-import.yml` runs on `cron: "0 3 * * *"` (03:00 UTC daily) and can also be triggered manually from the Actions tab (`workflow_dispatch`).

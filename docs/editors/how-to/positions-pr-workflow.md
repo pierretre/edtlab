@@ -62,7 +62,7 @@ Scroll to the bottom of the GitHub editor:
 
 ### 6. Verify on the live site
 
-Once merged to `main`, the site rebuilds and redeploys automatically. Check the position's page and the "join us" listing (and its focused-project page, if `pc` is set) once the deploy completes.
+Once merged to `main`, CI builds and publishes a new Docker image automatically (see [Deployment](../../developers/deployment.md)); the production server picks it up via its own webhook shortly after. Check the position's page and the "join us" listing (and its focused-project page, if `pc` is set) once the new deploy is live.
 
 ---
 

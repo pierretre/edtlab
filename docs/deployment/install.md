@@ -163,13 +163,14 @@ Create deployment script:
 sudo tee /opt/edtlab/hook/redeploy.sh <<'EOF'
 #!/bin/bash
 cd /opt/edtlab
-git pull
-docker-compose build
-docker-compose up -d
+docker-compose pull web
+docker-compose up -d web
 EOF
 
 sudo chmod +x /opt/edtlab/hook/redeploy.sh
 ```
+
+`docker-compose.yml`'s `web` service references `image: pierretre/edtlab:latest` (built and pushed by CI on every push to `main` — see [Deployment Guide](../developers/deployment.md)), not a local `build:` context — there's no source checkout to `git pull` or build on this server, only a new image to pull. (The live server currently uses a different, simpler webhook script — a raw `docker pull`/`stop`/`rm`/`run` sequence outside `docker-compose` entirely, documented in [Deployment Guide](../developers/deployment.md). Either approach works; don't mix `git pull`/`docker-compose build` into it, since there's no buildable source on this server.)
 
 Create webhook configuration:
 

@@ -37,9 +37,10 @@ summary: >-                       # OBLIGATOIRE — résumé en 2-4 phrases, aff
 lang: fr                          # OBLIGATOIRE — fr | en
 photo: /media/uploads/xxx.png     # chemin depuis /public ; défaut: /media/use-cases/uc-default.svg
                                   # ⚠️ ne PAS laisser vide — une chaîne vide bypass le défaut Zod
-domain: maritime                  # industrial-engineering | energy | geospatial | maritime |
-                                  # telecommunications | environment | health | robotics |
-                                  # agriculture | other
+domain: maritime                  # CHAÎNE LIBRE côté schéma (z.string()) — mais suivre cette
+                                  # convention pour la cohérence : industrial-engineering | energy |
+                                  # geospatial | maritime | telecommunications | environment |
+                                  # health | robotics | agriculture | other
 maturity: prototype               # concept | poc | prototype | operational
 originType: engineered            # natural | anthropic | engineered | infrastructure | process
 version: r0.1                     # identifiant de version
@@ -48,8 +49,29 @@ tags:
   - tag-en-kebab-case
 publishedDate: 2026-01-01T00:00:00.000Z   # OBLIGATOIRE — format ISO 8601
 usersCount: 5                     # nombre entier UNIQUEMENT (pas de "30+") — optionnel
+usagePhase: "operations"          # chaîne libre — optionnel
+usageLevel: consortium            # reduced | consortium | public — optionnel
+since: 2024-01-01                 # date — optionnel
+schema: /media/uploads/uc07-schema.svg  # chaîne libre (chemin de schéma) — optionnel
+objectives:                       # liste de chaînes — optionnel
+  - "Objectif 1"
+users:                             # liste — chaîne simple ou { name, role } — optionnel
+  - name: "Rôle utilisateur"
+    role: "Description du rôle"
+approvedBy:                       # objet — optionnel, si le UC a été formellement validé
+  name: "Prénom Nom"
+  email: valideur@domaine.fr
+  title: "Titre / Fonction"
+  org: "Organisation"
+  date: 2026-01-01
+approvedDate: 2026-01-01          # date — optionnel
+license: "CC-BY-4.0"              # chaîne libre — optionnel
+pepr: "identifiant PEPR"          # chaîne libre — optionnel
+lastUpdated: 2026-01-01           # date — optionnel, à mettre à jour à chaque révision de contenu
 ---
 ```
+
+`previewToken` et `confirmToken` existent aussi dans le schéma mais sont des jetons système (liens de prévisualisation/confirmation) — ne pas les renseigner à la main dans une nouvelle fiche.
 
 ### Valeurs `maturity`
 
