@@ -7,6 +7,7 @@ This directory contains comprehensive documentation for creating and managing co
 - **⚡ [Workflow Guide](workflow-guide.md)** - Simple process from creation to publication
 - **📄 [Pages Guide](how-to/pages-guide.md)** - Complete page creation workflow
 - **📋 [Positions Guide](how-to/positions-guide.md)** - Complete position posting workflow (open and ongoing/occupied)
+- **🔀 [Positions PR Workflow](how-to/positions-pr-workflow.md)** - Mark a position filled, or update your own record, via pull request
 - **📰 [News Guide](how-to/news-guide.md)** - Events and press releases
 - **📚 [Publications Guide](how-to/publications-guide.md)** - Research publication management
 - **🖼️ [Image Management](guidelines/image-management.md)** - Image storage, optimization, and usage
@@ -67,6 +68,7 @@ Complete step-by-step instructions for creating and managing positions, from ope
 - Writing effective position descriptions
 - Bilingual content management
 - Marking a position as filled / ongoing research, status updates and promotion
+- For the short, PR-focused version of "mark as filled" / "update my own record", see the [Positions PR Workflow](how-to/positions-pr-workflow.md)
 
 ### 📰 [News Guide](how-to/news-guide.md)
 
