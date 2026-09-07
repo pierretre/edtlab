@@ -9,7 +9,7 @@ publishedDate: 2026-04-01  # Date when job offer was published in YYYY-MM-DD for
 filled: false  # Position availability status: true if position is filled, false if still available
 description: "In this PhD research project we will investigate how to automatically classify the plausibility in datasets collected for a geographic or otherwise spatial data, and how to visualize it. We will rely on past results that detected data biases and data errors based on a manual analysis, and will investigate how to use machine learning models to automate this process. In addition, we will investigate how best to depict the different types and degrees of data bias, data imprecision, and data error." # Brief summary of the position (2-3 sentences) for list summury printing. The detailed description goes in the Body section below.
 requirements: ["Master degree in computer science or related field", "Interest in interactive data visualization and analysis", "Excellent programming skills; in particular, with experiences in computer graphics, visualization (e.g., D3, Altair, Plotly, ...)", "Good written and spoken communication in English", "Past experience in data visualization", "Past publications preferred but not required"] # Some requirements in a list
-contacts: ["https://adum.fr/as/ed/voirproposition.pl?site=adumR&matricule_prop=76145#version"]  # Array of contact emails for this position
+contacts: []  # Array of contact emails for this position
 references:
   - "hullman-2019-pursuit"
   - "isenberg-2022-you"
