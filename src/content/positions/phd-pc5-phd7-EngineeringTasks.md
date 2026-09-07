@@ -5,7 +5,7 @@ pc: PC5
 location: "Rennes, France"
 expectedStartDate: "Autumn 2026"
 publishedDate: 2026-03-25
-filled: false 
+filled: true 
 description: "By its very nature, a digital twin strongly relies on data visualization and user interactions. Building such interactive digital twins from scratch and in a craft way is time-consuming and may prevent the generalization of DT as industrial tools limiting the benefits to be expected from their deployment. The goal of the PhD is to propose novel software engineering approaches to ease and support the development of reliable and usable interactive digital twins" 
 requirements: ["Master degree in computer science with a focus on software engineering and/or human-computer interaction", "Initiative, curiosity, inventiveness"]
 contacts: ["arnaud.blouin@irisa.fr", "philippe.palanque@irit.fr", "benoit.combemale@irisa.fr"]
