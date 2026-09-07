@@ -4,7 +4,7 @@ type: "PhD"
 pc: PC5
 location: "Rennes, France"
 expectedStartDate: "October 2026"
-filled: false
+filled: true
 publishedDate: 2026-03-15
 description: "PhD position in Human-Computer Interaction and Virtual Reality focusing on immersive interfaces for digital twin systems"
 requirements: ["Master's degree in Computer Science, HCI, VR or related field", "Experience with VR/AR technologies", "Strong programming skills (C#, JavaScript, Python)", "Knowledge of 3D graphics and visualization", "Fluency in English and French"]
