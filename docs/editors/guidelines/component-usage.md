@@ -16,15 +16,15 @@ MDX allows you to use Astro components directly in your markdown content, enabli
 
 ### OptimizedFigure
 
-Displays images with responsive sizing, accessibility features, and optional captions.
+Displays an image with responsive sizing and an optional caption.
 
 #### Usage
 
 ```mdx
 import OptimizedFigure from '@components/OptimizedFigure.astro';
 
-<OptimizedFigure 
-  src="image-filename.jpg"
+<OptimizedFigure
+  src="/media/uploads/INRIA_EDT_PCs_ATs.png"
   alt="Descriptive alt text for accessibility"
   caption="Optional caption providing additional context"
 />
@@ -32,98 +32,44 @@ import OptimizedFigure from '@components/OptimizedFigure.astro';
 
 #### Props
 
-- `src` (required): Image filename (relative to `src/assets/images/` or `public/`)
-- `alt` (required): Alternative text for screen readers
-- `caption` (optional): Caption text displayed below the image
-- `width` (optional): Maximum width constraint
-- `height` (optional): Maximum height constraint
+- `src` (required): a string starting with `/media/uploads/` — the filename of an image already uploaded to `public/media/uploads/`. Any other value (a bare filename, an imported image object, a `src/assets/images/...` path) renders no image at all, silently.
+- `alt` (required)
+- `caption` (optional)
+- `class` (optional): extra classes on the `<figure>`
+- `loading` (optional): `"eager"` (default) or `"lazy"`
+- `align` (optional): `"left"` | `"center"` (default) | `"right"`
+- `maxWidth` (optional): number, in pixels
 
-#### Guidelines
+### EventTimeline
 
-- Always provide descriptive alt text
-- Use captions to provide additional context, not just repeat the alt text
-- Optimize images before adding them to the project
-- Use meaningful filenames
-
-#### Example
+Renders the chronological timeline of program milestones and events for one language — combines the `calendar` collection entry with `news` items where `newsType: event`. Not filterable beyond language.
 
 ```mdx
-<OptimizedFigure 
-  src="/src/assets/images/uploads/INRIA_EDT_CBLOT_PC1.jpg"
-  alt="PC1 project diagram showing model hybridization workflow with data inputs, processing stages, and output validation"
-  caption="PC1 Model Hybridization: Workflow diagram illustrating the integration of physical and data-driven models in digital twin applications"
-/>
+import EventTimeline from '@components/EventTimeline.astro';
+
+<EventTimeline lang="en" />
 ```
 
-### EventList
-
-Displays a filtered list of events with customizable display options.
-
-#### Usage
-
-```mdx
-import EventList from '@components/EventList.astro';
-
-<EventList 
-  limit={5}
-  showType={true}
-  lang="en"
-  filterType="conference"
-/>
-```
-
-#### Props
-
-- `limit` (optional): Maximum number of events to display (default: 10)
-- `showType` (optional): Show event type badges (default: true)
-- `lang` (required): Language filter ("en" or "fr")
-- `filterType` (optional): Filter by event type ("conference", "workshop", "seminar")
-- `showPast` (optional): Include past events (default: false)
-
-#### Guidelines
-
-- Use appropriate limits to avoid overwhelming users
-- Consider the page context when choosing filters
-- Include both upcoming and recent events when relevant
+**Props:** `lang` (required): `"en"` or `"fr"`.
 
 ### PublicationList
-
-Displays publications with filtering and sorting capabilities.
-
-#### Usage
 
 ```mdx
 import PublicationList from '@components/PublicationList.astro';
 
-<PublicationList 
-  limit={10}
-  showFilters={true}
-  defaultType="all"
-  defaultYear="all"
-  showAuthors={true}
-/>
+<PublicationList lang="en" origin="edt" />
 ```
 
-#### Props
+**Props:**
 
-- `limit` (optional): Maximum number of publications to display
-- `showFilters` (optional): Display filter controls (default: true)
-- `defaultType` (optional): Default publication type filter
-- `defaultYear` (optional): Default year filter
-- `showAuthors` (optional): Display author information (default: true)
-- `showVenue` (optional): Display venue information (default: true)
+- `lang` (required): `"en"` or `"fr"`
+- `origin` (optional): `"edt"` or `"external"` — omit to show all publications regardless of origin
 
-#### Guidelines
-
-- Enable filters for large publication lists
-- Consider the target audience when setting defaults
-- Provide clear categorization
+There is no `limit`, `showFilters`, `defaultType`/`defaultYear`, or `showAuthors`/`showVenue` prop — filtering (by type, year, search) is built into the component's own UI, not configured from the outside.
 
 ### PositionList
 
-Displays current open positions with project-based filtering.
-
-#### Usage
+Lists open (non-filled) positions for one language.
 
 ```mdx
 import PositionList from '@components/PositionList.astro';
@@ -131,48 +77,21 @@ import PositionList from '@components/PositionList.astro';
 <PositionList lang="en" />
 ```
 
-#### Props
+**Props:** `lang` (required): `"en"` or `"fr"`.
 
-- `lang` (required): Language filter ("en" or "fr")
+### TableOfContent
 
-#### Guidelines
-
-- Keep job lists current and relevant
-- Highlight urgent deadlines
-- Provide clear project associations
-
-### TableOfContents
-
-Generates an interactive table of contents for long-form content.
-
-#### Usage
+Note the singular name (`TableOfContent.astro`, not `TableOfContents`). It renders a project logo (if `projectId` matches `PC1`–`PC5`) plus a table of contents — but the TOC entries are generated client-side by scanning the page's `<article>` for `h1`/`h2` elements after load, not from a `headings` prop.
 
 ```mdx
-import TableOfContents from '@components/TableOfContents.astro';
+import TableOfContent from '@components/TableOfContent.astro';
 
-<TableOfContents 
-  maxDepth={3}
-  showNumbers={true}
-/>
+<TableOfContent projectId="PC1" />
 ```
 
-#### Props
-
-- `maxDepth` (optional): Maximum heading level to include (default: 3)
-- `showNumbers` (optional): Show section numbers (default: false)
-- `sticky` (optional): Make TOC sticky on scroll (default: true)
-
-#### Guidelines
-
-- Use for pages with multiple sections
-- Consider mobile experience with sticky positioning
-- Limit depth to maintain usability
+**Props:** `projectId` (optional): `"PC1"`–`"PC5"` or `"FP1"`–`"FP5"`, selects the logo shown above the TOC. There is no `maxDepth`, `showNumbers`, or `sticky` prop.
 
 ### Breadcrumb
-
-Displays navigation breadcrumbs for page hierarchy.
-
-#### Usage
 
 ```mdx
 import Breadcrumb from '@components/Breadcrumb.astro';
@@ -186,16 +105,7 @@ import Breadcrumb from '@components/Breadcrumb.astro';
 />
 ```
 
-#### Props
-
-- `items` (required): Array of breadcrumb items with `name` and `href`
-- `separator` (optional): Custom separator character (default: "/")
-
-#### Guidelines
-
-- Provide logical navigation hierarchy
-- Keep breadcrumb labels concise
-- Ensure all links are functional
+**Props:** `items` (required): array of `{ name, href? }`. There is no `separator` prop.
 
 ## Layout Components
 
@@ -354,8 +264,8 @@ Create tabbed interfaces for organized content:
 
 ```mdx
 <div class="custom-component-wrapper">
-  <OptimizedFigure 
-    src="diagram.jpg"
+  <OptimizedFigure
+    src="/media/uploads/INRIA_EDT_PCs_ATs.png"
     alt="Custom styled diagram"
     class="border-2 border-primary-300 rounded-lg"
   />
@@ -367,7 +277,7 @@ Create tabbed interfaces for organized content:
 ```mdx
 <div class="grid lg:grid-cols-3 gap-8">
   <div class="lg:col-span-2">
-    <EventList limit={5} lang="en" />
+    <EventTimeline lang="en" />
   </div>
   <div>
     <PositionList lang="en" />
@@ -380,9 +290,9 @@ Create tabbed interfaces for organized content:
 ```mdx
 {/* Show different content based on language */}
 {lang === 'en' ? (
-  <EventList lang="en" filterType="conference" />
+  <EventTimeline lang="en" />
 ) : (
-  <EventList lang="fr" filterType="conference" />
+  <EventTimeline lang="fr" />
 )}
 ```
 

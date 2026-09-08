@@ -43,7 +43,7 @@ Any static assets, like images, can be placed in the `public/` directory.
 2. **Start development environment**:
 
    ```bash
-   docker-compose --profile dev up -d
+   docker-compose -f docker-compose.dev.yml up -d
    ```
 
 3. **Access the services**:
@@ -69,7 +69,7 @@ If you prefer manual setup without Docker:
 
 This website includes anonymous Matomo analytics integration with comprehensive privacy features.
 
-**📖 Complete Setup Guide**: [Analytics Integration Guide](./docs/analytics-integration.md)
+**📖 Complete Setup Guide**: [Analytics Integration Guide](./docs/developers/analytics-integration.md)
 
 ## 🌐 Content Management
 
@@ -85,16 +85,17 @@ npm run dev:cms          # Start Astro + CMS proxy
 
 Then access: `http://localhost:4321/admin/`
 
-**Production:** `https://edtlab.fr/admin/` (requires GitHub authentication)
-
-**📖 Complete CMS Guide**: [DecapCMS Setup Guide](./docs/developers/decap-cms-setup.md)
+**Production:** `https://edtlab.fr/admin/` (GitHub OAuth, configured in `public/admin/config.yml`)
 
 ### Content Structure
 
 - **Pages** (`src/content/pages/`): Nested structure with bilingual support
-- **News** (`src/content/news/`): Articles, events, press releases
-- **Job Offers** (`src/content/job-offers/`): PhD, postdoc, engineer positions
+- **News** (`src/content/news/`): Events and press releases
+- **Positions** (`src/content/positions/`): Open and occupied/ongoing PhD, postdoc, engineer, and intern positions — see [Positions Guide](docs/editors/how-to/positions-guide.md)
 - **Publications** (`src/content/publications/`): Research papers and articles
+- **Use Cases** (`src/content/use-cases/`)
+- **Calendar** (`src/content/calendar/`): Program milestones shown alongside events
+- **Newsletter** (`src/content/newsletter/`)
 - **Menus** (`src/content/menu/`): Navigation structure (EN/FR)
 
 ### Translation Management
@@ -107,7 +108,7 @@ Then access: `http://localhost:4321/admin/`
 
 ## 🔧 Technology Stack
 
-- **Framework**: Astro.js 5.x with TypeScript
+- **Framework**: Astro.js 7.x with TypeScript
 - **Styling**: Tailwind CSS + Flowbite components
 - **Content**: Astro Content Collections with Zod validation
 - **Analytics**: Matomo (cookieless, anonymous)
@@ -120,9 +121,11 @@ The website can be deployed to production using Docker with integrated Matomo an
 
 ### Docker Services
 
-- **Website**: Astro.js static site with Nginx (port 4001)
-- **Matomo**: Analytics platform with MySQL database (port 4002)
-- **Matomo DB**: MariaDB database for Matomo (port 4003)
+- **Website**: Node.js SSR server (`@astrojs/node`, standalone mode), host port 4001 → container port 4321
+- **Matomo**: Analytics platform, host port 4002
+- **Matomo DB**: MariaDB, host port 4003
+
+A separate host-level Nginx reverse-proxies these to the public domain — see [Nginx Configuration](docs/deployment/nginx-configuration.md).
 
 ### Management Commands
 
@@ -137,18 +140,8 @@ docker-compose logs -f [service]
 docker-compose down
 ```
 
-For detailed Docker commands, see [DOCKER-SETUP.md](DOCKER-SETUP.md).
+For the full production install/deploy process, see [Deployment — Install Guide](docs/deployment/install.md) and [Deployment Guide](docs/developers/deployment.md).
 
 ## 📈 Analytics & Privacy
 
-This website uses anonymous analytics to improve user experience:
-
-- No cookies or personal data collection
-- IP addresses are anonymized
-- Geographic data is aggregated
-- Full GDPR compliance without consent banners
-- Legal notices in footer explain data usage
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+This website uses Matomo with cookies disabled at the tracking-script level (see [Analytics Integration](docs/developers/analytics-integration.md)) — no consent banner is shown because no cookie is ever set. IP anonymization and data-retention settings are configured separately, in the Matomo admin UI, not in this codebase.

@@ -8,12 +8,7 @@ export interface Props {
 }
 const { publication, t } = Astro.props as Props;
 
-const badges = [
-    ...(publication.tags || []).filter((tag) => tag && tag.trim()),
-    ...(publication.origin && ["edt", "hal"].includes(publication.origin)
-        ? [publication.origin.toUpperCase()]
-        : []),
-];
+const badges = [...(publication.tags || []).filter((tag) => tag && tag.trim())];
 ---
 
 <div
