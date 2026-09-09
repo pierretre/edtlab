@@ -15,6 +15,7 @@ contacts: []
 researcher:
   name: "-"
   email: "-"
+supervisors: []
 researchStatus: ongoing
 ---
 ## Context
@@ -61,3 +62,7 @@ Upon completion, you will be positioned as a recognized expert in a key domain f
 
 A candidate with a Master's degree in industrial engineering or computer science, with solid modeling skills and genuine curiosity for human-centered, real-world problems. Experience with simulation or process mining is a plus
 
+## Contacts
+"olivier.cardin@ls2n.fr"
+"hind.el-haouzi@univ-lorraine.fr", 
+"abir.ismaili-alaoui@univ-lorraine.fr"
