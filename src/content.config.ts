@@ -27,7 +27,7 @@ const publicationsCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         authors: z.array(z.string()),
-        type: z.enum(['journal', 'conference', 'book', 'report', 'white-paper', 'preprint', 'thesis', 'workshop-paper', 'slidedeck']),
+        type: z.enum(['journal', 'conference', 'book', 'delivrable', 'white-paper', 'preprint', 'thesis', 'workshop-paper', 'slidedeck']),
         year: z.number(),
         venue: z.string().optional(),
         doi: z.string().optional(),
