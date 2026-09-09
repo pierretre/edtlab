@@ -1,15 +1,15 @@
-## Overview
-- title: "PhD Position - Engineering Digital Twins Dedicated to 2D and 3D Input and Output Technologies of Interactive Systems: application to the digital twin of Luxembourg Electric Grid"
-- type: "PhD" 
-- location: "Toulouse, France" 
-- expectedStartDate: "October 2026" 
-- filled: false 
-- publishedDate: 2026-04-23 
-- description: "PhD position in Human-Computer Interaction focusing on engineering 2D and 3D input and output technologies for digital twin systems"
-- requirements: "Master's degree in Computer Science, HCI, or related fields", "Strong programming skills e.g. Java", "Knowledge of 2D / 3D applications", "Fluency in English and French"
-- Coordinated Program within EDT: "PC5"
-- contacts: "camille.fayollas@irit.fr", "philippe.palanque@irit.fr", "romain.pinquie@grenoble-inp.fr"
-<!--- lang: "en" -->
+---
+title: "PhD Position - Engineering Digital Twins Dedicated to 2D and 3D Input and Output Technologies of Interactive Systems: application to the digital twin of Luxembourg Electric Grid"
+type: "PhD"
+pc: PC5
+location: "Toulouse, France"
+expectedStartDate: "October 2026"
+publishedDate: 2026-04-23
+filled: false
+description: "PhD position in Human-Computer Interaction focusing on engineering 2D and 3D input and output technologies for digital twin systems"
+requirements: ["Master's degree in Computer Science, HCI, or related fields", "Strong programming skills e.g. Java", "Knowledge of 2D / 3D applications", "Fluency in English and French"]
+contacts: ["camille.fayollas@irit.fr", "philippe.palanque@irit.fr", "romain.pinquie@grenoble-inp.fr"]
+---
 
 ## Context
 
