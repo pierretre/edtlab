@@ -105,7 +105,7 @@ export const ui = {
         'publications.type.journal': 'Journal Article',
         'publications.type.conference': 'Conference Paper',
         'publications.type.book': 'Book',
-        'publications.type.report': 'Technical Report',
+        'publications.type.delivrable': 'Deliverable',
         'publications.type.white-paper': 'White Paper',
         'publications.type.preprint': 'Preprint',
         'publications.type.thesis': 'Thesis',
@@ -198,6 +198,14 @@ export const ui = {
         'badge.poc': 'PoC',
         'badge.prototype': 'Prototype',
         'badge.operational': 'Operational',
+
+        // HAL report subtypes (docSubType_s), tagged on 'delivrable' publications
+        'badge.research-report': 'Research Report',
+        'badge.technical-report': 'Technical Report',
+        'badge.deliverable': 'Deliverable',
+        'badge.expert-report': 'Expertise Report',
+        'badge.dmp': 'Data Management Plan',
+        'badge.research-protocol': 'Research Protocol',
 
         // News
         'news.no-results': 'No news items found matching your criteria.',
@@ -509,7 +517,7 @@ export const ui = {
         'publications.type.journal': 'Article de journal',
         'publications.type.conference': 'Article de conférence',
         'publications.type.book': 'Livre',
-        'publications.type.report': 'Rapport technique',
+        'publications.type.delivrable': 'Livrable',
         'publications.type.white-paper': 'Livre blanc',
         'publications.type.preprint': 'Prépublication',
         'publications.type.thesis': 'Thèse',
@@ -602,6 +610,14 @@ export const ui = {
         'badge.poc': 'PoC',
         'badge.prototype': 'Prototype',
         'badge.operational': 'Opérationnel',
+
+        // Sous-types de rapport HAL (docSubType_s), taggés sur les publications de type 'delivrable'
+        'badge.research-report': 'Rapport de recherche',
+        'badge.technical-report': 'Rapport technique',
+        'badge.deliverable': 'Livrable',
+        'badge.expert-report': 'Rapport d\'expertise',
+        'badge.dmp': 'Plan de gestion des données',
+        'badge.research-protocol': 'Protocole de recherche',
 
         // News
         'news.no-results': 'Aucune actualité trouvée correspondant à vos critères.',

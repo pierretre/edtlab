@@ -59,7 +59,7 @@ src/
 https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=<fields>
 ```
 
-Fields requested (`fl=`): `docid`, `title_s`, `authFullName_s`, `producedDateY_i`, `journalTitle_s`, `conferenceTitle_s`, `proceedingsTitle_s`, `doiId_s`, `uri_s`, `docType_s`, `keyword_s`.
+Fields requested (`fl=`): `docid`, `title_s`, `authFullName_s`, `producedDateY_i`, `journalTitle_s`, `conferenceTitle_s`, `proceedingsTitle_s`, `doiId_s`, `uri_s`, `docType_s`, `docSubType_s`, `keyword_s`, `collaboration_s`.
 
 `wt=json` is required — without it HAL falls back to its default (non-JSON) response format. The raw response has the shape `{ response: { numFound, docs: [...] } }`; `publications-loader.ts` reads `response.docs`.
 
@@ -67,16 +67,42 @@ Fields requested (`fl=`): `docid`, `title_s`, `authFullName_s`, `producedDateY_i
 
 ### HAL doc type → `Publication.type` mapping
 
-| HAL `docType_s`                              | Publication `type`    |
-| --------------------------------------------- | ---------------------- |
-| `ART`                                         | `journal`               |
-| `COMM`                                        | `conference`            |
-| `OUV`, `COUV`                                 | `book`                  |
-| `REPORT`, `RAPPORT`                           | `report`                |
-| `THESE`                                       | `thesis`                |
-| anything else (`POSTER`, `UNDEFINED`, ...)    | `preprint` (fallback)   |
+| HAL `docType_s`                            | Publication `type`    |
+| ------------------------------------------ | --------------------- |
+| `ART`                                      | `journal`             |
+| `COMM`                                     | `conference`          |
+| `OUV`, `COUV`                              | `book`                |
+| `REPORT`, `RAPPORT`                        | `delivrable`          |
+| `THESE`                                    | `thesis`              |
+| anything else (`POSTER`, `UNDEFINED`, ...) | `preprint` (fallback) |
 
-`venue` is taken from whichever of `journalTitle_s` / `conferenceTitle_s` / `proceedingsTitle_s` is present. `tags` comes from `keyword_s`. `origin` is always set to `'edt'` — HAL publications are treated the same as hand-written EDT publications, since they come from the lab's own HAL collection.
+`venue` is taken from whichever of `journalTitle_s` / `conferenceTitle_s` / `proceedingsTitle_s` is present. `origin` is always set to `'edt'` — HAL publications are treated the same as hand-written EDT publications, since they come from the lab's own HAL collection.
+
+`title` is HTML-entity-decoded (`decodeHtmlEntities()` in `publications-loader.ts`) — HAL's `title_s` comes back HTML-escaped (e.g. `V&amp;V` for `V&V`), and Astro already escapes text content on render, so decoding first avoids double-escaping (`V&amp;amp;V`) on the page.
+
+### `tags`
+
+`tags` is the union of three sources, all handled in `toPublication()`:
+
+- `keyword_s` — the author-entered HAL keywords, verbatim.
+- `collaboration_s` — the HAL "collaboration or project" field, mapped to the matching PC code via `PROJECT_TAG_MAP` in `publications-loader.ts` (e.g. `TWINOPS` → `PC3`, `GENUINE` → `PC5` — see `src/content/menu/{en,fr}.json` for the full "PC&lt;n&gt;: &lt;acronym&gt;" list), so it plugs into the existing PC1-PC5 project filter (`src/utils/filter-configs.ts`) the same as a hand-written publication's project tag. HAL allows several values per doc; each becomes its own tag. A `collaboration_s` value with no matching PC code is kept as-is.
+- A tag derived from `docSubType_s` (see below), only for `REPORT`-type docs.
+
+### Report subtype → tag mapping
+
+HAL's `docType_s: REPORT` is displayed on this site as **`publications.type.delivrable` = "Deliverable" / "Livrable"** (see `src/i18n/ui.ts`) regardless of subtype — the finer HAL subtype (`docSubType_s`) is preserved as a tag instead, via `REPORT_SUBTYPE_TAG_MAP` in `publications-loader.ts`:
+
+| HAL `docSubType_s`     | HAL meaning (EN)           | Tag added           |
+| ---------------------- | -------------------------- | ------------------- |
+| `RESREPORT`            | Research Report            | `research-report`   |
+| `TECHREPORT`           | Technical Report           | `technical-report`  |
+| `FUNDREPORT`           | Contract/Project Report    | `deliverable`       |
+| `EXPERTREPORT`         | Technical Expertise Report | `expert-report`     |
+| `DMP`                  | Data Management Plan       | `dmp`               |
+| `RESPROT`              | Research Protocol          | `research-protocol` |
+| anything else / absent | —                          | no tag added        |
+
+Each tag has a matching `badge.<tag>` i18n key in `src/i18n/ui.ts` (both `en` and `fr`) so it renders with a proper label via `Badge.astro` / `getBadge()` instead of the raw slug.
 
 ---
 
@@ -97,7 +123,7 @@ Fields requested (`fl=`): `docid`, `title_s`, `authFullName_s`, `producedDateY_i
 # Fetch a fresh export the same way the workflow does
 wget \
   --output-document=src/content/publications/hal-publications.json \
-  "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,keyword_s"
+  "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,docSubType_s,keyword_s,collaboration_s"
 
 npm run dev      # or: npm run build && npm run preview
 open http://localhost:4321/en/publications

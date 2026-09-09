@@ -194,7 +194,7 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Authors", name: "authors", widget: "list", required: true, hint: "List of author names" }
-      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "report", "white-paper", "preprint", "thesis", "workshop-paper", "slidedeck"], required: true }
+      - { label: "Type", name: "type", widget: "select", options: ["journal", "conference", "book", "delivrable", "white-paper", "preprint", "thesis", "workshop-paper", "slidedeck"], required: true }
       - { label: "Year", name: "year", widget: "number", required: true, value_type: "int", min: 1900, max: 2100 }
       - { label: "Venue", name: "venue", widget: "string", required: false, hint: "Journal name, conference name, etc." }
       - { label: "DOI", name: "doi", widget: "string", required: false, hint: "Digital Object Identifier" }

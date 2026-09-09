@@ -32,7 +32,7 @@ function toBibTeXType(type?: string): string {
         case 'conference':
         case 'workshop-paper': return 'inproceedings';
         case 'book': return 'book';
-        case 'report':
+        case 'delivrable':
         case 'white-paper': return 'techreport';
         case 'thesis': return 'phdthesis';
         case 'preprint': return 'misc';
