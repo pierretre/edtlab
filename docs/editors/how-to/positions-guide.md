@@ -4,7 +4,7 @@ This guide provides step-by-step instructions for creating, updating, and managi
 
 ## Quick Start Checklist
 
-- [ ] Choose appropriate position type (postdoc, phd, engineer, intern)
+- [ ] Choose appropriate position type (`PostDoc`, `PhD`, `Engineer`, `Intern`, or `Others`)
 - [ ] Create both English and French versions
 - [ ] Use consistent naming convention
 - [ ] Fill all required frontmatter fields
@@ -57,7 +57,7 @@ Copy this template and customize:
 ```yaml
 ---
 title: "Position Title"
-type: "postdoc" # postdoc | phd | engineer | intern
+type: "PostDoc" # PostDoc | PhD | Engineer | Intern | Others
 pc: "PC1" # Optional: PC1-PC5. Makes this position appear on that focused project's page.
 location: "City, Country"
 expectedStartDate: "Spring 2025" # Flexible format
@@ -135,7 +135,7 @@ Brief description of the associated focused project (if applicable) and how this
 
 #### `type`
 
-- **Options**: `postdoc`, `phd`, `engineer`, `intern`, `others`
+- **Options**: `PostDoc`, `PhD`, `Engineer`, `Intern`, `Others` (case-sensitive, exactly as written)
 - **Purpose**: Categorization and filtering
 - **Guidelines**: Choose the option that best matches the position level
 

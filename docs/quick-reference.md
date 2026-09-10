@@ -24,8 +24,9 @@ template: "new" # optional
 ---
 title: "Publication Title"
 authors: ["Author 1", "Author 2"]
-type: "journal" # journal|conference|book|report
+type: "journal" # journal|conference|book|report|white-paper|preprint|thesis|workshop-paper|slidedeck
 year: 2024
+origin: "edt" # optional, "edt"|"external" — defaults to "external"
 venue: "Journal Name" # optional
 doi: "10.1000/182" # optional
 url: "https://..." # optional
@@ -38,11 +39,12 @@ url: "https://..." # optional
 ---
 title: "Event Title"
 date: 2024-06-15
-newsType: "event" 
-location: "City, Country" # optional
-description: "Brief description"
-url: "https://..." # optional
 lang: "en" # or "fr"
+photo: /media/uploads/event-photo.jpg # required
+description: "Brief description"
+newsType: "event" # event | press-release
+location: "City, Country" # optional
+url: "https://..." # optional
 ---
 ```
 
@@ -51,7 +53,7 @@ lang: "en" # or "fr"
 ```yaml
 ---
 title: "Position Title"
-type: "postdoc" # PostDoc|PhD|Engineer|Intern|Others
+type: "PostDoc" # PostDoc|PhD|Engineer|Intern|Others
 pc: "PC1" # PC1|PC2|PC3|PC4|PC5, optional — makes it appear on that project's page
 location: "City, Country"
 filled: false
@@ -78,34 +80,26 @@ lang: "en" # or "fr"
 
 ### OptimizedFigure
 
+`src` must start with `/media/uploads/` (a file already in `public/media/uploads/`) — anything else renders no image.
+
 ```mdx
 <OptimizedFigure 
-  src="image.jpg"
+  src="/media/uploads/INRIA_EDT_PCs_ATs.png"
   alt="Descriptive alt text"
   caption="Optional caption"
 />
 ```
 
-### EventList
+### EventTimeline
 
 ```mdx
-<EventList 
-  limit={5}
-  showType={true}
-  lang="en"
-  filterType="conference"
-/>
+<EventTimeline lang="en" />
 ```
 
 ### PublicationList
 
 ```mdx
-<PublicationList 
-  limit={10}
-  showFilters={true}
-  defaultType="all"
-  defaultYear="all"
-/>
+<PublicationList lang="en" origin="edt" />
 ```
 
 ### PositionList
@@ -213,18 +207,19 @@ npm run astro check
 
 ### Required Fields by Content Type
 
-**Pages**: `title`, `href`, `lang`  
-**Publications**: `title`, `authors`, `type`, `year`  
-**Events**: `title`, `date`, `type`, `description`, `lang`  
-**Job Offers**: `title`, `project`, `type`, `location`, `deadline`, `publishedDate`, `description`, `requirements`, `lang`  
-**Press Releases**: `title`, `date`, `type`, `description`, `lang`
+(per `src/content.config.ts` — a field is required unless marked `.optional()` there)
+
+**Pages**: `title` (`href`/`lang`/`description` are optional)
+**Publications**: `title`, `authors`, `type`, `year`
+**News (events & press releases)**: `title`, `date`, `lang`, `photo`, `description`, `newsType`
+**Positions**: `title`, `type`, `location`, `description` (`filled` defaults to `false`)
 
 ### Enum Values
 
-**Publication Types**: `journal`, `conference`, `book`, `report`  
-**Event Types**: `conference`, `workshop`, `seminar`  
-**Job Types**: `postdoc`, `phd`, `engineer`, `intern`  
-**Projects**: `PC1`, `PC2`, `PC3`, `PC4`, `PC5`, `General`  
+**Publication Types**: `journal`, `conference`, `book`, `report`, `white-paper`, `preprint`, `thesis`, `workshop-paper`, `slidedeck`
+**News Types** (`newsType`): `event`, `press-release`
+**Position Types**: `PostDoc`, `PhD`, `Engineer`, `Intern`, `Others`
+**Projects** (`pc`): `PC1`, `PC2`, `PC3`, `PC4`, `PC5` (omit for general/cross-project)
 **Languages**: `en`, `fr`
 
 ## Useful Links

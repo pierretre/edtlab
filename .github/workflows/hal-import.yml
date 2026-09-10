@@ -2,7 +2,7 @@ name: Import HAL publications
 
 on:
   schedule:
-    - cron: "0 4 * * 1"
+    - cron: "0 3 * * *"
 
   workflow_dispatch:
 
@@ -30,7 +30,7 @@ jobs:
         run: |
           wget \
             --output-document=src/content/publications/hal-publications.json \
-            "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,keyword_s"
+            "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,docSubType_s,keyword_s,collaboration_s"
 
           echo "Downloaded file:"
           file src/content/publications/hal-publications.json

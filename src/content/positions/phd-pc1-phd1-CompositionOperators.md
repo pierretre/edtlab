@@ -1,24 +1,35 @@
 ---
-title: "Compositional Hybrid Digital Twins for Fermented Microbial Ecosystems"
-type: "PhD"
+title: Compositional Hybrid Digital Twins Models
+type: PhD
 pc: PC1
-location: "France"
-expectedStartDate: "October 2026"
+location: France
+description: PhD position on compositional hybrid modeling and digital twin frameworks
 filled: false
+lang: en
+expectedStartDate: October 2026
 publishedDate: 2026-03-15
-description: "PhD position on compositional hybrid modeling and digital twin frameworks for microbial fermentation ecosystems"
-requirements: ["Master's degree in Computer Science, Computational Biology, Applied Mathematics, or related field", "Background in modeling complex systems or machine learning", "Programming skills", "Interest in digital twins and biological systems", "Fluency in English"]
-contacts: ["lorenzo.sala@inrae.fr", "beatrice.laroche@inrae.fr", "julien.deantoni@inria.fr"]
-lang: "en"
+requirements:
+  - Master's degree in Computer Science, Computational Biology, Applied
+    Mathematics, or related field
+  - Background in modeling complex systems or machine learning
+  - Programming skills
+  - Interest in digital twins and biological systems
+  - Fluency in English
+contacts:
+  - lorenzo.sala@inrae.fr
+  - beatrice.laroche@inrae.fr
+  - julien.deantoni@inria.fr
+researcher:
+  name: Lorenzo Sala
 ---
 
 ## Position Overview
 
-We are seeking a motivated PhD candidate to contribute to the **Engineering Digital Twins (EDT)** program within **Catalyst: the Reliable Hybrid Model Forge**. The research focuses on developing **hybrid digital twin frameworks for microbial fermentation ecosystems**, with an emphasis on **compositional hybrid modeling operators and reusable hybridization patterns**.
+We are seeking a motivated PhD candidate to contribute to the **Engineering Digital Twins (EDT)** program within **Catalyst: the Reliable Hybrid Model Forge**. The research focuses on developing **hybrid digital twin frameworks**, with an emphasis on **compositional hybrid modeling operators and reusable hybridization patterns**.
 
 Fermented food systems are complex microbial ecosystems shaped by dynamic interactions between species and their environment. Predictive and controllable models of these systems are essential for advancing food innovation, safety, and functionality. However, these ecosystems involve highly nonlinear, evolving interactions that are difficult to capture using a single modeling paradigm.
 
-This project proposes the development of a **digital twin for fermented microbial communities**, grounded in mechanistic ecological models and enriched with machine learning components. The central goal is to design **composable hybrid modeling operators** that enable systematic integration of mechanistic and data-driven models in a reusable and scalable digital twin architecture.
+This project proposes to experiment through the development of a **digital twin for fermented microbial communities**, grounded in mechanistic ecological models and enriched with machine learning components. The central goal is to design **composable hybrid modeling operators** that enable systematic integration of mechanistic and data-driven models in a reusable and scalable digital twin architecture.
 
 ## Research Focus
 

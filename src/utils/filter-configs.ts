@@ -208,7 +208,7 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
                 { value: 'journal', label: 'Journal Article', translationKey: 'publications.type.journal' },
                 { value: 'conference', label: 'Conference Paper', translationKey: 'publications.type.conference' },
                 { value: 'book', label: 'Book', translationKey: 'publications.type.book' },
-                { value: 'report', label: 'Technical Report', translationKey: 'publications.type.report' },
+                { value: 'delivrable', label: 'Deliverable', translationKey: 'publications.type.delivrable' },
                 { value: 'white-paper', label: 'White Paper', translationKey: 'publications.type.white-paper' },
                 { value: 'preprint', label: 'Preprint', translationKey: 'publications.type.preprint' },
                 { value: 'thesis', label: 'Thesis', translationKey: 'publications.type.thesis' },

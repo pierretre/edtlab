@@ -193,16 +193,17 @@ edt-program-structure.png
 
 ```mdx
 import OptimizedFigure from '@components/OptimizedFigure.astro';
-import diagramImage from '/src/assets/images/edt-architecture.png';
 
 <OptimizedFigure
-  src={diagramImage}
+  src="/media/uploads/INRIA_EDT_PCs_ATs.png"
   alt="EDT program architecture showing five focused projects"
   caption="Figure 1: EDT Research Program Architecture"
   maxWidth={900}
   loading="eager"
 />
 ```
+
+`src` must start with `/media/uploads/` — the file needs to already be uploaded there. Any other path (including an imported `src/assets/images/...` file) silently renders no image.
 
 ### News Content
 
@@ -211,52 +212,27 @@ import diagramImage from '/src/assets/images/edt-architecture.png';
 ```yaml
 ---
 title: "Event Title"
-photo: "event-models2024-conference.jpg"  # Filename only
+photo: /media/uploads/event-models2024-conference.jpg
 ---
 ```
 
 #### Image Requirements
 
-- **Required**: All news items must have a photo
-- **Location**: Store in `src/assets/images/uploads/`
+- **Required**: `photo` is a required field on every news entry (`src/content.config.ts`)
+- **Location**: upload to `public/media/uploads/`, then reference it as `/media/uploads/<filename>` — real content also uses full external URLs here occasionally
 - **Usage**: Automatically displayed in listings and social sharing
-- **Alt text**: Generated from title and description
 
-### Job Offers
+### Positions
 
-#### Optional Images
-
-```yaml
----
-title: "PhD Position"
----
-```
-
-#### Usage Guidelines
-
-- **Not required**: Job offers don't require images
-- **When to use**: For special positions or to highlight research environment
-- **Location**: Store in `src/assets/images/general/`
-- **Content**: Research facilities, team photos, or relevant diagrams
+The `positions` schema (`src/content.config.ts`) has no image field — there is no way to attach a photo to a position entry.
 
 ### Publications
 
-#### Cover Images
-
-```yaml
----
-title: "Publication Title"
-coverImage: "2024-combemale-digital-twins.jpg"  # Optional
----
-```
-
-#### Figure Integration
+The `publications` schema has no `coverImage` (or any image) field either. Figures referenced from publication-related content still go through `OptimizedFigure` with a `/media/uploads/...` path, same as any other page:
 
 ```mdx
-import publicationFigure from '/src/assets/images/publications/methodology-diagram.png';
-
 <OptimizedFigure
-  src={publicationFigure}
+  src="/media/uploads/methodology-diagram.png"
   alt="Research methodology flowchart"
   caption="Figure 2: Proposed methodology for digital twin validation"
 />
@@ -316,7 +292,7 @@ sharp -i input.jpg -o output.jpg --jpeg-quality 85 --resize 1200
 
 ```mdx
 <OptimizedFigure
-  src={image}
+  src="/media/uploads/INRIA_EDT_PCs_ATs.png"
   alt="EDT program architecture diagram showing five interconnected focused projects: PC1 Model Hybridization, PC2 Architecture, PC3 Development Lifecycle, PC4 Digital Coupling, and PC5 Human Interaction"
   caption="Program structure overview"
 />
@@ -356,20 +332,21 @@ Use EDT brand colors consistently:
 
 ```mdx
 <OptimizedFigure
-  src={heroImage}
+  src="/media/uploads/hero-image.jpg"
   alt="Description"
-  loading="eager"  // Load immediately
-  priority={true}  // High priority
+  loading="eager"  // Load immediately (default)
 />
 ```
+
+There is no `priority` prop.
 
 #### Non-Critical Images
 
 ```mdx
 <OptimizedFigure
-  src={contentImage}
+  src="/media/uploads/content-image.jpg"
   alt="Description"
-  loading="lazy"   // Default: load when needed
+  loading="lazy"
 />
 ```
 

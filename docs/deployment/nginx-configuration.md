@@ -106,16 +106,18 @@ server {
 services:
   web:
     ports:
-      - "0.0.0.0:4001:80"  # Astro website
+      - "127.0.0.1:4001:4321"  # Astro website (Node SSR server, not port 80)
 
   matomo:
     ports:
-      - "0.0.0.0:4002:80"  # Matomo
-  
+      - "127.0.0.1:4002:80"  # Matomo
+
   matomo-db:
     ports:
-      - "0.0.0.0:4003:3306"  # MySQL
+      - "127.0.0.1:4003:3306"  # MariaDB
 ```
+
+All three are bound to `127.0.0.1` (loopback only, not `0.0.0.0`) — they are reachable only from the host itself, which is what makes routing everything through this Nginx layer meaningful. `web` maps to container port **4321**, not 80 (`Dockerfile.prod`: `EXPOSE 4321`).
 
 ---
 
@@ -123,15 +125,15 @@ services:
 
 ### Production (External Access)
 
-```
+```text
 User Browser
   ↓ https://edtlab.fr/api (port 443)
 Root Nginx (Stream)
   ↓ Routes to 10.0.0.2:4443 based on SNI
 Site Nginx
-  ↓ Terminates SSL
-Docker Container (API)
-  ↓ Node.js processes request on port 8080
+  ↓ Terminates SSL, proxies to 127.0.0.1:4001
+Docker Container (web)
+  ↓ Node.js server (@astrojs/node) listens on port 4321
 ```
 
 ## Testing the Configuration

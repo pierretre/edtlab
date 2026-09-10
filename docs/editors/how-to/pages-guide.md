@@ -176,7 +176,7 @@ toc: true
 ## Overview with Visual
 
 <OptimizedFigure
-  src={imageFile}
+  src="/media/uploads/example-image.jpg"
   alt="Descriptive alt text"
   caption="Figure caption explaining the image"
   maxWidth={800}
@@ -184,9 +184,7 @@ toc: true
 
 ## Highlighted Information
 
-<OutlinedCard title="Important Notice">
-This is highlighted information that stands out from regular content.
-</OutlinedCard>
+<OutlinedCard label="!" title="Important Notice" description="This is highlighted information that stands out from regular content." />
 
 ## Regular Content
 
@@ -289,10 +287,9 @@ For displaying images with responsive sizing and accessibility:
 
 ```mdx
 import OptimizedFigure from '@components/OptimizedFigure.astro';
-import imageFile from '/src/assets/images/diagram.png';
 
 <OptimizedFigure
-  src={imageFile}
+  src="/media/uploads/INRIA_EDT_PCs_ATs.png"
   alt="EDT program architecture diagram showing five focused projects"
   caption="Figure 1: EDT Research Program Architecture Overview"
   maxWidth={900}
@@ -302,7 +299,7 @@ import imageFile from '/src/assets/images/diagram.png';
 
 **Props:**
 
-- `src` (required): Image file import or path
+- `src` (required): must start with `/media/uploads/` — the filename of a file already uploaded to `public/media/uploads/`. Any other value (bare filename, `src/assets/images/...` path, imported image) silently renders no image.
 - `alt` (required): Descriptive alt text for accessibility
 - `caption` (optional): Caption displayed below image
 - `maxWidth` (optional): Maximum width in pixels
@@ -310,20 +307,23 @@ import imageFile from '/src/assets/images/diagram.png';
 
 #### OutlinedCard
 
-For highlighting important information:
+For highlighting important information. It does not use a slot — all three props are required and content goes through `description`, not children:
 
 ```mdx
 import OutlinedCard from '@components/OutlinedCard.astro';
 
-<OutlinedCard title="Important Update">
-The EDT program has received additional funding for 2025 research activities.
-</OutlinedCard>
+<OutlinedCard
+  label="!"
+  title="Important Update"
+  description="The EDT program has received additional funding for 2025 research activities."
+/>
 ```
 
-**Props:**
+**Props (all required):**
 
-- `title` (optional): Card header title
-- Content goes between opening and closing tags
+- `label`: short text/icon shown in the badge circle (e.g. a single character)
+- `title`: card header
+- `description`: body text
 
 #### ColorTable
 
@@ -653,7 +653,7 @@ import OptimizedFigure from '@components/OptimizedFigure.astro';
 ## Overview
 
 <OptimizedFigure
-  src="/src/assets/images/example.jpg"
+  src="/media/uploads/example-image.jpg"
   alt="Example image"
   caption="Example caption"
 />
@@ -672,7 +672,7 @@ Your content here...
 
 ### Internal Resources
 
-- Content Schema: `src/content/config.ts`
+- Content Schema: `src/content.config.ts`
 - Available Components: `src/components/`
 - Image Assets: `src/assets/images/`
 - Page Examples: `src/content/pages/`

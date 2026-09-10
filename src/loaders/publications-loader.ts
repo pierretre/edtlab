@@ -18,7 +18,9 @@ interface HalDoc {
     doiId_s?: string;
     uri_s?: string;
     docType_s?: string;
+    docSubType_s?: string;
     keyword_s?: string[];
+    collaboration_s?: string[];
 }
 
 // Raw response shape of https://api.hal.science/search/EDT/?...&wt=json,
@@ -35,10 +37,48 @@ const DOC_TYPE_MAP: Record<string, Publication['type']> = {
     COMM: 'conference',
     OUV: 'book',
     COUV: 'book',
-    REPORT: 'report',
-    RAPPORT: 'report',
+    REPORT: 'delivrable',
+    RAPPORT: 'delivrable',
     THESE: 'thesis',
 };
+
+const REPORT_SUBTYPE_TAG_MAP: Record<string, string> = {
+    RESREPORT: 'research-report',
+    TECHREPORT: 'technical-report',
+    FUNDREPORT: 'deliverable',
+    EXPERTREPORT: 'expert-report',
+    DMP: 'dmp',
+    RESPROT: 'research-protocol',
+};
+
+const PROJECT_TAG_MAP: Record<string, string> = {
+    CATALYST: 'PC1',
+    DTCOMPOSE: 'PC2',
+    TWINOPS: 'PC3',
+    SYNCHRONIC: 'PC4',
+    GENUINE: 'PC5',
+};
+
+const HTML_NAMED_ENTITIES: Record<string, string> = {
+    amp: '&',
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    nbsp: ' ',
+};
+
+function decodeHtmlEntities(text: string): string {
+    return text.replace(/&(#x?[0-9a-fA-F]+|[a-zA-Z]+);/g, (match, entity: string) => {
+        if (entity[0] === '#') {
+            const codePoint = entity[1] === 'x' || entity[1] === 'X'
+                ? parseInt(entity.slice(2), 16)
+                : parseInt(entity.slice(1), 10);
+            return Number.isNaN(codePoint) ? match : String.fromCodePoint(codePoint);
+        }
+        return HTML_NAMED_ENTITIES[entity] ?? match;
+    });
+}
 
 async function readHalExport(context: LoaderContext): Promise<HalDoc[]> {
     const fileUrl = new URL(HAL_EXPORT_PATH, context.config.root);
@@ -58,17 +98,29 @@ async function readHalExport(context: LoaderContext): Promise<HalDoc[]> {
     return data.response.docs;
 }
 
-const toPublication = (doc: HalDoc): Record<string, unknown> => ({
-    title: doc.title_s?.[0] || '(untitled)',
-    authors: doc.authFullName_s || [],
-    year: doc.producedDateY_i || new Date().getFullYear(),
-    venue: doc.journalTitle_s || doc.conferenceTitle_s || doc.proceedingsTitle_s,
-    doi: doc.doiId_s,
-    url: doc.uri_s,
-    type: (doc.docType_s && DOC_TYPE_MAP[doc.docType_s]) || 'preprint',
-    tags: doc.keyword_s || [],
-    origin: 'edt',
-});
+const toPublication = (doc: HalDoc): Record<string, unknown> => {
+    const reportSubtypeTag = doc.docSubType_s && REPORT_SUBTYPE_TAG_MAP[doc.docSubType_s];
+    const projectTags = (doc.collaboration_s || []).map(
+        (project) => PROJECT_TAG_MAP[project.toUpperCase()] || project,
+    );
+    const tags = [
+        ...(doc.keyword_s || []),
+        ...projectTags,
+        ...(reportSubtypeTag ? [reportSubtypeTag] : []),
+    ];
+
+    return {
+        title: (doc.title_s?.[0] && decodeHtmlEntities(doc.title_s[0])) || '(untitled)',
+        authors: doc.authFullName_s || [],
+        year: doc.producedDateY_i || new Date().getFullYear(),
+        venue: doc.journalTitle_s || doc.conferenceTitle_s || doc.proceedingsTitle_s,
+        doi: doc.doiId_s,
+        url: doc.uri_s,
+        type: (doc.docType_s && DOC_TYPE_MAP[doc.docType_s]) || 'preprint',
+        tags,
+        origin: 'edt',
+    };
+};
 
 export function publicationsLoader(): Loader {
     const staticPublicationsLoader = glob({
@@ -79,6 +131,9 @@ export function publicationsLoader(): Loader {
     return {
         name: 'publications-loader',
         load: async (context) => {
+            // clear collection
+            context.store.clear();
+
             // Populates the store with the hand-written MDX/MD publications.
             await staticPublicationsLoader.load(context);
 

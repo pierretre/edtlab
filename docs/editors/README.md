@@ -7,11 +7,12 @@ This directory contains comprehensive documentation for creating and managing co
 - **⚡ [Workflow Guide](workflow-guide.md)** - Simple process from creation to publication
 - **📄 [Pages Guide](how-to/pages-guide.md)** - Complete page creation workflow
 - **📋 [Positions Guide](how-to/positions-guide.md)** - Complete position posting workflow (open and ongoing/occupied)
+- **🔀 [Positions PR Workflow](how-to/positions-pr-workflow.md)** - Mark a position filled, or update your own record, via pull request
 - **📰 [News Guide](how-to/news-guide.md)** - Events and press releases
 - **📚 [Publications Guide](how-to/publications-guide.md)** - Research publication management
 - **🖼️ [Image Management](guidelines/image-management.md)** - Image storage, optimization, and usage
 - **✍️ [Style Guide](guidelines/content-style-guide.md)** - Writing standards
-- **⚙️ [Technical Reference](guidelines/frontmatter-reference.md)** - Frontmatter documentation
+- **⚙️ [Content Schema](../../src/content.config.ts)** - Authoritative frontmatter/schema reference (no separate frontmatter-reference doc exists)
 
 ## Quick Start
 
@@ -21,27 +22,33 @@ This directory contains comprehensive documentation for creating and managing co
 
 ## Documentation Structure
 
-```
+```text
 docs/editors/
 ├── README.md                    # This file - documentation hub
+├── workflow-guide.md            # Branch/PR/release process
+├── quick-reference.md           # Cheat sheet
 ├── how-to/                      # Step-by-step content creation guides
+│   ├── pages-guide.md          # Page creation guide
 │   ├── positions-guide.md      # Complete position creation guide
+│   ├── positions-pr-workflow.md # Mark filled / update own record via PR
 │   ├── news-guide.md           # Events and press releases guide
 │   └── publications-guide.md   # Research publications guide
 ├── templates/                   # Content templates for different types
 │   ├── page-basic.md           # Basic page template
 │   ├── page-advanced.mdx       # Advanced page with components
 │   ├── publication.md          # Publication entry template
-│   ├── event.md               # Event entry template
-│   ├── press-release.md       # Press release template
-│   └── position.md             # Position template
-└── guidelines/                 # Technical reference and style guides
-    ├── content-style-guide.md # Writing and formatting standards
-    ├── frontmatter-reference.md # Complete frontmatter documentation
-    ├── component-usage.md     # MDX component usage guide
-    ├── image-management.md    # Image storage, optimization, and usage
-    └── accessibility-guide.md # Accessibility requirements
+│   ├── event.md                # Event entry template
+│   ├── press-release.md        # Press release template
+│   ├── position.md             # Position template
+│   └── use-case.md             # Use case entry template
+└── guidelines/                  # Technical reference and style guides
+    ├── content-style-guide.md  # Writing and formatting standards
+    ├── component-usage.md      # MDX component usage guide
+    ├── image-management.md     # Image storage, optimization, and usage
+    └── accessibility-guide.md  # Accessibility requirements
 ```
+
+Frontmatter/schema reference: `src/content.config.ts` (no separate `frontmatter-reference.md` exists).
 
 ## Content Creation Guides
 
@@ -67,6 +74,7 @@ Complete step-by-step instructions for creating and managing positions, from ope
 - Writing effective position descriptions
 - Bilingual content management
 - Marking a position as filled / ongoing research, status updates and promotion
+- For the short, PR-focused version of "mark as filled" / "update my own record", see the [Positions PR Workflow](how-to/positions-pr-workflow.md)
 
 ### 📰 [News Guide](how-to/news-guide.md)
 
@@ -101,6 +109,9 @@ Dynamic content collections that power the website's interactive features:
 - **Publications** (`publications/`): Research papers, articles, and reports with filtering and search
 - **News** (`news/`): Events and press releases with chronological organization
 - **Positions** (`positions/`): Open and occupied/ongoing positions, with status tracking and focused-project association via `pc`
+- **Use Cases** (`use-cases/`)
+- **Calendar** (`calendar/`): Program milestones shown alongside events
+- **Newsletter** (`newsletter/`)
 - **Menu** (`menu/`): Navigation structure data for site organization
 
 ## Key Requirements
@@ -116,7 +127,7 @@ All content must be available in both English and French:
 
 ### Content Validation
 
-All content is validated against schemas in `src/content/config.ts`:
+All content is validated against schemas in `src/content.config.ts`:
 
 - Required fields must be present and correctly formatted
 - Enum values must match specified options
@@ -140,7 +151,7 @@ All content is validated against schemas in `src/content/config.ts`:
 
 ## Technical Resources
 
-- **Schema Reference**: `src/content/config.ts` - Authoritative source for content structure
+- **Schema Reference**: `src/content.config.ts` - Authoritative source for content structure
 - **Validation**: Automatic validation during build process
 - **Templates**: Pre-configured starting points for each content type
 - **Guidelines**: Detailed technical and style requirements

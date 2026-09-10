@@ -1,14 +1,12 @@
 ---
 title: "Press Release Title"
 date: 2024-02-10  # Publication date in YYYY-MM-DD format
-photo: "press-photo.jpg"  # REQUIRED: filename of the press release hero image used in listings and social previews
-tags:
-  - "PC1"  # Optional: associate press release with a focused project (PC1..PC5 or General)
-description: "Brief summary of the press release for listings and social media"
-url: "https://external-coverage.com"  # Optional: Link to external press coverage
 lang: "en"  # Language: "en" or "fr"
-tags: ["announcement"]  # Optional: tags for filtering and categorization
-template: "default"  # Optional: rendering template key
+photo: /media/uploads/press-photo.jpg  # REQUIRED: path to the uploaded hero image, used in listings and social previews
+description: "Brief summary of the press release for listings and social media"
+newsType: "press-release"  # REQUIRED — always "press-release" for this template
+url: "https://external-coverage.com"  # Optional: Link to external press coverage
+tags: ["announcement", "PC1"]  # Optional: tags for filtering and categorization; project codes (PC1..PC5) go here too
 ---
 
 ## Press Release - [Date]
@@ -93,7 +91,7 @@ Email: [contact@organization.edu]
 **Template Notes**:
 
 - **Date**: Use the actual publication date of the press release
-- **Type**: Choose the most appropriate category for filtering and organization
+- **`newsType`**: Required — always `"press-release"` for this template
 - **Description**: Write a compelling summary under 160 characters for social media
 - **URL**: Include if there's external press coverage or official announcement page
 
@@ -115,8 +113,8 @@ Email: [contact@organization.edu]
 
 **File Naming**:
 
-- English: `press-title-year-en.md` in `src/content/press-releases/`
-- French: `press-title-year-fr.md` in `src/content/press-releases/`
+- English: `press-title-year-en.md` in `src/content/news/`
+- French: `press-title-year-fr.md` in `src/content/news/`
 
 **SEO Considerations**:
 

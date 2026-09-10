@@ -4,24 +4,21 @@
 
 ### File Locations
 
-```
+```text
 src/content/
 ├── positions/      # Open and occupied/ongoing positions
-├── news/           # Events and press releases  
+├── news/           # Events and press releases
 ├── publications/   # Research papers and articles
+├── use-cases/
+├── calendar/       # Program milestones
+├── newsletter/
 ├── pages/          # Static content pages
 └── menu/           # Navigation data
 
-src/assets/images/  # Optimized images (recommended)
-├── news-covers/    # News and event photos
-├── team/           # Team member photos
-├── partners/       # Partner logos
-├── diagrams/       # Technical diagrams
-└── general/        # General purpose images
+src/assets/images/  # Flat — brand/logo assets only, no subfolders
 
-public/             # Direct access images
-├── favicon.png     # Site favicon
-└── *.svg          # Government logos
+public/media/uploads/  # Where editor-uploaded images actually go —
+                        # reference them from content as /media/uploads/<filename>
 ```
 
 ### Naming Conventions
@@ -167,12 +164,11 @@ tags: ["PC1", "keyword"]
 **Usage in Content:**
 
 ```mdx
-# MDX Pages (advanced)
+# MDX Pages (advanced) — src must start with /media/uploads/
 import OptimizedFigure from '@components/OptimizedFigure.astro';
-import image from '/src/assets/images/diagram.png';
 
 <OptimizedFigure
-  src={image}
+  src="/media/uploads/photo.jpg"
   alt="Descriptive alt text"
   caption="Figure caption"
 />
@@ -259,5 +255,4 @@ npm run build
 - [Publications Guide](how-to/publications-guide.md)
 - [Image Management](guidelines/image-management.md)
 - [Style Guide](guidelines/content-style-guide.md)
-- [Frontmatter Reference](guidelines/frontmatter-reference.md)
-- [Content Schema](../src/content/config.ts)
+- [Content Schema](../../src/content.config.ts)

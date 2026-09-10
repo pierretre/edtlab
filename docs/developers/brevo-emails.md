@@ -136,7 +136,7 @@ The API uses the official Brevo Node.js SDK:
 ```json
 {
   "dependencies": {
-    "@getbrevo/brevo": "^2.2.0"
+    "@getbrevo/brevo": "^3.0.1"
   }
 }
 ```
@@ -532,4 +532,3 @@ Email sending is synchronous and blocks the request. For high-volume scenarios, 
 - [Brevo API Documentation](https://developers.brevo.com/)
 - [Astro SSR Documentation](https://docs.astro.build/en/guides/server-side-rendering/)
 - [Astro API Routes](https://docs.astro.build/en/core-concepts/endpoints/)
-- [Migration Guide](../../MIGRATION-TO-ASTRO-API.md)

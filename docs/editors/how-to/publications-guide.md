@@ -15,27 +15,17 @@ This guide provides step-by-step instructions for creating, updating, and managi
 
 ## Publication Types Overview
 
-The publications system supports four main types:
+The `type` field accepts exactly nine values (`src/content.config.ts`): `journal`, `conference`, `book`, `report`, `white-paper`, `preprint`, `thesis`, `workshop-paper`, `slidedeck`.
 
-### Journal Articles
-- Peer-reviewed journal publications
-- Research articles, reviews, surveys
-- High-impact research contributions
-
-### Conference Papers
-- Conference proceedings and presentations
-- Workshop papers and extended abstracts
-- Peer-reviewed conference contributions
-
-### Books and Book Chapters
-- Monographs and edited volumes
-- Book chapters and contributions
-- Technical reports with ISBN
-
-### Reports
-- Technical reports and white papers
-- Government and institutional reports
-- Working papers and preprints
+- **journal** — peer-reviewed journal articles
+- **conference** — conference proceedings papers
+- **workshop-paper** — workshop papers, distinct from full conference papers
+- **book** — monographs and edited volumes
+- **report** — technical/institutional reports
+- **white-paper**
+- **preprint**
+- **thesis**
+- **slidedeck**
 
 ## File Structure and Naming
 
@@ -43,19 +33,18 @@ The publications system supports four main types:
 All publications are stored in: `src/content/publications/`
 
 ### Naming Convention
-Use this pattern: `{year}-{first-author-lastname}-{short-title}.md`
+Use this pattern: `{first-author-lastname}-{year}-{short-title}.md` — author first, then year (every real file in `src/content/publications/` follows this order, e.g. `combemale-2024-...`, not `2024-combemale-...`).
 
-**Examples:**
+**Examples (real files in the repo):**
 ```
-2024-combemale-digital-twin-engineering.md
-2024-jezequel-modular-architecture.md
-2023-gerard-collaborative-development.md
-2024-duval-human-interaction-frameworks.md
+ahmad-2023-codesigned.md
+b-2006-robust.md
+guedon-2024-sugar.md
 ```
 
 **Guidelines:**
-- Use publication year
 - Use first author's last name (lowercase)
+- Then the publication year
 - Include 2-3 key words from title
 - Use hyphens, no spaces
 - Keep under 50 characters total
@@ -95,11 +84,12 @@ authors:
   - "First Author Name"
   - "Second Author Name"
   - "Third Author Name"
-type: "journal" # journal | conference | book | report
+type: "journal" # journal | conference | book | report | white-paper | preprint | thesis | workshop-paper | slidedeck
 year: 2024
 venue: "Journal Name or Conference Proceedings" # Optional
 doi: "10.1000/182" # Optional but recommended
 url: "https://journal.example.com/article/123" # Optional
+origin: "edt" # Optional, "edt" | "external" — defaults to "external" if omitted
 tags: # Optional: project association and keywords
   - "PC1"
   - "model-hybridization"
@@ -199,7 +189,7 @@ authors:
 ```
 
 #### `type`
-- **Options**: `journal`, `conference`, `book`, `report`
+- **Options**: `journal`, `conference`, `book`, `report`, `white-paper`, `preprint`, `thesis`, `workshop-paper`, `slidedeck`
 - **Purpose**: Publication categorization and filtering
 - **Guidelines**: Choose the most appropriate category
 
@@ -239,6 +229,12 @@ venue: "Springer Nature"
   - Use institutional repositories if open access
   - Ensure link is stable and permanent
   - Prefer HTTPS when available
+
+#### `origin`
+- **Options**: `edt` or `external`
+- **Default**: `external` if the field is omitted
+- **Purpose**: Powers the `origin` filter on the publications list (e.g. `<PublicationList origin="edt" />`)
+- **Note**: publications imported automatically from HAL (see [HAL Publications Sync](../../developers/hal-publications-sync.md)) are always tagged `edt`. For a hand-written entry, set `origin: "edt"` if it's an EDT-program output; leave it unset (or `external`) otherwise.
 
 #### `tags`
 - **Format**: Array of strings
@@ -520,8 +516,7 @@ Digital twin interoperability remains a significant challenge for large-scale de
 ### Internal Resources
 
 - [Content Style Guide](../guidelines/content-style-guide.md)
-- [Frontmatter Reference](../guidelines/frontmatter-reference.md)
-- [SEO Guidelines](../guidelines/seo-guide.md)
+- [Content Schema](../../../src/content.config.ts)
 - [Project Pages](/focused-projects)
 
 ### Citation Tools
