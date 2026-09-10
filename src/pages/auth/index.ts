@@ -10,7 +10,7 @@ export const GET: APIRoute = ({ redirect }) => {
         return new Response("OAuth configuration error", { status: 500 });
     }
 
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo,user`;
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo`;
 
     return redirect(authUrl, 302);
 };
