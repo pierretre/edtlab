@@ -14,7 +14,6 @@ requirements:
 contacts: []
 researcher:
   name: "-"
-  email: "-"
 supervisors: []
 researchStatus: ongoing
 ---
@@ -36,7 +35,7 @@ Key scientific challenges include:
 - Modeling organizational processes as Discrete Event Systems
 - Designing divergence metrics between simulated and observed behavior
 - Developing structured knowledge elicitation protocols with practitioners
-- Implementing efficient methods, leveraging AI techniques to integrate elicited rules into digital twins. 
+- Implementing efficient methods, leveraging AI techniques to integrate elicited rules into digital twins.
 - Validating the full methodology on live healthcare environments
 
 
@@ -63,6 +62,6 @@ Upon completion, you will be positioned as a recognized expert in a key domain f
 A candidate with a Master's degree in industrial engineering or computer science, with solid modeling skills and genuine curiosity for human-centered, real-world problems. Experience with simulation or process mining is a plus
 
 ## Contacts
-"olivier.cardin@ls2n.fr"
-"hind.el-haouzi@univ-lorraine.fr", 
-"abir.ismaili-alaoui@univ-lorraine.fr"
+"<olivier.cardin@ls2n.fr>"
+"<hind.el-haouzi@univ-lorraine.fr>",
+"<abir.ismaili-alaoui@univ-lorraine.fr>"

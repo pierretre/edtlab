@@ -13,7 +13,6 @@ requirements:
 contacts: []
 researcher:
   name: "-"
-  email: "-"
 researchStatus: ongoing
 ---
 ## Context
@@ -76,18 +75,18 @@ runtime verification and enforcement.
 # Required skills and profile
 
 **Required:**
- - MSc / Master 2 Recherche in Computer Science or a closely related field
- - Solid background in formal methods and verification
- - Programming proficiency
- - Good command of English as the working language
- - Strong communication skills, autonomy, attention to detail, and a collaborative mindset
+- MSc / Master 2 Recherche in Computer Science or a closely related field
+- Solid background in formal methods and verification
+- Programming proficiency
+- Good command of English as the working language
+- Strong communication skills, autonomy, attention to detail, and a collaborative mindset
 
 **Appreciated:**
 
- - Familiarity with probabilistic methods (e.g., probabilistic model checking, tools such as PRISM or Storm)
- - Knowledge of distributed systems and/or digital twins
- - Exposure to robotics, control, or cyber-physical systems
- 
+- Familiarity with probabilistic methods (e.g., probabilistic model checking, tools such as PRISM or Storm)
+- Knowledge of distributed systems and/or digital twins
+- Exposure to robotics, control, or cyber-physical systems
+
 
 # Start date
 
@@ -113,11 +112,11 @@ to grow professionally while enjoying a rich and balanced lifestyle.
 
 # Application content
 
- - Letter of application
- - Curriculum vitae
- - Academic transcripts
- - References or letters of recommendation, if any
- - Scientific or technical publications, if any
+- Letter of application
+- Curriculum vitae
+- Academic transcripts
+- References or letters of recommendation, if any
+- Scientific or technical publications, if any
 
 
 # Application submission
@@ -129,6 +128,6 @@ has already been selected.
 
 # Contacts
 
-Gwen Salaün: gwen.salaun@inria.fr
+Gwen Salaün: <gwen.salaun@inria.fr>
 
-Yliès Falcone: ylies.falcone@univ-grenoble-alpes.fr
+Yliès Falcone: <ylies.falcone@univ-grenoble-alpes.fr>

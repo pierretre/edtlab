@@ -5,6 +5,7 @@ backend:
   site_domain: edtlab.fr
   base_url: https://edtlab.fr
   auth_endpoint: auth
+  open_authoring: true
 
 # CMS uploads go to public/ for reliable preview and no build-time hashing
 media_folder: "public/media/uploads"
@@ -118,7 +119,7 @@ collections:
         hint: "Fill in once the position is filled, to switch this page to the ongoing-research view"
         fields:
           - { label: "Name", name: "name", widget: "string", required: true }
-          - { label: "Email", name: "email", widget: "string", required: false }
+          - { label: "Email", name: "email", widget: "email", required: false }
       - label: "Supervisors"
         name: "supervisors"
         widget: "list"
