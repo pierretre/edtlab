@@ -5,16 +5,6 @@
     "maxScore":1.0,
     "numFoundExact":true,
     "docs":[{
-      "docid":"5221809",
-      "title_s":["On the Challenges of Integrating Digital Twins"],
-      "keyword_s":["Composition","Integration","Digital twin"],
-      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
-      "authFullName_s":["Benoît Combemale","Jörg Kienzle","Gunter Mussbacher","Pascal Archambault","Jean-Michel Bruel","Loli Burgueño","Betty H C Cheng","Loek Cleophas","Gregor Engels","Damien Foures","Stefan Klikovits","Vinay Kulkarni","Judith Michael","Sébastien Mosser","Houari Sahraoui","Eugene Syriani","Andreas Wortmann"],
-      "uri_s":"https://inria.hal.science/hal-05221809v1",
-      "docType_s":"COMM",
-      "collaboration_s":["DTCOMPOSE"],
-      "producedDateY_i":2025
-    },{
       "docid":"5095351",
       "title_s":["Model‐Driven Engineering for Digital Twins: Opportunities and Challenges"],
       "journalTitle_s":"Systems Engineering",
@@ -44,6 +34,16 @@
       "docType_s":"COMM",
       "collaboration_s":["GENUINE"],
       "producedDateY_i":2026
+    },{
+      "docid":"5221809",
+      "title_s":["On the Challenges of Integrating Digital Twins"],
+      "keyword_s":["Composition","Integration","Digital twin"],
+      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
+      "authFullName_s":["Benoît Combemale","Jörg Kienzle","Gunter Mussbacher","Pascal Archambault","Jean-Michel Bruel","Loli Burgueño","Betty H C Cheng","Loek Cleophas","Gregor Engels","Damien Foures","Stefan Klikovits","Vinay Kulkarni","Judith Michael","Sébastien Mosser","Houari Sahraoui","Eugene Syriani","Andreas Wortmann"],
+      "uri_s":"https://inria.hal.science/hal-05221809v1",
+      "docType_s":"COMM",
+      "collaboration_s":["DTCOMPOSE"],
+      "producedDateY_i":2025
     },{
       "docid":"5676507",
       "title_s":["A Model-Based Framework for Developing DTs in Industry 4.0"],
