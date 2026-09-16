@@ -26,22 +26,22 @@ Suite au séminaire scientifique du 6 au 8 juillet 2026 :
 ### Les rencontres passées
 * 3 juillet 2026 - journée IEEE France Day "Convergence Technologique & Souveraineté Industrielle". Sorbonne Université. Participation de Pascale Vicat-Blanc, pour EDT, à la Table Ronde : Les jumeaux numériques. Animateur : Jean Luc Garnier (AFIS/INCOSE). [Détails](https://www.afis.fr/calendrier/ieee-france-day-horizon-des-jumeaux-numeriques/)
 
-* 6 au 8 Juillet 2026 – Séminaire scientifique EDT : Réunion de la communauté académique (Réservé aux PC members). Rennes
+* 6 au 8 juillet 2026 - Séminaire scientifique EDT : Réunion de la communauté académique (Réservé aux PC members). Rennes
 
-* 4 au 8 Août 2026 - Conférence IDea [DigitalTwin](https://idea-global.net/digitwin2026) - Participation de Guy
+* 4 au 8 août 2026 - Conférence IDea [DigitalTwin](https://idea-global.net/digitwin2026) - Participation de Guy
 
-* 27 et 28 Août 2026 - Réunion de travail Catalyst, en présentiel au centre Inria de l'Université Côte d'Azur.
+* 27 et 28 août 2026 - Réunion de travail Catalyst, en présentiel au centre Inria de l'Université Côte d'Azur.
 
 ### Les prochains webinaires EDT
 
 #### Webinaires Building blocks
-* 1 septembre 2026 - Webinaire BB | Présentation de [OpenFlexo](https://openflexo.org/) par Sylvain Guerin (IMT Atlantique)
+* 1er septembre 2026 - Webinaire BB | Présentation de [OpenFlexo](https://openflexo.org/) par Sylvain Guerin (IMT Atlantique)
 
-* 6 Octobre 2026 - Webinaire BB | Présentation de [Corese](https://project.inria.fr/corese/) par Fabien Gandon (Inria)
+* 6 octobre 2026 - Webinaire BB | Présentation de [Corese](https://project.inria.fr/corese/) par Fabien Gandon (Inria)
 
-* 3 Novembre 2026 - Webinaire BB | Présentation de [DTaaS](https://into-cps-association.github.io/DTaaS/version0.3/index.html) par Prasad Talasila (Aarhus University)
+* 3 novembre 2026 - Webinaire BB | Présentation de [DTaaS](https://into-cps-association.github.io/DTaaS/version0.3/index.html) par Prasad Talasila (Aarhus University)
 
-* 2 Décembre 2026 - Webinaire BB | Présentation de [JNI](https://www.irt-systemx.fr/jumeaux-numeriques-des-systemes-industriels/) par Stephen Creff (Irt SystemX)
+* 2 décembre 2026 - Webinaire BB | Présentation de [JNI](https://www.irt-systemx.fr/jumeaux-numeriques-des-systemes-industriels/) par Stephen Creff (Irt SystemX)
 
 #### Webinaires Use Cases (NOUVEAU)
 * 15 septembre 2026 - Webinaire Use Case | Présentation de [la Boucle Fluidique (UC05)](https://www.edtlab.fr/en/use-cases/uc05-fluidic-loop-cetim-r1-0) par Hubert Lejeune (CETIM)
@@ -49,24 +49,24 @@ Suite au séminaire scientifique du 6 au 8 juillet 2026 :
 ### Les prochains rendez-vous internes
 * 14 - 15 octobre 2026 - Kickoff PC4 Synchronic - Nancy
 
-* 8 Décembre 2026 - Première journée du Club des doctorantes et doctorants (Toulouse ENSEEIHT)
+* 8 décembre 2026 - Première journée du Club des doctorantes et doctorants (Toulouse ENSEEIHT)
 
-* 9 Décembre 2026 - plénière EDT (Toulouse ENSEEIHT)
+* 9 décembre 2026 - plénière EDT (Toulouse ENSEEIHT)
 
-* 10 Décembre 2026 - journée GDR (Toulouse ENSEEIHT)
+* 10 décembre 2026 - journée GDR (Toulouse ENSEEIHT)
 
 ### Les prochains évènements publics
 * 15-16 septembre 2026 - Table ronde [Sido](https://www.sido-lyon.com/fr) (Lyon) | Participation PVB à la Table Ronde (Mercredi 16/09 de 13h00 à 13h45) : Simulation industrielle : dopés à l'IA, les jumeaux numériques passent à l'échelle (Speakers : Pascale Vicat-Blanc (Senior Research Scientist – INRIA), Anuchika Stanislaus (Conseillère numérique et grands projets - Secrétariat Général pour l'Investissement / France 2030), Christophe Eschenbrenner (Delmia R&D Generative Experiences Portfolio Manager - Dassault Systèmes))
 
-* 5-6 Octobre 2026 - Participation à la conférence [EDTConf](https://conf.researchr.org/home/edtconf-2026) - Malaga, Espagne (JMB, BC, PVB...)
+* 5-6 octobre 2026 - Participation à la conférence [EDTConf](https://conf.researchr.org/home/edtconf-2026) - Malaga, Espagne (JMB, BC, PVB...)
 
-* 30 septembre - 1 octobre 2026 - Présentation EDT aux Journées annuelles du PEPR Cloud - Nantes (PVB)
+* 30 septembre - 1er octobre 2026 - Présentation EDT aux Journées annuelles du PEPR Cloud - Nantes (PVB)
 
 * 13-15 octobre 2026 - Atelier et keynote EDT aux Journées annuelles du PEPR Santé Numérique (PVB)
 
-* 22 Octobre 2026 - Workshop [Projet Descartes](https://www.cnrsatcreate.cnrs.fr/descartes/) / EDT - ENSAM Paris (BC)
+* 22 octobre 2026 - Workshop [Projet Descartes](https://www.cnrsatcreate.cnrs.fr/descartes/) / EDT - ENSAM Paris (BC)
 
-* 17-18 Novembre 2026 - Présentation à la conférence [NAFEMS France](https://www.nafems.org/events/nafems/2026/nafems-france-conference/) (PVB)
+* 17-18 novembre 2026 - Présentation à la conférence [NAFEMS France](https://www.nafems.org/events/nafems/2026/nafems-france-conference/) (PVB)
 
 ### Les publications
 * ***A Dual-Lens Conceptual Framework for Digital Twin V&V***. Benoit Combemale, Steffen Zschaler, Jean-Michel Bruel, Christopher Burr, Adelaide de Vecchi, Aidan Dures, Sophie Ebersold, Rym M'Hallah, Pascale Vicat-Blanc, Bofan Zhang. EDTconf 2026 - 3rd International Conference on Engineering Digital Twins, Oct 2026, Malaga, Spain. doi:10.1145/3837062.3839091. hal-05723092
