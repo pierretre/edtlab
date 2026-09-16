@@ -2,9 +2,21 @@
 title: "Navigating through the temporal aspects of the digital twin"
 type: "PhD"
 pc: PC5
+host: INSA Rennes, Seamless
+supervisors:
+  - name: Valérie GOURANTON
+    org: INSA Rennes, Seamless
+    role: director
+  - name: Jean-Yves DIDIER
+    org: Université \u00c9vry / \u00c9nib, IBISC / Lab-STICC
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Gabriel GYORS
 location: "Rennes, France"
 expectedStartDate: "October 2026"
-filled: true
 publishedDate: 2026-03-15
 description: "PhD position in Human-Computer Interaction and Virtual Reality focusing on immersive interfaces for digital twin systems"
 requirements: ["Master's degree in Computer Science, HCI, VR or related field", "Experience with VR/AR technologies", "Strong programming skills (C#, JavaScript, Python)", "Knowledge of 3D graphics and visualization", "Fluency in English and French"]
@@ -187,36 +199,6 @@ The PhD will address the following research questions:
 ## Research Environment
 
 The position is based in Rennes, within the SEAMLESS team at Inria/IRISA, under the supervision of Prof. Valérie Gouranton and Prof. Jean-Yves Didier from Université Évry Paris-Saclay (IRA2 team, IBISC laboratory). The PhD will also be co-supervised by Ronan Gaugne from Inria/IRISA (SEAMLESS team) and Théophane Nicolas (Inrap).
-
-## Qualifications
-
-### Required
-
-- Master’s degree in Computer Science, HCI, AI, Virtual Reality, Data Visualization, or a related field.
-- Strong background in at least one of the following: AI, Machine Learning, 3D graphics, visualization, interaction design, or VR/AR technologies.
-- Programming skills in C++, C#, JavaScript, or Python.
-- Interest in digital twins, temporal data, simulation, AI-enhanced analysis, and interactive systems.
-- Excellent written and oral communication skills in English and French.
-- Strong analytical and problem-solving abilities.
-
-### Preferred
-
-- Experience with machine learning methods for time-series analysis, anomaly detection, predictive modeling, uncertainty estimation, or data fusion.
-- Familiarity with explainable AI, human-AI interaction, or AI-assisted decision support.
-- Experience with game engines such as Unity or Unreal Engine.
-- Knowledge of user experience design and evaluation methods.
-- Familiarity with web technologies, real-time systems, or data visualization frameworks.
-- Experience with 3D geodata, simulation data, scientific visualization, or digital twin platforms.
-- Previous research experience in AI, HCI, XR, visualization, or digital engineering.
-
-## Funding and Benefits
-
-- **Duration:** 3 years.
-- **Expected start date:** October 2026.
-- **Location:** Rennes, France.
-- **Salary:** PhD stipend according to French standards.
-- **Benefits:** Health insurance, social security, professional development support.
-- **Travel:** Support for conference attendance and research collaborations.
 
 ## About SEAMLESS / IRISA / Inria Rennes
 

@@ -27,7 +27,7 @@ export const enToFrMapping: PageMapping = {
     'resources': 'ressources',
     'use-cases': 'cas-d-utilisation',
     'news': 'actualites',
-    'join-us': 'nous-rejoindre',
+    'positions': 'postes',
     'contact-us': 'nous-contacter', // Both use same href but different lang
     'about': 'a-propos',
     'phd-club': 'club-des-doctorants'
@@ -49,7 +49,7 @@ export function getCorrespondingPage(
     currentHref: string,
     currentLang: 'en' | 'fr',
     targetLang: 'en' | 'fr'
-): string {    
+): string {
     // If switching to the same language, return current href
     if (currentLang === targetLang) {
         return currentHref;

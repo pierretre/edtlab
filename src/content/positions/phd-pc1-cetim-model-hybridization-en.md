@@ -38,13 +38,13 @@ Challenges are related to the identification of relevant patterns, and their pro
 ## Objectives
 Unifying theory for inductive and deductive reasoning
 
-### Hybrid modeling: coordinated use of heterogeneous predictive models.
+### Hybrid modeling: coordinated use of heterogeneous predictive models
 This objective focuses on the definition of well-defined concepts to specify complex hybrid modeling scenarios through the coordinated use of different techniques involved in digital twins, e.g., Modeling & Simulation, Machine Learning, Data Mining, etc. These concepts will provide the semantic foundations to enact hybrid models in digital twin services such as recommenders, linters and decision-making tools.
 
-### Adaptive modeling: model adaptation (inference/refinement/configuration).
+### Adaptive modeling: model adaptation (inference/refinement/configuration)
 This objective focuses on the definition of well-defined concepts to specify complex adaptive modeling scenarios through a retro-action in between the different models involved in the different techniques (e.g., Modeling & Simulation, Machine Learning, Data Mining, etc.) These concepts will provide the semantic foundations to enact adaptive modeling scenarios in digital twin services such as modeling environment, and decision-making tools.
 
-### Model interfaces and protocols.
+### Model interfaces and protocols
 This objective aims at formalizing the required model interfaces and protocols to leverage on the two aforementioned objectives. The outcome is a unifying predictive platform, supporting both the orchestration of service requests on the different available predictive models, but also possibly the adaptation of them from others.
 
 ## Application domain
@@ -52,7 +52,7 @@ The application domain of this work involves Mechanical equipments or systems ma
 
 The JNEM loop is representative of an industrial process loop. It’s a closed, instrumented hydraulic loop. It is equipped with a pump, a heat exchanger, a tank, a regulation valve and three piping sections. Its function is simply to provide the flow, pressure and/or temperature requested by the operator. Several control devices have been added to generate some defects artificially in the future.
 
-This digital twin is designed to serve several purposes: predictive maintenance, optimization of process loop settings and decision support. 
+This digital twin is designed to serve several purposes: predictive maintenance, optimization of process loop settings and decision support.
 
 The main objectives are to:
 - Detect, localize, and estimate variations in process parameters (pipe clogging, heat exchanger performance degradation, valve dynamic behavior changes, etc.) through comparison with process parameters measurements (flow, pressure, temperature) at several locations of the physical system

@@ -23,7 +23,17 @@ requirements:
 contacts:
   - net-phd-dt@icube.unistra.fr
 researcher:
-  name: "Feriel Meriem Aggoun "
+  name: "Feriel Meriem Aggoun"
+host: UniStra, CNRS/Icube
+supervisors:
+  - name: Fabrice THEOLEYRE
+    org: UniStra, CNRS/Icube
+    role: director
+  - name: Oana / Fabrice IOVA / VALOIS
+    org: Inria, Agora
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
 ---
 
 ## Context
@@ -52,26 +62,15 @@ During this Ph.D. thesis, the student is expected to make the following contribu
 ## Work Environment
 
 The PhD candidate will be co-supervised by:
-- Fabrice Theoleyre, CNRS / University of Strasbourg 
+- Fabrice Theoleyre, CNRS / University of Strasbourg
 - Oana Iova, INSA Lyon, Inria
 - Fabrice Valois, INSA Lyon, Inria
 
-within ICUBE laboratory, in Strasbourg, with visits to INSA Lyon / Inria AGORA. 
+within ICUBE laboratory, in Strasbourg, with visits to INSA Lyon / Inria AGORA.
 
 
 The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators.
 
-
-## What You Will Gain from This PhD
-
-This PhD offers the opportunity to:
-- Develop highly sought-after skills in system modeling, real-time data processing, and collaborative innovation.
-- Collaborate with leading partners (Inria, CNRS, CEA, etc.) and validate your research on a wireless networking use case.
-- Join a network of PhD candidates within the EDT program, fostering collaboration, peer support, and interdisciplinary exchanges.
-- Contribute to opensource implementations in the wireless networking field, and possibly part of the SLICES-FR platform.
-- Publish articles in high-reputation conferences and journals.
-
-Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
 
 ## References
 
