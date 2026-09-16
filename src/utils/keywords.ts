@@ -52,7 +52,7 @@ export function generatePageKeywords(
     }
 
     if (href.includes('positions') || href.includes('postes')) {
-        keywords.push(t('nav.positions').toLowerCase());
+        keywords.push(t('nav.join-us').toLowerCase());
         keywords.push(...getKeywords('positions', lang));
     }
 
