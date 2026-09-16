@@ -1,7 +1,19 @@
 ---
-title: "Explainable and Traceable Hybrid Model Management for Digital Twins"
+title: "Model Management for Explainable and Traceable Hybrid Model Management for Digital Twins"
 type: "PhD"
 pc: PC1
+host: Telecom Paris, Aces
+supervisors:
+  - name: Dominique BLOUIN
+    org: Telecom Paris, Aces
+    role: director
+  - name: Sylvain Guerin
+    org: IMT Atlantique, Lab-STICC (UMR 6285)
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+researcher:
+    name: Arnab MUKHERJEE
 location: "Paris, France"
 expectedStartDate: "April 2026"
 filled: true
@@ -81,55 +93,3 @@ The research will take place in a multidisciplinary environment combining expert
 - Access to model-driven engineering platforms and model federation tools
 - Collaboration with industrial partners and real-world digital twin use cases
 - Participation in international research networks on digital twin technologies
-
-## Qualifications
-
-### Required
-
-- Master's degree in Computer Science, Software Engineering, or related field
-- Strong background in model-driven engineering or system modeling
-- Interest in digital twins, simulation, and cyber-physical systems
-- Programming experience (Java, Python, or similar)
-- Good written and oral communication skills in English
-
-### Preferred
-
-- Knowledge of Model-Based Systems Engineering (MBSE)
-- Experience with simulation platforms or co-simulation frameworks
-- Familiarity with machine learning integration in engineering systems
-- Background in model management or model federation techniques
-
-## Application Process
-
-Please submit the following documents:
-
-1. **Cover Letter** explaining your motivation and research interests  
-2. **Curriculum Vitae**  
-3. **Academic Transcripts**  
-4. **Short Research Statement** (1–2 pages)  
-5. **Contact information for two references**
-
-## Contact Information
-
-Main supervisor
-**Supervisor**: Dominique Blouin
-**Institution**: Telecom Paris
-**Email**: dominique.blouin@telecom-paris.fr
-
-Co Supervisors
-**Supervisor**: Sylvain Guérin 
-**Institution**: IMT Atlantique
-**Email**: sylvain.guerin@imt-atlantique.fr
-
-For scientific questions regarding the PhD topic, please contact the main supervisor directly.
-
-## Funding and Benefits
-
-- **Duration**: 3 years
-- **Salary**: Competitive PhD stipend according to French standards
-- **Benefits**: Social security, health coverage, research travel support
-- **Travel**: Support for conference attendance and research collaborations
-
-## About the EDT Program
-
-The **Engineering Digital Twins (EDT)** program is a major French research initiative bringing together leading research institutions to advance the science and engineering of digital twin technologies. The program aims to develop the scientific foundations and engineering methods required for next-generation digital twin systems.

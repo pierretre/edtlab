@@ -14,9 +14,7 @@ const t = useTranslations(lang);
 
 // Get all open positions for the current language, excluding filled ones
 // (filled/occupied positions are surfaced on the project (PC) pages instead)
-const allPositions = (await getCollection("positions")).filter(
-    (position) => !position.data.filled,
-);
+const allPositions = await getCollection("positions");
 
 // Sort positions: EDT first, then external; within each group by date then title
 const isExtern = (position: (typeof allPositions)[number]) =>
@@ -38,7 +36,6 @@ const sortedPositions = allPositions.sort((a, b) => {
     // Finally by title
     return (a.data.title || "").localeCompare(b.data.title || "");
 });
-
 ---
 
 <div class="w-full mb-12">
@@ -112,46 +109,45 @@ const sortedPositions = allPositions.sort((a, b) => {
                         />
                     ))
                 }
+                <!-- No Results Message -->
+                <div id="no-results" class="hidden text-center py-32">
+                    <div class="max-w-md mx-auto">
+                        <h3 class="mt-4 text-lg font-medium text-gray-900">
+                            {t("positions.no-results")}
+                        </h3>
+                        <p class="mt-2 text-gray-500">
+                            {t("positions.no-results-description")}
+                        </p>
+                    </div>
+                </div>
             </div>
         </main>
-
-        <!-- No Results Message -->
-        <div id="no-results" class="hidden text-center py-32">
-            <div class="max-w-md mx-auto">
-                <h3 class="mt-4 text-lg font-medium text-gray-900">
-                    {t("positions.no-results")}
-                </h3>
-                <p class="mt-2 text-gray-500">
-                    {t("positions.no-results-description")}
-                </p>
-            </div>
-        </div>
     </div>
+
+    <script>
+        import { FilterManagerImpl } from "@utils/filtering";
+        import { positionsFilterConfig } from "@utils/filter-configs";
+
+        // Initialize filter manager - handle both cases where DOM might already be ready
+        function initFilters() {
+            const filterManager = new FilterManagerImpl(positionsFilterConfig);
+            filterManager.initialize();
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initFilters);
+        } else {
+            initFilters();
+        }
+    </script>
+
+    <style>
+        .position-item {
+            transition: opacity 0.2s ease;
+        }
+
+        .position-item.hidden {
+            display: none;
+        }
+    </style>
 </div>
-
-<script>
-    import { FilterManagerImpl } from "@utils/filtering";
-    import { positionsFilterConfig } from "@utils/filter-configs";
-
-    // Initialize filter manager - handle both cases where DOM might already be ready
-    function initFilters() {
-        const filterManager = new FilterManagerImpl(positionsFilterConfig);
-        filterManager.initialize();
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initFilters);
-    } else {
-        initFilters();
-    }
-</script>
-
-<style>
-    .position-item {
-        transition: opacity 0.2s ease;
-    }
-
-    .position-item.hidden {
-        display: none;
-    }
-</style>

@@ -5,7 +5,19 @@ pc: PC2
 location: "Anglet, France"
 expectedStartDate: "Fall 2026"
 publishedDate: 2026-03-15
-filled: false
+host: UPPA, ISA NUM
+supervisors:
+  - name: Johann BOURCIER
+    org: UPPA, ISA NUM
+    role: director
+  - name: Benoit Combemale
+    org: Inria, DiverSE
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Adam DHAINI
 description: "This PhD project investigates methods for composing and configuring digital twin architectures in order to meet user requirements under multiple non-functional constraints such as energy consumption, performance, and budget."
 requirements:
   - "Master degree in Computer Science, Software Engineering, or a related field"
@@ -49,15 +61,3 @@ The results of this thesis will directly contribute to the Artemis platform, an 
 ## Work Environment
 
 The PhD candidate will be co-supervised by Johann Bourcier (University of Pau and Pays de l’Adour) and Benoît Combemale (Inria) within the GL team in the LIUPPA laboratory (<https://liuppa.univ-pau.fr>). The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators, and the opportunity to contribute to Artemis, the program's open software platform.
-
-## What You Will Gain from This PhD
-
-This PhD offers the opportunity to:
-
-- Develop highly sought-after skills in system modeling, real-time data processing, and collaborative innovation.
-- Collaborate with leading partners (Inria, CEA, CNRS, etc.) and validate your research on real-world industrial use cases.
-- Join a network of PhD candidates within the EDT program, fostering collaboration, peer support, and interdisciplinary exchanges.
-- Contribute to an open-source platform (Artemis) and publish in international conferences and journals.
-- Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
-
-Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.

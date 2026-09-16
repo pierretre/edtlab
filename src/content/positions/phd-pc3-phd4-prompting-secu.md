@@ -1,15 +1,25 @@
 ---
-# Please respect these sections and template for good integration in the web site
 title: "AI-Assisted Model-Driven Security Engineering for Digital Twins: Toward an Automated Round-Trip Framework"
 type: "PhD"
 pc: PC3
+host: CEA List, 
+supervisors:
+  - name: Marcos DIDONET DEL FABRO
+    org: CEA List, 
+    role: director
+  - name: Brahim HAMID
+    org: UT2J, IRIT (ARGOS)
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Ismail AISSAOUI
 location: "Saclay, France"
 expectedStartDate: "Fall 2026" 
 publishedDate: 2026-04-09  
-filled: false  
 description: "This PhD thesis has the objective to address the challenges of modeling Digital Twins by integrating Artificial Intelligence (AI) assistance, enhanced security modeling, simulation and round-trip feedback." 
 requirements: ["Master degree in computer science", "Programming skills", "Modeling skills", "English or French", "Experience with digital twins is a plus"] 
-contacts: ["marcos.didonetdelfabro@cea.fr", "brahim.hamid@irit.fr"]  # Array of contact emails for this position
 ---
 
 ## Description

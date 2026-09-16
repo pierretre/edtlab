@@ -33,7 +33,7 @@ export async function validateInternalLink(
             'demo-center',
             'resources',
             'news',
-            'join-us',
+            'positions',
             'contact',
             'about'
         ];

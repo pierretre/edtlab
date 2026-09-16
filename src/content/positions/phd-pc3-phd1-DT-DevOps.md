@@ -1,15 +1,26 @@
 ---
-# Please respect these sections and template for good integration in the web site
-title: "Modeling the construction of digital twins" # Avoid accents in title
-type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
+title: "Modeling the construction of digital twins"
+type: "PhD"
 pc: PC3
+host: IMT-Atlantique, Lab-STICC (P4S)
+supervisors:
+  - name: Fabien DAGNAT
+    org: IMT-Atlantique, Lab-STICC (P4S)
+    role: director
+  - name: Jannik LAVAL
+    org: ULL2, DISP
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Younes MERZOUKA
 location: "Brest, France"
-expectedStartDate: "Autumn 2026"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
-publishedDate: 2026-03-16  # Date when job offer was published in YYYY-MM-DD format
-filled: false  # Position availability status: true if position is filled, false if still available
-description: "The goal is to develop an environment for building and executing digital twins based on a digital twin model and its lifecycle." # Brief summary of the position (2-3 sentences) for list summary printing. The detailed description goes in the Body section below.
-requirements: ["Master degree in computer science", "Programming skills", "Modeling skills", "Experience with digital twins is a plus"] # Some requirements in a list
-contacts: ["fabien.dagnat@imt-atlantique.fr", "Jannik.Laval@univ-lyon2.fr"]  # Array of contact emails for this position
+expectedStartDate: "Autumn 2026"
+publishedDate: 2026-03-16
+description: "The goal is to develop an environment for building and executing digital twins based on a digital twin model and its lifecycle."
+requirements: ["Master degree in computer science", "Programming skills", "Modeling skills", "Experience with digital twins is a plus"]
+contacts: ["fabien.dagnat@imt-atlantique.fr", "Jannik.Laval@univ-lyon2.fr"]
 references:
   - "edt-roadmap"
   - "gwendal-2025-automating"
@@ -60,16 +71,4 @@ It is part of the EDT program and will interact with other theses on related top
 - Assembly of digital twins as SoS
 - Federation of data and models to define digital twins
 - Variability
-
-## What You Will Gain from This PhD
-
-This PhD offers the opportunity to:
-
-- Develop highly sought-after skills in system modeling, real-time data processing, and collaborative innovation.
-- Collaborate with leading partners (Inria, CEA, CNRS, etc.) and validate your research on real-world industrial use cases.
-- Join a network of PhD candidates within the EDT program, fostering collaboration, peer support, and interdisciplinary exchanges.
-- Contribute to an open-source platform (Artemis) and publish in international conferences and journals.
-- Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
-
-Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
 

@@ -2,7 +2,6 @@
 type: PhD
 pc: PC1
 publishedDate: 2026-03-15
-filled: false
 references:
   - liang-2024-harnessing
   - ma-2025-bridging
@@ -27,7 +26,19 @@ contacts:
   - gerald.rocher@univ-cotedazur.fr
 title: Distributed Abductive Reasoning for Self-Explaining Digital Twins
 location: Nice, France
-expectedStartDate: October 2026
+host: UniCA, I3S Kairos
+supervisors:
+  - name: Gerald ROCHER
+    org: UniCA, I3S Kairos
+    role: director
+  - name: Andreas Tettamanzi
+    org: UniCA, I3S Wimmics
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Baptiste BILLEBAULT
 ---
 
 ## Position Overview
@@ -102,55 +113,3 @@ The candidate will collaborate with researchers working on:
 - Participation in interdisciplinary EDT research activities
 - Opportunities for international collaborations and conference participation
 
-## Qualifications
-
-### Required
-
-- Master's degree in Computer Science, Artificial Intelligence, or related field
-- Strong background reasoning systems, or distributed computing
-- Programming experience
-- Interest in cyber-physical systems and digital twin technologies
-- Strong analytical and problem-solving skills
-- Good written and oral communication skills in English
-
-### Preferred
-
-- Knowledge of explainable AI or symbolic reasoning
-- Experience with distributed architectures or edge computing
-- Familiarity with cyber-physical systems or digital twin concepts
-- Background in knowledge representation or reasoning systems
-
-## Application Process
-
-Please submit the following documents:
-
-1. **Cover Letter** describing your motivation and research interests  
-2. **Curriculum Vitae**  
-3. **Academic Transcripts**  
-4. **Short Research Statement** (1–2 pages)  
-5. **Contact information for two academic references**
-
-## Contact Information
-
-Main supervisor:
-**Supervisor**: Gérald Rocher  
-**Institution**: Université Côte d'Azur  
-**Email**: gerald.rocher@univ-cotedazur.fr  
-
-Co-Supervisor:
-**Supervisor**: Andrea Tettamanzi  
-**Institution**: Université Côte d'Azur  
-**Email**: andrea.tettamanzi@univ-cotedazur.fr  
-
-For scientific questions regarding the PhD topic, please contact the main supervisor directly.
-
-## Funding and Benefits
-
-- **Duration**: 3 years
-- **Salary**: Competitive PhD stipend according to French standards
-- **Benefits**: Social security, health coverage, research travel support
-- **Travel**: Support for conference attendance and research collaborations
-
-## About the EDT Program
-
-The **Engineering Digital Twins (EDT)** program is a major French research initiative bringing together leading institutions to advance the science and engineering of digital twin technologies. The program aims to build a national and international community developing next-generation methods for digital twin engineering.

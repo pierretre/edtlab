@@ -2,9 +2,20 @@
 title: "Smart Scenario Exploration for Digital Twins through Validity Envelopes"
 type: "PhD"
 pc: PC1
+host: UPPA, LIUPPA
+supervisors:
+  - name: Johann BOURCIER
+    org: UPPA, LIUPPA
+    role: director
+  - name: Julien Deantoni
+    org: Inria, Kairos
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Jad Khazzaka
 location: "Pau, France"
-expectedStartDate: "October 2026"
-filled: false
 publishedDate: 2026-03-15
 description: "PhD position on model interoperability and scenario exploration for environmental digital twins, focusing on validity envelopes for scientific models"
 requirements: ["Master's degree in Computer Science, Environmental Modeling, Applied Mathematics or related field", "Strong programming skills (Python, Java, or similar)", "Interest in scientific modeling and digital twins", "Knowledge of modeling, simulation, or software architectures", "Fluency in English"]
@@ -63,55 +74,3 @@ The project benefits from **existing collaborations with scientists developing h
 - Collaboration with interdisciplinary researchers within the EDT program
 - Software engineering and digital twin architecture expertise
 - Access to experimental case studies in coastal territories
-
-## Qualifications
-
-### Required
-
-- Master's degree in Computer Science, Environmental Modeling, Applied Mathematics, or related field
-- Strong interest in scientific modeling and simulation
-- Programming experience (Python, Java, or similar languages)
-- Knowledge of software architectures or modeling frameworks
-- Good communication and writing skills in English
-
-### Preferred
-
-- Background in environmental modeling or hydrology
-- Experience with model coupling or simulation platforms
-- Knowledge of uncertainty quantification or model validation
-- Interest in digital twin systems and decision-support tools
-
-## Application Process
-
-Please submit your application including:
-
-1. **Cover Letter** explaining your motivation and research interests
-2. **Curriculum Vitae**
-3. **Academic Transcripts**
-4. **Short Research Statement** (1–2 pages)
-5. **Contact information for two references**
-
-## Funding and Benefits
-
-- **Duration**: 3 years
-- **Salary**: Competitive PhD stipend according to French standards
-- **Benefits**: Social security, health coverage, research travel support
-- **Travel**: Support for conference attendance and research collaborations
-
-## Contact Information
-
-Main supervisor:
-**Supervisor**: Johann Bourcier  
-**Institution**: Université de Pau et des Pays de l’Adour (UPPA)  
-**Email**: johann.bourcier@univ-pau.fr
-
-Co-supervisor:
-**Supervisor**: Julien Deantoni  
-**Institution**: Université Côte d'Azur (UniCA)  
-**Email**: julien.deantoni@univ-cotedazur.fr
-
-For scientific questions regarding the PhD topic, please contact the main supervisor directly.
-
-## About the EDT Program
-
-The **Engineering Digital Twins (EDT)** program is a major French research initiative bringing together leading institutions to advance the science and engineering of digital twin technologies. The program aims to establish international leadership in digital twin engineering through interdisciplinary collaboration.
