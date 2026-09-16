@@ -6,6 +6,7 @@ import PublicationCard from "./PublicationCard.astro";
 import FilterSidebar from "./FilterSidebar.astro";
 import { publicationsFilterConfig } from "@utils/filter-configs";
 import type { Publication } from "~/models/Publication.model";
+import { publicationSortTime } from "@utils/date";
 
 export interface Props {
     lang: "en" | "fr";
@@ -21,10 +22,7 @@ const publicationEntries = await getCollection(
 );
 const publications = publicationEntries
     .map((entry) => entry.data as Publication)
-    .sort((a, b) => {
-        if (b.year !== a.year) return b.year - a.year;
-        return (a.title || "").localeCompare(b.title || "");
-    });
+    .sort((a, b) => publicationSortTime(b) - publicationSortTime(a));
 
 // Generate structured data for publications
 const publicationStructuredData = publications.map((pub: Publication) =>

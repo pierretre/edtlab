@@ -96,7 +96,7 @@ export function getPageLink(lang: Lang, pageKey: string): string {
 /**
  * Generate a localized link for any route
  * @param lang - Current language ('en' | 'fr')
- * @param route - Route path (can be nested like 'production/publications')
+ * @param route - Route path
  * @returns Localized URL path
  */
 export function getLocalizedLink(lang: Lang, route: string): string {

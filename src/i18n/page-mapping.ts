@@ -19,8 +19,6 @@ export const enToFrMapping: PageMapping = {
     'focused-projects/fp4': 'projets-cibles/pc4',
     'focused-projects/fp5': 'projets-cibles/pc5',
     'production': 'production',
-    // 'production/publications': 'production/publications', // TODO remove commmented code 
-    // 'production/platform': 'production/plateforme',
     'publications': 'publications',
     'platform': 'plateforme',
     // 'demo-center': 'centre-demo',

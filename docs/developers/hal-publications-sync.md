@@ -59,7 +59,7 @@ src/
 https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=<fields>
 ```
 
-Fields requested (`fl=`): `docid`, `title_s`, `authFullName_s`, `producedDateY_i`, `journalTitle_s`, `conferenceTitle_s`, `proceedingsTitle_s`, `doiId_s`, `uri_s`, `docType_s`, `docSubType_s`, `keyword_s`, `collaboration_s`.
+Fields requested (`fl=`): `docid`, `title_s`, `authFullName_s`, `producedDateY_i`, `journalTitle_s`, `conferenceTitle_s`, `proceedingsTitle_s`, `doiId_s`, `uri_s`, `docType_s`, `docSubType_s`, `keyword_s`, `collaboration_s`, `producedDate_tdate`.
 
 `wt=json` is required — without it HAL falls back to its default (non-JSON) response format. The raw response has the shape `{ response: { numFound, docs: [...] } }`; `publications-loader.ts` reads `response.docs`.
 
@@ -123,7 +123,7 @@ Each tag has a matching `badge.<tag>` i18n key in `src/i18n/ui.ts` (both `en` an
 # Fetch a fresh export the same way the workflow does
 wget \
   --output-document=src/content/publications/hal-publications.json \
-  "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,docSubType_s,keyword_s,collaboration_s"
+  "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,docSubType_s,keyword_s,collaboration_s,producedDate_tdate"
 
 npm run dev      # or: npm run build && npm run preview
 open http://localhost:4321/en/publications

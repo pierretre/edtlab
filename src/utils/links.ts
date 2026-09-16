@@ -28,9 +28,8 @@ export async function validateInternalLink(
             '',  // home page
             'program',
             'focused-projects',
-            'production',
-            'production/publications',
-            'production/platform',
+            'publications',
+            'platform',
             'demo-center',
             'resources',
             'news',

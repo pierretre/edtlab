@@ -2,6 +2,8 @@
  * Date utility functions for formatting and validation
  */
 
+import type { Publication } from "~/models/Publication.model";
+
 /**
  * Format a date according to the specified language locale
  * @param date - The date to format
@@ -93,4 +95,13 @@ export function isRecent(date: Date, days: number = 30): boolean {
     const timeDiff = now.getTime() - date.getTime();
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return daysDiff >= 0 && daysDiff <= days;
+}
+
+/**
+ * Sort key: published_at when available, otherwise fall back to January 1st of the publication year.
+ * @param pub - publication to convert to time.
+ * @returns time as a number.
+ */
+export function publicationSortTime(pub: Publication): number {
+    return pub.published_at ? pub.published_at.getTime() : new Date(pub.year, 0, 1).getTime();
 }
