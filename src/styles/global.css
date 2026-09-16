@@ -680,7 +680,7 @@ img[loading="lazy"] {
     }
 
     /* Hide navigation buttons and CTAs */
-    a[href*="join-us"]:not([href*="mailto"]),
+    a[href*="positions"]:not([href*="mailto"]),
     .btn,
     .btn-primary,
     .btn-primary-light,

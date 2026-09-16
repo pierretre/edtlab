@@ -1,15 +1,26 @@
 ---
-# Please respect these sections and template for good integration in the web site
-title: "Modeling Interaction Scenarios for Digital Twins in Mixed Reality" # Avoid accents in title
-type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
+title: "Modeling Interaction Scenarios for Digital Twins in Mixed Reality"
+type: "PhD" 
 pc: PC5
+host: Bretagne INP / Enib, Lab-STICC (INUIT)
+supervisors:
+  - name: Ronan QUERREC
+    org: Bretagne INP / Enib, Lab-STICC (INUIT)
+    role: director
+  - name: Valérie / David GOURANTON / BAUDRY
+    org: INSA Rennes / CESI Rouen, INRIA Seamless / LINEACT
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Yasser SIDRINE
 location: "Brest, France"
-expectedStartDate: "Q4 2026"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
-publishedDate: 2026-04-01  # Date when job offer was published in YYYY-MM-DD format
-filled: false  # Position availability status: true if position is filled, false if still available
-description: "The effective use of digital twins requires interactive scenarios capable of organizing the system’s objectives, roles, activities, and behaviors within a real-time framework. This requirement is further heightened in mixed reality, where the user interacts with both digital representations and a physical environment, necessitating the joint design of the business model, interaction, and scenario execution." # Brief summary of the position (2-3 sentences) for list summury printing. The detailed description goes in the Body section below.
-requirements: ["Master degree in computer science", "Experience with digital twins", "Programming skills"] # Some requirements in a list
-contacts: ["querrec@enib.fr", "Valerie.Gouranton@irisa.fr", "vhavard@cesi.fr", "elodie.bouzekri@univ-brest.fr"]  # Array of contact emails for this position
+expectedStartDate: "Q4 2026" 
+publishedDate: 2026-04-01 
+description: "The effective use of digital twins requires interactive scenarios capable of organizing the system’s objectives, roles, activities, and behaviors within a real-time framework. This requirement is further heightened in mixed reality, where the user interacts with both digital representations and a physical environment, necessitating the joint design of the business model, interaction, and scenario execution."
+requirements: ["Master degree in computer science", "Experience with digital twins", "Programming skills"]
+contacts: ["querrec@enib.fr", "Valerie.Gouranton@irisa.fr", "vhavard@cesi.fr", "elodie.bouzekri@univ-brest.fr"] 
 ---
 
 ## Context
@@ -37,18 +48,6 @@ The third challenge concerns the link between mixed-reality interaction and busi
 ## Work Environment
 
 The PhD candidate will be co-supervised by Ronan Querrec, Bretagne INP - Lab-STICC, Valérie Gouranton, INSA Rennes - IRISA, Vincent Havard, CESI Rouen, LINEACT, Eloidie Bouzekri UBO - Lab-STICC.
-
-## What You Will Gain from This PhD
-
-This PhD offers the opportunity to:
-
-- Develop highly sought-after skills in system modeling, real-time data processing, and collaborative innovation.
-- Collaborate with leading partners (Inria, CEA, CNRS, etc.) and validate your research on real-world industrial use cases.
-- Join a network of PhD candidates within the EDT program, fostering collaboration, peer support, and interdisciplinary exchanges.
-- Contribute to an open-source platform (Artemis) and publish in international conferences and journals.
-- Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
-
-Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
 
 ## References
 

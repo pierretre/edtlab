@@ -21,7 +21,9 @@ const t = useTranslations(lang);
 const occupied = !!frontmatter.researcher;
 
 const publicationsResolved = occupied
-    ? await Promise.all((frontmatter.publications || []).map((pub) => getEntry(pub)))
+    ? await Promise.all(
+          (frontmatter.publications || []).map((pub) => getEntry(pub)),
+      )
     : [];
 
 const jobStructuredData =
@@ -42,7 +44,9 @@ const badges = [
     ...(frontmatter.pc ? [frontmatter.pc] : []),
     ...(frontmatter.tags || []).filter((tag) => tag && tag.trim()),
     `positions.type.${frontmatter.type}`,
-    ...(occupied && frontmatter.funding ? [`positions.funding.${frontmatter.funding}`] : []),
+    ...(occupied && frontmatter.funding
+        ? [`positions.funding.${frontmatter.funding}`]
+        : []),
     ...(occupied && frontmatter.researchStatus
         ? [`positions.research-status.${frontmatter.researchStatus}`]
         : []),
@@ -51,7 +55,10 @@ const badges = [
 
 const backLink =
     occupied && frontmatter.pc
-        ? linkHelpers.page(lang, `focused-projects/fp${frontmatter.pc.replace("PC", "")}`)
+        ? linkHelpers.page(
+              lang,
+              `focused-projects/fp${frontmatter.pc.replace("PC", "")}`,
+          )
         : linkHelpers.page(lang, "join-us");
 ---
 
@@ -79,15 +86,19 @@ const backLink =
                     <a
                         href="https://edtlab.fr/"
                         target="_blank"
-                        rel="noopener noreferrer">{t("positions.funding-edt")}</a
+                        rel="noopener noreferrer"
                     >
+                        {t("positions.funding-edt")}
+                    </a>
                     {t("positions.funding-funded-by")}
                     <a
                         href="https://www.info.gouv.fr/grand-dossier/france-2030"
                         target="_blank"
                         rel="noopener noreferrer"
-                        >{t("positions.funding-france2030")}</a
-                    >.
+                    >
+                        {t("positions.funding-france2030")}
+                    </a>
+                    .
                 </p>
             </div>
         )
@@ -111,7 +122,11 @@ const backLink =
                     stroke-width="2"
                     d="M15 19l-7-7 7-7"></path>
             </svg>
-            {occupied && frontmatter.pc ? frontmatter.pc : t("positions.back-to-careers")}
+            {
+                occupied && frontmatter.pc
+                    ? `${t("positions.back-to-project")} ${frontmatter.pc}`
+                    : t("positions.back-to-careers")
+            }
         </a>
     </div>
 
@@ -130,7 +145,9 @@ const backLink =
             occupied ? (
                 <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 mb-4">
                     <div class="flex items-center">
-                        <span class="font-medium text-gray-800">{frontmatter.researcher!.name}</span>
+                        <span class="font-medium text-gray-800">
+                            {frontmatter.researcher!.name}
+                        </span>
                         {frontmatter.researcher!.email && (
                             <a
                                 href={`mailto:${frontmatter.researcher!.email}`}
@@ -139,28 +156,41 @@ const backLink =
                                 ({frontmatter.researcher!.email})
                             </a>
                         )}
-                        {frontmatter.supervisors && frontmatter.supervisors.length > 0 && (
-                            <span class="text-gray-500 ml-1">
-                                {" "}
-                                · {t("positions.supervised-by")}{" "}
-                                {frontmatter.supervisors.map((s) => s.name).join(", ")}
-                            </span>
-                        )}
+                        {frontmatter.supervisors &&
+                            frontmatter.supervisors.length > 0 && (
+                                <span class="text-gray-500 ml-1">
+                                    {" "}
+                                    · {t("positions.supervised-by")}{" "}
+                                    {frontmatter.supervisors
+                                        .map((s) => s.name)
+                                        .join(", ")}
+                                </span>
+                            )}
                     </div>
 
                     <div class="flex items-center">
                         <span>{frontmatter.location}</span>
-                        {frontmatter.host && <span class="text-gray-500 ml-1"> · {frontmatter.host}</span>}
+                        {frontmatter.host && (
+                            <span class="text-gray-500 ml-1">
+                                {" "}
+                                · {frontmatter.host}
+                            </span>
+                        )}
                     </div>
 
                     {frontmatter.startDate && (
                         <div class="flex items-center">
                             <span>
-                                {t("positions.start-date")}: {formatDate(frontmatter.startDate, lang)}
+                                {t("positions.start-date")}:{" "}
+                                {formatDate(frontmatter.startDate, lang)}
                                 {frontmatter.expectedEndDate && (
                                     <span class="text-gray-500">
                                         {" "}
-                                        → {formatDate(frontmatter.expectedEndDate, lang)}
+                                        →{" "}
+                                        {formatDate(
+                                            frontmatter.expectedEndDate,
+                                            lang,
+                                        )}
                                     </span>
                                 )}
                             </span>
@@ -190,8 +220,12 @@ const backLink =
                             />
                         </svg>
                         <div>
-                            <span class="text-sm font-medium text-gray-500">{t("positions.location")}</span>
-                            <p class="font-medium my-0">{frontmatter.location}</p>
+                            <span class="text-sm font-medium text-gray-500">
+                                {t("positions.location")}
+                            </span>
+                            <p class="font-medium my-0">
+                                {frontmatter.location}
+                            </p>
                         </div>
                     </div>
                     {frontmatter.expectedStartDate && (
@@ -234,11 +268,15 @@ const backLink =
     {
         frontmatter.references && frontmatter.references.length > 0 && (
             <section class="mt-8">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">{t("positions.references")}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                    {t("positions.references")}
+                </h3>
                 <div class="space-y-1">
                     {frontmatter.references.map((slug: string, i: number) => (
                         <div class="flex items-baseline gap-2">
-                            <span class="text-sm text-gray-500 font-medium shrink-0">[{i + 1}]</span>
+                            <span class="text-sm text-gray-500 font-medium shrink-0">
+                                [{i + 1}]
+                            </span>
                             <Citation slug={slug} />
                         </div>
                     ))}
@@ -250,19 +288,33 @@ const backLink =
     {
         occupied && publicationsResolved.length > 0 && (
             <section class="mt-8">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">{t("positions.publications")}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                    {t("positions.publications")}
+                </h3>
                 <ul>
                     {publicationsResolved.map((pub) => (
                         <li>
                             {pub.data.url ? (
-                                <a href={pub.data.url} target="_blank" rel="noopener noreferrer">
+                                <a
+                                    href={pub.data.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
                                     {pub.data.title}
                                 </a>
                             ) : (
                                 pub.data.title
                             )}
-                            {pub.data.venue && <span class="text-gray-500"> · {pub.data.venue}</span>}
-                            <span class="text-gray-500"> ({pub.data.year})</span>
+                            {pub.data.venue && (
+                                <span class="text-gray-500">
+                                    {" "}
+                                    · {pub.data.venue}
+                                </span>
+                            )}
+                            <span class="text-gray-500">
+                                {" "}
+                                ({pub.data.year})
+                            </span>
                         </li>
                     ))}
                 </ul>
@@ -272,39 +324,45 @@ const backLink =
 
     <!-- Requirements Section -->
     {
-        !occupied && frontmatter.requirements && frontmatter.requirements.length > 0 && (
-            <section class="mt-8 p-6 bg-primary-50 rounded-lg border-2 border-primary-200">
-                <h2 class="text-xl mt-0 font-semibold text-primary-800 mb-4">
-                    {t("positions.requirements")}
-                </h2>
-                <ul class="space-y-2">
-                    {frontmatter.requirements.map((requirement) => (
-                        <li class="flex items-start">
-                            <svg
-                                class="w-5 h-5 text-primary-600 mr-3 mt-0.5 flex-shrink-0"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            <span class="text-gray-700">{requirement}</span>
-                        </li>
-                    ))}
-                </ul>
-            </section>
-        )
+        !occupied &&
+            frontmatter.requirements &&
+            frontmatter.requirements.length > 0 && (
+                <section class="mt-8 p-6 bg-primary-50 rounded-lg border-2 border-primary-200">
+                    <h2 class="text-xl mt-0 font-semibold text-primary-800 mb-4">
+                        {t("positions.requirements")}
+                    </h2>
+                    <ul class="space-y-2">
+                        {frontmatter.requirements.map((requirement) => (
+                            <li class="flex items-start">
+                                <svg
+                                    class="w-5 h-5 text-primary-600 mr-3 mt-0.5 flex-shrink-0"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                                <span class="text-gray-700">{requirement}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )
     }
 
     <!-- Application CTA -->
     {
         !occupied && !frontmatter.filled && (
             <section class="mt-8 p-6 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg text-white">
-                <h2 class="text-xl mt-0 font-semibold mb-3 text-blue-50">{t("positions.ready-to-apply")}</h2>
-                <p class="mb-4 text-primary-100">{t("positions.application-instructions")}</p>
+                <h2 class="text-xl mt-0 font-semibold mb-3 text-blue-50">
+                    {t("positions.ready-to-apply")}
+                </h2>
+                <p class="mb-4 text-primary-100">
+                    {t("positions.application-instructions")}
+                </p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a
                         href={`mailto:${frontmatter.contacts?.join(";")}?subject=${encodeURIComponent(`Application: ${frontmatter.title}`)}`}
@@ -325,7 +383,10 @@ const backLink =
                         </svg>
                         {t("positions.apply-now")}
                     </a>
-                    <a href={`/${lang}/join-us`} class="btn-primary-light font-medium">
+                    <a
+                        href={`/${lang}/join-us`}
+                        class="btn-primary-light font-medium"
+                    >
                         {t("positions.view-all-positions")}
                     </a>
                 </div>
@@ -336,8 +397,12 @@ const backLink =
     {
         !occupied && frontmatter.filled && (
             <section class="mt-8 p-6 bg-gray-100 rounded-lg border">
-                <h2 class="text-xl font-semibold mb-3 text-gray-700">{t("positions.position-filled")}</h2>
-                <p class="mb-4 text-gray-600">{t("positions.position-filled-message")}</p>
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">
+                    {t("positions.position-filled")}
+                </h2>
+                <p class="mb-4 text-gray-600">
+                    {t("positions.position-filled-message")}
+                </p>
                 <a href={linkHelpers.page(lang, "join-us")} class="btn-primary">
                     {t("positions.view-all-positions")}
                 </a>
@@ -348,7 +413,8 @@ const backLink =
     {
         occupied && frontmatter.lastUpdated && (
             <p class="text-sm text-gray-500 mt-8">
-                {t("positions.last-updated")}: {formatDate(frontmatter.lastUpdated, lang)}
+                {t("positions.last-updated")}:{" "}
+                {formatDate(frontmatter.lastUpdated, lang)}
             </p>
         )
     }

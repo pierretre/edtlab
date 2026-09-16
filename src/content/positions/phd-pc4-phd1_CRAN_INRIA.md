@@ -1,14 +1,26 @@
 ---
-title: "Frugal and AI-Enhanced Data Governance for Reliable Digital Twins" # Avoid accents in title
-type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
+title: "Frugal and AI-Enhanced Data Governance for Reliable Digital Twins"
+type: "PhD" 
 pc: PC4
+host: U. de Lorraine, CRAN
+supervisors:
+  - name: Moufida MAIMOUR
+    org: U. de Lorraine, CRAN
+    role: director
+  - name: Malcom EGAN
+    org: Inria, Maracas
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+    name: Mohamed OUADDANE
 location: "Nancy, France"
-expectedStartDate: "2026-10-01"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
-publishedDate: 2026-05-01  # Date when job offer was published in YYYY-MM-DD format
-filled: false  # Position availability status: true if position is filled, false if still available
-description: "Brief summary of the position and research focus" # Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below.
-requirements: ["Master degree in relevant field", "Experience with digital twins", "Programming skills", "Language requirements"] # Some requirements in a list
-contacts: []  # Array of contact emails for this position
+expectedStartDate: "2026-10-01" 
+publishedDate: 2026-05-01 
+description: "Brief summary of the position and research focus"
+requirements: ["Master degree in relevant field", "Experience with digital twins", "Programming skills", "Language requirements"]
+contacts: [] 
 ---
 
 ## Context
@@ -45,16 +57,6 @@ The candidate will benefit from:
 - A high-level scientific and industrial environment with access to a national network of research institutions and industry partners
 - Regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators
 - The opportunity to contribute to Artemis, the program's open software platform
-
-## What You Will Gain from This PhD
-
-This PhD offers the opportunity to:
-
-- Develop expertise in system modeling, real-time data processing, and industrial digital twins
-- Collaborate with leading partners (Inria, CEA, CNRS, etc.) and validate research on real-world industrial use cases
-- Join a network of PhD candidates within the EDT program
-- Contribute to an open-source platform (Artemis) and publish in international conferences and journals
-- Gain recognition in a rapidly growing field with diverse career prospects in academia, industry R&D, or entrepreneurship
 
 ## References
 

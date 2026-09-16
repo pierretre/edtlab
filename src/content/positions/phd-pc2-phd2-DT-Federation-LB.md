@@ -1,15 +1,26 @@
 ---
-# Please respect these sections and template for good integration in the web site
-title: "Aggregation of digital twins in the manner of Systems of Systems" # Avoid accents in title
-type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
+title: "Aggregation of digital twins in the manner of Systems of Systems"
+type: "PhD" 
 pc: PC2
+host: INP-UGA, Verimag
+supervisors:
+  - name: Jannik LAVAL
+    org: INP-UGA, Verimag
+    role: director
+  - name: Sylvain GUERIN
+    org: IMT Atlantique, Lab-STICC P4S
+    role: co-supervisor
+startDate: 2026-09-01
+researchStatus: ongoing
+filled: true
+researcher:
+  name: Khaldi Anis Rabah
 location: "Lyon, France"
-expectedStartDate: "Autumn 2026"  # Expected start date - flexible format: "Spring 2025", "Q2 2025", "2025-06-01", etc.
-publishedDate: 2026-03-16  # Date when job offer was published in YYYY-MM-DD format
-filled: false  # Position availability status: true if position is filled, false if still available
-description: "The goal is to develop a System of Systems approach from the design stage onwards. This will enable each component of the digital twin to be identified in relation to a physical system functionality, and their assembly will result in a complete digital twin through aggregation, whose lifecycle management will be controllable, just like the physical system." # Brief summary of the position (2-3 sentences) for list summury printing. The detailed description goes in the Body section below.
-requirements: ["Master degree in computer science", "Programming skills", "Modelling skills", "Experience with digital twins is a plus"] # Some requirements in a list
-contacts: ["Jannik.Laval@univ-lyon2.fr", "Sylvain.Guerin@imt-atlantique.fr"]  # Array of contact emails for this position
+expectedStartDate: "Autumn 2026"
+publishedDate: 2026-03-16
+description: "The goal is to develop a System of Systems approach from the design stage onwards. This will enable each component of the digital twin to be identified in relation to a physical system functionality, and their assembly will result in a complete digital twin through aggregation, whose lifecycle management will be controllable, just like the physical system."
+requirements: ["Master degree in computer science", "Programming skills", "Modelling skills", "Experience with digital twins is a plus"]
+contacts: ["Jannik.Laval@univ-lyon2.fr", "Sylvain.Guerin@imt-atlantique.fr"] 
 references:
   - "edt-roadmap"
   - "russell-1971-system"
@@ -31,7 +42,7 @@ A System of Systems (SoS) is the result of aggregating several independent, inte
 
 ## Thesis Objectives
 
-This PhD project aims to develop a System of Systems approach from the design stage onwards. This will enable each component of the digital twin to be identified in relation to a physical system functionality, and their assembly will result in a complete digital twin through aggregation, whose lifecycle management will be controllable, just like the physical system. This architecture will facilitate modularity and adaptation throughout the system's lifecycle. 
+This PhD project aims to develop a System of Systems approach from the design stage onwards. This will enable each component of the digital twin to be identified in relation to a physical system functionality, and their assembly will result in a complete digital twin through aggregation, whose lifecycle management will be controllable, just like the physical system. This architecture will facilitate modularity and adaptation throughout the system's lifecycle.
 
 Key scientific challenges include:
 
@@ -55,16 +66,3 @@ The results of this thesis will directly contribute to the Artemis platform, an 
 The PhD candidate will be co-supervised by Jannik Laval, Université de Lyon 2 and Sylvain Guérin, IMT-Atlantique within [DISP laboratory](https://www.disp-lab.fr).
 
 The candidate will benefit from a stimulating scientific and industrial environment of the highest level, with access to a national network of leading research institutions and industry partners, regular interactions with the broader EDT community through workshops, seminars, and joint demonstrators, and the opportunity to contribute to Artemis, the program's open software platform.
-
-## What You Will Gain from This PhD
-
-This PhD offers the opportunity to:
-
-- Develop highly sought-after skills in system modeling, real-time data processing, and collaborative innovation.
-- Collaborate with leading partners (Inria, CEA, CNRS, etc.) and validate your research on real-world industrial use cases.
-- Join a network of PhD candidates within the EDT program, fostering collaboration, peer support, and interdisciplinary exchanges.
-- Contribute to an open-source platform (Artemis) and publish in international conferences and journals.
-- Gain recognition in a rapidly growing field, with career prospects in academic research, industrial R&D, or entrepreneurship.
-
-Upon completion, you will be positioned as a recognized expert in a key domain for industry and research, with diverse professional opportunities in France and internationally.
-

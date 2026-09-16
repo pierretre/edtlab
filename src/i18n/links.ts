@@ -9,7 +9,7 @@
  * const lang = 'fr';
  * ---
  * 
- * <!-- Instead of: href={lang === "fr" ? `/fr/nous-rejoindre/${position.slug.replace("-fr", "")}` : `/en/join-us/${position.slug.replace("-en", "")}`} -->
+ * <!-- Instead of: href={lang === "fr" ? `/fr/postes/${position.slug.replace("-fr", "")}` : `/en/positions/${position.slug.replace("-en", "")}`} -->
  * <a href={linkHelpers.position(lang, position.slug)}>Position</a>
  * 
  * <!-- Instead of: href={lang === "fr" ? "/fr/actualites" : "/en/news"} -->
@@ -35,8 +35,8 @@ const CONTENT_ROUTES: Record<ContentType, { en: string; fr: string }> = {
         fr: 'actualites'
     },
     'positions': {
-        en: 'join-us',
-        fr: 'nous-rejoindre'
+        en: 'positions',
+        fr: 'postes'
     },
     'use-cases': {
         en: 'use-cases',
@@ -201,7 +201,7 @@ export const linkHelpers = {
     newsIndex: (lang: Lang) => getContentLink(lang, 'news'),
 
     /**
-     * Generate careers/join-us link
+     * Generate careers/positions link
      */
     careers: (lang: Lang) => getContentLink(lang, 'positions'),
 

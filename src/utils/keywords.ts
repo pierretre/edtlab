@@ -51,9 +51,9 @@ export function generatePageKeywords(
         keywords.push(...getKeywords('news', lang));
     }
 
-    if (href.includes('join-us') || href.includes('nous-rejoindre')) {
-        keywords.push(t('nav.join-us').toLowerCase());
-        keywords.push(...getKeywords('join-us', lang));
+    if (href.includes('positions') || href.includes('postes')) {
+        keywords.push(t('nav.positions').toLowerCase());
+        keywords.push(...getKeywords('positions', lang));
     }
 
     if (href.includes('contact')) {
