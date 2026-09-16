@@ -84,7 +84,7 @@ Email: [contact@organization.edu]
 
 - [Related press release](/press-releases/related-announcement)
 - [Program website](/program)
-- [Research publications](/production/publications)
+- [Research publications](/publications)
 
 ---
 
