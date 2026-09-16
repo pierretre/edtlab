@@ -8,4 +8,5 @@ export interface Publication {
     type: 'journal' | 'conference' | 'book' | 'delivrable' | 'white-paper' | 'preprint' | 'thesis' | 'workshop-paper' | 'slidedeck';
     tags?: string[];
     origin?: 'edt' | 'external';
+    published_at?: Date;
 }

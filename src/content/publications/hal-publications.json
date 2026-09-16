@@ -1,50 +1,10 @@
 {
   "response":{
-    "numFound":11,
+    "numFound":12,
     "start":0,
     "maxScore":1.0,
     "numFoundExact":true,
     "docs":[{
-      "docid":"5718831",
-      "title_s":["Towards a Methodology for Continuous Model-Driven Digital Twin Engineering"],
-      "keyword_s":["Methodology","Continuous Engineering","Digital Twin","Model-Driven Engineering"],
-      "conferenceTitle_s":"MODELS 2026 - 29th International Conference on Model Driven Engineering Languages and Systems",
-      "authFullName_s":["Hafiyyan Sayyid Fadhlillah","Djamel Eddine Khelladi","Benoit Combemale","Vittoriano Muttillo","Hugo Bruneliere","Luca Berardinelli"],
-      "uri_s":"https://hal.science/hal-05718831v1",
-      "docType_s":"COMM",
-      "doiId_s":"10.1145/3822455.3838764",
-      "producedDateY_i":2026
-    },{
-      "docid":"5223776",
-      "title_s":["Engineering Digital Twins: A Research Roadmap"],
-      "conferenceTitle_s":"EDTconf 2025 -  2nd International Conference on Engineering Digital Twins",
-      "authFullName_s":["Benoît Combemale","Pascale Vicat-Blanc","Arnaud Blouin","Hind Bril El Haouzi","Jean-Michel Bruel","Julien Deantoni","Thierry Duval","Sébastien Gérard","Jean-Marc Jézéquel"],
-      "uri_s":"https://inria.hal.science/hal-05223776v1",
-      "docType_s":"COMM",
-      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
-      "doiId_s":"10.1109/MODELS-C68889.2025.00035",
-      "producedDateY_i":2025
-    },{
-      "docid":"5221809",
-      "title_s":["On the Challenges of Integrating Digital Twins"],
-      "keyword_s":["Composition","Integration","Digital twin"],
-      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
-      "authFullName_s":["Benoît Combemale","Jörg Kienzle","Gunter Mussbacher","Pascal Archambault","Jean-Michel Bruel","Loli Burgueño","Betty H C Cheng","Loek Cleophas","Gregor Engels","Damien Foures","Stefan Klikovits","Vinay Kulkarni","Judith Michael","Sébastien Mosser","Houari Sahraoui","Eugene Syriani","Andreas Wortmann"],
-      "uri_s":"https://inria.hal.science/hal-05221809v1",
-      "docType_s":"COMM",
-      "collaboration_s":["DTCOMPOSE"],
-      "producedDateY_i":2025
-    },{
-      "docid":"5723120",
-      "title_s":["Towards the Model-Based Engineering of Composable and Reusable Digital Twins: the Digital Twin Interface Concept"],
-      "keyword_s":["Digital twin","Modeling and modularity","Abstraction","Federation","Reuse","Composition","Model-Based Engineering","Interfaces"],
-      "conferenceTitle_s":"EDT 2026 - 3rd International Conference on Engineering Digital Twins",
-      "authFullName_s":["Martina Nolletti","Hugo Bruneliere","Benoit Combemale","Romina Eramo","Peeter Kool"],
-      "uri_s":"https://inria.hal.science/hal-05723120v1",
-      "docType_s":"COMM",
-      "doiId_s":"10.1145/3837062.3839088",
-      "producedDateY_i":2026
-    },{
       "docid":"5676507",
       "title_s":["A Model-Based Framework for Developing DTs in Industry 4.0"],
       "keyword_s":["Industry 40","Development Process","Automation","Digital Twins","Industry 40 JOT reference format"],
@@ -54,6 +14,18 @@
       "docType_s":"COMM",
       "collaboration_s":["TWINOPS"],
       "doiId_s":"10.5381/jot.2026.25.3.a18",
+      "producedDate_tdate":"2026-06-30T00:00:00Z",
+      "producedDateY_i":2026
+    },{
+      "docid":"5723120",
+      "title_s":["Towards the Model-Based Engineering of Composable and Reusable Digital Twins: the Digital Twin Interface Concept"],
+      "keyword_s":["Digital twin","Modeling and modularity","Abstraction","Federation","Reuse","Composition","Model-Based Engineering","Interfaces"],
+      "conferenceTitle_s":"EDT 2026 - 3rd International Conference on Engineering Digital Twins",
+      "authFullName_s":["Martina Nolletti","Hugo Bruneliere","Benoit Combemale","Romina Eramo","Peeter Kool"],
+      "uri_s":"https://inria.hal.science/hal-05723120v1",
+      "docType_s":"COMM",
+      "doiId_s":"10.1145/3837062.3839088",
+      "producedDate_tdate":"2026-10-05T00:00:00Z",
       "producedDateY_i":2026
     },{
       "docid":"5221886",
@@ -64,6 +36,7 @@
       "uri_s":"https://inria.hal.science/hal-05221886v1",
       "docType_s":"COMM",
       "collaboration_s":["TWINOPS"],
+      "producedDate_tdate":"2025-10-06T00:00:00Z",
       "producedDateY_i":2025
     },{
       "docid":"5095351",
@@ -74,6 +47,7 @@
       "docType_s":"ART",
       "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
       "doiId_s":"10.1002/sys.21815",
+      "producedDate_tdate":"2025-04-02T00:00:00Z",
       "producedDateY_i":2025
     },{
       "docid":"5701147",
@@ -84,7 +58,19 @@
       "uri_s":"https://hal.science/hal-05701147v1",
       "docType_s":"COMM",
       "collaboration_s":["GENUINE"],
+      "producedDate_tdate":"2026-09-29T00:00:00Z",
       "producedDateY_i":2026
+    },{
+      "docid":"5221809",
+      "title_s":["On the Challenges of Integrating Digital Twins"],
+      "keyword_s":["Composition","Integration","Digital twin"],
+      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
+      "authFullName_s":["Benoît Combemale","Jörg Kienzle","Gunter Mussbacher","Pascal Archambault","Jean-Michel Bruel","Loli Burgueño","Betty H C Cheng","Loek Cleophas","Gregor Engels","Damien Foures","Stefan Klikovits","Vinay Kulkarni","Judith Michael","Sébastien Mosser","Houari Sahraoui","Eugene Syriani","Andreas Wortmann"],
+      "uri_s":"https://inria.hal.science/hal-05221809v1",
+      "docType_s":"COMM",
+      "collaboration_s":["DTCOMPOSE"],
+      "producedDate_tdate":"2025-10-06T00:00:00Z",
+      "producedDateY_i":2025
     },{
       "docid":"5723092",
       "title_s":["A Dual-Lens Conceptual Framework for Digital Twin V&amp;V"],
@@ -94,6 +80,18 @@
       "uri_s":"https://inria.hal.science/hal-05723092v1",
       "docType_s":"COMM",
       "doiId_s":"10.1145/3837062.3839091",
+      "producedDate_tdate":"2026-10-05T00:00:00Z",
+      "producedDateY_i":2026
+    },{
+      "docid":"5730575",
+      "title_s":["An Exemplar of a Digital Twin in Mechanical Engineering: Understanding Model Hybridization"],
+      "keyword_s":["Digital Twin Hybridization Modeling Physics-Based Modeling Data-Driven Modeling","Data-Driven Modeling","Physics-Based Modeling","Modeling","Hybridization","Digital Twin"],
+      "conferenceTitle_s":"EDTconf 2026 - International Conference on Engineering Digital Twins",
+      "authFullName_s":["Mahussi Datongnon","Hubert Lejeune","Yoann Jus","Benoit Combemale","Julien Deantoni"],
+      "uri_s":"https://inria.hal.science/hal-05730575v1",
+      "docType_s":"COMM",
+      "doiId_s":"10.1145/3837062.3839089",
+      "producedDate_tdate":"2026-10-05T00:00:00Z",
       "producedDateY_i":2026
     },{
       "docid":"5485243",
@@ -103,6 +101,7 @@
       "uri_s":"https://inria.hal.science/hal-05485243v1",
       "docType_s":"ART",
       "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
+      "producedDate_tdate":"2025-01-01T00:00:00Z",
       "producedDateY_i":2025
     },{
       "docid":"5224789",
@@ -113,7 +112,30 @@
       "uri_s":"https://inria.hal.science/hal-05224789v1",
       "docType_s":"COMM",
       "collaboration_s":["DTCOMPOSE"],
+      "producedDate_tdate":"2025-09-09T00:00:00Z",
       "producedDateY_i":2025
+    },{
+      "docid":"5223776",
+      "title_s":["Engineering Digital Twins: A Research Roadmap"],
+      "conferenceTitle_s":"EDTconf 2025 -  2nd International Conference on Engineering Digital Twins",
+      "authFullName_s":["Benoît Combemale","Pascale Vicat-Blanc","Arnaud Blouin","Hind Bril El Haouzi","Jean-Michel Bruel","Julien Deantoni","Thierry Duval","Sébastien Gérard","Jean-Marc Jézéquel"],
+      "uri_s":"https://inria.hal.science/hal-05223776v1",
+      "docType_s":"COMM",
+      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
+      "doiId_s":"10.1109/MODELS-C68889.2025.00035",
+      "producedDate_tdate":"2025-10-06T00:00:00Z",
+      "producedDateY_i":2025
+    },{
+      "docid":"5718831",
+      "title_s":["Towards a Methodology for Continuous Model-Driven Digital Twin Engineering"],
+      "keyword_s":["Methodology","Continuous Engineering","Digital Twin","Model-Driven Engineering"],
+      "conferenceTitle_s":"MODELS 2026 - 29th International Conference on Model Driven Engineering Languages and Systems",
+      "authFullName_s":["Hafiyyan Sayyid Fadhlillah","Djamel Eddine Khelladi","Benoit Combemale","Vittoriano Muttillo","Hugo Bruneliere","Luca Berardinelli"],
+      "uri_s":"https://hal.science/hal-05718831v1",
+      "docType_s":"COMM",
+      "doiId_s":"10.1145/3822455.3838764",
+      "producedDate_tdate":"2026-10-04T00:00:00Z",
+      "producedDateY_i":2026
     }]
   }
 }

@@ -21,6 +21,7 @@ interface HalDoc {
     docSubType_s?: string;
     keyword_s?: string[];
     collaboration_s?: string[];
+    producedDate_tdate: string
 }
 
 // Raw response shape of https://api.hal.science/search/EDT/?...&wt=json,
@@ -119,6 +120,7 @@ const toPublication = (doc: HalDoc): Record<string, unknown> => {
         type: (doc.docType_s && DOC_TYPE_MAP[doc.docType_s]) || 'preprint',
         tags,
         origin: 'edt',
+        published_at: new Date(doc.producedDate_tdate)
     };
 };
 

@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import PublicationCard from "./PublicationCard.astro";
+import { publicationSortTime } from "@utils/date";
 
 export interface Props {
     project?: string;
@@ -16,11 +17,15 @@ const t = useTranslations(lang);
 let relatedPublications: any[] = [];
 if (project) {
     try {
-        const allPublications = await getCollection("publications");
+        const allPublications = await getCollection("publications", (pub) =>
+            pub.data.tags.includes(project),
+        );
 
-        // Filter publications explicitly associated with this project
         relatedPublications = allPublications
-            .filter((pub) => pub.data.tags.includes(project))
+            .sort(
+                (a, b) =>
+                    publicationSortTime(b.data) - publicationSortTime(a.data),
+            )
             .slice(0, 3); // Limit to 3 most relevant publications
     } catch (error) {
         console.warn(`Could not load publications: ${error}`);

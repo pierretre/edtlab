@@ -34,6 +34,7 @@ const publicationsCollection = defineCollection({
         url: z.url().optional(),
         tags: z.array(z.string()).optional().default([]),
         origin: z.enum(['edt', 'external']).optional().default('external'),
+        published_at: z.date().optional(),
     })
 });
 
