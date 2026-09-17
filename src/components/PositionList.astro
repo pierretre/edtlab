@@ -12,8 +12,9 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-// Get all open positions for the current language, excluding filled ones
-// (filled/occupied positions are surfaced on the project (PC) pages instead)
+// Get every position for the current language. Both open and filled positions
+// are rendered in the grid — the status filter below (default: "available")
+// hides filled ones client-side, and lets visitors switch to see filled ones.
 const allPositions = await getCollection("positions");
 
 // Sort positions: EDT first, then external; within each group by date then title
@@ -36,40 +37,27 @@ const sortedPositions = allPositions.sort((a, b) => {
     // Finally by title
     return (a.data.title || "").localeCompare(b.data.title || "");
 });
+
+// Count of currently open positions (the default "available" filter view)
+const openPositionsCount = sortedPositions.filter(
+    (position) => !position.data.filled,
+).length;
 ---
 
 <div class="w-full mb-12">
     <!-- Header with statistics -->
     <div class="mb-6 p-4 bg-primary-50 rounded-lg border border-primary-200">
-        <div
-            class="flex flex-col sm:flex-row sm:items-center sm:justify-between"
-        >
-            <div>
-                <h2 class="text-lg font-semibold text-primary-800 mb-1">
-                    {t("positions.current-opportunities")}
-                </h2>
-                <p class="text-primary-600 text-sm font-bold mb-0">
-                    {
-                        t("positions.available-count").replace(
-                            "{count}",
-                            sortedPositions.length.toString(),
-                        )
-                    }
-                </p>
-            </div>
-            <div class="mt-3 sm:mt-0">
-                <span
-                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-600"
-                >
-                    {
-                        t("positions.total-positions").replace(
-                            "{count}",
-                            sortedPositions.length.toString(),
-                        )
-                    }
-                </span>
-            </div>
-        </div>
+        <h2 class="text-lg font-semibold text-primary-800 mb-1">
+            {t("positions.current-opportunities")}
+        </h2>
+        <p class="text-primary-600 text-sm font-bold mb-0">
+            {
+                t("positions.available-count").replace(
+                    "{count}",
+                    openPositionsCount.toString(),
+                )
+            }
+        </p>
     </div>
 
     <div class="flex flex-col lg:flex-row gap-10">
@@ -90,7 +78,7 @@ const sortedPositions = allPositions.sort((a, b) => {
                     {
                         t("positions.results-count").replace(
                             "{count}",
-                            sortedPositions.length.toString(),
+                            openPositionsCount.toString(),
                         )
                     }
                 </span>
