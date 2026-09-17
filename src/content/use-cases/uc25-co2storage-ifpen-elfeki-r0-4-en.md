@@ -11,6 +11,7 @@ summary: >-
   Monitoring digital twin for a geological CO₂ storage site in a saline aquifer, enabling near-real-time data assimilation, prediction of the reservoir's dynamic behavior, risk quantification, and anomaly detection (overpressure, lateral CO₂ migration beyond reservoir boundaries).
 usersCount: 0
 lang: en
+photo: /media/uploads/uc-default.svg
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: energy
 # maturity : concept | poc | prototype | operational

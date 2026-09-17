@@ -11,6 +11,7 @@ summary: >-
   Jumeau numérique de surveillance d'un stockage géologique de CO₂ en aquifère salin, permettant l'assimilation de données en quasi-temps réel, la prédiction du comportement dynamique du réservoir, la quantification des risques et la détection d'anomalies (surpression, migration latérale de CO₂ au-delà des limites du réservoir).
 usersCount: 0
 lang: fr
+photo: /media/uploads/uc-default.svg
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
 domain: energy
 # maturity : concept | poc | prototype | operational
