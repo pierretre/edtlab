@@ -187,7 +187,7 @@ RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridatio
 
 Caractériser les incertitudes sur les paramètres physiques (perméabilité, porosité) et les paramètres de contrôle futur du puits et les propager jusqu'aux prédictions et évaluations de risque pour produire des intervalles de confiance exploitables par les opérateurs.
 
-RQ associées : RQ_D2 (incertitude des données), RQ_I5 (enveloppe de validité), RQ_T4 (quantification de la précision et fidélité)
+RQ associées : RQ_D2 (incertitude des données), RQ_I1 (enveloppe de validité), RQ_T4 (quantification de la précision et fidélité)
 
 ### Détection d'anomalies et gestion des risques
 

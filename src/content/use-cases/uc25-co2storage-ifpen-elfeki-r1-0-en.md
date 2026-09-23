@@ -187,7 +187,7 @@ Associated RQs: RQ_I3 (model hybridization), RQ_I4 (hybridization operators)
 
 Characterizing uncertainty on physical parameters (permeability, porosity) and future well control parameters, and propagating it through to predictions and risk assessments to produce confidence intervals usable by operators.
 
-Associated RQs: RQ_D2 (data uncertainty), RQ_I5 (validity envelope), RQ_T4 (accuracy and fidelity quantification)
+Associated RQs: RQ_D2 (data uncertainty), RQ_I1 (validity envelope), RQ_T4 (accuracy and fidelity quantification)
 
 ### Anomaly detection and risk management
 
