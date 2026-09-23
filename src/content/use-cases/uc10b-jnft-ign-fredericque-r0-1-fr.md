@@ -6,13 +6,18 @@ contacts:
   - name: Benoit Frédéricque
     org: IGN
     email: benoit.fredericque@ign.fr
-    role: Tech Lead 
+    role: Tech Lead
   - name: Quentin Houéry
     org: IGN
     email: quentin.houery@ign.fr
     role: Project coordinator
 summary: >-
-JUNN est une démarche visant à développer un socle technologique commun, ouvert et souverain, qui facilitera le déploiement des jumeaux numériques de territoires. Opéré à terme au travers d’une plateforme en ligne partagée, ce socle mutualisera des services de base génériques, prêts à l’emploi, et offrira un espace d’intégration et de combinaison de composants logiciels plus spécialisés (tels que des outils logiciels pour la simulation du risque d’inondation), développés et valorisés par les acteurs métier des différents secteurs d’usage.
+  JUNN est une démarche visant à développer un socle technologique commun, ouvert et souverain, qui facilitera
+  le déploiement des jumeaux numériques de territoires. Opéré à terme au travers d'une plateforme en ligne
+  partagée, ce socle mutualisera des services de base génériques, prêts à l'emploi, et offrira un espace
+  d'intégration et de combinaison de composants logiciels plus spécialisés (tels que des outils logiciels pour
+  la simulation du risque d'inondation), développés et valorisés par les acteurs métier des différents
+  secteurs d'usage.
 usersCount: 0
 lang: fr
 # domain : industrial-engineering | energy | geospatial | maritime | telecommunications | environment | health | robotics | agriculture | other
@@ -44,10 +49,10 @@ construction, dans un contexte de changement climatique et de menaces
 anthropiques croissantes.
 
 Les Jumeau Numériques des Territoires (JNT) sont des modèles
-numérique dynamiques et prospectifs des territoires. Ils s’inscrivent à une
-échelle territoriale plus fine que les modèles à l’échelle mondiale et plus
-abstraites que les jumeaux numériques locaux (ex : Jumeau d’ouvrage d’art,
-jumeaux d’usines). Le programme JUNN a pour objectif de fournir une fondation
+numérique dynamiques et prospectifs des territoires. Ils s'inscrivent à une
+échelle territoriale plus fine que les modèles à l'échelle mondiale et plus
+abstraites que les jumeaux numériques locaux (ex : Jumeau d'ouvrage d'art,
+jumeaux d'usines). Le programme JUNN a pour objectif de fournir une fondation
 technique open-source et un jeu de données 3D ouvert pour faciliter le
 développement d'initiatives de jumeaux numériques de territoires.
 
@@ -92,33 +97,23 @@ La France et ses territoires : systèmes naturels (relief, hydrographie, végét
 
 JUNN est un outil de connaissance, de simulation et d'aide à la décision. Les sorties du
 JN alimentent les politiques publiques d'aménagement, de gestion des risques
-naturels et d'adaptation climatique. Il n’est pas prévu d’actionneur
-directement dans le socle pour l’instant. En revanche, des actionneurs peuvent
-être ajoutés sous la forme d’extensions au socle.
+naturels et d'adaptation climatique. Il n'est pas prévu d'actionneur
+directement dans le socle pour l'instant. En revanche, des actionneurs peuvent
+être ajoutés sous la forme d'extensions au socle.
 
 ### MC3 - Composants de captation physiques
 
-Données produites dans le cadre du programme JUNN
+Données produites dans le cadre du programme JUNN :
 
-- - Maillages
-     sémantiques non texturés (Wasure + CGAL + LidarHD / IGN, Geometry Factory
-     & LASTIG)
-  - Maillages
-     texturés photoréalistes (IGO, 4 départements pilotes)
-  - Données
-     vectorielles multithématiques (SIRADEL - données, LUXCARTA - logiciel)
-  
-  Données et sources externes identifiées pour être
-  référencées dynamiquement par le socle JUNN
-  
-  - Orthoimages,
-     MNS (Modèle Numérique de Surface) et MNT (Modèle Numérique de Terrain) -
-     IGN, 20 cm/pixel, échelle nationale
-  
-  - Cartes d'occupation des sols
-    (Land Use Land Cover) - IGN, 20 cm/pix
-  
-  - Capteurs  IoT terrain, data spaces
+- Maillages sémantiques non texturés (Wasure + CGAL + LidarHD / IGN, Geometry Factory & LASTIG)
+- Maillages texturés photoréalistes (IGO, 4 départements pilotes)
+- Données vectorielles multithématiques (SIRADEL - données, LUXCARTA - logiciel)
+
+Données et sources externes identifiées pour être référencées dynamiquement par le socle JUNN :
+
+- Orthoimages, MNS (Modèle Numérique de Surface) et MNT (Modèle Numérique de Terrain) - IGN, 20 cm/pixel, échelle nationale
+- Cartes d'occupation des sols (Land Use Land Cover) - IGN, 20 cm/pixel
+- Capteurs IoT terrain, data spaces
 
 ### MC4 - Interaction physique → virtuel
 
@@ -143,7 +138,7 @@ territoriaux pour orienter les politiques et actions sur le terrain.
 Temporalité prospective et de planification : simulation
 de scénarios à court, moyen et long terme, visualisation de données historiques.
 Mise à jour continue du jeu de données géospatiales selon les cycles de
-production IGN et des partenaires.  Connexion à des données temps réel à l’aide de
+production IGN et des partenaires. Connexion à des données temps réel à l'aide de
 services externes (ex : API HUB EAU).
 
 ### MC8 - Multiplicités
@@ -156,27 +151,17 @@ Opération et gestion continue des territoires (surveillance de l'évolution du 
 
 ### MC10 - Modèles et données
 
-Données produites dans le cadre du programme JUNN
+Données produites dans le cadre du programme JUNN :
 
-- Maillages
-   sémantiques non texturés (Wasure + CGAL + LidarHD / IGN, Geometry Factory
-   & LASTIG)
-- Maillages
-   texturés photoréalistes (IGO, 4 départements pilotes)
-- Données
-   vectorielles multithématiques (SIRADEL - données, LUXCARTA - logiciel)
+- Maillages sémantiques non texturés (Wasure + CGAL + LidarHD / IGN, Geometry Factory & LASTIG)
+- Maillages texturés photoréalistes (IGO, 4 départements pilotes)
+- Données vectorielles multithématiques (SIRADEL - données, LUXCARTA - logiciel)
 
-Données et sources externes indentifiées pour être
-référencées dynamiquement par le socle JUNN
+Données et sources externes identifiées pour être référencées dynamiquement par le socle JUNN :
 
-- Orthoimages,
-   MNS (Modèle Numérique de Surface) et MNT (Modèle Numérique de Terrain) -
-   IGN, 20 cm/pixel, échelle nationale
-- Cartes
-   d'occupation des sols (Land Use Land Cover) - IGN, 20 cm/
-- LLM
-   et IA pour les applications scientifiques et de décision (H2E AI
-   Factory France)
+- Orthoimages, MNS (Modèle Numérique de Surface) et MNT (Modèle Numérique de Terrain) - IGN, 20 cm/pixel, échelle nationale
+- Cartes d'occupation des sols (Land Use Land Cover) - IGN, 20 cm/pixel
+- LLM et IA pour les applications scientifiques et de décision (H2E AI Factory France)
 
 ### MC11 - Outils et facilitateurs
 
@@ -200,7 +185,7 @@ Connecteurs vers les jumeaux d'infrastructure, jumeaux territoriaux locaux, IoT,
 
 ### MC16 - Hébergement / déploiement
 
-Socle technique open-source, déployable à différentes échelles. Architecture distribuée articulant niveau national  et déploiements locaux. Connexion à l'infrastructure DestinE au niveau européen/mondial.
+Socle technique open-source, déployable à différentes échelles. Architecture distribuée articulant niveau national et déploiements locaux. Connexion à l'infrastructure DestinE au niveau européen/mondial.
 
 ### MC17 - Insights et prise de décision
 
@@ -246,31 +231,31 @@ RQ associées : RQ_I3 (hybridation de modèles), RQ_I4 (opérateurs d'hybridatio
 
 Assurer la compatibilité et l'échange entre des sources de données hétérogènes (IGN, SIRADEL, LUXCARTA, DestinE, IoT terrain), des formats variés (raster, vecteur, 3D Tiles, CityGML), les modèles de simulations et des platformes différentes, tout en respectant les standards OGC et INSPIRE.
 
-RQ associées : RQ_D11 (interopérabilité sémantique), RQ_E1 (standardisation des interfaces), RQ_E2 (modularisation)
+RQ associées : RQ_D11 (interopérabilité sémantique), RQ_E1 (interface métadonnées modèles et services), RQ_E6 (standards et protocoles d'interopérabilité)
 
 ### Gestion du cycle de vie et développement collaboratif des modèles (PC3)
 
 Gérer l'évolution continue du jeu de données 3D ouvert, des modèles et de la fondation logicielle open-source dans un contexte multi-acteurs (IGN, collectivités, chercheurs, industriels), en assurant la traçabilité des versions, la cohérence des mises à jour et la gouvernance ouverte.
 
-RQ associées : RQ_D6 (évolution des modèles), RQ_E3 (co-simulation et composition), RQ_D4 (qualité et couverture des données)
+RQ associées : RQ_D6 (évolution des modèles), RQ_P8 (déploiement et versionnement des modèles), RQ_P5 (gestion modèles/données par secteur)
 
 ### Collecte intelligente de données territoriales (PC4)
 
 Optimiser les stratégies d'acquisition de données géospatiales à grande échelle (type, résolution, fréquence de mise à jour) pour alimenter les JNT de manière efficiente, en s'appuyant sur des capteurs IoT, des drones, des satellites et des sources participatives.
 
-RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D4 (qualité et couverture des données), RQ_D2 (incertitude des données)
+RQ associées : RQ_D3 (collecte de données hétérogènes), RQ_D1 (déploiement capteurs), RQ_D2 (incertitude des données)
 
 ### Interactions humain-machine pour l'exploration territoriale (PC5)
 
 Concevoir des interfaces de visualisation et d'exploration du modèle adaptées à des utilisateurs aux profils variés (décideurs, chercheurs, grand public), permettant une interrogation intuitive, la comparaison de scénarios et l'interprétation des résultats de simulation.
 
-RQ associées : RQ_F5 (interfaces et visualisation), RQ_F2 (explicabilité), RQ_F3 (composition et incertitude)
+RQ associées : RQ_U1 (création de représentations visuelles DT), RQ_U2 (perception et compréhension du système original), RQ_U5 (utilisabilité des DTs)
 
 ### Passage à l'échelle nationale
 
-Relever les défis techniques du déploiement à l'échelle nationale d'un socle de jumeau numérique territorial (volumétrie des données, calcul distribué, temps de rendu 3D, gestion des mises à jour continues) tout en maintenant des performances d'accès et  d'appropriation pour les utilisateurs.
+Relever les défis techniques du déploiement à l'échelle nationale d'un socle de jumeau numérique territorial (volumétrie des données, calcul distribué, temps de rendu 3D, gestion des mises à jour continues) tout en maintenant des performances d'accès et d'appropriation pour les utilisateurs.
 
-RQ associées : RQ_E4 (scalabilité), RQ_E5 (performance et temps réel), RQ_I2 (composition de simulations)
+RQ associées : RQ_P6 (passage à l'échelle), RQ_C1 (orchestration dynamique Cloud/Edge), RQ_D7 (interface CRUD modèles de simulation)
 
 ---
 
