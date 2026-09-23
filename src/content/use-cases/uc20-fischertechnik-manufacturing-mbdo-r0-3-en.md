@@ -367,7 +367,7 @@ The challenge is to extend this approach to the engineering of more complex digi
 
 This approach is part of a vision in which the digital twin can be built, adapted and evolved from a set of models describing the physical system, its behaviors and the associated services.
 
-**Associated RQs:** RQ\_E2 (modularization), RQ\_E1 (manipulation and querying of model and service metadata), and the engineering-process RQs relating to viewpoints, model types and model lifecycle management (i.e. RQ_D11 (semantic interoperability))
+**Associated RQs:** RQ_E2 (modularization), RQ_E1 (manipulation and querying of model and service metadata), and the engineering-process RQs relating to viewpoints, model types and model lifecycle management (i.e. RQ_D11 (semantic interoperability))
 
 ### Synchronization and integration of heterogeneous data and models
 
@@ -377,7 +377,7 @@ The challenge is to maintain a consistent representation of the system despite t
 
 From this perspective, the separation between data collection, filtering, aggregation, persistence and use is an important element of the architecture.
 
-**Associated RQs:** RQ\_C4 (consistent and safe bidirectional exchanges between the physical system and the DT), RQ_D2 (data uncertainty), RQ_D3 (heterogeneous data collection), RQ_D6 (model evolution), RQ_I5 (effect of hybridization on validity)
+**Associated RQs:** RQ_C4 (consistent and safe bidirectional exchanges between the physical system and the DT), RQ_D2 (data uncertainty), RQ_D3 (heterogeneous data collection), RQ_D6 (model evolution), RQ_I5 (effect of hybridization on validity)
 
 ### Co-engineering and continuous evolution of the digital twin
 

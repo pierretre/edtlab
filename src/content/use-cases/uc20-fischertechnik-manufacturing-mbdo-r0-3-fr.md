@@ -367,7 +367,7 @@ L'enjeu est d'étendre cette approche à l'ingénierie de jumeaux numériques pl
 
 Cette approche s'inscrit dans une vision où le jumeau numérique peut être construit, adapté et évolué à partir d'un ensemble de modèles décrivant le système physique, ses comportements et les services qui lui sont associés.
 
-**RQ associées :** RQ\_E2 (modularisation), RQ\_E1 (manipulation et interrogation des métadonnées des modèles et services), et les RQ du processus d'ingénierie relatives aux points de vue, types de modèles et gestion du cycle de vie des modèles (ie. RQ_D11 (interopérabilité sémantique) )
+**RQ associées :** RQ_E2 (modularisation), RQ_E1 (manipulation et interrogation des métadonnées des modèles et services), et les RQ du processus d'ingénierie relatives aux points de vue, types de modèles et gestion du cycle de vie des modèles (ie. RQ_D11 (interopérabilité sémantique) )
 
 ### Synchronisation et intégration de données et de modèles hétérogènes
 
@@ -377,7 +377,7 @@ L'enjeu est de maintenir une représentation cohérente du système malgré l'h�
 
 Dans cette perspective, la séparation entre collecte, filtrage, agrégation, persistance et exploitation des données constitue un élément important de l'architecture.
 
-**RQ associées :** RQ\_C4 (échanges bidirectionnels cohérents et sûrs entre système physique et DT), RQ_D2 (incertitude des données), RQ_D3 (collecte de données hétérogènes), RQ_D6 (évolution des modèles), RQ_I5 (effet de l'hybridation sur la validité)
+**RQ associées :** RQ_C4 (échanges bidirectionnels cohérents et sûrs entre système physique et DT), RQ_D2 (incertitude des données), RQ_D3 (collecte de données hétérogènes), RQ_D6 (évolution des modèles), RQ_I5 (effet de l'hybridation sur la validité)
 
 ### Co-ingénierie et évolution continue du jumeau numérique
 
