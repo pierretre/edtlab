@@ -374,6 +374,9 @@ export const ui = {
         'phd-club.form.validation-required': 'This field is required.',
         'phd-club.form.validation-email': 'Please enter a valid email address.',
         'phd-club.form.validation-consent': 'You must accept this condition to continue.',
+        'phd-club.members.intro': 'The Club brings together {count} PhD students from the EDT programme.',
+        'phd-club.members.empty': 'The member list will be published soon.',
+        'phd-club.members.supervised-by': 'Supervised by',
 
         // CT Industriels (Digital Twins Technical Committee) join form
         'ct-industriels.form.required': 'Required',
@@ -812,6 +815,9 @@ export const ui = {
         'phd-club.form.validation-required': 'Ce champ est obligatoire.',
         'phd-club.form.validation-email': 'Veuillez saisir une adresse email valide.',
         'phd-club.form.validation-consent': 'Vous devez accepter cette condition pour continuer.',
+        'phd-club.members.intro': 'Le club rassemble {count} doctorantes et doctorants du programme EDT.',
+        'phd-club.members.empty': 'La liste des membres sera publiée prochainement.',
+        'phd-club.members.supervised-by': 'Encadrement :',
 
         // CT Industriels (Comité Technique des Jumeaux Numériques) — formulaire d'adhésion
         'ct-industriels.form.required': 'Obligatoire',
