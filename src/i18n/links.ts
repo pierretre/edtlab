@@ -201,11 +201,6 @@ export const linkHelpers = {
     newsIndex: (lang: Lang) => getContentLink(lang, 'news'),
 
     /**
-     * Generate careers/positions link
-     */
-    careers: (lang: Lang) => getContentLink(lang, 'positions'),
-
-    /**
      * Generate redirected page link (for entries with redirectTo field) for any collection
      */
     redirect: async (entry: CollectionEntry<ContentType | "pages">) => {

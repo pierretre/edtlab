@@ -26,7 +26,11 @@ if (project) {
         ongoingPositions = forProject
             .filter((p) => p.data.filled && p.data.researcher)
             .filter((p) => !p.data.lang || p.data.lang === lang)
-            .sort((a, b) => (b.data.startDate?.getTime() ?? 0) - (a.data.startDate?.getTime() ?? 0));
+            .sort(
+                (a, b) =>
+                    (b.data.startDate?.getTime() ?? 0) -
+                    (a.data.startDate?.getTime() ?? 0),
+            );
     } catch (error) {
         console.warn(`Could not load positions: ${error}`);
     }
@@ -36,19 +40,27 @@ if (project) {
 <!-- Related Open Positions Section -->{
     openPositions.length > 0 && (
         <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <h2 id="related-positions" class="font-semibold text-gray-900 mb-4 mt-0">
+            <h2
+                id="related-positions"
+                class="font-semibold text-gray-900 mb-4 mt-0"
+            >
                 {t("projects.related-positions.title")}
             </h2>
 
             <div class="grid grid-cols-1 gap-4">
                 {openPositions.map((position) => (
-                    <PositionCard item={position.data} lang={lang} t={t} slug={position.id} />
+                    <PositionCard
+                        item={position.data}
+                        lang={lang}
+                        t={t}
+                        slug={position.id}
+                    />
                 ))}
             </div>
 
             <div class="mt-4 pt-3 border-t border-gray-100">
                 <a
-                    href={`${linkHelpers.careers(lang)}?project=${project}`}
+                    href={`${linkHelpers.page(lang, "join-us")}?project=${project}`}
                     class="text-sm text-primary-600 hover:text-primary-800 font-medium transition-colors"
                 >
                     {t("projects.related-positions.view-all")} →
@@ -61,7 +73,10 @@ if (project) {
 <!-- Ongoing Positions Section -->{
     ongoingPositions.length > 0 && (
         <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-            <h2 id="ongoing-positions" class="font-semibold text-gray-900 mb-4 mt-0">
+            <h2
+                id="ongoing-positions"
+                class="font-semibold text-gray-900 mb-4 mt-0"
+            >
                 {t("positions.ongoing.title")}
             </h2>
 
@@ -83,14 +98,21 @@ if (project) {
 
                         <div class="mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-600">
                             <div class="flex items-center">
-                                <span class="font-medium text-gray-800">{p.data.researcher.name}</span>
-                                {p.data.supervisors && p.data.supervisors.length > 0 && (
-                                    <span class="text-gray-500 ml-1">
-                                        {" "}
-                                        · {t("positions.supervised-by")}{" "}
-                                        {p.data.supervisors.map((sup: any) => sup.name).join(", ")}
-                                    </span>
-                                )}
+                                <span class="font-medium text-gray-800">
+                                    {p.data.researcher.name}
+                                </span>
+                                {p.data.supervisors &&
+                                    p.data.supervisors.length > 0 && (
+                                        <span class="text-gray-500 ml-1">
+                                            {" "}
+                                            · {t(
+                                                "positions.supervised-by",
+                                            )}{" "}
+                                            {p.data.supervisors
+                                                .map((sup: any) => sup.name)
+                                                .join(", ")}
+                                        </span>
+                                    )}
                             </div>
 
                             <div class="flex items-center">
@@ -100,14 +122,17 @@ if (project) {
                             {p.data.startDate && (
                                 <div class="flex items-center">
                                     <span>
-                                        {t("positions.start-date")}: {formatDate(p.data.startDate, lang)}
+                                        {t("positions.start-date")}:{" "}
+                                        {formatDate(p.data.startDate, lang)}
                                     </span>
                                 </div>
                             )}
                         </div>
 
                         {p.data.description && (
-                            <p class="text-gray-700 text-sm line-clamp-2 my-0">{p.data.description}</p>
+                            <p class="text-gray-700 text-sm line-clamp-2 my-0">
+                                {p.data.description}
+                            </p>
                         )}
                     </a>
                 ))}
