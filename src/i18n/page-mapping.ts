@@ -29,7 +29,7 @@ export const enToFrMapping: PageMapping = {
     'contact-us': 'nous-contacter', // Both use same href but different lang
     'about': 'a-propos',
     'phd-club': 'club-des-doctorants',
-    'industrials-tc': 'ct-industriels'
+    'industrials-ec': 'ct-industriels'
 };
 
 // French to English page mappings (reverse of above)
