@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//EDT Lab//Event//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+SUMMARY:EDT 2026 Plenary / Plénière EDT 2026
+DTSTART:20261209T080000Z
+DTEND:20261209T170000Z
+DTSTAMP:20261020T120000Z
+UID:plenary-edt-2026-12-09@edtlab.fr
+DESCRIPTION:Plénière annuelle du programme EDT (Engineering Digital Twins).\nBilan des projets ciblés et des actions transverses\, premiers résultats\, session de travail et table ronde.
+LOCATION:INP Toulouse\, ENSEEIHT
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
