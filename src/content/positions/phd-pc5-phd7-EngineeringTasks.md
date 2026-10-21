@@ -12,9 +12,7 @@ supervisors:
     role: co-supervisor
 startDate: 2026-09-01
 researchStatus: ongoing
-filled: true
-researcher:
-    name: Mohamed Said Aimen LAMRI
+filled: false
 location: "Rennes, France"
 expectedStartDate: "Autumn 2026"
 publishedDate: 2026-03-25
