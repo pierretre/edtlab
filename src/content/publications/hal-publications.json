@@ -16,17 +16,6 @@
       "producedDate_tdate":"2025-10-06T00:00:00Z",
       "producedDateY_i":2025
     },{
-      "docid":"5095351",
-      "title_s":["Model‐Driven Engineering for Digital Twins: Opportunities and Challenges"],
-      "journalTitle_s":"Systems Engineering",
-      "authFullName_s":["Judith Michael","Loek Cleophas","Steffen Zschaler","Tony Clark","Benoît Combemale","Thomas Godfrey","Djamel Eddine Khelladi","Vinay Kulkarni","Daniel Lehner","Bernhard Rumpe","Manuel Wimmer","Andreas Wortmann","Shaukat Ali","Balbir Barn","Ion Barosan","Nelly Bencomo","Francis Bordeleau","Georg Grossmann","Gabor Karsai","Oliver Kopp","Bernhard Mitschang","Paula Muñoz Ariza","Alfonso Pierantonio","Fiona Polack","Matthias Riebisch","Holger Schlingloff","Markus Stumptner","Antonio Vallecillo","Mark van den Brand","Hans Vangheluwe"],
-      "uri_s":"https://inria.hal.science/hal-05060561v1",
-      "docType_s":"ART",
-      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
-      "doiId_s":"10.1002/sys.21815",
-      "producedDate_tdate":"2025-04-02T00:00:00Z",
-      "producedDateY_i":2025
-    },{
       "docid":"5701147",
       "title_s":["Designing Usable User Interfaces of Digital Twins: Benefits and Limitations of Applying the User Centered Design Process"],
       "keyword_s":["Tasks Discovery","Operator Tasks","Digital Twins","User Centered Design Process","Usability"],
@@ -39,15 +28,15 @@
       "producedDate_tdate":"2026-09-29T00:00:00Z",
       "producedDateY_i":2026
     },{
-      "docid":"5221809",
-      "title_s":["On the Challenges of Integrating Digital Twins"],
-      "keyword_s":["Composition","Integration","Digital twin"],
-      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
-      "authFullName_s":["Benoît Combemale","Jörg Kienzle","Gunter Mussbacher","Pascal Archambault","Jean-Michel Bruel","Loli Burgueño","Betty H C Cheng","Loek Cleophas","Gregor Engels","Damien Foures","Stefan Klikovits","Vinay Kulkarni","Judith Michael","Sébastien Mosser","Houari Sahraoui","Eugene Syriani","Andreas Wortmann"],
-      "uri_s":"https://inria.hal.science/hal-05221809v1",
-      "docType_s":"COMM",
-      "collaboration_s":["DTCOMPOSE"],
-      "producedDate_tdate":"2025-10-06T00:00:00Z",
+      "docid":"5095351",
+      "title_s":["Model‐Driven Engineering for Digital Twins: Opportunities and Challenges"],
+      "journalTitle_s":"Systems Engineering",
+      "authFullName_s":["Judith Michael","Loek Cleophas","Steffen Zschaler","Tony Clark","Benoît Combemale","Thomas Godfrey","Djamel Eddine Khelladi","Vinay Kulkarni","Daniel Lehner","Bernhard Rumpe","Manuel Wimmer","Andreas Wortmann","Shaukat Ali","Balbir Barn","Ion Barosan","Nelly Bencomo","Francis Bordeleau","Georg Grossmann","Gabor Karsai","Oliver Kopp","Bernhard Mitschang","Paula Muñoz Ariza","Alfonso Pierantonio","Fiona Polack","Matthias Riebisch","Holger Schlingloff","Markus Stumptner","Antonio Vallecillo","Mark van den Brand","Hans Vangheluwe"],
+      "uri_s":"https://inria.hal.science/hal-05060561v1",
+      "docType_s":"ART",
+      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
+      "doiId_s":"10.1002/sys.21815",
+      "producedDate_tdate":"2025-04-02T00:00:00Z",
       "producedDateY_i":2025
     },{
       "docid":"5676507",
@@ -73,6 +62,17 @@
       "producedDate_tdate":"2026-10-05T00:00:00Z",
       "producedDateY_i":2026
     },{
+      "docid":"5221809",
+      "title_s":["On the Challenges of Integrating Digital Twins"],
+      "keyword_s":["Composition","Integration","Digital twin"],
+      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
+      "authFullName_s":["Benoît Combemale","Jörg Kienzle","Gunter Mussbacher","Pascal Archambault","Jean-Michel Bruel","Loli Burgueño","Betty H C Cheng","Loek Cleophas","Gregor Engels","Damien Foures","Stefan Klikovits","Vinay Kulkarni","Judith Michael","Sébastien Mosser","Houari Sahraoui","Eugene Syriani","Andreas Wortmann"],
+      "uri_s":"https://inria.hal.science/hal-05221809v1",
+      "docType_s":"COMM",
+      "collaboration_s":["DTCOMPOSE"],
+      "producedDate_tdate":"2025-10-06T00:00:00Z",
+      "producedDateY_i":2025
+    },{
       "docid":"5723092",
       "title_s":["A Dual-Lens Conceptual Framework for Digital Twin V&amp;V"],
       "keyword_s":["Software verification and validation","Digital Twin","Software and its engineering","Abstraction","Abstraction modeling and modularity"],
@@ -96,6 +96,16 @@
       "producedDate_tdate":"2026-10-05T00:00:00Z",
       "producedDateY_i":2026
     },{
+      "docid":"5485243",
+      "title_s":["Modeling and Digital Twins: Insights and Strategies for Software Engineers"],
+      "journalTitle_s":"IEEE Software",
+      "authFullName_s":["Silvia Abrahão","Miroslaw Staron","Judith Michael","Benoît Combemale","Marsha Chechik"],
+      "uri_s":"https://inria.hal.science/hal-05485243v1",
+      "docType_s":"ART",
+      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
+      "producedDate_tdate":"2025-01-01T00:00:00Z",
+      "producedDateY_i":2025
+    },{
       "docid":"5224789",
       "title_s":["Towards a Unifying Reference Model for Digital Twins of Cyber-Physical Systems"],
       "keyword_s":["Reference Model","Industry 40","Digital Twin"],
@@ -105,16 +115,6 @@
       "docType_s":"COMM",
       "collaboration_s":["DTCOMPOSE"],
       "producedDate_tdate":"2025-09-09T00:00:00Z",
-      "producedDateY_i":2025
-    },{
-      "docid":"5485243",
-      "title_s":["Modeling and Digital Twins: Insights and Strategies for Software Engineers"],
-      "journalTitle_s":"IEEE Software",
-      "authFullName_s":["Silvia Abrahão","Miroslaw Staron","Judith Michael","Benoît Combemale","Marsha Chechik"],
-      "uri_s":"https://inria.hal.science/hal-05485243v1",
-      "docType_s":"ART",
-      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
-      "producedDate_tdate":"2025-01-01T00:00:00Z",
       "producedDateY_i":2025
     },{
       "docid":"5718831",
