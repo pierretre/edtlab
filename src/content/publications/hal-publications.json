@@ -5,6 +5,40 @@
     "maxScore":1.0,
     "numFoundExact":true,
     "docs":[{
+      "docid":"5221886",
+      "title_s":["Evolution at the Core of Digital Twin Engineering"],
+      "keyword_s":["DevOps","Lifecycle","Evolution","Digital Twin Engineering"],
+      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
+      "authFullName_s":["Tarek Alskaif","Önder Babur","Francis Bordeleau","Loek Cleophas","Benoît Combemale","Joachim Denil","Øystein Haugen","Judith Michael","Phu H. Nguyen","Tiberiu Seceleanu","Mark van den Brand","Hans Vangheluwe"],
+      "uri_s":"https://inria.hal.science/hal-05221886v1",
+      "docType_s":"COMM",
+      "collaboration_s":["TWINOPS"],
+      "producedDate_tdate":"2025-10-06T00:00:00Z",
+      "producedDateY_i":2025
+    },{
+      "docid":"5095351",
+      "title_s":["Model‐Driven Engineering for Digital Twins: Opportunities and Challenges"],
+      "journalTitle_s":"Systems Engineering",
+      "authFullName_s":["Judith Michael","Loek Cleophas","Steffen Zschaler","Tony Clark","Benoît Combemale","Thomas Godfrey","Djamel Eddine Khelladi","Vinay Kulkarni","Daniel Lehner","Bernhard Rumpe","Manuel Wimmer","Andreas Wortmann","Shaukat Ali","Balbir Barn","Ion Barosan","Nelly Bencomo","Francis Bordeleau","Georg Grossmann","Gabor Karsai","Oliver Kopp","Bernhard Mitschang","Paula Muñoz Ariza","Alfonso Pierantonio","Fiona Polack","Matthias Riebisch","Holger Schlingloff","Markus Stumptner","Antonio Vallecillo","Mark van den Brand","Hans Vangheluwe"],
+      "uri_s":"https://inria.hal.science/hal-05060561v1",
+      "docType_s":"ART",
+      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
+      "doiId_s":"10.1002/sys.21815",
+      "producedDate_tdate":"2025-04-02T00:00:00Z",
+      "producedDateY_i":2025
+    },{
+      "docid":"5701147",
+      "title_s":["Designing Usable User Interfaces of Digital Twins: Benefits and Limitations of Applying the User Centered Design Process"],
+      "keyword_s":["Tasks Discovery","Operator Tasks","Digital Twins","User Centered Design Process","Usability"],
+      "conferenceTitle_s":"HCSE 2026 - 11th International Working Conference on Human-Centered Software Engineering",
+      "authFullName_s":["Pierre Treton","Hafiyyan Sayyid Fadhlillah","Camille Fayollas","Philippe Palanque","Arnaud Blouin","Benoit Combemale","François Fouquet"],
+      "uri_s":"https://hal.science/hal-05701147v1",
+      "docType_s":"COMM",
+      "collaboration_s":["GENUINE"],
+      "doiId_s":"10.1007/978-3-032-41627-8_2",
+      "producedDate_tdate":"2026-09-29T00:00:00Z",
+      "producedDateY_i":2026
+    },{
       "docid":"5221809",
       "title_s":["On the Challenges of Integrating Digital Twins"],
       "keyword_s":["Composition","Integration","Digital twin"],
@@ -38,40 +72,6 @@
       "doiId_s":"10.5381/jot.2026.25.3.a18",
       "producedDate_tdate":"2026-06-30T00:00:00Z",
       "producedDateY_i":2026
-    },{
-      "docid":"5221886",
-      "title_s":["Evolution at the Core of Digital Twin Engineering"],
-      "keyword_s":["DevOps","Lifecycle","Evolution","Digital Twin Engineering"],
-      "conferenceTitle_s":"EDTconf 2025 - 2nd International Conference on Engineering Digital Twins",
-      "authFullName_s":["Tarek Alskaif","Önder Babur","Francis Bordeleau","Loek Cleophas","Benoît Combemale","Joachim Denil","Øystein Haugen","Judith Michael","Phu H. Nguyen","Tiberiu Seceleanu","Mark van den Brand","Hans Vangheluwe"],
-      "uri_s":"https://inria.hal.science/hal-05221886v1",
-      "docType_s":"COMM",
-      "collaboration_s":["TWINOPS"],
-      "producedDate_tdate":"2025-10-06T00:00:00Z",
-      "producedDateY_i":2025
-    },{
-      "docid":"5701147",
-      "title_s":["Designing Usable User Interfaces of Digital Twins: Benefits and Limitations of Applying the User Centered Design Process"],
-      "keyword_s":["Tasks Discovery","Operator Tasks","Digital Twins","User Centered Design Process","Usability"],
-      "conferenceTitle_s":"HCSE 2026 - 11th International Working Conference on Human-Centered Software Engineering",
-      "authFullName_s":["Pierre Treton","Hafiyyan Sayyid Fadhlillah","Camille Fayollas","Philippe Palanque","Arnaud Blouin","Benoit Combemale","François Fouquet"],
-      "uri_s":"https://hal.science/hal-05701147v1",
-      "docType_s":"COMM",
-      "collaboration_s":["GENUINE"],
-      "doiId_s":"10.1007/978-3-032-41627-8_2",
-      "producedDate_tdate":"2026-09-29T00:00:00Z",
-      "producedDateY_i":2026
-    },{
-      "docid":"5095351",
-      "title_s":["Model‐Driven Engineering for Digital Twins: Opportunities and Challenges"],
-      "journalTitle_s":"Systems Engineering",
-      "authFullName_s":["Judith Michael","Loek Cleophas","Steffen Zschaler","Tony Clark","Benoît Combemale","Thomas Godfrey","Djamel Eddine Khelladi","Vinay Kulkarni","Daniel Lehner","Bernhard Rumpe","Manuel Wimmer","Andreas Wortmann","Shaukat Ali","Balbir Barn","Ion Barosan","Nelly Bencomo","Francis Bordeleau","Georg Grossmann","Gabor Karsai","Oliver Kopp","Bernhard Mitschang","Paula Muñoz Ariza","Alfonso Pierantonio","Fiona Polack","Matthias Riebisch","Holger Schlingloff","Markus Stumptner","Antonio Vallecillo","Mark van den Brand","Hans Vangheluwe"],
-      "uri_s":"https://inria.hal.science/hal-05060561v1",
-      "docType_s":"ART",
-      "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
-      "doiId_s":"10.1002/sys.21815",
-      "producedDate_tdate":"2025-04-02T00:00:00Z",
-      "producedDateY_i":2025
     },{
       "docid":"5723092",
       "title_s":["A Dual-Lens Conceptual Framework for Digital Twin V&amp;V"],
