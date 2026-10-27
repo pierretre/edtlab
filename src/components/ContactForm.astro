@@ -339,7 +339,9 @@ const apiUrl = "/api/contact";
             errorElement.textContent = "";
 
             // Required field validation
-            if (field.hasAttribute("required") && !field.value.trim()) {
+            const isEmpty =
+                field.type === "checkbox" ? !field.checked : !field.value.trim();
+            if (field.hasAttribute("required") && isEmpty) {
                 isValid = false;
                 errorText =
                     field.name === "privacy"

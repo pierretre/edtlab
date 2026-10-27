@@ -3,10 +3,6 @@ import {
     parseRecipients, renderEmailLayout, sendEmail
 } from '~/utils/email';
 
-// CT industriels ("Comité Technique des Jumeaux Numériques") join request.
-// Applications are emailed to the committee's EDT contacts, configured via
-// CT_INDUSTRIELS_INBOX (comma-separated list of recipient addresses).
-
 // Types
 interface JoinFormData {
     name: string;
@@ -50,7 +46,7 @@ export const POST = createEmailRoute<JoinFormData>({
     },
     send: (data) => sendEmail({
         tag: 'ct-industriels',
-        to: parseRecipients(process.env.CT_INDUSTRIELS_INBOX || import.meta.env.CT_INDUSTRIELS_INBOX || 'pascale.vicatblanc@inria.fr'),
+        to: parseRecipients(process.env.CT_INDUSTRIELS_INBOX || import.meta.env.CT_INDUSTRIELS_INBOX),
         replyTo: { email: data.email, name: data.name },
         subject: `CT industriels — Demande d'adhésion : ${data.name}`,
         htmlContent: generateEmailHtml(data),

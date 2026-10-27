@@ -321,6 +321,7 @@
         // Auto-enhance forms
         const forms = document.querySelectorAll("form");
         forms.forEach((form) => {
+            if (form.noValidate) return;
             form.addEventListener("submit", function (e) {
                 if (!window.A11yUtils.form.validate(form)) {
                     e.preventDefault();

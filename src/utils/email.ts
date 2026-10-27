@@ -236,6 +236,7 @@ export const createEmailRoute = <T>({ name, validate, send }: EmailRouteOptions<
     const rateLimiter = createRateLimiter();
 
     return async ({ request }) => {
+        let rawBody = '';
         try {
             const clientIp = getClientIp(request);
 
@@ -253,7 +254,8 @@ export const createEmailRoute = <T>({ name, validate, send }: EmailRouteOptions<
             }
 
             // Parse and validate request body
-            const result = validate(await request.json());
+            rawBody = await request.text();
+            const result = validate(JSON.parse(rawBody));
             if ('error' in result) {
                 return jsonResponse({ error: result.error }, 400);
             }
@@ -265,7 +267,7 @@ export const createEmailRoute = <T>({ name, validate, send }: EmailRouteOptions<
             return jsonResponse({ success: true });
 
         } catch (error) {
-            console.error(`Error processing ${name}:`, error);
+            console.error(`Error processing ${name}:`, error, `\nRequest body: ${rawBody || '(not read)'}`);
             if (error instanceof InvalidReplyToError) {
                 return jsonResponse({ error: 'Invalid email address', code: 'invalid_email' }, 400);
             }
