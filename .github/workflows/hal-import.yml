@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   import:
@@ -30,7 +31,7 @@ jobs:
         run: |
           wget \
             --output-document=src/content/publications/hal-publications.json \
-            "https://api.hal.science/search/EDT/?q=*:*&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,docSubType_s,keyword_s,collaboration_s,producedDate_tdate"
+            "https://api.hal.science/search/EDT/?q=*:*&sort=producedDate_s%20desc,docid%20desc&rows=100&start=0&wt=json&fl=docid,title_s,authFullName_s,producedDateY_i,journalTitle_s,conferenceTitle_s,proceedingsTitle_s,doiId_s,uri_s,docType_s,docSubType_s,keyword_s,collaboration_s,producedDate_tdate"
 
           echo "Downloaded file:"
           file src/content/publications/hal-publications.json
@@ -46,6 +47,8 @@ jobs:
         run: npm run build
 
       - name: Commit changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -57,4 +60,6 @@ jobs:
           else
             git commit -m "chore(hal): publications updated"
             git push
+
+            gh workflow run docker-build-publish.yml --ref main
           fi
