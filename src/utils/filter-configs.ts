@@ -229,9 +229,9 @@ export const publicationsFilterConfig: FilterSystemConfig<DOMItemData> = {
             translationKey: 'publications.filter.year',
             options: [
                 { value: '', label: 'All Years', translationKey: 'publications.filter.all-years' }
-                // Additional year options should be populated dynamically
-                // based on available publications
             ],
+            // Years are derived from the publications' data-year attribute
+            optionsFromItems: { dataKey: 'year', order: 'desc' },
             predicate: (data, value) => {
                 if (!value) return true;
                 // Compare as strings since data attributes are strings

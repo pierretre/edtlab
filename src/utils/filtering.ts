@@ -45,6 +45,16 @@ export interface FilterConfig<T = any> {
     placeholderTranslationKey?: string;
     /** Available options for select filters */
     options?: FilterOption[];
+    /**
+     * Derive extra select options from the items' `data-*` attributes at initialization.
+     * The distinct values found are appended after the static `options` (e.g. "All").
+     */
+    optionsFromItems?: {
+        /** Dataset key to read on each item (e.g. `year` for `data-year`) */
+        dataKey: string;
+        /** Sort order of the derived values (numeric when possible), defaults to 'desc' */
+        order?: 'asc' | 'desc';
+    };
     /** Predicate function to determine if an item matches the filter value */
     predicate: (item: T, value: string) => boolean;
     /** Default value for the filter */
@@ -375,6 +385,8 @@ export class FilterManagerImpl<T = any> implements FilterManager {
             console.warn(`FilterManager: No items found: ${this.config.itemSelector}`);
         }
 
+        this.populateOptionsFromItems();
+
         // Set up event listeners for each filter
         this.config.filters.forEach(filter => {
             const element = document.getElementById(filter.id);
@@ -437,6 +449,35 @@ export class FilterManagerImpl<T = any> implements FilterManager {
 
         // Apply filters to set initial visibility
         this.applyFilters();
+    }
+
+    /**
+     * Fill select filters declaring `optionsFromItems` with the distinct values
+     * found on the items, in both the config (URL validation) and the DOM.
+     */
+    private populateOptionsFromItems(): void {
+        this.config.filters.forEach(filter => {
+            if (filter.type !== 'select' || !filter.optionsFromItems) return;
+
+            const { dataKey, order = 'desc' } = filter.optionsFromItems;
+            const values = Array.from(new Set(
+                this.items
+                    .map(item => (item as HTMLElement).dataset[dataKey])
+                    .filter((value): value is string => !!value),
+            )).sort((a, b) => order === 'asc'
+                ? a.localeCompare(b, undefined, { numeric: true })
+                : b.localeCompare(a, undefined, { numeric: true }));
+
+            const staticOptions = (filter.options ?? []).filter(
+                option => !values.includes(option.value),
+            );
+            filter.options = [...staticOptions, ...values.map(value => ({ value, label: value }))];
+
+            const select = document.getElementById(filter.id) as HTMLSelectElement | null;
+            if (select) {
+                values.forEach(value => select.add(new Option(value, value)));
+            }
+        });
     }
 
     /**
