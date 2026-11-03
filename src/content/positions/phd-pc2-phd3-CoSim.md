@@ -1,28 +1,35 @@
 ---
-title: "Integration and synchronization of digital twins for co-simulation" 
-type: "PhD" 
+title: Integration and synchronization of digital twins for co-simulation
+type: PhD
 pc: PC2
-host: Inria, Moex
+location: Toulouse, France
+description: This PhD project aims to propose a framework enabling the
+  integration and synchronization of heterogeneous digital twins for reliable
+  co-simulation. The objectives consist to consider how heterogeneous DT can be
+  integrated into a coherent co-simulation framework.
+filled: false
+references:
+  - edt-roadmap
+expectedStartDate: Spring 2026
+publishedDate: 2026-03-15
+requirements:
+  - Master degree in Software Engineering
+  - Experience with digital twins
+contacts:
+  - sophie.ebersold@irit.fr
+  - jannik.laval@univ-lyon2.fr
+researcher:
+  name: none
 supervisors:
-  - name: Jérôme DAVID
-    org: Inria, Moex
-    role: director
   - name: Sophie EBERSOLD
     org: IRIT
-    role: co-supervisor
+    role: Director
+  - name: Jannik Laval
+    org: VERIMAG, Grenoble
+    role: Co-supervisor
+host: IRIT, Toulouse
 startDate: 2026-09-01
 researchStatus: ongoing
-filled: true
-researcher:
-    name: Edoardo CECCHINI
-location: "Toulouse, France"
-expectedStartDate: "Spring 2026"  
-publishedDate: 2026-03-15   
-description: "This PhD project aims to propose a framework enabling the integration and synchronization of heterogeneous digital twins for reliable co-simulation. The objectives consist to consider how heterogeneous DT can be integrated into a coherent co-simulation framework." 
-requirements: ["Master degree in Software Engineering", "Experience with digital twins"] 
-contacts: ["sophie.ebersold@irit.fr", "jannik.laval@univ-lyon2.fr"]  
-references:
-  - "edt-roadmap"
 ---
 
 
