@@ -53,7 +53,8 @@ const COLOR_PAST = "#737373";
 
 // ---- Time-proportional axis ----------------------------------------------
 const INNER_WIDTH = 2400; // px -- ~40px per month over ~5 years
-const MIN_GAP_PX = 4; // minimum px between displayed dots
+const PAD_X = 40; // px of room on each side so edge labels are not clipped
+const CLUSTER_PX = 10; // items closer than this are grouped on one dot
 
 const sixMonthsAhead = new Date(
     now.getFullYear(),
@@ -73,18 +74,22 @@ const spanMs = Math.max(1, maxMs - minMs);
 
 function timeToX(d: Date | number): number {
     const t = typeof d === "number" ? d : d.getTime();
-    return ((t - minMs) / spanMs) * INNER_WIDTH;
+    return PAD_X + ((t - minMs) / spanMs) * INNER_WIDTH;
 }
 
-const positionedItems = allItems.map((item) => ({
-    item,
-    x: timeToX(item.date),
-}));
-for (let i = 1; i < positionedItems.length; i++) {
-    const prev = positionedItems[i - 1];
-    const cur = positionedItems[i];
-    if (cur.x - prev.x < MIN_GAP_PX) {
-        cur.x = prev.x + MIN_GAP_PX;
+// Group items that would overlap on the axis into a single dot/label.
+type Group = { x: number; items: TimelineItem[] };
+const groups: Group[] = [];
+for (const item of allItems) {
+    const x = timeToX(item.date);
+    const last = groups[groups.length - 1];
+    if (
+        last &&
+        x - timeToX(last.items[last.items.length - 1].date) < CLUSTER_PX
+    ) {
+        last.items.push(item);
+    } else {
+        groups.push({ x, items: [item] });
     }
 }
 
@@ -124,9 +129,12 @@ function fmtDate(date: Date): string {
     });
 }
 
-const ABOVE_LANE_HEIGHT = 130;
-const AXIS_HEIGHT = 24;
-const BELOW_LANE_HEIGHT = 130;
+const STACK_STEP = 90; // px: horizontal offset between grouped labels (same baseline)
+const ABOVE_LANE_HEIGHT = 170;
+const AXIS_HEIGHT = 44; // line + ticks (top 28px) + year/quarter labels (bottom)
+const AXIS_LINE_Y = 14;
+const TICK_HEIGHT = 28;
+const BELOW_LANE_HEIGHT = 170;
 const TOTAL_HEIGHT = ABOVE_LANE_HEIGHT + AXIS_HEIGHT + BELOW_LANE_HEIGHT;
 const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
 ---
@@ -137,7 +145,7 @@ const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
             id="tl-inner"
             class="relative"
             data-today-x={todayX}
-            style={`width: ${INNER_WIDTH}px; height: ${TOTAL_HEIGHT}px;`}
+            style={`width: ${INNER_WIDTH + 2 * PAD_X}px; height: ${TOTAL_HEIGHT}px;`}
         >
             <!-- Above strip: items at even index (0, 2, 4, ...) — connector + title at bottom near dot -->
             <div
@@ -145,50 +153,55 @@ const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
                 style={`top: 0; height: ${ABOVE_LANE_HEIGHT}px;`}
             >
                 {
-                    positionedItems.map(({ item, x }, idx) => {
+                    groups.map(({ items, x }, idx) => {
                         if (idx % 2 !== 0) return null;
-                        const past = item.date < now;
-                        const titleColor = past ? COLOR_PAST : COLOR_ITEM;
+                        const color = items.every((i) => i.date < now)
+                            ? COLOR_PAST
+                            : COLOR_ITEM;
                         return (
                             <>
                                 <div
                                     class="absolute"
-                                    style={`left: ${x}px; bottom: 0; width: 1px; height: 12px; background-color: ${titleColor};`}
+                                    style={`left: ${x}px; bottom: 0; width: 1px; height: 12px; background-color: ${color};`}
                                 />
-                                <div
-                                    class="absolute"
-                                    style={`left: ${x}px; bottom: 12px;`}
-                                >
-                                    <div class="-rotate-45 origin-bottom-left whitespace-nowrap">
-                                        <time class="text-[10px] font-mono block text-gray-500">
-                                            {item.timeLabel ??
-                                                fmtDate(item.date)}
-                                        </time>
-                                        {item.location && (
-                                            <span class="text-[10px] text-gray-500 block">
-                                                {item.location}
-                                            </span>
-                                        )}
-                                        {item.href ? (
-                                            <a
-                                                href={item.href}
-                                                class="text-xs font-semibold leading-tight hover:underline block line-clamp-2"
-                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
-                                                title={item.title}
-                                            >
-                                                {item.title}
-                                            </a>
-                                        ) : (
-                                            <span
-                                                class="text-xs font-semibold leading-tight block line-clamp-2"
-                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
-                                                title={item.title}
-                                            >
-                                                {item.title}
-                                            </span>
-                                        )}
+                                {items.map((item, k) => (
+                                    <div
+                                        class="absolute"
+                                        style={`left: ${x + k * STACK_STEP}px; bottom: 12px;`}
+                                    >
+                                        <div class="-rotate-45 origin-bottom-left whitespace-nowrap">
+                                            <div>
+                                                <time class="text-[10px] font-mono block text-gray-500">
+                                                    {item.timeLabel ??
+                                                        fmtDate(item.date)}
+                                                </time>
+                                                {item.location && (
+                                                    <span class="text-[10px] text-gray-500 block">
+                                                        {item.location}
+                                                    </span>
+                                                )}
+                                                {item.href ? (
+                                                    <a
+                                                        href={item.href}
+                                                        class="text-xs font-semibold leading-tight hover:underline block line-clamp-2"
+                                                        style={`color: ${item.date < now ? COLOR_PAST : COLOR_ITEM}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                        title={item.title}
+                                                    >
+                                                        {item.title}
+                                                    </a>
+                                                ) : (
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight block line-clamp-2"
+                                                        style={`color: ${item.date < now ? COLOR_PAST : COLOR_ITEM}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                        title={item.title}
+                                                    >
+                                                        {item.title}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                ))}
                             </>
                         );
                     })
@@ -201,7 +214,8 @@ const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
                 style={`top: ${ABOVE_LANE_HEIGHT}px; height: ${AXIS_HEIGHT}px;`}
             >
                 <div
-                    class="absolute inset-x-0 top-1/2 h-0.5 bg-gradient-to-r from-gray-300 to-gray-400"
+                    class="absolute inset-x-0 h-0.5 bg-gradient-to-r from-gray-300 to-gray-400"
+                    style={`top: ${AXIS_LINE_Y}px; transform: translateY(-50%);`}
                 >
                 </div>
 
@@ -215,11 +229,11 @@ const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
                             <>
                                 <div
                                     class={`absolute ${tickColor}`}
-                                    style={`left: ${tick.x}px; top: 50%; transform: translate(-50%, -50%); width: 1px; height: ${AXIS_HEIGHT}px;`}
+                                    style={`left: ${tick.x}px; top: ${AXIS_LINE_Y}px; transform: translate(-50%, -50%); width: 1px; height: ${TICK_HEIGHT}px;`}
                                 />
                                 <div
-                                    class="absolute text-[9px] text-gray-500 whitespace-nowrap"
-                                    style={`left: ${tick.x}px; top: ${AXIS_HEIGHT}px; transform: translateX(-50%);`}
+                                    class={`absolute whitespace-nowrap ${tick.level === "year" ? "text-xs font-semibold text-gray-700" : "text-[10px] text-gray-500"}`}
+                                    style={`left: ${tick.x}px; top: ${AXIS_LINE_Y + TICK_HEIGHT / 2 + 1}px; transform: translateX(-50%);`}
                                 >
                                     {tick.label}
                                 </div>
@@ -229,14 +243,17 @@ const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
                 }
 
                 {
-                    positionedItems.map(({ item, x }) => {
-                        const past = item.date < now;
-                        const dotColor = past ? COLOR_PAST : COLOR_ITEM;
+                    groups.map(({ items, x }) => {
+                        const color = items.every((i) => i.date < now)
+                            ? COLOR_PAST
+                            : COLOR_ITEM;
                         return (
                             <div
-                                class="absolute rounded-full border-2 border-white shadow z-10"
-                                style={`left: ${x}px; top: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background-color: ${dotColor};`}
-                            />
+                                class="absolute rounded-full border-2 border-white shadow z-10 flex items-center justify-center text-[8px] font-bold text-white"
+                                style={`left: ${x}px; top: ${AXIS_LINE_Y}px; transform: translate(-50%, -50%); width: ${items.length > 1 ? 16 : 12}px; height: ${items.length > 1 ? 16 : 12}px; background-color: ${color};`}
+                            >
+                                {items.length > 1 ? items.length : ""}
+                            </div>
                         );
                     })
                 }
@@ -248,51 +265,55 @@ const TITLE_MAX_WIDTH = 130; // px -- title wraps on 2 lines above this
                 style={`top: ${ABOVE_LANE_HEIGHT + AXIS_HEIGHT}px; height: ${BELOW_LANE_HEIGHT}px;`}
             >
                 {
-                    positionedItems.map(({ item, x }, idx) => {
+                    groups.map(({ items, x }, idx) => {
                         if (idx % 2 !== 1) return null;
-                        const past = item.date < now;
-                        const titleColor = past ? COLOR_PAST : COLOR_ITEM;
-                        const href = item.href;
+                        const color = items.every((i) => i.date < now)
+                            ? COLOR_PAST
+                            : COLOR_ITEM;
                         return (
                             <>
                                 <div
                                     class="absolute"
-                                    style={`left: ${x}px; top: 0; width: 1px; height: 12px; background-color: ${titleColor};`}
+                                    style={`left: ${x}px; top: 0; width: 1px; height: 12px; background-color: ${color};`}
                                 />
-                                <div
-                                    class="absolute"
-                                    style={`left: ${x}px; top: 12px;`}
-                                >
-                                    <div class="rotate-45 origin-top-left whitespace-nowrap">
-                                        {href ? (
-                                            <a
-                                                href={href}
-                                                class="text-xs font-semibold leading-tight hover:underline block line-clamp-2"
-                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
-                                                title={item.title}
-                                            >
-                                                {item.title}
-                                            </a>
-                                        ) : (
-                                            <span
-                                                class="text-xs font-semibold leading-tight block line-clamp-2"
-                                                style={`color: ${titleColor}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
-                                                title={item.title}
-                                            >
-                                                {item.title}
-                                            </span>
-                                        )}
-                                        <time class="text-[10px] font-mono block text-gray-500">
-                                            {item.timeLabel ??
-                                                fmtDate(item.date)}
-                                        </time>
-                                        {item.location && (
-                                            <span class="text-[10px] text-gray-500 block">
-                                                {item.location}
-                                            </span>
-                                        )}
+                                {items.map((item, k) => (
+                                    <div
+                                        class="absolute"
+                                        style={`left: ${x + k * STACK_STEP}px; top: 12px;`}
+                                    >
+                                        <div class="rotate-45 origin-top-left whitespace-nowrap">
+                                            <div>
+                                                {item.href ? (
+                                                    <a
+                                                        href={item.href}
+                                                        class="text-xs font-semibold leading-tight hover:underline block line-clamp-2"
+                                                        style={`color: ${item.date < now ? COLOR_PAST : COLOR_ITEM}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                        title={item.title}
+                                                    >
+                                                        {item.title}
+                                                    </a>
+                                                ) : (
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight block line-clamp-2"
+                                                        style={`color: ${item.date < now ? COLOR_PAST : COLOR_ITEM}; max-width: ${TITLE_MAX_WIDTH}px; white-space: normal;`}
+                                                        title={item.title}
+                                                    >
+                                                        {item.title}
+                                                    </span>
+                                                )}
+                                                <time class="text-[10px] font-mono block text-gray-500">
+                                                    {item.timeLabel ??
+                                                        fmtDate(item.date)}
+                                                </time>
+                                                {item.location && (
+                                                    <span class="text-[10px] text-gray-500 block">
+                                                        {item.location}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                ))}
                             </>
                         );
                     })
