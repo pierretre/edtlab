@@ -10,6 +10,8 @@ import { getCollection } from "astro:content";
 export interface Props {
     /** Slug (filename without .md) of the publication to cite */
     slug?: string;
+    hal?: boolean;
+    numbered?: boolean;
     /** Or pass publication data directly */
     publication?: {
         title: string;
@@ -22,7 +24,7 @@ export interface Props {
     };
 }
 
-const { slug, publication: pubProp } = Astro.props as Props;
+const { slug, publication: pubProp, hal = false, numbered = false } = Astro.props as Props;
 
 let pub = pubProp;
 
@@ -62,7 +64,12 @@ function doiUrl(doi: string): string {
 
 {
     pub ? (
-        <p class="citation text-sm text-gray-800 leading-relaxed pl-8 -indent-8 mb-3">
+        <p
+            class:list={[
+                "citation text-gray-800 leading-relaxed text-left",
+                numbered ? "text-base m-0" : "text-sm pl-8 -indent-8 mb-3",
+            ]}
+        >
             {/* Authors */}
             {formatAuthorsAPA(pub.authors)}
 
@@ -84,7 +91,7 @@ function doiUrl(doi: string): string {
             {pub.venue && ". "}
 
             {/* DOI — clickable link */}
-            {hasDoi(pub.doi) && (
+            {!hal && hasDoi(pub.doi) && (
                 <a
                     href={doiUrl(pub.doi!)}
                     target="_blank"
@@ -96,7 +103,7 @@ function doiUrl(doi: string): string {
             )}
 
             {/* URL fallback if no DOI */}
-            {!hasDoi(pub.doi) && pub.url && (
+            {(hal || !hasDoi(pub.doi)) && pub.url && (
                 <a
                     href={pub.url}
                     target="_blank"

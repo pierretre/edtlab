@@ -2,7 +2,8 @@
 import PageLayout from "./PageLayout.astro";
 import type { Position } from "@models/Position.model";
 import { linkHelpers, useTranslations } from "@i18n/utils";
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
+import { isAuthor } from "@utils/author-match";
 import Badge from "@components/Badge.astro";
 import Citation from "@components/Citation.astro";
 import { generateJobPostingStructuredData } from "@utils/seo";
@@ -21,11 +22,25 @@ const t = useTranslations(lang);
 // in by the researcher (see docs/editors/how-to/positions-guide.md).
 const occupied = !!frontmatter.researcher;
 
-const publicationsResolved = occupied
+// Explicitly listed publications, plus every publication whose authors
+// include the researcher (matched by name).
+const explicitPublications = occupied
     ? await Promise.all(
           (frontmatter.publications || []).map((pub) => getEntry(pub)),
       )
     : [];
+const authoredPublications = occupied
+    ? (await getCollection("publications")).filter((pub) =>
+          isAuthor(frontmatter.researcher!.name, pub.data.authors),
+      )
+    : [];
+const publicationsResolved = [
+    ...new Map(
+        [...explicitPublications, ...authoredPublications]
+            .filter((pub) => !!pub)
+            .map((pub) => [pub!.id, pub!]),
+    ).values(),
+].sort((a, b) => b.data.year - a.data.year);
 
 const jobStructuredData =
     !occupied && frontmatter.publishedDate && frontmatter.expectedStartDate
@@ -295,33 +310,16 @@ const backLink =
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">
                     {t("positions.publications")}
                 </h3>
-                <ul>
-                    {publicationsResolved.map((pub) => (
-                        <li>
-                            {pub.data.url ? (
-                                <a
-                                    href={pub.data.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {pub.data.title}
-                                </a>
-                            ) : (
-                                pub.data.title
-                            )}
-                            {pub.data.venue && (
-                                <span class="text-gray-500">
-                                    {" "}
-                                    · {pub.data.venue}
-                                </span>
-                            )}
-                            <span class="text-gray-500">
-                                {" "}
-                                ({pub.data.year})
+                <div class="space-y-1">
+                    {publicationsResolved.map((pub, i) => (
+                        <div class="flex items-baseline gap-2 mb-3">
+                            <span class="text-base text-gray-500 font-medium shrink-0">
+                                [{i + 1}]
                             </span>
-                        </li>
+                            <Citation publication={pub.data} hal numbered />
+                        </div>
                     ))}
-                </ul>
+                </div>
             </section>
         )
     }
