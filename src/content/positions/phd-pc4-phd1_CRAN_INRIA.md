@@ -4,11 +4,17 @@ type: "PhD"
 pc: PC4
 host: U. de Lorraine, CRAN
 supervisors:
+  - name: Samir SI-MOHAMMED
+    org: U. de Lorraine, CRAN
+    role: co-supervisor
   - name: Moufida MAIMOUR
     org: U. de Lorraine, CRAN
     role: director
-  - name: Malcom EGAN
+  - name: Malcolm EGAN
     org: Inria, Maracas
+    role: co-supervisor
+  - name: Hind BRIL EL HAOUZI
+    org: U. de Lorraine, CRAN
     role: co-supervisor
 startDate: 2026-09-01
 researchStatus: ongoing

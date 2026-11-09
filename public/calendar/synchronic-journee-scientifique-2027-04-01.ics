@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//EDT//News//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:synchronic-journee-scientifique-2027-04-01@edt
+DTSTAMP:20261109T000000Z
+DTSTART;VALUE=DATE:20270401
+DTEND;VALUE=DATE:20270402
+SUMMARY:Journée scientifique Synchronic / Synchronic Scientific Day
+DESCRIPTION:Journée scientifique du projet ciblé Synchronic (PC4 du programm
+ e EDT). Lieu\, programme et inscription à venir.\n\nScientific day of the t
+ argeted project Synchronic (PC4 of the EDT programme). Venue\, programme an
+ d registration to be announced.
+LOCATION:À venir / To be announced
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

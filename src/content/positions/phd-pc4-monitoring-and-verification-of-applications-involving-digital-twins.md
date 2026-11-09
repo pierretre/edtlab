@@ -4,7 +4,7 @@ type: PhD
 pc: PC4
 location: Grenoble-UGA
 description: "-"
-filled: false
+filled: true
 tags: []
 references: []
 publishedDate: 2026-09-09
@@ -12,7 +12,19 @@ requirements:
   - Fluency in English and French
 contacts: []
 researcher:
-  name: "-"
+  name: Fares MESTRE
+host: Univ. Grenoble Alpes
+supervisors:
+  - name: Yliès FALCONE
+    org: Univ. Grenoble Alpes
+    role: director
+  - name: Gwen SALAÜN
+    org: Univ. Grenoble Alpes
+    role: co-supervisor
+  - name: Jean-Philippe GEORGES
+    org: U. de Lorraine, CRAN
+    role: co-supervisor
+startDate: 2026-11-01
 researchStatus: ongoing
 ---
 ## Context

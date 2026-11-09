@@ -1,13 +1,24 @@
 ---
 title: "Data Assimilation with Model Bias Correction for Digital Twin Monitoring of Complex Systems" # Avoid accents in title
-type: "PhD"  # Options (Limited): "PostDoc", "PhD", "Engineer", "Intern"
+type: "PhD"
 pc: PC4
 location: "Palaiseau, Toulouse, France"
-publishedDate: 2026-06-30  # Date when job offer was published in YYYY-MM-DD format
-filled: true  # Position availability status: true if position is filled, false if still available
-description: "This PhD designs bias-aware data assimilation methods for digital twins of large, complex, high-dimensional systems, combining model reduction and AI to improve accuracy and robustness against model bias, validated on a Cetim pressure-vessel demonstrator." # Brief summary of the position (2-3 sentences). The detailed description goes in the Body section below.
-requirements: ["Master degree in Applied Mathematics, Computational Mechanics, or Data Science", "Interest in numerical methods for data assimilation and uncertainty quantification", "Programming skills (Python and/or MATLAB)", "Good command of English"] # Some requirements in a list
-contacts: ["ludovic.chamoin@ens-paris-saclay.fr", "serge.gratton@univ-toulouse.fr"]  # Array of contact emails for this position
+publishedDate: 2026-06-30
+filled: true 
+description: "This PhD designs bias-aware data assimilation methods for digital twins of large, complex, high-dimensional systems, combining model reduction and AI to improve accuracy and robustness against model bias, validated on a Cetim pressure-vessel demonstrator."
+requirements: ["Master degree in Applied Mathematics, Computational Mechanics, or Data Science", "Interest in numerical methods for data assimilation and uncertainty quantification", "Programming skills (Python and/or MATLAB)", "Good command of English"]
+contacts: ["ludovic.chamoin@ens-paris-saclay.fr", "serge.gratton@univ-toulouse.fr"]
+researcher:
+  name: Tristan L'HORSET
+supervisors:
+  - name: Ludovic CHAMOIN
+    org: ENS Paris-Saclay, LMPS
+    role: director
+  - name: Serge GRATTON
+    org: INP Toulouse, ANITI
+    role: co-supervisor
+startDate: 2026-10-01
+researchStatus: ongoing  
 ---
 
 ## Context
