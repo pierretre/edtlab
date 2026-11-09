@@ -72,15 +72,19 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                                 <li class="relative group flex items-center">
                                     {section.items &&
                                     section.items.length > 0 ? (
-                                        <span
-                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out cursor-default
+                                        <button
+                                            type="button"
+                                            data-desktop-dropdown-toggle
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            class={`relative flex items-center gap-1 py-1 px-1 text-gray-900 transition-colors duration-300 ease-in-out cursor-pointer bg-transparent border-0
                                             before:absolute before:bottom-0 before:left-0 before:h-0.5
                                             before:bg-primary-600 before:transition-all before:duration-500 before:ease-in-out
                                             ${isActive ? "text-primary-600 before:w-full" : "before:w-0"}`}
                                         >
                                             <span>{section.name}</span>
                                             <svg
-                                                class="w-2.5 h-2.5 mt-1 transition-transform group-hover:rotate-180"
+                                                class="w-2.5 h-2.5 mt-1 transition-transform group-hover:rotate-180 group-data-open:rotate-180"
                                                 aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
@@ -94,10 +98,10 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                                                     d="m1 1 4 4 4-4"
                                                 />
                                             </svg>
-                                        </span>
+                                        </button>
 
                                         <div
-                                            class="absolute hidden group-hover:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
+                                            class="absolute hidden group-hover:block group-data-open:block z-50 bg-white divide-y divide-gray-100 shadow w-auto"
                                             style="top: 100%;"
                                             role="menu"
                                             aria-label={`${section.name} submenu`}
@@ -330,6 +334,42 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
                 }
             });
         }
+
+        // Desktop/tablet dropdowns: open on click (hover still works with a mouse)
+        const desktopToggles = document.querySelectorAll(
+            "[data-desktop-dropdown-toggle]",
+        );
+        const closeAllDesktop = function (except) {
+            desktopToggles.forEach(function (btn) {
+                const li = btn.closest("li");
+                if (li && li !== except) {
+                    li.removeAttribute("data-open");
+                    btn.setAttribute("aria-expanded", "false");
+                }
+            });
+        };
+        desktopToggles.forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                const li = btn.closest("li");
+                if (!li) return;
+                const open = li.hasAttribute("data-open");
+                closeAllDesktop(li);
+                if (open) {
+                    li.removeAttribute("data-open");
+                    btn.setAttribute("aria-expanded", "false");
+                } else {
+                    li.setAttribute("data-open", "");
+                    btn.setAttribute("aria-expanded", "true");
+                }
+            });
+        });
+        document.addEventListener("click", function () {
+            closeAllDesktop(null);
+        });
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") closeAllDesktop(null);
+        });
 
         // Initialize mobile dropdown collapses
         const mobileDropdownButtons = document.querySelectorAll(
