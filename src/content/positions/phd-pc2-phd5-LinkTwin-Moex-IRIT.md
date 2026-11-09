@@ -1,22 +1,40 @@
 ---
-title: "Interconnection of digital twin knowledge" 
-type: "PhD" 
+title: Interconnection of digital twin knowledge
+type: PhD
 pc: PC2
-location: "Grenoble, France"
-expectedStartDate: "Spring 2026"  
-publishedDate: 2026-03-15  
-filled: false 
-description: "Digital twins will need to represent a variety of knowledge about territories and related data. It is therefore not possible to rely solely on a single unifying model, but must be able to interact with a variety of heterogeneous representations. This PhD project aims to manage the diversity of knowledge and viewpoints." 
-requirements: ["Master degree in Software Engineering", "Experience with digital twins"] 
-contacts: ["jerome.david@inria.fr", "sophie.ebersold@irit.fr"]  
+location: Grenoble, France
+description: Digital twins will need to represent a variety of knowledge about
+  territories and related data. It is therefore not possible to rely solely on a
+  single unifying model, but must be able to interact with a variety of
+  heterogeneous representations. This PhD project aims to manage the diversity
+  of knowledge and viewpoints.
+filled: true
 references:
-  - "anna-2023-combining"
-  - "edt-roadmap"
-  - "pascal-2009-foundations"
-  - "krzysztof-2020-neuralsymbolic"
-  - "chloe-2025-graph"
-  - "guilherme-2025-results"
-  - "guilherme-2026-survey"
+  - anna-2023-combining
+  - edt-roadmap
+  - pascal-2009-foundations
+  - krzysztof-2020-neuralsymbolic
+  - chloe-2025-graph
+  - guilherme-2025-results
+  - guilherme-2026-survey
+expectedStartDate: Spring 2026
+publishedDate: 2026-03-15
+requirements:
+  - Master degree in Software Engineering
+  - Experience with digital twins
+contacts:
+  - jerome.david@inria.fr
+  - sophie.ebersold@irit.fr
+researcher:
+  name: Edoardo CECCHINI
+supervisors:
+  - name: Jérome David
+    org: Inria, Moex
+    role: director
+  - name: Sophie Ebersold
+    org: IRIT, Toulouse
+    role: co-supervisor
+startDate: 2026-11-02
 ---
 
 ## Context
