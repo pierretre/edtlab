@@ -1,8 +1,31 @@
 ---
-title: "Aggregation of digital twins in the manner of Systems of Systems"
-type: "PhD" 
+title: Aggregation of digital twins in the manner of Systems of Systems
+type: PhD
 pc: PC2
-host: INP-UGA, Verimag
+location: Lyon, France
+description: The goal is to develop a System of Systems approach from the design
+  stage onwards. This will enable each component of the digital twin to be
+  identified in relation to a physical system functionality, and their assembly
+  will result in a complete digital twin through aggregation, whose lifecycle
+  management will be controllable, just like the physical system.
+filled: true
+references:
+  - edt-roadmap
+  - russell-1971-system
+  - meriem-2025-digital
+  - meriem-2023-use
+expectedStartDate: Autumn 2026
+publishedDate: 2026-03-16
+requirements:
+  - Master degree in computer science
+  - Programming skills
+  - Modelling skills
+  - Experience with digital twins is a plus
+contacts:
+  - Jannik.Laval@univ-lyon2.fr
+  - Sylvain.Guerin@imt-atlantique.fr
+researcher:
+  name: Khaldi Anis Rabah
 supervisors:
   - name: Jannik LAVAL
     org: INP-UGA, Verimag
@@ -10,22 +33,10 @@ supervisors:
   - name: Sylvain GUERIN
     org: IMT Atlantique, Lab-STICC P4S
     role: co-supervisor
-startDate: 2026-09-01
+host: INP-UGA, Verimag
+startDate: 2026-12-01
+expectedEndDate: 2029-11-30
 researchStatus: ongoing
-filled: true
-researcher:
-  name: Khaldi Anis Rabah
-location: "Lyon, France"
-expectedStartDate: "Autumn 2026"
-publishedDate: 2026-03-16
-description: "The goal is to develop a System of Systems approach from the design stage onwards. This will enable each component of the digital twin to be identified in relation to a physical system functionality, and their assembly will result in a complete digital twin through aggregation, whose lifecycle management will be controllable, just like the physical system."
-requirements: ["Master degree in computer science", "Programming skills", "Modelling skills", "Experience with digital twins is a plus"]
-contacts: ["Jannik.Laval@univ-lyon2.fr", "Sylvain.Guerin@imt-atlantique.fr"] 
-references:
-  - "edt-roadmap"
-  - "russell-1971-system"
-  - "meriem-2025-digital"
-  - "meriem-2023-use"
 ---
 
 ## Context
