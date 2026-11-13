@@ -16,8 +16,8 @@ timeLabel: "9 déc. 2026"
 
 - 09:00-09:30 : Café d'accueil
 - 09:30-10:00 : Introduction (ANR & directeurs scientifiques EDT)
-- 10:00-11:00 : Bilan des projets ciblés (responsables des PC)
-- 11:00-12:00 : Bilan des actions transverses (directeurs scientifiques EDT)
+- 10:00-11:30 : Bilan des projets ciblés (responsables des PC)
+- 11:30-12:00 : Bilan des actions transverses (directeurs scientifiques EDT)
 - 12:00-13:30 : Déjeuner
 - 13:30-15:00 : Faits marquants des premiers résultats
 - 15:00-15:30 : Pause
