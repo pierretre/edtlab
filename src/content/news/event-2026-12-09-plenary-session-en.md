@@ -16,8 +16,8 @@ timeLabel: "December 9, 2026"
 
 - 09:00-09:30: Welcome coffee
 - 09:30-10:00: Introduction (ANR & EDT Scientific Directors)
-- 10:00-11:00: Review of the Focused Projects (PC leaders)
-- 11:00-12:00: Review of the Cross-cutting actions (EDT Scientific Directors)
+- 10:00-11:30: Review of the Focused Projects (PC leaders)
+- 11:30-12:00: Review of the Cross-cutting actions (EDT Scientific Directors)
 - 12:00-13:30: Lunch
 - 13:30-15:00: Highlights about Initial Results
 - 15:00-15:30: Break
