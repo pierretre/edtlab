@@ -26,7 +26,7 @@ timeLabel: "December 9, 2026"
     - PC4 SYNCHRONIC: _Méthodes d'assimilation de données adaptées pour un système chaotique avec un biais de modèle non gaussien_ (Tristan L’Horset)
     - PC5 GENUINE: _Reconstructing & Navigating the Topology of Digital Twin Rationales_ (Romain Pinquié)
 - 15:00-15:30: Break
-- 15:30-17:00: Working Session ("From The Methodology To The Platform") (chairs: Antoine/Jean-Michel)
+- 15:30-17:00: Working Session _"From The Methodology To The Platform"_ (chairs: Antoine Beugnard and Jean-Michel Bruel)
 - 17:00-17:45: Panel "Digital Twin Lifecycle: Experiences and Lessons Learned"
 - 17:45-18:00: Concluding Remarks (EDT Scientific Directors)
 - 19:30-22:00: Community Dinner
