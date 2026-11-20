@@ -27,6 +27,6 @@ timeLabel: "9 déc. 2026"
     - PC5 GENUINE: _Reconstructing & Navigating the Topology of Digital Twin Rationales_ (Romain Pinquié)
 - 15:00-15:30 : Pause
 - 15:30-17:00 : Session de travail « De la méthodologie à la plateforme » (animée par Antoine et Jean-Michel)
-- 17:00-17:45 : Table ronde « Cycle de vie du jumeau numérique : expériences et retours d'expérience »
+- 17:00-17:45 : Table ronde « Cycle de vie du jumeau numérique : expériences et retours d'expérience » (modérateur: Olivier Scart, 3DS)
 - 17:45-18:00 : Conclusion (directeurs scientifiques EDT)
 - 19:30-22:00 : Dîner de la communauté EDT 
