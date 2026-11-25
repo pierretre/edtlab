@@ -282,8 +282,13 @@
     }
 
     /* Prose list markers (default) */
-    .prose ul {
+    .prose ul,
+    .news-content ul {
         list-style: disc;
+    }
+
+    .news-content ol {
+        list-style: decimal;
     }
 
     /* Accessible button styles */

@@ -24,10 +24,11 @@ const filteredNews = allNews.map((item) => ({
 }));
 ---
 
-<div class="w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
-    <div
-        class="flex flex-col lg:flex-row gap-10 max-w-384 mx-auto px-4 sm:px-6 lg:px-8"
-    >
+<div
+    id="news-list-section"
+    class="w-screen relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]"
+>
+    <div class="flex flex-col lg:flex-row gap-10 max-w-384 mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Sidebar -->
         <FilterSidebar
             filters={newsFilterConfig.filters}
@@ -43,12 +44,10 @@ const filteredNews = allNews.map((item) => ({
                     id="results-count"
                     data-template={t("news.results-count")}
                 >
-                    {
-                        t("news.results-count").replace(
-                            "{count}",
-                            filteredNews.length.toString(),
-                        )
-                    }
+                    {t("news.results-count").replace(
+                        "{count}",
+                        filteredNews.length.toString(),
+                    )}
                 </span>
             </div>
 
@@ -56,16 +55,14 @@ const filteredNews = allNews.map((item) => ({
                 id="unified-list"
                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-                {
-                    filteredNews.map((item) => (
-                        <NewsCard
-                            item={item.data as NewsItem}
-                            lang={lang}
-                            href={item.href}
-                            t={t}
-                        />
-                    ))
-                }
+                {filteredNews.map((item) => (
+                    <NewsCard
+                        item={item.data as NewsItem}
+                        lang={lang}
+                        href={item.href}
+                        t={t}
+                    />
+                ))}
             </div>
 
             <!-- Pagination -->
@@ -73,8 +70,7 @@ const filteredNews = allNews.map((item) => ({
                 id="news-pagination"
                 class="mt-6 flex items-center justify-center"
                 aria-label="Pagination"
-            >
-            </nav>
+            ></nav>
             <!-- No Results Message -->
             <div id="no-results" class="hidden text-center py-32">
                 <div class="max-w-md mx-auto">
@@ -94,7 +90,7 @@ const filteredNews = allNews.map((item) => ({
     import { FilterManagerImpl } from "@utils/filtering";
     import { newsFilterConfig } from "@utils/filter-configs";
 
-    const PAGE_SIZE = 12;
+    const PAGE_SIZE = 9;
     let currentPage = 1;
     let filterManager: FilterManagerImpl | null = null;
 
@@ -110,7 +106,7 @@ const filteredNews = allNews.map((item) => ({
         (container as HTMLElement).style.display = "";
 
         const ul = document.createElement("ul");
-        ul.className = "inline-flex -space-x-px text-sm m-0 p-0";
+        ul.className = "inline-flex -space-x-px text-sm m-0 p-0 list-none";
 
         const makeItem = (
             label: string,
@@ -287,6 +283,19 @@ const filteredNews = allNews.map((item) => ({
 </script>
 
 <style>
+    /* Experimental: on large screens the "All News" heading + list snap just
+       under the fixed nav. */
+    @media (min-width: 1024px) {
+        :global(html:has(#news-list-section)) {
+            scroll-snap-type: y proximity;
+        }
+        :global(h2:has(+ #news-list-section)) {
+            scroll-snap-align: start;
+            scroll-margin-top: 0.5rem;
+            margin-top: 0;
+        }
+    }
+
     /* Break out of parent container - requires custom CSS for viewport calculations */
     .news-list-breakout {
         width: 100vw;
@@ -298,13 +307,18 @@ const filteredNews = allNews.map((item) => ({
     }
 
     /* News item styles - using Tailwind @apply */
-    .news-item {
+    :global(.news-item) {
         @apply w-full h-auto;
     }
 
+    /* Slightly more compact cards: shorter image area, whole image visible */
+    :global(#unified-list .news-item > a.relative) {
+        height: 10rem;
+    }
+
     /* Hidden states for filtering and pagination */
-    .news-item.hidden,
-    .news-item.pagination-hidden {
+    :global(.news-item.hidden),
+    :global(.news-item.pagination-hidden) {
         @apply !hidden;
     }
 </style>
