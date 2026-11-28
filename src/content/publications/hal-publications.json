@@ -1,6 +1,6 @@
 {
   "response":{
-    "numFound":14,
+    "numFound":18,
     "start":0,
     "numFoundExact":true,
     "docs":[{
@@ -82,6 +82,16 @@
       "producedDate_tdate":"2026-06-30T00:00:00Z",
       "producedDateY_i":2026
     },{
+      "docid":"5880804",
+      "title_s":["Jumeaux numériques : architecture fonctionnelle et mise en oeuvre"],
+      "keyword_s":["Conception","Architecture logicielle","Jumeau numerique"],
+      "authFullName_s":["Pascale Vicat-Blanc","Olivier Scart","Fahad Golra","Antoine Beugnard","Hervé Labarge","Christian Chaplais","Emmanuelle Abisset-Chavanne","Thierry Coupaye","Nathalie Toulouse","Damien Lamy","Aicha Sekhari","Souad Rabah","Jannik Laval","Clarissa Gregory","Ariane Piel","Thomas Rousselot","Blaise Conrard"],
+      "uri_s":"https://hal.science/hal-05880804v1",
+      "docType_s":"REPORT",
+      "docSubType_s":"EXPERTREPORT",
+      "producedDate_tdate":"2026-03-10T00:00:00Z",
+      "producedDateY_i":2026
+    },{
       "docid":"5842123",
       "title_s":["On the Genealogy of Digital Twins"],
       "keyword_s":["Software Engineering","Control Theory","Adaptive Systems","Digital Twins"],
@@ -148,6 +158,16 @@
       "producedDate_tdate":"2025-04-02T00:00:00Z",
       "producedDateY_i":2025
     },{
+      "docid":"5883366",
+      "title_s":["Digital Twin","Fédérer Accélérer Transformer"],
+      "keyword_s":["Environmental impact of Industry","Eco-design","Circular economy","Sustainable industry","Digital Twin"],
+      "authFullName_s":["Emmanuelle Abisset-Chavanne","Christian Chaplais","Damien Lamy","Mariza Maliqi","Yvan Picaud","Ariane Piel","Thomas Rousselot","Olivier Scart","Pascale Vicat-Blanc"],
+      "uri_s":"https://hal.science/hal-05883366v1",
+      "docType_s":"REPORT",
+      "docSubType_s":"EXPERTREPORT",
+      "producedDate_tdate":"2025-01-01T00:00:00Z",
+      "producedDateY_i":2025
+    },{
       "docid":"5485243",
       "title_s":["Modeling and Digital Twins: Insights and Strategies for Software Engineers"],
       "journalTitle_s":"IEEE Software",
@@ -157,6 +177,25 @@
       "collaboration_s":["CATALYST","DTCOMPOSE","TWINOPS","SYNCHRONIC","GENUINE"],
       "producedDate_tdate":"2025-01-01T00:00:00Z",
       "producedDateY_i":2025
+    },{
+      "docid":"5883453",
+      "title_s":["Digital Twin : Leveraging the Digital Transformation of the Industry"],
+      "keyword_s":["Digital twin","Manufacturing","Digital Transformation","Definition","Use case"],
+      "authFullName_s":["Emmanuelle Abisset-Chavanne","Stéphane Barth-Chahinian","Antoine Beugnard","Didier Caudron","Christian Chaplais","Thierry Coupaye","Fahad Golra","Hervé Labarge","Patrick Lamboley","Damien Lamy","Lidia Manogarane","Philippe Marcel","Yvan Picaud","Ariane Piel","Jean-Pascal Riss","Olivier Scart","Philippe Thaillades","Gilles Triay","Marc Zolghadri","Pascale Vicat-Blanc"],
+      "uri_s":"https://hal.science/hal-05883453v1",
+      "docType_s":"REPORT",
+      "producedDate_tdate":"2024-01-01T00:00:00Z",
+      "producedDateY_i":2024
+    },{
+      "docid":"5883418",
+      "title_s":["Jumeau Numérique : Levier majeur de la transformation digitale de l’industrie"],
+      "keyword_s":["Jumeau numerique","Definition","Cas d'usage industriel","Transformation numérique","Optimisation","Manufacturing"],
+      "authFullName_s":["Emmanuelle Abisset-Chavanne","Stéphane Barth-Chahinian","Antoine Beugnard","Didier Caudron","Christian Chaplais","Thierry Coupaye","Fahad Golra","Hervé Labarge","Patrick Lamboley","Damien Lamy","Lidia Manogarane","Philippe Marcel","Yvan Picaud","Ariane Piel","Jean-Pascal Riss","Olivier Scart","Philippe Thaillades","Gilles Triay","Marc Zolghadri","Pascale Vicat-Blanc"],
+      "uri_s":"https://hal.science/hal-05883418v1",
+      "docType_s":"REPORT",
+      "docSubType_s":"EXPERTREPORT",
+      "producedDate_tdate":"2024-01-01T00:00:00Z",
+      "producedDateY_i":2024
     }]
   }
 }
